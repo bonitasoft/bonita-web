@@ -133,12 +133,13 @@ public class APIApplicationTest {
 
         //then
         final Map<String, Deployer> deployers = apiApplication.getDeployers();
-        assertThat(deployers).hasSize(4);
+        assertThat(deployers).hasSize(5);
         assertThat(deployers.keySet()).contains(ApplicationItem.ATTRIBUTE_CREATED_BY, ApplicationItem.ATTRIBUTE_UPDATED_BY,
                 ApplicationItem.ATTRIBUTE_PROFILE_ID);
         assertThat(deployers.get(ApplicationItem.ATTRIBUTE_CREATED_BY)).isExactlyInstanceOf(UserDeployer.class);
         assertThat(deployers.get(ApplicationItem.ATTRIBUTE_UPDATED_BY)).isExactlyInstanceOf(UserDeployer.class);
         assertThat(deployers.get(ApplicationItem.ATTRIBUTE_LAYOUT_ID)).isExactlyInstanceOf(PageDeployer.class);
+        assertThat(deployers.get(ApplicationItem.ATTRIBUTE_THEME_ID)).isExactlyInstanceOf(PageDeployer.class);
     }
 
 }

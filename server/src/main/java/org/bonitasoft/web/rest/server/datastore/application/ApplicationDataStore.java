@@ -57,6 +57,7 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     private final PageAPI pageAPI;
     private static final String CUSTOMPAGE_HOME = "custompage_home";
     private static final String DEFAULT_LAYOUT = "custompage_layout";
+    private static final String DEFAULT_THEME = "custompage_theme";
 
     public ApplicationDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI, final ApplicationItemConverter converter) {
         super(engineSession);
@@ -91,9 +92,7 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
 
         try {
             final Page homePageDef = pageAPI.getPageByName(CUSTOMPAGE_HOME);
-            final Page layoutPage = pageAPI.getPageByName(DEFAULT_LAYOUT);
 
-            item.setLayoutId(layoutPage.getId());
             final ApplicationCreator creator = converter.toApplicationCreator(item);
 
             final Application application = applicationAPI.createApplication(creator);

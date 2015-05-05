@@ -41,25 +41,25 @@ public class CustomPageAuthorizationsHelperTest {
     PageAPI pageAPI;
 
     @Test
-    public void should_authorize_page_when_appId_not_null_and_page_authorized_in_application() throws Exception {
+    public void should_authorize_page_when_appToken_not_null_and_page_authorized_in_application() throws Exception {
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class)))
                 .willReturn(new SearchResultImpl<>(1, Collections.<ApplicationPage>emptyList()));
 
-        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
+        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
 
         assertThat(isPageAuthorized).isTrue();
     }
 
     @Test
-    public void should_filter_application_page_search_on_application_id() throws Exception {
+    public void should_filter_application_page_search_on_application_Token() throws Exception {
         final ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
 
-        customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
+        customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
         verify(applicationAPI).searchApplicationPages(captor.capture());
 
         final SearchFilter filter = captor.getValue().getFilters().get(0);
-        assertThat(filter.getField()).isEqualTo(ApplicationPageSearchDescriptor.APPLICATION_ID);
-        assertThat(filter.getValue()).isEqualTo("1");
+        assertThat(filter.getField()).isEqualTo(ApplicationPageSearchDescriptor.TOKEN);
+        assertThat(filter.getValue()).isEqualTo("appToken");
     }
 
     @Test
@@ -67,7 +67,7 @@ public class CustomPageAuthorizationsHelperTest {
         given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, "", ContentType.PAGE,null));
         final ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
 
-        customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
+        customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
         verify(applicationAPI).searchApplicationPages(captor.capture());
 
         final SearchFilter filter = captor.getValue().getFilters().get(1);
@@ -76,17 +76,17 @@ public class CustomPageAuthorizationsHelperTest {
     }
 
     @Test
-    public void should_not_authorize_page_when_appId_not_null_and_page_unauthorized_in_application() throws Exception {
+    public void should_not_authorize_page_when_appToken_not_null_and_page_unauthorized_in_application() throws Exception {
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class)))
                 .willReturn(new SearchResultImpl<>(0, Collections.<ApplicationPage>emptyList()));
 
-        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken");
+        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
 
         assertThat(isPageAuthorized).isFalse();
     }
 
     @Test
-    public void should_authorize_page_when_appId_is_null_and_page_authorized_in_portal() throws Exception {
+    public void should_authorize_page_when_appToken_is_null_and_page_authorized_in_portal() throws Exception {
         given(getUserRightsHelper.getUserRights()).willReturn(Arrays.asList("pageToken"));
 
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("", "pageToken");
@@ -95,7 +95,7 @@ public class CustomPageAuthorizationsHelperTest {
     }
 
     @Test
-    public void should_not_authorize_page_when_appId_is_null_and_page_unauthorized_in_portal() throws Exception {
+    public void should_not_authorize_page_when_appToken_is_null_and_page_unauthorized_in_portal() throws Exception {
         given(getUserRightsHelper.getUserRights()).willReturn(Collections.<String>emptyList());
 
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("", "pageToken");

@@ -51,6 +51,8 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_LAYOUT_ID = "layoutId";
 
+    public static final String ATTRIBUTE_THEME_ID = "themeId";
+
     public ApplicationItem() {
         super();
     }
@@ -176,6 +178,14 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public void setLayoutId(final Long layoutId) {
         setAttribute(ATTRIBUTE_LAYOUT_ID, layoutId);
+    }
+
+    public APIID getThemeId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_THEME_ID);
+    }
+
+    public void setThemeId(final Long themeId) {
+        setAttribute(ATTRIBUTE_THEME_ID, themeId);
     }
 
 }

@@ -53,6 +53,12 @@ public class ApplicationItemConverter {
         } else {
             item.setLayoutId(-1L);
         }
+        if (application.getThemeId() != null) {
+            item.setThemeId(application.getThemeId());
+        } else {
+            item.setThemeId(-1L);
+        }
+
         return item;
     }
 

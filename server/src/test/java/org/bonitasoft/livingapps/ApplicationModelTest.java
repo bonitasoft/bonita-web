@@ -62,7 +62,7 @@ public class ApplicationModelTest {
 
     ApplicationModel model;
 
-    ApplicationImpl application = new ApplicationImpl("token", "version", "description",1L);
+    ApplicationImpl application = new ApplicationImpl("token", "version", "description",1L , 2L);
 
     @Before
     public void beforeEach() throws Exception {

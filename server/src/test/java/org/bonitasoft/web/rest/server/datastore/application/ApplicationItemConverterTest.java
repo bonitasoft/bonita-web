@@ -33,6 +33,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     private static final long PROFILE_ID = 1L;
     private static final long HOME_PAGE_ID = 2L;
     private static final long LAYOUT_ID = 3L;
+    private static final long THEME_ID = 4L;
 
     private ApplicationItemConverter converter;
 
@@ -44,7 +45,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     @Test
     public void toApplicationItem_should_map_all_fields() throws Exception {
         //given
-        final ApplicationImpl application = new ApplicationImpl(TOKEN, VERSION, DESCRIPTION, LAYOUT_ID);
+        final ApplicationImpl application = new ApplicationImpl(TOKEN, VERSION, DESCRIPTION, LAYOUT_ID, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
         application.setIconPath(ICON_PATH);
@@ -81,7 +82,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     @Test
     public void applicationItem_with_null_homepage_id_should_not_return_null() throws Exception {
         //given
-        final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, LAYOUT_ID);
+        final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, LAYOUT_ID, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
         application.setIconPath(ICON_PATH);
@@ -104,7 +105,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     @Test
     public void applicationItem_with_null_Layout_id_should_not_return_null() throws Exception {
         //given
-        final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, null);
+        final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, null, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
         application.setIconPath(ICON_PATH);
@@ -125,6 +126,29 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     }
 
     @Test
+    public void applicationItem_with_null_Theme_id_should_not_return_null() throws Exception {
+        //given
+        final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, LAYOUT_ID, null);
+        application.setId(15);
+        application.setDisplayName(DISPLAY_NAME);
+        application.setIconPath(ICON_PATH);
+        application.setCreationDate(CREATION_DATE);
+        application.setCreatedBy(CREATED_BY);
+        application.setLastUpdateDate(UPDATE_DATE);
+        application.setUpdatedBy(UPDATED_BY);
+        application.setState(STATE);
+        application.setProfileId(PROFILE_ID);
+        application.setHomePageId(null);
+
+        //when
+        final ApplicationItem item = converter.toApplicationItem(application);
+
+        //then
+        assertThat(item).isNotNull();
+        assertThat(item.getAttributeValue(ApplicationItem.ATTRIBUTE_THEME_ID)).isEqualTo("-1");
+    }
+
+    @Test
     public void toApplicationCreator_should_map_all_fields() throws Exception {
         //given
         final ApplicationItem item = new ApplicationItem();
@@ -134,7 +158,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         item.setDescription(DESCRIPTION);
         item.setIconPath(ICON_PATH);
         item.setProfileId(PROFILE_ID);
-        item.setLayoutId(LAYOUT_ID);
 
         //when
         final ApplicationCreator creator = converter.toApplicationCreator(item);
@@ -209,6 +232,22 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         //then
         assertThat(updater).isNotNull();
         assertThat(updater.getFields().get(ApplicationField.LAYOUT_ID)).isEqualTo(null);
+
+    }
+
+    @Test
+    public void update_with_no_Theme_page_should_send_null() {
+
+        //given
+        final HashMap<String, String> fields = new HashMap<String, String>();
+        fields.put(ApplicationItem.ATTRIBUTE_THEME_ID, "-1");
+
+        //when
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
+
+        //then
+        assertThat(updater).isNotNull();
+        assertThat(updater.getFields().get(ApplicationField.THEME_ID)).isEqualTo(null);
 
     }
 }
