@@ -3,6 +3,7 @@ package org.bonitasoft.web.rest.server.api.extension;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.restlet.Request;
@@ -18,13 +19,13 @@ import org.restlet.resource.ServerResource;
  */
 public class ApiExtensionResource extends ServerResource {
 
-    private final ResourceExtensionDescriptor resourceExtensionDescriptor;
-
     private final RestApiRenderer restApiRenderer;
 
-    public ApiExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor, RestApiRenderer restApiRenderer) {
-        this.resourceExtensionDescriptor = resourceExtensionDescriptor;
+    private PageMappingService pageMappingService;
+
+    public ApiExtensionResource(RestApiRenderer restApiRenderer, PageMappingService pageMappingService) {
         this.restApiRenderer = restApiRenderer;
+        this.pageMappingService = pageMappingService;
     }
 
     @Override
@@ -48,15 +49,12 @@ public class ApiExtensionResource extends ServerResource {
 
     private Object handleRequest() throws BonitaException {
         final Request request = getRequest();
-        final String httpMethod = request.getMethod().getName();
-        if (httpMethod.equalsIgnoreCase(resourceExtensionDescriptor.getMethod())) {
-            final HttpServletRequest httpServletRequest = ServletUtils.getRequest(request);
-            try {
-                return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionDescriptor.getPageName(), resourceExtensionDescriptor.getClassFileName());
-            } catch (InstantiationException | IllegalAccessException | IOException | BonitaException e) {
-                throw new BonitaException("error while getting result", e);
-            }
+        final ResourceExtensionResolver resourceExtensionResolver = new ResourceExtensionResolver(request, pageMappingService);
+        final HttpServletRequest httpServletRequest = ServletUtils.getRequest(request);
+        try {
+            return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionResolver);
+        } catch (InstantiationException | IllegalAccessException | IOException | BonitaException e) {
+            throw new BonitaException("error while getting result", e);
         }
-        throw new BonitaException("method " + httpMethod + " is not supported");
     }
 }

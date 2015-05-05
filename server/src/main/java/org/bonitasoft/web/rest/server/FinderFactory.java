@@ -10,6 +10,12 @@
  */
 package org.bonitasoft.web.rest.server;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
@@ -40,17 +46,10 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FinderFactory {
 
@@ -105,8 +104,8 @@ public class FinderFactory {
         return finder;
     }
 
-    public Finder createExtensionResource(ResourceExtensionDescriptor resourceExtensionDescriptor) {
-        return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
+    public Finder createExtensionResource() {
+        return new ApiExtensionResourceFinder();
     }
 
     public ResourceFinder getResourceFinderFor(Serializable object) {

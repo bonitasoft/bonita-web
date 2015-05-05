@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server;
 
+import java.util.logging.Level;
+
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
@@ -31,8 +33,6 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
-import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -44,12 +44,8 @@ import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
 
-import java.util.logging.Level;
-
 /**
- *
  * @author Matthieu Chaffotte
- *
  */
 public class BonitaRestletApplication extends Application {
 
@@ -66,15 +62,11 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_CASE_CONTEXT = "/bpm/case";
     private static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
 
-
     private final FinderFactory factory;
 
-    private final TenantSpringBeanAccessor beanAccessor;
-
-    public BonitaRestletApplication(final FinderFactory finderFactory, final TenantSpringBeanAccessor tenantSpringBeanAccessor) {
+    public BonitaRestletApplication(final FinderFactory finderFactory) {
         super();
         factory = finderFactory;
-        this.beanAccessor = tenantSpringBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -138,14 +130,10 @@ public class BonitaRestletApplication extends Application {
         //GET a Simple BusinessDataReference
         router.attach(BDM_BUSINESS_DATA_REFERENCE_URL + "/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
-        buildRouterExtension(router);
-        return router;
-    }
+        // api extension
+        router.attach(ROUTER_EXTENSION_PREFIX, factory.createExtensionResource());
 
-    private void buildRouterExtension(Router router) {
-        for (ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
-            router.attach(ROUTER_EXTENSION_PREFIX + resourceExtensionDescriptor.getPathTemplate(), factory.createExtensionResource(resourceExtensionDescriptor));
-        }
+        return router;
     }
 
     @Override
