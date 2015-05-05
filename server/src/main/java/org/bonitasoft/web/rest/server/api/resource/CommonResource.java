@@ -257,10 +257,11 @@ public class CommonResource extends ServerResource {
             for (final String explanation : e.getExplanations()) {
                 explanations.append(explanation);
             }
-            getLogger().log(Level.INFO, e.getMessage() + "\nExplanations:\n" + explanations);
+            getLogger().log(Level.INFO, e.getSimpleMessage() + "\nExplanations:\n" + explanations);
         }
         getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST, statusErrorMessage);
         final ErrorMessageWithExplanations errorMessage = new ErrorMessageWithExplanations(e);
+        errorMessage.setMessage(e.getSimpleMessage());
         errorMessage.setExplanations(e.getExplanations());
         getResponse().setEntity(errorMessage.toEntity());
     }

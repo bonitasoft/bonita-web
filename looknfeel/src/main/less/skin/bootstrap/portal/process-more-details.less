@@ -1,4 +1,10 @@
 .process-details  {
+  
+  .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: @mainAccentColor;
+    border-color: @mainAccentColor;
+  }
+
   .actions {
     padding: 20px 0 10px 0;
   }
@@ -191,6 +197,14 @@
   .multiSelect button{
     margin: 0 5px 0 5px;
   }
+  
+  .processDetails-formList p {
+    padding: 10px;
+  }
+
+  .processDetails-formList {
+    padding-top: 10px;
+  }
 }
 
 button.glyphicon{
@@ -244,4 +258,58 @@ button.glyphicon{
 
 .process-details .bonita-toggle .btn{
  
+}
+
+.fade{
+  opacity:1;
+}
+
+/* The starting CSS styles for the enter animation */
+.fade.ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+/* The starting CSS styles for the enter animation */
+.fade.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+/* now the element will fade out before it is removed from the DOM */
+.fade.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.fade.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+
+.slide.ng-enter, 
+.slide.ng-leave
+{ 
+  -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space:nowrap;
+} 
+
+.slide.ng-leave.ng-leave-active,
+.slide.ng-enter {
+  opacity: 0;
+  width: 100%;
+  height: 0px;
+}
+
+.slide.ng-enter.ng-enter-active, 
+.slide.ng-leave {
+  opacity: 1;
+  width: 100%;
+  height: 100px;
 }
