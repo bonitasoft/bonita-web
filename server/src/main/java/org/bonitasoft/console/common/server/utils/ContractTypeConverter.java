@@ -13,15 +13,6 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.document.DocumentException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,6 +24,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.document.DocumentException;
+
 /**
  * @author Anthony Birembaut
  */
@@ -42,11 +42,11 @@ public class ContractTypeConverter {
     public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
 
-    private static final String FILE_TEMP_PATH = "tempPath";
+    public static final String FILE_TEMP_PATH = "tempPath";
+
+    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     private final ConvertUtilsBean convertUtilsBean;
-
-    private BonitaHomeFolderAccessor tenantFolder;
 
     private long maxSizeForTenant;
 
@@ -64,8 +64,7 @@ public class ContractTypeConverter {
         return convertToType(clazz, parameterValue);
     }
 
-    public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
-        tenantFolder = new BonitaHomeFolderAccessor();
+    public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input, final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
@@ -100,7 +99,7 @@ public class ContractTypeConverter {
             if (inputDefinition instanceof InputDefinition) {
                 final String inputDefinitionType = ((InputDefinition) inputDefinition).getType().name();
                 if (Type.FILE.name().equals(inputDefinitionType)) {
-                    return (Serializable) convertFileInputToExpectedType(mapOfValues);
+                    return convertFileInputToExpectedType(mapOfValues);
                 }
             } else {
                 final Map<String, Serializable> mapOfInputDefinition = (Map<String, Serializable>) inputDefinition;
@@ -113,8 +112,8 @@ public class ContractTypeConverter {
         return inputValue;
     }
 
-    protected Map<String, Serializable> convertComplexInputToExpectedType(Map<String, Serializable> mapOfValues, Map<String, Serializable> mapOfInputDefinition) throws FileNotFoundException {
-        Map<String, Serializable> convertedMapOfValues = new HashMap<String, Serializable>();
+    protected Map<String, Serializable> convertComplexInputToExpectedType(final Map<String, Serializable> mapOfValues, final Map<String, Serializable> mapOfInputDefinition) throws FileNotFoundException {
+        final Map<String, Serializable> convertedMapOfValues = new HashMap<String, Serializable>();
         for (final Entry<String, Serializable> valueEntry : mapOfValues.entrySet()) {
             final Serializable childInputDefinition = mapOfInputDefinition.get(valueEntry.getKey());
             Serializable convertedValue;
@@ -128,17 +127,17 @@ public class ContractTypeConverter {
         return convertedMapOfValues;
     }
 
-    protected FileInputValue convertFileInputToExpectedType(Map<String, Serializable> mapOfValues) throws FileNotFoundException {
-        String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
-        FileInputValue fileInputValue = new FileInputValue(filename, getFileContent((String)mapOfValues.get(FILE_TEMP_PATH)));
+    protected FileInputValue convertFileInputToExpectedType(final Map<String, Serializable> mapOfValues) throws FileNotFoundException {
+        final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
+        final FileInputValue fileInputValue = new FileInputValue(filename, getFileContent((String)mapOfValues.get(FILE_TEMP_PATH)));
         return fileInputValue;
     }
 
-    private byte[] getFileContent(String fileTempPath) throws FileNotFoundException {
+    protected byte[] getFileContent(final String fileTempPath) throws FileNotFoundException {
         final File sourceFile;
         byte[] fileContent = null;
         try {
-            sourceFile = tenantFolder.getTempFile(fileTempPath, tenantId);
+            sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
             if (sourceFile.exists()) {
                 if (sourceFile.length() > maxSizeForTenant * 1048576) {
                     final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
@@ -148,11 +147,11 @@ public class ContractTypeConverter {
             } else {
                 throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
             }
-        } catch(FileNotFoundException e) {
+        } catch(final FileNotFoundException e) {
             throw new FileNotFoundException(e.getMessage());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
-        } catch (DocumentException e) {
+        } catch (final DocumentException e) {
             throw new RuntimeException(e);
         }
         return fileContent;
