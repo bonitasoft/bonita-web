@@ -6,7 +6,21 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,20 +28,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,20 +45,17 @@ public class ContractTypeConverterTest {
 
     String fileName = "file.txt";
 
-    String tempFilePath = "tempFile";
-
     String fileContentString = "content";
 
     @Spy
     @InjectMocks
     ContractTypeConverter contractTypeConverter = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
-    @Before
-    public void initMocks() throws Exception {
+    private File generateTempFile() throws IOException {
         final File tempFile = File.createTempFile(this.getClass().getName(), null);
         tempFile.deleteOnExit();
         FileUtils.writeByteArrayToFile(tempFile, fileContentString.getBytes("UTF-8"));
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        return tempFile;
     }
 
     @Test
@@ -77,7 +74,10 @@ public class ContractTypeConverterTest {
     public void getProcessedInputs_with_simple_input_should_return_processed_input() throws Exception {
         final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
-        final Map<String, Serializable> input = generateInputMap();
+        String tempFilePath = "tempFile";
+        File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMap(tempFilePath);
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
 
@@ -91,7 +91,10 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        final Map<String, Serializable> complexInput = generateInputMap();
+        String tempFilePath = "tempFile";
+        File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> complexInput = generateInputMap(tempFilePath);
         input.put("inputComplex", (Serializable) complexInput);
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
@@ -107,10 +110,17 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        final Map<String, Serializable> complexInput = generateInputMap();
+        String tempFilePath = "tempFile";
+        File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> complexInput = generateInputMap(tempFilePath);
         final List<Serializable> multipleComplexInput = new ArrayList<>();
         multipleComplexInput.add((Serializable) complexInput);
-        multipleComplexInput.add((Serializable) complexInput);
+        String tempFilePath2 = "tempFile2";
+        File tempFile2 = generateTempFile();
+        doReturn(tempFile2).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath2, tenantId);
+        final Map<String, Serializable> complexInput2 = generateInputMap(tempFilePath2);
+        multipleComplexInput.add((Serializable) complexInput2);
         input.put("inputComplex", (Serializable) multipleComplexInput);
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
@@ -125,7 +135,7 @@ public class ContractTypeConverterTest {
         }
     }
 
-    private Map<String, Serializable> generateInputMap() {
+    private Map<String, Serializable> generateInputMap(String tempFilePath) {
         final Map<String, Serializable> inputMap = new HashMap<>();
         inputMap.put("inputText", "text");
         inputMap.put("inputBoolean", "true");
