@@ -13,18 +13,21 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
-import java.io.Serializable;
-import java.util.Map;
-
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Emmanuel Duchastenier
@@ -38,19 +41,24 @@ public class UserTaskExecutionResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
+    private final APISession apiSession;
+
     protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
-    public UserTaskExecutionResource(final ProcessAPI processAPI) {
+    public UserTaskExecutionResource(final ProcessAPI processAPI, final APISession apiSession) {
         this.processAPI = processAPI;
+        this.apiSession = apiSession;
     }
 
     @Post("json")
-    public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException {
+    public void executeTask(final Map<String, Serializable> inputs) throws UserTaskNotFoundException, FlowNodeExecutionException, FileNotFoundException {
         final String userId = getRequestParameter(USER_PARAM);
         final long taskId = getTaskIdParameter();
         try {
             final ContractDefinition taskContract = processAPI.getUserTaskContract(taskId);
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs);
+            final long tenantId = apiSession.getTenantId();
+            final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs, maxSizeForTenant, tenantId);
     		if (userId == null) {
                 processAPI.executeUserTask(taskId, processedInputs);
             } else {
