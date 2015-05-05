@@ -94,17 +94,16 @@ public class ContractTypeConverter {
     protected Serializable convertSingleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition) throws FileNotFoundException {
         if (inputDefinition == null) {
             return inputValue;
-        } else if (inputValue instanceof Map) {
+        } else if (inputDefinition instanceof Map && inputDefinition instanceof InputDefinition) {
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
-            if (inputDefinition instanceof InputDefinition) {
-                final String inputDefinitionType = ((InputDefinition) inputDefinition).getType().name();
-                if (Type.FILE.name().equals(inputDefinitionType)) {
-                    return convertFileInputToExpectedType(mapOfValues);
-                }
-            } else {
-                final Map<String, Serializable> mapOfInputDefinition = (Map<String, Serializable>) inputDefinition;
-                return (Serializable) convertComplexInputToExpectedType(mapOfValues, mapOfInputDefinition);
+            final String inputDefinitionType = ((InputDefinition) inputDefinition).getType().name();
+            if (Type.FILE.name().equals(inputDefinitionType)) {
+                return (Serializable) convertFileInputToExpectedType(mapOfValues);
             }
+        } else if (inputDefinition instanceof Map) {
+            final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
+            final Map<String, Serializable> mapOfInputDefinition = (Map<String, Serializable>) inputDefinition;
+            return (Serializable) convertComplexInputToExpectedType(mapOfValues, mapOfInputDefinition);
         } else {
             final InputDefinition simpleInputDefinition = (InputDefinition) inputDefinition;
             return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
