@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
@@ -65,7 +65,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     private Document mockedDocument;
 
     @Mock
-    private TenantFolder tenantFolder;
+    private BonitaHomeFolderAccessor tenantFolder;
 
     @Mock
     private SearchResult<Document> mockedEngineSearchResults;
@@ -81,7 +81,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void setUp() throws Exception {
         initMocks(this);
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
@@ -234,6 +234,25 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         verify(processAPI).addDocument(eq(1L), eq("doc 1"), eq("This is a description"), any(DocumentValue.class));
     }
 
+    @Test(expected = APIException.class)
+    public void it_should_not_add_a_document_calling_addDocument_with_invalid_upload_Path() throws Exception {
+        // Given
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "unexisting.document");
+
+        when(tenantFolder.getTempFile("unexisting.document", 1L)).thenReturn(new File("unexisting.document"));
+
+        try {
+            // When
+            documentDatastore.add(mockedDocumentItem);
+        } finally {
+            // Then
+            verify(documentDatastore).buildDocumentValueFromUploadPath("unexisting.document", -1, null);
+            verify(processAPI, times(0)).addDocument(eq(1L), eq("doc 1"), eq(""), any(DocumentValue.class));
+        }
+    }
+
     @Test
     public void it_should_add_a_document_calling_addDocument_with_external_Url() throws Exception {
         // Given
@@ -369,6 +388,29 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         }
         // When
         documentDatastore.update(id, attributes);
+    }
+
+    @Test(expected = APIException.class)
+    public void it_should_not_update_document_and_throws_exception_for_invalid_uploadPath() throws Exception {
+        // Given
+        final Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, "Doc 1");
+        attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "unexisting.document");
+        final APIID id = APIID.makeAPIID(1l);
+        try {
+            when(tenantFolder.getTempFile("invalidDocument", 1L)).thenReturn(new File("unexisting.document"));
+            when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            // When
+            documentDatastore.update(id, attributes);
+        } finally {
+            // Then
+            verify(documentDatastore).buildDocumentValueFromUploadPath("unexisting.document", -1, null);
+            verify(processAPI, times(0)).updateDocument(eq(1L), any(DocumentValue.class));
+        }
     }
 
     @Test(expected = APIForbiddenException.class)

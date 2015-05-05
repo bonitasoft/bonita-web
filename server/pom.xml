@@ -18,7 +18,7 @@
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
         <build.year>${maven.build.timestamp}</build.year>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <bonita.home>${bonita.home.test}/bonita</bonita.home>
+        <bonita.home>${bonita.home.test}</bonita.home>
     </properties>
 
     <dependencies>
@@ -314,7 +314,7 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <copy file="${project.basedir}/src/test/resources/loginManager-config.properties" tofile="${project.build.directory}/bonita-home/bonita/client/platform/conf/loginManager-config.properties"
+                                <copy file="${project.basedir}/src/test/resources/loginManager-config.properties" tofile="${project.build.directory}/bonita-home/client/platform/conf/loginManager-config.properties"
                                     overwrite="true" />
                             </tasks>
                         </configuration>

@@ -12,7 +12,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
@@ -85,7 +85,7 @@ public class APIDocumentTest {
     Exception {
 
         doThrow(new UnauthorizedFolderException("error")).when(documentDatastore).createDocument(any(Long.class), any(String.class), any(String.class),
-                any(String.class), any(TenantFolder.class));
+                any(String.class), any(BonitaHomeFolderAccessor.class));
         apiDocument.add(item);
 
     }
@@ -94,7 +94,7 @@ public class APIDocumentTest {
     public void it_throws_an_exception_when_cannot_write_file_on_add() throws Exception {
         // Given
         doThrow(new IOException("error")).when(documentDatastore).createDocument(any(Long.class), any(String.class), any(String.class),
-                any(String.class), any(TenantFolder.class));
+                any(String.class), any(BonitaHomeFolderAccessor.class));
 
         // When
         try {

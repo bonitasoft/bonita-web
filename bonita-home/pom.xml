@@ -18,7 +18,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <targetPath>${bonita.home}/home</targetPath>
+                <targetPath>${bonita.home}/bonita-home</targetPath>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
@@ -66,7 +66,7 @@
 									<overWrite>false</overWrite>
 								</artifactItem>
 							</artifactItems>
-                            <outputDirectory>${bonita.home}/home/client/platform/tenant-template/work/theme/portal</outputDirectory>
+                            <outputDirectory>${bonita.home}/bonita-home/client/platform/tenant-template/work/theme/portal</outputDirectory>
 						</configuration>
 					</execution>
                     <execution>
@@ -106,7 +106,7 @@
                                     <overWrite>false</overWrite>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${bonita.home}/home/server/platform/tenant-template/conf/security-scripts</outputDirectory>
+                            <outputDirectory>${bonita.home}/bonita-home/engine-server/conf/tenants/template/security-scripts</outputDirectory>
                         </configuration>
                     </execution>
 				</executions>

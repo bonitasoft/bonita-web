@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ExecutionException;
@@ -114,8 +114,8 @@ abstract class BonitaImportService extends ConsoleService {
         return content;
     }
 
-    protected TenantFolder getTenantFolder() {
-        return new TenantFolder();
+    protected BonitaHomeFolderAccessor getTenantFolder() {
+        return new BonitaHomeFolderAccessor();
     }
 
     protected String getFileUploadParamValue() {

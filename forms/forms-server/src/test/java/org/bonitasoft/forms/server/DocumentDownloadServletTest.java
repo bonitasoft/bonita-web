@@ -44,7 +44,7 @@ public class DocumentDownloadServletTest {
 
         final DocumentDownloadServlet documentDownloadServlet = spy(new DocumentDownloadServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter(DocumentDownloadServlet.FILE_PATH_PARAM)).thenReturn("../../..");
         when(req.getParameter(DocumentDownloadServlet.FILE_NAME_PARAM)).thenReturn("file.txt");
         when(req.getParameter(DocumentDownloadServlet.RESOURCE_FILE_NAME_PARAM)).thenReturn("resources");
@@ -58,7 +58,7 @@ public class DocumentDownloadServletTest {
         try {
             documentDownloadServlet.doGet(req, res);
         } catch (final ServletException e) {
-            assertTrue(e.getMessage().startsWith("For security reasons, access to this file paths"));
+            assertTrue(e.getMessage().startsWith("Unauthorized access to the file"));
         }
     }
 

@@ -42,6 +42,12 @@ public class TestCategory {
      */
     public TestCategory(final Category category) {
         this.category = category;
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building category: " + category.getName());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     /**
@@ -67,6 +73,14 @@ public class TestCategory {
     public void delete(final APISession apiSession) {
         try {
             TenantAPIAccessor.getProcessAPI(apiSession).deleteCategory(this.category.getId());
+        } catch (final Exception e) {
+            throw new TestToolkitException("Can't delete category", e);
+        }
+    }
+
+    public void delete() {
+        try {
+            delete(TestToolkitCtx.getInstance().getInitiator().getSession());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't delete category", e);
         }

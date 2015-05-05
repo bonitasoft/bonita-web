@@ -22,6 +22,7 @@ import org.bonitasoft.forms.client.view.SupportedFieldTypes;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
 import org.bonitasoft.forms.client.view.common.URLUtils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -49,15 +50,15 @@ public class FileDownloadWidget extends Composite {
 
     protected boolean hasImagePreview;
 
-    private final String formID;
+    protected final String formID;
 
-    private String imageServletURL;
+    protected final String imageServletURL;
 
-    private final Map<String, Object> contextMap;
+    protected final Map<String, Object> contextMap;
 
-    private final String attachmentServletURL;
+    protected final String attachmentServletURL;
 
-    private final String valueType;
+    protected final String valueType;
 
     /**
      * Constructor
@@ -97,6 +98,7 @@ public class FileDownloadWidget extends Composite {
 
         flowPanel = new FlowPanel();
         attachmentServletURL = RpcFormsServices.getAttachmentDownloadURL();
+        imageServletURL = RpcFormsServices.getAttachmentImageURL();
         String downloadURL;
         if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
             downloadURL = URLUtils.getInstance().getAttachmentURL(attachmentServletURL, formID, contextMap, this.attachmentId, fileName);
@@ -107,7 +109,6 @@ public class FileDownloadWidget extends Composite {
             previewImage = new Image();
             previewImage.setStyleName("bonita_image_preview");
             if (SupportedFieldTypes.JAVA_FILE_CLASSNAME.equals(valueType)) {
-                imageServletURL = RpcFormsServices.getAttachmentImageURL();
                 final String imageURL = URLUtils.getInstance().getAttachmentURL(imageServletURL, formID, contextMap, this.attachmentId, fileName);
                 if (fileName != null) {
                     previewImage.setUrl(imageURL);
@@ -120,7 +121,7 @@ public class FileDownloadWidget extends Composite {
             }
             flowPanel.add(previewImage);
         }
-        fileNameLabel = new Anchor();
+        fileNameLabel = GWT.create(Anchor.class);
         fileNameLabel.setStyleName("bonita_download_link");
         if (fileName != null) {
             fileNameLabel.setHref(downloadURL);

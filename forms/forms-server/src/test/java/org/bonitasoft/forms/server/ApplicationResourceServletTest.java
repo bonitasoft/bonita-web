@@ -47,7 +47,7 @@ public class ApplicationResourceServletTest {
 
         final ApplicationResourceServlet applicationResourceServlet = spy(new ApplicationResourceServlet());
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter("process")).thenReturn("processUUIDStr");
         when(req.getParameter("location")).thenReturn("../../../file.txt");
         when(req.getMethod()).thenReturn("GET");

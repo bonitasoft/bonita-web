@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -53,7 +53,7 @@ public class CustomPageServlet extends HttpServlet {
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
-    protected TenantFolder tenantFolder = new TenantFolder();
+    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
@@ -122,7 +122,7 @@ public class CustomPageServlet extends HttpServlet {
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutPageName(resourcePath, pageName));
 
-        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+        if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
         }
         return resourceFile;

@@ -14,15 +14,9 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -417,5 +411,4 @@ public class APICaseTest {
         // Then
         verify(item).setAttribute(CaseItem.COUNTER_ACTIVE_FLOW_NODES, numberOfFailedFlowNodes);
     }
-
 }

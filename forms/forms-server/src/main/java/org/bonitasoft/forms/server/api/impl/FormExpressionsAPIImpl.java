@@ -31,7 +31,7 @@ import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BPMExpressionEvaluationException;
 import org.bonitasoft.console.common.server.utils.DocumentUtil;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
@@ -371,8 +371,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
         return documentValue;
     }
 
-    protected TenantFolder getTenantFolder() {
-        return new TenantFolder();
+    protected BonitaHomeFolderAccessor getTenantFolder() {
+        return new BonitaHomeFolderAccessor();
     }
 
     protected DocumentValue getNewFileDocumentValue(final APISession session, final FormFieldValue fieldValue, final boolean deleteDocument, final String uri)
