@@ -110,16 +110,10 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        String tempFilePath = "tempFile";
-        File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
-        final Map<String, Serializable> complexInput = generateInputMap(tempFilePath);
+        final Map<String, Serializable> complexInput = generateInputMapWithFile( "tempFile");
+        final Map<String, Serializable> complexInput2 = generateInputMapWithFile("tempFile2");
         final List<Serializable> multipleComplexInput = new ArrayList<>();
         multipleComplexInput.add((Serializable) complexInput);
-        String tempFilePath2 = "tempFile2";
-        File tempFile2 = generateTempFile();
-        doReturn(tempFile2).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath2, tenantId);
-        final Map<String, Serializable> complexInput2 = generateInputMap(tempFilePath2);
         multipleComplexInput.add((Serializable) complexInput2);
         input.put("inputComplex", (Serializable) multipleComplexInput);
 
@@ -133,6 +127,12 @@ public class ContractTypeConverterTest {
                     entry("inputInteger", 125686181L), entry("inputDecimal", 12.8),
                     entry("inputFile", new FileInputValue(fileName, fileContentString.getBytes("UTF-8"))));
         }
+    }
+
+    private Map<String, Serializable> generateInputMapWithFile(String tempFilePath) throws IOException {
+        File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        return generateInputMap(tempFilePath);
     }
 
     private Map<String, Serializable> generateInputMap(String tempFilePath) {
