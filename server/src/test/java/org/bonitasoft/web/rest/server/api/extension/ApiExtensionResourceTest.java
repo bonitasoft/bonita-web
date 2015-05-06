@@ -2,13 +2,11 @@ package org.bonitasoft.web.rest.server.api.extension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.junit.Before;
@@ -29,11 +27,8 @@ import org.restlet.representation.Representation;
 public class ApiExtensionResourceTest {
 
     public static final String RETURN_VALUE = "{'return':'value'}";
-    public static final String CUSTOM_PAGE_NAME = "custom_pageName";
     public static final String GET = "GET";
 
-    @Mock
-    private ResourceExtensionDescriptor resourceExtensionDescriptor;
 
     @Mock
     private RestApiRenderer restApiRenderer;
@@ -47,10 +42,13 @@ public class ApiExtensionResourceTest {
 
     private Method method;
 
+    @Mock
+    private ResourceExtensionResolver resourceExtensionResolver;
 
     @Before
     public void before() throws Exception {
         doReturn(request).when(apiExtensionResource).getRequest();
+
 
     }
 
@@ -59,11 +57,7 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(GET).when(resourceExtensionDescriptor).getMethod();
-        doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
-        doReturn(CustomPageService.PAGE_INDEX_NAME).when(resourceExtensionDescriptor).getClassFileName();
-
-        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq(CustomPageService.PAGE_INDEX_NAME));
+        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -77,11 +71,7 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(GET).when(resourceExtensionDescriptor).getMethod();
-        doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
-        doReturn("resource.groovy").when(resourceExtensionDescriptor).getClassFileName();
-
-        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq("resource.groovy"));
+        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -95,10 +85,8 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(GET).when(resourceExtensionDescriptor).getMethod();
-        doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
 
-        doReturn(null).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq(CustomPageService.PAGE_CONTROLLER_FILENAME));
+        doReturn(null).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -112,11 +100,8 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(GET).when(resourceExtensionDescriptor).getMethod();
-        doReturn(CUSTOM_PAGE_NAME).when(resourceExtensionDescriptor).getPageName();
-        doReturn(CustomPageService.PAGE_CONTROLLER_FILENAME).when(resourceExtensionDescriptor).getClassFileName();
 
-        doThrow(BonitaException.class).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), eq(CUSTOM_PAGE_NAME), eq(CustomPageService.PAGE_CONTROLLER_FILENAME));
+        doThrow(BonitaException.class).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -129,15 +114,17 @@ public class ApiExtensionResourceTest {
     @Test
     public void should_handle_wrong_method() throws Exception {
         //given
+        BonitaException bonitaException = new BonitaException("error");
+        doThrow(bonitaException).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
+
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn("POST").when(resourceExtensionDescriptor).getMethod();
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
 
         //then
-        assertThat(representation.getText()).as("should return page response").isEqualTo("method GET is not supported");
+        assertThat(representation.getText()).as("should return page response").isEqualTo("error while getting result");
     }
 
 

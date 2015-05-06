@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import groovy.lang.GroovyClassLoader;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionResolver;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 /**
@@ -34,22 +36,24 @@ public class RestApiRenderer {
 
     private final CustomPageService customPageService = new CustomPageService();
 
-    public Object handleRestApiCall(final HttpServletRequest request, final String pageName, String classFileName)
+    public Object handleRestApiCall(final HttpServletRequest request, ResourceExtensionResolver resourceExtensionResolver)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
-
         final PageContextHelper pageContextHelper = new PageContextHelper(request);
         final APISession apiSession = pageContextHelper.getApiSession();
-        final PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
+        Long pageId=resourceExtensionResolver.resolvePageId(apiSession);
+        final Page page = customPageService.getPage(apiSession, pageId);
+        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+        String classFileName=resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
         if (isFileGroovyPage(pageResourceProvider, classFileName)) {
             return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider,classFileName);
         }
-        throw new BonitaException("unable to handle custom rest api call to " + pageName);
+        throw new BonitaException("unable to handle rest api call to " +resourceExtensionResolver.generateMappingKey());
     }
 
     private boolean isFileGroovyPage(final PageResourceProvider pageResourceProvider, String classFileName) {
         final File pageFolder = pageResourceProvider.getPageDirectory();
-        final File indexGroovy = customPageService.getPageFile(pageFolder,classFileName);
+        final File indexGroovy = customPageService.getPageFile(pageFolder, classFileName);
         return indexGroovy.exists();
     }
 
