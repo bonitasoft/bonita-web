@@ -100,31 +100,14 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-
-        doThrow(BonitaException.class).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
-
-        //when
-        final Representation representation = apiExtensionResource.doHandle();
-
-        //then
-        assertThat(representation.getText()).as("should return error message").isEqualTo("error while getting result");
-    }
-
-
-    @Test
-    public void should_handle_wrong_method() throws Exception {
-        //given
-        BonitaException bonitaException = new BonitaException("error");
+        BonitaException bonitaException = new BonitaException("error message");
         doThrow(bonitaException).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
-        method = new Method(GET);
-        doReturn(method).when(request).getMethod();
-
         //when
         final Representation representation = apiExtensionResource.doHandle();
 
         //then
-        assertThat(representation.getText()).as("should return page response").isEqualTo("error while getting result");
+        assertThat(representation.getText()).as("should return error message").isEqualTo("error message");
     }
 
 
