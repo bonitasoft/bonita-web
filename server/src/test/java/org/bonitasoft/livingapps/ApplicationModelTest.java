@@ -164,7 +164,7 @@ public class ApplicationModelTest {
     @Test
     public void should_getApplicationThemeName_return_valide_name() throws Exception {
         given(page.getName()).willReturn("themePage");
-        given(pageApi.getPage(1L)).willReturn(page);
+        given(pageApi.getPage(2L)).willReturn(page);
 
         String appLayoutName = model.getApplicationThemeName();
 
