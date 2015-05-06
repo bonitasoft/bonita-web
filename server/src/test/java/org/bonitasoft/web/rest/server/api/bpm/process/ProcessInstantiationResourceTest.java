@@ -12,6 +12,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -32,15 +41,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessInstantiationResourceTest extends RestletTest {
@@ -118,8 +118,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\","
-                        + "\"rootCaseId\":\"0\",\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"processInstanceId\":0}");
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
 
     }
@@ -135,8 +134,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
-                        + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"processInstanceId\":0}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }
