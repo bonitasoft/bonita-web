@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.utils;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.console.common.server.login.filter.AbstractAuthorizationFilter;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.FileInputValue;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
@@ -32,12 +33,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
  */
 
 public class ContractTypeConverter {
+
+    /**
+     * Logger
+     */
+    protected static final Logger LOGGER = Logger.getLogger(AbstractAuthorizationFilter.class.getName());
 
     public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
@@ -144,7 +152,10 @@ public class ContractTypeConverter {
                 }
                 fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
                 if (!sourceFile.delete()){
-                    throw new RuntimeException("Cannot delete " + fileTempPath + "in the tenant temp directory." );
+                    sourceFile.deleteOnExit();
+                    if (LOGGER.isLoggable(Level.INFO)) {
+                        LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
+                    }
                 }
             } else {
                 throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
