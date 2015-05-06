@@ -31,9 +31,19 @@ public class BonitaRestletApplicationTest {
         Mockito.verify(finderFactory).create(BusinessDataReferenceResource.class);
         Mockito.verify(finderFactory).create(BusinessDataReferencesResource.class);
         Mockito.verify(finderFactory, times(2)).create(BusinessDataResource.class);
-
-        Mockito.verify(finderFactory ).createExtensionResource();
-
-
     }
+
+    @Test
+    public void should_application_register_extension_resources() throws Exception {
+        //given
+        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory);
+
+        //when
+        bonitaSPRestletApplication.buildRouter();
+
+        //then
+        Mockito.verify(finderFactory).createExtensionResource();
+    }
+
+
 }
