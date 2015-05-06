@@ -13,6 +13,15 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.document.DocumentException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,21 +32,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.document.DocumentException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anthony Birembaut
  */
 
 public class ContractTypeConverter {
+
+    /**
+     * Logger
+     */
+    protected static final Logger LOGGER = Logger.getLogger(ContractTypeConverter.class.getName());
 
     public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
@@ -143,6 +150,12 @@ public class ContractTypeConverter {
                     throw new DocumentException(errorMessage);
                 }
                 fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
+                if (!sourceFile.delete()){
+                    sourceFile.deleteOnExit();
+                    if (LOGGER.isLoggable(Level.INFO)) {
+                        LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
+                    }
+                }
             } else {
                 throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
             }
