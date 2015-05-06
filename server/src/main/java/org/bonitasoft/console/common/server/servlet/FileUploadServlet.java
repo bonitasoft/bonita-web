@@ -151,6 +151,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
                 }
+                uploadedFile.deleteOnExit();
 
                 // Response
                 final String responseString;
