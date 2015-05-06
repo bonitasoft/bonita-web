@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-14 03:02+0100\n"
-"PO-Revision-Date: 2015-03-24 04:15-0400\n"
+"POT-Creation-Date: 2015-04-18 03:02+0200\n"
+"PO-Revision-Date: 2015-05-04 04:45-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1330,6 +1330,9 @@ msgstr "Monitoring"
 msgid "More"
 msgstr "Mehr"
 
+msgid "More (BETA)"
+msgstr "More (BETA)"
+
 msgid "Move this element after the next one"
 msgstr "Verschieben Sie dieses Element hinter das nächste"
 
@@ -1368,6 +1371,9 @@ msgstr "Name des Benutzers, der diesen Fall gestartet hat"
 
 msgid "Name of the variable"
 msgstr "Name der Variable"
+
+msgid "New process more details view"
+msgstr "New process more details view"
 
 msgid "Next"
 msgstr "Weiter"
