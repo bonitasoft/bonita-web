@@ -88,7 +88,7 @@ class TaskPermissionRule implements PermissionRule {
             try {
                 return isTaskAccessible(processAPI, filters.get("parentTaskId"), currentUserId, userName, logger)
             } catch (NotFoundException e) {
-                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
+                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId, userName)
             }
         } else if (filters.containsKey("processId")) {
             def long processId = Long.valueOf(filters.get("processId"))
@@ -130,7 +130,7 @@ class TaskPermissionRule implements PermissionRule {
     }
 
     private boolean isArchivedFlowNodeAccessible(ProcessAPI processAPI, long taskId, long currentUserId, String username) throws NotFoundException {
-        def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(taskId)
+        def archivedFlowNodeInstance = processAPI.getArchivedActivityInstance(taskId)
         if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
             if (currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
                 return true
