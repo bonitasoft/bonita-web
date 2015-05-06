@@ -82,7 +82,7 @@ public abstract class ResourceFinder extends Finder {
         return finderFactory;
     }
 
-    public Serializable getContextResultElement(Serializable object) {
+    public Serializable toClientObject(Serializable object) {
         return object;
     }
 }

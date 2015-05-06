@@ -232,7 +232,7 @@ public class FinderFactoryTest {
     public void should_getResourceFinderFor_return_result_of_first_handler(){
         final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(final Serializable object) {
+            public Serializable toClientObject(final Serializable object) {
                 return "resultA";
             }
 
@@ -251,7 +251,7 @@ public class FinderFactoryTest {
     public void should_getResourceFinderFor_return_the_object_if_no_handler(){
         final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(final Serializable object) {
+            public Serializable toClientObject(final Serializable object) {
                 return "resultA";
             }
 
