@@ -13,15 +13,6 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.document.DocumentException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +25,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.document.DocumentException;
 
 /**
  * @author Anthony Birembaut
@@ -135,27 +135,17 @@ public class ContractTypeConverter {
 
     protected FileInputValue convertFileInputToExpectedType(final Map<String, Serializable> mapOfValues) throws FileNotFoundException {
         final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
-        final FileInputValue fileInputValue = new FileInputValue(filename, getFileContent((String)mapOfValues.get(FILE_TEMP_PATH)));
+        final FileInputValue fileInputValue = new FileInputValue(filename, retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH)));
         return fileInputValue;
     }
 
-    protected byte[] getFileContent(final String fileTempPath) throws FileNotFoundException {
+    protected byte[] retrieveFileAndGetContent(final String fileTempPath) throws FileNotFoundException {
         final File sourceFile;
         byte[] fileContent = null;
         try {
             sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
             if (sourceFile.exists()) {
-                if (sourceFile.length() > maxSizeForTenant * 1048576) {
-                    final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
-                    throw new DocumentException(errorMessage);
-                }
-                fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
-                if (!sourceFile.delete()){
-                    sourceFile.deleteOnExit();
-                    if (LOGGER.isLoggable(Level.INFO)) {
-                        LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
-                    }
-                }
+                fileContent = getFileContent(sourceFile, fileTempPath);
             } else {
                 throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
             }
@@ -165,6 +155,22 @@ public class ContractTypeConverter {
             throw new RuntimeException(e);
         } catch (final DocumentException e) {
             throw new RuntimeException(e);
+        }
+        return fileContent;
+    }
+
+    protected byte[] getFileContent(final File sourceFile, final String fileTempPath) throws DocumentException, IOException {
+        byte[] fileContent;
+        if (sourceFile.length() > maxSizeForTenant * 1048576) {
+            final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
+            throw new DocumentException(errorMessage);
+        }
+        fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
+        if (!sourceFile.delete()){
+            sourceFile.deleteOnExit();
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
+            }
         }
         return fileContent;
     }
