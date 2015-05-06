@@ -54,7 +54,7 @@ public class ApiExtensionResource extends ServerResource {
         try {
             return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionResolver);
         } catch (InstantiationException | IllegalAccessException | IOException | BonitaException e) {
-            throw new BonitaException("error while getting result", e);
+            throw new BonitaException(e.getMessage());
         }
     }
 }

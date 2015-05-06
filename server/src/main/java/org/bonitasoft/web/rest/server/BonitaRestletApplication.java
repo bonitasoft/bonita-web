@@ -43,6 +43,7 @@ import org.restlet.data.CharacterSet;
 import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
+import org.restlet.routing.Template;
 
 /**
  * @author Matthieu Chaffotte
@@ -131,19 +132,16 @@ public class BonitaRestletApplication extends Application {
         router.attach(BDM_BUSINESS_DATA_REFERENCE_URL + "/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
         // api extension
-        router.attach(ROUTER_EXTENSION_PREFIX, factory.createExtensionResource());
+        router.attach(ROUTER_EXTENSION_PREFIX, factory.createExtensionResource(),Template.MODE_STARTS_WITH);
 
         return router;
     }
 
     @Override
     public void handle(final Request request, final Response response) {
-
-
         request.setLoggable(false);
         Engine.setLogLevel(Level.OFF);
         Engine.setRestletLogLevel(Level.OFF);
-        // New Restlet APIs:
         super.handle(request, response);
     }
 
