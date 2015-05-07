@@ -26,15 +26,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
@@ -44,6 +35,7 @@ import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -54,6 +46,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTaskExecutionResourceTest extends RestletTest {
@@ -74,17 +76,20 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     private Response response;
 
     @Mock
+    private APISession apiSession;
+
+    @Mock
     private ContractDefinition contractDefinition;
 
     @Before
     public void initializeMocks() {
-        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
+        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI, apiSession));
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
     @Override
     protected ServerResource configureResource() {
-        return new UserTaskExecutionResource(processAPI);
+        return new UserTaskExecutionResource(processAPI, apiSession);
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -168,7 +173,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Test
     public void should_contract_violation_exception_log_explanations_when_logger_is_info() throws UserTaskNotFoundException, FlowNodeExecutionException,
-            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException {
+            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException, FileNotFoundException {
         //given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");

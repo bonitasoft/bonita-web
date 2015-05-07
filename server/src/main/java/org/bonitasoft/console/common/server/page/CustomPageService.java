@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import groovy.lang.GroovyClassLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -50,8 +52,6 @@ import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
 
-import groovy.lang.GroovyClassLoader;
-
 /**
  * @author Anthony Birembaut, Fabio Lombardi
  */
@@ -80,6 +80,8 @@ public class CustomPageService {
     private static final Map<String, File> PAGES_LIB_DIRECTORIES = new HashMap<>();
 
     public static final String RESOURCES_PROPERTY = "resources";
+
+    public static final String NAME_PROPERTY = "name";
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
@@ -275,11 +277,27 @@ public class CustomPageService {
         return 0L;
     }
 
-    public Properties getPageProperties(final APISession apiSession, final byte[] zipContent, final boolean checkIfItAlreadyExists)
-            throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException, InvalidPageZipInconsistentException,
+    public Properties getPageProperties(final APISession apiSession, final byte[] zipContent, final boolean checkIfItAlreadyExists,
+            final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
+            InvalidPageZipInconsistentException,
             InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
         final PageAPI pageAPI = getPageAPI(apiSession);
-        return pageAPI.getPageProperties(zipContent, checkIfItAlreadyExists);
+        Properties properties;
+        if (processDefinitionId == null) {
+            properties = pageAPI.getPageProperties(zipContent, checkIfItAlreadyExists);
+        } else {
+            properties = pageAPI.getPageProperties(zipContent, false);
+            if (checkIfItAlreadyExists) {
+                try {
+                    final String pageName = properties.getProperty(NAME_PROPERTY);
+                    pageAPI.getPageByNameAndProcessDefinitionId(pageName, processDefinitionId);
+                    throw new AlreadyExistsException("A page with name " + pageName + " already exists for the process " + processDefinitionId);
+                } catch (final PageNotFoundException e) {
+                    //Do nothing (if the page was not found, it means a page with the same name doesn't already exist)
+                }
+            }
+        }
+        return properties;
     }
 
     public Set<String> getCustomPagePermissions(final Properties properties, final ResourcesPermissionsMapping resourcesPermissionsMapping,

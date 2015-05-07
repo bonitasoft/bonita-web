@@ -6,18 +6,6 @@
     <packaging>pom</packaging>
     <version>7.0.0-SNAPSHOT</version>
 
-    <modules>
-        <module>looknfeel</module>
-        <module>security-scripts</module>
-        <module>bonita-home</module>
-        <module>test-toolkit</module>
-        <module>common</module>
-        <module>forms</module>
-        <module>server</module>
-        <module>custom-pages</module>
-        <module>portal</module>
-    </modules>
-
     <scm>
         <developerConnection>scm:git:git@github.com:bonitasoft/bonita-web.git</developerConnection>
         <url>scm:git:git@github.com:bonitasoft/bonita-web.git</url>
@@ -44,6 +32,16 @@
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
+    <modules>
+        <module>looknfeel</module>
+        <module>security-scripts</module>
+        <module>bonita-home</module>
+        <module>test-toolkit</module>
+        <module>common</module>
+        <module>forms</module>
+        <module>server</module>
+        <module>portal</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -620,13 +618,16 @@
     </build>
 
     <profiles>
-        <profile>
+       <profile>
             <activation>
                 <property>
                     <name>generateSource</name>
                 </property>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <modules>
+                <module>custom-pages</module>
+            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -645,41 +646,24 @@
             </build>
         </profile>
         <profile>
-            <id>windows</id>
-            <properties>
-                <plateform>windows</plateform>
-            </properties>
-            <activation>
-                <os>
-                    <family>windows</family>
-                </os>
-            </activation>
+            <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
-        <profile>
-            <id>linux</id>
-            <properties>
-                <plateform>linux</plateform>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <os>
-                    <family>unix</family>
-                </os>
-            </activation>
-        </profile>
-        <profile>
-            <id>mac</id>
-            <properties>
-                <plateform>mac</plateform>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-        </profile>
-
         <profile>
             <id>sonar</id>
 
@@ -702,6 +686,9 @@
                 <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
                 <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
+            <modules>
+                <module>custom-pages</module>
+            </modules>
 
             <build>
                 <plugins>
