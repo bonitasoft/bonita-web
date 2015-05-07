@@ -16,6 +16,8 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import groovy.lang.GroovyClassLoader;
@@ -33,22 +35,25 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 public class RestApiRenderer {
 
+    private static final Logger LOGGER = Logger.getLogger(RestApiRenderer.class.getName());
 
     private final CustomPageService customPageService = new CustomPageService();
 
-    public Object handleRestApiCall(final HttpServletRequest request, ResourceExtensionResolver resourceExtensionResolver)
+    public RestApiResponse handleRestApiCall(final HttpServletRequest request, ResourceExtensionResolver resourceExtensionResolver)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final PageContextHelper pageContextHelper = new PageContextHelper(request);
         final APISession apiSession = pageContextHelper.getApiSession();
-        Long pageId=resourceExtensionResolver.resolvePageId(apiSession);
+        Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
         final Page page = customPageService.getPage(apiSession, pageId);
         final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-        String classFileName=resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
+        String classFileName = resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
+        final String mappingKey = resourceExtensionResolver.generateMappingKey();
         if (isFileGroovyPage(pageResourceProvider, classFileName)) {
-            return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider,classFileName);
+            return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider, classFileName, mappingKey);
         }
-        throw new BonitaException("unable to handle rest api call to " +resourceExtensionResolver.generateMappingKey());
+        LOGGER.log(Level.SEVERE, "resource does not exists:" + mappingKey);
+        throw new BonitaException("unable to handle rest api call to " + mappingKey);
     }
 
     private boolean isFileGroovyPage(final PageResourceProvider pageResourceProvider, String classFileName) {
@@ -57,18 +62,23 @@ public class RestApiRenderer {
         return indexGroovy.exists();
     }
 
-    private Object displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
-                                     final PageResourceProvider pageResourceProvider, String classFileName)
+    private RestApiResponse displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
+                                              final PageResourceProvider pageResourceProvider, String classFileName, String mappingKey)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         try {
             Thread.currentThread().setContextClassLoader(pageClassloader);
-            final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider,classFileName);
+            final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider, classFileName);
             final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
-            return restApiController.doHandle(request, pageResourceProvider,
-                    new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()));
+            try {
+                return restApiController.doHandle(request, pageResourceProvider,
+                        new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()), new RestApiResponseBuilder());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
+                throw e;
+            }
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassloader);
         }
