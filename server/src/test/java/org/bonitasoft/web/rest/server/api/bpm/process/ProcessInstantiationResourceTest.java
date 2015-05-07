@@ -118,7 +118,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                        "{\"processInstanceId\":0}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
 
     }
@@ -134,7 +134,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                        "{\"processInstanceId\":0}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }

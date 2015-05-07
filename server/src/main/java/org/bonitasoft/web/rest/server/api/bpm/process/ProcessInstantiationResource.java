@@ -74,7 +74,7 @@ public class ProcessInstantiationResource extends CommonResource {
             }
             final JsonNodeFactory factory = JsonNodeFactory.instance;
             final ObjectNode returnedObject = factory.objectNode();
-            returnedObject.put("processInstanceId", processInstanceId);
+            returnedObject.put("caseId", processInstanceId);
             return returnedObject.toString();
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instantiate process task.");
