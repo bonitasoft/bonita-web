@@ -8,42 +8,6 @@
     font-size: 14px;
   }
 
-
-  /* make sidebar nav vertical */ 
-  @media (min-width: 768px) {
-    
-    .navbar {
-      width: 200px;
-      border: 0px;
-      li {
-        border-color: #e7e7e7;
-        border-radius: 4px;
-        border: 1px solid #e7e7e7;
-        margin-bottom: 2px;
-      }
-    }
-
-    .sidebar-nav .navbar {
-      .navbar-collapse {
-        padding: 0;
-        max-height: none;
-      }
-      ul {
-        float: none;
-      }
-      ul:not {
-        display: block;
-
-      }
-      li {
-        float: none;
-        display: block;
-      }
-      li > a{
-        padding: 3px 15px 0px;
-      }
-    }
-  }
   .sidebar-nav .navbar-header{ float: none; }
 
   span.label {
@@ -61,7 +25,8 @@
       padding: 3px 20px 6px 12px;
       min-width: 1px;
       height: 25;
-    
+      margin-right: 0;
+      margin-top: -2px;
       &.toggle-off {
         padding-right: 5px;
       }
@@ -160,24 +125,29 @@
     }
   }
   .members, .managers{
+    padding-bottom: 0;
     a.member, a.manager, label.member, label.manager{
       margin-right: 0.75em;
       display: inline-block;
       margin-bottom: 0.5em;
     }
+    .glyphicon {
+      cursor: pointer;
+    }
+
+
   }
-
-
-  button.glyphicon{
-    border: none;
-    font-weight: normal;
-    background-color: transparent;
-    text-align: inherit;
-    padding: 1px 0;
-    white-space: nowrap;
-    text-transform: none !important;
+  .mappingEdition-actions > td{
+    padding: 0 0 0 0 ;
+    border-top: 0;
   }
-
+  .mappingEdition-actions{
+    border-top: 0;
+    .cellFooter {
+      margin-right: 10px;
+    }
+  }
+  
   .categories{
     padding-top: 10px;
   }
@@ -221,7 +191,25 @@
   .multiSelect button{
     margin: 0 5px 0 5px;
   }
+}
 
+button.glyphicon{
+  border: none;
+  font-weight: normal;
+  background-color: transparent;
+  text-align: inherit;
+  padding: 1px 0;
+  white-space: nowrap;
+  text-transform: none !important;
+  min-width: 10px;
+  background: none;
+  box-shadow: none;
+
+  &:hover{
+    color: @color3;
+    background-color: transparent;
+    border-color: transparent;
+  }
 }
 
 #form-mapping {
@@ -239,16 +227,8 @@
       padding: 0 0 0 0;
     }
   }
-  button.glyphicon{
-    border: none;
-    font-weight: normal;
-    background-color: transparent;
-    text-align: inherit;
-    padding: 1px 0;
-    white-space: nowrap;
-    text-transform: none !important;
-  }
 }
+
 #manage-categories-modal {
  
   .tags .tag.editable{
@@ -259,4 +239,9 @@
     overflow-x: hidden;
     width : 100%;
   }
+}
+
+
+.process-details .bonita-toggle .btn{
+ 
 }

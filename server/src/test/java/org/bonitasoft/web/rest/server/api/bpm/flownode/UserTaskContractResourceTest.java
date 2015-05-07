@@ -22,10 +22,9 @@ import static org.mockito.Mockito.when;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.contract.impl.ComplexInputDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ConstraintDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
-import org.bonitasoft.engine.bpm.contract.impl.SimpleInputDefinitionImpl;
+import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -64,11 +63,11 @@ public class UserTaskContractResourceTest extends RestletTest {
     public void should_return_a_contract_for_a_given_task_instance() throws Exception {
         //given
         final ContractDefinitionImpl contract = new ContractDefinitionImpl();
-        contract.addSimpleInput(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
-        final ComplexInputDefinitionImpl complexInputDefinitionImpl = new ComplexInputDefinitionImpl("complexInput", "description", true);
-        complexInputDefinitionImpl.getSimpleInputs().add(new SimpleInputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+        contract.addInput(new InputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
+        final InputDefinitionImpl complexInputDefinitionImpl = new InputDefinitionImpl("complexInput", "description", true, null, null);
+        complexInputDefinitionImpl.getInputs().add(new InputDefinitionImpl("anInput", Type.TEXT, "aDescription"));
 
-        contract.addComplexInput(complexInputDefinitionImpl);
+        contract.addInput(complexInputDefinitionImpl);
         contract.addConstraint(new ConstraintDefinitionImpl("aRule", "an expression", "an explanation"));
 
         when(processAPI.getUserTaskContract(2L)).thenReturn(contract);
