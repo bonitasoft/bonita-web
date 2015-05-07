@@ -116,7 +116,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected boolean checkPermissions(final HttpServletRequest request) throws ServletException {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
-        return checkPermissions(request, restRequestParser.getApiName(), restRequestParser.getResourceName(), restRequestParser.getId());
+        return checkPermissions(request, restRequestParser.getApiName(), restRequestParser.getResourceName(), restRequestParser.getResourceQualifier());
     }
 
     protected boolean checkPermissions(final HttpServletRequest request, final String apiName, final String resourceName, final APIID id)
