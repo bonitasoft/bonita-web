@@ -50,7 +50,7 @@ public class RestApiRenderer {
         String classFileName = resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
         final String mappingKey = resourceExtensionResolver.generateMappingKey();
         if (isFileGroovyPage(pageResourceProvider, classFileName)) {
-            return displayGroovyPage(request, apiSession, pageContextHelper, pageResourceProvider, classFileName, mappingKey);
+            return renderResponse(request, apiSession, pageContextHelper, pageResourceProvider, classFileName, mappingKey);
         }
         LOGGER.log(Level.SEVERE, "resource does not exists:" + mappingKey);
         throw new BonitaException("unable to handle rest api call to " + mappingKey);
@@ -62,8 +62,8 @@ public class RestApiRenderer {
         return indexGroovy.exists();
     }
 
-    private RestApiResponse displayGroovyPage(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
-                                              final PageResourceProvider pageResourceProvider, String classFileName, String mappingKey)
+    private RestApiResponse renderResponse(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
+                                           final PageResourceProvider pageResourceProvider, String classFileName, String mappingKey)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
