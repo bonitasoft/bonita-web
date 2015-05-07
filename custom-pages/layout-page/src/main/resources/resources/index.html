@@ -4,11 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title>LivingApplicationLayoutPage</title> 
   <link rel="stylesheet" href="css/bootstrap.min.css"> 
-  <link rel="stylesheet" href="css/widget.css"> 
-  <link rel="stylesheet" href="theme/theme.css"> 
+  <link rel="stylesheet" href="css/widget.css"> <link rel="stylesheet" href="theme/theme.css"> 
   <script src="js/vendor.min.js"></script> 
   <script src="js/generator.min.js"></script> 
-  <!-- widget need to be injected at runtime -->
+  <!-- widget need to be injected at runtime --> 
   <script src="widgets/customLivingApplicationMenu/customLivingApplicationMenu.js"></script> 
   <script src="widgets/customLivingApplicationIFrame/customLivingApplicationIFrame.js"></script> 
  </head> 
@@ -30,7 +29,7 @@
    </div> 
    <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('dataModelFactory', function() {
   var resources = {};
-  resources['5432837c-2fa0-43b1-8d14-a870ee100dda'] =  {"AuthorizeApplicationAPI":{"type":"url","value":"../API/living/application","exposed":false}};
+  resources['5432837c-2fa0-43b1-8d14-a870ee100dda'] =  {"AuthorizeApplicationAPI":{"type":"url","value":"../API/living/application","exposed":false},"AuthorizeApplicationPageAPI":{"type":"url","value":"../API/living/application-page","exposed":false},"AuthorizeApplicationMenuAPI":{"type":"url","value":"../API/living/application-menu","exposed":false},"targetedPageUrl":{"type":"constant","value":null,"exposed":false}};
   return {
     get: function(uuid) {
       return resources[uuid];
@@ -40,8 +39,8 @@
 </script> 
    <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('propertyValuesFactory', function() {
   var resources = {};
-  resources['a2f94771-e43d-41e2-ab87-2f48847b2939'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"selectedMenu":{"type":"data","value":"targetedPage"},"menuList":{"type":"data","value":"pageList"},"applicationName":{"type":"constant","value":"{{application[0].displayName}}"}};
-  resources['9cd7cd7e-d548-410a-aaa3-4318f9280818'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"src":{"type":"constant","value":"/bonita/portal/custom-page/{{targetedPage[0].pageId.urlToken}}/?applicationId={{applicationId}}&{{queryString}}"},"contentHeight":{"type":"constant","value":"700px;"}};
+  resources['a2f94771-e43d-41e2-ab87-2f48847b2939'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"selectedMenu":{"type":"data","value":"targetedPage"},"menuList":{"type":"data","value":"pageList"},"applicationName":{"type":"constant","value":"{{application[0].displayName}}"},"targetUrl":{"type":"data","value":"targetedPageUrl"}};
+  resources['9cd7cd7e-d548-410a-aaa3-4318f9280818'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"src":{"type":"data","value":"targetedPageUrl"},"contentHeight":{"type":"constant","value":"700px;"}};
   return {
     get: function(uuid) {
       return resources[uuid];

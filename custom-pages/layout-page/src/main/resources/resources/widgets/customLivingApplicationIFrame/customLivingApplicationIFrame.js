@@ -28,10 +28,10 @@ angular.module('org.bonitasoft.pagebuilder.widgets')
     }).then(getTargetedApplicationPage);
      
     ctrl.getSrc = function(){
-        return '/bonita/portal/custom-page/'+ctrl.customPageToken+'/?applicationId='+ctrl.applicationId+'&'+ctrl.queryString;
+        return '/bonita/portal/custom-page/'+ctrl.customPageToken+'/?appToken='+ctrl.applicationToken+'&'+ctrl.queryString;
     };
     
 },
-      template: '\n<iframe id="livingAppIFrame" width="100%" height="{{properties.contentHeight}}" style="border: 0" ng-src="{{ctrl.getSrc()}}"></iframe>'
+      template: '\n<iframe id="livingAppIFrame" width="100%" height="{{properties.contentHeight}}" style="border: 0" ng-src="{{properties.src}}"></iframe>'
     };
   });
