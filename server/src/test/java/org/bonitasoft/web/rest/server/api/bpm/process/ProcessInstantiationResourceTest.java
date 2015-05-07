@@ -141,7 +141,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_instanciate_a_process() throws Exception {
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+        doThrow(new ContractViolationException("aMessage","aMessage", asList("first explanation", "second explanation"), null))
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
@@ -186,7 +186,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         // given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
-        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+        doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         doReturn(logger).when(processInstantiationResource).getLogger();
         doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
