@@ -41,6 +41,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class ProcessInstantiationResource extends CommonResource {
 
+    private static final String CASE_ID_ATTRIBUTE = "caseId";
+
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
     private static final String USER_PARAM = "user";
@@ -74,7 +76,7 @@ public class ProcessInstantiationResource extends CommonResource {
             }
             final JsonNodeFactory factory = JsonNodeFactory.instance;
             final ObjectNode returnedObject = factory.objectNode();
-            returnedObject.put("caseId", processInstanceId);
+            returnedObject.put(CASE_ID_ATTRIBUTE, processInstanceId);
             return returnedObject.toString();
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instantiate process task.");
