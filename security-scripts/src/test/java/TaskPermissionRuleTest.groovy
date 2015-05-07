@@ -131,7 +131,7 @@ public class TaskPermissionRuleTest {
         //given
         havingResource("archivedElement")
         def archivedTask = mock(ArchivedFlowNodeInstance.class)
-        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
+        doReturn(FlowNodeType.USER_TASK).when(archivedTask).getType()
         doReturn(currentUserId).when(archivedTask).getExecutedBy()
         doReturn(archivedTask).when(processAPI).getArchivedFlowNodeInstance(458)
         //when
@@ -145,7 +145,7 @@ public class TaskPermissionRuleTest {
         //given
         havingResource("archivedElement")
         def archivedTask = mock(ArchivedFlowNodeInstance.class)
-        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
+        doReturn(FlowNodeType.USER_TASK).when(archivedTask).getType()
         doReturn(58l).when(archivedTask).getExecutedBy()
         doReturn(archivedTask).when(processAPI).getArchivedFlowNodeInstance(458)
         //when
@@ -250,7 +250,7 @@ public class TaskPermissionRuleTest {
     @Test
      public void should_GET_an_archivedHumanTask_providing_a_parentTaskId() {
         def archivedTask = mock(ArchivedFlowNodeInstance.class)
-        doReturn(FlowNodeType.HUMAN_TASK).when(archivedTask).getType()
+        doReturn(FlowNodeType.MANUAL_TASK).when(archivedTask).getType()
         doReturn(true).when(apiCallContext).isGET()
         doReturn(null).when(apiCallContext).getResourceName()
         havingFilters([parentTaskId: "4"])
