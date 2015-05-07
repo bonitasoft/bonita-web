@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /release-6.5.2/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /6.5.x/bonita-web/portal/portal-js.po\n"
 
 msgid "Columns"
 msgstr "Columnas"
@@ -267,10 +267,10 @@ msgid "sort by Open cases descending"
 msgstr "ordenar por casos abiertos, descendente"
 
 msgid "Items per page"
-msgstr "Items per page"
+msgstr "Elementos por página"
 
 msgid "Columns selection"
-msgstr "Columns selection"
+msgstr "Selección de columnas"
 
 msgid "Table settings"
 msgstr "Table settings"
