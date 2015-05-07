@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,7 @@ import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
@@ -38,6 +39,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.BarUploadFilter;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.FileUpload;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 import com.google.gwt.core.client.GWT;
 
@@ -114,7 +116,9 @@ public class UploadProcessPage extends Page {
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final ProcessItem process = JSonItemReader.parseItem(response, ProcessDefinition.get());
-            ViewController.showView(AngularIFrameView.redirectToMoreDetailsPage(process));
+            final TreeIndexed<String> tree = new TreeIndexed<String>();
+            tree.addValue(PageOnItem.PARAMETER_ITEM_ID, process.getId().toString());
+            ViewController.showView(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, tree);
         }
     }
 }

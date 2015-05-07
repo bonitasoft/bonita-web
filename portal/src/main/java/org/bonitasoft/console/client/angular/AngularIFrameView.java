@@ -13,7 +13,7 @@
  ******************************************************************************/
 package org.bonitasoft.console.client.angular;
 
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.*;
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,17 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickEvent;
 import org.bonitasoft.web.toolkit.client.eventbus.events.MenuClickHandler;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
-import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -61,33 +57,38 @@ public class AngularIFrameView extends RawView {
 
     private String token;
 
-    public static RawView redirectToMoreDetailsPage(final ProcessItem process) {
-        return new PageOnItem<IItem>(process.getId(), ProcessDefinition.get()) {
+    public static Map<String, String> angularViewsMap = new HashMap<String, String>();
 
-            @Override
-            public String getToken() {
-                addParameter(PARAMETER_ITEM_ID, getItemId().toString());
-                return super.getToken();
-            }
+    /**
+     * add a route support to angular
+     *
+     * @param token the gwt token to match
+     * @param route the matching angular route
+     */
+    public static void addTokenSupport(final String token, final String route) {
+        angularViewsMap.put(token, route);
+    }
 
-            @Override
-            protected void defineTitle(final IItem item) {
+    /**
+     * get route associated to given token when it exists, null otherwise
+     * 
+     * @param token the token to get the route from
+     * @return the route
+     */
+    public static String getRoute(final String token) {
+        return angularViewsMap.get(token);
+    }
 
-            }
-
-            @Override
-            protected void buildView(final IItem item) {
-            }
-
-            @Override
-            public String defineToken() {
-                return AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN;
-            }
-
-        };
+    /**
+     * @param token2
+     * @return
+     */
+    public static boolean supportsToken(final String token) {
+        return angularViewsMap.containsKey(token);
     }
 
     public AngularIFrameView() {
+
         MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
 
             @Override

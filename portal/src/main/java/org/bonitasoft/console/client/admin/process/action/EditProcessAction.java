@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,7 +19,7 @@ package org.bonitasoft.console.client.admin.process.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
 
 /**
  * @author Chong Zhao, Haojie Yuan
- * 
+ *
  */
 public class EditProcessAction extends FormAction {
 
@@ -50,10 +50,10 @@ public class EditProcessAction extends FormAction {
     @Override
     public void execute() {
 
-        if (this.id != null) {
-            this.isFromProcessInfo = true;
+        if (id != null) {
+            isFromProcessInfo = true;
         } else {
-            this.id = this.getParameter("id");
+            id = this.getParameter("id");
         }
 
         final String processDisplayName = this.getParameter(ProcessItem.ATTRIBUTE_DISPLAY_NAME);
@@ -72,15 +72,15 @@ public class EditProcessAction extends FormAction {
             attributesToUpdate.put(ProcessItem.ATTRIBUTE_DISPLAY_NAME, processDisplayName);
         }
 
-        new APICaller(ProcessDefinition.get()).update(this.processId, attributesToUpdate, new APICallback() {
+        new APICaller(ProcessDefinition.get()).update(processId, attributesToUpdate, new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 ViewController.closePopup();
-                if (EditProcessAction.this.isFromProcessInfo) {
+                if (isFromProcessInfo) {
                     final TreeIndexed<String> params = new TreeIndexed<String>();
-                    params.addValue(PROCESS_ID, EditProcessAction.this.processId);
-                    ViewController.showView(ProcessMoreDetailsAdminPage.TOKEN, params);
+                    params.addValue(PROCESS_ID, processId);
+                    ViewController.showView(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, params);
                 }
                 ViewController.refreshCurrentPage();
             }

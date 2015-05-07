@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static java.util.Arrays.*;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static java.util.Arrays.asList;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,12 +30,13 @@ import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 
@@ -72,16 +73,13 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
     @Override
     protected void buildToolbar(final ProcessItem process) {
         addToolbarLink(new MoreButton(_("Show more details about this process"), createAngularMoreDetailsAction(process)));
-        addToolbarLink(new Button("btn-more2", _("More (Old)"), _("Former process more details view"), createMoreDetailsAction(process)));
 
-    }
-
-    private Action createMoreDetailsAction(final ProcessItem process) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
     }
 
     private Action createAngularMoreDetailsAction(final ProcessItem process) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.redirectToMoreDetailsPage(process)));
+        final TreeIndexed<String> tree = new TreeIndexed<String>();
+        tree.addValue(PageOnItem.PARAMETER_ITEM_ID, process.getId().toString());
+        return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, tree));
     }
 
     @Override
