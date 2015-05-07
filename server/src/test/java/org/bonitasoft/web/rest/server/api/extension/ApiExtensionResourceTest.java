@@ -8,6 +8,8 @@ import static org.mockito.Mockito.doThrow;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
+import org.bonitasoft.console.common.server.page.RestApiResponse;
+import org.bonitasoft.console.common.server.page.RestApiResponseBuilder;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Request;
+import org.restlet.Response;
 import org.restlet.data.Method;
 import org.restlet.representation.Representation;
 
@@ -36,6 +39,10 @@ public class ApiExtensionResourceTest {
     @Mock
     private Request request;
 
+    @Mock
+    private Response response;
+
+
     @InjectMocks
     @Spy
     ApiExtensionResource apiExtensionResource;
@@ -48,6 +55,7 @@ public class ApiExtensionResourceTest {
     @Before
     public void before() throws Exception {
         doReturn(request).when(apiExtensionResource).getRequest();
+        doReturn(response).when(apiExtensionResource).getResponse();
 
 
     }
@@ -57,7 +65,8 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
+        final RestApiResponse restApiResponse = new RestApiResponseBuilder().withResponse(RETURN_VALUE).build();
+        doReturn(restApiResponse).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -66,22 +75,23 @@ public class ApiExtensionResourceTest {
         assertThat(representation.getText()).as("should return response").isEqualTo(RETURN_VALUE);
     }
 
-    @Test
-    public void should_handle_return_result_from_other_class_file() throws Exception {
-        //given
-        method = new Method(GET);
-        doReturn(method).when(request).getMethod();
-        doReturn(RETURN_VALUE).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
-
-        //when
-        final Representation representation = apiExtensionResource.doHandle();
-
-        //then
-        assertThat(representation.getText()).as("should return response").isEqualTo(RETURN_VALUE);
-    }
 
     @Test
     public void should_handle_return_empty_response() throws Exception {
+        //given
+        method = new Method(GET);
+        doReturn(method).when(request).getMethod();
+        doReturn(new RestApiResponseBuilder().build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
+
+        //when
+        final Representation representation = apiExtensionResource.doHandle();
+
+        //then
+        assertThat(representation.getText()).as("should return response").isEqualTo("");
+    }
+
+    @Test
+    public void should_handle_return_null() throws Exception {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
@@ -92,7 +102,7 @@ public class ApiExtensionResourceTest {
         final Representation representation = apiExtensionResource.doHandle();
 
         //then
-        assertThat(representation.getText()).as("should return response").isEqualTo("");
+        assertThat(representation.getText()).as("should return response").isEqualTo("error: restApiResponse is null");
     }
 
     @Test
