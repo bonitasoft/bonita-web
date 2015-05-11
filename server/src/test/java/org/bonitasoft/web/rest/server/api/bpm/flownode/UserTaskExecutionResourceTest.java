@@ -26,6 +26,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
@@ -46,16 +56,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
-
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTaskExecutionResourceTest extends RestletTest {
@@ -132,7 +132,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+        doThrow(new ContractViolationException("aMessage", "aMessage", asList("first explanation", "second explanation"), null))
                 .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
@@ -177,7 +177,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         //given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
-        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+        doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
                 .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
         doReturn(logger).when(userTaskExecutionResource).getLogger();
