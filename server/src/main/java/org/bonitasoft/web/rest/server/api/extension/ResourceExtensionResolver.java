@@ -33,7 +33,7 @@ public class ResourceExtensionResolver {
     public Long resolvePageId(APISession apiSession) throws BonitaException {
         final HttpServletRequest httpServletRequest = getHttpServletRequest();
         final PageReference pageReference;
-        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(), httpServletRequest.getLocale());
+        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(), httpServletRequest.getLocale(),false);
         return pageReference.getPageId();
     }
 

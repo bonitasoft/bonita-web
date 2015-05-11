@@ -99,7 +99,7 @@ public class ResourceExtensionResolverTest {
         ResourceExtensionResolver resourceExtensionResolver = new ResourceExtensionResolver(request, new PageMappingService());
 
         //when then exception
-       resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
+        resourceExtensionResolver.resolveClassFileName(pageResourceProvider);
 
     }
 
@@ -122,7 +122,7 @@ public class ResourceExtensionResolverTest {
         //given
         Request request = new Request(Method.POST, "/bonita/API/extension/myPostResource");
         doReturn(Locale.FRENCH).when(httpServletRequest).getLocale();
-        doReturn(pageReference).when(pageMappingService).getPage(httpServletRequest, apiSession, API_EXTENSION_POST_MAPPING_KEY, Locale.FRENCH);
+        doReturn(pageReference).when(pageMappingService).getPage(httpServletRequest, apiSession, API_EXTENSION_POST_MAPPING_KEY, Locale.FRENCH, false);
         doReturn(PAGE_ID).when(pageReference).getPageId();
 
         ResourceExtensionResolver resourceExtensionResolver = spy(new ResourceExtensionResolver(request, pageMappingService));
@@ -132,7 +132,7 @@ public class ResourceExtensionResolverTest {
         final Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
 
         //then
-        verify(pageMappingService).getPage(any(HttpServletRequest.class), eq(apiSession), eq(API_EXTENSION_POST_MAPPING_KEY), any(Locale.class));
+        verify(pageMappingService).getPage(any(HttpServletRequest.class), eq(apiSession), eq(API_EXTENSION_POST_MAPPING_KEY), any(Locale.class), eq(false));
         assertThat(pageId).isEqualTo(PAGE_ID);
     }
 
@@ -141,8 +141,8 @@ public class ResourceExtensionResolverTest {
         //given
         Request request = new Request(Method.POST, "/bonita/API/extension/myPostResource");
         doReturn(Locale.FRENCH).when(httpServletRequest).getLocale();
-        NotFoundException notFoundException=new NotFoundException("page not found");
-        doThrow(notFoundException).when(pageMappingService).getPage(httpServletRequest, apiSession, API_EXTENSION_POST_MAPPING_KEY, Locale.FRENCH);
+        NotFoundException notFoundException = new NotFoundException("page not found");
+        doThrow(notFoundException).when(pageMappingService).getPage(httpServletRequest, apiSession, API_EXTENSION_POST_MAPPING_KEY, Locale.FRENCH, false);
         doReturn(PAGE_ID).when(pageReference).getPageId();
 
         ResourceExtensionResolver resourceExtensionResolver = spy(new ResourceExtensionResolver(request, pageMappingService));
@@ -152,7 +152,7 @@ public class ResourceExtensionResolverTest {
         final Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
 
         //then
-        verify(pageMappingService).getPage(any(HttpServletRequest.class), eq(apiSession), eq(API_EXTENSION_POST_MAPPING_KEY), any(Locale.class));
+        verify(pageMappingService).getPage(any(HttpServletRequest.class), eq(apiSession), eq(API_EXTENSION_POST_MAPPING_KEY), any(Locale.class), eq(false));
         assertThat(pageId).isEqualTo(PAGE_ID);
     }
 
