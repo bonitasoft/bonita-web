@@ -13,9 +13,7 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import java.io.Serializable;
-import java.util.Map;
-
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -24,11 +22,16 @@ import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Nicolas Tith
@@ -41,27 +44,32 @@ public class ProcessInstantiationResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
+    private final APISession apiSession;
+
     protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
-    public ProcessInstantiationResource(final ProcessAPI processAPI) {
+    public ProcessInstantiationResource(final ProcessAPI processAPI, APISession apiSession) {
         this.processAPI = processAPI;
+        this.apiSession = apiSession;
     }
 
     @Post("json")
-    public String instanciateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
-    ProcessExecutionException {
+    public String instantiateProcess(final Map<String, Serializable> inputs) throws ProcessDefinitionNotFoundException, ProcessActivationException,
+            ProcessExecutionException, FileNotFoundException {
         final String userId = getRequestParameter(USER_PARAM);
         final long processDefinitionId = getProcessDefinitionIdParameter();
         try {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs);
+            final long tenantId = apiSession.getTenantId();
+            final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
             if (userId == null) {
                 return convertEngineToConsoleItem(processAPI.startProcessWithInputs(processDefinitionId, processedInputs)).toJson();
             } else {
                 return convertEngineToConsoleItem(processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs)).toJson();
             }
         } catch (final ContractViolationException e) {
-            manageContractViolationException(e, "Cannot instanciate process task.");
+            manageContractViolationException(e, "Cannot instantiate process task.");
             return null;
         } catch (final Exception e) {
             e.printStackTrace();

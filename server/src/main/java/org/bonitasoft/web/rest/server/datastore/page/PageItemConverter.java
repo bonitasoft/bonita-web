@@ -25,6 +25,7 @@ public class PageItemConverter extends ItemConverter<PageItem, Page> {
     public PageItem convert(final Page engineItem) {
         final PageItem pageItem = new PageItem();
         pageItem.setId(engineItem.getId());
+        pageItem.setProcessId(engineItem.getProcessDefinitionId());
         pageItem.setUrlToken(engineItem.getName());
         pageItem.setDisplayName(engineItem.getDisplayName());
         pageItem.setIsProvided(engineItem.isProvided());
@@ -34,6 +35,7 @@ public class PageItemConverter extends ItemConverter<PageItem, Page> {
         pageItem.setLastUpdateDate(engineItem.getLastModificationDate());
         pageItem.setUpdatedByUserId(engineItem.getLastUpdatedBy());
         pageItem.setContentName(engineItem.getContentName());
+        pageItem.setContentType(engineItem.getContentType());
         return pageItem;
     }
 

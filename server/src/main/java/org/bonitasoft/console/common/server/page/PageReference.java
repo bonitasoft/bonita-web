@@ -28,6 +28,8 @@ public class PageReference implements Serializable {
 
     private String url;
 
+    private Long processId;
+
     public PageReference() {
     }
 
@@ -51,5 +53,14 @@ public class PageReference implements Serializable {
     public void setURL(final String url) {
         this.url = url;
     }
+
+    public Long getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(final Long processId) {
+        this.processId = processId;
+    }
+
 
 }
