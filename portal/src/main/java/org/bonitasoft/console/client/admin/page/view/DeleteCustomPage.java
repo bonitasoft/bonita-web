@@ -16,12 +16,11 @@ package org.bonitasoft.console.client.admin.page.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
@@ -33,9 +32,18 @@ import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
+import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutDanger;
+import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutWarning;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Julien Mege
@@ -51,6 +59,8 @@ public class DeleteCustomPage extends Page {
     private final ArrayList<String> idsAsString;
 
     private boolean firstApplicationNotFound = true;
+
+    private boolean firstFormNotFound = true;
 
     static {
         PRIVILEGES.add(PageListingPage.TOKEN);
@@ -82,6 +92,12 @@ public class DeleteCustomPage extends Page {
             addBody(new Text(_("If this page is used in a profile, the page and related profile entries will be permanently deleted.")));
         }
         searchApplicationDependancies();
+        if (firstApplicationNotFound) {
+            searchFormMappingDependancies();
+            if (firstFormNotFound) {
+                this.setTitle(_("Confirm Delete?"));
+            }
+        }
     }
 
     private void buildform() {
@@ -111,7 +127,6 @@ public class DeleteCustomPage extends Page {
         for (final String pageId : idsAsString) {
             searchApplicationDependanciesForPage(pageId);
         }
-
     }
 
     private void searchApplicationDependanciesForPage(final String pageId) {
@@ -132,7 +147,7 @@ public class DeleteCustomPage extends Page {
             final List<ApplicationPageItem> applicationPages = JSonItemReader.parseItems(response, ApplicationPageDefinition.get());
             if (applicationPages.size() > 0) {
                 if (firstApplicationNotFound) {
-                    setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
+                    setBody(new CalloutDanger(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
                     activateDeleteButton(false);
                     firstApplicationNotFound = false;
                 }
@@ -140,6 +155,65 @@ public class DeleteCustomPage extends Page {
             }
         }
 
+    }
+
+    private void searchFormMappingDependancies() {
+        for (final String pageId : idsAsString) {
+            searchFormMappingDependenciesForPage(pageId);
+        }
+
+    }
+
+    private void searchFormMappingDependenciesForPage(String pageId) {
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ApplicationPageItem.ATTRIBUTE_PAGE_ID, pageId);
+        RequestBuilder requestBuilder;
+        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=pageId=" + pageId);
+        requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId));
+        try {
+            requestBuilder.send();
+        } catch (RequestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class DeletePageProblemFormCallback extends APICallback {
+        private String pageId;
+
+        public DeletePageProblemFormCallback(String pageId) {
+            this.pageId = pageId;
+        }
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+
+            String newResponse = "[{\"id\":1,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"TASK\",\"target\":\"INTERNAL\",\"task\":\"Step1\",\"pageId\":1,\"pageMappingKey\":\"taskInstance/Pool/1.0/Step1\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430927238637,\"url\":null},{\"id\":2,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"PROCESS_START\",\"target\":\"INTERNAL\",\"task\":null,\"pageId\":1,\"pageMappingKey\":\"process/Pool/1.0\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430988014464,\"url\":null},{\"id\":3,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"PROCESS_OVERVIEW\",\"target\":\"INTERNAL\",\"task\":null,\"pageId\":1,\"pageMappingKey\":\"processInstance/Pool/1.0\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430988045680,\"url\":null}]";
+
+            JSONValue root= JSONParser.parseLenient(newResponse);
+            JSONArray formMappings=root.isArray();
+            if (formMappings.size()>0) {
+                if (firstFormNotFound) {
+                    setBody(new Paragraph(_("Some of the pages you selected for deletion are used by processes:")));
+                    firstFormNotFound = false;
+                }
+                new APICaller<PageItem>(PageDefinition.get()).get(pageId, new GetPageNameCallback(formMappings));
+            }
+        }
+
+        private class GetPageNameCallback extends APICallback {
+            private final JSONArray formMappings;
+
+            public GetPageNameCallback(JSONArray formMappings) {
+                this.formMappings = formMappings;
+            }
+
+            @Override
+            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                final PageItem page = JSonItemReader.parseItem(response, PageDefinition.get());
+                addBody(new DeletePageFormProblemsCallout(formMappings, page.getDisplayName()));
+                addBody(new CalloutWarning(_("If you delete a page that is used by a process, the process becomes unresolved.\nBefore deleting a page, you should also check whether it is used in a custom profile navigation.\nDo you still want to delete the selected pages?")));
+            }
+        }
     }
 
     private void activateDeleteButton(final boolean noApplicationLink) {
