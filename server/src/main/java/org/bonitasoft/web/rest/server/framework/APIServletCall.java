@@ -155,7 +155,7 @@ public class APIServletCall extends ServletCall {
 
     void parsePath(final HttpServletRequest request) {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
-        id = restRequestParser.getResourceQualifier();
+        id = restRequestParser.getResourceQualifiers();
         apiName = restRequestParser.getApiName();
         resourceName = restRequestParser.getResourceName();
     }

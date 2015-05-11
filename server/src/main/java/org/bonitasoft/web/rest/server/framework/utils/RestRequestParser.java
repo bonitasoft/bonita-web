@@ -34,7 +34,7 @@ public class RestRequestParser {
     private final HttpServletRequest request;
     private String apiName;
     private String resourceName;
-    private APIID resourceQualifier;
+    private APIID resourceQualifiers;
 
     public RestRequestParser(final HttpServletRequest request) {
         this.request = request;
@@ -48,8 +48,8 @@ public class RestRequestParser {
         return resourceName;
     }
 
-    public APIID getResourceQualifier() {
-        return resourceQualifier;
+    public APIID getResourceQualifiers() {
+        return resourceQualifiers;
     }
 
     public RestRequestParser invoke() {
@@ -68,9 +68,9 @@ public class RestRequestParser {
         // Read id (if defined)
         if (path.length > 3) {
             final List<String> pathList = Arrays.asList(path);
-            resourceQualifier = APIID.makeAPIID(pathList.subList(3, pathList.size()));
+            resourceQualifiers = APIID.makeAPIID(pathList.subList(3, pathList.size()));
         } else {
-            resourceQualifier = null;
+            resourceQualifiers = null;
         }
         return this;
     }

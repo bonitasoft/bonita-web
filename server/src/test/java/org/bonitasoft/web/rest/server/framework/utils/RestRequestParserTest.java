@@ -42,7 +42,7 @@ public class RestRequestParserTest {
 
         restRequestParser.invoke();
 
-        assertThat(restRequestParser.getResourceQualifier().getPart(0)).isEqualTo("15");
+        assertThat(restRequestParser.getResourceQualifiers().getPart(0)).isEqualTo("15");
         assertThat(restRequestParser.getResourceName()).isEqualTo("case");
         assertThat(restRequestParser.getApiName()).isEqualTo("bpm");
 
@@ -54,7 +54,7 @@ public class RestRequestParserTest {
 
         restRequestParser.invoke();
 
-        assertThat(restRequestParser.getResourceQualifier()).isNull();
+        assertThat(restRequestParser.getResourceQualifiers()).isNull();
         assertThat(restRequestParser.getResourceName()).isEqualTo("case");
         assertThat(restRequestParser.getApiName()).isEqualTo("bpm");
 
