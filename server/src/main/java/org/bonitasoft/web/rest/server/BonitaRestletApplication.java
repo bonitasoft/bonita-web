@@ -65,7 +65,7 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
     public static final String BPM_CASE_CONTEXT = "/bpm/case";
-    private static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
+    public static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
 
 
     private final FinderFactory factory;
