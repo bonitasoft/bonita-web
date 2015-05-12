@@ -127,7 +127,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 request.getRequestDispatcher(apiPath).forward(request, response);
             } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "One of the separator '/content', '/them' or '/API' is expected in the URL after the application token and the page token.");
+                        "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
             }
 
         } else {
