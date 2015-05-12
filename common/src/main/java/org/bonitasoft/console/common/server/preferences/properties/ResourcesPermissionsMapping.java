@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -74,7 +75,7 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
                 return permissions;
             }
         }
-        return null;
+        return Collections.emptySet();
     }
 
     protected List<String> getResourceQualifiersWithWildCard(final List<String> resourceQualifiers, final int wildCardPosition) {
