@@ -148,7 +148,7 @@ public class ApplicationModelTest {
     public void should_ApplicationHomePage_return_valide_path() throws Exception {
         given(applicationApi.getApplicationHomePage(1L)).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
 
-        assertThat(model.getApplicationHomePage()).isEqualTo("token/pageToken");
+        assertThat(model.getApplicationHomePage()).isEqualTo("pageToken/");
     }
 
     @Test

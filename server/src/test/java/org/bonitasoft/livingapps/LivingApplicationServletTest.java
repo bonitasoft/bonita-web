@@ -3,11 +3,13 @@ package org.bonitasoft.livingapps;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -46,6 +48,9 @@ public class LivingApplicationServletTest {
     @Mock
     PageRenderer pageRenderer;
 
+    @Mock
+    CustomPageRequestModifier customPageRequestModifier;
+
     @Spy
     LivingApplicationServlet servlet;
 
@@ -55,6 +60,8 @@ public class LivingApplicationServletTest {
         doReturn(pageRenderer).when(servlet).getPageRenderer();
         doReturn(resourceRenderer).when(servlet).getResourceRenderer();
         doReturn(session).when(servlet).getSession(hsRequest);
+        doReturn("/appToken/pageToken/").when(hsRequest).getPathInfo();
+        servlet.customPageRequestModifier = customPageRequestModifier;
     }
 
     @Test
@@ -144,6 +151,26 @@ public class LivingApplicationServletTest {
         servlet.doGet(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404);
+    }
+
+    @Test
+    public void should_redirectToValidPageUrl_on_missing_final_slash() throws Exception {
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
+        doReturn("/appToken/pageToken").when(hsRequest).getPathInfo();
+
+        servlet.doGet(hsRequest, hsResponse);
+
+        verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
+    }
+
+    @Test
+    public void should_not_redirectToValidPageUrl_on_resource_query() throws Exception {
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
+        doReturn("/appToken/pageToken/file.css").when(hsRequest).getPathInfo();
+
+        servlet.doGet(hsRequest, hsResponse);
+
+        verify(customPageRequestModifier, times(0)).redirectToValidPageUrl(hsRequest, hsResponse);
     }
 
 }

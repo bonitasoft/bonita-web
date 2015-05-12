@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,13 +49,13 @@ public class ApplicationRouter {
             return true;
         }
 
-        //If URL finish with '/', send 404 error
-        if (hsRequest.getPathInfo().endsWith("/")) {
-            hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Application page url cannot finish with '/' caractere.");
+        if ("API".equals(parsedRequest.getPageToken())) {
+            //Support relative calls to the REST API from the application page using ../API/
+            hsRequest.getRequestDispatcher("/"+getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(),parsedRequest.getApplicationName())).forward(hsRequest, hsResponse);
             return true;
         }
 
+        /*
         //Deprecated themeResource servlet
         if (hsRequest.getRequestURI().endsWith("themeResource")) {
             forwardTo("/portal/themeResource", hsRequest, hsResponse);
@@ -68,14 +66,12 @@ public class ApplicationRouter {
         if (hsRequest.getRequestURI().endsWith("pageResource")) {
             forwardTo("/portal/pageResource", hsRequest, hsResponse);
             return true;
-        }
+        }*/
 
 
         if (isApplicationPageRequest(pathSegments)) {
             //Application page request
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
-                hsRequest.setAttribute("application", application);
-                hsRequest.setAttribute("customPage", application.getCustomPage(parsedRequest.getPageToken()));
                 pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
                 return true;
             }
@@ -103,7 +99,7 @@ public class ApplicationRouter {
 
         final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
-                + getResourcePath(resourcePath, pathSegments.get(0)));
+                + getResourcePath(resourcePath, pathSegments.get(0), pathSegments.get(1)));
 
         if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
@@ -111,11 +107,11 @@ public class ApplicationRouter {
         return resourceFile;
     }
 
-    private String getResourcePath(final String fullResourcePath, final String applicationName) {
-        //resource path match "/applicationName/{resourcePath}"
+    private String getResourcePath(final String fullResourcePath, final String applicationName, final String pageToken) {
+        //resource path match "/applicationName/pageName/{resourcePath}"
         // or "/applicationName/theme/{resourcePath}"
         String resourcePath = getResourcePathWithoutApplicationToken(fullResourcePath, applicationName);
-        resourcePath = getResourcePathWithoutThemeToken(resourcePath);
+        resourcePath = getResourcePathWithoutPageToken(resourcePath, pageToken);
 
         return resourcePath;
     }
@@ -125,17 +121,8 @@ public class ApplicationRouter {
         return resourcePath.substring(applicationName.length() + 2);
     }
 
-    private String getResourcePathWithoutThemeToken(final String resourcePath) {
-        //resource path match "theme/{resourcePath}"
-        if (resourcePath.startsWith(THEME_TOKEN)){
-            return resourcePath.substring(THEME_TOKEN.length() + 1);
-        }
-        return resourcePath;
-    }
-
-    private void forwardTo(final String url, final ServletRequest servletRequest, final ServletResponse servletResponse)
-            throws ServletException, IOException {
-        servletRequest.getRequestDispatcher(url).forward(servletRequest, servletResponse);
+    private String getResourcePathWithoutPageToken(final String resourcePath, final String pageToken) {
+            return resourcePath.substring(pageToken.length() + 1);
     }
 
     private ParsedRequest parse(final String context, final String uri) {
