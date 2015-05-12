@@ -158,18 +158,20 @@ public class DeleteCustomPage extends Page {
     }
 
     private void searchFormMappingDependancies() {
+        int counter = 0;
         for (final String pageId : idsAsString) {
-            searchFormMappingDependenciesForPage(pageId);
+            counter++;
+            boolean isLastPage = counter == idsAsString.size();
+            searchFormMappingDependenciesForPage(pageId, isLastPage);
         }
-
     }
 
-    private void searchFormMappingDependenciesForPage(String pageId) {
+    private void searchFormMappingDependenciesForPage(String pageId, Boolean isLastPage) {
         final Map<String, String> filter = new HashMap<String, String>();
         filter.put(ApplicationPageItem.ATTRIBUTE_PAGE_ID, pageId);
         RequestBuilder requestBuilder;
         requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=pageId=" + pageId);
-        requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId));
+        requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId, isLastPage));
         try {
             requestBuilder.send();
         } catch (RequestException e) {
@@ -179,9 +181,11 @@ public class DeleteCustomPage extends Page {
 
     private class DeletePageProblemFormCallback extends APICallback {
         private String pageId;
+        private Boolean isLastPage = false;
 
-        public DeletePageProblemFormCallback(String pageId) {
+        public DeletePageProblemFormCallback(String pageId, Boolean isLastPage) {
             this.pageId = pageId;
+            this.isLastPage = isLastPage;
         }
 
         @Override
@@ -211,7 +215,10 @@ public class DeleteCustomPage extends Page {
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 final PageItem page = JSonItemReader.parseItem(response, PageDefinition.get());
                 addBody(new DeletePageFormProblemsCallout(formMappings, page.getDisplayName()));
-                addBody(new CalloutWarning(_("If you delete a page that is used by a process, the process becomes unresolved.\nBefore deleting a page, you should also check whether it is used in a custom profile navigation.\nDo you still want to delete the selected pages?")));
+                if (isLastPage) {
+                    addBody(new CalloutWarning(_("If you delete a page that is used by a process, the process becomes unresolved.\nBefore deleting a page, you should also check whether it is used in a custom profile navigation.")));
+                    addBody(new Paragraph(_("Do you still want to delete the selected pages?")));
+                }
             }
         }
     }
