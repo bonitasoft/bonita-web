@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +33,10 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.engine.api.ApplicationAPI;
+import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.business.application.ApplicationPage;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,6 +79,18 @@ public class LivingApplicationPageServletTest {
     @Mock
     CustomPageRequestModifier customPageRequestModifier;
 
+    @Mock
+    ApplicationAPI applicationAPI;
+
+    @Mock
+    Page page;
+
+    @Mock
+    ApplicationPage applicationPage;
+
+    @Mock
+    PageAPI pageAPI;
+
     @Spy
     @InjectMocks
     LivingApplicationPageServlet servlet;
@@ -83,6 +100,8 @@ public class LivingApplicationPageServletTest {
     public void beforeEach() throws Exception {
         hsRequest.setSession(httpSession);
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
+        doReturn(applicationAPI).when(servlet).getApplicationApi(apiSession);
+        doReturn(pageAPI).when(servlet).getPageApi(apiSession);
         doReturn(1L).when(apiSession).getTenantId();
         doReturn(customPageAuthorizationsHelper).when(servlet).getCustomPageAuthorizationsHelper(apiSession);
     }
@@ -91,7 +110,12 @@ public class LivingApplicationPageServletTest {
     public void should_get_Forbidden_Status_when_page_unAuthorize() throws Exception {
         hsRequest.setPathInfo("/AppToken/pageToken/content/");
         given(resourceRenderer.getPathSegments("/AppToken/pageToken/content/")).willReturn(Arrays.asList("AppToken", "pageToken", "content"));
-        given(customPageAuthorizationsHelper.isPageAuthorized("AppToken", "pageToken")).willReturn(false);
+        given(customPageAuthorizationsHelper.isPageAuthorized("AppToken", "customPageName")).willReturn(false);
+
+        doReturn(applicationPage).when(applicationAPI).getApplicationPage("AppToken","pageToken");
+        doReturn(2L).when(applicationPage).getPageId();
+        doReturn(page).when(pageAPI).getPage(2L);
+        doReturn("customPageName").when(page).getName();
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -118,30 +142,40 @@ public class LivingApplicationPageServletTest {
 
     @Test
     public void getPage_should_call_the_page_renderer() throws Exception {
-        testPageIsWellCalled("AppToken", "contentcustompage_htmlexample1", "/AppToken/contentcustompage_htmlexample1/content/", Arrays.asList("AppToken","contentcustompage_htmlexample1","content"));
-        testPageIsWellCalled("AppToken", "custompage_htmlexample2", "/AppToken/custompage_htmlexample2/content/index", Arrays.asList("AppToken","custompage_htmlexample2","content","index"));
-        testPageIsWellCalled("AppToken", "custompage_htmlexample4", "/AppToken/custompage_htmlexample4/content/index.html", Arrays.asList("AppToken","custompage_htmlexample4","content","index.html"));
-        testPageIsWellCalled("AppToken", "custompage_htmlexample5", "/AppToken/custompage_htmlexample5/content/Index.groovy", Arrays.asList("AppToken","custompage_htmlexample5","content","Index.groovy"));
+        testPageIsWellCalled("AppToken", "htmlexample1", "/AppToken/htmlexample1/content/", Arrays.asList("AppToken","htmlexample1","content"));
+        testPageIsWellCalled("AppToken", "htmlexample2", "/AppToken/htmlexample2/content/index", Arrays.asList("AppToken","htmlexample2","content","index"));
+        testPageIsWellCalled("AppToken", "htmlexample4", "/AppToken/htmlexample4/content/index.html", Arrays.asList("AppToken","htmlexample4","content","index.html"));
+        testPageIsWellCalled("AppToken", "htmlexample5", "/AppToken/htmlexample5/content/Index.groovy", Arrays.asList("AppToken","htmlexample5","content","Index.groovy"));
     }
 
     private void testPageIsWellCalled(final String appToken, final String pageToken, final String path, final List<String> pathSegment) throws Exception {
         hsRequest.setPathInfo(path);
         given(resourceRenderer.getPathSegments(path)).willReturn(pathSegment);
-        given(customPageAuthorizationsHelper.isPageAuthorized(appToken, pageToken)).willReturn(true);
+        given(customPageAuthorizationsHelper.isPageAuthorized(appToken, "customPage_"+pageToken)).willReturn(true);
+
+        doReturn(applicationPage).when(applicationAPI).getApplicationPage(appToken,pageToken);
+        doReturn(2L).when(applicationPage).getPageId();
+        doReturn(page).when(pageAPI).getPage(2L);
+        doReturn("customPage_"+pageToken).when(page).getName();
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, pageToken);
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "customPage_"+pageToken);
     }
 
     @Test
     public void getResource_should_call_the_resource_renderer() throws Exception {
-        hsRequest.setPathInfo("/AppToken/custompage_htmlexample/content/css/file.css");
+        hsRequest.setPathInfo("/AppToken/htmlexample/content/css/file.css");
         final File pageDir = new File("/pageDir");
-        given(resourceRenderer.getPathSegments("/AppToken/custompage_htmlexample/content/css/file.css")).willReturn(Arrays.asList("AppToken", "custompage_htmlexample", "content", "css", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
+        given(resourceRenderer.getPathSegments("/AppToken/htmlexample/content/css/file.css")).willReturn(Arrays.asList("AppToken", "htmlexample", "content", "css", "file.css"));
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("customPage_"+"htmlexample", 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
+
+        doReturn(applicationPage).when(applicationAPI).getApplicationPage("AppToken","htmlexample");
+        doReturn(2L).when(applicationPage).getPageId();
+        doReturn(page).when(pageAPI).getPage(2L);
+        doReturn("customPage_"+"htmlexample").when(page).getName();
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -150,13 +184,18 @@ public class LivingApplicationPageServletTest {
 
     @Test(expected=ServletException.class)
     public void getResource_should_throw_exception_if_unauthorised() throws Exception {
-        hsRequest.setPathInfo("/AppToken/custompage_htmlexample/content/css/../../../file.css");
+        hsRequest.setPathInfo("/AppToken/htmlexample/content/css/../../../file.css");
         final File pageDir = new File(".");
-        given(resourceRenderer.getPathSegments("/AppToken/custompage_htmlexample/content/css/../../../file.css")).willReturn(
-                Arrays.asList("AppToken","custompage_htmlexample","content", "css", "..", "..", "..", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
+        given(resourceRenderer.getPathSegments("/AppToken/htmlexample/content/css/../../../file.css")).willReturn(
+                Arrays.asList("AppToken","htmlexample","content", "css", "..", "..", "..", "file.css"));
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("htmlexample", 1L);
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
         doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
+
+        doReturn(applicationPage).when(applicationAPI).getApplicationPage("AppToken","htmlexample");
+        doReturn(2L).when(applicationPage).getPageId();
+        doReturn(page).when(pageAPI).getPage(2L);
+        doReturn("customPage_"+"htmlexample").when(page).getName();
 
         servlet.doGet(hsRequest, hsResponse);
     }

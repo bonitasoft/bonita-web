@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -23,11 +24,21 @@ public class LivingApplicationServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3911437607969651000L;
 
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+
+
     @Override
     protected void doGet(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse)
             throws ServletException, IOException {
 
         final APISession session = getSession(hsRequest);
+
+        // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
+        if (isPageUrlWithoutFinalSlash(hsRequest)) {
+            customPageRequestModifier.redirectToValidPageUrl(hsRequest, hsResponse);
+            return;
+        }
+
         try {
             if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new BonitaHomeFolderAccessor())) {
                 hsResponse.sendError(404);
@@ -58,6 +69,10 @@ public class LivingApplicationServlet extends HttpServlet {
                 TenantAPIAccessor.getLivingApplicationAPI(session),
                 TenantAPIAccessor.getCustomPageAPI(session),
                 TenantAPIAccessor.getProfileAPI(session)));
+    }
+
+    private boolean isPageUrlWithoutFinalSlash(final HttpServletRequest request) {
+        return request.getPathInfo().matches("/[^/]+/[^/]+");
     }
 
     APISession getSession(final HttpServletRequest hsRequest) {

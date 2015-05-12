@@ -34,11 +34,15 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.engine.api.ApplicationAPI;
+import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 
 public class LivingApplicationPageServlet extends HttpServlet {
@@ -81,45 +85,47 @@ public class LivingApplicationPageServlet extends HttpServlet {
         }
 
         String appToken = null;
-        String pageName = null;
+        String pageToken = null;
+        String customPageName = null;
         String resourcePath = null;
 
         //Validate mapping key contain "AppToken/PageToken/" and at least one more segment
         final List<String> pathSegments = resourceRenderer.getPathSegments(pathInfo);
         if (pathSegments.size() >= 3) {
             appToken = pathSegments.get(0);
-            pageName = pathSegments.get(1);
+            pageToken = pathSegments.get(1);
+            customPageName = getCustomPageName(appToken, pageToken, apiSession, response);
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
 
-                String pageMapping = "/" + appToken + "/" + pageName + RESOURCE_PATH_SEPARATOR + "/";
+                String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
 
                 try {
                     if (resourcePath == null || isNotResourcePath(resourcePath)) {
-                        if (!isAuthorized(apiSession, appToken, pageName)) {
+                        if (!isAuthorized(apiSession, appToken, customPageName)) {
                             response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                             return;
                         }
-                        pageRenderer.displayCustomPage(request, response, apiSession, pageName);
+                        pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                     } else {
-                        final File resourceFile = getResourceFile(resourcePath, pageName, apiSession);
+                        final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
                         resourceRenderer.renderFile(request, response, resourceFile);
                     }
                 } catch (final Exception e) {
-                    handleException(pageName, e);
+                    handleException(customPageName, e);
                 }
             } else if (isValidPathForToken(THEME_PATH_SEPARATOR, pathSegments)) {
                 //Support relative calls to the THEME from the application page using ../theme/
                 final String themePath = pathInfo.substring(pathInfo.indexOf(THEME_PATH_SEPARATOR + "/"));
                 request.getRequestDispatcher("/apps/" + appToken + themePath).forward(request, response);
-            }else if (isValidPathForToken(API_PATH_SEPARATOR, pathSegments)) {
+            } else if (isValidPathForToken(API_PATH_SEPARATOR, pathSegments)) {
                 //Support relative calls to the REST API from the application page using ../API/
                 final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
                 request.getRequestDispatcher(apiPath).forward(request, response);
-            }else {
+            } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "One of the separator '/content', '/them' or '/API' is expected in the URL after the application token and the page token.");
             }
@@ -129,6 +135,37 @@ public class LivingApplicationPageServlet extends HttpServlet {
                     "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
         }
 
+    }
+
+    private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws IOException, ServletException {
+        try {
+            return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
+        } catch (ApplicationPageNotFoundException e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
+            }
+            response.sendError(HttpServletResponse.SC_NOT_FOUND,
+                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
+        } catch (Exception e) {
+            handleException(appToken + "/" + pageToken, e);
+        }
+        return null;
+    }
+
+    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
+            return getPageApi(apiSession).getPage(customPageId).getName();
+        } catch (PageNotFoundException e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
+            }
+            response.sendError(HttpServletResponse.SC_NOT_FOUND,
+                    "Cannot found the page"+pageToken+"for the application"+appToken+".");
+        } catch (Exception e) {
+            handleException(appToken + "/" + pageToken, e);
+        }
+        return "";
     }
 
     private boolean isValidPathForToken(final String TokenSeparator, final List<String> pathSegments) {
@@ -157,9 +194,17 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     private void handleException(final String pageName, final Exception e) throws ServletException {
         if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, "Error while trying to render the custom page " + pageName, e);
+            LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
         }
         throw new ServletException(e.getMessage());
+    }
+
+    protected ApplicationAPI getApplicationApi(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return TenantAPIAccessor.getLivingApplicationAPI(apiSession);
+    }
+
+    protected PageAPI getPageApi(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
 
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,

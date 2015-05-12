@@ -3,12 +3,10 @@ package org.bonitasoft.livingapps;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +14,6 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
-import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,24 +65,13 @@ public class ApplicationRouterTest {
 
     @Test
     public void should_redirect_to_home_page_when_accessing_living_application_root() throws Exception {
-        given(applicationModel.getApplicationHomePage()).willReturn("HumanResources/home");
+        given(applicationModel.getApplicationHomePage()).willReturn("home/");
         given(applicationModel.getApplicationLayoutName()).willReturn("layoutPageName");
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-        verify(hsResponse).sendRedirect("HumanResources/home");
-    }
-
-    @Test
-    public void should_send_404_when_url_finish_with_backslash() throws Exception {
-        accessAuthorizedPage("HumanResources", "leavingRequests");
-
-        given(hsRequest.getPathInfo()).willReturn("/HumanResources/leavingRequests/");
-
-        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-        verify(hsResponse).sendError(HttpServletResponse.SC_NOT_FOUND,
-                "Application page url cannot finish with '/' caractere.");
+        verify(hsResponse).sendRedirect("home/");
     }
 
     @Test(expected = RuntimeException.class)
@@ -95,6 +81,7 @@ public class ApplicationRouterTest {
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
     }
 
+/*
     @Test
     public void should_forward_to_themeResource_servlet_when_accessing_a_theme_resource() throws Exception {
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources/themeResource");
@@ -112,6 +99,7 @@ public class ApplicationRouterTest {
 
         verify(hsRequest).getRequestDispatcher("/portal/pageResource");
     }
+*/
 
     @Test
     public void should_display_layout_page() throws Exception {
@@ -124,7 +112,7 @@ public class ApplicationRouterTest {
 
     @Test
     public void should_access_Layout_resource() throws Exception {
-        accessAuthorizedPage("HumanResources", "css/file.css");
+        accessAuthorizedPage("HumanResources", "AnyPage/css/file.css");
         File layoutFolder = new File("layout");
         given(applicationModel.getApplicationLayoutName()).willReturn("layout");
         given(pageRenderer.getPageResourceProvider("layout", 1L)).willReturn(pageResourceProvider);
@@ -169,37 +157,6 @@ public class ApplicationRouterTest {
     }
 
     @Test
-    public void should_add_application_to_request_attributes() throws Exception {
-        accessAuthorizedPage("HumanResources", "leavingRequests");
-
-        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-
-        verify(hsRequest).setAttribute("application", applicationModel);
-    }
-
-    @Test
-    public void should_add_custom_page_to_request_attribute() throws Exception {
-        accessAuthorizedPage("HumanResources", "leavingRequests");
-        final Page customPage = mock(Page.class);
-        given(applicationModel.getCustomPage("leavingRequests")).willReturn(customPage);
-
-        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-
-        verify(hsRequest).setAttribute("customPage", customPage);
-    }
-
-    @Test
-    public void should_sort_menu_for_the_given_application() throws Exception {
-        //        ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
-        //
-        //        servlet.getApplicationMenus(livingApplication, apiSession);
-        //        verify(api).searchApplicationMenus(captor.capture());
-        //
-        //        assertThat(captor.getValue().getSorts().get(0).getField()).isEqualTo("index");
-        //        assertThat(captor.getValue().getSorts().get(0).getOrder()).isEqualTo(Order.ASC);
-    }
-
-    @Test
     public void should_none_authorized_page_been_exclude_from_the_menu() throws Exception {
         //        final List<ApplicationMenuImpl> menus = Arrays.asList(
         //                new ApplicationMenuImpl("Page 1", 1, 1L, 1),
@@ -234,7 +191,7 @@ public class ApplicationRouterTest {
         given(applicationModel.hasPage(pageToken)).willReturn(hasPage);
         given(applicationModel.authorize(apiSession)).willReturn(isAuthorized);
         given(applicationModelFactory.createApplicationModel(applicationToken)).willReturn(applicationModel);
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/" + applicationToken + "/" + pageToken);
-        given(hsRequest.getPathInfo()).willReturn("/" + applicationToken + "/" + pageToken);
+        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/" + applicationToken + "/" + pageToken + "/");
+        given(hsRequest.getPathInfo()).willReturn("/" + applicationToken + "/" + pageToken + "/");
     }
 }
