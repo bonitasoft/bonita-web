@@ -164,6 +164,16 @@ public class LivingApplicationServletTest {
     }
 
     @Test
+    public void should_redirectToValidPageUrl_on_missing_final_slash_after_appToken() throws Exception {
+        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
+        doReturn("/appToken").when(hsRequest).getPathInfo();
+
+        servlet.doGet(hsRequest, hsResponse);
+
+        verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
+    }
+
+    @Test
     public void should_not_redirectToValidPageUrl_on_resource_query() throws Exception {
         given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
         doReturn("/appToken/pageToken/file.css").when(hsRequest).getPathInfo();
