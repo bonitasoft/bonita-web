@@ -34,7 +34,6 @@ import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
-import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutDanger;
 import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutWarning;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
@@ -61,6 +60,8 @@ public class DeleteCustomPage extends Page {
     private boolean firstApplicationNotFound = true;
 
     private boolean firstFormNotFound = true;
+
+    private int pagesLeft;
 
     static {
         PRIVILEGES.add(PageListingPage.TOKEN);
@@ -92,12 +93,7 @@ public class DeleteCustomPage extends Page {
             addBody(new Text(_("If this page is used in a profile, the page and related profile entries will be permanently deleted.")));
         }
         searchApplicationDependancies();
-        if (firstApplicationNotFound) {
-            searchFormMappingDependancies();
-            if (firstFormNotFound) {
-                this.setTitle(_("Confirm Delete?"));
-            }
-        }
+        searchFormMappingDependancies();
     }
 
     private void buildform() {
@@ -147,7 +143,7 @@ public class DeleteCustomPage extends Page {
             final List<ApplicationPageItem> applicationPages = JSonItemReader.parseItems(response, ApplicationPageDefinition.get());
             if (applicationPages.size() > 0) {
                 if (firstApplicationNotFound) {
-                    setBody(new CalloutDanger(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
+                    setBody(new Text(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
                     activateDeleteButton(false);
                     firstApplicationNotFound = false;
                 }
@@ -158,20 +154,18 @@ public class DeleteCustomPage extends Page {
     }
 
     private void searchFormMappingDependancies() {
-        int counter = 0;
+        //pagesLeft = 0;
         for (final String pageId : idsAsString) {
-            counter++;
-            boolean isLastPage = counter == idsAsString.size();
-            searchFormMappingDependenciesForPage(pageId, isLastPage);
+            searchFormMappingDependenciesForPage(pageId);
         }
     }
 
-    private void searchFormMappingDependenciesForPage(String pageId, Boolean isLastPage) {
+    private void searchFormMappingDependenciesForPage(String pageId) {
         final Map<String, String> filter = new HashMap<String, String>();
         filter.put(ApplicationPageItem.ATTRIBUTE_PAGE_ID, pageId);
         RequestBuilder requestBuilder;
         requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=pageId=" + pageId);
-        requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId, isLastPage));
+        requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId));
         try {
             requestBuilder.send();
         } catch (RequestException e) {
@@ -183,24 +177,26 @@ public class DeleteCustomPage extends Page {
         private String pageId;
         private Boolean isLastPage = false;
 
-        public DeletePageProblemFormCallback(String pageId, Boolean isLastPage) {
+        public DeletePageProblemFormCallback(String pageId) {
             this.pageId = pageId;
-            this.isLastPage = isLastPage;
         }
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-
-            String newResponse = "[{\"id\":1,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"TASK\",\"target\":\"INTERNAL\",\"task\":\"Step1\",\"pageId\":1,\"pageMappingKey\":\"taskInstance/Pool/1.0/Step1\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430927238637,\"url\":null},{\"id\":2,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"PROCESS_START\",\"target\":\"INTERNAL\",\"task\":null,\"pageId\":1,\"pageMappingKey\":\"process/Pool/1.0\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430988014464,\"url\":null},{\"id\":3,\"processDefinitionId\":\"8088540540914613175\",\"type\":\"PROCESS_OVERVIEW\",\"target\":\"INTERNAL\",\"task\":null,\"pageId\":1,\"pageMappingKey\":\"processInstance/Pool/1.0\",\"lastUpdatedBy\":1,\"lastUpdateDate\":1430988045680,\"url\":null}]";
-
-            JSONValue root= JSONParser.parseLenient(newResponse);
+            JSONValue root= JSONParser.parseLenient(response);
             JSONArray formMappings=root.isArray();
-            if (formMappings.size()>0) {
-                if (firstFormNotFound) {
-                    setBody(new Paragraph(_("Some of the pages you selected for deletion are used by processes:")));
-                    firstFormNotFound = false;
+            if (firstApplicationNotFound) {
+                if (formMappings.size()>0) {
+                    if (firstFormNotFound) {
+                        pagesLeft=1;
+                        setBody(new Paragraph(_("Some of the pages you selected for deletion are used by processes:")));
+                        firstFormNotFound = false;
+                        setTitle(_("Confirm Delete?"));
+                    } else {
+                        pagesLeft++;
+                    }
+                    new APICaller<PageItem>(PageDefinition.get()).get(pageId, new GetPageNameCallback(formMappings));
                 }
-                new APICaller<PageItem>(PageDefinition.get()).get(pageId, new GetPageNameCallback(formMappings));
             }
         }
 
@@ -215,7 +211,8 @@ public class DeleteCustomPage extends Page {
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 final PageItem page = JSonItemReader.parseItem(response, PageDefinition.get());
                 addBody(new DeletePageFormProblemsCallout(formMappings, page.getDisplayName()));
-                if (isLastPage) {
+                pagesLeft--;
+                if (pagesLeft==0) {
                     addBody(new CalloutWarning(_("If you delete a page that is used by a process, the process becomes unresolved.\nBefore deleting a page, you should also check whether it is used in a custom profile navigation.")));
                     addBody(new Paragraph(_("Do you still want to delete the selected pages?")));
                 }
