@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2015 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
@@ -11,8 +11,12 @@
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- **/
+ */
 
+
+import static org.mockito.Matchers.any
+import static org.mockito.Matchers.eq
+import static org.mockito.Mockito.*
 
 import org.assertj.core.api.Assertions
 import org.bonitasoft.engine.api.APIAccessor
@@ -20,7 +24,10 @@ import org.bonitasoft.engine.api.IdentityAPI
 import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
-import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException
+import org.bonitasoft.engine.bpm.process.ProcessInstance
+import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.search.SearchOptions
 import org.bonitasoft.engine.search.impl.SearchResultImpl
@@ -29,13 +36,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
-
-import static org.assertj.core.api.Assertions.assertThat
-import static org.mockito.Matchers.eq
-import static org.mockito.Mockito.doReturn
-import static org.mockito.Mockito.mock
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessInstantiationPermissionRuleTest {
@@ -66,58 +67,35 @@ public class ProcessInstantiationPermissionRuleTest {
         doReturn(currentUserId).when(apiSession).getUserId()
     }
 
-    @Test
-    public void should_check_verify_resourceid_when_is_supervisor() {
-        //given
-        havingResourceId(currentUserId)
-        doReturn(true).when(processAPI).isUserProcessSupervisor(56l,currentUserId)
-        //when
-        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
-        //then
-        Assertions.assertThat(isAuthorized).isTrue();
-    }
-
-    @Test
-    public void should_check_verify_resourceid_when_is_not_supervisor() {
-        //given
-        havingResourceId(currentUserId)
-        doReturn(false).when(processAPI).isUserProcessSupervisor(56l,currentUserId)
-        //when
-        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
-        //then
-        Assertions.assertThat(isAuthorized).isFalse();
-    }
-
-    @Test
-    public void should_check_verify_resourceId_isInvolved() {
-        //given
-        havingResourceId(currentUserId)
-        //when
-        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
-        //then
-        Assertions.assertThat(isAuthorized).isTrue();
-    }
-
-    @Test
-    public void should_check_verify_resourceId_not_isInvolved() {
-        //given
-        havingResourceId(15)
-        doReturn(new SearchResultImpl(0,[])).when(processAPI).searchProcessDeploymentInfosCanBeStartedBy(eq(currentUserId), Mockito.any(SearchOptions.class))
-        //when
-        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
-        //then
-        Assertions.assertThat(isAuthorized).isFalse();
-    }
-
-    def havingResourceId(long deployedBy) {
+    def havingResourceId(boolean isInvolvedIn) {
         doReturn(currentUserId).when(apiSession).getUserId()
-        doReturn(true).when(apiCallContext).isGET()
+        doReturn(true).when(apiCallContext).isPOST()
         doReturn("process").when(apiCallContext).getResourceName()
         doReturn("45/instantiation").when(apiCallContext).getResourceId()
         doReturn(Arrays.asList("45", "instantiation")).when(apiCallContext).getCompoundResourceId()
-        def info = mock(ProcessDeploymentInfo.class)
-        doReturn(deployedBy).when(info).getDeployedBy()
-        doReturn(info).when(processAPI).getProcessDeploymentInfo(45l);
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
     }
 
+    @Test
+    public void should_check_verify_can_start_is_true() {
+        havingResourceId(true)
+        doReturn(new SearchResultImpl<User>(1, [user])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(45l), any(SearchOptions.class));
+
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+
+    }
+
+    @Test
+    public void should_check_verify_can_start_on_post_is_false() {
+        havingResourceId(false)
+        doReturn(new SearchResultImpl<User>(0, [])).when(processAPI).searchUsersWhoCanStartProcessDefinition(eq(45l), any(SearchOptions.class));
+
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isFalse();
+    }
 }

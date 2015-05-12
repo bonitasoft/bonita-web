@@ -23,6 +23,7 @@ import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ArchivedManualTaskInstance
+import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ManualTaskInstance
 import org.bonitasoft.engine.exception.NotFoundException
