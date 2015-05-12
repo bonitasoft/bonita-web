@@ -67,12 +67,14 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
 
     public Set<String> getResourcePermissionsWithWildCard(final String method, final String apiName, final String resourceName,
             final List<String> resourceQualifiers) {
-        for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
-            final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
-            final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
-            final Set<String> permissions = getPropertyAsSet(key);
-            if (!permissions.isEmpty()) {
-                return permissions;
+        if (resourceQualifiers != null) {
+            for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
+                final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
+                final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
+                final Set<String> permissions = getPropertyAsSet(key);
+                if (!permissions.isEmpty()) {
+                    return permissions;
+                }
             }
         }
         return Collections.emptySet();
