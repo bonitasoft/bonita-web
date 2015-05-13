@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,6 +35,7 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,10 +47,12 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
+import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
@@ -83,12 +86,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Fabio Lombardi
- *
  */
 
 @RunWith(MockitoJUnitRunner.class)
 public class PageDatastoreTest extends APITestWithMock {
 
+    public static final long TENANT_ID = 1L;
+    public static final long PAGE_ID = 123l;
+    public static final String PAGE_ZIP = "page.zip";
+    public static final String PAGE_REST_API_ZIP = "pageApiExtension.zip";
     private PageDatastore pageDatastore;
 
     @Mock
@@ -105,6 +111,9 @@ public class PageDatastoreTest extends APITestWithMock {
 
     @Mock
     Page mockedPage;
+
+    @Mock
+    Page mockedApiExtension;
 
     @Mock
     BonitaHomeFolderAccessor tenantFolder;
@@ -125,36 +134,52 @@ public class PageDatastoreTest extends APITestWithMock {
     public ExpectedException expectedEx = ExpectedException.none();
 
     PageItem pageToBeAdded;
+    PageItem apiExtensionToBeAdded;
 
     File pagesDir = new File("target/bonita-home/client/tenants/1/work/pages");
 
-    URL zipFileUrl;
 
     private String savedBonitaHomeProperty;
 
+    @Mock
+    private PageResourceProvider pageResourceProvider;
+
+
     @Before
     public void setUp() throws Exception {
+        final Date mockedDate = new Date(0l);
+
+        File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
+        File pageZipFile = deployZipFileToTarget(PAGE_ZIP);
+
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         deleteDir(pagesDir);
         // Given
-        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getId()).thenReturn(PAGE_ID);
         when(mockedPage.getName()).thenReturn("custompage_page1");
         when(mockedPage.getDisplayName()).thenReturn("Page 1");
         when(mockedPage.getDescription()).thenReturn("This is a page description");
-        final Date mockedDate = new Date(0l);
         when(mockedPage.getInstallationDate()).thenReturn(mockedDate);
         when(mockedPage.getLastModificationDate()).thenReturn(mockedDate);
         when(mockedPage.getInstalledBy()).thenReturn(1l);
         when(mockedPage.isProvided()).thenReturn(false);
-        when(engineSession.getTenantId()).thenReturn(1L);
 
-        zipFileUrl = getClass().getResource("/page.zip");
-        FileUtils.copyFileToDirectory(new File(zipFileUrl.toURI()), new File("target"));
-        final File zipFile = new File("target/page.zip");
-        when(tenantFolder.getTempFile("page.zip", 1L)).thenReturn(zipFile);
+        when(mockedApiExtension.getId()).thenReturn(PAGE_ID);
+        when(mockedApiExtension.getName()).thenReturn("custompage_apiExt");
+        when(mockedApiExtension.getDisplayName()).thenReturn("Page 1");
+        when(mockedApiExtension.getDescription()).thenReturn("This is a page description");
+        when(mockedApiExtension.getInstallationDate()).thenReturn(mockedDate);
+        when(mockedApiExtension.getLastModificationDate()).thenReturn(mockedDate);
+        when(mockedApiExtension.getInstalledBy()).thenReturn(1l);
+        when(mockedApiExtension.isProvided()).thenReturn(false);
 
-        when(constantsValue.getTempFolder()).thenReturn(zipFile.getParentFile());
+        when(engineSession.getTenantId()).thenReturn(TENANT_ID);
+
+        when(tenantFolder.getTempFile(PAGE_ZIP, TENANT_ID)).thenReturn(pageZipFile);
+        when(tenantFolder.getTempFile(PAGE_REST_API_ZIP, TENANT_ID)).thenReturn(pageZipFile);
+
+        when(constantsValue.getTempFolder()).thenReturn(pageZipFile.getParentFile());
         when(constantsValue.getPagesFolder()).thenReturn(pagesDir);
 
         pageDatastore = spy(new PageDatastore(engineSession, constantsValue, pageAPI, customPageService, compoundPermissionsMapping,
@@ -165,8 +190,21 @@ public class PageDatastoreTest extends APITestWithMock {
         pageToBeAdded.setUrlToken("custompage_page1");
         pageToBeAdded.setDisplayName("Page 1");
         pageToBeAdded.setDescription("This is a page description");
+        pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, pageZipFile.getName());
 
-        pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, zipFile.getName());
+        apiExtensionToBeAdded = new PageItem();
+        apiExtensionToBeAdded.setUrlToken("custompage_apiExt");
+        apiExtensionToBeAdded.setDisplayName("Page 1");
+        apiExtensionToBeAdded.setDescription("This is a page description");
+        apiExtensionToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getName());
+
+    }
+
+    private File deployZipFileToTarget(String zipFileName) throws IOException, URISyntaxException {
+        final File file = new File(getClass().getResource(zipFileName).toURI());
+        assertThat(file).as("file should exists " + file.getAbsolutePath()).exists();
+        FileUtils.copyFileToDirectory(file, new File("target"));
+        return new File("target/" + zipFileName);
     }
 
     @After
@@ -192,6 +230,20 @@ public class PageDatastoreTest extends APITestWithMock {
         assertNotNull(addedPage);
         assertTrue(new File("target/bonita-home/client/tenants/1/work/pages", addedPage.getUrlToken()).listFiles().length > 0);
     }
+
+    @Test
+    public void should_add_a_api_extension_add_related_permission() throws Exception {
+        // given
+        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
+
+        // when
+        pageDatastore.add(apiExtensionToBeAdded);
+
+        //then
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+    }
+
 
     @Test(expected = APIException.class)
     public void should_add_a_not_valid_page_rise_exception() {
@@ -222,7 +274,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
-        when(pageAPI.getPage(1l)).thenReturn(mockedPage);
+        when(pageAPI.getPage(mockedPage.getId())).thenReturn(mockedPage);
         final PageItem pageToRemove = pageDatastore.add(pageToBeAdded);
         final List<APIID> ids = new ArrayList<APIID>();
         ids.add(pageToRemove.getId());
@@ -278,11 +330,10 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void should_delete_compound_permission_when_deleting_page() throws Exception {
         // Given
-        deleteDir(pagesDir);
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
-        when(pageAPI.getPage(1l)).thenReturn(mockedPage);
+        when(pageAPI.getPage(mockedPage.getId())).thenReturn(mockedPage);
         final PageItem pageToRemove = pageDatastore.add(pageToBeAdded);
-        final List<APIID> ids = new ArrayList<APIID>();
+        final List<APIID> ids = new ArrayList<>();
         ids.add(pageToRemove.getId());
 
         // When
@@ -292,12 +343,56 @@ public class PageDatastoreTest extends APITestWithMock {
         verify(compoundPermissionsMapping).removeProperty(mockedPage.getName());
     }
 
+    @Test
+    public void should_delete_resource_permission_when_deleting_api_extension() throws Exception {
+        // Given
+        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
+        when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
+        final PageItem pageToRemove = pageDatastore.add(apiExtensionToBeAdded);
+        final List<APIID> ids = new ArrayList<>();
+        ids.add(pageToRemove.getId());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
+
+
+        // When
+        pageDatastore.delete(ids);
+
+        // then
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+    }
+
+    @Test
+    public void should_update_resource_permission_when_updating_api_extension() throws Exception {
+        // Given
+        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
+        when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
+        when(pageAPI.updatePage(eq(mockedApiExtension.getId()), any(PageUpdater.class))).thenReturn(mockedApiExtension);
+
+        final PageItem pageToRemove = pageDatastore.add(apiExtensionToBeAdded);
+        final APIID id = APIID.makeAPIID(mockedApiExtension.getId());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
+
+        File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
+        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
+
+        // When
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR + apiExtensionZipFile.getName());
+        pageDatastore.update(id, attributes);
+
+
+        // then
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+    }
+
+
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_adding_page_with_unauthorized_path() throws IOException {
         // Given
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
 
-        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", 1L);
+        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", TENANT_ID);
 
         // When
         pageDatastore.add(pageToBeAdded);
@@ -308,7 +403,7 @@ public class PageDatastoreTest extends APITestWithMock {
     public void it_throws_an_exception_when_cannot_write_file_on_add() throws IOException {
         // Given
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
-        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", 1L);
+        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", TENANT_ID);
 
         // When
         try {
@@ -326,11 +421,11 @@ public class PageDatastoreTest extends APITestWithMock {
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
-        doReturn(mockedPage).when(pageAPI).getPage(1L);
-        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", 1L);
+        doReturn(mockedPage).when(pageAPI).getPage(TENANT_ID);
+        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", TENANT_ID);
 
         // When
-        pageDatastore.update(APIID.makeAPIID(1L), attributes);
+        pageDatastore.update(APIID.makeAPIID(TENANT_ID), attributes);
 
     }
 
@@ -341,12 +436,12 @@ public class PageDatastoreTest extends APITestWithMock {
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
-        doReturn(mockedPage).when(pageAPI).getPage(1L);
-        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", 1L);
+        doReturn(mockedPage).when(pageAPI).getPage(TENANT_ID);
+        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", TENANT_ID);
 
         // When
         try {
-            pageDatastore.update(APIID.makeAPIID(1L), attributes);
+            pageDatastore.update(APIID.makeAPIID(TENANT_ID), attributes);
         } catch (final APIException e) {
             assertEquals(e.getMessage(), "java.io.IOException: error");
         }
@@ -381,7 +476,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageUpdater.setProcessDefinitionId(processId.toLong());
         final ArgumentCaptor<PageUpdater> argumentCaptor = ArgumentCaptor.forClass(PageUpdater.class);
 
-        verify(pageAPI, times(1)).updatePage(eq(1L), argumentCaptor.capture());
+        verify(pageAPI, times(1)).updatePage(eq(mockedPage.getId()), argumentCaptor.capture());
         assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(pageUpdater);
     }
 
@@ -394,6 +489,7 @@ public class PageDatastoreTest extends APITestWithMock {
         doReturn(zipContent).when(pageDatastore).readZipFile(mockedZipFile);
         doReturn(mockedPage).when(pageAPI).createPage(anyString(), any(byte[].class));
         pageDatastore.createEnginePage(pageItem, mockedZipFile);
+
         verify(pageAPI, times(0)).updatePage(anyLong(), any(PageUpdater.class));
     }
 
@@ -412,7 +508,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageUpdater.setProcessDefinitionId(processId.toLong());
         final ArgumentCaptor<PageUpdater> argumentCaptor = ArgumentCaptor.forClass(PageUpdater.class);
 
-        verify(pageAPI, times(1)).updatePage(eq(1L), argumentCaptor.capture());
+        verify(pageAPI, times(1)).updatePage(eq(mockedPage.getId()), argumentCaptor.capture());
         assertThat(argumentCaptor.getValue()).isEqualToComparingFieldByField(pageUpdater);
     }
 
@@ -449,7 +545,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         final PageCreator pageCreator = pageDatastore.buildPageCreatorFrom(pageItem);
 
-        final Map<PageField, Serializable> expectedFields = new HashMap<PageField, Serializable>();
+        final Map<PageField, Serializable> expectedFields = new HashMap<>();
         expectedFields.put(PageField.NAME, testUrlTokenString);
         expectedFields.put(PageField.CONTENT_NAME, testContentNameString);
         expectedFields.put(PageField.CONTENT_TYPE, ContentType.PAGE);
@@ -477,7 +573,7 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void testValidateZipContent() throws Exception {
         doReturn(false).when(pageDatastore).areResourcesAvailable(any(File.class));
-        try{
+        try {
             pageDatastore.validateZipContent(mockedZipFile);
         } catch (final Exception e) {
             assertThat(e).isInstanceOf(InvalidPageZipContentException.class);

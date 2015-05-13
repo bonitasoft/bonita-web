@@ -30,6 +30,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -47,6 +48,7 @@ import org.bonitasoft.engine.exception.InvalidPageZipInconsistentException;
 import org.bonitasoft.engine.exception.InvalidPageZipMissingAPropertyException;
 import org.bonitasoft.engine.exception.InvalidPageZipMissingIndexException;
 import org.bonitasoft.engine.exception.InvalidPageZipMissingPropertiesException;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -80,6 +82,14 @@ public class CustomPageService {
     private static final Map<String, File> PAGES_LIB_DIRECTORIES = new HashMap<>();
 
     public static final String RESOURCES_PROPERTY = "resources";
+    public static final String PROPERTY_CONTENT_TYPE = "contentType";
+    public static final String PROPERTY_API_EXTENSIONS = "apiExtensions";
+    public static final String PROPERTY_METHOD_MASK = "%s.method";
+    public static final String PROPERTY_PATH_TEMPLATE_MASK = "%s.pathTemplate";
+    public static final String PROPERTY_PERMISSIONS_MASK = "%s.permissions";
+    public static final String RESOURCE_PERMISSION_KEY_MASK = "%s|extension/%s";
+    public static final String RESOURCE_PERMISSION_VALUE = "[%s]";
+    public static final String EXTENSION_SEPARATOR = ",";
 
     public static final String NAME_PROPERTY = "name";
 
@@ -117,7 +127,7 @@ public class CustomPageService {
 
     public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider, String classFileName)
             throws CompilationFailedException, IOException {
-        final File PageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(),classFileName);
+        final File PageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(), classFileName);
         return pageClassLoader.parseClass(PageControllerFile);
     }
 
@@ -305,13 +315,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final Properties properties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(properties);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     protected Set<String> getCustomPagePermissions(final SimpleProperties pageProperties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                   final boolean alsoReturnResourcesNotFound) {
         final Set<String> pageRestResources = new HashSet<String>(pageProperties.getPropertyAsSet(RESOURCES_PROPERTY));
         // pageRestResources.addAll(Arrays.asList(GET_SYSTEM_SESSION, GET_PORTAL_PROFILE, GET_IDENTITY_USER));
         final Set<String> permissions = new HashSet<String>();
@@ -333,13 +343,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final File file, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(file);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     public void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
-            final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
+                                                    final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_PORTAL_PROFILE));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_IDENTITY_USER));
@@ -352,5 +362,47 @@ public class CustomPageService {
 
     public Page getPage(final APISession apiSession, final long pageId) throws BonitaException {
         return getPageAPI(apiSession).getPage(pageId);
+    }
+
+    public void removeRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider) {
+        final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
+        for (String key : permissionsMapping.keySet()) {
+            resourcesPermissionsMapping.removeProperty(key);
+        }
+
+    }
+
+    public void addRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider) {
+        final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
+        for (String key : permissionsMapping.keySet()) {
+            resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));
+        }
+    }
+
+    private Map<String, String> getPermissionMapping(PageResourceProvider pageResourceProvider) {
+        Map<String, String> permissionsMapping;
+        final File pageProperties = pageResourceProvider.getResourceAsFile("page.properties");
+        permissionsMapping = getApiExtensionResourcesPermissionsMapping(pageProperties);
+        return permissionsMapping;
+    }
+
+    private Map<String, String> getApiExtensionResourcesPermissionsMapping(File pagePropertyFile) {
+        final SimpleProperties pageProperties = new SimpleProperties(pagePropertyFile);
+        Map<String, String> permissionsMap = new HashMap<>();
+        if (ContentType.API_EXTENSION.equals(pageProperties.getProperty(PROPERTY_CONTENT_TYPE))) {
+            final String apiExtensionList = pageProperties.getProperty(PROPERTY_API_EXTENSIONS);
+            final String[] apiExtensions = apiExtensionList.split(EXTENSION_SEPARATOR);
+            for (String apiExtension : apiExtensions) {
+                final String method = pageProperties.getProperty(String.format(PROPERTY_METHOD_MASK, apiExtension.trim()));
+                final String pathTemplate = pageProperties.getProperty(String.format(PROPERTY_PATH_TEMPLATE_MASK, apiExtension.trim()));
+                final String permissions = pageProperties.getProperty(String.format(PROPERTY_PERMISSIONS_MASK, apiExtension.trim()));
+                permissionsMap.put(String.format(RESOURCE_PERMISSION_KEY_MASK, method, pathTemplate), String.format(RESOURCE_PERMISSION_VALUE, permissions));
+            }
+        }
+        return permissionsMap;
+    }
+
+    public PageResourceProvider getPageResourceProvider(Page page, long tenantId) {
+        return new PageResourceProvider(page,tenantId);
     }
 }
