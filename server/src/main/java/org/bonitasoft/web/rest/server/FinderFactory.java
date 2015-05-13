@@ -124,7 +124,7 @@ public class FinderFactory {
     public Serializable getContextResultElement(final Serializable object) {
         final ResourceFinder resourceFinderFor = getResourceFinderFor(object);
         if (resourceFinderFor != null) {
-            return resourceFinderFor.getContextResultElement(object);
+            return resourceFinderFor.toClientObject(object);
         }
         return object;
     }

@@ -48,7 +48,7 @@ public class FormMappingResourceTest extends RestletTest {
         final Response response = request("/form/mapping?p=2&c=10&f=type=TASK").get();
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
-        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("20-29/1");
+        assertThat(response.getHeaders().getFirstValue("Content-range")).isEqualTo("2-10/1");
     }
 
     @Test
