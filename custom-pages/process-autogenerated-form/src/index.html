@@ -7,7 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- build:css resources/css/styles.css-->
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- <link rel="stylesheet" href="themeResource?theme=portal&location=bonita.css">
+  -->
   <!-- endbuild -->
 </head>
 
@@ -16,7 +19,9 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <div class="alert alert-warning"><b>Attention</b>: this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms.</div>
+        <div class="alert alert-warning"> <b>Attention</b>
+          : this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms.
+        </div>
       </div>
     </div>
     <div class="row">
@@ -24,41 +29,58 @@
         <h1>{{process.displayName}}</h1>
       </div>
     </div>
-
     <div class="row">
       <div class="col-lg-12 text-center">
-        <div style="float: right; width:100px"><button class="btn btn-danger btn-block" ng-click="fillData()" title="Fill in each form inputs with fake data." ng-if="contract.inputs.length>0">Autofill</button></div>
+        <div style="float: right; width:100px">
+          <button class="btn btn-danger btn-block" ng-click="fillData()" title="Fill in each form inputs with fake data." ng-if="contract.inputs.length>0">Autofill</button>
+        </div>
       </div>
     </div>
 
     <div class="row">
-      <form>
 
-        <div class="form-group" ng-repeat="input in contract.inputs">
-          {{
+      <div class="form-group" ng-repeat="input in contract.inputs">
+        {{
           ::dataToSend[input.name] = null;
-          }}
-          <div class="hidden">{{::autofill[input.name] = generateValue(input) }}</div>
-          <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-          <input type="text" class="form-control" id="{{input.name}}" ng-if="input.inputs.length===0" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [\'a\' , \'list\', \'of values\']':'Expecting a ' + input.type + ' value.'}}">
-          <input type="text" class="form-control" id="{{input.name}}" ng-if="input.inputs.length>0" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [{\'property\':\'value\'}, {...}]':'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
+        }}
+        <div class="hidden">{{::autofill[input.name] = generateValue(input) }}</div>
+        <label for="{{input.name}}">{{input.name}}</label>
+        - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i> 
+        <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-if="input.inputs.length===0 && input.type!=='FILE'" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [\'a\' , \'list\', \'of values\']':'Expecting a ' + input.type + ' value.'}}">
+        <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-if="input.inputs.length> 0 && input.type!=='FILE'" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [{\'property\':\'value\'}, {...}]':'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
+        <form action="{{importUrl}}"
+          ng-if="input.inputs.length>0 && input.type==='FILE'"
+          name="uploadForm{{$index}}"
+          ng-upload="onUploadSuccess(content, input, this)"
+          >
+          <div class="input-group file-upload">
+            <input type="text" readonly="" disabled placeholder="{{'Select your file' | translate}}" value="{{input.value}}" name="{{input.name}}" class="form-control">
+            <div class="input-group-btn">
+              <div class="btn" ng-class="{'btn-default disabled':$isUploading, 'btn-primary':!$isUploading}">
+                <input class="file-upload-input" ng-class="{'file-upload-input--disabled':$isUploading}" name="file" type="file" ng-model="input.value" required id="auto_uploading_file_input_{{$index}}" file-input-auto-submit/>
+                <span class="fa" ng-class="{'fa fa-spinner fa-pulse':$isUploading, 'fa fa-folder':!$isUploading}" ></span>
+              </div>
+            </div>
+          </div>
+        </form>
 
-        </div>
+      </div>
 
+      <pre class="alert alert-danger" ng-if="message">{{ message }}</pre>
+      <div style="margin:auto; width:100px">
+        <button type="submit" class="btn btn-primary btn-block" ng-click="postData()">Start</button>
+      </div>
 
-        <pre class="alert alert-danger" ng-if="message">{{ message }}</pre>
-        <div style="margin:auto; width:100px"><button type="submit" class="btn btn-primary btn-block" ng-click="postData()">Start</button></div>
-
-      </form>
     </div>
 
   </div>
-</body>
 
   <!-- build:js resources/js/app.js -->
   <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/angular-bootstrap/dist/ui-bootstrap.js"></script>
   <script src="../node_modules/angular-resource/angular-resource.js"></script>
+  <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
+  <script src="../node_modules/ngUpload/ng-upload.min.js"></script>
   <script src="../target/work/templates.js"></script>
   <script src="js/resources.js"></script>
   <script src="js/app.js"></script>
@@ -66,11 +88,11 @@
   <!-- endbuild -->
 
   <!-- build:remove -->
-    <!-- for development only! MUST be ignored at build time -->
-    <script src="../node_modules/angular-mocks/angular-mocks.js"></script>
-    <script src="js/dev-only.js"></script>
+  <!-- for development only! MUST be ignored at build time -->
+  <script src="../node_modules/angular-mocks/angular-mocks.js"></script>
+  <script src="js/dev-only.js"></script>
   <!-- endbuild -->
-
+  <iframe name="fileUploadIframe" height="0" width="0"></iframe>
 </body>
 
 </html>
