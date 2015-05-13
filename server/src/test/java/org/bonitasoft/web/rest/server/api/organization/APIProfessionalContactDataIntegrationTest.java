@@ -29,6 +29,7 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
+import java.util.Arrays;
 /**
  * @author Paul AMAR
  */
