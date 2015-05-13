@@ -28,8 +28,6 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
-
-import java.util.Arrays;
 /**
  * @author Paul AMAR
  */
@@ -87,8 +85,6 @@ public class APIProfessionalContactDataIntegrationTest extends AbstractConsoleTe
 
         final ProfessionalContactDataItem expectedItem = this.apiProfessionalContactData.get(makeAPIID(user.getId()));
         assertItemEquals(expectedItem, updatedItem);
-        // delete item
-        this.apiProfessionalContactData.delete(Arrays.asList(expectedItem.getId()));
     }
 
     @Test public void 
@@ -104,8 +100,5 @@ public class APIProfessionalContactDataIntegrationTest extends AbstractConsoleTe
         assertEquals(result.getCity(), null);
         assertEquals(result.getAddress(), "New address");
         assertEquals(result.getBuilding(), null);
-        
-        // delete item
-        this.apiProfessionalContactData.delete(Arrays.asList(res.getId()));
     }
 }
