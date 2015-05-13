@@ -8,8 +8,6 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.ext.servlet.ServerServlet;
@@ -20,8 +18,7 @@ public class BonitaRestletApplicationServlet extends ServerServlet {
 
     @Override
     protected Application createApplication(final Context parentContext) {
-        TenantSpringBeanAccessor beanAccessor = new TenantSpringBeanAccessor(WebBonitaConstantsUtils.getInstance().getConfFolder());
-        final BonitaRestletApplication bonitaRestletApplication = new BonitaRestletApplication(new FinderFactory(), beanAccessor);
+        final BonitaRestletApplication bonitaRestletApplication = new BonitaRestletApplication(new FinderFactory());
         bonitaRestletApplication.setContext(parentContext.createChildContext());
         return bonitaRestletApplication;
     }

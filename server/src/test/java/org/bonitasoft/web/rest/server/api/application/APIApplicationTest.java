@@ -6,16 +6,18 @@ import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
+import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
+import org.bonitasoft.web.rest.server.api.deployer.PageDeployer;
 import org.bonitasoft.web.rest.server.api.deployer.UserDeployer;
 import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStore;
 import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStoreCreator;
+import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.Deployer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -43,11 +45,21 @@ public class APIApplicationTest {
     @Mock
     private ApplicationDataStore dataStore;
 
-    @InjectMocks
-    private APIApplication apiApplication;
-
     @Mock(answer = Answers.RETURNS_MOCKS)
     private APIServletCall caller;
+
+
+    @Mock
+    private APIApplicationDataStoreFactory applicationDataStoreFactory;
+
+    @Mock
+    private ApplicationDataStoreCreator creator;
+
+    @Mock
+    private PageDatastore pageDatastore;
+
+    @InjectMocks
+    private APIApplication apiApplication;
 
     @Mock
     private HttpSession httpSession;
@@ -61,6 +73,8 @@ public class APIApplicationTest {
         given(caller.getHttpSession()).willReturn(httpSession);
         given(httpSession.getAttribute("apiSession")).willReturn(apiSession);
         given(dataStoreCreator.create(apiSession)).willReturn(dataStore);
+        given(applicationDataStoreFactory.createPageDataStore(apiSession)).willReturn(pageDatastore);
+        given(creator.create(apiSession)).willReturn(dataStore);
     }
 
     @Test
@@ -69,8 +83,8 @@ public class APIApplicationTest {
         final ApplicationItem itemToCreate = mock(ApplicationItem.class);
         final ApplicationItem createdItem = mock(ApplicationItem.class);
         given(dataStore.add(itemToCreate)).willReturn(createdItem);
-
-        //when
+        given(dataStore.add(itemToCreate)).willReturn(createdItem);
+                //when
         final ApplicationItem retrievedItem = apiApplication.add(itemToCreate);
 
         //then
@@ -110,7 +124,7 @@ public class APIApplicationTest {
     }
 
     @Test
-    public void fill_delploys_should_add_deployers_for_createdBy_updatedBy_and_ProfileId() throws Exception {
+    public void fill_delploys_should_add_deployers_for_createdBy_updatedBy_ProfileId_and_LayoutId() throws Exception {
         //given
         final ApplicationItem item = mock(ApplicationItem.class);
 
@@ -119,11 +133,13 @@ public class APIApplicationTest {
 
         //then
         final Map<String, Deployer> deployers = apiApplication.getDeployers();
-        assertThat(deployers).hasSize(3);
+        assertThat(deployers).hasSize(5);
         assertThat(deployers.keySet()).contains(ApplicationItem.ATTRIBUTE_CREATED_BY, ApplicationItem.ATTRIBUTE_UPDATED_BY,
                 ApplicationItem.ATTRIBUTE_PROFILE_ID);
         assertThat(deployers.get(ApplicationItem.ATTRIBUTE_CREATED_BY)).isExactlyInstanceOf(UserDeployer.class);
         assertThat(deployers.get(ApplicationItem.ATTRIBUTE_UPDATED_BY)).isExactlyInstanceOf(UserDeployer.class);
+        assertThat(deployers.get(ApplicationItem.ATTRIBUTE_LAYOUT_ID)).isExactlyInstanceOf(PageDeployer.class);
+        assertThat(deployers.get(ApplicationItem.ATTRIBUTE_THEME_ID)).isExactlyInstanceOf(PageDeployer.class);
     }
 
 }

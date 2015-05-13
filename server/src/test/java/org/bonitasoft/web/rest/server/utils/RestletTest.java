@@ -12,10 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.web.rest.server.BonitaRestletApplication;
 import org.bonitasoft.web.rest.server.FinderFactory;
-import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.junit.After;
 import org.junit.Before;
 import org.restlet.Application;
@@ -59,12 +57,9 @@ public abstract class RestletTest {
     protected Application configureApplication() {
         final ServerResource resource = configureResource();
         final FinderFactory finderFactory = getFinderFactory(resource);
-        return new BonitaRestletApplication(finderFactory, configureTenantSpringBeanAccessor());
+        return new BonitaRestletApplication(finderFactory);
     }
 
-    protected TenantSpringBeanAccessor configureTenantSpringBeanAccessor() {
-        return new TenantSpringBeanAccessor(WebBonitaConstantsUtils.getInstance().getConfFolder());
-    }
 
     /**
      * Create a request builder with server baseUri as base path

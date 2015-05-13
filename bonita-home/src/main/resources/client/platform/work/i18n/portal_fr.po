@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-18 03:02+0200\n"
-"PO-Revision-Date: 2015-05-04 04:41-0400\n"
+"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"PO-Revision-Date: 2015-04-13 05:55-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /BS_12613_application_layout/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour ce faire, consultez la page %entitymappingprofilelink%."
@@ -428,7 +428,7 @@ msgid "BPM services"
 msgstr "Services BPM"
 
 msgid "Back"
-msgstr "Précédent"
+msgstr "Retour"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -1330,9 +1330,6 @@ msgstr "Monitoring"
 msgid "More"
 msgstr "Détails"
 
-msgid "More (BETA)"
-msgstr "More (BETA)"
-
 msgid "Move this element after the next one"
 msgstr "Déplacer cet élément après le suivant"
 
@@ -1371,9 +1368,6 @@ msgstr "Nom de l'utilisateur qui a démarré le cas"
 
 msgid "Name of the variable"
 msgstr "Nom de la variable"
-
-msgid "New process more details view"
-msgstr "New process more details view"
 
 msgid "Next"
 msgstr "Suivant"
@@ -1823,7 +1817,7 @@ msgid "Start an instance of process %app_name%"
 msgstr "Démarrer une instance de processus %app_name%"
 
 msgid "Start date"
-msgstr "Débuté le"
+msgstr "Date de début"
 
 msgid "Start this process"
 msgstr "Démarrer ce processus"
