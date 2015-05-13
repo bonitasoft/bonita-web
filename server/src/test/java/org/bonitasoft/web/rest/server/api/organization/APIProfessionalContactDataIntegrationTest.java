@@ -87,7 +87,7 @@ public class APIProfessionalContactDataIntegrationTest extends AbstractConsoleTe
         final ProfessionalContactDataItem expectedItem = this.apiProfessionalContactData.get(makeAPIID(user.getId()));
         assertItemEquals(expectedItem, updatedItem);
         // delete item
-        this.apiProfessionalContactData.delete(Arrays.asList(APIID.makeAPIID(user.getId())));
+        this.apiProfessionalContactData.delete(Arrays.asList(expectedItem.getId()));
     }
 
     @Test public void 
