@@ -1,7 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static junit.framework.Assert.assertNull;
-import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 
 import junit.framework.Assert;
@@ -15,7 +14,6 @@ import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
@@ -134,12 +132,12 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         TestCategoryFactory.removeTestCategoryFromList(category);
     }
-
+    /*
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
         CategoryItem categoryItem = aCategoryItem().build();
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
         api.runDelete(Arrays.asList(categoryItem.getId()));
-    }
+    }*/
 }
