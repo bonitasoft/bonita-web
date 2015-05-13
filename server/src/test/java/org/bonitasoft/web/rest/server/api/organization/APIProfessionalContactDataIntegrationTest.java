@@ -86,6 +86,8 @@ public class APIProfessionalContactDataIntegrationTest extends AbstractConsoleTe
 
         final ProfessionalContactDataItem expectedItem = this.apiProfessionalContactData.get(makeAPIID(user.getId()));
         assertItemEquals(expectedItem, updatedItem);
+        // delete item
+        this.apiProfessionalContactData.delete(Arrays.asList(APIID.makeAPIID(user.getId())));
     }
 
     @Test public void 
@@ -101,5 +103,8 @@ public class APIProfessionalContactDataIntegrationTest extends AbstractConsoleTe
         assertEquals(result.getCity(), null);
         assertEquals(result.getAddress(), "New address");
         assertEquals(result.getBuilding(), null);
+        
+        // delete item
+        this.apiProfessionalContactData.delete(Arrays.asList(res.getId()));
     }
 }
