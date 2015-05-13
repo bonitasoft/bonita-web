@@ -64,11 +64,10 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 /**
  * @author Fabio Lombardi, Anthony Birembaut
- *
  */
 
 public class PageDatastore extends CommonDatastore<PageItem, Page> implements DatastoreHasAdd<PageItem>, DatastoreHasUpdate<PageItem>,
-DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
+        DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     private static final String INDEX_GROOVY = "Index.groovy";
 
@@ -97,9 +96,9 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     private final BonitaHomeFolderAccessor tenantFolder;
 
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final PageAPI pageAPI,
-            final CustomPageService customPageService,
-            final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final BonitaHomeFolderAccessor tenantFolder) {
+                         final CustomPageService customPageService,
+                         final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping,
+                         final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.pageAPI = pageAPI;
@@ -129,14 +128,16 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
             validateZipContent(unzipPageTempFolder);
             final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new File(unzipPageTempFolder, PAGE_PROPERTIES),
                     resourcesPermissionsMapping, false);
-            final PageItem addedPage = convertEngineToConsoleItem(createEnginePage(pageItem, zipFile));
+            final Page page = createEnginePage(pageItem, zipFile);
+            final PageItem addedPage = convertEngineToConsoleItem(page);
             savePageInBonitahome(addedPage.getUrlToken(), unzipPageTempFolder);
+            customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
             customPageService.addPermissionsToCompoundPermissions(addedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                     resourcesPermissionsMapping);
             return addedPage;
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
-        }catch (final Exception e) {
+        } catch (final Exception e) {
             throw new APIException(e);
         }
     }
@@ -181,9 +182,9 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                 }
             }
         }
-        if(!indexOK){
+        if (!indexOK) {
             final File indexInResources = new File(unzipPageFolder.getPath(), CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
-            if(indexInResources.exists()){
+            if (indexInResources.exists()) {
                 indexOK = true;
             }
         }
@@ -260,6 +261,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 if (!page.isProvided()) {
+                    customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
                     pageAPI.deletePage(id.toLong());
                     customPageService.removePage(getEngineSession(), page.getName());
                     compoundPermissionsMapping.removeProperty(page.getName());
@@ -280,7 +282,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     @Override
     public ItemSearchResult<PageItem> search(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                             final Map<String, String> filters) {
         // Build search
         final SearchOptionsCreator creator = makeSearchOptionCreator(page, resultsByPage, search, orders, filters);
 
@@ -301,7 +303,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                                           final Map<String, String> filters) {
         return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, getSearchDescriptorConverter()), new Filters(filters,
                 new PageFilterCreator(getSearchDescriptorConverter())));
     }
@@ -345,11 +347,13 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                             resourcesPermissionsMapping, false);
                     pageUpdater.setContentName(originalFileName);
                     updatePageContent(id, zipFile, oldURLToken);
-                    updatedPage = convertEngineToConsoleItem(pageAPI.updatePage(id.toLong(), pageUpdater));
+                    final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
+                    updatedPage = convertEngineToConsoleItem(page);
                     savePageInBonitahome(updatedPage.getUrlToken(), unzipPageTempFolder);
                     if (oldURLToken != updatedPage.getUrlToken()) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
                     }
+                    customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
                     customPageService.addPermissionsToCompoundPermissions(updatedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                             resourcesPermissionsMapping);
                 }
@@ -363,9 +367,11 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
-    CompilationFailedException, BonitaException {
+            CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            pageAPI.updatePageContent(id.toLong(), readZipFile(zipFile));
+            final Long pageId = id.toLong();
+            customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(pageAPI.getPage(pageId), getEngineSession().getTenantId()));
+            pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
             zipFile.delete();
         }
         customPageService.removePage(getEngineSession(), oldURLToken);
