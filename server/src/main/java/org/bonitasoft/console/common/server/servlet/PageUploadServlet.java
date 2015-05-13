@@ -41,6 +41,8 @@ public class PageUploadServlet extends TenantFileUploadServlet {
 
     protected static final String ACTION_PARAM_NAME = "action";
 
+    private static final String PROCESS_PARAM_NAME = "process";
+
     protected static final String ADD_ACTION = "add";
 
     protected static final String EDIT_ACTION = "edit";
@@ -88,11 +90,22 @@ public class PageUploadServlet extends TenantFileUploadServlet {
     protected Set<String> getPagePermissions(final HttpServletRequest request, final File uploadedFile, final boolean checkIfItAlreadyExists)
             throws InvalidPageZipContentException, InvalidPageTokenException, AlreadyExistsException, BonitaException,
             IOException, InvalidPageZipContentException {
+
         final APISession apiSession = getAPISession(request);
+        final Long processDefinitionId = getProcessDefinitionId(request);
         final CustomPageService customPageService = new CustomPageService();
         final Properties properties = customPageService.getPageProperties(apiSession, FileUtils.readFileToByteArray(uploadedFile),
-                checkIfItAlreadyExists);
+                checkIfItAlreadyExists, processDefinitionId);
         return customPageService.getCustomPagePermissions(properties, PropertiesFactory.getResourcesPermissionsMapping(apiSession.getTenantId()), true);
+    }
+
+    private Long getProcessDefinitionId(final HttpServletRequest request) {
+        final String processStr = request.getParameter(PROCESS_PARAM_NAME);
+        Long processDefinitionId = null;
+        if (processStr != null) {
+            processDefinitionId = Long.parseLong(processStr);
+        }
+        return processDefinitionId;
     }
 
 }

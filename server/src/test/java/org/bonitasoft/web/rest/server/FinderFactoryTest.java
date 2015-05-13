@@ -9,10 +9,12 @@
 package org.bonitasoft.web.rest.server;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+
+import java.io.Serializable;
+import java.util.Collections;
 
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
@@ -35,8 +37,12 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
@@ -50,9 +56,6 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
-
-import java.io.Serializable;
-import java.util.Collections;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FinderFactoryTest {
@@ -128,6 +131,7 @@ public class FinderFactoryTest {
     public void should_return_ProcessInstanciationResource_for_ProcessInstanciationResourceFinder() {
         final ProcessInstantiationResourceFinder processInstanciationResourceFinder = spy(new ProcessInstantiationResourceFinder());
         doReturn(processAPI).when(processInstanciationResourceFinder).getProcessAPI(any(Request.class));
+        doReturn(apiSession).when(processInstanciationResourceFinder).getAPISession(any(Request.class));
         final ServerResource serverResource = processInstanciationResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(ProcessInstantiationResource.class);
     }
@@ -198,10 +202,19 @@ public class FinderFactoryTest {
 
     @Test
     public void should_return_TaskExecutionResource_for_TaskExecutionResourceFinder() {
-        final UserTaskContractResourceFinder userTaskContractResourceFinder = spy(new UserTaskContractResourceFinder());
-        doReturn(processAPI).when(userTaskContractResourceFinder).getProcessAPI(any(Request.class));
-        final ServerResource serverResource = userTaskContractResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(UserTaskContractResource.class);
+        final UserTaskExecutionResourceFinder userTaskExecutionResourceFinder = spy(new UserTaskExecutionResourceFinder());
+        doReturn(processAPI).when(userTaskExecutionResourceFinder).getProcessAPI(any(Request.class));
+        doReturn(apiSession).when(userTaskExecutionResourceFinder).getAPISession(any(Request.class));
+        final ServerResource serverResource = userTaskExecutionResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(UserTaskExecutionResource.class);
+    }
+
+    @Test
+    public void should_return_ProcessDefinitionDesignResource_for_ProcessDefinitionDesignResourceFinder() {
+        final ProcessDefinitionDesignResourceFinder processDefinitionDesignResourceFinder = spy(new ProcessDefinitionDesignResourceFinder());
+        doReturn(processAPI).when(processDefinitionDesignResourceFinder).getProcessAPI(any(Request.class));
+        final ServerResource serverResource = processDefinitionDesignResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(ProcessDefinitionDesignResource.class);
     }
 
     @Test
@@ -222,38 +235,38 @@ public class FinderFactoryTest {
 
     @Test
     public void should_getResourceFinderFor_return_result_of_first_handler(){
-        FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
+        final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(Serializable object) {
+            public Serializable getContextResultElement(final Serializable object) {
                 return "resultA";
             }
 
             @Override
-            public boolean handlesResource(Serializable object) {
+            public boolean handlesResource(final Serializable object) {
                 return object.equals("objectA");
             }
         }));
 
-        Serializable objectA = finderFactory.getContextResultElement("objectA");
+        final Serializable objectA = finderFactory.getContextResultElement("objectA");
 
         assertThat(objectA).isEqualTo("resultA");
     }
 
     @Test
     public void should_getResourceFinderFor_return_the_object_if_no_handler(){
-        FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
+        final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(Serializable object) {
+            public Serializable getContextResultElement(final Serializable object) {
                 return "resultA";
             }
 
             @Override
-            public boolean handlesResource(Serializable object) {
+            public boolean handlesResource(final Serializable object) {
                 return object.equals("objectB");
             }
         }));
 
-        Serializable objectA = finderFactory.getContextResultElement("objectA");
+        final Serializable objectA = finderFactory.getContextResultElement("objectA");
 
         assertThat(objectA).isEqualTo("objectA");
     }

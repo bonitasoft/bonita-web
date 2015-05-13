@@ -264,7 +264,23 @@
         <servlet-class>org.bonitasoft.console.server.ConsoleServiceServlet</servlet-class>
     </servlet>
 
-    <!-- UserXP file upload servlets -->
+    <!-- Portal file upload servlets -->
+    <servlet>
+        <servlet-name>fileUploadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>formFileUploadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>json</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ReturnOriginalFilename</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
     <servlet>
         <servlet-name>processUploadServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
@@ -280,12 +296,6 @@
             <param-name>SupportedExtensions</param-name>
             <param-value>xml</param-value>
         </init-param>
-    </servlet>
-
-
-    <servlet>
-        <servlet-name>fileUploadServlet</servlet-name>
-        <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>imageUploadServlet</servlet-name>

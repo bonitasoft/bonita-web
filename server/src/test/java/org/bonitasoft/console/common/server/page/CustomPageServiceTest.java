@@ -4,11 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,7 +44,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class CustomPageServiceTest {
 
     @Spy
-    private final CustomPageService customPageService = new CustomPageService();
+    private final CustomPageService customPageService = spy(new CustomPageService());
 
     @Mock
     CompoundPermissionsMapping compoundPermissionsMapping;
@@ -222,6 +228,21 @@ public class CustomPageServiceTest {
 
         // Then
         verify(compoundPermissionsMapping).setPropertyAsSet("customPage1", customPagePermissions);
+    }
+
+    @Test
+    public void should_GetPageProperties_does_not_throws_already_exist_exception_if_checkIfItAlreadyExists_is_false() throws Exception {
+        //given
+        final boolean checkIfItAlreadyExists = false;
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        doReturn(new Properties()).when(pageAPI).getPageProperties(any(byte[].class), eq(checkIfItAlreadyExists));
+
+        //when
+        final byte[] zipContent = new byte[0];
+        customPageService.getPageProperties(apiSession, zipContent, checkIfItAlreadyExists, 123123L);
+
+        //then
+        verify(pageAPI, times(0)).getPageByNameAndProcessDefinitionId(anyString(), anyLong());
     }
 
     @Test
