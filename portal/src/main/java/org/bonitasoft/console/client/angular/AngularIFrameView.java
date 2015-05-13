@@ -41,7 +41,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String APPLICATION_LISTING_PAGE = "applicationslistingadmin";
 
-    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "ngprocessmoredetailsadmin";
+    public static final String PROCESS_MORE_DETAILS_ADMIN_TOKEN = "processmoredetailsadmin";
 
     public static final String CASE_LISTING_ARCHIVED_TAB = "archived";
 
@@ -57,7 +57,38 @@ public class AngularIFrameView extends RawView {
 
     private String token;
 
+    public static Map<String, String> angularViewsMap = new HashMap<String, String>();
+
+    /**
+     * add a route support to angular
+     *
+     * @param token the gwt token to match
+     * @param route the matching angular route
+     */
+    public static void addTokenSupport(final String token, final String route) {
+        angularViewsMap.put(token, route);
+    }
+
+    /**
+     * get route associated to given token when it exists, null otherwise
+     * 
+     * @param token the token to get the route from
+     * @return the route
+     */
+    public static String getRoute(final String token) {
+        return angularViewsMap.get(token);
+    }
+
+    /**
+     * @param token2
+     * @return
+     */
+    public static boolean supportsToken(final String token) {
+        return angularViewsMap.containsKey(token);
+    }
+
     public AngularIFrameView() {
+
         MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
 
             @Override

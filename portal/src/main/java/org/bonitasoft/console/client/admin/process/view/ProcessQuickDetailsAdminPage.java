@@ -30,13 +30,12 @@ import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.ProcessMetadataBuilder;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.NameAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
-import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
@@ -73,41 +72,14 @@ public class ProcessQuickDetailsAdminPage extends ItemQuickDetailsPage<ProcessIt
 
     @Override
     protected void buildToolbar(final ProcessItem process) {
-        addToolbarLink(new MoreButton(_("Show more details about this process"), createMoreDetailsAction(process)));
-        addToolbarLink(new Button("btn-more2", _("More (BETA)"), _("New process more details view"), createNewMoreDetailsAction(process)));
+        addToolbarLink(new MoreButton(_("Show more details about this process"), createAngularMoreDetailsAction(process)));
 
     }
 
-    private Action createMoreDetailsAction(final ProcessItem process) {
-    	return new CheckValidSessionBeforeAction(new ActionShowView(new ProcessMoreDetailsAdminPage(process)));
-    }
-
-    private Action createNewMoreDetailsAction(final ProcessItem process) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new PageOnItem<IItem>(process.getId(), ProcessDefinition.get()) {
-
-
-            @Override
-            public String getToken() {
-                addParameter(PARAMETER_ITEM_ID, getItemId().toString());
-                return super.getToken();
-            }
-
-            @Override
-            protected void defineTitle(final IItem item) {
-
-            }
-
-            @Override
-            protected void buildView(final IItem item) {
-            }
-
-            @Override
-            public String defineToken() {
-                return AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN;
-            }
-
-
-        }));
+    private Action createAngularMoreDetailsAction(final ProcessItem process) {
+        final TreeIndexed<String> tree = new TreeIndexed<String>();
+        tree.addValue(PageOnItem.PARAMETER_ITEM_ID, process.getId().toString());
+        return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, tree));
     }
 
     @Override
