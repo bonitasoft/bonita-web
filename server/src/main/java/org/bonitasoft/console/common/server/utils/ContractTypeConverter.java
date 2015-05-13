@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +76,7 @@ public class ContractTypeConverter {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
-        final Map<String, Serializable> contractDefinitionMap = createContractInputMap(contractDefinition.getInputs());
+        final Map<String, Serializable> contractDefinitionMap = contractDefinition == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(contractDefinition.getInputs());
 
         for (final Entry<String, Serializable> inputEntry : input.entrySet()) {
             processedInputs.put(inputEntry.getKey(), convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey())));

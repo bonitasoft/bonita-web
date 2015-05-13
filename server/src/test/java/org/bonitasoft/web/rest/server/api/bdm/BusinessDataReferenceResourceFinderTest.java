@@ -1,19 +1,14 @@
 package org.bonitasoft.web.rest.server.api.bdm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
 import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ContextResultElement;
 import org.junit.Test;
-import org.restlet.Response;
-import org.restlet.data.Status;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BusinessDataReferenceResourceFinderTest {
 
@@ -26,9 +21,14 @@ public class BusinessDataReferenceResourceFinderTest {
         MultipleBusinessDataReferenceImpl bizDataRef = new MultipleBusinessDataReferenceImpl("Ticket", "com.acme.object.Ticket", Arrays.asList(7L, 8L));
 
 
-        Serializable contextResultElement = businessDataReferenceResourceFinder.getContextResultElement(bizDataRef);
+        Serializable contextResultElement = businessDataReferenceResourceFinder.toClientObject(bizDataRef);
 
-        assertThat(contextResultElement).isEqualTo(new ContextResultElement("com.acme.object.Ticket", "[7, 8]", "API/bdm/businessData/com.acme.object.Ticket/?q=findByIds&f=ids=7,8"));
+        assertThat(contextResultElement).isInstanceOf(MultipleBusinessDataReferenceClient.class);
+        final MultipleBusinessDataReferenceClient businessDataReferenceClient = (MultipleBusinessDataReferenceClient) contextResultElement;
+        assertThat(businessDataReferenceClient.getName()).isEqualTo("Ticket");
+        assertThat(businessDataReferenceClient.getType()).isEqualTo("com.acme.object.Ticket");
+        assertThat(businessDataReferenceClient.getStorageIds()).containsExactly(7L, 8L);
+        assertThat(businessDataReferenceClient.getLink()).isEqualTo("API/bdm/businessData/com.acme.object.Ticket/?q=findByIds&f=ids=7,8");
     }
 
     @Test
@@ -37,9 +37,14 @@ public class BusinessDataReferenceResourceFinderTest {
         SimpleBusinessDataReferenceImpl bizDataRef = new SimpleBusinessDataReferenceImpl("Ticket", "com.acme.object.Ticket", 8L);
 
 
-        Serializable contextResultElement = businessDataReferenceResourceFinder.getContextResultElement(bizDataRef);
+        Serializable contextResultElement = businessDataReferenceResourceFinder.toClientObject(bizDataRef);
 
-        assertThat(contextResultElement).isEqualTo(new ContextResultElement("com.acme.object.Ticket","8","API/bdm/businessData/com.acme.object.Ticket/8"));
+        assertThat(contextResultElement).isInstanceOf(SimpleBusinessDataReferenceClient.class);
+        final SimpleBusinessDataReferenceClient businessDataReferenceClient = (SimpleBusinessDataReferenceClient) contextResultElement;
+        assertThat(businessDataReferenceClient.getName()).isEqualTo("Ticket");
+        assertThat(businessDataReferenceClient.getType()).isEqualTo("com.acme.object.Ticket");
+        assertThat(businessDataReferenceClient.getStorageId()).isEqualTo(8L);
+        assertThat(businessDataReferenceClient.getLink()).isEqualTo("API/bdm/businessData/com.acme.object.Ticket/8");
     }
     @Test
     public void should_handle_multiple_business_data() throws Exception {
@@ -68,14 +73,6 @@ public class BusinessDataReferenceResourceFinderTest {
         boolean handlesResource = businessDataReferenceResourceFinder.handlesResource(12l);
 
         assertThat(handlesResource).isFalse();
-    }
-
-    @Test
-    public void should_return_the_object_if_it_is_not_a_business_data() throws Exception {
-
-        Serializable contextResultElement = businessDataReferenceResourceFinder.getContextResultElement(12l);
-
-        assertThat(contextResultElement).isEqualTo(12l);
     }
 
 

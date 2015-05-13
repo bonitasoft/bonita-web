@@ -16,7 +16,7 @@ public class UserTaskContextResource extends CommonResource {
     static final String TASK_ID = "taskId";
 
     private final ProcessAPI processAPI;
-    private FinderFactory resourceHandler;
+    private final FinderFactory resourceHandler;
 
     public UserTaskContextResource(final ProcessAPI processAPI, FinderFactory resourceHandler) {
         this.processAPI = processAPI;
