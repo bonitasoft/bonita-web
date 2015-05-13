@@ -4,14 +4,7 @@ import static junit.framework.Assert.assertNull;
 import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import junit.framework.Assert;
-
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.engine.bpm.category.CategoryNotFoundException;
 import org.bonitasoft.test.toolkit.bpm.TestCategory;
@@ -25,6 +18,12 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Nicolas Tith
@@ -90,7 +89,6 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         final Category resultCategory = catList.get(0).getCategory();
         Assert.assertEquals("Wrong category found (not same name)", categoryItem.getName(), resultCategory.getName());
         Assert.assertEquals("Wrong category found (not same description)", categoryItem.getDescription(), resultCategory.getDescription());
-
     }
 
     @Test
@@ -140,8 +138,8 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
         CategoryItem categoryItem = aCategoryItem().build();
-
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
+        api.runDelete(Arrays.asList(categoryItem.getId()));
     }
 }
