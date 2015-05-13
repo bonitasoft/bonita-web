@@ -64,8 +64,8 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_TIMER_EVENT_TRIGGER_URL = "/bpm/timerEventTrigger";
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
-    public static final String BPM_CASE_CONTEXT = "/bpm/case";
-    public static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
+    public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
+    public static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
 
 
     private final FinderFactory factory;
@@ -106,10 +106,10 @@ public class BonitaRestletApplication extends Application {
         router.attach(BPM_CASE_INFO_URL + "/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
 
         // GET to retrieve a case context:
-        router.attach(BPM_CASE_CONTEXT + "/{caseId}/context", factory.create(CaseContextResource.class));
+        router.attach(BPM_CASE_CONTEXT_URL + "/{caseId}/context", factory.create(CaseContextResource.class));
 
         // GET to retrieve an archived case context
-        router.attach(BPM_ARCHIVED_CASE_CONTEXT + "/{archivedCaseId}/context", factory.create(ArchivedCaseContextResource.class));
+        router.attach(BPM_ARCHIVED_CASE_CONTEXT_URL + "/{archivedCaseId}/context", factory.create(ArchivedCaseContextResource.class));
 
         // GET a task contract:
         router.attach(BPM_USER_TASK_URL + "/{taskId}/contract", factory.create(UserTaskContractResource.class));
