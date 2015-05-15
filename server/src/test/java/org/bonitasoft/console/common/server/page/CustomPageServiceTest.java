@@ -12,11 +12,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -43,6 +43,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
+
+    public static final String PAGE_NO_API_EXTENSION_PROPERTIES = "pageNoApiExtension.properties";
+    public static final String PAGE_PROPERTIES = "page.properties";
 
     @Spy
     private final CustomPageService customPageService = spy(new CustomPageService());
@@ -158,7 +161,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|identity/user, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -177,7 +180,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|unkown/resource, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -196,7 +199,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|unkown/resource, GET|identity/user, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -215,7 +218,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
 
@@ -307,8 +310,7 @@ public class CustomPageServiceTest {
         //given
         doReturn("custompage_test").when(mockedPage).getName();
         doReturn(null).when(mockedPage).getProcessDefinitionId();
-        final InputStream inputStream = getClass().getResourceAsStream("page.properties");
-        File propertyFile = new File(getClass().getResource("page.properties").toURI());
+        File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
 
@@ -321,10 +323,26 @@ public class CustomPageServiceTest {
     }
 
     @Test
+    public void should_add_no_api_extension_permission() throws Exception {
+        //given
+        doReturn("custompage_test").when(mockedPage).getName();
+        doReturn(null).when(mockedPage).getProcessDefinitionId();
+        File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+
+        //when
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+
+        //then
+        verifyZeroInteractions(resourcesPermissionsMapping);
+    }
+
+
+    @Test
     public void should_remove_api_extension_permissions() throws Exception {
         //given
-        final InputStream inputStream = getClass().getResourceAsStream("page.properties");
-        File propertyFile = new File(getClass().getResource("page.properties").toURI());
+        File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
 
@@ -335,5 +353,20 @@ public class CustomPageServiceTest {
         verify(resourcesPermissionsMapping).removeProperty("GET|extension/restApiGet");
         verify(resourcesPermissionsMapping).removeProperty("POST|extension/restApiPost");
     }
+
+    @Test
+    public void should_remove_no_permissions() throws Exception {
+        //given
+        File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+
+        //when
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+
+        //then
+        verifyZeroInteractions(resourcesPermissionsMapping);
+    }
+
 
 }
