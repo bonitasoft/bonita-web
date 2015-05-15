@@ -69,15 +69,15 @@
       ],
       inputs:[
         {
-          'description':null,
-          'name':'complex',
-          'multiple':true,
-          'inputs':[
+          description:null,
+          name:'complex',
+          multiple:true,
+          inputs:[
             {
-              'description':null,
-              'name':'child',
-              'multiple':false,
-              'type':'TEXT'
+              description:null,
+              name:'child',
+              multiple:false,
+              type:'TEXT'
             }
           ]
         },
@@ -199,23 +199,23 @@
           inputs:[]
         },
         {
-          'description':null,
-          'name':'complex',
-          'multiple':true,
-          'inputs':[
+          description:null,
+          name:'complex',
+          multiple:true,
+          inputs:[
             {
-              'description':null,
-              'name':'child1',
-              'multiple':false,
-              'type':'TEXT',
-              'inputs':[]
+              description:null,
+              name:'child1',
+              multiple:false,
+              type:'TEXT',
+              inputs:[]
             },
             {
-             'description':null,
-             'name':'children',
-             'multiple':true,
-             'type':'DECIMAL',
-             'inputs':[]
+             description:null,
+             name:'children',
+             multiple:true,
+             type:'DECIMAL',
+             inputs:[]
             }
           ]
         },
@@ -234,11 +234,48 @@
          inputs:[]
        },
        {
-        description:'File attached to the ticket',
-        name:'file_attachement',
-        multiple:false,
-        type:'FILE',
-        inputs:[]
+          type: 'FILE',
+          description: 'buisness archive',
+          name: 'buisnessArchive',
+          multiple: false,
+          inputs: [
+            {
+              type: 'TEXT',
+              description: 'Name of the file',
+              name: 'filename',
+              multiple: false,
+              inputs: []
+            },
+            {
+              type: 'BYTE_ARRAY',
+              description: 'Content of the file',
+              name: 'content',
+              multiple: false,
+              inputs: []
+            }
+          ]
+        },
+        {
+          type: 'FILE',
+          description: 'multiple file',
+          name: 'screenShots',
+          multiple: true,
+          inputs: [
+            {
+              type: 'TEXT',
+              description: 'Name of the file',
+              name: 'filename',
+              multiple: false,
+              inputs: []
+            },
+            {
+              type: 'BYTE_ARRAY',
+              description: 'Content of the file',
+              name: 'content',
+              multiple: false,
+              inputs: []
+            }
+          ]
         }
       ]
     };
@@ -252,7 +289,7 @@
       return [200, step2, {}];
     });
 
-    var step2 = {'displayDescription':'','executedBySubstitute':'0','processId':'7843764322062200989','parentCaseId':'4','state':'ready','rootContainerId':'4','type':'USER_TASK','assigned_id':'','assigned_date':'','id':'12','executedBy':'0','caseId':'4','priority':'normal','actorId':'1','description':'','name':'Ticket review','reached_state_date':'2015-04-14 17:26:39.783','rootCaseId':'4','displayName':'Ticket review','dueDate':'2015-04-14 18:26:39.778','last_update_date':'2015-04-14 17:26:39.783'};
+    var step2 = {'displayDescription':'','executedBySubstitute':'0','processId':'7843764322062200989','parentCaseId':'4','state':'ready','rootContainerId':'4',type:'USER_TASK','assigned_id':'','assigned_date':'','id':'12','executedBy':'0','caseId':'4','priority':'normal','actorId':'1',description:'',name:'Ticket review','reached_state_date':'2015-04-14 17:26:39.783','rootCaseId':'4','displayName':'Ticket review','dueDate':'2015-04-14 18:26:39.778','last_update_date':'2015-04-14 17:26:39.783'};
 
     //--------------------------------------------------------------------------
     //--------------------- List Archived Human Tasks  -------------------------

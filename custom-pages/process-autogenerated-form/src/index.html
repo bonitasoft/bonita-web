@@ -50,9 +50,10 @@
         <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-if="input.inputs.length> 0 && input.type!=='FILE'" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [{\'property\':\'value\'}, {...}]':'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
         <form action="{{importUrl}}"
           ng-if="input.inputs.length>0 && input.type==='FILE'"
-          name="uploadForm{{$index}}"
+          name="uploadForm_{{$index}}"
           ng-upload="onUploadSuccess(content, input, this)"
           >
+
           <div class="input-group file-upload">
             <input type="text" readonly="" disabled placeholder="{{'Select your file' | translate}}" value="{{input.value}}" name="{{input.name}}" class="form-control">
             <div class="input-group-btn">
@@ -62,16 +63,20 @@
               </div>
             </div>
           </div>
+          <div class="input-group">
+            <button ng-if="input.multiple===true" class="btn btn-primary" ng-click="appendNewFileUpload()">{{'Add'|translate}}</button>
+          </div>
         </form>
 
       </div>
 
       <pre class="alert alert-danger" ng-if="message">{{ message }}</pre>
       <div style="margin:auto; width:100px">
-        <button type="submit" class="btn btn-primary btn-block" ng-click="postData()">Start</button>
+        <button type="submit" class="btn btn-success btn-block" ng-click="postData()">Start</button>
       </div>
 
     </div>
+
 
   </div>
 
@@ -92,7 +97,6 @@
   <script src="../node_modules/angular-mocks/angular-mocks.js"></script>
   <script src="js/dev-only.js"></script>
   <!-- endbuild -->
-  <iframe name="fileUploadIframe" height="0" width="0"></iframe>
 </body>
 
 </html>
