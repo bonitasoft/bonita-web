@@ -502,7 +502,7 @@
           href: '/API/bdm/businessData/com.company.model.Client/2/industry'
         }
       ]
-    }
+    };
 
     var Ticket7 =
     {

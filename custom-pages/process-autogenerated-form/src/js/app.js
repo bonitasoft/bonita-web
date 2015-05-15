@@ -11,7 +11,7 @@
   app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog) {
     var self = this;
     var processId = $location.search().id;
-
+    $scope.inputArray = [];
     $scope.contract = {};
     $scope.dataToSend = {};
     $scope.autofill = {};
@@ -31,6 +31,7 @@
     });
 
     $scope.onUploadSuccess = function onUploadSuccess(response, input) {
+      console.log('response',response, 'input', input);
       if(input.multiple){
         if($scope.dataToSend[input.name] === null){
           $scope.dataToSend[input.name] = [];
@@ -41,6 +42,24 @@
       }
     };
 
+    $scope.appendNewFileUpload = function appendNewFileUpload(input){
+      var newInput = {
+          type: input.type,
+          description: input.description,
+          name: input.name,
+          multiple: input.multiple,
+          inputs: input.inputs
+        };
+      $scope.inputArray.push(newInput);
+    };
+
+    $scope.removeFileUpload = function removeFileUpload (index){
+      $scope.inputArray.splice(index, 1);
+    };
+
+
+
+
     var jsonify = function (data) {
       var jsonified = {};
       for (var prop in data) {
@@ -49,21 +68,19 @@
           console.log('Jsonification of prop: ', data[prop]);
           jsonified[prop] = angular.fromJson(data[prop]);
         } else {
-          console.log('prop', prop, data[prop]);
           jsonified[prop] = data[prop];
-          console.log('prop', jsonified[prop]);
+          console.log('prop', prop, 'jsonified[prop]', jsonified[prop]);
         }
 
       }
       return jsonified;
     };
 
-
     $scope.postData = function postData() {
       $scope.message = undefined;
       console.log('dataToSend', $scope.dataToSend);
       var jsonifiedDataToSend = jsonify($scope.dataToSend);
-      console.log(jsonifiedDataToSend);
+      console.log('jsonifiedDataToSend',jsonifiedDataToSend);
       contractSrvc.startProcess(processId, jsonifiedDataToSend).then(function () {
         
         $window.top.location.href = '/bonita';
