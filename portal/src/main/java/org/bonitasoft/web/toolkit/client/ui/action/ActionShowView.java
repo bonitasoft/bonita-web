@@ -15,6 +15,7 @@
 package org.bonitasoft.web.toolkit.client.ui.action;
 
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 
 /**
@@ -22,14 +23,21 @@ import org.bonitasoft.web.toolkit.client.ui.RawView;
  */
 public class ActionShowView extends Action {
 
-    private RawView view;
+    private final String token;
+    private final TreeIndexed<String> parameters;
 
-    public ActionShowView(RawView view) {
-        this.view = view;
+    public ActionShowView(final RawView view) {
+        token = view.getToken();
+        parameters = view.getParameters();
+    }
+
+    public ActionShowView(final String token, final TreeIndexed<String> parameters) {
+        this.token = token;
+        this.parameters = parameters;
     }
 
     @Override
     public void execute() {
-        ViewController.showView(view.getToken(), view.getParameters());
+        ViewController.showView(token, parameters);
     }
 }

@@ -489,6 +489,10 @@
         <url-pattern>/portal/fileUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>formFileUploadServlet</servlet-name>
+        <url-pattern>/API/formFileUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>exportProcessActorsServlet</servlet-name>
         <url-pattern>/portal/exportActors</url-pattern>
     </servlet-mapping>

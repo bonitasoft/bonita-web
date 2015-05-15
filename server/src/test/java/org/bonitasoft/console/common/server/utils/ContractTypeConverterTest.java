@@ -71,6 +71,16 @@ public class ContractTypeConverterTest {
     }
 
     @Test
+    public void getProcessedInput_when_no_contract() throws Exception {
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition>emptyList());
+        final Map<String, Serializable> input = new HashMap<>();
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(null, input, maxSizeForTenant, tenantId);
+
+        assertThat(processedInput).isEqualTo(input);
+    }
+
+    @Test
     public void getProcessedInputs_with_simple_input_should_return_processed_input() throws Exception {
         final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);

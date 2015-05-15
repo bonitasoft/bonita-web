@@ -192,14 +192,14 @@ div#bonita-banneralthaut {
 div#bonita-banneraltbas {
 	height: 35px;
 	width: 100%;
-	background-color: #b20706;
-	background: -moz-linear-gradient(top, #CD0807 0%, #B20706 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CD0807), color-stop(100%, #B20706)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #CD0807 0%,#B20706 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,	#CD0807 0%, #B20706 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,	#CD0807 0%,#B20706 100%); /* IE10+ */
-	background: linear-gradient(to bottom,	#CD0807 0%, #B20706 100%); /* W3C */
-	-pie-background: linear-gradient(#CD0807 0%, #B20706 100%) #CD0807;
+	background-color: #DD0033;
+	background: -moz-linear-gradient(top, #CD0807 0%, #DD0033 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CD0807), color-stop(100%, #DD0033)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #CD0807 0%,#DD0033 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,	#CD0807 0%, #DD0033 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,	#CD0807 0%,#DD0033 100%); /* IE10+ */
+	background: linear-gradient(to bottom,	#CD0807 0%, #DD0033 100%); /* W3C */
+	-pie-background: linear-gradient(#CD0807 0%, #DD0033 100%) #CD0807;
 	behavior: url(PIE.htc);
 }
 
@@ -253,7 +253,7 @@ div#bonita-identification-area {
 
 .bonita_logout_label, .bonita_logout_label:visited, .bonita_logout_label:hover, .bonita_user_xp_label, .bonita_user_xp_label:visited, .bonita_user_xp_label:hover {
 	text-decoration: none;
-	color: #B20706;
+	color: #DD0033;
 }
 
 .bonita_user_xp_icon {
@@ -422,7 +422,7 @@ div#bonita-object-area-description {
 }
 
 .gwt-SuggestBoxPopup .item.item-selected{
-	background: #b20706;
+	background: #DD0033;
 	color: #ffffff;
 }
 /* ------------------------------------------------------------------------- */
@@ -517,7 +517,7 @@ div#bonita-object-area-description {
 }
 
 .dateBoxPopup .datePickerDayIsHighlighted:hover {
-	border-color: #b20706;
+	border-color: #DD0033;
 }
 
 .dateBoxPopup .datePickerDayIsValue {

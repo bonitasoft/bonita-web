@@ -15,6 +15,9 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,6 +28,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Fabio Lombardi
  */
 public class ResourcesPermissionsMapping extends SimpleProperties {
+
+    public static final String API_METHOD_SEPARATOR = "|";
+
+    public static final String WILDCARD = "*";
 
     /**
      * Default name of the preferences file
@@ -53,15 +60,38 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
         super(fileName);
     }
 
-    public Set<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final String resourceId) {
-        final String key = buildResourceKey(method, apiName, resourceName, resourceId);
+    public Set<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final List<String> resourceQualifiers) {
+        final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiers);
         return getPropertyAsSet(key);
     }
 
-    protected String buildResourceKey(final String method, final String apiName, final String resourceName, final String resourceId) {
-        String key = method + "|" + apiName + "/" + resourceName;
-        if(resourceId != null){
-            key +=  "/" + resourceId;
+    public Set<String> getResourcePermissionsWithWildCard(final String method, final String apiName, final String resourceName,
+            final List<String> resourceQualifiers) {
+        if (resourceQualifiers != null) {
+            for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
+                final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
+                final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
+                final Set<String> permissions = getPropertyAsSet(key);
+                if (!permissions.isEmpty()) {
+                    return permissions;
+                }
+            }
+        }
+        return Collections.emptySet();
+    }
+
+    protected List<String> getResourceQualifiersWithWildCard(final List<String> resourceQualifiers, final int wildCardPosition) {
+        final List<String> resourceQualifiersWithWildCard = new ArrayList<String>(resourceQualifiers);
+        resourceQualifiersWithWildCard.set(wildCardPosition, WILDCARD);
+        return resourceQualifiersWithWildCard;
+    }
+
+    protected String buildResourceKey(final String method, final String apiName, final String resourceName, final List<String> resourceQualifiers) {
+        String key = method + API_METHOD_SEPARATOR + apiName + "/" + resourceName;
+        if (resourceQualifiers != null) {
+            for (final String resourceQualifier : resourceQualifiers) {
+                key += "/" + resourceQualifier;
+            }
         }
         return key;
     }
