@@ -27,6 +27,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationRouterTest {
 
+    public static final String LAYOUT_PAGE_NAME = "layoutPageName";
     @Mock(answer = Answers.RETURNS_MOCKS)
     HttpServletRequest hsRequest;
 
@@ -66,7 +67,7 @@ public class ApplicationRouterTest {
     @Test
     public void should_redirect_to_home_page_when_accessing_living_application_root() throws Exception {
         given(applicationModel.getApplicationHomePage()).willReturn("home/");
-        given(applicationModel.getApplicationLayoutName()).willReturn("layoutPageName");
+        given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
 
@@ -145,15 +146,17 @@ public class ApplicationRouterTest {
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
         assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor)).isEqualTo(false);
-        verify(hsRequest, never()).getRequestDispatcher("/application-template.jsp");
+        verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
     @Test
     public void should_not_forward_to_the_application_page_template_when_user_is_not_authorized() throws Exception {
         accessUnauthorizedPage("HumanResources", "leavingRequests");
 
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
+
         assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor)).isEqualTo(false);
-        verify(hsRequest, never()).getRequestDispatcher("/application-template.jsp");
+        verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
     @Test
