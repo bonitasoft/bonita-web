@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -369,34 +368,5 @@ public class CustomPageServiceTest {
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
-
-        final InputStream inputStream = getClass().getResourceAsStream("page.properties");
-        File propertyFile = new File(getClass().getResource("page.properties").toURI());
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
-        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
-
-        //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
-
-        //then
-        verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
-        verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
-    }
-
-    @Test
-    public void should_remove_api_extension_permissions() throws Exception {
-        //given
-        final InputStream inputStream = getClass().getResourceAsStream("page.properties");
-        File propertyFile = new File(getClass().getResource("page.properties").toURI());
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
-        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
-
-        //when
-        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
-
-        //then
-        verify(resourcesPermissionsMapping).removeProperty("GET|extension/restApiGet");
-        verify(resourcesPermissionsMapping).removeProperty("POST|extension/restApiPost");
-    }
 
 }
