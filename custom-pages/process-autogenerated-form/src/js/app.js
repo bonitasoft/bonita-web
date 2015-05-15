@@ -41,7 +41,7 @@
       }
     };
 
-    $scope.appendNewFileUpload = function appendNewFileUpload(array, input){
+    $scope.appendNewInput = function appendNewInput(array, input){
       var newInput = {
           type: input.type,
           description: input.description,
@@ -52,8 +52,9 @@
       array.push(newInput);
     };
 
-    $scope.removeFileUpload = function removeFileUpload (array, index){
+    $scope.removeInput = function removeInput (array, array2, index){
       array.splice(index, 1);
+      array2.splice(index, 1);
     };
 
 
@@ -77,9 +78,7 @@
 
     $scope.postData = function postData() {
       $scope.message = undefined;
-      console.log('dataToSend', $scope.dataToSend);
       var jsonifiedDataToSend = jsonify($scope.dataToSend);
-      console.log('jsonifiedDataToSend',jsonifiedDataToSend);
       contractSrvc.startProcess(processId, jsonifiedDataToSend).then(function () {
         
         $window.top.location.href = '/bonita';
