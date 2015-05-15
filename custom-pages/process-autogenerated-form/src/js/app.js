@@ -41,7 +41,7 @@
       }
     };
 
-    $scope.appendNewInput = function appendNewInput(array, input){
+    $scope.appendNewInput = function appendNewInput(input){
       var newInput = {
           type: input.type,
           description: input.description,
@@ -49,16 +49,13 @@
           multiple: input.multiple,
           inputs: input.inputs
         };
-      array.push(newInput);
+      $scope.inputArray[input.name].push(newInput);
     };
 
-    $scope.removeInput = function removeInput (array, array2, index){
-      array.splice(index, 1);
-      array2.splice(index, 1);
+    $scope.removeInput = function removeInput (input, index){
+      $scope.inputArray[input.name].splice(index, 1);
+      $scope.dataToSend[input.name].splice(index, 1);
     };
-
-
-
 
     var jsonify = function (data) {
       var jsonified = {};
@@ -138,6 +135,45 @@
       }
       return result;
     };
+
+    $scope.isSimpleInput = function isSimpleInput(input) {
+      return (input.inputs.length===0);
+    };
+
+    $scope.isMultipleInput = function isMultipleInput(input) {
+      return (input.multiple);
+    };
+
+    $scope.isSingleInput = function isSingleInput(input) {
+      return (!$scope.isMultipleInput(input));
+    };
+
+    $scope.initMultipleInput = function initMultipleInput(input) {
+      $scope.dataToSend[input.name]=[];
+      $scope.inputArray[input.name] = [input];
+    };
+
+    $scope.initSingleInput = function initSingleInput(input) {
+      $scope.dataToSend[input.name] = null;
+    };
+
+    $scope.hasSeveralItemsInCollection = function hasSeveralItemsInCollection(input) {
+      return ($scope.inputArray[input.name].length>1);
+    };
+
+    /*
+    $scope. = function (input) {
+      return ($scope.);
+    };
+*/
+    $scope.isComplexInput = function isComplexInput(input) {
+      return (input.inputs.length> 0);
+    };
+
+    $scope.isFileInput = function isFileInput(input) {
+      return (input.type=='FILE');
+    };
+
 
   }])
     .directive('fileInputAutoSubmit', function () {
