@@ -2,19 +2,13 @@ package org.bonitasoft.console.common.server.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -28,6 +22,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -137,6 +141,36 @@ public class ContractTypeConverterTest {
                     entry("inputInteger", 125686181L), entry("inputDecimal", 12.8),
                     entry("inputFile", new FileInputValue(filename, fileContentString.getBytes("UTF-8"))));
         }
+    }
+
+    @Test
+    public void getProcessedInputs_without_deleting_contract_temp_files() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMap(tempFilePath);
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
+
+        //files should not have been deleted
+        verify(contractTypeConverter, times(0)).deleteFile(any(File.class), anyString());
+    }
+
+    @Test
+    public void getProcessedInputs_deleting_contract_temp_files() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMap(tempFilePath);
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, true);
+
+        //files should not have been deleted
+        verify(contractTypeConverter, times(1)).deleteFile(any(File.class), anyString());
     }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {

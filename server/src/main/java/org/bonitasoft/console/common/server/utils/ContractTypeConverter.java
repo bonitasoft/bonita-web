@@ -13,6 +13,15 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.document.DocumentException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,15 +35,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.document.DocumentException;
 
 /**
  * @author Anthony Birembaut
@@ -59,6 +59,7 @@ public class ContractTypeConverter {
     private long maxSizeForTenant;
 
     private long tenantId;
+    private boolean deleteFile = false;
 
     public ContractTypeConverter(final String[] datePatterns) {
         convertUtilsBean = new ConvertUtilsBean();
@@ -70,6 +71,11 @@ public class ContractTypeConverter {
     public Object convertToType(final Type type, final Serializable parameterValue) {
         final Class<? extends Serializable> clazz = getClassFromType(type);
         return convertToType(clazz, parameterValue);
+    }
+
+    public Map<String,Serializable> getProcessedInput(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId, boolean deleteFile) throws FileNotFoundException {
+        this.deleteFile = deleteFile;
+        return this.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
     }
 
     public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input, final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
@@ -167,13 +173,19 @@ public class ContractTypeConverter {
             throw new DocumentException(errorMessage);
         }
         fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
+        if (deleteFile) {
+            deleteFile(sourceFile, fileTempPath);
+        }
+        return fileContent;
+    }
+
+    protected void deleteFile(File sourceFile, String fileTempPath) {
         if (!sourceFile.delete()){
             sourceFile.deleteOnExit();
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
             }
         }
-        return fileContent;
     }
 
     protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
