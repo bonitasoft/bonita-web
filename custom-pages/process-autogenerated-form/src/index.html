@@ -46,46 +46,30 @@
         - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i> 
         <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-if="input.inputs.length===0 && input.type!=='FILE'" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [\'a\' , \'list\', \'of values\']':'Expecting a ' + input.type + ' value.'}}">
         <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-if="input.inputs.length> 0 && input.type!=='FILE'" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [{\'property\':\'value\'}, {...}]':'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
-        <form
-        class="form-group"
-        action="{{importUrl}}" 
-        ng-if="input.inputs.length>0 && input.type==='FILE' && !input.multiple" 
-        name="uploadForm_{{$index}}" 
-        ng-upload="onUploadSuccess(content, input)"
-        >
-          <div class="input-group file-upload">
-            <input type="text" readonly="" disabled placeholder="{{'Select your file' | translate}}" value="{{input.value}}" name="{{input.name}}" class="form-control">
-            <div class="input-group-btn">
-              <div class="btn" ng-class="{'btn-default disabled':$isUploading, 'btn-primary':!$isUploading}">
-                <input class="file-upload-input" ng-class="{'file-upload-input--disabled':$isUploading}" name="file" type="file" ng-model="input.value" required id="auto_uploading_file_input_{{$index}}" file-input-auto-submit/>
-                <span class="fa" ng-class="{'fa fa-spinner fa-pulse':$isUploading, 'fa fa-folder':!$isUploading}" ></span>
-              </div>
-            </div>
-          </div>
-        </form>
-        <div ng-if="input.inputs.length>0 && input.type==='FILE' && input.multiple" ng-init="inputArray.push(input)">
+        <div ng-if="input.inputs.length>0 && input.type==='FILE'" ng-init="inputArray[input.name] = [input]">
+
           <form
           class="form-group"
           action="{{importUrl}}" 
           name="uploadForm_{{$index}}" 
           ng-upload="onUploadSuccess(content, input)"
-          ng-repeat="multipleInput in inputArray"
+          ng-repeat="multipleInput in inputArray[input.name]"
           >
             <div>
               <div class="input-group file-upload">
-                <input type="text" readonly="" disabled placeholder="{{'Select your file' | translate}}" value="{{multipleInput.value}}" name="{{input.name}}" class="form-control">
+                <input type="text" readonly="" disabled placeholder="{{'Select a file'| translate}}" value="{{multipleInput.value}}" name="{{input.name}}" class="form-control">
                 <div class="input-group-btn">
                   <div class="btn" ng-class="{'btn-default disabled':$isUploading, 'btn-primary':!$isUploading}">
                     <input class="file-upload-input" ng-class="{'file-upload-input--disabled':$isUploading}" name="file" type="file" ng-model="multipleInput.value" required id="auto_uploading_file_input_{{$index}}" file-input-auto-submit/>
                     <span class="fa" ng-class="{'fa fa-spinner fa-pulse':$isUploading, 'fa fa-folder':!$isUploading}" ></span>
                   </div>
-                  <input type="button" class="btn btn-danger" value="{{'remove'|translate}}" ng-click="removeFileUpload($index)" ng-if="inputArray.length>1">
+                  <input type="button" class="btn btn-danger" value="{{'remove'|translate}}" ng-click="removeFileUpload(inputArray[input.name], $index)" ng-if="inputArray[input.name].length>1">
                 </div>
               </div>
             </div>
           </form>
           <div class="input-group">
-            <button type="button" ng-if="input.multiple===true" class="btn btn-primary" ng-click="appendNewFileUpload(input)">{{'Add'|translate}}</button>
+            <button type="button" ng-if="input.multiple" class="btn btn-primary" ng-click="appendNewFileUpload(inputArray[input.name], input)">{{'Add'|translate}}</button>
           </div>
         </div>
 

@@ -31,7 +31,6 @@
     });
 
     $scope.onUploadSuccess = function onUploadSuccess(response, input) {
-      console.log('response',response, 'input', input);
       if(input.multiple){
         if($scope.dataToSend[input.name] === null){
           $scope.dataToSend[input.name] = [];
@@ -42,7 +41,7 @@
       }
     };
 
-    $scope.appendNewFileUpload = function appendNewFileUpload(input){
+    $scope.appendNewFileUpload = function appendNewFileUpload(array, input){
       var newInput = {
           type: input.type,
           description: input.description,
@@ -50,11 +49,11 @@
           multiple: input.multiple,
           inputs: input.inputs
         };
-      $scope.inputArray.push(newInput);
+      array.push(newInput);
     };
 
-    $scope.removeFileUpload = function removeFileUpload (index){
-      $scope.inputArray.splice(index, 1);
+    $scope.removeFileUpload = function removeFileUpload (array, index){
+      array.splice(index, 1);
     };
 
 
