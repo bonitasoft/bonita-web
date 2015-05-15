@@ -18,8 +18,6 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
-import org.bonitasoft.livingapps.ApplicationModel;
-import org.bonitasoft.livingapps.ApplicationModelFactory;
 import org.bonitasoft.livingapps.exception.CreationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +64,7 @@ public class ApplicationModelFactoryTest {
 
         final ApplicationModel model = factory.createApplicationModel("foo");
 
-        assertThat(model.getApplicationHomePage()).isEqualTo("foobar/home");
+        assertThat(model.getApplicationHomePage()).isEqualTo("home/");
     }
 
     @Test

@@ -1,6 +1,7 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static junit.framework.Assert.assertNull;
+import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuilder.aCategoryItem;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 
 import junit.framework.Assert;
@@ -14,6 +15,7 @@ import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
@@ -70,6 +72,10 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void addCategoryTest() {
+        //before
+        //avoid conflict with addingTwiceSameCategoryIsForbidden
+        TestCategoryFactory.getInstance().clear();
+
         // API call
         final CategoryItem categoryItem = new CategoryItem();
         categoryItem.setName("categoryTest");
@@ -87,6 +93,7 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         final Category resultCategory = catList.get(0).getCategory();
         Assert.assertEquals("Wrong category found (not same name)", categoryItem.getName(), resultCategory.getName());
         Assert.assertEquals("Wrong category found (not same description)", categoryItem.getDescription(), resultCategory.getDescription());
+
     }
 
     @Test
@@ -132,12 +139,14 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         TestCategoryFactory.removeTestCategoryFromList(category);
     }
-    /*
+
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
+        //given
         CategoryItem categoryItem = aCategoryItem().build();
+
+        //when then exception
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
-        api.runDelete(Arrays.asList(categoryItem.getId()));
-    }*/
+    }
 }
