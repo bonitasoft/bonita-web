@@ -13,6 +13,18 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ConstraintDefinition;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
+import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
+import org.bonitasoft.engine.bpm.document.DocumentException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,15 +38,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.converters.DateConverter;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.document.DocumentException;
 
 /**
  * @author Anthony Birembaut
@@ -188,6 +191,50 @@ public class ContractTypeConverter {
         }
         return contractDefinitionMap;
     }
+
+    public ContractDefinition getAdaptedContractDefinition(ContractDefinition processContract) {
+        List<ConstraintDefinition> constraints = processContract.getConstraints();
+        List<InputDefinition> inputDefinitions = adaptContractInputList(processContract.getInputs());
+        ContractDefinitionImpl contractDefinition = getContractDefinition(constraints, inputDefinitions);
+        return contractDefinition;
+    }
+
+    protected List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {
+        List<InputDefinition> contractDefinition = new ArrayList<InputDefinition>();
+        for (final InputDefinition inputDefinition : inputDefinitions) {
+            List<InputDefinition> childInputDefinitions;
+            if (Type.FILE.equals(inputDefinition.getType())) {
+                childInputDefinitions = new ArrayList<InputDefinition>();
+                for (InputDefinition childInputDefinition : inputDefinition.getInputs()) {
+                    if(Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
+                        childInputDefinitions.add(new InputDefinitionImpl("tempPath", "file name in the temporary upload directory",false, Type.TEXT, new ArrayList<InputDefinition>()));
+                    } else {
+                        childInputDefinitions.add(childInputDefinition);
+                    }
+                }
+            } else if (inputDefinition.hasChildren()) {
+                childInputDefinitions = adaptContractInputList(inputDefinition.getInputs());
+            } else {
+                childInputDefinitions = new ArrayList<InputDefinition>();
+            }
+            InputDefinition newInputDefinition = new InputDefinitionImpl(inputDefinition.getName(), inputDefinition.getDescription(), inputDefinition.isMultiple(), inputDefinition.getType(), childInputDefinitions);
+            contractDefinition.add(newInputDefinition);
+        }
+        return contractDefinition;
+    }
+
+    protected ContractDefinitionImpl getContractDefinition(List<ConstraintDefinition> constraints, List<InputDefinition> inputDefinitions) {
+        ContractDefinitionImpl contractDefinition = new ContractDefinitionImpl();
+        for (ConstraintDefinition constraint: constraints) {
+            contractDefinition.addConstraint(constraint);
+        }
+
+        for (InputDefinition input: inputDefinitions) {
+            contractDefinition.addInput(input);
+        }
+        return contractDefinition;
+    }
+
 
     protected Object convertToType(final Class<? extends Serializable> clazz, final Serializable parameterValue) {
         try {
