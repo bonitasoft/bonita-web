@@ -67,34 +67,34 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[
+      inputs:[
         {
           "description":null,
           "name":"complex",
           "multiple":true,
-          "simpleInputs":[
+          "inputs":[
             {
               "description":null,
-              "name":"test2",
+              "name":"child",
               "multiple":false,
               "type":"TEXT"
             }
-          ],
-          "complexInputs":[           ]
-        }
-      ],
-      simpleInputs:[
+          ]
+        },
+
         {
-          description:null,
+          description:"Leave a comment to explain the issue.",
           name:'ticket_comment',
           multiple:false,
-          type:'TEXT'
+          type:'TEXT',
+          inputs:[]
         },
         {
           description:'Steps to execute to reproduce the issue within the product.',
           name:'ticket_step_to_reproduce',
           multiple:true,
-          type:'TEXT'
+          type:'TEXT',
+          inputs:[]
         }
       ]
     } ;
@@ -103,10 +103,46 @@
     //-----------------------------------------------------------------
     //--------------------- Process contract  -------------------------
     //-----------------------------------------------------------------
+    $httpBackend.whenGET('/bonita/API/bpm/process/'+2).respond(function() {
+      console.log('Getting mock response for Process 2.');
+      return [200, process2, {}];
+    });
+
     $httpBackend.whenGET('/bonita/API/bpm/process/'+2+'/contract').respond(function() {
       console.log('Getting mock response for Process 2 Contract.');
       return [200, contractProcess2, {}];
     });
+
+    $httpBackend.whenPOST('/bonita/API/bpm/process/'+2+'/instantiation').respond(function() {
+      console.log('Getting mock response for Process 2 instantiation');
+      return [204, {}, {}];
+    });
+
+    $httpBackend.whenPOST('/bonita/API/bpm/process/'+4+'/instantiation').respond(function() {
+      console.log('Getting mock ERROR response for Process 4 instantiation');
+      return [400, process4InstantiationFailed, {}];
+    });
+
+    $httpBackend.whenPOST('/bonita/API/bpm/process/'+5+'/instantiation').respond(function() {
+      console.log('Getting mock ERROR response for Process 5 instantiation');
+      return [500, process5InstantiationFailed, {}];
+    });
+
+    var process5InstantiationFailed = {
+      "exception":"class org.bonitasoft.engine.bpm.process.ProcessExecutionException","message":"USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \"bjh\"\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]"
+    };
+
+    var process4InstantiationFailed = {
+      "exception":"class org.bonitasoft.engine.bpm.contract.ContractViolationException",
+      "message":"USERNAME=william.jobs | Contract is not valid: ",
+      "explanations":[
+        "Expected input [ticket_account] is missing",
+        "Expected input [ticket_description] is missing",
+        "Expected input [ticket_subject] is missing"
+      ]
+    };
+
+    var process2 = {id:'5142703331505681458',icon:'/default/process.png',displayDescription:'',deploymentDate:'2015-04-14 15:53:34.489',description:'',activationState:'ENABLED',name:'Register new Support Ticket',deployedBy:'4',displayName:'Register new Support Ticket',actorinitiatorid:'2',last_update_date:'2015-04-14 15:53:34.648',configurationState:'RESOLVED',version:'1.0'};
 
     var contractProcess2 = {
       constraints:[
@@ -138,26 +174,63 @@
           constraintType:'MANDATORY'
         }
       ],
-      complexInputs:[     ],
-      simpleInputs:[
-        {
-          description:null,
+      inputs:[
+       {
+          description:'Customer Account Name',
           name:'ticket_account',
           multiple:false,
-          type:'TEXT'
+          type:'BOOLEAN',
+          inputs:[]
         },
         {
-          description:null,
+          description:'Description of your issue',
           name:'ticket_description',
           multiple:false,
-          type:'TEXT'
+          type:'INTEGER',
+          inputs:[]
         },
         {
           description:null,
           name:'ticket_subject',
+          multiple:true,
+          type:'TEXT',
+          inputs:[]
+        },
+        {
+          "description":null,
+          "name":"complex",
+          "multiple":true,
+          "inputs":[
+            {
+              "description":null,
+              "name":"child1",
+              "multiple":false,
+              "type":"TEXT",
+              "inputs":[]
+            },
+            {
+             "description":null,
+             "name":"children",
+             "multiple":true,
+             "type":"DECIMAL",
+             "inputs":[]
+            }
+          ]
+        },
+         {
+          description:"Business cost associated to this issue. In US Dollars.",
+          name:'ticket_cost',
           multiple:false,
-          type:'TEXT'
-        }
+          type:'DECIMAL',
+          inputs:[]
+        },
+       {
+         description:"Ticket creation date",
+         name:'ticket_date',
+         multiple:false,
+         type:'DATE',
+         inputs:[]
+       }
       ]
     };
 

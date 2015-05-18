@@ -37,6 +37,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
@@ -129,6 +131,7 @@ public class FinderFactoryTest {
     public void should_return_ProcessInstanciationResource_for_ProcessInstanciationResourceFinder() {
         final ProcessInstantiationResourceFinder processInstanciationResourceFinder = spy(new ProcessInstantiationResourceFinder());
         doReturn(processAPI).when(processInstanciationResourceFinder).getProcessAPI(any(Request.class));
+        doReturn(apiSession).when(processInstanciationResourceFinder).getAPISession(any(Request.class));
         final ServerResource serverResource = processInstanciationResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(ProcessInstantiationResource.class);
     }
@@ -199,10 +202,11 @@ public class FinderFactoryTest {
 
     @Test
     public void should_return_TaskExecutionResource_for_TaskExecutionResourceFinder() {
-        final UserTaskContractResourceFinder userTaskContractResourceFinder = spy(new UserTaskContractResourceFinder());
-        doReturn(processAPI).when(userTaskContractResourceFinder).getProcessAPI(any(Request.class));
-        final ServerResource serverResource = userTaskContractResourceFinder.create(request, response);
-        assertThat(serverResource).isInstanceOf(UserTaskContractResource.class);
+        final UserTaskExecutionResourceFinder userTaskExecutionResourceFinder = spy(new UserTaskExecutionResourceFinder());
+        doReturn(processAPI).when(userTaskExecutionResourceFinder).getProcessAPI(any(Request.class));
+        doReturn(apiSession).when(userTaskExecutionResourceFinder).getAPISession(any(Request.class));
+        final ServerResource serverResource = userTaskExecutionResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(UserTaskExecutionResource.class);
     }
 
     @Test
@@ -233,7 +237,7 @@ public class FinderFactoryTest {
     public void should_getResourceFinderFor_return_result_of_first_handler(){
         final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(final Serializable object) {
+            public Serializable toClientObject(final Serializable object) {
                 return "resultA";
             }
 
@@ -252,7 +256,7 @@ public class FinderFactoryTest {
     public void should_getResourceFinderFor_return_the_object_if_no_handler(){
         final FinderFactory finderFactory = new FinderFactory(Collections.<Class<? extends ServerResource>,ResourceFinder>singletonMap(null, new ResourceFinder() {
             @Override
-            public Serializable getContextResultElement(final Serializable object) {
+            public Serializable toClientObject(final Serializable object) {
                 return "resultA";
             }
 

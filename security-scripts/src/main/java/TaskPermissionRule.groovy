@@ -24,6 +24,7 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ArchivedManualTaskInstance
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance
 import org.bonitasoft.engine.bpm.flownode.ManualTaskInstance
+import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.exception.NotFoundException
 import org.bonitasoft.engine.identity.UserSearchDescriptor
 import org.bonitasoft.engine.search.SearchOptionsBuilder
@@ -88,7 +89,7 @@ class TaskPermissionRule implements PermissionRule {
             try {
                 return isTaskAccessible(processAPI, filters.get("parentTaskId"), currentUserId, userName, logger)
             } catch (NotFoundException e) {
-                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId)
+                return isArchivedFlowNodeAccessible(processAPI, parentTaskId, currentUserId, userName)
             }
         } else if (filters.containsKey("processId")) {
             def long processId = Long.valueOf(filters.get("processId"))
@@ -131,12 +132,12 @@ class TaskPermissionRule implements PermissionRule {
 
     private boolean isArchivedFlowNodeAccessible(ProcessAPI processAPI, long taskId, long currentUserId, String username) throws NotFoundException {
         def archivedFlowNodeInstance = processAPI.getArchivedFlowNodeInstance(taskId)
-        if (archivedFlowNodeInstance instanceof ArchivedHumanTaskInstance) {
-            if (currentUserId == archivedFlowNodeInstance.getAssigneeId()) {
+        if (FlowNodeType.MANUAL_TASK.equals(archivedFlowNodeInstance.getType()) || FlowNodeType.USER_TASK.equals(archivedFlowNodeInstance.getType())) {
+            if (currentUserId == archivedFlowNodeInstance.getExecutedBy()) {
                 return true
             }
             //get the last flow node in journal
-            if(archivedFlowNodeInstance.getAssigneeId() == 0){
+            if(archivedFlowNodeInstance.getExecutedBy() == 0){
                 try{
                     def instance1 = processAPI.getHumanTaskInstance(archivedFlowNodeInstance.getSourceObjectId())
                     if(currentUserId == instance1.getAssigneeId()){
@@ -147,7 +148,7 @@ class TaskPermissionRule implements PermissionRule {
                 }
             }
         }
-        if(archivedFlowNodeInstance instanceof ArchivedManualTaskInstance){
+        if (FlowNodeType.MANUAL_TASK.equals(archivedFlowNodeInstance.getType())) {
             try {
                 def parentTask = processAPI.getHumanTaskInstance(archivedFlowNodeInstance.getParentContainerId())
                 if (parentTask.assigneeId > 0) {
@@ -155,8 +156,8 @@ class TaskPermissionRule implements PermissionRule {
                         return true
                     }
                 } else {
-                    final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1);
-                    builder.filter(UserSearchDescriptor.USER_NAME, username);
+                    final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 1)
+                    builder.filter(UserSearchDescriptor.USER_NAME, username)
                     def searchResult = processAPI.searchUsersWhoCanExecutePendingHumanTask(parentTask.id, builder.done())
                     if (searchResult.getCount() == 1l) {
                         logger.debug("The parent task is pending for user")
@@ -167,7 +168,7 @@ class TaskPermissionRule implements PermissionRule {
                 try {
                     def instance = processAPI.getArchivedActivityInstance(archivedFlowNodeInstance.getParentContainerId())
                     //return false because it means the parent is not found, not the element itself
-                    if (instance instanceof ArchivedHumanTaskInstance &&  instance.assigneeId > 0) {
+                    if ((FlowNodeType.MANUAL_TASK.equals(instance.getType()) || FlowNodeType.USER_TASK.equals(instance.getType())) &&  instance.assigneeId > 0) {
                         if (instance.assigneeId == currentUserId) {
                             return true
                         }
@@ -176,7 +177,6 @@ class TaskPermissionRule implements PermissionRule {
                     //return false because it means the parent is not found, not the element itself
                     return false
                 }
-
             }
         }
         def processDefinitionId = archivedFlowNodeInstance.getProcessDefinitionId()

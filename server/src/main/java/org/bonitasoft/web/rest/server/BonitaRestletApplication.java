@@ -31,8 +31,6 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskC
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
-import org.bonitasoft.web.rest.server.api.extension.TenantSpringBeanAccessor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Application;
 import org.restlet.Context;
@@ -43,11 +41,10 @@ import org.restlet.data.CharacterSet;
 import org.restlet.data.MediaType;
 import org.restlet.engine.Engine;
 import org.restlet.routing.Router;
+import org.restlet.routing.Template;
 
 /**
- *
  * @author Matthieu Chaffotte
- *
  */
 public class BonitaRestletApplication extends Application {
 
@@ -71,18 +68,15 @@ public class BonitaRestletApplication extends Application {
 
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
 
-    public static final String BPM_CASE_CONTEXT = "/bpm/case";
+    public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
 
-    private static final String BPM_ARCHIVED_CASE_CONTEXT = "/bpm/archivedCase";
+    private static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
 
     private final FinderFactory factory;
 
-    private final TenantSpringBeanAccessor beanAccessor;
-
-    public BonitaRestletApplication(final FinderFactory finderFactory, final TenantSpringBeanAccessor tenantSpringBeanAccessor) {
+    public BonitaRestletApplication(final FinderFactory finderFactory) {
         super();
         factory = finderFactory;
-        beanAccessor = tenantSpringBeanAccessor;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
         getMetadataService().setDefaultCharacterSet(CharacterSet.UTF_8);
     }
@@ -114,10 +108,10 @@ public class BonitaRestletApplication extends Application {
         router.attach(BPM_CASE_INFO_URL + "/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
 
         // GET to retrieve a case context:
-        router.attach(BPM_CASE_CONTEXT + "/{caseId}/context", factory.create(CaseContextResource.class));
+        router.attach(BPM_CASE_CONTEXT_URL + "/{caseId}/context", factory.create(CaseContextResource.class));
 
         // GET to retrieve an archived case context
-        router.attach(BPM_ARCHIVED_CASE_CONTEXT + "/{archivedCaseId}/context", factory.create(ArchivedCaseContextResource.class));
+        router.attach(BPM_ARCHIVED_CASE_CONTEXT_URL + "/{archivedCaseId}/context", factory.create(ArchivedCaseContextResource.class));
 
         // GET a task contract:
         router.attach(BPM_USER_TASK_URL + "/{taskId}/contract", factory.create(UserTaskContractResource.class));
@@ -149,23 +143,17 @@ public class BonitaRestletApplication extends Application {
         // GET a Simple BusinessDataReference
         router.attach(BDM_BUSINESS_DATA_REFERENCE_URL + "/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
-        buildRouterExtension(router);
-        return router;
-    }
+        // api extension
+        router.attach(ROUTER_EXTENSION_PREFIX, factory.createExtensionResource(),Template.MODE_STARTS_WITH);
 
-    private void buildRouterExtension(final Router router) {
-        for (final ResourceExtensionDescriptor resourceExtensionDescriptor : beanAccessor.getResourceExtensionConfiguration()) {
-            router.attach(ROUTER_EXTENSION_PREFIX + resourceExtensionDescriptor.getPathTemplate(), factory.createExtensionResource(resourceExtensionDescriptor));
-        }
+        return router;
     }
 
     @Override
     public void handle(final Request request, final Response response) {
-
         request.setLoggable(false);
         Engine.setLogLevel(Level.OFF);
         Engine.setRestletLogLevel(Level.OFF);
-        // New Restlet APIs:
         super.handle(request, response);
     }
 

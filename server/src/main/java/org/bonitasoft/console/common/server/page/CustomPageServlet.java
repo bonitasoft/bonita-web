@@ -47,7 +47,7 @@ public class CustomPageServlet extends HttpServlet {
      */
     private static final long serialVersionUID = -5410859017103815654L;
 
-    public static final String APP_ID_PARAM = "applicationId";
+    public static final String APP_TOKEN_PARAM = "appToken";
 
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
@@ -68,7 +68,7 @@ public class CustomPageServlet extends HttpServlet {
             return;
         }
 
-        final String appID = request.getParameter(APP_ID_PARAM);
+        final String appToken = request.getParameter(APP_TOKEN_PARAM);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
 
@@ -83,7 +83,7 @@ public class CustomPageServlet extends HttpServlet {
         try {
 
             if (isPageRequest(pathSegments)) {
-                if (!isAuthorized(apiSession, appID, pageName)) {
+                if (!isAuthorized(apiSession, appToken, pageName)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                     return;
                 }
@@ -133,8 +133,8 @@ public class CustomPageServlet extends HttpServlet {
         return resourcePath.substring(pageName.length() + 2);
     }
 
-    private boolean isAuthorized(final APISession apiSession, final String appID, final String pageName) throws BonitaException {
-        return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appID, pageName);
+    private boolean isAuthorized(final APISession apiSession, final String appToken, final String pageName) throws BonitaException {
+        return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
     }
 
     private void handleException(final String pageName, final Exception e) throws ServletException {

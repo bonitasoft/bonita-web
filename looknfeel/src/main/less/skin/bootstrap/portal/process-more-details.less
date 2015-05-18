@@ -1,4 +1,10 @@
 .process-details  {
+  
+  .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: @mainAccentColor;
+    border-color: @mainAccentColor;
+  }
+
   .actions {
     padding: 20px 0 10px 0;
   }
@@ -80,7 +86,7 @@
       border: 1px solid @borderColor3;
       color: @secondAccentColor;
       @primary-color: #337ab7;
-      @danger-color: #b20706;
+      @danger-color: #DD0033;
       &.label-,.btn-{
         &primary{
           border-color: @primary-color;

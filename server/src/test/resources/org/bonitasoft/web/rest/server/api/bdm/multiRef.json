@@ -1,5 +1,6 @@
 {
 	"name":"myEmployee",
 	"type":"com.bonitasoft.pojo.Employee",
-	"storageIds":[487467354, 48674634]
+	"storageIds":[487467354, 48674634],
+	"link":"API/bdm/businessData/com.bonitasoft.pojo.Employee/?q=findByIds&f=ids=487467354,48674634"
 }

@@ -28,7 +28,6 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
-
 /**
  * @author Paul AMAR
  */

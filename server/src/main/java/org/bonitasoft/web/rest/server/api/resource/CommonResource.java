@@ -13,17 +13,7 @@
  **/
 package org.bonitasoft.web.rest.server.api.resource;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.fasterxml.jackson.core.JsonParseException;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -44,7 +34,16 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @author Emmanuel Duchastenier
@@ -56,7 +55,7 @@ public class CommonResource extends ServerResource {
     /**
      * Get the tenant session to access the engine APIs
      */
-    protected APISession getEngineSession() {
+    public APISession getEngineSession() {
         if (sessionSingleton == null) {
             final HttpSession session = getHttpSession();
             sessionSingleton = (APISession) session.getAttribute("apiSession");
@@ -186,6 +185,9 @@ public class CommonResource extends ServerResource {
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
+        else if (t instanceof FileNotFoundException) {
+            getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        }
         else if (t instanceof NotFoundException) {
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
         }
@@ -246,9 +248,7 @@ public class CommonResource extends ServerResource {
 
     protected void setContentRange(final SearchResult<?> searchResult) {
         final Series<Header> headers = getResponse().getHeaders();
-        final int startIndex = getSearchPageNumber() * getSearchPageSize();
-        headers.add(new Header("Content-range", startIndex + "-" + (startIndex + getSearchPageSize() - 1) + "/"
-                + searchResult.getCount()));
+        headers.add(new Header("Content-range", getSearchPageNumber() + "-" + getSearchPageSize() + "/" + searchResult.getCount()));
     }
 
     protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {
@@ -257,10 +257,11 @@ public class CommonResource extends ServerResource {
             for (final String explanation : e.getExplanations()) {
                 explanations.append(explanation);
             }
-            getLogger().log(Level.INFO, e.getMessage() + "\nExplanations:\n" + explanations);
+            getLogger().log(Level.INFO, e.getSimpleMessage() + "\nExplanations:\n" + explanations);
         }
         getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST, statusErrorMessage);
         final ErrorMessageWithExplanations errorMessage = new ErrorMessageWithExplanations(e);
+        errorMessage.setMessage(e.getSimpleMessage());
         errorMessage.setExplanations(e.getExplanations());
         getResponse().setEntity(errorMessage.toEntity());
     }

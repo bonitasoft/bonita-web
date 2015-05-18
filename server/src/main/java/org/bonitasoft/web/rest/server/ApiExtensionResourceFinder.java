@@ -10,13 +10,13 @@
  * You should have received a copy of the GNU Lesser General Public License along with this
  * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
  * Floor, Boston, MA 02110-1301, USA.
- **/
+ */
 
 package org.bonitasoft.web.rest.server;
 
+import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.web.rest.server.api.extension.ApiExtensionResource;
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.ServerResource;
@@ -26,16 +26,10 @@ import org.restlet.resource.ServerResource;
  */
 public class ApiExtensionResourceFinder extends ResourceFinder {
 
-    private final ResourceExtensionDescriptor resourceExtensionDescriptor;
-
-    public ApiExtensionResourceFinder(ResourceExtensionDescriptor resourceExtensionDescriptor) {
-        this.resourceExtensionDescriptor = resourceExtensionDescriptor;
-    }
-
     @Override
     public ServerResource create(final Request request, final Response response) {
         final RestApiRenderer restApiRenderer = new RestApiRenderer();
-        return new ApiExtensionResource(resourceExtensionDescriptor, restApiRenderer);
+        return new ApiExtensionResource(restApiRenderer, new PageMappingService());
     }
 
 }

@@ -1,10 +1,16 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static java.util.Arrays.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.bonitasoft.web.rest.server.utils.ResponseAssert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -23,6 +29,7 @@ import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -65,6 +72,9 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Mock
     ContractDefinition contractDefinition;
 
+    @Mock
+    APISession apiSession;
+
     @BeforeClass
     public static void initClass() {
         I18n.getInstance();
@@ -72,13 +82,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Before
     public void initializeMocks() {
-        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI));
+        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI, apiSession));
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
+        when(apiSession.getTenantId()).thenReturn(1L);
     }
 
     @Override
     protected ServerResource configureResource() {
-        return new ProcessInstantiationResource(processAPI);
+        return new ProcessInstantiationResource(processAPI, apiSession);
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -101,13 +112,13 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
+
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\","
-                        + "\"rootCaseId\":\"0\",\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
 
     }
@@ -123,15 +134,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
-                        + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_instanciate_a_process() throws Exception {
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+        doThrow(new ContractViolationException("aMessage","aMessage", asList("first explanation", "second explanation"), null))
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
@@ -176,7 +186,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         // given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
-        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+        doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         doReturn(logger).when(processInstantiationResource).getLogger();
         doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
@@ -187,7 +197,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         inputs.put("testKey", "testValue");
 
         // when
-        processInstantiationResource.instanciateProcess(inputs);
+        processInstantiationResource.instantiateProcess(inputs);
 
         // then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");

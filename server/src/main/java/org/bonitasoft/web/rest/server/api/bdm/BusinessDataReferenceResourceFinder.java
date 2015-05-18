@@ -40,25 +40,7 @@ public class BusinessDataReferenceResourceFinder extends ResourceFinder {
 
 
     @Override
-    public Serializable getContextResultElement(Serializable object) {
-        String type;
-        String value;
-        String link;
-        if (object instanceof SimpleBusinessDataReference) {
-            type = ((SimpleBusinessDataReference) object).getType();
-            value = ((SimpleBusinessDataReference) object).getStorageId().toString();
-            link =  getUrl(type, value);
-        } else if (object instanceof MultipleBusinessDataReference) {
-            type = ((MultipleBusinessDataReference) object).getType();
-            value = ((MultipleBusinessDataReference) object).getStorageIds().toString();
-            link =  getUrl(type, "?q=findByIds&f=ids="+value.replaceAll("[\\[\\] ]",""));
-        } else {
-            return object;
-        }
-        return new ContextResultElement(type, value, link);
-    }
-
-    private String getUrl(String type, String value) {
-        return "API"+ BonitaRestletApplication.BDM_BUSINESS_DATA_URL + "/" + type + "/" + value;
+    public Serializable toClientObject(Serializable object) {
+        return BusinessDataReferenceResource.toClient((BusinessDataReference) object);
     }
 }

@@ -1,0 +1,116 @@
+<!doctype html>
+<html ng-app="caseOverview" ng-controller="MainCtrl">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{case.processDefinitionId.displayName}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- build:css resources/css/styles.css-->
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../node_modules/angular-timeline/src/angular-timeline.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- endbuild -->
+</head>
+
+<body >
+
+  <div class="container">
+
+        <div class="alert alert-warning"><b>Note</b>: this overview page is provided as an example, you might prefer designing your own page.</div>
+        <div class="panel panel-title">List of Business Data</div>
+        <div ng-repeat="(dataType, dataValues) in businessData">
+          <div class="badge">List of {{ dataType }} :</div>
+          <table class="table table-striped table-hover table-responsive">
+            <thead>
+            <tr>
+              <th class="text-center" ng-class="{hidden: isInternalField(propertyName)}" ng-repeat="(propertyName, propertyValue) in dataValues[0]">{{propertyName}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="data in dataValues">
+              <td class="text-left" ng-class="{hidden: isInternalField(propertyName)}" ng-repeat="(propertyName, propertyValue) in data">{{propertyValue}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div ng-if="businessData==null" class="alert alert-info">No Business data used in this case.</div>
+        <div class="panel panel-title">Timeline</div>
+        <timeline>
+        <timeline-node  ng-repeat="task in doneTasks.data" side="{{$even ?'left':'right'}}">
+          <timeline-badge class="info"> <i class="glyphicon glyphicon-check"></i>
+          </timeline-badge>
+          <timeline-panel>
+            <timeline-heading>
+              <timeline-title>
+                {{task.displayName}} ({{task.executedBy.firstname+' '+task.executedBy.lastname}})
+              </timeline-title>
+              <p>
+                <small class="text-muted"> <i class="glyphicon glyphicon-time"></i>
+                  {{task.reached_state_date| date:'medium'}}
+                </small>
+              </p>
+            </timeline-heading>
+            <timeline-content>
+              <p>{{task.displayDescription}}</p>
+            </timeline-content>
+          </timeline-panel>
+        </timeline-node>
+          <timeline-node ng-if="doneTasks.data[0]===undefined">
+            <timeline-badge class="warning"> <i class="glyphicon glyphicon-asterisk"></i>
+            </timeline-badge>
+            <timeline-panel>
+              <timeline-heading>
+                <timeline-title>
+                  No Tasks executed yet.
+                </timeline-title>
+              </timeline-heading>
+              <timeline-content>
+                <p>Tasks executed by any participant will be displayed here ordered by date. Most recent on the top.</p>
+              </timeline-content>
+            </timeline-panel>
+          </timeline-node>
+          <timeline-footer>
+
+            <timeline-panel>
+              <timeline-heading>
+                <timeline-title>
+                  Case started by: {{case.started_by.firstname}} {{case.started_by.lastname}}
+                </timeline-title>
+                <p>
+                  <small class="text-muted"> <i class="glyphicon glyphicon-time"></i>
+                    {{case.start | date:'medium'}}
+                  </small>
+                </p>
+              </timeline-heading>
+              <timeline-content>
+                <p>{{case.processDefinitionId.displayDescription}}</p>
+              </timeline-content>
+            </timeline-panel>
+          </timeline-footer>
+      </timeline>
+
+  </div>
+</body>
+
+  <!-- build:js resources/js/app.js -->
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/angular-bootstrap/dist/ui-bootstrap.js"></script>
+  <script src="../node_modules/angular-resource/angular-resource.js"></script>
+  <script src="../node_modules/angular-timeline/src/angular-timeline.js"></script>
+  <script src="../target/work/templates.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/contextService.js"></script>
+  <script src="js/businessDataService.js"></script>
+  <script src="js/overviewService.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:remove -->
+    <!-- for development only! MUST be ignored at build time -->
+    <script src="../node_modules/angular-mocks/angular-mocks.js"></script>
+    <script src="js/dev-only.js"></script>
+  <!-- endbuild -->
+
+</body>
+
+</html>
