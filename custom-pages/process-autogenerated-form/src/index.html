@@ -42,7 +42,7 @@
         <label for="{{input.name}}">{{input.name}}</label>
         - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i> 
         <!-- simple input -->
-        <div class="input-group input" ng-if="isSingleInput(input) && !isFileInput(input)" >
+        <div class="input" ng-if="isSingleInput(input) && !isFileInput(input)" >
           <input ng-init="initSingleInput(input)" type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[input.name]" placeholder="{{input.multiple?'Expecting a JSON collection of ' + input.type +' values, e.g. [\'a\' , \'list\', \'of values\']':'Expecting a ' + input.type + ' value.'}}">
         </div>
 
