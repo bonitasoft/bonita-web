@@ -7,6 +7,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -313,11 +314,13 @@ public class CustomPageServiceTest {
         File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
 
         //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
         verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
     }
@@ -330,11 +333,13 @@ public class CustomPageServiceTest {
         File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
@@ -345,11 +350,13 @@ public class CustomPageServiceTest {
         File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         verify(resourcesPermissionsMapping).removeProperty("GET|extension/restApiGet");
         verify(resourcesPermissionsMapping).removeProperty("POST|extension/restApiPost");
     }
@@ -360,11 +367,13 @@ public class CustomPageServiceTest {
         File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
         doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 

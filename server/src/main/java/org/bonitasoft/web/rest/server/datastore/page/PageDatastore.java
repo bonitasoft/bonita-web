@@ -61,7 +61,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenExcept
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.codehaus.groovy.control.CompilationFailedException;
 
-
 /**
  * @author Fabio Lombardi, Anthony Birembaut
  */
@@ -88,7 +87,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
 
     protected final CustomPageService customPageService;
 
-
     private final CompoundPermissionsMapping compoundPermissionsMapping;
 
     private final ResourcesPermissionsMapping resourcesPermissionsMapping;
@@ -96,9 +94,9 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
     private final BonitaHomeFolderAccessor tenantFolder;
 
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final PageAPI pageAPI,
-                         final CustomPageService customPageService,
-                         final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-                         final BonitaHomeFolderAccessor tenantFolder) {
+            final CustomPageService customPageService,
+            final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping,
+            final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.pageAPI = pageAPI;
@@ -123,7 +121,9 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
         pageItem.setContentName(originalFileName);
 
         try {
-            final File zipFile = tenantFolder.getTempFile(filename, getEngineSession().getTenantId());
+            final APISession engineSession = getEngineSession();
+            final long tenantId = engineSession.getTenantId();
+            final File zipFile = tenantFolder.getTempFile(filename, tenantId);
             final File unzipPageTempFolder = unzipContentFile(zipFile);
             validateZipContent(unzipPageTempFolder);
             final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new File(unzipPageTempFolder, PAGE_PROPERTIES),
@@ -131,7 +131,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
             final Page page = createEnginePage(pageItem, zipFile);
             final PageItem addedPage = convertEngineToConsoleItem(page);
             savePageInBonitahome(addedPage.getUrlToken(), unzipPageTempFolder);
-            customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
+            customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
+                    customPageService.getPageResourceProvider(page, tenantId), engineSession);
             customPageService.addPermissionsToCompoundPermissions(addedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                     resourcesPermissionsMapping);
             return addedPage;
@@ -261,9 +262,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 if (!page.isProvided()) {
-                    customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
+                    final APISession engineSession = getEngineSession();
+                    customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
+                            customPageService.getPageResourceProvider(page, engineSession.getTenantId()), engineSession);
                     pageAPI.deletePage(id.toLong());
-                    customPageService.removePage(getEngineSession(), page.getName());
+                    customPageService.removePage(engineSession, page.getName());
                     compoundPermissionsMapping.removeProperty(page.getName());
                 }
             }
@@ -282,7 +285,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
 
     @Override
     public ItemSearchResult<PageItem> search(final int page, final int resultsByPage, final String search, final String orders,
-                                             final Map<String, String> filters) {
+            final Map<String, String> filters) {
         // Build search
         final SearchOptionsCreator creator = makeSearchOptionCreator(page, resultsByPage, search, orders, filters);
 
@@ -303,7 +306,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
     }
 
     protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search, final String orders,
-                                                           final Map<String, String> filters) {
+            final Map<String, String> filters) {
         return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, getSearchDescriptorConverter()), new Filters(filters,
                 new PageFilterCreator(getSearchDescriptorConverter())));
     }
@@ -340,7 +343,9 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
                         originalFileName = filename;
                     }
 
-                    zipFile = tenantFolder.getTempFile(filename, getEngineSession().getTenantId());
+                    final APISession engineSession = getEngineSession();
+                    final long tenantId = engineSession.getTenantId();
+                    zipFile = tenantFolder.getTempFile(filename, tenantId);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     validateZipContent(unzipPageTempFolder);
                     final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new File(unzipPageTempFolder, PAGE_PROPERTIES),
@@ -353,7 +358,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
                     if (oldURLToken != updatedPage.getUrlToken()) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
                     }
-                    customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()));
+                    customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
+                            customPageService.getPageResourceProvider(page, tenantId), engineSession);
                     customPageService.addPermissionsToCompoundPermissions(updatedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                             resourcesPermissionsMapping);
                 }
@@ -370,7 +376,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
             CompilationFailedException, BonitaException {
         if (zipFile != null) {
             final Long pageId = id.toLong();
-            customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, customPageService.getPageResourceProvider(pageAPI.getPage(pageId), getEngineSession().getTenantId()));
+            customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
+                    customPageService.getPageResourceProvider(pageAPI.getPage(pageId), getEngineSession().getTenantId()), getEngineSession());
             pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
             zipFile.delete();
         }
