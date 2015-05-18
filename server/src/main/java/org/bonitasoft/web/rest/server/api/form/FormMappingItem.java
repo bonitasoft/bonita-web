@@ -6,7 +6,6 @@ import org.bonitasoft.engine.form.FormMappingType;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by Fabio Lombardi
@@ -117,41 +116,4 @@ public class FormMappingItem implements Serializable {
         this.target = target;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof FormMappingItem)) return false;
-        FormMappingItem that = (FormMappingItem) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(processDefinitionId, that.processDefinitionId) &&
-                Objects.equals(lastUpdatedBy, that.lastUpdatedBy) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(target, that.target) &&
-                Objects.equals(task, that.task) &&
-                Objects.equals(pageId, that.pageId) &&
-                Objects.equals(pageURL, that.pageURL) &&
-                Objects.equals(pageMappingKey, that.pageMappingKey) &&
-                Objects.equals(lastUpdateDate, that.lastUpdateDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, processDefinitionId, type, target, task, pageId, pageURL, pageMappingKey, lastUpdatedBy, lastUpdateDate);
-    }
-
-    @Override
-    public String toString() {
-        return "FormMapping{" +
-                "id=" + id +
-                ", processDefinitionId=" + processDefinitionId +
-                ", type=" + type +
-                ", target=" + target +
-                ", task='" + task + '\'' +
-                ", pageId=" + pageId +
-                ", pageURL='" + pageURL + '\'' +
-                ", pageMappingKey='" + pageMappingKey + '\'' +
-                ", lastUpdatedBy=" + lastUpdatedBy +
-                ", lastUpdateDate=" + lastUpdateDate +
-                '}';
-    }
 }

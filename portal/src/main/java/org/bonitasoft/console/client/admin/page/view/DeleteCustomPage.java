@@ -121,11 +121,11 @@ public class DeleteCustomPage extends Page {
 
     private void searchApplicationDependancies() {
         for (final String pageId : idsAsString) {
-            searchApplicationDependanciesForPage(pageId);
+            searchApplicationDependenciesForPage(pageId);
         }
     }
 
-    private void searchApplicationDependanciesForPage(final String pageId) {
+    private void searchApplicationDependenciesForPage(final String pageId) {
         final Map<String, String> filter = new HashMap<String, String>();
         filter.put(ApplicationPageItem.ATTRIBUTE_PAGE_ID, pageId);
         final List<String> deploys = Arrays.asList(ApplicationPageItem.ATTRIBUTE_PAGE_ID, ApplicationPageItem.ATTRIBUTE_APPLICATION_ID);
@@ -211,8 +211,7 @@ public class DeleteCustomPage extends Page {
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 final PageItem page = JSonItemReader.parseItem(response, PageDefinition.get());
                 addBody(new DeletePageFormProblemsCallout(formMappings, page.getDisplayName()));
-                pagesLeft--;
-                if (pagesLeft==0) {
+                if (--pagesLeft==0) {
                     addBody(new CalloutWarning(_("If you delete a page that is used by a process, the process becomes unresolved.\nBefore deleting a page, you should also check whether it is used in a custom profile navigation.")));
                     addBody(new Paragraph(_("Do you still want to delete the selected pages?")));
                 }
