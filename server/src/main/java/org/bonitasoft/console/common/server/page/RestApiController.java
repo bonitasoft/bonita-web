@@ -23,7 +23,6 @@ public interface RestApiController {
 
     /**
      * Let the custom page parse request for specific attribute handling.
-     *  @param
      * @param request              the HTTP servlet request intended to be used as in a servlet
      * @param pageResourceProvider provide access to the resources contained in the custom page zip
      * @param pageContext          provide access to the data relative to the context in which the custom page is displayed
