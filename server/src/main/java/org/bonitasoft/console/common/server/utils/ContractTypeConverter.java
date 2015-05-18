@@ -74,17 +74,13 @@ public class ContractTypeConverter {
     }
 
     public Map<String,Serializable> getProcessedInput(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId, boolean deleteFile) throws FileNotFoundException {
-        this.deleteFile = deleteFile;
-        return this.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
-    }
-
-    public Map<String, Serializable> getProcessedInput(final ContractDefinition contractDefinition, final Map<String, Serializable> input, final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
+        this.deleteFile = deleteFile;
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
-        final Map<String, Serializable> contractDefinitionMap = contractDefinition == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(contractDefinition.getInputs());
+        final Map<String, Serializable> contractDefinitionMap = processContract == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(processContract.getInputs());
 
-        for (final Entry<String, Serializable> inputEntry : input.entrySet()) {
+        for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
             processedInputs.put(inputEntry.getKey(), convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey())));
         }
         return processedInputs;

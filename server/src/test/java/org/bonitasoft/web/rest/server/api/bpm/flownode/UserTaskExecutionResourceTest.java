@@ -91,7 +91,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new UserTaskExecutionResource(processAPI, apiSession);
+        return userTaskExecutionResource;
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -129,6 +129,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).executeUserTask(1L, 2L, expectedComplexInput);
         verify(processAPI, times(0)).executeUserTask(2L, expectedComplexInput);
+        verify(userTaskExecutionResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
