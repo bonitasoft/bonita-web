@@ -135,6 +135,7 @@ public class ConnectorDefinitionAdapter implements ConnectorDefinition {
 
     @Override
     public <T> T accept(ModelFinderVisitor<T> visitor, long modelId) {
-        return visitor.find(this, modelId);
+        // Not needed here, as the method is used engine side to search for elements on specific Engine APIs:
+        return null;
     }
 }
