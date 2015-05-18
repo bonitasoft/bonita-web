@@ -92,8 +92,8 @@ public class DeleteCustomPage extends Page {
         } else {
             addBody(new Text(_("If this page is used in a profile, the page and related profile entries will be permanently deleted.")));
         }
-        searchApplicationDependancies();
-        searchFormMappingDependancies();
+        searchApplicationDependencies();
+        searchFormMappingDependencies();
     }
 
     private void buildform() {
@@ -119,7 +119,7 @@ public class DeleteCustomPage extends Page {
         setFooter(form);
     }
 
-    private void searchApplicationDependancies() {
+    private void searchApplicationDependencies() {
         for (final String pageId : idsAsString) {
             searchApplicationDependenciesForPage(pageId);
         }
@@ -153,7 +153,7 @@ public class DeleteCustomPage extends Page {
 
     }
 
-    private void searchFormMappingDependancies() {
+    private void searchFormMappingDependencies() {
         //pagesLeft = 0;
         for (final String pageId : idsAsString) {
             searchFormMappingDependenciesForPage(pageId);
