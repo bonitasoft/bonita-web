@@ -16,10 +16,18 @@
 package org.bonitasoft.web.rest.server.framework;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +57,8 @@ public class APIServletCallTest {
     private APISession apiSession;
     @Mock
     private HttpSession httpSession;
+    @Mock
+    private API api;
 
     @Spy
     private final APIServletCall apiServletCall = new APIServletCall();
@@ -59,6 +70,7 @@ public class APIServletCallTest {
         doReturn(1l).when(apiSession).getTenantId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn("john").when(apiSession).getUserName();
+        apiServletCall.api = api;
     }
 
     @Test
@@ -76,6 +88,24 @@ public class APIServletCallTest {
 
     @Test
     public void doGet_On_Search_Should_Set_Content_Range_Headers_Correctly() throws Exception {
+        doReturn(new ArrayList<String>()).when(apiServletCall).getParameterAsList("d");
+        doReturn(new ArrayList<String>()).when(apiServletCall).getParameterAsList("n");
+        doReturn("0").when(apiServletCall).getParameter("p");
+        doReturn("0").when(apiServletCall).getParameter("c");
+        doReturn("id ASC").when(apiServletCall).getParameter("o");
+        doReturn("").when(apiServletCall).getParameter("s");
+        doReturn(null).when(apiServletCall).getParameterAsList("f");
+        doReturn(new ArrayList<String>()).when(apiServletCall).getParameterAsList("d");
+
+        doNothing().when(apiServletCall).head(anyString(), anyString());
+        doNothing().when(apiServletCall).output(any(List.class));
+        doReturn(2).when(apiServletCall).countParameters();
+
+        final ItemSearchResult itemSearchResult = mock(ItemSearchResult.class);
+        when(itemSearchResult.getPage()).thenReturn(4);
+        when(itemSearchResult.getLength()).thenReturn(8);
+        when(itemSearchResult.getTotal()).thenReturn(789L);
+        when(api.runSearch(anyInt(), anyInt(), anyString(), anyString(), any(Map.class), any(List.class), any(List.class))).thenReturn(itemSearchResult);
 
         apiServletCall.doGet();
         verify(apiServletCall).head(anyString(), anyString());

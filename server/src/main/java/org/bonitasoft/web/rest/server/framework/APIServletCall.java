@@ -73,7 +73,7 @@ public class APIServletCall extends ServletCall {
     // REQUEST PARSING
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private API<? extends IItem> api;
+    protected API<? extends IItem> api;
 
     private String apiName;
 
@@ -178,14 +178,11 @@ public class APIServletCall extends ServletCall {
             }
             // Search
             else {
-
                 final ItemSearchResult<?> result = api.runSearch(Integer.parseInt(getParameter(PARAMETER_PAGE, "0")),
                         Integer.parseInt(getParameter(PARAMETER_LIMIT, "10")), getParameter(PARAMETER_SEARCH),
                         getParameter(PARAMETER_ORDER), parseFilters(getParameterAsList(PARAMETER_FILTER)),
                         getParameterAsList(PARAMETER_DEPLOY), getParameterAsList(PARAMETER_COUNTER));
-                final int firstResultIndex = result.getPage() * Integer.parseInt(getParameter(PARAMETER_LIMIT, "10"));
-                final int lastResultIndex = firstResultIndex + result.getLength();
-                head("Content-Range", firstResultIndex + "-" + lastResultIndex + "/" + result.getTotal());
+                head("Content-Range", result.getPage() + "-" + result.getLength() + "/" + result.getTotal());
 
                 output(result.getResults());
             }
@@ -196,9 +193,11 @@ public class APIServletCall extends ServletCall {
         }
     }
 
-    /**
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#head(java.lang.String, java.lang.String)
-     */
+    @Override
+    protected void output(final Object object) {
+        super.output(object);
+    }
+
     @Override
     protected void head(final String name, final String value) {
         super.head(name, value);
