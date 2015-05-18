@@ -9,7 +9,7 @@
   ]);
 
   app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog) {
-    var self = this;
+
     var processId = $location.search().id;
     $scope.inputArray = [];
     $scope.contract = {};
