@@ -1,6 +1,6 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ public class LogoutServletTest {
     @Test
     public void testBuildLoginPageUrlFromMaliciousRedirectShouldReturnBrokenUrl() throws Exception {
         String loginPage = logoutServlet.buildLoginPageUrl("http://www.test.com");
-        assertThat(loginPage).isEqualToIgnoringCase("://.test.com");
+        assertThat(loginPage).isEqualToIgnoringCase(":.test.com");
     }
 
     @Test
