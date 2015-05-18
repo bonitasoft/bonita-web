@@ -19,8 +19,10 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
@@ -35,6 +37,7 @@ import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -76,6 +79,9 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Mock
     APISession apiSession;
+
+    @Mock
+    ProcessInstance processInstance;
 
     @BeforeClass
     public static void initClass() {
@@ -205,7 +211,23 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
         // then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+    }
 
+    @Test
+    public void should_call_deleteFiles() throws ProcessDefinitionNotFoundException, FileNotFoundException, ProcessExecutionException, ProcessActivationException, ContractViolationException {
+        //given
+        doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
+        doReturn(contractDefinition).when(processAPI).getProcessContract(PROCESS_DEFINITION_ID);
+        doReturn(response).when(processInstantiationResource).getResponse();
+        final Map<String, Serializable> inputs = new HashMap<>();
+        inputs.put("testKey", "testValue");
+        when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, inputs)).thenReturn(processInstance);
+
+        //when
+        processInstantiationResource.instantiateProcess(inputs);
+
+        verify(processInstantiationResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test

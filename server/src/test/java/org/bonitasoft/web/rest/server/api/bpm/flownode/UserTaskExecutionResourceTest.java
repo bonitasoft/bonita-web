@@ -91,7 +91,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return userTaskExecutionResource;
+        return new UserTaskExecutionResource(processAPI, apiSession);
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -129,7 +129,6 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
         verify(processAPI).executeUserTask(1L, 2L, expectedComplexInput);
         verify(processAPI, times(0)).executeUserTask(2L, expectedComplexInput);
-        verify(userTaskExecutionResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -199,7 +198,22 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
         //then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+    }
 
+    @Test
+    public void should_call_deleteFiles() throws UserTaskNotFoundException, FileNotFoundException, FlowNodeExecutionException {
+        //given
+        when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
+        doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
+        doReturn(response).when(userTaskExecutionResource).getResponse();
+        final Map<String, Serializable> inputs = new HashMap<>();
+        inputs.put("testKey", "testValue");
+
+        //when
+        userTaskExecutionResource.executeTask(inputs);
+
+        verify(userTaskExecutionResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
