@@ -13,10 +13,8 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -33,8 +31,9 @@ import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Nicolas Tith
@@ -67,13 +66,16 @@ public class ProcessInstantiationResource extends CommonResource {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
             final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, false);
             long processInstanceId;
             if (userId == null) {
                 processInstanceId = processAPI.startProcessWithInputs(processDefinitionId, processedInputs).getId();
             } else {
                 processInstanceId = processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs).getId();
             }
+            //clean temp files
+            deleteFiles(processContract, inputs, maxSizeForTenant, tenantId);
+
             final JsonNodeFactory factory = JsonNodeFactory.instance;
             final ObjectNode returnedObject = factory.objectNode();
             returnedObject.put(CASE_ID_ATTRIBUTE, processInstanceId);
@@ -85,6 +87,10 @@ public class ProcessInstantiationResource extends CommonResource {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    protected void deleteFiles(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
+        typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 
     protected CaseItem convertEngineToConsoleItem(final ProcessInstance item) {
