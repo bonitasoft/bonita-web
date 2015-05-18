@@ -50,11 +50,13 @@
           inputs: input.inputs
         };
       $scope.inputArray[input.name].push(newInput);
+      $scope.autofill[input.name].push(generateValue(input));
     };
 
     $scope.removeInput = function removeInput (input, index){
       $scope.inputArray[input.name].splice(index, 1);
       $scope.dataToSend[input.name].splice(index, 1);
+      $scope.autofill[input.name].splice(index, 1);
     };
 
     var jsonify = function (data) {
@@ -92,14 +94,14 @@
 
 
     var generateValueForChildrenAttribute = function generateValueForChildrenAttribute(input) {
-      var result = $scope.generateValue(input);
+      var result = generateValue(input);
       if (input.type === 'TEXT') {
         return '"' + result + '"';
       }
       return result;
     };
 
-    $scope.generateValue = function generateValue(input) {
+     var generateValue = function generateValue(input) {
       var result = null;
 
       if (input.type === 'TEXT') {
@@ -127,12 +129,14 @@
         }
         result += '}';
       }
+      /*
       if (input.multiple) {
         if (input.type === 'TEXT') {
           result = '"' + result + '"';
         }
         result = '[' + result + ']';
       }
+      */
       return result;
     };
 
@@ -156,10 +160,12 @@
     $scope.initMultipleInput = function initMultipleInput(input) {
       $scope.dataToSend[input.name]=[];
       $scope.inputArray[input.name] = [input];
+      $scope.autofill[input.name] = [generateValue(input)];
     };
 
     $scope.initSingleInput = function initSingleInput(input) {
       $scope.dataToSend[input.name] = null;
+      $scope.autofill[input.name] = generateValue(input);
     };
 
     $scope.hasSeveralItemsInCollection = function hasSeveralItemsInCollection(input) {
