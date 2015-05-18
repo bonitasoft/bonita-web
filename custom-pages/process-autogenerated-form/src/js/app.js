@@ -64,11 +64,9 @@
       for (var prop in data) {
 
         if ((typeof data[prop] === 'string') && ((data[prop].lastIndexOf('{', 0) === 0) || (data[prop].lastIndexOf('[', 0) === 0))) {
-          console.log('Jsonification of prop: ', data[prop]);
           jsonified[prop] = angular.fromJson(data[prop]);
         } else {
           jsonified[prop] = data[prop];
-          console.log('prop', prop, 'jsonified[prop]', jsonified[prop]);
         }
 
       }
@@ -129,14 +127,7 @@
         }
         result += '}';
       }
-      /*
-      if (input.multiple) {
-        if (input.type === 'TEXT') {
-          result = '"' + result + '"';
-        }
-        result = '[' + result + ']';
-      }
-      */
+
       return result;
     };
 
