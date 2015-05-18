@@ -151,7 +151,7 @@ public class APIServletCall extends ServletCall {
 
         super.parseRequest(request, response);
 
-        }
+    }
 
     void parsePath(final HttpServletRequest request) {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
@@ -183,8 +183,9 @@ public class APIServletCall extends ServletCall {
                         Integer.parseInt(getParameter(PARAMETER_LIMIT, "10")), getParameter(PARAMETER_SEARCH),
                         getParameter(PARAMETER_ORDER), parseFilters(getParameterAsList(PARAMETER_FILTER)),
                         getParameterAsList(PARAMETER_DEPLOY), getParameterAsList(PARAMETER_COUNTER));
-
-                head("Content-Range", result.getPage() + "-" + result.getLength() + "/" + result.getTotal());
+                final int firstResultIndex = result.getPage() * Integer.parseInt(getParameter(PARAMETER_LIMIT, "10"));
+                final int lastResultIndex = firstResultIndex + result.getLength();
+                head("Content-Range", firstResultIndex + "-" + lastResultIndex + "/" + result.getTotal());
 
                 output(result.getResults());
             }
@@ -193,6 +194,14 @@ public class APIServletCall extends ServletCall {
             e.setResource(resourceName);
             throw e;
         }
+    }
+
+    /**
+     * @see org.bonitasoft.web.toolkit.server.ServletCall#head(java.lang.String, java.lang.String)
+     */
+    @Override
+    protected void head(final String name, final String value) {
+        super.head(name, value);
     }
 
     /**

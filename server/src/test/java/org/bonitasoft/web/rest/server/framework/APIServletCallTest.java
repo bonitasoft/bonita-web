@@ -16,8 +16,10 @@
 package org.bonitasoft.web.rest.server.framework;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,11 +28,11 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,7 +49,8 @@ public class APIServletCallTest {
     @Mock
     private HttpSession httpSession;
 
-    private APIServletCall apiServletCall = new APIServletCall();
+    @Spy
+    private final APIServletCall apiServletCall = new APIServletCall();
 
     @Before
     public void before() {
@@ -60,7 +63,7 @@ public class APIServletCallTest {
 
     @Test
     public void should_parsePath_request_info_with_id() {
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        final HttpServletRequest request = mock(HttpServletRequest.class);
         doReturn("API/bpm/case/15").when(request).getPathInfo();
 
         apiServletCall.parsePath(request);
@@ -69,6 +72,13 @@ public class APIServletCallTest {
         assertThat(apiServletCall.getResourceName()).isEqualTo("case");
         assertThat(apiServletCall.getApiName()).isEqualTo("bpm");
 
+    }
+
+    @Test
+    public void doGet_On_Search_Should_Set_Content_Range_Headers_Correctly() throws Exception {
+
+        apiServletCall.doGet();
+        verify(apiServletCall).head(anyString(), anyString());
     }
 
 }
