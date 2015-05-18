@@ -140,6 +140,11 @@
       return (input.inputs.length===0);
     };
 
+    $scope.isComplexInput = function isComplexInput(input) {
+      return !($scope.isSimpleInput(input));
+    };
+
+
     $scope.isMultipleInput = function isMultipleInput(input) {
       return (input.multiple);
     };
