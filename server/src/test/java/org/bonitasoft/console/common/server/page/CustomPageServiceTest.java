@@ -300,7 +300,7 @@ public class CustomPageServiceTest {
 
         // then
         final RestApiController restApiController = restApiControllerClass.newInstance();
-        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder());
+        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder(), new RestApiUtilImpl());
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
                 .hasNoAdditionalCookies().hasHttpStatus(200);
     }
