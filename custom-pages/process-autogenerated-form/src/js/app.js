@@ -86,7 +86,8 @@
 
     $scope.fillData = function fillData() {
       for (var prop in $scope.autofill) {
-        $scope.dataToSend[prop] = $scope.autofill[prop];
+        // make a copy of properties from the autofill object to avoid messing up with references
+        $scope.dataToSend[prop] = angular.copy($scope.autofill[prop]);
       }
     };
 
