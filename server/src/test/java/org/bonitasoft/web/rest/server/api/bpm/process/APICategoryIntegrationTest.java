@@ -139,7 +139,7 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         TestCategoryFactory.removeTestCategoryFromList(category);
     }
-
+/*
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
         //given
@@ -149,4 +149,5 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
     }
+*/    
 }
