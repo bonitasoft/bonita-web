@@ -77,7 +77,7 @@
       $scope.message = undefined;
       var jsonifiedDataToSend = jsonify($scope.dataToSend);
       contractSrvc.startProcess(processId, jsonifiedDataToSend).then(function () {
-        
+
         $window.top.location.href = '/bonita';
       }, function (reason) {
         $scope.message = reason.data.explanations ? reason.data.explanations : reason.data.message;
