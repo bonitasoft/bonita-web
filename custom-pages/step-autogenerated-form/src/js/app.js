@@ -116,7 +116,7 @@
         result = input.name.length + (input.name.length + 1) / 10;
       }
       if (input.type === 'DATE') {
-        result = '"' + new Date().toJSON().slice(0, 10) + '"';
+        result = new Date().toJSON().slice(0, 10);
       }
       if (input.inputs.length > 0) {
         result = '{';
