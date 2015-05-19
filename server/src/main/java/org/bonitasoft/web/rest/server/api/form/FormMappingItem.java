@@ -17,10 +17,10 @@ public class FormMappingItem implements Serializable {
     private FormMappingType type;
     private FormMappingTarget target;
     private String task;
-    private String pageId;
+    private Long pageId;
     private String pageURL;
     private String pageMappingKey;
-    private String lastUpdatedBy;
+    private long lastUpdatedBy;
     private Date lastUpdateDate;
 
     public FormMappingItem(FormMapping item) {
@@ -29,10 +29,10 @@ public class FormMappingItem implements Serializable {
         this.type = item.getType();
         this.target = item.getTarget();
         this.task = item.getTask();
-        this.pageId = String.valueOf(item.getPageId());
+        this.pageId = item.getPageId();
         this.pageURL = item.getURL();
         this.pageMappingKey = item.getPageMappingKey();
-        this.lastUpdatedBy = String.valueOf(item.getLastUpdatedBy());
+        this.lastUpdatedBy = item.getLastUpdatedBy();
         this.lastUpdateDate = item.getLastUpdateDate();
     }
 
@@ -68,11 +68,11 @@ public class FormMappingItem implements Serializable {
         this.task = task;
     }
 
-    public String getPageId() {
+    public Long getPageId() {
         return pageId;
     }
 
-    public void setPageId(String pageId) {
+    public void setPageId(Long pageId) {
         this.pageId = pageId;
     }
 
@@ -92,11 +92,11 @@ public class FormMappingItem implements Serializable {
         this.type = type;
     }
 
-    public String getLastUpdatedBy() {
+    public long getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(String lastUpdatedBy) {
+    public void setLastUpdatedBy(long lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
