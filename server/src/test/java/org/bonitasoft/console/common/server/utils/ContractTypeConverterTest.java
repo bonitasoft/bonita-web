@@ -15,6 +15,7 @@ import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.FileInputValue;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
 import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -124,7 +125,7 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        final Map<String, Serializable> complexInput = generateInputMapWithFile( "tempFile");
+        final Map<String, Serializable> complexInput = generateInputMapWithFile("tempFile");
         final Map<String, Serializable> complexInput2 = generateInputMapWithFile("tempFile2");
         final List<Serializable> multipleComplexInput = new ArrayList<>();
         multipleComplexInput.add((Serializable) complexInput);
@@ -171,6 +172,29 @@ public class ContractTypeConverterTest {
 
         //files should not have been deleted
         verify(contractTypeConverter, times(1)).deleteFile(any(File.class), anyString());
+    }
+
+
+    @Test
+    public void getAdaptedContractDefinition_should_return_a_converter_contract() throws IOException {
+        //given
+        ContractDefinitionImpl processContract = new ContractDefinitionImpl();
+        List<InputDefinition> inputDefinitions = new ArrayList<InputDefinition>();
+        inputDefinitions.add(new InputDefinitionImpl(InputDefinition.FILE_INPUT_FILENAME, Type.TEXT, "Name of the file", false));
+        inputDefinitions.add(new InputDefinitionImpl(InputDefinition.FILE_INPUT_CONTENT, Type.BYTE_ARRAY, "Content of the file", false));
+        processContract.addInput(new InputDefinitionImpl("inputFile", "this is a input file", false, Type.FILE, inputDefinitions));
+
+        //when
+        ContractDefinition adaptedContractDefinition = contractTypeConverter.getAdaptedContractDefinition(processContract);
+
+        //assert
+        InputDefinition tempPathFileInputDefinition = adaptedContractDefinition.getInputs().get(0).getInputs().get(1);
+        assertThat(tempPathFileInputDefinition.getType()).isEqualTo(Type.TEXT);
+        assertThat(tempPathFileInputDefinition.getType()).isNotEqualTo(Type.BYTE_ARRAY);
+        assertThat(tempPathFileInputDefinition.getName()).isEqualTo(contractTypeConverter.FILE_TEMP_PATH);
+        assertThat(tempPathFileInputDefinition.getDescription()).isNotEqualTo(InputDefinition.FILE_INPUT_CONTENT);
+        assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(contractTypeConverter.TEMP_PATH_DESCRIPTION);
+        assertThat(tempPathFileInputDefinition.getDescription()).isNotEqualTo("Content of the file");
     }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
