@@ -30,12 +30,12 @@
       $scope.task = result;
     });
 
-    $scope.onUploadSuccess = function onUploadSuccess(response, input) {
+    $scope.onUploadSuccess = function onUploadSuccess(response, input, $index) {
       if(input.multiple){
         if($scope.dataToSend[input.name] === null){
           $scope.dataToSend[input.name] = [];
         }
-        $scope.dataToSend[input.name].push(response);
+        $scope.dataToSend[input.name][$index] = response;
       }else{
         $scope.dataToSend[input.name] = response;
       }
