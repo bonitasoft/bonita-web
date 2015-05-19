@@ -76,12 +76,14 @@ public class FormMappingResourceTest extends RestletTest {
     }
 
     @Test
-    public void searchFormMappingShouldReturnPrecessDefIdAsString() throws Exception {
+    public void searchFormMappingShouldReturnLongIdAsString() throws Exception {
 
         final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
         final FormMapping formMapping = new FormMapping();
         formMapping.setTask("myTask");
         formMapping.setProcessDefinitionId(4871148324840256385L);
+        formMapping.setPageId(1L);
+        formMapping.setLastUpdatedBy(1L);
         final List<FormMapping> formMappings = new ArrayList<>();
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
@@ -97,6 +99,8 @@ public class FormMappingResourceTest extends RestletTest {
         outputStream.close();
         assertThat(content).isNotNull();
         assertThat(content).contains("\"processDefinitionId\":\"4871148324840256385\"");
+        assertThat(content).contains("\"pageId\":\"1\"");
+        assertThat(content).contains("\"lastUpdatedBy\":\"1\"");
         verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
     }
 
