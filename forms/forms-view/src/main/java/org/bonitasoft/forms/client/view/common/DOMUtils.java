@@ -524,7 +524,7 @@ public class DOMUtils {
 
     /**
      * Override a checkbox or radiobuton behavior after it is checked or unchecked
-     * 
+     *
      * @param checbox
      * @param checked
      */
@@ -612,7 +612,7 @@ public class DOMUtils {
         theElement = DOM.getElementById("loading");
         if (theElement != null) {
             theElement.getStyle().setProperty("display", "table");
-            theElement.getStyle().setProperty("zIndex", "999");
+
         }
     }
 
