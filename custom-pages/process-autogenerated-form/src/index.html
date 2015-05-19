@@ -82,7 +82,7 @@
           class="form-group"
           action="{{importUrl}}"
           name="uploadForm_{{$index}}"
-          ng-upload="onUploadSuccess(content, input)"
+          ng-upload="onUploadSuccess(content, input, $index)"
           ng-repeat="multipleInput in inputArray[input.name]"
           >
             <div>
