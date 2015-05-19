@@ -13,11 +13,14 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
+import java.io.IOException;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.resource.Get;
 
 /**
@@ -34,8 +37,18 @@ public class ProcessDefinitionDesignResource extends CommonResource {
     }
 
     @Get("json")
-    public DesignProcessDefinition getDesign() throws ProcessDefinitionNotFoundException {
-        return processAPI.getDesignProcessDefinition(getProcessDefinitionIdParameter());
+    public String getDesign() throws ProcessDefinitionNotFoundException, IOException {
+        final DesignProcessDefinition design = processAPI.getDesignProcessDefinition(getProcessDefinitionIdParameter());
+        return replaceLongIdToString(new JacksonRepresentation<DesignProcessDefinition>(design).getText());
+    }
+
+    /**
+     * @param design
+     * @return
+     * @throws IOException
+     */
+    protected String replaceLongIdToString(final String design) throws IOException {
+        return design.replaceAll("([^\\\\]\"id\"\\s*:\\s*)(\\d+)", "$1\"$2\"");
     }
 
     protected long getProcessDefinitionIdParameter() {
