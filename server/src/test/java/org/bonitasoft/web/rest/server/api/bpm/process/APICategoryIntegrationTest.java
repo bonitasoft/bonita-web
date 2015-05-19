@@ -85,7 +85,6 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
     public void addCategoryTest() {
         //before
 
-
         // API call
         final CategoryItem categoryItem = new CategoryItem();
         categoryItem.setName("categoryTest");
@@ -149,7 +148,7 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         TestCategoryFactory.removeTestCategoryFromList(category);
     }
-/*
+
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
         //given
@@ -157,13 +156,10 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         final String name = "aCategory";
         final CategoryItem categoryItem = aCategoryItem().build();
 
-
         //when then exception
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
 
-
-
     }
-*/    
+
 }
