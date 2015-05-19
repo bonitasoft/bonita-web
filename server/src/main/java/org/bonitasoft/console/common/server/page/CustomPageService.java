@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import groovy.lang.GroovyClassLoader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -364,7 +362,8 @@ public class CustomPageService {
         return getPageAPI(apiSession).getPage(pageId);
     }
 
-    public void removeRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider) {
+    public void removeRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider, APISession apiSession) throws IOException, BonitaException {
+        ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.removeProperty(key);
@@ -372,7 +371,8 @@ public class CustomPageService {
 
     }
 
-    public void addRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider) {
+    public void addRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider, APISession apiSession) throws IOException, BonitaException {
+        ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));

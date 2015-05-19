@@ -138,12 +138,10 @@ public class PageDatastoreTest extends APITestWithMock {
 
     File pagesDir = new File("target/bonita-home/client/tenants/1/work/pages");
 
-
     private String savedBonitaHomeProperty;
 
     @Mock
     private PageResourceProvider pageResourceProvider;
-
 
     @Before
     public void setUp() throws Exception {
@@ -241,9 +239,8 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(apiExtensionToBeAdded);
 
         //then
-        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
     }
-
 
     @Test(expected = APIException.class)
     public void should_add_a_not_valid_page_rise_exception() {
@@ -353,12 +350,11 @@ public class PageDatastoreTest extends APITestWithMock {
         ids.add(pageToRemove.getId());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
 
-
         // When
         pageDatastore.delete(ids);
 
         // then
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
     }
 
     @Test
@@ -377,15 +373,14 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // When
         Map<String, String> attributes = new HashMap<>();
-        attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR + apiExtensionZipFile.getName());
+        attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR
+                + apiExtensionZipFile.getName());
         pageDatastore.update(id, attributes);
 
-
         // then
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
-        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
     }
-
 
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_adding_page_with_unauthorized_path() throws IOException {
@@ -460,7 +455,6 @@ public class PageDatastoreTest extends APITestWithMock {
             }
         }
     }
-
 
     @Test
     public void it_should_set_the_process_definition_id_on_creation() throws Exception {
