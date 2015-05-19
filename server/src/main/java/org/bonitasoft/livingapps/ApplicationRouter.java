@@ -30,7 +30,7 @@ public class ApplicationRouter {
         this.applicationModelFactory = applicationModelFactory;
     }
 
-    public boolean route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer, final  ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
+    public void route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer, final  ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
             throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
@@ -41,47 +41,34 @@ public class ApplicationRouter {
         if (pathSegments.isEmpty()) {
             hsResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "The name of the application is required.");
+            return;
         }
 
         //If no page name, redirect to Home page
         if (parsedRequest.getPageToken() == null) {
             hsResponse.sendRedirect(application.getApplicationHomePage());
-            return true;
+            return;
         }
 
         if ("API".equals(parsedRequest.getPageToken())) {
             //Support relative calls to the REST API from the application page using ../API/
             hsRequest.getRequestDispatcher("/"+getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(),parsedRequest.getApplicationName())).forward(hsRequest, hsResponse);
-            return true;
+            return;
         }
-
-        /*
-        //Deprecated themeResource servlet
-        if (hsRequest.getRequestURI().endsWith("themeResource")) {
-            forwardTo("/portal/themeResource", hsRequest, hsResponse);
-            return true;
-        }
-
-        //Deprecated pageResource servlet
-        if (hsRequest.getRequestURI().endsWith("pageResource")) {
-            forwardTo("/portal/pageResource", hsRequest, hsResponse);
-            return true;
-        }*/
-
 
         if (isApplicationPageRequest(pathSegments)) {
             //Application page request
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
                 pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
-                return true;
+            }else{
+                hsResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                        "Unauthorized access for the page "+ parsedRequest.getPageToken()+" of the application "+ parsedRequest.getApplicationName());
             }
         } else {
             //Layout or theme resource file request
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
             resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
         }
-
-        return false;
     }
 
     private boolean isApplicationPageRequest(final List<String> pathSegments) {

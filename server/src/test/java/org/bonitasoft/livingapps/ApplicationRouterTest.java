@@ -1,12 +1,12 @@
 package org.bonitasoft.livingapps;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import java.io.File;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,10 +66,13 @@ public class ApplicationRouterTest {
 
     @Test
     public void should_redirect_to_home_page_when_accessing_living_application_root() throws Exception {
+
         given(applicationModel.getApplicationHomePage()).willReturn("home/");
         given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
+        given(hsRequest.getPathInfo()).willReturn("HumanResources");
+        given(resourceRenderer.getPathSegments("HumanResources")).willReturn(Arrays.asList("HumanResources"));
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
         verify(hsResponse).sendRedirect("home/");
@@ -81,26 +84,6 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
     }
-
-/*
-    @Test
-    public void should_forward_to_themeResource_servlet_when_accessing_a_theme_resource() throws Exception {
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources/themeResource");
-
-        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-
-        verify(hsRequest).getRequestDispatcher("/portal/themeResource");
-    }
-
-    @Test
-    public void should_forward_to_pageResource_servlet_when_accessing_a_page_resource() throws Exception {
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources/pageResource");
-
-        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
-
-        verify(hsRequest).getRequestDispatcher("/portal/pageResource");
-    }
-*/
 
     @Test
     public void should_display_layout_page() throws Exception {
@@ -145,7 +128,7 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor)).isEqualTo(false);
+        verify(hsResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
         verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
@@ -155,27 +138,8 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        assertThat(applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor)).isEqualTo(false);
+        verify(hsResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
         verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
-    }
-
-    @Test
-    public void should_none_authorized_page_been_exclude_from_the_menu() throws Exception {
-        //        final List<ApplicationMenuImpl> menus = Arrays.asList(
-        //                new ApplicationMenuImpl("Page 1", 1, 1L, 1),
-        //                new ApplicationMenuImpl("Page 2", 1, 2L, 1));
-        //
-        //        doReturn(api).when(servlet).getApplicationAPI(apiSession);
-        //        doReturn(new SearchResultImpl<ApplicationMenuImpl>(2, menus)).when(api).searchApplicationMenus(any(SearchOptions.class));
-        //        doReturn(new ApplicationPageImpl(8, 1, "customPageName1")).when(api).getApplicationPage(1);
-        //        doReturn(new ApplicationPageImpl(8, 2, "customPageName2")).when(api).getApplicationPage(2);
-        //        doThrow(new ApplicationPageNotFoundException("")).when(api).getApplicationPage(1);
-        //
-        //        final List<MenuModel> returnedMenus = servlet.getApplicationMenus(livingApplication, apiSession);
-        //
-        //        assertThat(returnedMenus.size()).isEqualTo(1);
-        //        assertThat(returnedMenus.get(0).getName()).isEqualTo("Page 2");
-        //        assertThat(returnedMenus.get(0).getToken()).isEqualTo("customPageName2");
     }
 
     private void accessAuthorizedPage(final String applicationToken, final String pageToken) throws Exception {

@@ -2,7 +2,9 @@ package org.bonitasoft.livingapps;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -66,48 +68,45 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_application_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
-        .willThrow(new ApplicationPageNotFoundException(""));
+        doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(404);
+        verify(hsResponse).sendError(404, "error");
     }
+
+
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_associated_to_application() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
-        .willThrow(new ApplicationPageNotFoundException(""));
+        doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(404);
+        verify(hsResponse).sendError(404,"error");
     }
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_existing() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
-        .willThrow(new PageNotFoundException(""));
+        doThrow(new PageNotFoundException("PageName")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(404);
+        verify(hsResponse).sendError(404, "Unable to find page with name: "+"PageName" );
     }
 
     @Test
     public void should_send_error_500_on_searchException() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
-        .willThrow(new CreationException(""));
+        doThrow(new CreationException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(404);
+        verify(hsResponse).sendError(404, "error");
     }
 
     @Test
     public void should_send_error_500_on_BonitaHomeNotSetException() throws Exception {
-        given(servlet.createApplicationRouter(session))
-        .willThrow(new BonitaHomeNotSetException(""));
+        doThrow(new BonitaHomeNotSetException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -127,7 +126,7 @@ public class LivingApplicationServletTest {
     @Test
     public void should_send_error_500_on_UnknownAPITypeException() throws Exception {
         given(servlet.createApplicationRouter(session))
-        .willThrow(new UnknownAPITypeException(""));
+        .willThrow(new UnknownAPITypeException("error"));
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -136,26 +135,15 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_send_error_404_when_the_page_is_not_found() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor()))
-        .willThrow(new ApplicationPageNotFoundException(""));
+        doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(404);
-    }
-
-    @Test
-    public void should_send_error_404_when_the_route_is_false() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
-
-        servlet.doGet(hsRequest, hsResponse);
-
-        verify(hsResponse).sendError(404);
+        verify(hsResponse).sendError(404, "error");
     }
 
     @Test
     public void should_redirectToValidPageUrl_on_missing_final_slash() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
         doReturn("/appToken/pageToken").when(hsRequest).getPathInfo();
 
         servlet.doGet(hsRequest, hsResponse);
@@ -165,7 +153,6 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_redirectToValidPageUrl_on_missing_final_slash_after_appToken() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
         doReturn("/appToken").when(hsRequest).getPathInfo();
 
         servlet.doGet(hsRequest, hsResponse);
@@ -175,7 +162,6 @@ public class LivingApplicationServletTest {
 
     @Test
     public void should_not_redirectToValidPageUrl_on_resource_query() throws Exception {
-        given(router.route(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, new BonitaHomeFolderAccessor())).willReturn(false);
         doReturn("/appToken/pageToken/file.css").when(hsRequest).getPathInfo();
 
         servlet.doGet(hsRequest, hsResponse);
