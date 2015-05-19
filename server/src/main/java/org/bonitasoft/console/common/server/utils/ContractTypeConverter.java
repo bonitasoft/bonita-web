@@ -16,10 +16,13 @@ package org.bonitasoft.console.common.server.utils;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.bonitasoft.engine.bpm.contract.ConstraintDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.FileInputValue;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
+import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
 import org.bonitasoft.engine.bpm.document.DocumentException;
 
 import java.io.File;
@@ -51,6 +54,7 @@ public class ContractTypeConverter {
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
 
     public static final String FILE_TEMP_PATH = "tempPath";
+    public static final String TEMP_PATH_DESCRIPTION = "file name in the temporary upload directory";
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
@@ -193,6 +197,55 @@ public class ContractTypeConverter {
             }
         }
         return contractDefinitionMap;
+    }
+
+    public ContractDefinition getAdaptedContractDefinition(ContractDefinition contract) {
+        List<ConstraintDefinition> constraints = contract.getConstraints();
+        List<InputDefinition> inputDefinitions = adaptContractInputList(contract.getInputs());
+        ContractDefinitionImpl contractDefinition = getContractDefinition(constraints, inputDefinitions);
+        return contractDefinition;
+    }
+
+    protected List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {
+        List<InputDefinition> contractDefinition = new ArrayList<InputDefinition>();
+        for (final InputDefinition inputDefinition : inputDefinitions) {
+            List<InputDefinition> childInputDefinitions;
+            if (Type.FILE.equals(inputDefinition.getType())) {
+                childInputDefinitions = getFileChildInputDefinitions(inputDefinition);
+            } else if (inputDefinition.hasChildren()) {
+                childInputDefinitions = adaptContractInputList(inputDefinition.getInputs());
+            } else {
+                childInputDefinitions = new ArrayList<InputDefinition>();
+            }
+            InputDefinition newInputDefinition = new InputDefinitionImpl(inputDefinition.getName(), inputDefinition.getDescription(), inputDefinition.isMultiple(), inputDefinition.getType(), childInputDefinitions);
+            contractDefinition.add(newInputDefinition);
+        }
+        return contractDefinition;
+    }
+
+    private List<InputDefinition> getFileChildInputDefinitions(InputDefinition inputDefinition) {
+        List<InputDefinition> childInputDefinitions;
+        childInputDefinitions = new ArrayList<InputDefinition>();
+        for (InputDefinition childInputDefinition : inputDefinition.getInputs()) {
+            if(Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
+                childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION,false, Type.TEXT, new ArrayList<InputDefinition>()));
+            } else {
+                childInputDefinitions.add(childInputDefinition);
+            }
+        }
+        return childInputDefinitions;
+    }
+
+    protected ContractDefinitionImpl getContractDefinition(List<ConstraintDefinition> constraints, List<InputDefinition> inputDefinitions) {
+        ContractDefinitionImpl contractDefinition = new ContractDefinitionImpl();
+        for (ConstraintDefinition constraint: constraints) {
+            contractDefinition.addConstraint(constraint);
+        }
+
+        for (InputDefinition input: inputDefinitions) {
+            contractDefinition.addInput(input);
+        }
+        return contractDefinition;
     }
 
     protected Object convertToType(final Class<? extends Serializable> clazz, final Serializable parameterValue) {

@@ -13,6 +13,7 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
@@ -30,13 +31,16 @@ public class UserTaskContractResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
+    protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
+
     public UserTaskContractResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
     @Get("json")
     public ContractDefinition getContract() throws UserTaskNotFoundException {
-        return processAPI.getUserTaskContract(getTaskIdParameter());
+        ContractDefinition processContract = processAPI.getUserTaskContract(getTaskIdParameter());
+        return typeConverterUtil.getAdaptedContractDefinition(processContract);
     }
 
     protected long getTaskIdParameter() {
