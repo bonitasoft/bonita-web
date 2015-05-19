@@ -190,11 +190,8 @@ public class ContractTypeConverterTest {
         //assert
         InputDefinition tempPathFileInputDefinition = adaptedContractDefinition.getInputs().get(0).getInputs().get(1);
         assertThat(tempPathFileInputDefinition.getType()).isEqualTo(Type.TEXT);
-        assertThat(tempPathFileInputDefinition.getType()).isNotEqualTo(Type.BYTE_ARRAY);
         assertThat(tempPathFileInputDefinition.getName()).isEqualTo(contractTypeConverter.FILE_TEMP_PATH);
-        assertThat(tempPathFileInputDefinition.getDescription()).isNotEqualTo(InputDefinition.FILE_INPUT_CONTENT);
         assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(contractTypeConverter.TEMP_PATH_DESCRIPTION);
-        assertThat(tempPathFileInputDefinition.getDescription()).isNotEqualTo("Content of the file");
     }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {

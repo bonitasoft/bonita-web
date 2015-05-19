@@ -199,9 +199,9 @@ public class ContractTypeConverter {
         return contractDefinitionMap;
     }
 
-    public ContractDefinition getAdaptedContractDefinition(ContractDefinition processContract) {
-        List<ConstraintDefinition> constraints = processContract.getConstraints();
-        List<InputDefinition> inputDefinitions = adaptContractInputList(processContract.getInputs());
+    public ContractDefinition getAdaptedContractDefinition(ContractDefinition contract) {
+        List<ConstraintDefinition> constraints = contract.getConstraints();
+        List<InputDefinition> inputDefinitions = adaptContractInputList(contract.getInputs());
         ContractDefinitionImpl contractDefinition = getContractDefinition(constraints, inputDefinitions);
         return contractDefinition;
     }
@@ -211,7 +211,7 @@ public class ContractTypeConverter {
         for (final InputDefinition inputDefinition : inputDefinitions) {
             List<InputDefinition> childInputDefinitions;
             if (Type.FILE.equals(inputDefinition.getType())) {
-                childInputDefinitions = getChildInputDefinitions(inputDefinition);
+                childInputDefinitions = getFileChildInputDefinitions(inputDefinition);
             } else if (inputDefinition.hasChildren()) {
                 childInputDefinitions = adaptContractInputList(inputDefinition.getInputs());
             } else {
@@ -223,7 +223,7 @@ public class ContractTypeConverter {
         return contractDefinition;
     }
 
-    private List<InputDefinition> getChildInputDefinitions(InputDefinition inputDefinition) {
+    private List<InputDefinition> getFileChildInputDefinitions(InputDefinition inputDefinition) {
         List<InputDefinition> childInputDefinitions;
         childInputDefinitions = new ArrayList<InputDefinition>();
         for (InputDefinition childInputDefinition : inputDefinition.getInputs()) {
