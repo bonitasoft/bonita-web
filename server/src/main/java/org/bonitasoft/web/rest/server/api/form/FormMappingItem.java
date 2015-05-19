@@ -12,27 +12,27 @@ import java.util.Date;
  */
 public class FormMappingItem implements Serializable {
 
-    private long id;
+    private String id;
     private String processDefinitionId;
     private FormMappingType type;
     private FormMappingTarget target;
     private String task;
-    private Long pageId;
+    private String pageId;
     private String pageURL;
     private String pageMappingKey;
-    private long lastUpdatedBy;
+    private String lastUpdatedBy;
     private Date lastUpdateDate;
 
     public FormMappingItem(FormMapping item) {
-        this.id = item.getId();
+        this.id = String.valueOf(item.getId());
         this.processDefinitionId = String.valueOf(item.getProcessDefinitionId());
         this.type = item.getType();
         this.target = item.getTarget();
         this.task = item.getTask();
-        this.pageId = item.getPageId();
+        this.pageId = String.valueOf(item.getPageId());
         this.pageURL = item.getURL();
         this.pageMappingKey = item.getPageMappingKey();
-        this.lastUpdatedBy = item.getLastUpdatedBy();
+        this.lastUpdatedBy = String.valueOf(item.getLastUpdatedBy());
         this.lastUpdateDate = item.getLastUpdateDate();
     }
 
@@ -52,11 +52,11 @@ public class FormMappingItem implements Serializable {
         this.pageMappingKey = pageMappingKey;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -68,11 +68,11 @@ public class FormMappingItem implements Serializable {
         this.task = task;
     }
 
-    public Long getPageId() {
+    public String getPageId() {
         return pageId;
     }
 
-    public void setPageId(Long pageId) {
+    public void setPageId(String pageId) {
         this.pageId = pageId;
     }
 
@@ -92,11 +92,11 @@ public class FormMappingItem implements Serializable {
         this.type = type;
     }
 
-    public long getLastUpdatedBy() {
+    public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(long lastUpdatedBy) {
+    public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
