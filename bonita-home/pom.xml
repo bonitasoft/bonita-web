@@ -106,7 +106,7 @@
                                     <overWrite>false</overWrite>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${bonita.home}/bonita-home/engine-server/conf/tenants/template/security-scripts</outputDirectory>
+                            <outputDirectory>${bonita.home}/bonita-home/engine-server/work/tenants/template/security-scripts</outputDirectory>
                         </configuration>
                     </execution>
 				</executions>

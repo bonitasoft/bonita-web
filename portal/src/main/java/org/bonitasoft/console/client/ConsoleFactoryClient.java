@@ -104,26 +104,17 @@ import com.google.gwt.core.shared.GWT;
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
-    protected Map<String, String> angularViewsMap = new HashMap<String, String>();
-
     protected AngularIFrameView angularFrame = new AngularIFrameView();
 
     private List<String> currentUserAccessRights = null;
-
-    private final Action emptyAction = new Action() {
-
-        @Override
-        public void execute() {
-        }
-    };
 
     /**
      * Default Constructor.
      */
     public ConsoleFactoryClient() {
-        angularViewsMap.put(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
-        angularViewsMap.put(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
-        angularViewsMap.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -132,6 +123,24 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             GWT.log("Current log user as access to (with SP pages) :" + listAUthorizedTokens(AvailableTokens.tokens));
         }
         return currentUserAccessRights;
+    }
+
+    private static final Action emptyAction = new Action() {
+
+        @Override
+        public void execute() {
+        }
+    };
+
+    /**
+     * @param token
+     * @return
+     */
+    public RawView prepareAngularPage(final String token) {
+        new CheckValidSessionBeforeAction(emptyAction).execute();
+        final AngularIFrameView ngView = angularFrame;
+        ngView.setUrl("#" + AngularIFrameView.getRoute(token), token);
+        return ngView;
     }
 
     @Override
@@ -354,22 +363,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (BDMImportWarningPopUp.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new BDMImportWarningPopUp();
 
-        } else if (angularViewsMap.containsKey(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
+        } else if (AngularIFrameView.supportsToken(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
             // No action is necessary as an unauthorized request will result in a page reload.
             return prepareAngularPage(token);
         } else {
             return new BlankPage();
         }
-    }
-
-    /**
-     * @param token
-     * @return
-     */
-    protected RawView prepareAngularPage(final String token) {
-        new CheckValidSessionBeforeAction(emptyAction).execute();
-        angularFrame.setUrl("#" + angularViewsMap.get(token), token);
-        return angularFrame;
     }
 
     public native void print(String content) /*-{
