@@ -19,6 +19,7 @@ import org.restlet.ext.servlet.ServletUtils;
  * @author Laurent Leseigneur
  */
 public class ResourceExtensionResolver {
+
     public static final String MAPPING_KEY_SEPARATOR = "|";
     public static final String MAPPING_KEY_PREFIX = "apiExtension";
     public static final String API_EXTENSION_TEMPLATE_PREFIX = "/API/extension/";
@@ -33,7 +34,7 @@ public class ResourceExtensionResolver {
     public Long resolvePageId(APISession apiSession) throws BonitaException {
         final HttpServletRequest httpServletRequest = getHttpServletRequest();
         final PageReference pageReference;
-        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(), httpServletRequest.getLocale(),false);
+        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(), httpServletRequest.getLocale(), false);
         return pageReference.getPageId();
     }
 
@@ -43,7 +44,7 @@ public class ResourceExtensionResolver {
 
     public String generateMappingKey() {
         StringBuilder builder = new StringBuilder();
-        String requestAsString =getHttpServletRequest().getContextPath();
+        String requestAsString = getHttpServletRequest().getRequestURI();
         final String pathTemplate = StringUtils.substringAfter(requestAsString, API_EXTENSION_TEMPLATE_PREFIX);
 
         builder.append(MAPPING_KEY_PREFIX)
@@ -86,6 +87,7 @@ public class ResourceExtensionResolver {
     }
 
     private boolean extensionMatches(String method, String pathTemplate) {
-        return request.getMethod().getName().equals(method) && request.getResourceRef().toString().contains(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
+        return request.getMethod().getName().equals(method)
+                && getHttpServletRequest().getRequestURI().contains(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
     }
 }
