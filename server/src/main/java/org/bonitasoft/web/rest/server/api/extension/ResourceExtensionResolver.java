@@ -43,7 +43,7 @@ public class ResourceExtensionResolver {
 
     public String generateMappingKey() {
         StringBuilder builder = new StringBuilder();
-        final String requestAsString = request.getResourceRef().toString();
+        String requestAsString =getHttpServletRequest().getContextPath();
         final String pathTemplate = StringUtils.substringAfter(requestAsString, API_EXTENSION_TEMPLATE_PREFIX);
 
         builder.append(MAPPING_KEY_PREFIX)
