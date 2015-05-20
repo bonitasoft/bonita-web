@@ -23,6 +23,8 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.resource.Get;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 /**
  * @author Nicolas Tith
  */
@@ -39,7 +41,9 @@ public class ProcessDefinitionDesignResource extends CommonResource {
     @Get("json")
     public String getDesign() throws ProcessDefinitionNotFoundException, IOException {
         final DesignProcessDefinition design = processAPI.getDesignProcessDefinition(getProcessDefinitionIdParameter());
-        return replaceLongIdToString(new JacksonRepresentation<DesignProcessDefinition>(design).getText());
+        final JacksonRepresentation<DesignProcessDefinition> jacksonRepresentation = new JacksonRepresentation<DesignProcessDefinition>(design);
+        jacksonRepresentation.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        return replaceLongIdToString(jacksonRepresentation.getText());
     }
 
     /**
