@@ -128,19 +128,6 @@ public class ResourceExtensionResolverTest {
     }
 
     @Test
-    public void should_generate_mapping_key_with_parameters() throws Exception {
-        //given
-        Request request = new Request(Method.GET, "/bonita/API/extension/helloWorld?param1=a&param2=b");
-        ResourceExtensionResolver resourceExtensionResolver = createSpy(request, "/bonita/API/extension/helloWorld");
-
-        //when
-        final String mappingKey = resourceExtensionResolver.generateMappingKey();
-
-        //then
-        assertThat(mappingKey).isEqualTo(API_EXTENSION_GET_MAPPING_KEY);
-    }
-
-    @Test
     public void should_resolve_pageId() throws Exception {
         //given
         Request request = new Request(Method.POST, "/bonita/API/extension/myPostResource");
