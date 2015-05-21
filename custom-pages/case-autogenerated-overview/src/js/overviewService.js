@@ -91,8 +91,7 @@
                 c:1,
                 d:['started_by'],
                 f:['sourceObjectId='+caseId]
-              }
-              , function(result){
+              }, function(result){
             deferred.resolve(result.data[0]);
           }, function(){
             deferred.reject('Case not found!');
