@@ -52,7 +52,7 @@
 			left: @filtersPanel-actions-positionLeft;
 			a{
 				.addButton(@filtersPanel-actions-addButton-bgColor, @filtersPanel-actions-addButton-txtColor);
-				max-width: @filtersPanel-width -(@filtersPanel-padding-left*2) -(@filtersPanel-actions-positionLeft*2) -(@button-paddingX*2);
+				//max-width: @filtersPanel-width -(@filtersPanel-padding-left*2) -(@filtersPanel-actions-positionLeft*2) -(@button-paddingX*2);
 			}
 			//TO BE DELETED: once we will have page title in portal, this workaround (BS-448) will be not necessary
 			.bigAddButton{
@@ -65,15 +65,9 @@
     padding-left: 1*@w;
   }
 	
-	h1, h2, h3, h4, h5, h6, h7, label{
+	h1, h2, h3, h4, h5, h6, h7{
 		color: @filtersPanel-titleColor;
 		.boxSizing();
-	}
-	.resource_filters{
-		a{
-			
-		}
-		
 	}
 	.primary, .secondary, .resource{
 		&_filters{
@@ -209,7 +203,8 @@
                     }
                 }
 				&:hover{
-					.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1, @header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
+					background-color: @header-menu-gradientColor1Hover;
+					//.verticalGradient(@header-menu-gradientColor1Hover, @header-menu-gradientPosition1, @header-menu-gradientColor2Hover, @header-menu-gradientPosition2);
 				}
 			}
 			a.current{

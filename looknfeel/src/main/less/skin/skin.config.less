@@ -5,7 +5,7 @@
 @height: @h;
 @w: 5px; // std width
 @width: @w;
-@mainAccentColor: #D03; //the main skin color (red)
+@mainAccentColor: #DD0033; //the main skin color (red)
 //@mainAccentColor: #2674b0; //the main skin color (blue)
 //@secondAccentColor: #313433;
 @secondAccentColor: #2c3e50;
@@ -18,6 +18,7 @@
 
 @fontSize: ~"@{calcFontSize}em";
 @skinFont: "Signika-Semibold", sans-serif;
+@regularFont: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @skinFontPath: "themeResource?theme=portal&location=skin/fonts/";
 @skinpath: "themeResource?theme=portal&location=skin/images/";
 @fontColor: #6e6f6b;
@@ -121,7 +122,7 @@
 // Reset
 // ----------------------------------------------------------------------------
 @body-background: #fff;
-@secondary-background: #f5f4f4;
+@secondary-background: #fff;
 // ----------------------------------------------------------------------------
 // Icon Size
 // ----------------------------------------------------------------------------
@@ -174,7 +175,7 @@
 @header-menu-gradientColor1: @mainAccentColor;
 @header-menu-gradientColor2: @mainAccentColor;
 
-@header-menu-gradientColor1Hover: lighten(@mainAccentColor, 13%);
+@header-menu-gradientColor1Hover: lighten(@mainAccentColor, 5%);
 @header-menu-gradientColor2Hover: @mainAccentColor;
 
 
@@ -256,7 +257,7 @@
 @filtersPanel-width: 40*@w;
 @filtersPanel-minWidth: @filtersPanel-width;
 @filtersPanel-maxWidth: @filtersPanel-width;
-@filtersPanel-bgColor: @mainAccentColor;
+@filtersPanel-bgColor: #d3dde2;
 
 @detailsPanel-width: 50%;
 
@@ -271,14 +272,14 @@
 
 @tablesPanel-tableActions-textAlign: right;
 @tablesPanel-table-thead-fontSize: 18;
-@tablesPanel-table-thead-bgColor: @mainAccentColor;
+@tablesPanel-table-thead-bgColor: #2c3e50; //@mainAccentColor;
 @tablesPanel-table-thead-height: 3*@h;
 @tablesPanel-table-thead-paddingTop: 3*@h;
 @tablesPanel-table-thead-paddingBottom: 3*@h;
 @tablesPanel-table-thead-textColor: #fff;
 @tablesPanel-table-thead-margin: @tablesPanel-table-line-margin;
 //@tablesPanel-table-thead-tr-gradientColor1:  lighten(@mainAccentColor, 7.5%);
-@tablesPanel-table-thead-tr-gradientColor1:  @mainAccentColor;
+@tablesPanel-table-thead-tr-gradientColor1:  #2c3e50;//@mainAccentColor;
 @tablesPanel-table-sort-textAlign: right;
 @tablesPanel-table-thead-tr-gradientPosition1: 0%;
 @tablesPanel-table-thead-tr-gradientColor2: lighten(@mainAccentColor, 1.5%);
@@ -286,8 +287,8 @@
 @tablesPanel-table-thead-cellCheckbox-padding:  0 2*@w 0 2*@w;
 
 @tablesPanel-table-thead-cell-borderWidth: @border-width;
-@tablesPanel-table-thead-cell-borderLeft: @tablesPanel-table-thead-cell-borderWidth solid lighten(@mainAccentColor, 8.5%);
-@tablesPanel-table-thead-cell-borderRight: @tablesPanel-table-thead-cell-borderWidth solid darken(@mainAccentColor, 7%);
+@tablesPanel-table-thead-cell-borderLeft: @tablesPanel-table-thead-cell-borderWidth solid rgba(255,255,255,.5);//#d3dde2;//lighten(@mainAccentColor, 8.5%);
+@tablesPanel-table-thead-cell-borderRight: @tablesPanel-table-thead-cell-borderWidth solid rgba(255,255,255,.5);//#d3dde2;//darken(@mainAccentColor, 7%);
 
 @tablesPanel-table-line-textColor: #323232;
 @tablesPanel-table-line-fontSize: 12;
@@ -347,7 +348,7 @@
 @filtersPanel-titleColor: #fff;
 @filtersPanel-display: block;
 @filtersPanel-padding-left: 1*@w;
-@filtersPanel-padding: 7*@h 0 0 0;
+@filtersPanel-padding: 13*@h 0 0 0;
 @filtersPanel-margin: 0;
 @filtersPanel-font: @skinFont;
 @filtersPanel-position: relative;
@@ -356,7 +357,7 @@
 @filtersPanel-actions-positionLeft: 6*@w;
 @filtersPanel-actions-addButton-bgColor: @btnPrimaryActionColor;
 @filtersPanel-actions-addButton-txtColor: #fff;
-@filtersPanel-textColor: #fff;
+@filtersPanel-textColor: #2c3e50;
 @filtersPanel-fontSize: 15;
 @filtersPanel-fontWeight: normal;
 @filtersPanel-subfilters-fontSize: 13;
@@ -428,7 +429,7 @@
 @filtersPanel-filtersCurrent-borderRadiusSize: 1*@w;
 @filtersPanel-filtersCurrent-arrow-background: "arrow-filter.png";
 
-@filtersPanel-filterHover-bgColor: fadein(@mainAccentColor,15%);
+@filtersPanel-filterHover-bgColor: #b4b9c2;//fadein(@mainAccentColor,15%);
 
 @filtersPanel-filtersResourceTitle-paddingTop: 2*@h;
 @filtersPanel-filtersResourceTitle-paddingBottom:  2*@h;
