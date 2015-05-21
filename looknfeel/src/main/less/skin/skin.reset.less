@@ -19,7 +19,7 @@
 // HTML reset
 // -----------------------------------------------------------------------------
 html{
-	font-family: @skinFont, sans-serif;
+	font-family: @regularFont;
 	font-size: 100%;
 	color: @fontColor;
 }
@@ -40,8 +40,10 @@ ul{
 }
 
 h1, h2, h3, h4, h5, h6, h7{
-	font-weight: bold;
-	color: @secondAccentColor;
+	.skinFontFamily();
+	font-weight: 300;
+	color: @mainAccentColor;
+	letter-spacing: 0.05em;
 	margin: 0;
 }
 
