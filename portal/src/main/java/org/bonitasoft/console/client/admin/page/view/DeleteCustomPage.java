@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
+import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
@@ -50,7 +52,7 @@ public class DeleteCustomPage extends Page {
 
     private final ArrayList<String> idsAsString;
 
-    private boolean firstApplicationNotFound = true;
+    private boolean firstPageLinkNotFound = true;
 
     static {
         PRIVILEGES.add(PageListingPage.TOKEN);
@@ -110,6 +112,8 @@ public class DeleteCustomPage extends Page {
     private void searchApplicationDependancies() {
         for (final String pageId : idsAsString) {
             searchApplicationDependanciesForPage(pageId);
+            searchApplicationLayoutDependanciesForPage(pageId);
+            searchApplicationThemeDependanciesForPage(pageId);
         }
 
     }
@@ -125,18 +129,74 @@ public class DeleteCustomPage extends Page {
                 new DeletePageProblemCallback());
     }
 
+    private void searchApplicationLayoutDependanciesForPage(final String pageId) {
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, pageId);
+        final List<String> deploys = Arrays.asList(ApplicationItem.ATTRIBUTE_LAYOUT_ID);
+
+        new APICaller<ApplicationItem>(ApplicationDefinition.get()).search(
+                0, Integer.MAX_VALUE, null, null, filter,
+                deploys,
+                new DeleteApplicationLayoutCallback());
+    }
+
+    private void searchApplicationThemeDependanciesForPage(final String pageId) {
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ApplicationItem.ATTRIBUTE_THEME_ID, pageId);
+        final List<String> deploys = Arrays.asList(ApplicationItem.ATTRIBUTE_THEME_ID);
+
+        new APICaller<ApplicationItem>(ApplicationDefinition.get()).search(
+                0, Integer.MAX_VALUE, null, null, filter,
+                deploys,
+                new DeleteApplicationThemeCallback());
+    }
+
     private class DeletePageProblemCallback extends APICallback {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ApplicationPageItem> applicationPages = JSonItemReader.parseItems(response, ApplicationPageDefinition.get());
             if (applicationPages.size() > 0) {
-                if (firstApplicationNotFound) {
+                if (firstPageLinkNotFound) {
                     setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
                     activateDeleteButton(false);
-                    firstApplicationNotFound = false;
+                    firstPageLinkNotFound = false;
                 }
                 addBody(new DeletePageProblemsCallout(applicationPages));
+            }
+        }
+
+    }
+
+    private class DeleteApplicationLayoutCallback extends APICallback {
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
+            if (applications.size() > 0) {
+                if (firstPageLinkNotFound) {
+                    setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
+                    activateDeleteButton(false);
+                    firstPageLinkNotFound = false;
+                }
+                addBody(new DeleteApplicationLayoutProblemsCallout(applications));
+            }
+        }
+
+    }
+
+    private class DeleteApplicationThemeCallback extends APICallback {
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
+            if (applications.size() > 0) {
+                if (firstPageLinkNotFound) {
+                    setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
+                    activateDeleteButton(false);
+                    firstPageLinkNotFound = false;
+                }
+                addBody(new DeleteApplicationThemeProblemsCallout(applications));
             }
         }
 
