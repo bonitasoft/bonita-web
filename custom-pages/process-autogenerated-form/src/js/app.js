@@ -177,7 +177,21 @@
       return (input.type=='FILE');
     };
 
+    $scope.inputType2HTML = function inputType2HTML(input) {
+      var result;
 
+      if (input.type === 'INTEGER' || input.type === 'DECIMAL') {
+        result = 'number';
+      }else if (input.type === 'DATE') {
+        result = 'text';
+      } /*else if (input.type === 'BOOLEAN') {
+        result = 'checkbox';
+      } */else {
+        result = input.type;
+      }
+
+      return result;
+    };
   }])
     .directive('fileInputAutoSubmit', function () {
       // Utility function to get the closest parent element with a given tag
