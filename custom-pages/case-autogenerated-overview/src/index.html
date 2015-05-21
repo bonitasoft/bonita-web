@@ -23,7 +23,7 @@
           <table class="table table-striped table-hover table-responsive">
             <thead>
             <tr>
-              <th class="text-center" ng-class="{hidden: isInternalField(propertyName)}" ng-repeat="(propertyName, propertyValue) in dataValues[0]">{{propertyName}}</th>
+              <th class="text-left" ng-class="{hidden: isInternalField(propertyName)}" ng-repeat="(propertyName, propertyValue) in dataValues[0]">{{propertyName}}</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +34,26 @@
           </table>
         </div>
         <div ng-if="businessData==null" class="alert alert-info">No Business data used in this case.</div>
+    <div class="panel panel-title">List of Documents</div>
+    <div>
+      <table class="table table-striped table-hover table-responsive">
+        <thead>
+        <tr>
+          <th class="text-left">Name</th>
+          <th class="text-left">Filename</th>
+          <th class="text-left">Download</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="document in documents">
+          <td class="text-left">{{document.name}}</td>
+          <td class="text-left">{{document.contentFileName}}</td>
+          <td class="text-left"><a ng-href="{{document.url}}" class="glyphicon glyphicon-download"></a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-if="documents==null" class="alert alert-info">No Documents used in this case.</div>
         <div class="panel panel-title">Timeline</div>
         <timeline>
         <timeline-node  ng-repeat="task in doneTasks.data" side="{{$even ?'left':'right'}}">
