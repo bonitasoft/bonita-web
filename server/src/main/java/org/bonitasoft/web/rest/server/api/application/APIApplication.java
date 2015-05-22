@@ -44,6 +44,11 @@ APIHasGet<ApplicationItem>, APIHasUpdate<ApplicationItem>, APIHasDelete {
 
     private final APIApplicationDataStoreFactory applicationDataStoreFactory;
 
+    public APIApplication() {
+        this.creator = null;
+        this.applicationDataStoreFactory = null;
+    }
+
     public APIApplication(final ApplicationDataStoreCreator creator, final  APIApplicationDataStoreFactory applicationDataStoreFactory) {
         this.creator = creator;
         this.applicationDataStoreFactory = applicationDataStoreFactory;
@@ -94,6 +99,9 @@ APIHasGet<ApplicationItem>, APIHasUpdate<ApplicationItem>, APIHasDelete {
         addDeployer(getDeployerFactory().createProfileDeployer(ApplicationItem.ATTRIBUTE_PROFILE_ID));
         addDeployer(new PageDeployer(
                 applicationDataStoreFactory.createPageDataStore(getEngineSession()), ApplicationItem.ATTRIBUTE_LAYOUT_ID));
+        addDeployer(new PageDeployer(
+                applicationDataStoreFactory.createPageDataStore(getEngineSession()), ApplicationItem.ATTRIBUTE_THEME_ID));
+
         super.fillDeploys(item, deploys);
     }
 

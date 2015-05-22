@@ -26,13 +26,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,7 +63,7 @@ public class ResourceRendererTest {
     HttpSession httpSession;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
     ResourceRenderer resourceRenderer;
 
@@ -76,8 +77,8 @@ public class ResourceRendererTest {
 
     @Test
     public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException, InstantiationException {
-        File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
-        long contentLength = resourceFile.length();
+        final File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
+        final long contentLength = resourceFile.length();
         when(servletContext.getMimeType("file.css")).thenReturn("text/css");
         resourceRenderer.renderFile(req, res, resourceFile);
 
@@ -94,7 +95,7 @@ public class ResourceRendererTest {
 
     @Test(expected = BonitaException.class)
     public void renderFile_should_throw_bonita_exception_on_ioexception() throws BonitaException, URISyntaxException, IOException, IllegalAccessException, InstantiationException {
-        File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
+        final File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
         doThrow(new IOException()).when(outputStream).write(any(byte[].class), any(int.class), any(int.class));
 
         resourceRenderer.renderFile(req, res, resourceFile);
@@ -110,7 +111,7 @@ public class ResourceRendererTest {
     @Test
     public void getResourceFile_should_sendError404_on_passing_none_existing_resources() throws
             Exception {
-        File noneExistingFile = new File("NoneExistingFile.css");
+        final File noneExistingFile = new File("NoneExistingFile.css");
         resourceRenderer.renderFile(req, res, noneExistingFile);
         verify(res).sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the resource file " + noneExistingFile.getName());
     }
@@ -119,7 +120,7 @@ public class ResourceRendererTest {
     public void getPathSegments_should_return_expected_token_list() throws UnsupportedEncodingException {
         when(req.getPathInfo()).thenReturn("a/b");
 
-        List<String> tokens =  resourceRenderer.getPathSegments(req);
+        final List<String> tokens = resourceRenderer.getPathSegments("a/b");
         assertThat(tokens).hasSize(2).containsExactly("a","b");
     }
 
@@ -127,7 +128,7 @@ public class ResourceRendererTest {
     public void getPathSegments_should_return_expected_token_list_ondouble_slash() throws UnsupportedEncodingException {
         when(req.getPathInfo()).thenReturn("a//b");
 
-        List<String> tokens =  resourceRenderer.getPathSegments(req);
+        final List<String> tokens = resourceRenderer.getPathSegments("a//b");
         assertThat(tokens).hasSize(2).containsExactly("a","b");
     }
 
@@ -135,7 +136,7 @@ public class ResourceRendererTest {
     public void getPathSegments_should_return_expected_token_list_if_no_slash() throws UnsupportedEncodingException {
         when(req.getPathInfo()).thenReturn("a");
 
-        List<String> tokens =  resourceRenderer.getPathSegments(req);
+        final List<String> tokens = resourceRenderer.getPathSegments("a");
         assertThat(tokens).hasSize(1).containsExactly("a");
     }
 

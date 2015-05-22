@@ -28,7 +28,7 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
@@ -36,6 +36,9 @@ import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.exception.UpdateException;
+import org.bonitasoft.engine.exception.UpdatingWithInvalidPageTokenException;
+import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentException;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
@@ -58,14 +61,12 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenExcept
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.codehaus.groovy.control.CompilationFailedException;
 
-
 /**
  * @author Fabio Lombardi, Anthony Birembaut
- *
  */
 
 public class PageDatastore extends CommonDatastore<PageItem, Page> implements DatastoreHasAdd<PageItem>, DatastoreHasUpdate<PageItem>,
-DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
+        DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     private static final String INDEX_GROOVY = "Index.groovy";
 
@@ -78,7 +79,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
      */
     public static final String UNMAPPED_ATTRIBUTE_ZIP_FILE = "pageZip";
 
-    private static final String PAGE_TOKEN_PREFIX = "custompage_";
+    static final String PAGE_TOKEN_PREFIX = "custompage_";
 
     protected final WebBonitaConstantsUtils constants;
 
@@ -86,17 +87,16 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     protected final CustomPageService customPageService;
 
-
     private final CompoundPermissionsMapping compoundPermissionsMapping;
 
     private final ResourcesPermissionsMapping resourcesPermissionsMapping;
 
-    private final TenantFolder tenantFolder;
+    private final BonitaHomeFolderAccessor tenantFolder;
 
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final PageAPI pageAPI,
             final CustomPageService customPageService,
             final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final TenantFolder tenantFolder) {
+            final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.pageAPI = pageAPI;
@@ -121,24 +121,29 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         pageItem.setContentName(originalFileName);
 
         try {
-            final File zipFile = tenantFolder.getTempFile(filename, getEngineSession().getTenantId());
+            final APISession engineSession = getEngineSession();
+            final long tenantId = engineSession.getTenantId();
+            final File zipFile = tenantFolder.getTempFile(filename, tenantId);
             final File unzipPageTempFolder = unzipContentFile(zipFile);
             validateZipContent(unzipPageTempFolder);
             final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new File(unzipPageTempFolder, PAGE_PROPERTIES),
                     resourcesPermissionsMapping, false);
-            final PageItem addedPage = convertEngineToConsoleItem(createEnginePage(pageItem, zipFile));
+            final Page page = createEnginePage(pageItem, zipFile);
+            final PageItem addedPage = convertEngineToConsoleItem(page);
             savePageInBonitahome(addedPage.getUrlToken(), unzipPageTempFolder);
+            customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
+                    customPageService.getPageResourceProvider(page, tenantId), engineSession);
             customPageService.addPermissionsToCompoundPermissions(addedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                     resourcesPermissionsMapping);
             return addedPage;
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
-        }catch (final Exception e) {
+        } catch (final Exception e) {
             throw new APIException(e);
         }
     }
 
-    private File unzipContentFile(final File zipFile) throws InvalidPageZipContentException {
+    protected File unzipContentFile(final File zipFile) throws InvalidPageZipContentException {
         File unzipPageTempFolder = null;
         try {
             final Random randomGen = new Random();
@@ -178,9 +183,9 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                 }
             }
         }
-        if(!indexOK){
-            File indexInResources = new File(unzipPageFolder.getPath(), CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
-            if(indexInResources.exists()){
+        if (!indexOK) {
+            final File indexInResources = new File(unzipPageFolder.getPath(), CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
+            if (indexInResources.exists()) {
                 indexOK = true;
             }
         }
@@ -190,23 +195,41 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     protected void deleteTempDirectory(final File unzipPage) {
         try {
             if (unzipPage.isDirectory()) {
-                IOUtil.deleteDir(unzipPage);
+                IOUtilDeleteDir(unzipPage);
             }
         } catch (final IOException e) {
             throw new APIException(e);
         }
     }
 
-    protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException {
+    protected void IOUtilDeleteDir(final File unzipPage) throws IOException {
+        IOUtil.deleteDir(unzipPage);
+    }
+
+    protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException,
+            UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
 
         try {
-            final byte[] zipContent = FileUtils.readFileToByteArray(zipFile);
+            final byte[] zipContent = readZipFile(zipFile);
 
-            return pageAPI.createPage(pageItem.getContentName(), zipContent);
+            Page page = pageAPI.createPage(pageItem.getContentName(), zipContent);
+            if (pageItem.getProcessId() != null) {
+                final PageUpdater pageUpdater = new PageUpdater();
+                pageUpdater.setProcessDefinitionId(pageItem.getProcessId().toLong());
+                if (pageItem.getContentType() != null) {
+                    pageUpdater.setContentType(pageItem.getContentType());
+                }
+                page = pageAPI.updatePage(page.getId(), pageUpdater);
+            }
+            return page;
 
         } finally {
             zipFile.delete();
         }
+    }
+
+    protected byte[] readZipFile(final File zipFile) throws IOException {
+        return FileUtils.readFileToByteArray(zipFile);
     }
 
     protected PageCreator buildPageCreatorFrom(final PageItem pageItem) {
@@ -217,7 +240,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected void savePageInBonitahome(final String urlToken, final File unzipPageTempFolder) throws IOException {
-        customPageService.verifyPageClass(urlToken, unzipPageTempFolder);
+        customPageService.verifyPageClass(unzipPageTempFolder);
         final File pagesFolder = new File(constants.getPagesFolder(), urlToken);
         FileUtils.copyDirectory(unzipPageTempFolder, pagesFolder);
         deleteTempDirectory(unzipPageTempFolder);
@@ -239,8 +262,11 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 if (!page.isProvided()) {
+                    final APISession engineSession = getEngineSession();
+                    customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
+                            customPageService.getPageResourceProvider(page, engineSession.getTenantId()), engineSession);
                     pageAPI.deletePage(id.toLong());
-                    customPageService.removePage(getEngineSession(), page.getName());
+                    customPageService.removePage(engineSession, page.getName());
                     compoundPermissionsMapping.removeProperty(page.getName());
                 }
             }
@@ -317,18 +343,23 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                         originalFileName = filename;
                     }
 
-                    zipFile = tenantFolder.getTempFile(filename, getEngineSession().getTenantId());
+                    final APISession engineSession = getEngineSession();
+                    final long tenantId = engineSession.getTenantId();
+                    zipFile = tenantFolder.getTempFile(filename, tenantId);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     validateZipContent(unzipPageTempFolder);
                     final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new File(unzipPageTempFolder, PAGE_PROPERTIES),
                             resourcesPermissionsMapping, false);
                     pageUpdater.setContentName(originalFileName);
                     updatePageContent(id, zipFile, oldURLToken);
-                    updatedPage = convertEngineToConsoleItem(pageAPI.updatePage(id.toLong(), pageUpdater));
+                    final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
+                    updatedPage = convertEngineToConsoleItem(page);
                     savePageInBonitahome(updatedPage.getUrlToken(), unzipPageTempFolder);
                     if (oldURLToken != updatedPage.getUrlToken()) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
                     }
+                    customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
+                            customPageService.getPageResourceProvider(page, tenantId), engineSession);
                     customPageService.addPermissionsToCompoundPermissions(updatedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
                             resourcesPermissionsMapping);
                 }
@@ -342,9 +373,12 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
-    CompilationFailedException, BonitaException {
+            CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            pageAPI.updatePageContent(id.toLong(), FileUtils.readFileToByteArray(zipFile));
+            final Long pageId = id.toLong();
+            customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
+                    customPageService.getPageResourceProvider(pageAPI.getPage(pageId), getEngineSession().getTenantId()), getEngineSession());
+            pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
             zipFile.delete();
         }
         customPageService.removePage(getEngineSession(), oldURLToken);

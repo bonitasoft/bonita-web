@@ -80,6 +80,16 @@
 			<artifactId>bonita-server-test-utils</artifactId>
 			<version>${bonita.engine.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.engine.test</groupId>
+			<artifactId>bonita-client-test-utils</artifactId>
+			<version>${bonita.engine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.engine.test</groupId>
+			<artifactId>bonita-common-test-utils</artifactId>
+			<version>${bonita.engine.version}</version>
+		</dependency>
 	</dependencies>
     
 	<build>

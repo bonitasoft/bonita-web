@@ -1,12 +1,11 @@
 {
 	"constraints":[
-		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[],"constraintType":"CUSTOM"}
+		{"name":"aRule","expression":"an expression","explanation":"an explanation","inputNames":[]}
 	],
-	"complexInputs":[
-	{"description":"description","name":"complexInput","multiple":true,"simpleInputs":[
-			{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
-		],"complexInputs":[]}],
-	"simpleInputs":[
-		{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT"}
+	"inputs":[
+		{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT","inputs":[]},
+		{"description":"description","name":"complexInput","multiple":true,"type":null,"inputs":[
+			{"description":"aDescription","name":"anInput","multiple":false,"type":"TEXT","inputs":[]}
+		]}
 	]
 }

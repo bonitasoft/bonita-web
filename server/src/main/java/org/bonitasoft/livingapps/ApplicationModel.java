@@ -48,8 +48,12 @@ public class ApplicationModel {
         return pageApi.getPage(application.getLayoutId()).getName();
     }
 
+    public String getApplicationThemeName() throws PageNotFoundException {
+        return pageApi.getPage(application.getThemeId()).getName();
+    }
+
     public String getApplicationHomePage() throws ApplicationPageNotFoundException {
-        return application.getToken() + "/" + applicationApi.getApplicationHomePage(application.getId()).getToken();
+        return applicationApi.getApplicationHomePage(application.getId()).getToken() + "/";
     }
 
     public boolean hasPage(final String pageToken) {

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -47,13 +47,13 @@ public class CustomPageServlet extends HttpServlet {
      */
     private static final long serialVersionUID = -5410859017103815654L;
 
-    public static final String APP_ID_PARAM = "applicationId";
+    public static final String APP_TOKEN_PARAM = "appToken";
 
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
-    protected TenantFolder tenantFolder = new TenantFolder();
+    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
@@ -68,28 +68,28 @@ public class CustomPageServlet extends HttpServlet {
             return;
         }
 
-        final String appID = request.getParameter(APP_ID_PARAM);
+        final String appToken = request.getParameter(APP_TOKEN_PARAM);
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
 
-        final List<String> pathSegments = resourceRenderer.getPathSegments(request);
+        final List<String> pathSegments = resourceRenderer.getPathSegments(request.getPathInfo());
         if (pathSegments.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "The name of the page is required.");
             return;
         }
-        String pageName = pathSegments.get(0);
+        final String pageName = pathSegments.get(0);
 
         try {
 
             if (isPageRequest(pathSegments)) {
-                if (!isAuthorized(apiSession, appID, pageName)) {
+                if (!isAuthorized(apiSession, appToken, pageName)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
                     return;
                 }
                 pageRenderer.displayCustomPage(request, response, apiSession, pageName);
             } else {
-                File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
+                final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
                 resourceRenderer.renderFile(request, response, resourceFile);
             }
 
@@ -99,7 +99,7 @@ public class CustomPageServlet extends HttpServlet {
 
     }
 
-    private boolean isPageRequest(List<String> pathSegments) {
+    private boolean isPageRequest(final List<String> pathSegments) {
         if (pathSegments.size() == 1) {
             return true;
         } else if (pathSegments.size() == 2) {
@@ -108,7 +108,7 @@ public class CustomPageServlet extends HttpServlet {
         return false;
     }
 
-    private boolean isAnIndexSegment(String segment) {
+    private boolean isAnIndexSegment(final String segment) {
         return segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_FILENAME) || segment.equalsIgnoreCase(CustomPageService.PAGE_CONTROLLER_FILENAME)
                 || segment.equalsIgnoreCase(CustomPageService.PAGE_INDEX_NAME);
     }
@@ -117,24 +117,24 @@ public class CustomPageServlet extends HttpServlet {
         return request.getPathInfo().matches("/[^/]+");
     }
 
-    private File getResourceFile(String resourcePath, String pageName, APISession apiSession) throws IOException, BonitaException {
+    private File getResourceFile(final String resourcePath, final String pageName, final APISession apiSession) throws IOException, BonitaException {
         final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
-        File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
+        final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutPageName(resourcePath, pageName));
 
-        if (!tenantFolder.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
+        if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
         }
         return resourceFile;
     }
 
-    private String getResourcePathWithoutPageName(String resourcePath, String pageName) {
+    private String getResourcePathWithoutPageName(final String resourcePath, final String pageName) {
         //resource path match "/pagename/resourcefolder/filename"
         return resourcePath.substring(pageName.length() + 2);
     }
 
-    private boolean isAuthorized(final APISession apiSession, final String appID, final String pageName) throws BonitaException {
-        return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appID, pageName);
+    private boolean isAuthorized(final APISession apiSession, final String appToken, final String pageName) throws BonitaException {
+        return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
     }
 
     private void handleException(final String pageName, final Exception e) throws ServletException {

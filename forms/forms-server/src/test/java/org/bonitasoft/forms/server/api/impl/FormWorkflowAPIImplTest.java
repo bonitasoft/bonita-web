@@ -15,9 +15,11 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.utils.BPMEngineAPIUtil;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
+import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +59,9 @@ public class FormWorkflowAPIImplTest {
 
     @Mock
     private List<Expression> expressions;
+
+    @Mock
+    private HumanTaskInstance humanTaskInstance;
 
     @Before
     public void setUp() throws Exception {
@@ -161,5 +166,43 @@ public class FormWorkflowAPIImplTest {
         verify(formExpressionsAPI, never()).evaluateActivityInitialExpressions(session, activityInstanceID, expressions, locale, true, context);
     }
 
+    @Test
+    public void asignTaskIfNotAssigned_should_call_engine() throws Exception {
+        // Given
+        final long userId = 25L;
+        final long activityInstanceID = 42L;
+        doReturn(humanTaskInstance).when(processApi).getHumanTaskInstance(activityInstanceID);
+        doReturn(0L).when(humanTaskInstance).getAssigneeId();
+        doReturn(userId).when(session).getUserId();
+        // When
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
+        // Then
+        verify(processApi).assignUserTask(activityInstanceID, userId);
+    }
 
+    @Test
+    public void asignTaskIfNotAssigned_should_not_call_engine_if_the_task_is_already_assigned() throws Exception {
+        // Given
+        final long userId = 25L;
+        final long activityInstanceID = 42L;
+        doReturn(humanTaskInstance).when(processApi).getHumanTaskInstance(activityInstanceID);
+        doReturn(25L).when(humanTaskInstance).getAssigneeId();
+        doReturn(userId).when(session).getUserId();
+        // When
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
+        // Then
+        verify(processApi, never()).assignUserTask(activityInstanceID, userId);
+    }
+
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void asignTaskIfNotAssigned_should_throw_exception_if_the_task_is_already_assigned_to_someone_else() throws Exception {
+        // Given
+        final long userId = 25L;
+        final long activityInstanceID = 42L;
+        doReturn(humanTaskInstance).when(processApi).getHumanTaskInstance(activityInstanceID);
+        doReturn(33L).when(humanTaskInstance).getAssigneeId();
+        doReturn(userId).when(session).getUserId();
+        // When
+        formWorkflowAPIImpl.assignTaskIfNotAssigned(session, activityInstanceID, session.getUserId());
+    }
 }

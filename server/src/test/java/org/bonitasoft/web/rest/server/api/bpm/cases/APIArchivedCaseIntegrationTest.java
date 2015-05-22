@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.test.toolkit.bpm.TestCase;
-import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
@@ -73,7 +72,6 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
     }
 
     private void assertEquals(final String message, final ArchivedProcessInstance engineItem, final ArchivedCaseItem consoleItem) {
-
         Assert.assertEquals(message, engineItem.getId(), consoleItem.getId().toLong().longValue());
         Assert.assertEquals(message, engineItem.getLastUpdate().toString(), consoleItem.getLastUpdateDate().toString());
         Assert.assertEquals(message, engineItem.getState(), consoleItem.getState());
@@ -88,24 +86,26 @@ public class APIArchivedCaseIntegrationTest extends AbstractConsoleTest {
     @Test
     public void testGetArchivedCase() {
         final TestCase testCase = initArchivedCaseForGet();
+        final ArchivedProcessInstance archivedProcessInstance = testCase.getArchive();
 
-        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(),
+        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()), new ArrayList<String>(),
                 new ArrayList<String>());
 
         Assert.assertNotNull("ArchivedCase not found", caseItem);
-        assertEquals("Wrong case found", testCase.getArchive(), caseItem);
+
+        assertEquals("Wrong case found" + ". Expected=" + archivedProcessInstance + ". Found=" + caseItem.toString(), archivedProcessInstance, caseItem);
     }
 
     @Test
     public void testGetArchivedCaseWithDeploys() {
-        final TestProcess testProcess = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator());
-        final TestCase testArchivedCase = testProcess.startCase();
+        final TestCase testCase = initArchivedCaseForGet();
+        final ArchivedProcessInstance archivedProcessInstance = testCase.getArchive();
 
-        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(testArchivedCase.getId()),
+        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()),
                 Arrays.asList(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<String>());
 
         Assert.assertNotNull("Failed to deploy process", caseItem.getProcess());
-        Assert.assertEquals("Wrong process deployed", testArchivedCase.getProcessInstance().getName(), caseItem.getProcess().getName());
+        Assert.assertEquals("Wrong process deployed", testCase.getProcessInstance().getName(), caseItem.getProcess().getName());
 
         Assert.assertNotNull("Failed to deploy intiator user", caseItem.getStartedByUserId());
         Assert.assertEquals("Wrong process deployed", getInitiator().getUserName(), caseItem.getStartedByUser().getUserName());

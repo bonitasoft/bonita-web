@@ -32,7 +32,7 @@ public class DeletePageProblemsCallout extends CalloutDanger {
     protected org.bonitasoft.web.toolkit.client.ui.component.List ul;
 
     public DeletePageProblemsCallout(final java.util.List<ApplicationPageItem> applicationPages) {
-        super(_("%pageName% is used by:",
+        super(_("'%pageName%' is used by:",
                 new Arg("pageName", applicationPages.get(0).getPage().getDisplayName())));
         ul = buildProblemsList(applicationPages);
         append(ul);
@@ -41,7 +41,7 @@ public class DeletePageProblemsCallout extends CalloutDanger {
     private List buildProblemsList(final java.util.List<ApplicationPageItem> applicationPages) {
         final List ul = new List();
         for (final ApplicationPageItem applicationPage : applicationPages) {
-            ul.append(new Text(_("%applicationName% as page %associationName%",
+            ul.append(new Text(_("'%applicationName%' as page '%associationName%'",
                     new Arg("applicationName", applicationPage.getApplication().getToken()),
                     new Arg("associationName", applicationPage.getToken()))));
         }

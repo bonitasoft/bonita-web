@@ -46,7 +46,7 @@ public class TestPlatform {
      * Default Constructor.
      */
     protected TestPlatform() {
-        createPlatform();
+        // createPlatform();
     }
 
     /**
@@ -61,7 +61,7 @@ public class TestPlatform {
             }
         } catch (final Exception e) {
             throw new TestToolkitException("Can't create platform", e);
-        };
+        }
 
         // start
         try {

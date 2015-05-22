@@ -19,7 +19,8 @@ import org.bonitasoft.engine.business.application.ApplicationPageNotFoundExcepti
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationMenuImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
-import org.bonitasoft.engine.impl.PageImpl;
+import org.bonitasoft.engine.page.ContentType;
+import org.bonitasoft.engine.page.impl.PageImpl;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileCriterion;
@@ -61,7 +62,7 @@ public class ApplicationModelTest {
 
     ApplicationModel model;
 
-    ApplicationImpl application = new ApplicationImpl("token", "version", "description",1L);
+    ApplicationImpl application = new ApplicationImpl("token", "version", "description",1L , 2L);
 
     @Before
     public void beforeEach() throws Exception {
@@ -135,7 +136,7 @@ public class ApplicationModelTest {
 
     private void givenSearchApplicationMenusWillReturns(final List<ApplicationMenu> menuList) throws Exception {
         given(applicationApi.searchApplicationMenus(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationMenu>(menuList.size(), menuList));
+                new SearchResultImpl<>(menuList.size(), menuList));
     }
 
     @Test
@@ -147,7 +148,7 @@ public class ApplicationModelTest {
     public void should_ApplicationHomePage_return_valide_path() throws Exception {
         given(applicationApi.getApplicationHomePage(1L)).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
 
-        assertThat(model.getApplicationHomePage()).isEqualTo("token/pageToken");
+        assertThat(model.getApplicationHomePage()).isEqualTo("pageToken/");
     }
 
     @Test
@@ -159,6 +160,17 @@ public class ApplicationModelTest {
 
         assertThat(appLayoutName).isEqualTo("layoutPage");
     }
+
+    @Test
+    public void should_getApplicationThemeName_return_valide_name() throws Exception {
+        given(page.getName()).willReturn("themePage");
+        given(pageApi.getPage(2L)).willReturn(page);
+
+        String appLayoutName = model.getApplicationThemeName();
+
+        assertThat(appLayoutName).isEqualTo("themePage");
+    }
+
 
     @Test
     public void should_hasPage_return_true() throws Exception {
@@ -177,7 +189,7 @@ public class ApplicationModelTest {
     @Test
     public void should_getCustomPage_return_expectedPage() throws Exception {
         given(applicationApi.getApplicationPage("token", "pageToken")).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
-        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, "", 0L, 0L, 0L, 0L, ""));
+        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, "", 0L, 0L, 0L, 0L, "", ContentType.PAGE,null));
 
         assertThat(model.getCustomPage("pageToken").getId()).isEqualTo(1);
     }

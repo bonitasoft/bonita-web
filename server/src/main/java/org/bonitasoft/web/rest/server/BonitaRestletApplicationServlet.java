@@ -22,4 +22,6 @@ public class BonitaRestletApplicationServlet extends ServerServlet {
         bonitaRestletApplication.setContext(parentContext.createChildContext());
         return bonitaRestletApplication;
     }
+
+
 }

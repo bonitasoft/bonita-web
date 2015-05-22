@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,8 +25,13 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorCriterion;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveBuilder;
+import org.bonitasoft.engine.bpm.bar.form.model.FormMappingModel;
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
+import org.bonitasoft.engine.bpm.flownode.ActivityDefinition;
+import org.bonitasoft.engine.bpm.flownode.UserTaskDefinition;
+import org.bonitasoft.engine.bpm.form.FormMappingDefinitionBuilder;
+import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -36,9 +41,14 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.form.FormMappingTarget;
+import org.bonitasoft.engine.form.FormMappingType;
+import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -50,7 +60,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TestProcess {
 
@@ -72,7 +81,7 @@ public class TestProcess {
 
     private ProcessSupervisor processSupervisor;
 
-    private final List<ActorInstance> actors = new ArrayList<ActorInstance>();
+    private final List<ActorInstance> actors = new ArrayList<>();
 
     /**
      * Default Constructor.
@@ -81,6 +90,12 @@ public class TestProcess {
      */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -89,6 +104,12 @@ public class TestProcess {
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
+        /*
+        System.err.println("\n\n");
+        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
+        Thread.dumpStack();
+        System.err.println("\n\n");
+        */
     }
 
     public TestProcess(final BusinessArchiveBuilder businessArchiveBuilder) {
@@ -112,11 +133,25 @@ public class TestProcess {
     private ProcessDefinition createProcessDefinition(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         try {
             return deployProcessDefinition(apiSession, new BusinessArchiveBuilder().createNewBusinessArchive()
+                    .setFormMappings(createDefaultProcessFormMapping(processDefinitionBuilder.getProcess()))
                     .setProcessDefinition(processDefinitionBuilder.done()));
         } catch (final InvalidProcessDefinitionException e) {
             throw new TestToolkitException("Invalid process definition", e);
         }
     }
+
+    public static FormMappingModel createDefaultProcessFormMapping(DesignProcessDefinition designProcessDefinition) {
+        FormMappingModel formMappingModel = new FormMappingModel();
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_START, FormMappingTarget.URL).build());
+        formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.PROCESS_OVERVIEW, FormMappingTarget.URL).build());
+        for (ActivityDefinition activityDefinition : designProcessDefinition.getFlowElementContainer().getActivities()) {
+            if (activityDefinition instanceof UserTaskDefinition) {
+                formMappingModel.addFormMapping(FormMappingDefinitionBuilder.buildFormMapping("http://url.com", FormMappingType.TASK, FormMappingTarget.URL).withTaskname(activityDefinition.getName()).build());
+            }
+        }
+        return formMappingModel;
+    }
+
 
     /**
      * Deploy process from the archive
@@ -182,6 +217,26 @@ public class TestProcess {
         return this;
     }
     
+    protected void delete(final APISession apiSession) {
+        try {
+            // Delete all process instances
+            long nbDeletedProcessInstances;
+            do {
+                nbDeletedProcessInstances = getProcessAPI(apiSession).deleteProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedProcessInstances > 0);
+
+            // Delete all archived process instances
+            long nbDeletedArchivedProcessInstances;
+            do {
+                nbDeletedArchivedProcessInstances = getProcessAPI(apiSession).deleteArchivedProcessInstances(processDefinition.getId(), 0, 100);
+            } while (nbDeletedArchivedProcessInstances > 0);
+
+            getProcessAPI(apiSession).deleteProcessDefinition(processDefinition.getId());
+        } catch (DeletionException e) {
+            throw new TestToolkitException("Can't delete process <" + this.processDefinition.getId() + "> with name " + this.processDefinition.getName(), e);
+        }
+    }
+
     private void enableProcess(APISession apiSession) {
         try {
             getProcessAPI(apiSession).enableProcess(this.processDefinition.getId());
@@ -202,6 +257,10 @@ public class TestProcess {
         return setEnable(initiator.getSession(), enabled);
     }
 
+    public void delete(final TestUser initiator) {
+        delete(initiator.getSession());
+    }
+
     /**
      * Deprecated, use {@link #enable()} or {@link #disable()}
      */
@@ -218,9 +277,13 @@ public class TestProcess {
         return setEnable(TestToolkitCtx.getInstance().getInitiator(), false);
     }
 
+    public void delete() {
+        delete(TestToolkitCtx.getInstance().getInitiator());
+    }
+
     /**
      * Add actors to enable process
-     * 
+     * <p/>
      * TODO: Need to evolve to choose on which Actors category the actor will be added
      * 
      * @param apiSession
@@ -364,7 +427,7 @@ public class TestProcess {
      * Add a role as process supervisor
      * 
      * @param apiSession
-     * @param user
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestRole role) {
@@ -388,7 +451,7 @@ public class TestProcess {
      * Add a group as process supervisor
      * 
      * @param apiSession
-     * @param user
+     * @param group
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group) {
@@ -412,7 +475,8 @@ public class TestProcess {
      * Add a memebership as process supervisor
      * 
      * @param apiSession
-     * @param user
+     * @param group
+     * @param role
      * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group, final TestRole role) {
@@ -489,5 +553,41 @@ public class TestProcess {
         final SearchOptionsBuilder builder = new SearchOptionsBuilder(0, 100);
         builder.filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, getProcessDefinition().getId());
         return getProcessAPI(getSession()).searchOpenProcessInstances(builder.done()).getResult();
+    }
+
+    public void deleteCases() throws Exception {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(getSession());
+        int repeatNb = 10;
+        boolean repeat;
+        long sleep = 500;
+        Exception latestException = null;
+        do {
+            repeat = false;
+            repeatNb--;
+            final SearchOptions searchOptions = new SearchOptionsBuilder(0, 100000)
+                    .filter(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID, processDefinition.getId())
+                    .sort(ProcessInstanceSearchDescriptor.ID, Order.ASC).done();
+            for (ProcessInstance pi : processAPI.searchProcessInstances(searchOptions).getResult()) {
+                try {
+                    processAPI.deleteProcessInstance(pi.getId());
+                } catch (DeletionException e) {
+                    //ignore as it may be due a process instance finishing its execution
+                    repeat = true;
+                    latestException = e;
+                }
+            }
+            try {
+                processAPI.deleteArchivedProcessInstances(processDefinition.getId(), 0, 10000);
+            } catch (DeletionException e) {
+                //ignore as it may be due a process instance finishing its execution
+                repeat = true;
+                latestException = e;
+            }
+            Thread.sleep(sleep);
+        } while (repeat && repeatNb > 0);
+        if (repeat && latestException != null) {
+            throw latestException;
+        }
+
     }
 }

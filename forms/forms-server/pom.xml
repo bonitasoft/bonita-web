@@ -116,7 +116,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<systemPropertyVariables>
-						<bonita.home>${bonita.home.test}/bonita</bonita.home>
+						<bonita.home>${bonita.home.test}</bonita.home>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>

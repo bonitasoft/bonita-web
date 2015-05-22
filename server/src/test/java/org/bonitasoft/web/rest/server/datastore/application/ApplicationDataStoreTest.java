@@ -71,9 +71,6 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Mock
     private Page homePage;
 
-    @Mock
-    private Page layoutPage;
-
     @Before
     public void setUp() throws Exception {
         ItemDefinitionFactory.setDefaultFactory(new ItemDefinitionFactory() {
@@ -87,19 +84,16 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Test
     public void should_return_application_created_by_ApplicationAPI_converted_to_ApplicationItem_on_add() throws Exception {
         //given
-        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0", 2L);
+        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0");
         ApplicationItem app = new ApplicationItem();
-        app.setLayoutId(2L);
         given(converter.toApplicationCreator(app)).willReturn(creator);
-        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L);
+        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L, 3L);
         given(applicationAPI.createApplication(creator)).willReturn(application);
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);
 
         given(pageAPI.getPageByName("custompage_home")).willReturn(homePage);
         given(homePage.getId()).willReturn(1L);
-        given(pageAPI.getPageByName("custompage_layout")).willReturn(layoutPage);
-        given(layoutPage.getId()).willReturn(2L);
 
         given(applicationAPI.createApplicationPage(application.getId(), 1, "home")).willReturn(applicationPage);
 
@@ -113,19 +107,16 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Test
     public void should_create_default_home_page_on_add() throws Exception {
         //given
-        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0", 2L);
+        final ApplicationCreator creator = new ApplicationCreator("app", "My application", "1.0");
         ApplicationItem item = new ApplicationItem();
-        item.setLayoutId(2L);
         given(converter.toApplicationCreator(item)).willReturn(creator);
-        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L);
+        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L, 3L);
         application.setId(1);
         given(applicationAPI.createApplication(creator)).willReturn(application);
         final ApplicationItem convertedAppItem = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(convertedAppItem);
         given(pageAPI.getPageByName("custompage_home")).willReturn(homePage);
         given(homePage.getId()).willReturn(1L);
-        given(pageAPI.getPageByName("custompage_layout")).willReturn(layoutPage);
-        given(layoutPage.getId()).willReturn(2L);
         given(applicationAPI.createApplicationPage(application.getId(), 1L, "home")).willReturn(applicationPage);
         given(applicationPage.getId()).willReturn(3L);
 
@@ -145,7 +136,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final ApplicationUpdater applicationUpdater = new ApplicationUpdater();
         given(converter.toApplicationUpdater(attributesToUpDate)).willReturn(applicationUpdater);
 
-        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L);
+        final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L, 3L);
         given(applicationAPI.updateApplication(1, applicationUpdater)).willReturn(application);
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);

@@ -1,14 +1,17 @@
 package org.bonitasoft.livingapps;
 
 import java.io.IOException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -23,34 +26,38 @@ public class LivingApplicationServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3911437607969651000L;
 
+    /**
+     * Logger
+     */
+    private static Logger LOGGER = Logger.getLogger(LivingApplicationServlet.class.getName());
+
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+
+
     @Override
     protected void doGet(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse)
             throws ServletException, IOException {
 
         final APISession session = getSession(hsRequest);
-        try {
-            if(!createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer())) {
-                hsResponse.sendError(404);
-            }
-        } catch (final ApplicationPageNotFoundException e) {
-            hsResponse.sendError(404);
-        } catch (final PageNotFoundException e) {
-            hsResponse.sendError(404);
-        } catch (final BonitaHomeNotSetException e) {
-            hsResponse.sendError(500);
-        } catch (final ServerAPIException e) {
-            hsResponse.sendError(500);
-        } catch (final UnknownAPITypeException e) {
-            hsResponse.sendError(500);
-        } catch (final CreationException e) {
-            hsResponse.sendError(404);
-        } catch (BonitaException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+
+        // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
+        if (isPageUrlWithoutFinalSlash(hsRequest)) {
+            customPageRequestModifier.redirectToValidPageUrl(hsRequest, hsResponse);
+            return;
         }
+
+        try {
+            createApplicationRouter(session).route(hsRequest, hsResponse, session, getPageRenderer(), getResourceRenderer(), new BonitaHomeFolderAccessor());
+        } catch (final ApplicationPageNotFoundException | PageNotFoundException | CreationException e) {
+            hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+        } catch (final BonitaException | IllegalAccessException | InstantiationException e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                final String message = "Error while trying to display application " + hsRequest.getPathInfo();
+                LOGGER.log(Level.WARNING, message, e);
+            }
+            hsResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     ApplicationRouter createApplicationRouter(final APISession session) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
@@ -58,6 +65,11 @@ public class LivingApplicationServlet extends HttpServlet {
                 TenantAPIAccessor.getLivingApplicationAPI(session),
                 TenantAPIAccessor.getCustomPageAPI(session),
                 TenantAPIAccessor.getProfileAPI(session)));
+    }
+
+    private boolean isPageUrlWithoutFinalSlash(final HttpServletRequest request) {
+        return request.getPathInfo().matches("/[^/]+/[^/]+")
+                ||request.getPathInfo().matches("/[^/]+");
     }
 
     APISession getSession(final HttpServletRequest hsRequest) {

@@ -62,7 +62,7 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
     }
 
     private void beforeSearch() {
-        final List<TestRole> roles = TestRoleFactory.createRandomRoles(5);
+        final List<TestRole> roles = TestRoleFactory.getInstance().createRandomRoles(5);
         final List<TestGroup> groups = TestGroupFactory.createRandomGroups(5);
 
         final TestUser user1 = getInitiator();

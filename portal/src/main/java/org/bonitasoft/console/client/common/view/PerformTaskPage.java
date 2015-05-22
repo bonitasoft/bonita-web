@@ -17,6 +17,7 @@
 package org.bonitasoft.console.client.common.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
@@ -32,6 +33,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
@@ -92,28 +94,29 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     @Override
     public void buildView(final HumanTaskItem task) {
-        if (task.getAssignedId() != null) {
-            addBody(createFormIframe(task, false));
-        } else {
-            addBody(createFormIframe(task, true));
-        }
+        addBody(createFormIframe(task));
     }
 
-    private Component createFormIframe(final HumanTaskItem item, final boolean assignTask) {
-        return new UiComponent(new IFrameView(buildTasksFormURL(item, assignTask)));
+    private Component createFormIframe(final HumanTaskItem item) {
+        return new UiComponent(new IFrameView(buildTasksFormURL(item)));
     }
 
-    private String buildTasksFormURL(final HumanTaskItem item, final boolean assignTask) {
+    private String buildTasksFormURL(final HumanTaskItem item) {
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);
         final String tenantId = ClientApplicationURL.getTenantId();
 
         final StringBuilder frameURL = new StringBuilder();
-        frameURL.append("form/taskInstance/")
-                .append(item.getId())
+        frameURL.append("resource/taskInstance/")
+                .append(UrlUtil.escapePathSegment(item.getProcess().getName()))
                 .append("/")
-                .append("?locale=")
+                .append(UrlUtil.escapePathSegment(item.getProcess().getVersion()))
+                .append("/")
+                .append(UrlUtil.escapePathSegment(item.getName()))
+                .append("/content/?id=")
+                .append(item.getId())
+                .append("&locale=")
                 .append(locale);
         // if tenant is filled in portal url add tenant parameter to IFrame url
         if (tenantId != null && !tenantId.isEmpty()) {
@@ -121,9 +124,6 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         }
         if (userId != null && !userId.isEmpty()) {
             frameURL.append("&user=").append(userId);
-        }
-        if (assignTask) {
-            frameURL.append("&assignTask=true");
         }
 
         return frameURL.toString();
@@ -148,5 +148,10 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     @Override
     protected void onItemNotFound() {
         ViewController.showPopup(new ItemNotFoundPopup(TasksListingPage.TOKEN));
+    }
+
+    @Override
+    protected List<String> defineDeploys() {
+        return Arrays.asList(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
     }
 }

@@ -53,7 +53,7 @@ public class TestCategoryFactory {
 
     private static TestCategoryFactory instance = new TestCategoryFactory();
 
-    private static TestCategoryFactory getInstance() {
+    public static TestCategoryFactory getInstance() {
         return instance;
     }
 
@@ -71,7 +71,11 @@ public class TestCategoryFactory {
     }
 
     public static List<TestCategory> getAllCategories(final APISession apiSession) {
-        return TestCategory.getAll(apiSession);
+        final List<TestCategory> all = TestCategory.getAll(apiSession);
+        for (TestCategory testCategory : all) {
+            getInstance().getCategoriesList().put(testCategory.getCategory().getName(), testCategory);
+        }
+        return all;
     }
 
     public static TestCategory getRandomCategory() {
@@ -86,4 +90,27 @@ public class TestCategoryFactory {
         return getCategory(HUMAN_RESOURCES_NAME, HUMAN_RESOURCES_DESCRIPTION);
     }
 
+    public void clear() {
+        for (TestCategory testCategory : getCategoriesList().values()) {
+            testCategory.delete();
+        }
+        getCategoriesList().clear();
+    }
+
+    /**
+     * @return the userList
+     */
+    private Map<String, TestCategory> getCategoriesList() {
+        return this.categories;
+    }
+
+    public void check() {
+        if (!getCategoriesList().isEmpty()) {
+            throw new RuntimeException(this.getClass().getName() + " cannot be reset because the list is not empty: " + getCategoriesList());
+        }
+    }
+
+    public static void removeTestCategoryFromList(TestCategory category) {
+        getInstance().getCategoriesList().remove(category.getCategory().getName());
+    }
 }

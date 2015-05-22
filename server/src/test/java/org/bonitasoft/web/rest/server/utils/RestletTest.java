@@ -30,8 +30,8 @@ import org.restlet.resource.ServerResource;
  * <ul>
  * <li>Allow to configure tested resource via {@link #configureResource()}</li>
  * <li>Allow to configure tested app via {@link #configureApplication()}</li>
- * <li>Start restlet server bound on a random port before each tests (and stop it after)</li>
- * <li>Provide {@link #request(String)} method to perform http requests</li>
+ * <li>Start Restlet server bound on a random port before each tests (and stop it after)</li>
+ * <li>Provide {@link #request(String)} method to perform HTTP requests</li>
  * </ul>
  *
  * @author Colin Puy
@@ -43,7 +43,7 @@ public abstract class RestletTest {
 
     /**
      * Configure the {@link ServerResource} under test.
-     * Override this method in your test to return an instance of the tested ressource.
+     * Override this method in your test to return an instance of the tested resource.
      * If not overridden, production RestletApplication will be launched
      */
     protected ServerResource configureResource() {
@@ -60,6 +60,7 @@ public abstract class RestletTest {
         return new BonitaRestletApplication(finderFactory);
     }
 
+
     /**
      * Create a request builder with server baseUri as base path
      * @param path absolute path to map request on
@@ -72,8 +73,9 @@ public abstract class RestletTest {
      * Read a file in current package
      */
     protected String readFile(final String fileName) throws IOException {
-        final InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName);
-        return IOUtils.toString(resourceAsStream);
+    	try (InputStream resourceAsStream = this.getClass().getResourceAsStream(fileName)) {
+    		return IOUtils.toString(resourceAsStream);	
+    	}
     }
 
     @Before
@@ -111,7 +113,7 @@ public abstract class RestletTest {
         }
     }
 
-    private class MockFinderFactory extends FinderFactory {
+    protected class MockFinderFactory extends FinderFactory {
 
         private final ServerResource serverResource;
 
@@ -132,6 +134,5 @@ public abstract class RestletTest {
             return super.create(clazz);
         }
     }
-
 
 }

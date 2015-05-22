@@ -73,6 +73,10 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void addCategoryTest() {
+        //before
+        //avoid conflict with addingTwiceSameCategoryIsForbidden
+        TestCategoryFactory.getInstance().clear();
+
         // API call
         final CategoryItem categoryItem = new CategoryItem();
         categoryItem.setName("categoryTest");
@@ -81,7 +85,12 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
 
         // Check
         final List<TestCategory> catList = TestCategoryFactory.getAllCategories(getInitiator().getSession());
-        Assert.assertEquals("No categories added", 1, catList.size());
+        final int nbOfCategories = catList.size();
+        String message = "No categories added. " + nbOfCategories + " categories found. Categories are: \n";
+        for (TestCategory testCategory : catList) {
+            message += " catgeory with id " + testCategory.getId() + ": " + testCategory.getCategory().getName() + "\n";
+        }
+        Assert.assertEquals(message, 1, nbOfCategories);
         final Category resultCategory = catList.get(0).getCategory();
         Assert.assertEquals("Wrong category found (not same name)", categoryItem.getName(), resultCategory.getName());
         Assert.assertEquals("Wrong category found (not same description)", categoryItem.getDescription(), resultCategory.getDescription());
@@ -128,12 +137,16 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         this.api.runDelete(Arrays.asList(APIID.makeAPIID(category.getId())));
 
         assertNull(getFromEngine(category.getId()));
+
+        TestCategoryFactory.removeTestCategoryFromList(category);
     }
 
     @Test(expected = APIForbiddenException.class)
     public void addingTwiceSameCategoryIsForbidden() throws Exception {
+        //given
         CategoryItem categoryItem = aCategoryItem().build();
 
+        //when then exception
         api.runAdd(categoryItem);
         api.runAdd(categoryItem);
     }

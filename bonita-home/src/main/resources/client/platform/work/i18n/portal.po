@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-14 03:02+0100\n"
+"POT-Creation-Date: 2015-04-21 07:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1331,6 +1331,9 @@ msgstr ""
 msgid "More"
 msgstr ""
 
+msgid "More (BETA)"
+msgstr ""
+
 msgid "Move this element after the next one"
 msgstr ""
 
@@ -1368,6 +1371,9 @@ msgid "Name of the user who started this case"
 msgstr ""
 
 msgid "Name of the variable"
+msgstr ""
+
+msgid "New process more details view"
 msgstr ""
 
 msgid "Next"

@@ -24,8 +24,9 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.engine.impl.PageImpl;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.impl.PageImpl;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 
@@ -55,6 +56,8 @@ public class PageItemBuilder {
 
     protected long updatedBy = 1L;
 
+    private String zipFileName="/page.zip";
+
     public static PageItemBuilder aPageItem() {
         return new PageItemBuilder();
     }
@@ -71,7 +74,7 @@ public class PageItemBuilder {
         item.setLastUpdateDate(last_update_date);
         item.setUpdatedByUserId(updatedBy);
         item.setContentName(contentName);
-        final URL zipFileUrl = getClass().getResource("/page.zip");
+        final URL zipFileUrl = getClass().getResource(zipFileName);
         final File zipFile = new File(zipFileUrl.toURI());
 
         FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
@@ -81,8 +84,8 @@ public class PageItemBuilder {
     }
 
     public Page toPage() {
-        final PageImpl page = new PageImpl(id, urlToken, displayName, isProvided, description, createdBy, 1l, 1l, 1l, contentName);
-        return page;
+        final PageImpl pageImpl = new PageImpl(id, urlToken, displayName, isProvided, description, createdBy, 1l, 1l, 1l, contentName, ContentType.PAGE,null);
+        return pageImpl;
     }
 
     public PageItemBuilder fromEngineItem(final Page page) {
@@ -112,6 +115,11 @@ public class PageItemBuilder {
 
     public PageItemBuilder isProvided(final boolean isProvided) {
         this.isProvided = isProvided;
+        return this;
+    }
+
+    public PageItemBuilder withZip(String zipFileName){
+        this.zipFileName = zipFileName;
         return this;
     }
 }

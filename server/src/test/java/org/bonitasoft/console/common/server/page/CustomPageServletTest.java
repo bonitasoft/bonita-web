@@ -9,10 +9,11 @@ import static org.mockito.Mockito.verify;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.TenantFolder;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class CustomPageServletTest {
     PageResourceProvider pageResourceProvider;
 
     @Mock
-    TenantFolder tenantFolder;
+    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
     @Mock
     CustomPageRequestModifier customPageRequestModifier;
@@ -73,7 +74,7 @@ public class CustomPageServletTest {
     public void should_get_Forbidden_Status_when_page_unAuthorize() throws Exception {
         hsRequest.setPathInfo("/pageToken/");
         hsRequest.setParameter("applicationId", "1");
-        given(resourceRenderer.getPathSegments(hsRequest)).willReturn(Arrays.asList("pageToken"));
+        given(resourceRenderer.getPathSegments("/pageToken/")).willReturn(Arrays.asList("pageToken"));
         given(customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken")).willReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);
@@ -109,9 +110,9 @@ public class CustomPageServletTest {
         testPageIsWellCalled("custompage_htmlexample5", "/custompage_htmlexample5/index.groovy", Arrays.asList("custompage_htmlexample5","index.groovy"));
     }
 
-    private void testPageIsWellCalled(String token, String path, List<String> pathSegment) throws Exception {
+    private void testPageIsWellCalled(final String token, final String path, final List<String> pathSegment) throws Exception {
         hsRequest.setPathInfo(path);
-        given(resourceRenderer.getPathSegments(hsRequest)).willReturn(pathSegment);
+        given(resourceRenderer.getPathSegments(path)).willReturn(pathSegment);
         given(customPageAuthorizationsHelper.isPageAuthorized(null, token)).willReturn(true);
 
         servlet.doGet(hsRequest, hsResponse);
@@ -122,11 +123,11 @@ public class CustomPageServletTest {
     @Test
     public void getResource_should_call_the_resource_renderer() throws Exception {
         hsRequest.setPathInfo("/custompage_htmlexample/css/file.css");
-        File pageDir = new File("/pageDir");
-        given(resourceRenderer.getPathSegments(hsRequest)).willReturn(Arrays.asList("custompage_htmlexample", "css", "file.css"));
+        final File pageDir = new File("/pageDir");
+        given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList("custompage_htmlexample", "css", "file.css"));
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample",1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
-        doReturn(true).when(tenantFolder).isInFolder(any(File.class), any(File.class));
+        doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -136,11 +137,12 @@ public class CustomPageServletTest {
     @Test(expected=ServletException.class)
     public void getResource_should_throw_exception_if_unauthorised() throws Exception {
         hsRequest.setPathInfo("/custompage_htmlexample/css/../../../file.css");
-        File pageDir = new File(".");
-        given(resourceRenderer.getPathSegments(hsRequest)).willReturn(Arrays.asList("custompage_htmlexample", "css", "..", "..", "..", "file.css"));
+        final File pageDir = new File(".");
+        given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/../../../file.css")).willReturn(
+                Arrays.asList("custompage_htmlexample", "css", "..", "..", "..", "file.css"));
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
-        doReturn(false).when(tenantFolder).isInFolder(any(File.class), any(File.class));
+        doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
     }

@@ -31,5 +31,5 @@ public interface PageController {
      * @param pageContext
      *            provide access to the data relative to the context in which the custom page is displayed
      */
-    public void doGet(HttpServletRequest request, HttpServletResponse response, PageResourceProvider pageResourceProvider, PageContext pageContext);
+    void doGet(HttpServletRequest request, HttpServletResponse response, PageResourceProvider pageResourceProvider, PageContext pageContext);
 }

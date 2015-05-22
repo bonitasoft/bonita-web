@@ -17,7 +17,9 @@ package org.bonitasoft.console.common.server.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +32,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Servlet allowing to upload a File.
@@ -57,11 +60,23 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final String RETURN_ORIGINAL_FILENAME_PARAM = "ReturnOriginalFilename";
 
+    protected static final String RESPONSE_CONTENT_TYPE_PARAM = "ContentType";
+
+    protected static final String TEXT_CONTENT_TYPE = "text";
+
+    protected static final String JSON_CONTENT_TYPE = "json";
+
+    protected static final String TEMP_PATH_RESPONSE_ATTRIBUTE = "tempPath";
+
+    protected static final String FILE_NAME_RESPONSE_ATTRIBUTE = "filename";
+
     protected String[] supportedExtensionsList = new String[0];
 
     protected boolean returnFullPathInResponse = false;
 
     protected boolean alsoReturnOriginalFilename = false;
+
+    protected String responseContentType = TEXT_CONTENT_TYPE;
 
     @Override
     public void init() throws ServletException {
@@ -77,6 +92,10 @@ public abstract class FileUploadServlet extends HttpServlet {
         final String returnFullPathInResponseParam = getInitParameter(RETURN_FULL_SERVER_PATH_PARAM);
         if (returnFullPathInResponseParam != null) {
             returnFullPathInResponse = Boolean.parseBoolean(returnFullPathInResponseParam);
+        }
+        final String responseContentTypeParam = getInitParameter(RESPONSE_CONTENT_TYPE_PARAM);
+        if (responseContentTypeParam != null) {
+            responseContentType = responseContentTypeParam;
         }
     }
 
@@ -132,9 +151,17 @@ public abstract class FileUploadServlet extends HttpServlet {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
                 }
+                uploadedFile.deleteOnExit();
 
                 // Response
-                final String responseString = generateResponseString(request, fileName, uploadedFile);
+                final String responseString;
+                if (JSON_CONTENT_TYPE.equals(responseContentType)) {
+                    responseString = generateResponseJson(request, fileName, uploadedFile);
+                } else if (TEXT_CONTENT_TYPE.equals(responseContentType)) {
+                    responseString = generateResponseString(request, fileName, uploadedFile);
+                } else {
+                    throw new ServletException("Unsupported content type in servlet configuration : " + responseContentType);
+                }
                 responsePW.print(responseString);
                 responsePW.flush();
             }
@@ -158,6 +185,19 @@ public abstract class FileUploadServlet extends HttpServlet {
             responseString = responseString + RESPONSE_SEPARATOR + fileName;
         }
         return responseString;
+    }
+
+    protected String generateResponseJson(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
+        final Map<String, String> responseMap = new HashMap<String, String>();
+        if (alsoReturnOriginalFilename) {
+            responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, fileName);
+        }
+        if (returnFullPathInResponse) {
+            responseMap.put(TEMP_PATH_RESPONSE_ATTRIBUTE, uploadedFile.getPath());
+        } else {
+            responseMap.put(TEMP_PATH_RESPONSE_ATTRIBUTE, uploadedFile.getName());
+        }
+        return new JSONObject(responseMap).toString();
     }
 
     protected File makeUniqueFilename(final File targetDirectory, final String fileName) throws IOException {
