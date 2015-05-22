@@ -61,7 +61,7 @@ public class ApplicationRouter {
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
                 pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
             }else{
-                hsResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                hsResponse.sendError(HttpServletResponse.SC_FORBIDDEN,
                         "Unauthorized access for the page "+ parsedRequest.getPageToken()+" of the application "+ parsedRequest.getApplicationName());
             }
         } else {
