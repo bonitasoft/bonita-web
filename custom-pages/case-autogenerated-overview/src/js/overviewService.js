@@ -82,14 +82,14 @@
 
       fetchCase: function(caseId){
         var deferred = $q.defer();
-        caseAPI.get({id:caseId, d:'started_by'}, function(result){
+        caseAPI.get({id:caseId, d:['started_by','processDefinitionId']}, function(result){
           deferred.resolve(result);
         }, function(){
           archivedCaseAPI.search(
               {
                 p:0,
                 c:1,
-                d:['started_by'],
+                d:['started_by','processDefinitionId'],
                 f:['sourceObjectId='+caseId]
               }, function(result){
             deferred.resolve(result.data[0]);

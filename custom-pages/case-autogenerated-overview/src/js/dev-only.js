@@ -58,17 +58,17 @@
       return [200, tickets, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/2?d=started_by').respond(function() {
+    $httpBackend.whenGET('/bonita/API/bpm/case/2?d=started_by&d=processDefinitionId').respond(function() {
       console.log('Getting mock response for case: Case2.');
       return [200, case2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/4?d=started_by').respond(function() {
+    $httpBackend.whenGET('/bonita/API/bpm/case/4?d=started_by&d=processDefinitionId').respond(function() {
       console.log('Getting 404 mock response for case 4.');
       return [404, {}, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedCase?c=1&d=started_by&f=sourceObjectId%3D4&p=0').respond(function() {
+    $httpBackend.whenGET('/bonita/API/bpm/archivedCase?c=1&d=started_by&d=processDefinitionId&f=sourceObjectId%3D4&p=0').respond(function() {
       console.log('Getting mock response for archived case: Case4.');
       return [200, archivedCased4, {}];
     });
@@ -98,7 +98,7 @@
         last_update_date: '2014-11-27 17:53:46.509'
       },
       archivedDate: '2014-10-22 10:57:00.299',
-      processDefinitionId: '6054482369194211518',
+      processDefinitionId: {id:'6054482369194211518',icon:'',displayDescription:'',deploymentDate:'2015-05-19 14:14:56.505',description:'',activationState:'ENABLED',name:'TicketManagement - alpha',deployedBy:'204',displayName:'TicketManagement - alpha',actorinitiatorid:'110',last_update_date:'2015-05-21 14:11:45.236',configurationState:'RESOLVED',version:'2.10'},
       last_update_date: '2014-10-22 10:57:00.299',
       searchIndex1Label:'case9SearchIndex1Label',
       searchIndex2Label:'case9SearchIndex2Label',
