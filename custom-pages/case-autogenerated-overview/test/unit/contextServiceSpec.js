@@ -2,6 +2,8 @@
 
 describe('Case Overview test', function () {
 
+  var ROOT_PATH = '../../../../../../';
+
   var $httpBackend, contextSrvc;
 
   beforeEach(module('caseOverview'));
@@ -36,7 +38,7 @@ describe('Case Overview test', function () {
     };
     var response;
 
-    $httpBackend.expect('GET', '/bonita/API/bpm/case/' + 2 + '/context')
+    $httpBackend.expect('GET', ROOT_PATH + 'API/bpm/case/' + 2 + '/context')
       .respond(context);
     contextSrvc.fetchCaseContext(2).then(function (fetchedData) {
       response = fetchedData.data;

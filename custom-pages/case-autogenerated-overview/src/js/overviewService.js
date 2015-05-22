@@ -72,7 +72,6 @@
         var deferred = $q.defer();
         contextSrvc.fetchCaseContext(caseId).then(function(result){
           var contextData;
-          console.log(result.data);
           for (contextData in result.data) {
             fetchValue(result.data[contextData], deferred);
           }
@@ -82,14 +81,14 @@
 
       fetchCase: function(caseId){
         var deferred = $q.defer();
-        caseAPI.get({id:caseId, d:'started_by'}, function(result){
+        caseAPI.get({id:caseId, d:['started_by','processDefinitionId']}, function(result){
           deferred.resolve(result);
         }, function(){
           archivedCaseAPI.search(
               {
                 p:0,
                 c:1,
-                d:['started_by'],
+                d:['started_by','processDefinitionId'],
                 f:['sourceObjectId='+caseId]
               }, function(result){
             deferred.resolve(result.data[0]);
@@ -99,10 +98,6 @@
         });
         return deferred.promise;
       }
-
-
-
-
     };
   }]);
 })();
