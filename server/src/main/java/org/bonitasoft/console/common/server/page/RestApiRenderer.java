@@ -74,7 +74,7 @@ public class RestApiRenderer {
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             try {
                 return restApiController.doHandle(request, pageResourceProvider,
-                        new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()), new RestApiResponseBuilder());
+                        new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()), new RestApiResponseBuilder(), new RestApiUtilImpl());
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
                 throw e;

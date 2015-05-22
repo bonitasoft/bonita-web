@@ -16,11 +16,19 @@ package org.bonitasoft.console.client.admin.page.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
+import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
@@ -38,12 +46,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutWarning;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Julien Mege
  */
@@ -57,7 +59,7 @@ public class DeleteCustomPage extends Page {
 
     private final ArrayList<String> idsAsString;
 
-    private boolean firstApplicationNotFound = true;
+    private boolean firstPageLinkNotFound = true;
 
     private boolean firstFormNotFound = true;
 
@@ -122,6 +124,8 @@ public class DeleteCustomPage extends Page {
     private void searchApplicationDependencies() {
         for (final String pageId : idsAsString) {
             searchApplicationDependenciesForPage(pageId);
+            searchApplicationLayoutDependanciesForPage(pageId);
+            searchApplicationThemeDependanciesForPage(pageId);
         }
     }
 
@@ -136,18 +140,70 @@ public class DeleteCustomPage extends Page {
                 new DeletePageProblemCallback());
     }
 
+    private void searchApplicationLayoutDependanciesForPage(final String pageId) {
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, pageId);
+        final List<String> deploys = Arrays.asList(ApplicationItem.ATTRIBUTE_LAYOUT_ID);
+
+        new APICaller<ApplicationItem>(ApplicationDefinition.get()).search(
+                0, Integer.MAX_VALUE, null, null, filter,
+                deploys,
+                new DeleteApplicationLayoutCallback());
+    }
+
+    private void searchApplicationThemeDependanciesForPage(final String pageId) {
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ApplicationItem.ATTRIBUTE_THEME_ID, pageId);
+        final List<String> deploys = Arrays.asList(ApplicationItem.ATTRIBUTE_THEME_ID);
+
+        new APICaller<ApplicationItem>(ApplicationDefinition.get()).search(
+                0, Integer.MAX_VALUE, null, null, filter,
+                deploys,
+                new DeleteApplicationThemeCallback());
+    }
+
     private class DeletePageProblemCallback extends APICallback {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ApplicationPageItem> applicationPages = JSonItemReader.parseItems(response, ApplicationPageDefinition.get());
             if (applicationPages.size() > 0) {
-                if (firstApplicationNotFound) {
-                    setBody(new Text(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
-                    activateDeleteButton(false);
-                    firstApplicationNotFound = false;
-                }
+                addInfoMessageOnApplicationPageLinkFound();
                 addBody(new DeletePageProblemsCallout(applicationPages));
+            }
+        }
+
+    }
+
+    private void addInfoMessageOnApplicationPageLinkFound() {
+        if (firstPageLinkNotFound) {
+            setBody(new Text(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
+            activateDeleteButton(false);
+            firstPageLinkNotFound = false;
+        }
+    }
+
+    private class DeleteApplicationLayoutCallback extends APICallback {
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
+            if (applications.size() > 0) {
+                addInfoMessageOnApplicationPageLinkFound();
+                addBody(new DeleteApplicationLayoutProblemsCallout(applications));
+            }
+        }
+
+    }
+
+    private class DeleteApplicationThemeCallback extends APICallback {
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
+            if (applications.size() > 0) {
+                addInfoMessageOnApplicationPageLinkFound();
+                addBody(new DeleteApplicationThemeProblemsCallout(applications));
             }
         }
 
@@ -185,7 +241,7 @@ public class DeleteCustomPage extends Page {
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             JSONValue root= JSONParser.parseLenient(response);
             JSONArray formMappings=root.isArray();
-            if (firstApplicationNotFound) {
+            if (firstPageLinkNotFound) {
                 if (formMappings.size()>0) {
                     if (firstFormNotFound) {
                         pagesLeft=1;
