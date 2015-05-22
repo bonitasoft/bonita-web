@@ -19,9 +19,11 @@ package org.bonitasoft.forms.server.filter;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +35,7 @@ public class CacheFilter implements Filter {
 
 	protected FilterConfig filterConfig = null;
 	
-	protected HashMap expiresMap = new HashMap();
+	protected Map<String, Integer> expiresMap = new HashMap<String, Integer>();
 	
 	/**
      * Logger
@@ -43,7 +45,7 @@ public class CacheFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
 		expiresMap.clear();
-		Enumeration names = filterConfig.getInitParameterNames();
+		Enumeration<?> names = filterConfig.getInitParameterNames();
 		while (names.hasMoreElements()) {
             final String name = (String) names.nextElement();
             final String value = filterConfig.getInitParameter(name);
@@ -60,16 +62,17 @@ public class CacheFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		final String uri = req.getRequestURI();
-		if (!uri.endsWith("nocache.js")) {
-    		String ext = null;
-    		int dot = uri.lastIndexOf(".");
-    		if (dot != -1) {
-    			ext = uri.substring(dot + 1);
-    		}
-    		setResponseHeader(res, ext);
-	    }
 		chain.doFilter(req, res);
+
+        final String uri = req.getRequestURI();
+        if (!uri.endsWith("nocache.js")) {
+            String ext = null;
+            int dot = uri.lastIndexOf(".");
+            if (dot != -1) {
+                ext = uri.substring(dot + 1);
+            }
+            setResponseHeader(res, ext);
+        }
 	}
 
 	public void destroy() {
@@ -78,7 +81,7 @@ public class CacheFilter implements Filter {
 
 	private void setResponseHeader(HttpServletResponse response, String ext) {
 		if (ext != null && ext.length() > 0) {
-			final Integer expires = (Integer) expiresMap.get(ext);
+			final Integer expires = expiresMap.get(ext);
 			if (expires != null) {
 				if (expires.intValue() > 0) {
 					response.setHeader("Cache-Control", "max-age=" + expires.intValue()); // HTTP 1.1
