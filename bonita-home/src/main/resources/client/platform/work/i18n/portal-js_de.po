@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-05-04 04:45-0400\n"
+"PO-Revision-Date: 2015-05-21 10:29-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,159 +16,1019 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
 
-msgid "Columns"
-msgstr "Spalten"
+#: main/features/admin/monitoring/monitoring.html
+msgid "1 h."
+msgstr "1 h."
 
-msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
+#: main/features/admin/monitoring/monitoring.html
+msgid "1 min."
+msgstr "1 min."
 
-msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+#: main/features/admin/monitoring/monitoring.html
+msgid "10 min."
+msgstr "10 min."
 
-msgid "The deleted case will be permanently deleted and will not be stored in the archives."
-msgstr "Der gelöschte Fall dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
+#: main/features/admin/monitoring/monitoring.html
+msgid "30 min."
+msgstr "30 Min."
 
-msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
-msgstr "Der gelöschte Fall wird dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
+#: main/features/admin/monitoring/monitoring.html
+msgid "5 min."
+msgstr "5 Min."
 
-msgid "The deleted case will be permanently deleted from the archives."
-msgstr "Der gelöschte Fall wird dauerhaft aus den Archiven gelöscht."
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/processes/details/monitoring-status.html
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/cases/list/cases-list.html
+#: main/features/admin/processes/details/process-connectors.html
+msgid "Actions"
+msgstr "Aktionen"
 
-msgid "These deleted cases will be permanently deleted from the archives."
-msgstr "Diese gelöschten Fälle werden dauerhaft aus den Archiven gelöscht."
+#: main/features/admin/processes/details/information.html
+msgid "Activation state"
+msgstr "Aktivierungsstatus"
 
-msgid "Failed Flow Nodes"
-msgstr "Fehlgeschlagene Flow Nodes"
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Actor name"
+msgstr "Name des Akteurs"
 
-msgid "Pending Flow Nodes"
-msgstr "Ausstehende Flow Nodes"
+msgid "Actor {} has been deleted"
+msgstr "Akteur {} wurde gelöscht"
 
-msgid "No cases to display"
-msgstr "Keine Fälle, die angezeigt werden können"
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Actors"
+msgstr "Akteure"
 
-msgid "Case list"
-msgstr "Fall-Liste"
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/applications/details/menubuilder-menuCreator.html
+#: main/features/admin/applications/details/page-list-addPageModal.html
+#: main/features/admin/applications/details/page-list.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "Add"
+msgstr "Hinzufügen"
 
-msgid "End date"
-msgstr "End-Datum"
+#: main/features/admin/applications/details/page-list.html
+msgid "Add from custom pages"
+msgstr "Hinzufügen von benutzerdefinierten Seiten"
 
-msgid "Confirm delete?"
-msgstr "Löschen bestätigen?"
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Add menu"
+msgstr "Menü hinzufügen"
 
-msgid "Filters"
-msgstr "Filter"
+#: main/features/admin/applications/details/menubuilder-actionBar.html
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Add menu item"
+msgstr "Menüpunkt hinzufügen"
+
+#: main/features/admin/applications/details/page-list-addPageModal.html
+msgid "Add page"
+msgstr "Seite hinzufügen"
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Add pages in Navigation"
+msgstr "Seiten in der Navigation hinzufügen"
+
+#: main/features/admin/applications/details/menubuilder-menuCreator.html
+msgid "Add top-level menu"
+msgstr "Top-Level-Menü hinzufügen"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "All"
+msgstr "Alle"
+
+#: main/features/admin/applications/applications-list.html
+msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
+msgstr "Eine Anwendung ist eine individuell angepasste Umgebung für ein bestimmtes Benutzerprofil, in der Benutzer mit Geschäftsdaten und Geschäftsprozessen in der effizientesten Art interagieren."
+
+msgid "An error occured during categories update"
+msgstr "Während der Aktualisierung der Kategorien ist ein Fehler aufgetreten"
+
+#: main/features/admin/applications/import-application.html
+msgid "Application XML file"
+msgstr "XML-Anwendungsdatei"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Application list"
+msgstr "Anwendungsliste"
 
 msgid "Archived cases"
 msgstr "Archivierte Fälle"
 
-msgid "With failures"
-msgstr "Mit Fehlschlägen"
+#: main/features/admin/processes/details/menu.html
+msgid "Back"
+msgstr "Zurück"
 
-msgid "items per page"
-msgstr "Elemente pro Seite"
+#: main/features/admin/processes/details/forms.html
+msgid "Before you can use a custom page in a form mapping, you must install the page"
+msgstr "Bevor Sie eine benutzerdefinierte Seite in einem Formular-Mapping verwenden können, müssen Sie die Seite installieren"
 
-msgid "View case details"
-msgstr "View case details"
+#: main/features/admin/applications/import-application.html
+msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
+msgstr "Bevor Sie die Anwendung importieren, müssen die Seiten und das Profil im Portal geladen worden sein."
 
-msgid "columns selection"
-msgstr "Spalten-Auswahl"
+#: main/features/admin/processes/details/edit-process-connector-implementation.html
+#: main/features/admin/processes/details/startForModal.html
+#: main/features/admin/applications/delete-application.html
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+#: main/features/admin/applications/details/page-list-addPageModal.html
+#: main/features/admin/applications/edit-application.html
+#: main/features/admin/applications/export-application.html
+#: main/features/admin/applications/import-application.html
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+#: main/features/admin/processes/details/delete-process-modal.html
+#: main/features/admin/processes/details/manage-category-mapping-modal.html
+msgid "Cancel"
+msgstr "Annulieren"
 
-msgid "{{nbOfDeletedCases}} case deleted successfully"
-msgstr "{{nbOfDeletedCases}} Fall erfolgreich gelöscht"
+msgid "Cancelled, skipped instances"
+msgstr "Cancelled, skipped instances"
 
-msgid "{{nbOfDeletedCases}} cases deleted successfully"
-msgstr "{{nbOfDeletedCases}} Fälle erfolgreich gelöscht"
+msgid "Cannot upload the file"
+msgstr "Die Datei kann nicht hochgeladen werden"
 
-msgid "One or more connectors on case start or case end failed"
-msgstr "Ein oder mehrere Konnektor(en) am Fallbeginn oder am Fallende fehlgeschlagen"
+#: main/features/admin/processes/details/forms.html
+msgid "Case Start"
+msgstr "Fallbeginn"
 
-msgid "Monitor open cases"
-msgstr "Monitoring der offenen Fälle"
+msgid "Case id"
+msgstr "Fall-ID"
 
-msgid "Open cases"
-msgstr "Offene Fälle"
+#: main/features/admin/cases/list/cases-list.html
+msgid "Case list"
+msgstr "Fall-Liste"
 
-msgid "Healthy cases"
-msgstr "Fehlerfreie Fälle"
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list-filters.html
+msgid "Case state"
+msgstr "Zustand des Falls"
 
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "Case with failures"
+msgstr "Fall mit Fehlschlägen"
+
+#: main/features/admin/cases/list/cases.html
+msgid "Cases"
+msgstr "Fälle"
+
+#: main/features/admin/monitoring/monitoring.html
 msgid "Cases with failures"
 msgstr "Fällen mit Fehlschlägen"
 
-msgid "Filter on process"
-msgstr "Filtern nach Prozess"
+#: main/features/admin/processes/details/information.html
+msgid "Categories"
+msgstr "Kategorien"
 
-msgid "Process list"
-msgstr "Prozessliste"
+#: main/features/admin/processes/details/process-managers-mapping.html
+msgid "Check that each entity has the relevant Process Manager profile in the Portal."
+msgstr "Check that each entity has the relevant Process Manager profile in the Portal."
 
-msgid "Refresh"
-msgstr "Aktualisieren"
+#: main/features/admin/processes/details/process-connectors.html
+msgid "Class name"
+msgstr "Klassenname"
 
-msgid "Process name"
-msgstr "Prozessname"
+#: main/features/admin/processes/details/edit-process-connector-implementation.html
+msgid "Click here to choose your file (.zip)"
+msgstr "Klicken Sie hier, um Ihre Datei (.zip) auszuwählen"
 
-msgid "Failed"
-msgstr "Fehlgeschlagen"
+#: main/features/admin/applications/import-application.html
+msgid "Click here to choose your file. XML file (.xml)"
+msgstr "Klicken Sie hier, um Ihre Datei auszuwählen. XML-Datei (.xml)"
 
-msgid "Actions"
-msgstr "Aktionen"
+#: main/features/admin/processes/details/process-managers-mapping.html
+msgid "Click here to go to Profile listing page"
+msgstr "Klicken Sie hier um zur Profil-Liste-Seite zu gehen"
 
-msgid "Wait ..."
-msgstr "Warten ..."
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/applications/import-application.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "Close"
+msgstr "Schließen"
 
-# Pagination label: "1 - 10 of 300"
-msgid "of"
-msgstr "von"
+msgid "Columns"
+msgstr "Spalten"
 
-msgid "No data"
-msgstr "Keine Daten"
+msgid "Columns selection"
+msgstr "Spalten-Auswahl"
+
+msgid "Completed instances"
+msgstr "Completed instances"
+
+#: main/features/admin/processes/details/information.html
+msgid "Configuration state"
+msgstr "Konfigurationsstatus"
+
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+msgid "Confirm delete?"
+msgstr "Löschen bestätigen?"
+
+#: main/features/admin/processes/details/edit-process-connector-implementation.html
+msgid "Connector zip file"
+msgstr "Konnektor-Zip-Datei"
+
+#: main/features/admin/processes/details/process-connectors.html
+msgid "Connectors"
+msgstr "Konnektoren"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Counters include cases from root processes and cases started by call activities."
+msgstr "Counters include cases from root processes and cases started by call activities."
+
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "Create a new membership"
+msgstr "Erstellen einer neuen Mitgliedschaft"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Create an application"
+msgstr "Erstellen einer Anwendung"
+
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "Create membership"
+msgstr "Mitgliedschaft erstellen"
+
+#: main/features/admin/applications/details/application-details.html
+msgid "Created by"
+msgstr "Erstellt von"
+
+#: main/features/admin/applications/details/application-details-app.html
+msgid "Creation"
+msgstr "Erstellung"
+
+#: main/features/admin/applications/details/application-details.html
+msgid "Creation on"
+msgstr "Erstellen am"
+
+msgid "DEFAULT ZOOM LEVEL"
+msgstr "STANDARD-ZOOM-NIVEAU"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/delete-application.html
+#: main/features/admin/applications/details/menubuilder-actionBar.html
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+#: main/features/admin/cases/list/cases-list.html
+#: main/features/admin/processes/details/delete-process-modal.html
+#: main/features/admin/processes/details/menu.html
+msgid "Delete"
+msgstr "Löschen"
+
+#: main/features/admin/processes/details/delete-process-modal.html
+msgid "Delete Process"
+msgstr "Prozess löschen"
+
+#: main/features/admin/applications/delete-application.html
+msgid "Delete application"
+msgstr "Anwendung löschen"
+
+#: main/features/admin/processes/details/delete-process-modal.html
+msgid "Delete the process"
+msgstr "Den Prozess löschen"
+
+#: main/features/admin/applications/edit-application.html
+#: main/features/admin/processes/details/params.html
+msgid "Description"
+msgstr "Beschreibung"
+
+#: main/features/admin/processVisu/visuShowKey.html
+msgid "Diagram Key"
+msgstr "Diagramm-Schlüssel"
+
+msgid "Disabled, no new case can be started"
+msgstr "Deaktiviert, kein neuer Fall kann gestartet werden"
+
+#: main/features/admin/applications/edit-application.html
+msgid "Display name"
+msgstr "Name"
+
+msgid "Drawing process ..."
+msgstr "Prozess zeichnen ..."
+
+msgid "Drawing process..."
+msgstr "Prozess zeichnen..."
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/details/application-details.html
+#: main/features/admin/applications/details/menubuilder-actionBar.html
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Edit menu"
+msgstr "Menü bearbeiten"
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Edit menu item"
+msgstr "Menüpunkt bearbeiten"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "End date"
+msgstr "End-Datum"
+
+#: main/features/admin/processes/details/manage-category-mapping-modal.html
+msgid "Enter a new category name to create a new category and assign it to the current process."
+msgstr "Geben Sie einen neuen Kategorienamen ein, um eine neue Kategorie zu erstellen und dem aktuellen Prozess zuzuweisen."
+
+msgid "Enter the user to start the case for..."
+msgstr "Geben Sie den Benutzer ein, um den Fall zu starten für..."
+
+#: main/features/admin/processes/details/startForModal.html
+msgid "Enter user"
+msgstr "Geben Sie Benutzer ein"
+
+#: main/features/admin/applications/import-application.html
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Error on drawing process!"
+msgstr "Fehler beim Zeichnen des Prozesses!"
 
 msgid "Error!"
 msgstr "Fehler!"
 
-msgid "Started"
-msgstr "Gestartet"
+msgid "Error: value must be a boolean"
+msgstr "Fehler: der Wert muss ein boolescher Wert sein"
 
-msgid "All"
-msgstr "Alle"
+msgid "Error: value must be a double"
+msgstr "Fehler: der Wert muss ein Double sein"
 
+msgid "Error: value must be an integer"
+msgstr "Fehler: Wert muss eine Ganzzahl sein"
+
+msgid "Executing, completing, initializing instances"
+msgstr "Executing, completing, initializing instances"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/export-application.html
+msgid "Export"
+msgstr "Exportieren"
+
+#: main/features/admin/applications/export-application.html
+msgid "Export application"
+msgstr "Anwendung exportieren"
+
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Failed Flow Nodes"
+msgstr "Fehlgeschlagene Flow Nodes"
+
+msgid "Failed instances"
+msgstr "Failed instances"
+
+msgid "Filter on process"
+msgstr "Filtern nach Prozess"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/archived-cases-list-filters.html
+#: main/features/admin/cases/list/cases-list-filters.html
+msgid "Filters"
+msgstr "Filter"
+
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Überprüfen Sie für für jeden Akteur, dass jede Entität (Benutzer, Gruppe, Rolle, Mitgliedschaft) das entsprechende Benutzerprofil im Portal hat."
+
+#: main/features/admin/processes/details/forms.html
+msgid "Form"
+msgstr "Formular"
+
+#: main/features/admin/processes/details/forms.html
+msgid "Form mapping"
+msgstr "Formular-Mapping"
+
+#: main/features/admin/processes/details/information.html
+msgid "General"
+msgstr "Allgemein"
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Groups"
+msgstr "Gruppen"
+
+msgid "Groups mapped to {}"
+msgstr "Gruppen zugeordnet zu {}"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Healthy"
+msgstr "Fehlerfrei"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "Healthy cases"
+msgstr "Fehlerfreie Fälle"
+
+msgid "Hide"
+msgstr "Ausblenden"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "ID"
+msgstr "ID"
+
+#: main/features/admin/processes/details/process-connectors.html
+msgid "Implementation version"
+msgstr "Implementierungsversion"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/import-application.html
+msgid "Import"
+msgstr "Importieren"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/import-application.html
+msgid "Import an application"
+msgstr "Importieren einer Anwendung"
+
+msgid "Internal"
+msgstr "Intern"
+
+msgid "Items per page"
+msgstr "Elemente pro Seite"
+
+#: main/features/admin/processes/details/information.html
+msgid "Last updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#: main/features/admin/processes/details/forms.html
+msgid "Legacy"
+msgstr "Formular 6.x"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Loading..."
+msgstr "Laden …"
+
+#: main/features/admin/processVisu/processVisu.html
+msgid "MAX"
+msgstr "MAX"
+
+#: main/features/admin/processVisu/processVisu.html
+msgid "MIN"
+msgstr "MIN"
+
+#: main/features/admin/processes/details/manage-category-mapping-modal.html
+msgid "Manage Categories"
+msgstr "Kategorien verwalten"
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Memberships"
+msgstr "Mitgliedschaften"
+
+msgid "Memberships mapped to {}"
+msgstr "Zu {} zugeordnete Mitgliedschaften"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Monitor open cases"
+msgstr "Monitoring der offenen Fälle"
+
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "Monitoring status"
+msgstr "Monitoring-Status"
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Multi-page menu"
+msgstr "Übergeordenetes Menü"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+#: main/features/admin/processes/details/params.html
+msgid "Name"
+msgstr "Name"
+
+#: main/features/admin/applications/details/menubuilder-menuCreator.html
+msgid "Navigation"
+msgstr "Navigation"
+
+#: main/features/admin/monitoring/monitoring.html
 msgid "Never"
 msgstr "Niemals"
 
-msgid "1 min."
-msgstr "1 min."
+#: main/features/admin/applications/applications-list.html
+msgid "New"
+msgstr "Neu"
 
-msgid "5 min."
-msgstr "5 Min."
+msgid "No Mapping"
+msgstr "Kein Mapping"
 
-msgid "10 min."
-msgstr "10 min."
+#: main/features/admin/applications/applications-list.html
+msgid "No application available."
+msgstr "Keine Anwendung verfügbar."
 
-msgid "30 min."
-msgstr "30 Min."
+#: main/features/admin/cases/list/cases-list.html
+msgid "No cases to display"
+msgstr "Keine Fälle, die angezeigt werden können"
 
-msgid "1 h."
-msgstr "1 h."
+msgid "No data"
+msgstr "Keine Daten"
 
-msgid "Technical error."
-msgstr "Technischer Fehler."
+#: main/features/admin/processes/details/information.html
+msgid "No description."
+msgstr "Keine Beschreibung."
 
-msgid "State"
-msgstr "Status"
+#: main/features/admin/processes/details/startForModal.html
+msgid "OK"
+msgstr "OK"
 
-msgid "Show"
-msgstr "Anzeigen"
+#: main/features/admin/cases/list/cases-list.html
+msgid "One or more connectors on case start or case end failed"
+msgstr "Ein oder mehrere Konnektor(en) am Fallbeginn oder am Fallende fehlgeschlagen"
 
-msgid "Healthy cases"
-msgstr "Fehlerfreie Fälle"
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "One-page menu"
+msgstr "Menü mit Link für eine Seite"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 
 msgid "Open"
 msgstr "Öffnen"
 
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "Open cases"
+msgstr "Offene Fälle"
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+#: main/features/admin/applications/details/page-list-addPageModal.html
+msgid "Page"
+msgstr "Seite"
+
+#: main/features/admin/applications/details/page-list.html
+msgid "Pages"
+msgstr "Seiten"
+
+#: main/features/admin/processes/details/params.html
+msgid "Parameters"
+msgstr "Parameter"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Pending Flow Nodes"
+msgstr "Ausstehende Flow Nodes"
+
+#: main/features/admin/processes/details/forms.html
+msgid "Process"
+msgstr "Prozess"
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+msgid "Process Manager mapping"
+msgstr "Process Manager Mapping"
+
+msgid "Process enabled"
+msgstr "Prozess aktiviert"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Process list"
+msgstr "Prozessliste"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/archived-cases-list-filters.html
+#: main/features/admin/cases/list/cases-list-filters.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "Process name"
+msgstr "Prozessname"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/archived-cases-list-filters.html
+#: main/features/admin/cases/list/cases-list-filters.html
 msgid "Process version"
 msgstr "Prozessversion"
 
-msgid "Case state"
-msgstr "Zustand des Falls"
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/details/application-details.html
+#: main/features/admin/applications/edit-application.html
+msgid "Profile"
+msgstr "Benutzerrechte"
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Profiles"
+msgstr "Benutzerrechte"
+
+msgid "Ready, waiting instances"
+msgstr "Ready, waiting instances"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: main/features/admin/applications/details/page-list.html
+msgid "Remove"
+msgstr "Entfernen"
+
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "Remove all"
+msgstr "Alles entfernen"
+
+#: main/features/admin/processVisu/processVisu.html
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Roles"
+msgstr "Rollen"
+
+msgid "Roles mapped to {}"
+msgstr "Zu {} zugeordnete Rollen"
+
+#: main/features/admin/processes/details/edit-process-connector-implementation.html
+#: main/features/admin/processes/details/manage-category-mapping-modal.html
+msgid "Save"
+msgstr "Speichern"
+
+#: main/features/admin/cases/list/archived-cases-list-filters.html
+#: main/features/admin/cases/list/cases-list-filters.html
+msgid "Search..."
+msgstr "Suche..."
+
+msgid "Select a group..."
+msgstr "Wählen Sie eine Gruppe..."
+
+msgid "Select a role..."
+msgstr "Wählen Sie eine Rolle..."
+
+msgid "Select all"
+msgstr "Selecione todos os campos"
+
+msgid "Select groups..."
+msgstr "Wählen Sie Gruppen..."
+
+msgid "Select none"
+msgstr "Wählen Sie keine"
+
+msgid "Select roles..."
+msgstr "Wählen Sie Rollen..."
+
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Wählen Sie die Entitäten (Benutzer, Gruppen, Rollen, Mitgliedschaften), um sie den Akteuren zuzuordnen. Diese Entitäten werden die menschlichen Aufgaben im Prozess machen."
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+msgid "Select the entities (users, groups, roles, memberships) who will supervise this process."
+msgstr "Wählen Sie die Dateneinheiten (Benutzer, Gruppen, Rollen, Mitgliedschaften), die diesen Prozess überwachen werden."
+
+#: main/features/admin/applications/details/menubuilder-addCustomMenuModal.html
+msgid "Select the page"
+msgstr "Wählen Sie die Seite"
+
+msgid "Select users..."
+msgstr "Auswählen von Benutzern..."
+
+#: main/features/admin/applications/details/page-list.html
+msgid "Set as Home page"
+msgstr "Als Startseite festlegen"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Show"
+msgstr "Anzeigen"
+
+# #-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#
+# Case Visu - Show Key
+#: main/features/admin/processVisu/visuShowKey.html
+msgid "Show key"
+msgstr "Show key"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Sort by URL"
+msgstr "Sortieren nach URL"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Sort by name"
+msgstr "Sortieren nach Name"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Sort by updated on"
+msgstr "Sortiert nach Aktualisierungsdatum"
+
+#: main/features/admin/applications/applications-list.html
+msgid "Sort by version"
+msgstr "Sortieren nach Version"
+
+#: main/features/admin/processes/details/forms.html
+msgid "Specify a custom page name or URL"
+msgstr "Geben Sie den Namen einer benutzerdefinierten Seite oder eine URL an"
+
+#: main/features/admin/applications/details/menubuilder-menuCreator.html
+msgid "Specify the menu structure."
+msgstr "Geben Sie die Menüstruktur an."
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Start date"
+msgstr "Startdatum"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Start for"
+msgstr "Start für"
+
+msgid "Started"
+msgstr "Gestartet"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "Started by"
+msgstr "Begonnen von"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "State"
+msgstr "Status"
+
+#: main/features/admin/applications/import-application.html
+msgid "Status of import"
+msgstr "Status des Imports"
+
+msgid "Successfully updated categories"
+msgstr "Erfolgreich aktualisierte Kategorien"
+
+msgid "Table settings"
+msgstr "Table settings"
+
+msgid "Target is not set"
+msgstr "Ziel ist nicht gesetzt"
+
+#: main/features/admin/processes/details/forms.html
+msgid "Task name"
+msgstr "Name der Aufgabe"
+
+#: main/features/admin/processVisu/visuShowKey.html
+msgid "Task1"
+msgstr "Task1"
+
+msgid "Technical error."
+msgstr "Technischer Fehler."
+
+#: main/features/admin/processes/details/menu.html
+msgid "The Process cannot be enabled"
+msgstr "Der Prozess kann nicht aktiviert werden"
+
+#: main/features/admin/applications/delete-application.html
+msgid "The application"
+msgstr "Die Anwendung"
+
+#: main/features/admin/processes/details/forms.html
+msgid "The current process has no task defined."
+msgstr "Der laufende Prozess hat keine definierte Aufgabe."
+
+#: main/features/admin/processes/details/process-connectors.html
+msgid "The current process has no connectors defined."
+msgstr "Der laufende Prozess hat keine definierten Konnektoren."
+
+#: main/features/admin/processes/details/params.html
+msgid "The current process has no parameters defined."
+msgstr "Der laufende Prozess hat keine definierten Parameter."
+
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
+
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "Der gelöschte Fall wird dauerhaft aus den Archiven gelöscht."
+
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Der gelöschte Fall wird dauerhaft gelöscht werden und wird nicht in den Archiven gespeichert."
+
+#: main/features/admin/cases/list/cases-list-deletion-modal.html
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Diese gelöschten Fälle werden dauerhaft aus den Archiven gelöscht."
+
+#: main/features/admin/applications/applications-list.html
+msgid "To create an application, click New or Import."
+msgstr "Um eine Anwendung zu erstellen, klicken Sie auf Neu oder Importieren."
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "To do so, go to"
+msgstr "Um dies zu tun, gehen Sie zu"
+
+msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr "Um dieses Feature zu verwenden, erstellen Sie eine neue Version des Prozesses in Bonita BPM Studio Version 6.4 und höher, dann erstellen Sie und installieren Sie neue die .bar-Datei im Portal."
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "Totals"
+msgstr "Gesamtzahlen"
+
+#: main/features/admin/processes/details/params.html
+#: main/features/admin/processes/details/process-connectors.html
+msgid "Type"
+msgstr "Typ"
+
+msgid "Type here to search for a user..."
+msgstr "Für die Suche eines Benutzers: Eingabe hier..."
+
+msgid "Type here to search..."
+msgstr "Für Suche: Eingabe hier..."
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/details/application-details.html
+#: main/features/admin/applications/details/page-list-addPageModal.html
+#: main/features/admin/applications/edit-application.html
+#: main/features/admin/applications/import-application.html
+msgid "URL"
+msgstr "URL"
+
+#: main/features/admin/applications/details/application-details-app.html
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: main/features/admin/applications/details/application-details.html
+msgid "Updated by"
+msgstr "Aktualisiert von"
+
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/details/application-details.html
+msgid "Updated on"
+msgstr "Aktualisiert am"
+
+#: main/features/admin/processes/details/edit-process-connector-implementation.html
+msgid "Upload new version of the connector"
+msgstr "Neue Version des Konnektors hochladen"
+
+msgid "Url"
+msgstr "URL"
+
+#: main/features/admin/processes/details/manage-category-mapping-modal.html
+msgid "Use Arrow up and Arrow down keys to browse among existing categories."
+msgstr "Benutzen Sie die Pfeil-hoch- und Pfeil-runter-Tasten, um die den vorhandenen Kategorien zu durchsuchen."
+
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Users mapped to {}"
+msgstr "Zu {} zugeordnete Benutzer"
+
+#: main/features/admin/processes/details/params.html
+msgid "Value"
+msgstr "Wert"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/applications/applications-list.html
+#: main/features/admin/applications/edit-application.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "Version"
+msgstr "Version"
+
+#: main/features/admin/cases/list/caseVisuDirective.html
+msgid "View case design"
+msgstr "View case design"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "View case details"
+msgstr "View case details"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "View case list"
+msgstr "Liste der Fälle anzeigen"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/processes/details/monitoring-status.html
+msgid "View diagram"
+msgstr "Diagramm anzeigen"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "View process"
+msgstr "Prozess ansehen"
+
+msgid "View process design"
+msgstr "View process design"
+
+msgid "Wait ..."
+msgstr "Warten ..."
+
+#: main/features/admin/applications/export-application.html
+msgid "When you export an application, pages and profiles are not exported in the file."
+msgstr "Wenn Sie eine Anwendung exportieren, werden Seiten und Profile nicht in die Datei exportiert."
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list-filters.html
+msgid "With failures"
+msgstr "Mit Fehlschlägen"
+
+#: main/features/admin/processVisu/visuShowKey.html
+msgid "X is the number of Flow Node instances"
+msgstr "X ist die Anzahl der Flow-Nodes-Instanzen"
+
+#: main/features/admin/applications/export-application.html
+msgid "You are about to export the application"
+msgstr "Sind sind dabei, die Anwendung zu exportieren"
+
+#: main/features/admin/applications/details/menubuilder-menuCreator.html
+msgid "You must add a page before you can reference it in a menu."
+msgstr "Sie müssen eine Seite hinzufügen, bevor Sie es in einem Menü referenzieren können."
+
+#: main/features/admin/applications/edit-application.html
+msgid "an Application"
+msgstr "eine Anwendung"
+
+#: main/features/admin/applications/import-application.html
+msgid "application has been partially imported. The following items are not loaded in the Portal."
+msgstr "Anwendung wurde teilweise importiert. Die folgenden Elemente werden nicht im Portal geladen."
+
+#: main/features/admin/applications/import-application.html
+msgid "application has been successfully imported, with complete page mapping and menu mapping."
+msgstr "Anwendung wurde erfolgreich importiert, mit komplettem Seiten-Mapping und Menü-Mapping."
+
+#: main/features/admin/processVisu/processVisu.html
+msgid "back"
+msgstr "Zurück"
+
+msgid "columns selection"
+msgstr "Spalten-Auswahl"
+
+msgid "items per page"
+msgstr "Elemente pro Seite"
+
+# Membership 'Role' of 'Group'
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "of"
+msgstr "von"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Cases with failures ascending"
+msgstr "Fälle mit Fehlern sortieren, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Cases with failures descending"
+msgstr "Fälle mit Fehlern sortieren, absteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by End date ascending"
+msgstr "sortieren nach Enddatum, aufsteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by End date descending"
+msgstr "sortieren nach Enddatum, absteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Healthy cases ascending"
+msgstr "Fällen ohne Fehler sortieren, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Healthy cases descending"
+msgstr "Fällen ohne Fehler sortieren, absteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by ID ascending"
+msgstr "sortieren nach Id, aufsteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by ID descending"
+msgstr "sortieren nach Id, absteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Open cases ascending"
+msgstr "Offene Fälle sortieren, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Open cases descending"
+msgstr "Offene Fällen sortieren, absteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by Process name ascending"
+msgstr "sortieren nach Prozessname, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by Process name descending"
+msgstr "sortieren nach Prozessname, absteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by Start date ascending"
+msgstr "sortieren nach Startdatum, aufsteigend"
+
+#: main/features/admin/cases/list/cases-list.html
+msgid "sort by Start date descending"
+msgstr "sortieren nach Startdatum, absteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by State ascending"
+msgstr "sortieren nach Zustand, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by State descending"
+msgstr "sortieren nach Zustand, absteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Version ascending"
+msgstr "sortieren nach Version, aufsteigend"
+
+#: main/features/admin/monitoring/monitoring.html
+msgid "sort by Version descending"
+msgstr "sortieren nach Version, absteigend"
+
+#: main/features/admin/applications/delete-application.html
+msgid "will be permanently deleted."
+msgstr "wird dauerhaft gelöscht."
+
+msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProcesses()}}"
@@ -176,112 +1036,35 @@ msgstr "{{getStartIndexOfPage()}} von {{getEndIndexOfPage()}} bis {{getTotalProc
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
-msgid "Disabled, no new case can be started"
-msgstr "Deaktiviert, kein neuer Fall kann gestartet werden"
+msgid "{{nbOfDeletedCases}} case deleted"
+msgstr "{{nbOfDeletedCases}} Fall gelöscht"
 
-msgid "Process enabled"
-msgstr "Prozess aktiviert"
+msgid "{{nbOfDeletedCases}} cases deleted"
+msgstr "{{nbOfDeletedCases}} Fälle gelöscht"
 
-msgid "View case list"
-msgstr "Liste der Fälle anzeigen"
+msgid "{} has been created"
+msgstr "{} wurde erstellt"
 
-msgid "View process"
-msgstr "Prozess ansehen"
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+#: main/features/admin/processes/details/edit-actor-members.html
+msgid "{} mapped"
+msgstr "{} zugeordnet"
 
-msgid "Drawing process..."
-msgstr "Prozess zeichnen..."
+#: main/features/admin/processes/details/edit-process-managers-mapping.html
+msgid "{} mapped to process manager profile"
+msgstr "{}, dem Prozess-Manager-Profil zugeordnet"
 
-msgid "Error on drawing process!"
-msgstr "Fehler beim Zeichnen des Prozesses!"
+#: main/features/admin/processes/details/process-managers-mapping.html
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "{} more"
+msgstr "{} mehr"
 
-msgid "DEFAULT ZOOM LEVEL"
-msgstr "STANDARD-ZOOM-NIVEAU"
+# Membership label: "Member of Acme" (Role of Group) 
+#: main/features/admin/processes/details/actors-mapping.html
+msgid "{} of {}"
+msgstr "{} von {}"
 
-msgid "MIN"
-msgstr "MIN"
-
-msgid "MAX"
-msgstr "MAX"
-
-msgid "Version"
-msgstr "Version"
-
-msgid "Totals"
-msgstr "Gesamtzahlen"
-
-msgid "Loading..."
-msgstr "Laden …"
-
-msgid "Totals"
-msgstr "Gesamtzahlen"
-
-msgid "View process design"
-msgstr "View process design"
-
-msgid "View case design"
-msgstr "View case design"
-
-# Case Visu - Show Key
-msgid "Show key"
-msgstr "Show key"
-
-msgid "Task1"
-msgstr "Task1"
-
-msgid "Cancelled, skipped instances"
-msgstr "Cancelled, skipped instances"
-
-msgid "Completed instances"
-msgstr "Completed instances"
-
-msgid "Failed instances"
-msgstr "Failed instances"
-
-msgid "Executing, completing, initializing instances"
-msgstr "Executing, completing, initializing instances"
-
-msgid "Ready, waiting instances"
-msgstr "Ready, waiting instances"
-
-msgid "Items per page"
-msgstr "Elemente pro Seite"
-
-msgid "Columns selection"
-msgstr "Spalten-Auswahl"
-
-msgid "Table settings"
-msgstr "Table settings"
-
-msgid "sort by ID ascending"
-msgstr "sortieren nach Id, aufsteigend"
-
-msgid "sort by ID descending"
-msgstr "sortieren nach Id, absteigend"
-
-msgid "sort by Process name ascending"
-msgstr "sortieren nach Prozessname, aufsteigend"
-
-msgid "sort by Process name descending"
-msgstr "sortieren nach Prozessname, absteigend"
-
-msgid "sort by Start date ascending"
-msgstr "sortieren nach Startdatum, aufsteigend"
-
-msgid "sort by Start date descending"
-msgstr "sortieren nach Startdatum, absteigend"
-
-msgid "sort by End date ascending"
-msgstr "sortieren nach Enddatum, aufsteigend"
-
-msgid "sort by End date descending"
-msgstr "sortieren nach Enddatum, absteigend"
-
-msgid "Hide"
-msgstr "Ausblenden"
-
-msgid "Show"
-msgstr "Anzeigen"
-
-msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
-msgstr "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+#: main/features/admin/cases/list/cases-list.html
+msgid "{}-{} of {}"
+msgstr "{}-{} of {}"
 
