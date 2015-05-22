@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
@@ -35,7 +36,7 @@ public class TaskFinder {
         } catch (final APIItemNotFoundException e) {
             final Map<String, String> filters = new HashMap<String, String>();
             filters.put(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, taskId.toString());
-            final ItemSearchResult<ArchivedTaskItem> result = archives.search(0, 1, null, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE + " "
+            final ItemSearchResult<ArchivedTaskItem> result = archives.search(0, 1, null, ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE + " "
                     + Order.DESC, filters);
             if (result.getResults().isEmpty()) {
                 throw new APIItemNotFoundException(ArchivedTaskDefinition.TOKEN, taskId);

@@ -11,6 +11,7 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.ArchivedTaskDatastore;
@@ -71,7 +72,7 @@ public class TaskFinderTest {
         filters.put(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, id.toString());
         final ItemSearchResult<ArchivedTaskItem> result = mock(ItemSearchResult.class);
         when(result.getResults()).thenReturn(Arrays.asList(task));
-        when(archives.search(0, 1, null, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE + " "
+        when(archives.search(0, 1, null, ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE + " "
                 + Order.DESC, filters)).thenReturn(result);
 
         final IItem item = taskFinder.find(id);
@@ -84,7 +85,7 @@ public class TaskFinderTest {
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, id.toString());
-        when(archives.search(0, 1, null, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE + " "
+        when(archives.search(0, 1, null, ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE + " "
                 + Order.DESC, filters)).thenThrow(new APIItemNotFoundException("type", id));
 
         taskFinder.find(id);
