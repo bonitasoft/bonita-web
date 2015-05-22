@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
  * @author Séverin Moussel
  * @author Baptiste Mesta
  * @author Fabio Lombardi
- * 
+ *
  */
 public abstract class ServletCall {
 
@@ -68,7 +68,7 @@ public abstract class ServletCall {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param request
      *            The request made to access this servletCall.
      * @param response
@@ -86,8 +86,8 @@ public abstract class ServletCall {
      * Constructor for tests
      */
     public ServletCall(){
-        this.request = null;
-        this.response = null;
+        request = null;
+        response = null;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ public abstract class ServletCall {
 
     /**
      * Get the current call's HttpSession
-     * 
+     *
      * @return This method returns the session from the current call.
      */
     public HttpSession getHttpSession() {
@@ -115,25 +115,25 @@ public abstract class ServletCall {
      * The returned URL contains a protocol, server name, port
      * number, and server path, but it does not include query
      * string parameters.
-     * 
+     *
      * @return This method returns the reconstructed URL
      */
-    public final String getRequestURL() {
+    public String getRequestURL() {
         return request.getRequestURL().toString();
     }
 
     /**
      * Read the input stream and set it in a String
      */
-    public final String getInputStream() {
+    public String getInputStream() {
         if (inputStream == null) {
-            
+
             BufferedReader reader = null;
             try {
 
                 // BS-8474 - use custom reader instead of request reader to avoid JBoss5.1 bug
                 // see https://issues.jboss.org/browse/JBAS-7817
-                ServletInputStream stream = request.getInputStream();
+                final ServletInputStream stream = request.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
                 final StringBuilder sb = new StringBuilder();
@@ -155,11 +155,11 @@ public abstract class ServletCall {
         return inputStream;
     }
 
-    private void closeQuietly(BufferedReader reader) {
+    private void closeQuietly(final BufferedReader reader) {
         if (reader != null) {
             try {
                 reader.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // do nothing / close quietly
             }
         }
@@ -167,34 +167,34 @@ public abstract class ServletCall {
 
     /**
      * Count the number of parameters passed in the URL
-     * 
+     *
      * @return This method returns the number of parameters in the URL
      */
-    public final int countParameters() {
+    public int countParameters() {
         return parameters.size();
     }
 
     /**
      * Get a parameter values by its name
-     * 
+     *
      * @param name
      *            The name of the parameter (case sensitive)
      * @return This method returns the values of a parameter as a list of String or null if the parameter isn't defined
      */
-    public final List<String> getParameterAsList(final String name) {
+    public List<String> getParameterAsList(final String name) {
         return getParameterAsList(name, (String) null);
     }
 
     /**
      * Get a parameter values by its name
-     * 
+     *
      * @param name
      *            The name of the parameter (case sensitive)
      * @param defaultValue
      *            The value to return if the parameter isn't define
      * @return This method returns the values of a parameter as a list of String
      */
-    public final List<String> getParameterAsList(final String name, final String defaultValue) {
+    public List<String> getParameterAsList(final String name, final String defaultValue) {
         if (parameters.containsKey(name)) {
             return Arrays.asList(parameters.get(name));
         }
@@ -208,25 +208,25 @@ public abstract class ServletCall {
 
     /**
      * Get a parameter first value by its name
-     * 
+     *
      * @param name
      *            The name of the parameter (case sensitive)
      * @return This method returns the first value of a parameter as a String or null if the parameter isn't define
      */
-    public final String getParameter(final String name) {
+    public String getParameter(final String name) {
         return getParameter(name, (String) null);
     }
 
     /**
      * Get a parameter first value by its name
-     * 
+     *
      * @param name
      *            The name of the parameter (case sensitive)
      * @param defaultValue
      *            The value to return if the parameter isn't define
      * @return This method returns the first value of a parameter as a String
      */
-    public final String getParameter(final String name, final String defaultValue) {
+    public String getParameter(final String name, final String defaultValue) {
         if (parameters.containsKey(name)) {
             final String[] result = parameters.get(name);
             if (result.length > 0) {
@@ -238,10 +238,10 @@ public abstract class ServletCall {
 
     /**
      * Get all the parameters
-     * 
+     *
      * @return This method returns all the parameters as a Map of array of String
      */
-    public final Map<String, String[]> getParameters() {
+    public Map<String, String[]> getParameters() {
         return parameters;
     }
 
@@ -251,23 +251,23 @@ public abstract class ServletCall {
 
     /**
      * Write into the output header.
-     * 
+     *
      * @param name
      *            The name of the header to write.
      * @param value
      *            The value of the header to write.
      */
-    protected final void head(final String name, final String value) {
+    protected void head(final String name, final String value) {
         response.addHeader(name, value);
     }
 
     /**
      * Output a file
-     * 
+     *
      * @param file
      *            The file to output
      */
-    protected final void output(final File file) {
+    protected void output(final File file) {
         try {
             output(new FileInputStream(file));
         } catch (final FileNotFoundException e) {
@@ -277,7 +277,7 @@ public abstract class ServletCall {
 
     /**
      * Output a stream as a file
-     * 
+     *
      * @param stream
      *            The stream to output
      * @param filename
@@ -290,7 +290,7 @@ public abstract class ServletCall {
 
     /**
      * Output a stream as a file
-     * 
+     *
      * @param stream
      *            The stream to output
      */
@@ -305,11 +305,11 @@ public abstract class ServletCall {
 
     /**
      * Write into the output
-     * 
+     *
      * @param string
      *            The string to output
      */
-    protected final void output(final String string) {
+    protected void output(final String string) {
         final PrintWriter outputWriter = getOutputWriter();
         outputWriter.print(string);
         outputWriter.flush();
@@ -317,11 +317,11 @@ public abstract class ServletCall {
 
     /**
      * Write into the output
-     * 
+     *
      * @param object
      *            An object that will be transform into JSon
      */
-    protected final void output(final Object object) {
+    protected void output(final Object object) {
         final PrintWriter outputWriter = getOutputWriter();
         outputWriter.print(JSonSerializer.serialize(object));
         outputWriter.flush();
@@ -334,7 +334,7 @@ public abstract class ServletCall {
 
     /**
      * Prepare the output
-     * 
+     *
      * @param response
      */
     private PrintWriter getOutputWriter() {
@@ -361,7 +361,7 @@ public abstract class ServletCall {
      * @param response
      */
     @SuppressWarnings("unchecked")
-    protected void parseRequest(final HttpServletRequest request, HttpServletResponse response) {
+    protected void parseRequest(final HttpServletRequest request, final HttpServletResponse response) {
         // Create a new HashMap and copy all the elements in the new one
         parameters.putAll(this.request.getParameterMap());
     }
