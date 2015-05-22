@@ -128,7 +128,7 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
         verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
@@ -138,7 +138,7 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
         verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
