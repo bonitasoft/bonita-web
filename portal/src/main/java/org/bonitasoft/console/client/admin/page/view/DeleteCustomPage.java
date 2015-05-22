@@ -168,15 +168,19 @@ public class DeleteCustomPage extends Page {
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ApplicationPageItem> applicationPages = JSonItemReader.parseItems(response, ApplicationPageDefinition.get());
             if (applicationPages.size() > 0) {
-                if (firstPageLinkNotFound) {
-                    setBody(new Text(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
-                    activateDeleteButton(false);
-                    firstPageLinkNotFound = false;
-                }
+                addInfoMessageOnApplicationPageLinkFound();
                 addBody(new DeletePageProblemsCallout(applicationPages));
             }
         }
 
+    }
+
+    private void addInfoMessageOnApplicationPageLinkFound() {
+        if (firstPageLinkNotFound) {
+            setBody(new Text(_("These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it.")));
+            activateDeleteButton(false);
+            firstPageLinkNotFound = false;
+        }
     }
 
     private class DeleteApplicationLayoutCallback extends APICallback {
@@ -185,11 +189,7 @@ public class DeleteCustomPage extends Page {
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
             if (applications.size() > 0) {
-                if (firstPageLinkNotFound) {
-                    setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
-                    activateDeleteButton(false);
-                    firstPageLinkNotFound = false;
-                }
+                addInfoMessageOnApplicationPageLinkFound();
                 addBody(new DeleteApplicationLayoutProblemsCallout(applications));
             }
         }
@@ -202,11 +202,7 @@ public class DeleteCustomPage extends Page {
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
             final List<ApplicationItem> applications = JSonItemReader.parseItems(response, ApplicationDefinition.get());
             if (applications.size() > 0) {
-                if (firstPageLinkNotFound) {
-                    setBody(new Text(_("No pages will be deleted as some of them are used in applications.")));
-                    activateDeleteButton(false);
-                    firstPageLinkNotFound = false;
-                }
+                addInfoMessageOnApplicationPageLinkFound();
                 addBody(new DeleteApplicationThemeProblemsCallout(applications));
             }
         }
