@@ -345,7 +345,7 @@
 // ----------------------------------------------------------------------------
 // Lists : filters
 // ----------------------------------------------------------------------------
-@filtersPanel-titleColor: #fff;
+@filtersPanel-titleColor: @secondAccentColor;
 @filtersPanel-display: block;
 @filtersPanel-padding-left: 1*@w;
 @filtersPanel-padding: 13*@h 0 0 0;
@@ -372,6 +372,9 @@
 @filtersPanel-subfilters-paddingLeft: 14*@w;
 @filtersPanel-filters-paddingRight: 3*@w;
 
+@filtersPanel-filters-hover-bgColor: #B4B9C2;
+@filtersPanel-filters-hover-txtColor: @secondAccentColor;
+
 @filtersPanel-filters-users-tasks-todo: "filters-users-tasks-todo.png";
 @filtersPanel-filters-users-tasks-todo-selected: "filters-users-tasks-todo-selected.png";
 @filtersPanel-filters-users-tasks-available: "filters-users-tasks-available.png";
@@ -384,41 +387,61 @@
 @filtersPanel-filters-users-tasks-performed-selected: "filters-users-tasks-performed-selected.png";
 
 @filtersPanel-filters-bgAvailable: "filters-available.png";
-@filtersPanel-filters-bgAvailableSelected: "filters-available-selected.png";
+@filtersPanel-filters-bgAvailable-selected: "filters-available-selected.png";
 
 @filtersPanel-filters-bgUnassigned: "filters-unassigned.png";
-@filtersPanel-filters-bgUnassignedSelected: "filters-unassigned-selected.png";
+@filtersPanel-filters-bgUnassigned-selected: "filters-unassigned-selected.png";
 
 @filtersPanel-filters-bgAssigned: "filters-assigned.png";
-@filtersPanel-filters-bgAssignedSelected: "filters-assigned-selected.png";
+@filtersPanel-filters-bgAssigned-selected: "filters-assigned-selected.png";
 
 @filtersPanel-filters-bgIgnored: "filters-ignored.png";
-@filtersPanel-filters-bgIgnoredSelected: "filters-ignored-selected.png";
+@filtersPanel-filters-bgIgnored-selected: "filters-ignored-selected.png";
 
 @filtersPanel-filters-bgPerformed: "filters-users-tasks-performed.png";
-@filtersPanel-filters-bgPerformedSelected: "filters-users-tasks-performed-selected.png";
+@filtersPanel-filters-bgPerformed-selected: "filters-users-tasks-performed-selected.png";
 
 @filtersPanel-filters-bgMyCases: "filters-mycases.png";
-@filtersPanel-filters-bgMyCasesSelected: "filters-mycases-selected.png";
+@filtersPanel-filters-bgMyCases-selected: "filters-mycases-selected.png";
 
 @filtersPanel-filters-bgWorkedOn: "filters-workedon.png";
-@filtersPanel-filters-bgWorkedOnSelected: "filters-workedon-selected.png";
+@filtersPanel-filters-bgWorkedOn-selected: "filters-workedon-selected.png";
 
 @filtersPanel-filters-bgArchived: "filters-archived.png";
-@filtersPanel-filters-bgArchivedSelected: "filters-archived-selected.png";
+@filtersPanel-filters-bgArchived-selected: "filters-archived-selected.png";
 
 
 @filtersPanel-filters-bgAll: "filters-all.png";
-@filtersPanel-filters-bgAllSelected: "filters-all-selected.png";
+@filtersPanel-filters-bgAll-selected: "filters-all-selected.png";
 
 @customPagefiltersPanel-filters-bgAll: "filters-all-custom-page.png";
-@customPagefiltersPanel-filters-bgAllSelected: "filters-all-custom-pages-selected.png";
+@customPagefiltersPanel-filters-bgAll-selected: "filters-all-custom-pages-selected.png";
 
 @filtersPanel-filters-bgHumanTask: "filters-human.png";
-@filtersPanel-filters-bgHumanTaskSelected: "filters-human-selected.png";
+@filtersPanel-filters-bgHumanTask-selected: "filters-human-selected.png";
 
 @filtersPanel-filters-bgFailed: "filters-failed.png";
-@filtersPanel-filters-bgFailedSelected: "filters-failed-selected.png";
+@filtersPanel-filters-bgFailed-selected: "filters-failed-selected.png";
+
+
+@filtersPanel-filters-bg-resolved:"filters-resolved.png";
+@filtersPanel-filters-bg-resolved:"filters-resolved.png";
+@filtersPanel-filters-bg-resolved-selected:"filters-resolved-selected.png";
+@filtersPanel-filters-bg-unresolved:"filters-unresolved.png";
+@filtersPanel-filters-bg-unresolved:"filters-unresolved.png";
+@filtersPanel-filters-bg-unresolved-selected:"filters-unresolved-selected.png";
+@filtersPanel-filters-bg-monitoring:"filters-monitoring.png";
+@filtersPanel-filters-bg-monitoring:"filters-monitoring.png";
+@filtersPanel-filters-bg-monitoring-selected:"filters-monitoring-selected.png";
+@filtersPanel-filters-bg-reporting:"filters-reporting.png";
+@filtersPanel-filters-bg-reporting:"filters-reporting.png";
+@filtersPanel-filters-bg-reporting-selected:"filters-reporting-selected.png";
+@filtersPanel-filters-bg-user-active:"filters-user-active.png";
+@filtersPanel-filters-bg-user-active:"filters-user-active.png";
+@filtersPanel-filters-bg-user-active-selected:"filters-user-active-selected.png";
+@filtersPanel-filters-bg-user-inactive:"filters-user-inactive.png";
+@filtersPanel-filters-bg-user-inactive:"filters-user-inactive.png";
+@filtersPanel-filters-bg-user-inactive-selected:"filters-user-inactive-selected.png";
 
 
 @filtersPanel-filtersCurrent-background: @tablesPanel-bgColor;
