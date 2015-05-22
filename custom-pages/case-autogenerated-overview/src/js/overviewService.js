@@ -72,7 +72,6 @@
         var deferred = $q.defer();
         contextSrvc.fetchCaseContext(caseId).then(function(result){
           var contextData;
-          console.log(result.data);
           for (contextData in result.data) {
             fetchValue(result.data[contextData], deferred);
           }
@@ -99,10 +98,6 @@
         });
         return deferred.promise;
       }
-
-
-
-
     };
   }]);
 })();

@@ -6,7 +6,7 @@
   /* Make the module depends on a Mock Backend to simulate API calls. */
   var app = angular.module('devMode', ['ngMockE2E']);
 
-
+  var ROOT_PATH = '../../../../../../';
 
   // define mock answers coming from the backend
   app.run(function($httpBackend) {
@@ -23,52 +23,52 @@
     // http://localhost:8080/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3Dindex&o=reached_state_date+DESC&p=0
     //[{'displayDescription:'','executedBySubstitute:'26','processId:'8902137890939378455','parentCaseId:'1024','state:'completed','rootContainerId:'1024','type:'USER_TASK','assigned_id:'26','id:'80105','sourceObjectId:'20085','executedBy':{'last_connection:'2015-04-01 14:54:27.483','created_by_user_id:'-1','creation_date:'2015-03-30 17:20:16.052','id:'26','icon:'/default/icon_user.png','enabled:'true','title:'Mr','manager_id:'25','job_title:'Human resources benefits','userName:'walter.bates','lastname:'Bates','firstname:'Walter','password:'','last_update_date:'2015-03-30 17:20:16.052'},'caseId:'1024','priority:'normal','actorId:'115','description:'','name:'Ticket review','reached_state_date:'2015-03-31 14:35:54.918','rootCaseId:'1024','archivedDate:'2015-03-31 14:35:54.936','displayName:'Ticket review','dueDate:'2015-03-31 15:34:18.937','last_update_date:'2015-03-31 14:35:54.918'}]
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+2+'&o=reached_state_date+DESC&p=0').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+2+'&o=reached_state_date+DESC&p=0').respond(function() {
       console.log('Getting mock response for archivedHumanTask.');
       return [200, archivedHumanTask, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+4+'&o=reached_state_date+DESC&p=0').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+4+'&o=reached_state_date+DESC&p=0').respond(function() {
       console.log('Getting mock response for archivedHumanTask.');
       return [200, noArchivedHumanTask, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/' + 2 + '/context').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/case/' + 2 + '/context').respond(function() {
       console.log('Getting mock response for context.');
       return [200, caseContext, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/businessData/com.acme.object.Ticket/7').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bdm/businessData/com.acme.object.Ticket/7').respond(function() {
       console.log('Getting mock response for business Data: Ticket 7.');
       return [200, Ticket7, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/businessData/com.acme.object.Ticket/8').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bdm/businessData/com.acme.object.Ticket/8').respond(function() {
       console.log('Getting mock response for business Data: Ticket 8.');
       return [200, Ticket8, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/businessData/com.company.model.Client/2').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bdm/businessData/com.company.model.Client/2').respond(function() {
       console.log('Getting mock response for business Data: Client 2.');
       return [200, Client2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/businessData/com.acme.object.Ticket?q=findByIds&f=ids=100,101,102').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bdm/businessData/com.acme.object.Ticket?q=findByIds&f=ids=100,101,102').respond(function() {
       console.log('Getting mock response for business Data: Tickets.');
       return [200, tickets, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/2?d=started_by&d=processDefinitionId').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/case/2?d=started_by&d=processDefinitionId').respond(function() {
       console.log('Getting mock response for case: Case2.');
       return [200, case2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/4?d=started_by&d=processDefinitionId').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/case/4?d=started_by&d=processDefinitionId').respond(function() {
       console.log('Getting 404 mock response for case 4.');
       return [404, {}, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedCase?c=1&d=started_by&d=processDefinitionId&f=sourceObjectId%3D4&p=0').respond(function() {
+    $httpBackend.whenGET(ROOT_PATH + 'API/bpm/archivedCase?c=1&d=started_by&d=processDefinitionId&f=sourceObjectId%3D4&p=0').respond(function() {
       console.log('Getting mock response for archived case: Case4.');
       return [200, archivedCased4, {}];
     });
