@@ -88,60 +88,75 @@ public class ContractTypeConverter {
         return processedInputs;
     }
 
-    @SuppressWarnings("unchecked")
     protected Serializable convertInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile) throws FileNotFoundException {
-        if (inputValue instanceof List) {
-            final List<Serializable> listOfValues = (List<Serializable>) inputValue;
-            final List<Serializable> convertedListOfValues = new ArrayList<Serializable>();
-            for (final Serializable value : listOfValues) {
-                convertedListOfValues.add(convertSingleInputToExpectedType(value, inputDefinition, deleteFile));
-            }
-            return (Serializable) convertedListOfValues;
+        if (inputValue == null) {
+            return null;
+        } else if (inputValue instanceof List) {
+            return convertMultipleInputToExpectedType(inputValue, inputDefinition, deleteFile);
         } else {
             return convertSingleInputToExpectedType(inputValue, inputDefinition, deleteFile);
         }
     }
 
-    @SuppressWarnings("unchecked")
+    protected Serializable convertMultipleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+            throws FileNotFoundException {
+        @SuppressWarnings("unchecked")
+        final List<Serializable> listOfValues = (List<Serializable>) inputValue;
+        final List<Serializable> convertedListOfValues = new ArrayList<Serializable>();
+        for (final Serializable value : listOfValues) {
+            Serializable convertedValue = null;
+            if (value != null) {
+                convertedValue = convertSingleInputToExpectedType(value, inputDefinition, deleteFile);
+            }
+            convertedListOfValues.add(convertedValue);
+        }
+        return (Serializable) convertedListOfValues;
+    }
+
     protected Serializable convertSingleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile) throws FileNotFoundException {
         if (inputDefinition == null) {
             return inputValue;
         } else if (inputDefinition instanceof Map) {
-            final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
+            @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfInputDefinition = (Map<String, Serializable>) inputDefinition;
-            return (Serializable) convertComplexInputToExpectedType(mapOfValues, mapOfInputDefinition, deleteFile);
-        } else if (inputValue instanceof Map) {
-            final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
-            final String inputDefinitionType = ((InputDefinition) inputDefinition).getType().name();
-            if (Type.FILE.name().equals(inputDefinitionType)) {
-                return convertFileInputToExpectedType(mapOfValues, deleteFile);
-            }
+            return convertComplexInputToExpectedType(inputValue, mapOfInputDefinition, deleteFile);
         } else {
             final InputDefinition simpleInputDefinition = (InputDefinition) inputDefinition;
-            return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
-        }
-        return inputValue;
-    }
-
-    protected Map<String, Serializable> convertComplexInputToExpectedType(final Map<String, Serializable> mapOfValues, final Map<String, Serializable> mapOfInputDefinition, final boolean deleteFile) throws FileNotFoundException {
-        final Map<String, Serializable> convertedMapOfValues = new HashMap<String, Serializable>();
-        for (final Entry<String, Serializable> valueEntry : mapOfValues.entrySet()) {
-            final Serializable childInputDefinition = mapOfInputDefinition.get(valueEntry.getKey());
-            Serializable convertedValue;
-            if (valueEntry.getValue() instanceof List) {
-                convertedValue = convertInputToExpectedType(valueEntry.getValue(), childInputDefinition, deleteFile);
+            if (Type.FILE.equals(simpleInputDefinition.getType())) {
+                return convertFileInputToExpectedType(inputValue, deleteFile);
             } else {
-                convertedValue = convertSingleInputToExpectedType(valueEntry.getValue(), childInputDefinition, deleteFile);
+                return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
             }
-            convertedMapOfValues.put(valueEntry.getKey(), convertedValue);
         }
-        return convertedMapOfValues;
     }
 
-    protected FileInputValue convertFileInputToExpectedType(final Map<String, Serializable> mapOfValues, final boolean deleteFile) throws FileNotFoundException {
-        final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
-        final FileInputValue fileInputValue = new FileInputValue(filename, retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH), deleteFile));
-        return fileInputValue;
+    protected Serializable convertComplexInputToExpectedType(final Serializable inputValue, final Map<String, Serializable> mapOfInputDefinition,
+            final boolean deleteFile) throws FileNotFoundException {
+        if (inputValue instanceof Map) {
+            @SuppressWarnings("unchecked")
+            final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
+            final Map<String, Serializable> convertedMapOfValues = new HashMap<String, Serializable>();
+            for (final Entry<String, Serializable> valueEntry : mapOfValues.entrySet()) {
+                final Serializable childInputDefinition = mapOfInputDefinition.get(valueEntry.getKey());
+                final Serializable convertedValue = convertInputToExpectedType(valueEntry.getValue(), childInputDefinition, deleteFile);
+                convertedMapOfValues.put(valueEntry.getKey(), convertedValue);
+            }
+            return (Serializable) convertedMapOfValues;
+        } else {
+            return inputValue;
+        }
+    }
+
+    protected Serializable convertFileInputToExpectedType(final Serializable inputValue, final boolean deleteFile) throws FileNotFoundException {
+        if (inputValue instanceof Map) {
+            @SuppressWarnings("unchecked")
+            final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
+            final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
+            final FileInputValue fileInputValue = new FileInputValue(filename, retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH), deleteFile));
+            return fileInputValue;
+        } else {
+            return inputValue;
+        }
     }
 
     protected byte[] retrieveFileAndGetContent(final String fileTempPath, final boolean deleteFile) throws FileNotFoundException {
