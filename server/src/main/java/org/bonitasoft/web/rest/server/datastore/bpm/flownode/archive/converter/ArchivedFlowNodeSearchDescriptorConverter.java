@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,7 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConverter {
 
@@ -37,7 +37,7 @@ public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConve
     }
 
     private Map<String, String> createMapping() {
-        Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<String, String>();
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedFlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_NAME, ArchivedFlowNodeInstanceSearchDescriptor.NAME);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_DISPLAY_NAME, ArchivedFlowNodeInstanceSearchDescriptor.DISPLAY_NAME);
@@ -46,15 +46,16 @@ public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConve
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_TYPE, ArchivedFlowNodeInstanceSearchDescriptor.FLOW_NODE_TYPE);
         mapping.put(ArchivedFlowNodeItem.FILTER_IS_TERMINAL, ArchivedFlowNodeInstanceSearchDescriptor.TERMINAL);
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE);
+        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID);
         return mapping;
     }
 
     @Override
-    public String convert(String attribute) {
+    public String convert(final String attribute) {
         return MapUtil.getMandatory(mapping, attribute);
     }
 
-    protected final void extendsMapping(Map<String, String> extension) {
+    protected final void extendsMapping(final Map<String, String> extension) {
         mapping.putAll(extension);
     }
 }

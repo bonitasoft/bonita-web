@@ -42,6 +42,7 @@ public class ArchivedHumanTaskSearchDescriptorConverter extends ArchivedActivity
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, ArchivedHumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, ArchivedHumanTaskInstanceSearchDescriptor.PRIORITY);
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedHumanTaskInstanceSearchDescriptor.ARCHIVE_DATE);
+        mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedHumanTaskInstanceSearchDescriptor.ORIGINAL_HUMAN_TASK_ID);
         mapping.put(ArchivedHumanTaskItem.FILTER_USER_ID, "");
 
     }
