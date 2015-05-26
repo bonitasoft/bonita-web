@@ -79,7 +79,6 @@
 				.tr{
 					display: block;
 					float: left;
-					.skinFontFamily();
 					.fontSize(@tablesPanel-table-thead-fontSize);
 					min-height: @tablesPanel-table-thead-height;
 					padding-top: @tablesPanel-table-thead-paddingTop;
@@ -87,8 +86,7 @@
 					.borderRadiusLeft(@defaultRadius);
 					.noMargin();
 					position: relative;
-					background-color: @tablesPanel-table-thead-tr-gradientColor1;
-					//.verticalGradient(@tablesPanel-table-thead-tr-gradientColor1, @tablesPanel-table-thead-tr-gradientPosition1, @tablesPanel-table-thead-tr-gradientColor2, @tablesPanel-table-thead-tr-gradientPosition2);
+					.verticalGradient(@tablesPanel-table-thead-tr-gradientColor1, @tablesPanel-table-thead-tr-gradientPosition1, @tablesPanel-table-thead-tr-gradientColor2, @tablesPanel-table-thead-tr-gradientPosition2);
 					.th{
 						text-align: @tablesPanel-table-sort-textAlign;
 						position: relative;
