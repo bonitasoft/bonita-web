@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
@@ -69,7 +69,7 @@ public class TaskFinderTest {
         task.setId(id);
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
         final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, id.toString());
+        filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
         final ItemSearchResult<ArchivedTaskItem> result = mock(ItemSearchResult.class);
         when(result.getResults()).thenReturn(Arrays.asList(task));
         when(archives.search(0, 1, null, ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE + " "
@@ -84,7 +84,7 @@ public class TaskFinderTest {
     public void should_throw_an_exception_when_the_task_does_not_exist() throws Exception {
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
         final Map<String, String> filters = new HashMap<String, String>();
-        filters.put(ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID, id.toString());
+        filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
         when(archives.search(0, 1, null, ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE + " "
                 + Order.DESC, filters)).thenThrow(new APIItemNotFoundException("type", id));
 
