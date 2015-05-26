@@ -1,0 +1,16 @@
+<form name="complexMultipleInputsForm" class="form-horizontal">
+    <div ng-class="{'form-group': true, 'has-error': !complexMultipleInputsForm[input.name].$valid, 'has-feedback': complexMultipleInputsForm[input.name].$valid}">
+        <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
+        <div ng-init="initMultipleInput(input)">
+            <div ng-class="hasSeveralItemsInCollection(input)?'input-group':''" ng-repeat="multipleInput in inputArray[input.name]">
+                <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[multipleInput.name][$index]" placeholder="{{'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
+                <div ng-class="hasSeveralItemsInCollection(input)?'input-group-btn':''">
+                    <input type="button" class="btn btn-danger " value="{{'remove'|translate}}" ng-click="removeInput(multipleInput, $index)" ng-if="hasSeveralItemsInCollection(input)">
+                </div>
+            </div>
+            <div class="input-group">
+                <button type="button" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

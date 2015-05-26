@@ -39,98 +39,16 @@
       <div ng-repeat="input in contract.inputs">
 
         <!-- simple input -->
-        <div ng-if="isSingleInput(input) && !isFileInput(input)">
-          <form name="simpleInputsForm" class="form-horizontal">
-            <div ng-class="{'form-group': true, 'has-error': !simpleInputsForm[input.name].$valid, 'has-feedback': simpleInputsForm[input.name].$valid}">
-              <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-              <div class="input"  >
-                <input ng-init="initSingleInput(input)" type="{{inputType2HTML(input)}}" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[input.name]" placeholder="{{'Expecting a ' + input.type + ' value.'}}">
-                <span class="text-danger has-error has-feedback" ng-show="simpleInputsForm[input.name].$error.number">Not a valid number!</span>
-              </div>
-            </div>
-          </form>
-        </div>
+        <div ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/simple.html'"></div>
         <!-- simple input multiple-->
-        <div ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)">
-          <form name="simpleInputsMultipleForm" class="form-horizontal">
-          <div ng-class="{'form-group': true, 'has-error': !simpleInputsMultipleForm.$valid, 'has-feedback': simpleInputsMultipleForm.$valid}">
-            <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-            <div  ng-init="initMultipleInput(input)">
-              <div ng-class="{'input-group': hasSeveralItemsInCollection(input)}" ng-repeat="multipleInput in inputArray[input.name]" ng-init="formInputName=multipleInput.name+'_'+$index">
-                <input type="{{inputType2HTML(input)}}" class="form-control input" id="{{formInputName}}" name="{{formInputName}}" ng-model="dataToSend[multipleInput.name][$index]" placeholder="{{'Expecting a ' + multipleInput.type + ' value.'}}">
-                <div ng-class="{'input-group-btn': hasSeveralItemsInCollection(input)}">
-                  <input type="button" class="btn btn-danger " value="{{'remove'|translate}}" ng-click="removeInput(multipleInput, $index)" ng-if="hasSeveralItemsInCollection(input)">
-                </div>
-                <div ng-class="{'text-danger': true, 'has-error': true, 'has-feedback':true}"  ng-show="simpleInputsMultipleForm[formInputName].$error.number">Not a valid number!</div>
-              </div>
-
-              <div class="input-group">
-
-                <button type="button" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
-              </div>
-            </div>
-          </div>
-        </form>
-        </div>
+        <div ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/multiple.html'"></div>
         <!-- complex input -->
-        <div ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)">
-          <form name="complexInputsForm" class="form-horizontal">
-          <div ng-class="{'form-group': true, 'has-error': !complexInputsForm[input.name].$valid, 'has-feedback': complexInputsForm[input.name].$valid}">
-            <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-            <div class="input">
-              <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[input.name]" placeholder="{{'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
-            </div>
-          </div>
-        </form>
-        </div>
+        <div ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/complex.html'"></div>
         <!-- complex input multiple -->
-        <div ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)">
-          <form name="complexMultipleInputsForm" class="form-horizontal">
-          <div ng-class="{'form-group': true, 'has-error': !complexMultipleInputsForm[input.name].$valid, 'has-feedback': complexMultipleInputsForm[input.name].$valid}">
-            <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-            <div ng-init="initMultipleInput(input)">
-              <div ng-class="hasSeveralItemsInCollection(input)?'input-group':''" ng-repeat="multipleInput in inputArray[input.name]">
-                <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[multipleInput.name][$index]" placeholder="{{'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
-                <div ng-class="hasSeveralItemsInCollection(input)?'input-group-btn':''">
-                  <input type="button" class="btn btn-danger " value="{{'remove'|translate}}" ng-click="removeInput(multipleInput, $index)" ng-if="hasSeveralItemsInCollection(input)">
-                </div>
-              </div>
-              <div class="input-group">
-                <button type="button" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
-              </div>
-            </div>
-          </div>
-        </form>
-        </div>
+        <div ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/complexMultiple.html'"></div>
         <!-- file input and multiple file input-->
-        <div ng-if="isFileInput(input)" ng-init="initMultipleInput(input)">
-          <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-          <form
-          class="form-horizontal"
-          action="{{importUrl}}"
-          name="uploadForm_{{$index}}"
-          ng-upload="onUploadSuccess(content, input, $index)"
-          ng-repeat="multipleInput in inputArray[input.name]"
-          >
-            <div class="form-group">
-              <div>
-                <div class="input-group file-upload">
-                  <input type="text" readonly="" disabled placeholder="{{'Select a file'| translate}}" value="{{multipleInput.value}}" name="{{input.name}}" class="form-control">
-                  <div class="input-group-btn">
-                    <div class="btn" ng-class="{'btn-default disabled':$isUploading, 'btn-primary':!$isUploading}">
-                      <input class="file-upload-input" ng-class="{'file-upload-input--disabled':$isUploading}" name="file" type="file" ng-model="multipleInput.value" required id="auto_uploading_file_input_{{$index}}" file-input-auto-submit/>
-                      <span class="fa" ng-class="{'fa fa-spinner fa-pulse':$isUploading, 'fa fa-folder':!$isUploading}" ></span>
-                    </div>
-                    <input type="button" class="btn btn-danger" value="{{'remove'|translate}}" ng-click="removeInput(multipleInput,  $index)" ng-if="inputArray[input.name].length>1">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-          <div class="input-group">
-            <button type="button" ng-if="input.multiple" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
-          </div>
-        </div>
+        <div ng-if="isFileInput(input)" ng-init="initMultipleInput(input)" ng-include="'templates/files.html'"></div>
+
       </div>
     </div>
     <div class="row">

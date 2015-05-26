@@ -18,6 +18,12 @@
     console.log('**********************************************************************************************');
 
     //--------------------------------------------------------------
+    //-------------------- Templates files  ------------------------
+    //--------------------------------------------------------------
+    $httpBackend.whenGET(/^templates\//).passThrough();
+
+
+    //--------------------------------------------------------------
     //--------------------- Step contract  -------------------------
     //--------------------------------------------------------------
     $httpBackend.whenGET('/bonita/API/bpm/userTask/'+2+'/contract').respond(function() {
@@ -77,7 +83,8 @@
               description:null,
               name:'child',
               multiple:false,
-              type:'TEXT'
+              type:'TEXT',
+              inputs:[]
             }
           ]
         },
@@ -201,7 +208,7 @@
         {
           description:null,
           name:'complex',
-          multiple:true,
+          multiple:false,
           inputs:[
             {
               description:null,
