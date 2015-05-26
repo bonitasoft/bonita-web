@@ -37,40 +37,62 @@ import org.bonitasoft.engine.session.APISession
  *
  *
  * @author Baptiste Mesta
+ * @author Truc Nguyen
  */
 class DocumentPermissionRule implements PermissionRule {
 
-
-    public static final String PROCESS_INSTANCE_ID = "processInstanceId"
     public static final String CASE_ID = "caseId"
+    public static final String ARCHIVED_CASE_ID = "archivedCaseId"
 
     @Override
     public boolean isAllowed(APISession apiSession, APICallContext apiCallContext, APIAccessor apiAccessor, Logger logger) {
         long currentUserId = apiSession.getUserId();
+        
+        def resourceId = apiCallContext.getResourceId()
+        if (resourceId != null) {
+            return checkMethodWithResourceId(resourceId, apiAccessor, currentUserId)
+        }
+        
         if (apiCallContext.isGET()) {
             return checkGetMethod(apiCallContext, apiAccessor, currentUserId)
         } else if (apiCallContext.isPOST()) {
-            return checkPostMethod(apiCallContext, apiAccessor, currentUserId, logger)
+            return checkPostMethod(apiCallContext, apiAccessor, currentUserId)
         }
+        
         return false
     }
 
-    private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
+    private boolean checkMethodWithResourceId(String resourceId, APIAccessor apiAccessor, long currentUserId) {
+        def processAPI = apiAccessor.getProcessAPI()
+        try {
+            long documentId = Long.valueOf(resourceId)
+            def processInstanceId = processAPI.getDocument(documentId).getProcessInstanceId()
+            return isInvolved(processAPI, currentUserId, processInstanceId) ||
+                    isSupervisor(processAPI, currentUserId, processInstanceId)
+        }
+        catch (NumberFormatException e) {
+            return true
+        }
+    }
+    
+    private boolean checkPostMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
 
         ObjectMapper mapper = new ObjectMapper();
         def map = mapper.readValue(apiCallContext.getBody(), Map.class)
 
-        def string = map.get((PROCESS_INSTANCE_ID))
-        if (string == null || string.toString().isEmpty()) {
+        def processInstanceIdAsString = map.get(CASE_ID)
+        if (processInstanceIdAsString == null || processInstanceIdAsString.toString().isEmpty()) {
             return true;
         }
-        def processInstanceId = Long.valueOf(string.toString())
+        def processInstanceId = Long.valueOf(processInstanceIdAsString.toString())
         if (processInstanceId <= 0) {
             return true;
         }
         try {
             def processAPI = apiAccessor.getProcessAPI()
-            return isInvolved(processAPI, currentUserId, processInstanceId)
+            def processDefinitionId = processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId()
+            return isInvolved(processAPI, currentUserId, processInstanceId) ||
+                    processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
         } catch (NotFoundException e) {
             return true
         }
@@ -79,15 +101,29 @@ class DocumentPermissionRule implements PermissionRule {
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId) {
         def filters = apiCallContext.getFilters()
         def processAPI = apiAccessor.getProcessAPI()
-        def processInstanceIdAsString = filters.get(PROCESS_INSTANCE_ID)
-        if (processInstanceIdAsString == null) {
-            processInstanceIdAsString = filters.get(CASE_ID)
+        
+        long processInstanceId = -1
+        long processDefinitionId = -1
+        
+        def archivedCaseIdAsString = filters.get(ARCHIVED_CASE_ID)
+        if (archivedCaseIdAsString != null) {
+            def archivedCaseId = Long.valueOf(archivedCaseIdAsString)
+            processInstanceId = processAPI.getArchivedProcessInstance(archivedCaseId).getSourceObjectId()
+            processDefinitionId = processAPI.getFinalArchivedProcessInstance(processInstanceId).getProcessDefinitionId()
         }
-        if (processInstanceIdAsString != null) {
-            def processInstanceId = Long.valueOf(processInstanceIdAsString)
+        else {
+            def processInstanceIdAsString = filters.get(CASE_ID)
+            if (processInstanceIdAsString != null) {
+                processInstanceId = Long.valueOf(processInstanceIdAsString)
+                processDefinitionId = processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId()
+            }
+        }
+        
+        if (processInstanceId > 0 && processDefinitionId > 0) {
             return isInvolved(processAPI, currentUserId, processInstanceId) ||
-                    processAPI.isUserProcessSupervisor(processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId(), currentUserId)
+                    processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
         }
+        
         return false;
     }
 
@@ -99,4 +135,19 @@ class DocumentPermissionRule implements PermissionRule {
             return true
         }
     }
+    
+    private boolean isSupervisor(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
+        def processDefinitionId
+        try {
+            processDefinitionId = processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId()
+        } catch (NotFoundException e) {
+            try {
+                processDefinitionId = processAPI.getFinalArchivedProcessInstance(processInstanceId).getProcessDefinitionId()
+            } catch (NotFoundException e1) {
+                return true
+            }
+        }
+        return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
+    }
+    
 }
