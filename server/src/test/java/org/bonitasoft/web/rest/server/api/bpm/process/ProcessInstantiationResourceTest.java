@@ -1,28 +1,30 @@
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static java.util.Arrays.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.bonitasoft.web.rest.server.utils.ResponseAssert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -34,6 +36,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessInstantiationResourceTest extends RestletTest {
@@ -65,6 +77,12 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Mock
     ContractDefinition contractDefinition;
 
+    @Mock
+    APISession apiSession;
+
+    @Mock
+    ProcessInstance processInstance;
+
     @BeforeClass
     public static void initClass() {
         I18n.getInstance();
@@ -72,13 +90,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Before
     public void initializeMocks() {
-        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI));
+        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI, apiSession));
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
+        when(apiSession.getTenantId()).thenReturn(1L);
     }
 
     @Override
     protected ServerResource configureResource() {
-        return new ProcessInstantiationResource(processAPI);
+        return new ProcessInstantiationResource(processAPI, apiSession);
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -101,15 +120,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput)).thenReturn(new ProcessInstanceImpl("complexProcessInstance"));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
+
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\","
-                        + "\"rootCaseId\":\"0\",\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
-
     }
 
     @Test
@@ -123,15 +141,14 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response).hasStatus(Status.SUCCESS_OK);
         assertThat(response.getEntityAsText())
         .isEqualTo(
-                "{\"id\":\"0\",\"end_date\":\"\",\"startedBySubstitute\":\"0\",\"start\":\"\",\"state\":\"\",\"rootCaseId\":\"0\","
-                        + "\"started_by\":\"0\",\"processDefinitionId\":\"\",\"last_update_date\":\"\"}");
+                        "{\"caseId\":0}");
         verify(processAPI).startProcessWithInputs(1L, PROCESS_DEFINITION_ID, expectedComplexInput);
         verify(processAPI, times(0)).startProcessWithInputs(PROCESS_DEFINITION_ID, expectedComplexInput);
     }
 
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_instanciate_a_process() throws Exception {
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+        doThrow(new ContractViolationException("aMessage","aMessage", asList("first explanation", "second explanation"), null))
         .when(processAPI).startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(contractDefinition);
 
@@ -141,6 +158,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response)
         .hasJsonEntityEqualTo(
                 "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
+        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -151,6 +169,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
+        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -158,6 +177,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -176,7 +196,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         // given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
-        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+        doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
         doReturn(logger).when(processInstantiationResource).getLogger();
         doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
@@ -187,11 +207,27 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         inputs.put("testKey", "testValue");
 
         // when
-        processInstantiationResource.instanciateProcess(inputs);
+        processInstantiationResource.instantiateProcess(inputs);
 
         // then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+    }
 
+    @Test
+    public void should_call_deleteFiles() throws ProcessDefinitionNotFoundException, FileNotFoundException, ProcessExecutionException, ProcessActivationException, ContractViolationException {
+        //given
+        doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
+        doReturn(contractDefinition).when(processAPI).getProcessContract(PROCESS_DEFINITION_ID);
+        doReturn(response).when(processInstantiationResource).getResponse();
+        final Map<String, Serializable> inputs = new HashMap<>();
+        inputs.put("testKey", "testValue");
+        when(processAPI.startProcessWithInputs(PROCESS_DEFINITION_ID, inputs)).thenReturn(processInstance);
+
+        //when
+        processInstantiationResource.instantiateProcess(inputs);
+
+        verify(processInstantiationResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test

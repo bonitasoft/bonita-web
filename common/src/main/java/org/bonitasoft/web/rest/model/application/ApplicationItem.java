@@ -49,6 +49,10 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_HOME_PAGE_ID = "homePageId";
 
+    public static final String ATTRIBUTE_LAYOUT_ID = "layoutId";
+
+    public static final String ATTRIBUTE_THEME_ID = "themeId";
+
     public ApplicationItem() {
         super();
     }
@@ -166,6 +170,22 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public void setHomePageId(final Long homePageId) {
         setAttribute(ATTRIBUTE_HOME_PAGE_ID, homePageId);
+    }
+
+    public APIID getLayoutId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_LAYOUT_ID);
+    }
+
+    public void setLayoutId(final Long layoutId) {
+        setAttribute(ATTRIBUTE_LAYOUT_ID, layoutId);
+    }
+
+    public APIID getThemeId() {
+        return getAttributeValueAsAPIID(ATTRIBUTE_THEME_ID);
+    }
+
+    public void setThemeId(final Long themeId) {
+        setAttribute(ATTRIBUTE_THEME_ID, themeId);
     }
 
 }

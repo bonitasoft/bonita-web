@@ -227,7 +227,7 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
            }
         } else if ("living".equals(apiToken)) {
             if ("application".equals(resourceToken)) {
-                return new APIApplication(new ApplicationDataStoreCreator());
+                return new APIApplication(new ApplicationDataStoreCreator(), new APIApplicationDataStoreFactory());
             } else if ("application-page".equals(resourceToken)) {
                 return new APIApplicationPage(new APIApplicationDataStoreFactory());
             } else if ("application-menu".equals(resourceToken)) {

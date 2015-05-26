@@ -17,7 +17,9 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -25,15 +27,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -44,6 +37,7 @@ import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -54,6 +48,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTaskExecutionResourceTest extends RestletTest {
@@ -74,17 +78,20 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     private Response response;
 
     @Mock
+    private APISession apiSession;
+
+    @Mock
     private ContractDefinition contractDefinition;
 
     @Before
     public void initializeMocks() {
-        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI));
+        userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI, apiSession));
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
     @Override
     protected ServerResource configureResource() {
-        return new UserTaskExecutionResource(processAPI);
+        return new UserTaskExecutionResource(processAPI, apiSession);
     }
 
     private Map<String, Serializable> aComplexInput() {
@@ -127,7 +134,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Test
     public void should_respond_400_Bad_request_when_contract_is_not_validated_when_executing_a_task() throws Exception {
         when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
-        doThrow(new ContractViolationException("aMessage", asList("first explanation", "second explanation")))
+        doThrow(new ContractViolationException("aMessage", "aMessage", asList("first explanation", "second explanation"), null))
                 .when(processAPI).executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
 
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
@@ -136,6 +143,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         assertThat(response)
                 .hasJsonEntityEqualTo(
                         "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -146,6 +154,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -153,6 +162,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
@@ -164,15 +174,16 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test
     public void should_contract_violation_exception_log_explanations_when_logger_is_info() throws UserTaskNotFoundException, FlowNodeExecutionException,
-            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException {
+            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException, FileNotFoundException {
         //given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
-        doThrow(new ContractViolationException(message, explanations)).when(processAPI)
+        doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
                 .executeUserTask(anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
         doReturn(logger).when(userTaskExecutionResource).getLogger();
@@ -187,7 +198,22 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
         //then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+    }
 
+    @Test
+    public void should_call_deleteFiles() throws UserTaskNotFoundException, FileNotFoundException, FlowNodeExecutionException {
+        //given
+        when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
+        doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
+        doReturn(response).when(userTaskExecutionResource).getResponse();
+        final Map<String, Serializable> inputs = new HashMap<>();
+        inputs.put("testKey", "testValue");
+
+        //when
+        userTaskExecutionResource.executeTask(inputs);
+
+        verify(userTaskExecutionResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
     }
 
     @Test

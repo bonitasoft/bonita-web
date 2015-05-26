@@ -5,33 +5,35 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.forms.server.api.impl.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.engine.bpm.connector.ConnectorDefinition;
 import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
 import org.bonitasoft.engine.bpm.connector.FailAction;
+import org.bonitasoft.engine.bpm.process.ModelFinderVisitor;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.engine.operation.Operation;
 import org.bonitasoft.forms.client.model.Connector;
 import org.bonitasoft.forms.client.model.FormAction;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * @author Ruiheng Fan
- * 
  */
 public class ConnectorDefinitionAdapter implements ConnectorDefinition {
 
@@ -91,7 +93,7 @@ public class ConnectorDefinitionAdapter implements ConnectorDefinition {
      */
     @Override
     public Map<String, Expression> getInputs() {
-        final Map<String, Expression> inputMap = new HashMap<String, Expression>();
+        final Map<String, Expression> inputMap = new HashMap<>();
         final Map<String, org.bonitasoft.forms.client.model.Expression> inputParameters = this.connector.getInputParameters();
         final Iterator<Entry<String, org.bonitasoft.forms.client.model.Expression>> it = inputParameters.entrySet().iterator();
         final ExpressionAdapter adapter = new ExpressionAdapter();
@@ -110,7 +112,7 @@ public class ConnectorDefinitionAdapter implements ConnectorDefinition {
     public List<Operation> getOutputs() {
         final List<FormAction> actions = this.connector.getOutputOperations();
         final FormActionAdapter adapter = new FormActionAdapter();
-        final List<Operation> operations = new ArrayList<Operation>();
+        final List<Operation> operations = new ArrayList<>();
         for (final FormAction action : actions) {
             operations.add(adapter.getEngineOperation(action));
         }
@@ -131,4 +133,8 @@ public class ConnectorDefinitionAdapter implements ConnectorDefinition {
         }
     }
 
+    @Override
+    public void accept(ModelFinderVisitor visitor, long modelId) {
+        // Not needed here, as the method is used engine side to search for elements on specific Engine APIs:
+    }
 }

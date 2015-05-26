@@ -16,26 +16,18 @@ package org.bonitasoft.web.rest.server.framework;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.exception.APIMissingIdException;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -44,8 +36,6 @@ import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemWriter;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -83,7 +73,7 @@ public class APIServletCall extends ServletCall {
     // REQUEST PARSING
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private API<? extends IItem> api;
+    protected API<? extends IItem> api;
 
     private String apiName;
 
@@ -149,7 +139,7 @@ public class APIServletCall extends ServletCall {
      * @param response
      */
     @Override
-    protected final void parseRequest(final HttpServletRequest request, HttpServletResponse response) {
+    protected final void parseRequest(final HttpServletRequest request, final HttpServletResponse response) {
 
         parsePath(request);
 
@@ -161,11 +151,11 @@ public class APIServletCall extends ServletCall {
 
         super.parseRequest(request, response);
 
-        }
+    }
 
-    void parsePath(HttpServletRequest request) {
-        RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
-        id = restRequestParser.getId();
+    void parsePath(final HttpServletRequest request) {
+        final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
+        id = restRequestParser.getResourceQualifiers();
         apiName = restRequestParser.getApiName();
         resourceName = restRequestParser.getResourceName();
     }
@@ -188,12 +178,10 @@ public class APIServletCall extends ServletCall {
             }
             // Search
             else {
-
                 final ItemSearchResult<?> result = api.runSearch(Integer.parseInt(getParameter(PARAMETER_PAGE, "0")),
                         Integer.parseInt(getParameter(PARAMETER_LIMIT, "10")), getParameter(PARAMETER_SEARCH),
                         getParameter(PARAMETER_ORDER), parseFilters(getParameterAsList(PARAMETER_FILTER)),
                         getParameterAsList(PARAMETER_DEPLOY), getParameterAsList(PARAMETER_COUNTER));
-
                 head("Content-Range", result.getPage() + "-" + result.getLength() + "/" + result.getTotal());
 
                 output(result.getResults());
@@ -203,6 +191,16 @@ public class APIServletCall extends ServletCall {
             e.setResource(resourceName);
             throw e;
         }
+    }
+
+    @Override
+    protected void output(final Object object) {
+        super.output(object);
+    }
+
+    @Override
+    protected void head(final String name, final String value) {
+        super.head(name, value);
     }
 
     /**
@@ -253,7 +251,7 @@ public class APIServletCall extends ServletCall {
     /**
      * Get deploys and add them in json representation in map<String, String>
      * Workaround to be able to have included json objects in main object in PUT request
-     * You have to unserialize them to be able to use them in java representation 
+     * You have to unserialize them to be able to use them in java representation
      */
     private HashMap<String, String> getAttributesWithDeploysAsJsonString(final IItem item) {
         final HashMap<String, String> map = new HashMap<String, String>();

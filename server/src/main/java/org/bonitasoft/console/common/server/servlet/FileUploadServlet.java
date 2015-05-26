@@ -68,7 +68,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final String TEMP_PATH_RESPONSE_ATTRIBUTE = "tempPath";
 
-    protected static final String FILE_NAME_RESPONSE_ATTRIBUTE = "fileName";
+    protected static final String FILE_NAME_RESPONSE_ATTRIBUTE = "filename";
 
     protected String[] supportedExtensionsList = new String[0];
 
@@ -151,6 +151,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 if (LOGGER.isLoggable(Level.FINEST)) {
                     LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
                 }
+                uploadedFile.deleteOnExit();
 
                 // Response
                 final String responseString;

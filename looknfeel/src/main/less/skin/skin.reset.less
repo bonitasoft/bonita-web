@@ -15,11 +15,16 @@
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('@{skinFontPath}glyphicons-halflings-regular.eot');
+  src: url('@{skinFontPath}glyphicons-halflings-regular.eot#iefix') format('embedded-opentype'), url('@{skinFontPath}glyphicons-halflings-regular.woff') format('woff'), url('@{skinFontPath}glyphicons-halflings-regular.ttf') format('truetype'), url('@{skinFontPath}glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
 // -----------------------------------------------------------------------------
 // HTML reset
 // -----------------------------------------------------------------------------
 html{
-	font-family: @skinFont, sans-serif;
+	font-family: @regularFont;
 	font-size: 100%;
 	color: @fontColor;
 }
@@ -40,8 +45,10 @@ ul{
 }
 
 h1, h2, h3, h4, h5, h6, h7{
-	font-weight: bold;
-	color: @secondAccentColor;
+	.skinFontFamily();
+	font-weight: 300;
+	color: @mainAccentColor;
+	letter-spacing: 0.05em;
 	margin: 0;
 }
 

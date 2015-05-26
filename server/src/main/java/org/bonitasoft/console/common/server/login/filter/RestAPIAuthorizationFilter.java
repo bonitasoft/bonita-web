@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -116,10 +117,10 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected boolean checkPermissions(final HttpServletRequest request) throws ServletException {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
-        return checkPermissions(request, restRequestParser.getApiName(), restRequestParser.getResourceName(), restRequestParser.getId());
+        return checkPermissions(request, restRequestParser.getApiName(), restRequestParser.getResourceName(), restRequestParser.getResourceQualifiers());
     }
 
-    protected boolean checkPermissions(final HttpServletRequest request, final String apiName, final String resourceName, final APIID id)
+    protected boolean checkPermissions(final HttpServletRequest request, final String apiName, final String resourceName, final APIID resourceQualifiers)
             throws ServletException {
         final String method = request.getMethod();
         final HttpSession session = request.getSession();
@@ -131,29 +132,36 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return true;
         }
-        final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
-        final String resourceId = id != null ? id.toString() : null;
+        final String resourceQualifiersAsString = resourceQualifiers != null ? resourceQualifiers.toString() : null;
 
         final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
-
-        final Set<String> resourceAuthorizations = getDynamicAuthorizations(apiName, resourceName, method, resourceId, dynamicPermissionsChecks);
+        final Set<String> resourceAuthorizations = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, dynamicPermissionsChecks);
         if (!resourceAuthorizations.isEmpty()) {
             //if there is a dynamic rule, use it to check the permissions
             final String requestBody = getRequestBody(request);
-            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceId, request.getQueryString(), requestBody);
+            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(), requestBody);
             return dynamicCheck(apiCallContext, userPermissions, resourceAuthorizations, apiSession);
         } else {
             //if there is no dynamic rule, use the static permissions
-            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceId);
-            return staticCheck(apiCallContext, userPermissions, resourcesPermissionsMapping, apiSession.getUserName());
+            final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
+            final Set<String> resourcePermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, resourcesPermissionsMapping);
+            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString);
+            return staticCheck(apiCallContext, userPermissions, resourcePermissions, apiSession.getUserName());
         }
     }
 
-    protected Set<String> getDynamicAuthorizations(final String apiName, final String resourceName, final String method, final String resourceId,
-            final DynamicPermissionsChecks dynamicPermissionsChecks) {
-        Set<String> resourcePermissions = dynamicPermissionsChecks.getResourcePermissions(method, apiName, resourceName, resourceId);
+    protected Set<String> getDeclaredPermissions(final String apiName, final String resourceName, final String method, final APIID resourceQualifiers,
+            final ResourcesPermissionsMapping resourcesPermissionsMapping) {
+        List<String> resourceQualifiersIds = null;
+        if (resourceQualifiers != null) {
+            resourceQualifiersIds = resourceQualifiers.getIds();
+        }
+        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceQualifiersIds);
         if (resourcePermissions.isEmpty()) {
-            resourcePermissions = dynamicPermissionsChecks.getResourcePermissions(method, apiName, resourceName);
+            resourcePermissions = resourcesPermissionsMapping.getResourcePermissionsWithWildCard(method, apiName, resourceName, resourceQualifiersIds);
+        }
+        if (resourcePermissions.isEmpty()) {
+            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName);
         }
         return resourcePermissions;
     }
@@ -180,13 +188,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected boolean staticCheck(final APICallContext apiCallContext, final Set<String> permissionsOfUser,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping, final String username) {
-        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(apiCallContext.getMethod(), apiCallContext.getApiName(),
-                apiCallContext.getResourceName(), apiCallContext.getResourceId());
-        if (resourcePermissions.isEmpty()) {
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(apiCallContext.getMethod(), apiCallContext.getApiName(),
-                    apiCallContext.getResourceName());
-        }
+            final Set<String> resourcePermissions, final String username) {
         for (final String resourcePermission : resourcePermissions) {
             if (permissionsOfUser.contains(resourcePermission)) {
                 return true;

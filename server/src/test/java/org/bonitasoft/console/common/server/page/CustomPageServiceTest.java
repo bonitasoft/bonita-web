@@ -23,7 +23,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -62,6 +64,12 @@ public class CustomPageServiceTest {
     @Mock
     PageAPI pageAPI;
 
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private PageContext pageContext;
+
     @Test
     public void should_load_page_return_page_impl() throws Exception {
         // Given
@@ -88,6 +96,7 @@ public class CustomPageServiceTest {
         assertNotNull(pageController);
     }
 
+
     @Test
     public void should_load_rest_api_page_return_api_impl() throws Exception {
         // Given
@@ -96,7 +105,7 @@ public class CustomPageServiceTest {
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
-        doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
+        doReturn(pageFile).when(customPageService).getPageFile(any(File.class), anyString());
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
@@ -107,7 +116,7 @@ public class CustomPageServiceTest {
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider, CustomPageService.PAGE_CONTROLLER_FILENAME);
         final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
 
         // Then
@@ -143,8 +152,8 @@ public class CustomPageServiceTest {
 
         final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(new HashSet<String>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
-        doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
+        doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
+        doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
                 .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
@@ -163,7 +172,7 @@ public class CustomPageServiceTest {
         final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
-        doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
+        doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
                 .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
@@ -181,8 +190,8 @@ public class CustomPageServiceTest {
 
         final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(new HashSet<String>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
-        doReturn(new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment")))
+        doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
+        doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
                 .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
@@ -212,7 +221,7 @@ public class CustomPageServiceTest {
     @Test
     public void should_add_Custom_Page_permissions_to_CompoundPermissions() throws Exception {
         // Given
-        final HashSet<String> customPagePermissions = new HashSet<String>(Arrays.asList("Organization Visualization", "Organization Managment"));
+        final HashSet<String> customPagePermissions = new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment"));
 
         // When
         customPageService.addPermissionsToCompoundPermissions("customPage1", customPagePermissions, compoundPermissionsMapping, resourcesPermissionsMapping);
@@ -234,6 +243,55 @@ public class CustomPageServiceTest {
 
         //then
         verify(pageAPI, times(0)).getPageByNameAndProcessDefinitionId(anyString(), anyLong());
+    }
+
+    @Test
+    public void should_retrieve_class_file() throws Exception {
+        // Given
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getName()).thenReturn("page1");
+        when(apiSession.getTenantId()).thenReturn(0L);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
+        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
+        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page1"));
+
+        // When
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
+        final File file = customPageService.getPageFile(pageResourceProvider.getPageDirectory(), "readme.txt");
+
+        // Validate
+        assertThat(file).as("should return file").exists();
+    }
+
+    @Test
+    public void should_register_restApiPage() throws Exception {
+        // Given
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getName()).thenReturn("page2");
+        when(apiSession.getTenantId()).thenReturn(0L);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/pageRestApi.zip"));
+        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
+        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page2"));
+
+        final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
+
+        // When
+        customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider, "RestResource.groovy");
+
+        // then
+        final RestApiController restApiController = restApiControllerClass.newInstance();
+        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder());
+        RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
+                .hasNoAdditionalCookies().hasHttpStatus(200);
     }
 
 }

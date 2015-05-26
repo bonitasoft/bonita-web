@@ -13,6 +13,7 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
+import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -29,13 +30,16 @@ public class ProcessContractResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
+    protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
+
     public ProcessContractResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
     @Get("json")
     public ContractDefinition getContract() throws ProcessDefinitionNotFoundException {
-        return processAPI.getProcessContract(getProcessDefinitionIdParameter());
+        ContractDefinition processContract = processAPI.getProcessContract(getProcessDefinitionIdParameter());
+        return typeConverterUtil.getAdaptedContractDefinition(processContract);
     }
 
     protected long getProcessDefinitionIdParameter() {

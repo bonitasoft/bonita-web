@@ -10,6 +10,7 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.ResourceFinder;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -23,6 +24,7 @@ public class UserTaskExecutionResourceFinder extends ResourceFinder {
     @Override
     public ServerResource create(final Request request, final Response response) {
         final ProcessAPI processAPI = getProcessAPI(request);
-        return new UserTaskExecutionResource(processAPI);
+        final APISession apiSession = getAPISession(request);
+        return new UserTaskExecutionResource(processAPI, apiSession);
     }
 }

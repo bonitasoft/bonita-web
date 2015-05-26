@@ -11,14 +11,14 @@
 @gray-darker:            lighten(@gray-base, 13.5%); // #222
 @gray-dark:              #7b8a8b;   // #333
 @gray:                   #95a5a6; // #555
-@gray-light:             #b4bcc2;   // #999
+@gray-light:             #999;   // #999
 @gray-lighter:           #ecf0f1; // #eee
 
 @brand-primary:         #2C3E50;
-@brand-success:         #18BC9C;
+@brand-success:         #267f00;
 @brand-info:            #3498DB;
 @brand-warning:         #F39C12;
-@brand-danger:          #E74C3C;
+@brand-danger:          #DD0033;
 
 
 //== Scaffolding
@@ -28,10 +28,10 @@
 //** Background color for `<body>`.
 @body-bg:               #fff;
 //** Global text color on `<body>`.
-@text-color:            @brand-primary;
+@text-color:            #323232;
 
 //** Global textual link color.
-@link-color:            @brand-success;
+@link-color:            @brand-danger;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      @link-color;
 //** Link hover decoration.
@@ -48,12 +48,12 @@
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
 
-@font-size-base:          15px;
+@font-size-base:          13px;
 @font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
 @font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
 
-@font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
-@font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
+@font-size-h1:            floor((@font-size-base * 2.15)); // ~36px
+@font-size-h2:            floor((@font-size-base * 1.9)); // ~30px
 @font-size-h3:            ceil((@font-size-base * 1.7)); // ~24px
 @font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
 @font-size-h5:            @font-size-base;
@@ -65,10 +65,10 @@
 @line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
 
 //** By default, this inherits from the `<body>`.
-@headings-font-family:    @font-family-base;
+@headings-font-family:    "Signika-Regular";
 @headings-font-weight:    400;
 @headings-line-height:    1.1;
-@headings-color:          inherit;
+@headings-color:          @brand-danger;
 
 
 //== Iconography
@@ -87,8 +87,8 @@
 //
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
-@padding-base-vertical:     10px;
-@padding-base-horizontal:   15px;
+@padding-base-vertical:     5px;
+@padding-base-horizontal:   10px;
 
 @padding-large-vertical:    18px;
 @padding-large-horizontal:  27px;

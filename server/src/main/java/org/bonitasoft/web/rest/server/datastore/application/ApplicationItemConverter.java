@@ -48,6 +48,17 @@ public class ApplicationItemConverter {
         } else {
             item.setHomePageId(-1L);
         }
+        if (application.getLayoutId() != null) {
+            item.setLayoutId(application.getLayoutId());
+        } else {
+            item.setLayoutId(-1L);
+        }
+        if (application.getThemeId() != null) {
+            item.setThemeId(application.getThemeId());
+        } else {
+            item.setThemeId(-1L);
+        }
+
         return item;
     }
 
@@ -60,7 +71,7 @@ public class ApplicationItemConverter {
     }
 
     public ApplicationUpdater toApplicationUpdater(final Map<String, String> attributes) {
-        final ApplicationUpdater applicationUpdater = new ApplicationUpdater();
+        final ApplicationUpdater applicationUpdater = getApplicationUpdater();
 
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_TOKEN)) {
             applicationUpdater.setToken(attributes.get(ApplicationItem.ATTRIBUTE_TOKEN));
@@ -82,7 +93,6 @@ public class ApplicationItemConverter {
             }
             applicationUpdater.setHomePageId(homePageId);
         }
-
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_STATE)) {
             applicationUpdater.setState(attributes.get(ApplicationItem.ATTRIBUTE_STATE));
         }
@@ -95,6 +105,10 @@ public class ApplicationItemConverter {
 
         return applicationUpdater;
 
+    }
+
+    protected ApplicationUpdater getApplicationUpdater() {
+        return new ApplicationUpdater();
     }
 
 }
