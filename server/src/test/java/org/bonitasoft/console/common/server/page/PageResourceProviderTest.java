@@ -40,7 +40,6 @@ public class PageResourceProviderTest {
         doReturn(PAGE_NAME).when(page).getName();
         doReturn(PAGE_ID).when(page).getId();
 
-
         pageResourceProvider = new PageResourceProvider(PAGE_NAME, 1);
         pageResourceProviderWithProcessDefinition = new PageResourceProvider(page, 1);
     }

@@ -30,7 +30,6 @@ public class CompilableFile {
 
     public static final CompilableFile[] ALWAYS_COMPILED_FILES = new CompilableFile[] {
             new CompilableFile("skin/bootstrap/portal/main.less", "bonita-skin.css"),
-            new CompilableFile("skin/bootstrap/applications/main.less", "applications-skin.css")
     };
 
     public CompilableFile(String input, String output) {
