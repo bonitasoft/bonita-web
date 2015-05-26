@@ -7,13 +7,14 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +33,7 @@ import org.bonitasoft.console.common.server.preferences.properties.ResourcesPerm
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -42,6 +44,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
+
+    public static final String PAGE_NO_API_EXTENSION_PROPERTIES = "pageNoApiExtension.properties";
+    public static final String PAGE_PROPERTIES = "page.properties";
 
     @Spy
     private final CustomPageService customPageService = spy(new CustomPageService());
@@ -70,10 +75,17 @@ public class CustomPageServiceTest {
     @Mock
     private PageContext pageContext;
 
+    @Mock
+    private Page mockedPage;
+
+    @Before
+    public void before() {
+        when(apiSession.getTenantId()).thenReturn(1L);
+    }
+
     @Test
     public void should_load_page_return_page_impl() throws Exception {
         // Given
-        when(apiSession.getTenantId()).thenReturn(0L);
         final File pageFile = new File(getClass().getResource("/Index.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
@@ -82,7 +94,7 @@ public class CustomPageServiceTest {
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
-        final Page mockedPage = mock(Page.class);
+
         when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         when(pageAPI.getPageByName("")).thenReturn(mockedPage);
@@ -131,7 +143,7 @@ public class CustomPageServiceTest {
         when(mockedPage.getName()).thenReturn("page1");
         when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
-        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("page.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
@@ -150,7 +162,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|identity/user, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -169,7 +181,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|unkown/resource, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -188,7 +200,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[GET|unkown/resource, GET|identity/user, PUT|identity/user]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping).getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
@@ -207,7 +219,7 @@ public class CustomPageServiceTest {
         final String fileContent = "name=customPage1\n" +
                 "resources=[]";
 
-        final File pagePropertiesFile = File.createTempFile("page.properties", ".tmp");
+        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
         doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
 
@@ -253,7 +265,7 @@ public class CustomPageServiceTest {
         when(mockedPage.getName()).thenReturn("page1");
         when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
-        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/page.zip"));
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("page.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
@@ -275,7 +287,7 @@ public class CustomPageServiceTest {
         when(mockedPage.getName()).thenReturn("page2");
         when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
-        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("/pageRestApi.zip"));
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("pageApiExtension.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
@@ -289,9 +301,81 @@ public class CustomPageServiceTest {
 
         // then
         final RestApiController restApiController = restApiControllerClass.newInstance();
-        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder());
+        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder(), new RestApiUtilImpl());
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
                 .hasNoAdditionalCookies().hasHttpStatus(200);
     }
+
+    @Test
+    public void should_add_api_extension_permission() throws Exception {
+        //given
+        doReturn("custompage_test").when(mockedPage).getName();
+        doReturn(null).when(mockedPage).getProcessDefinitionId();
+        File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+
+        //when
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+
+        //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+        verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
+        verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
+    }
+
+    @Test
+    public void should_add_no_api_extension_permission() throws Exception {
+        //given
+        doReturn("custompage_test").when(mockedPage).getName();
+        doReturn(null).when(mockedPage).getProcessDefinitionId();
+        File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+
+        //when
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+
+        //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+        verifyZeroInteractions(resourcesPermissionsMapping);
+    }
+
+
+    @Test
+    public void should_remove_api_extension_permissions() throws Exception {
+        //given
+        File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+
+        //when
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+
+        //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+        verify(resourcesPermissionsMapping).removeProperty("GET|extension/restApiGet");
+        verify(resourcesPermissionsMapping).removeProperty("POST|extension/restApiPost");
+    }
+
+    @Test
+    public void should_remove_no_permissions() throws Exception {
+        //given
+        File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+
+        //when
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+
+        //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+        verifyZeroInteractions(resourcesPermissionsMapping);
+    }
+
 
 }

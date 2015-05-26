@@ -14,14 +14,15 @@
  */
 package org.bonitasoft.console.client.admin.page.view;
 
-import static java.util.Arrays.*;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static java.util.Arrays.asList;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.admin.page.action.DeleteMultipleItemsPopupCustomPageAction;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -57,17 +58,27 @@ public class PageListingPage extends ItemListingPage<PageItem> {
     protected static final String TABLE_ALL_PAGES = "allpages";
 
     private static final String FILTER_PRIMARY_ALL_PAGES = "allpagesfilter";
+    private static final String FILTER_PRIMARY_PAGES = "pages";
+    private static final String FILTER_PRIMARY_FORMS = "forms";
+    private static final String FILTER_PRIMARY_LAYOUT = "layout";
+    private static final String FILTER_PRIMARY_THEME = "theme";
+    private static final String FILTER_PRIMARY_API = "apiextension";
 
     @Override
     protected LinkedList<ItemListingFilter> definePrimaryFilters() {
         final LinkedList<ItemListingFilter> filters = new LinkedList<ItemListingFilter>();
         filters.add(new ItemListingFilter(FILTER_PRIMARY_ALL_PAGES, _("All"), _("All pages"), TABLE_ALL_PAGES));
+        filters.add(new ItemListingFilter(FILTER_PRIMARY_PAGES, _("Pages"), _("Pages"), TABLE_ALL_PAGES).addFilter(PageItem.FILTER_CONTENT_TYPE, ContentType.PAGE));
+        filters.add(new ItemListingFilter(FILTER_PRIMARY_FORMS, _("Forms"), _("Forms"), TABLE_ALL_PAGES).addFilter(PageItem.FILTER_CONTENT_TYPE, ContentType.FORM));
+        filters.add(new ItemListingFilter(FILTER_PRIMARY_LAYOUT, _("Layouts"), _("Layouts"), TABLE_ALL_PAGES).addFilter(PageItem.FILTER_CONTENT_TYPE, "layout"));
+        filters.add(new ItemListingFilter(FILTER_PRIMARY_THEME, _("Themes"), _("Themes"), TABLE_ALL_PAGES).addFilter(PageItem.FILTER_CONTENT_TYPE, "theme"));
+        filters.add(new ItemListingFilter(FILTER_PRIMARY_API, _("REST API extensions"), _("REST API extensions"), TABLE_ALL_PAGES).addFilter(PageItem.FILTER_CONTENT_TYPE, ContentType.API_EXTENSION));
         return filters;
     }
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("Manage pages"));
+        this.setTitle(_("Manage resources"));
     }
 
     @Override
