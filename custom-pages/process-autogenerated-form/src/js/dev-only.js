@@ -207,7 +207,7 @@
         {
           description:null,
           name:'complex',
-          multiple:true,
+          multiple:false,
           inputs:[
             {
               description:null,

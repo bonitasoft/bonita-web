@@ -39,7 +39,7 @@
       <div ng-repeat="input in contract.inputs">
 
         <!-- simple input -->
-        <div ng-if="isSingleInput(input) && !isFileInput(input)" ng-include="'templates/simple.html'"></div>
+        <div ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/simple.html'"></div>
         <!-- simple input multiple-->
         <div ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/multiple.html'"></div>
         <!-- complex input -->

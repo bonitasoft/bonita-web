@@ -120,33 +120,32 @@ describe('custom page', function() {
         });
     });
 
-    it('should have a text form field for the complex input', function() {
+    it('should have a form field for each attribute of the complex input', function() {
         /*
-         * {
+        * {
          description:null,
          name:'complex',
          multiple:true,
          inputs:[
-         {
-         description:null,
-         name:'child1',
-         multiple:false,
-         type:'TEXT',
-         inputs:[]
-         },
-         {
-         description:null,
-         name:'children',
-         multiple:true,
-         type:'DECIMAL',
-         inputs:[]
-         }
+             {
+             description:null,
+             name:'child1',
+             multiple:false,
+             type:'TEXT',
+             inputs:[]
+             },
+             {
+             description:null,
+             name:'children',
+             multiple:true,
+             type:'DECIMAL',
+             inputs:[]
+             }
          ]
          }
-         * */
-        expect(element(by.id('complex')).getAttribute('type')).toEqual('text');
+        * */
+        expect(element(by.id('child1')).getAttribute('type')).toEqual('text');
+        expect(element(by.id('children_0')).getAttribute('type')).toEqual('number');
     });
-
-
 
 });
