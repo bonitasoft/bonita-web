@@ -41,16 +41,16 @@
     });
 
     var step5ExecutionFailed = {
-      "exception":"class org.bonitasoft.engine.bpm.process.ProcessExecutionException","message":"USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \"bjh\"\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]"
+      'exception':'class org.bonitasoft.engine.bpm.process.ProcessExecutionException','message':'USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \'bjh\'\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]'
     };
 
     var step4ExecutionFailed = {
-      "exception":"class org.bonitasoft.engine.bpm.contract.ContractViolationException",
-      "message":"USERNAME=william.jobs | Contract is not valid: ",
-      "explanations":[
-        "Expected input [ticket_account] is missing",
-        "Expected input [ticket_description] is missing",
-        "Expected input [ticket_subject] is missing"
+      'exception':'class org.bonitasoft.engine.bpm.contract.ContractViolationException',
+      'message':'USERNAME=william.jobs | Contract is not valid: ',
+      'explanations':[
+        'Expected input [ticket_account] is missing',
+        'Expected input [ticket_description] is missing',
+        'Expected input [ticket_subject] is missing'
       ]
     };
 
@@ -69,21 +69,22 @@
       ],
       inputs:[
         {
-          "description":null,
-          "name":"complex",
-          "multiple":true,
-          "inputs":[
+          description:null,
+          name:'complex',
+          multiple:true,
+          inputs:[
             {
-              "description":null,
-              "name":"child",
-              "multiple":false,
-              "type":"TEXT"
+              description:null,
+              name:'child',
+              multiple:false,
+              type:'TEXT',
+              inputs:[]
             }
           ]
         },
 
         {
-          description:"Leave a comment to explain the issue.",
+          description:'Leave a comment to explain the issue.',
           name:'ticket_comment',
           multiple:false,
           type:'TEXT',
@@ -129,20 +130,22 @@
     });
 
     var process5InstantiationFailed = {
-      "exception":"class org.bonitasoft.engine.bpm.process.ProcessExecutionException","message":"USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \"bjh\"\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]"
+      'exception':'class org.bonitasoft.engine.bpm.process.ProcessExecutionException','message':'USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \'bjh\'\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]'
     };
 
     var process4InstantiationFailed = {
-      "exception":"class org.bonitasoft.engine.bpm.contract.ContractViolationException",
-      "message":"USERNAME=william.jobs | Contract is not valid: ",
-      "explanations":[
-        "Expected input [ticket_account] is missing",
-        "Expected input [ticket_description] is missing",
-        "Expected input [ticket_subject] is missing"
+      'exception':'class org.bonitasoft.engine.bpm.contract.ContractViolationException',
+      'message':'USERNAME=william.jobs | Contract is not valid: ',
+      'explanations':[
+        'Expected input [ticket_account] is missing',
+        'Expected input [ticket_description] is missing',
+        'Expected input [ticket_subject] is missing'
       ]
     };
 
+    /*jshint camelcase: false */
     var process2 = {id:'5142703331505681458',icon:'/default/process.png',displayDescription:'',deploymentDate:'2015-04-14 15:53:34.489',description:'',activationState:'ENABLED',name:'Register new Support Ticket',deployedBy:'4',displayName:'Register new Support Ticket',actorinitiatorid:'2',last_update_date:'2015-04-14 15:53:34.648',configurationState:'RESOLVED',version:'1.0'};
+    /*jshint camelcase: true */
 
     var contractProcess2 = {
       constraints:[
@@ -197,40 +200,84 @@
           inputs:[]
         },
         {
-          "description":null,
-          "name":"complex",
-          "multiple":true,
-          "inputs":[
+          description:null,
+          name:'complex',
+          multiple:true,
+          inputs:[
             {
-              "description":null,
-              "name":"child1",
-              "multiple":false,
-              "type":"TEXT",
-              "inputs":[]
+              description:null,
+              name:'child1',
+              multiple:false,
+              type:'TEXT',
+              inputs:[]
             },
             {
-             "description":null,
-             "name":"children",
-             "multiple":true,
-             "type":"DECIMAL",
-             "inputs":[]
+             description:null,
+             name:'children',
+             multiple:true,
+             type:'DECIMAL',
+             inputs:[]
             }
           ]
         },
          {
-          description:"Business cost associated to this issue. In US Dollars.",
+          description:'Business cost associated to this issue. In US Dollars.',
           name:'ticket_cost',
           multiple:false,
           type:'DECIMAL',
           inputs:[]
         },
        {
-         description:"Ticket creation date",
+         description:'Ticket creation date',
          name:'ticket_date',
          multiple:false,
          type:'DATE',
          inputs:[]
-       }
+       },
+       {
+          type: 'FILE',
+          description: 'buisness archive',
+          name: 'buisnessArchive',
+          multiple: false,
+          inputs: [
+            {
+              type: 'TEXT',
+              description: 'Name of the file',
+              name: 'filename',
+              multiple: false,
+              inputs: []
+            },
+            {
+              type: 'BYTE_ARRAY',
+              description: 'Content of the file',
+              name: 'content',
+              multiple: false,
+              inputs: []
+            }
+          ]
+        },
+        {
+          type: 'FILE',
+          description: 'multiple file',
+          name: 'screenShots',
+          multiple: true,
+          inputs: [
+            {
+              type: 'TEXT',
+              description: 'Name of the file',
+              name: 'filename',
+              multiple: false,
+              inputs: []
+            },
+            {
+              type: 'BYTE_ARRAY',
+              description: 'Content of the file',
+              name: 'content',
+              multiple: false,
+              inputs: []
+            }
+          ]
+        }
       ]
     };
 
@@ -243,7 +290,7 @@
       return [200, step2, {}];
     });
 
-    var step2 = {"displayDescription":"","executedBySubstitute":"0","processId":"7843764322062200989","parentCaseId":"4","state":"ready","rootContainerId":"4","type":"USER_TASK","assigned_id":"","assigned_date":"","id":"12","executedBy":"0","caseId":"4","priority":"normal","actorId":"1","description":"","name":"Ticket review","reached_state_date":"2015-04-14 17:26:39.783","rootCaseId":"4","displayName":"Ticket review","dueDate":"2015-04-14 18:26:39.778","last_update_date":"2015-04-14 17:26:39.783"};
+    var step2 = {'displayDescription':'','executedBySubstitute':'0','processId':'7843764322062200989','parentCaseId':'4','state':'ready','rootContainerId':'4',type:'USER_TASK','assigned_id':'','assigned_date':'','id':'12','executedBy':'0','caseId':'4','priority':'normal','actorId':'1',description:'',name:'Ticket review','reached_state_date':'2015-04-14 17:26:39.783','rootCaseId':'4','displayName':'Ticket review','dueDate':'2015-04-14 18:26:39.778','last_update_date':'2015-04-14 17:26:39.783'};
 
     //--------------------------------------------------------------------------
     //--------------------- List Archived Human Tasks  -------------------------
@@ -456,7 +503,7 @@
           href: '/API/bdm/businessData/com.company.model.Client/2/industry'
         }
       ]
-    }
+    };
 
     var Ticket7 =
     {

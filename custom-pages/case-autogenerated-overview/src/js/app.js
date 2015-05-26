@@ -24,7 +24,8 @@
       $scope.doneTasks = data;
     });
     overviewSrvc.fetchContext(caseId).then(function(data){
-      $scope.businessData = data;
+      $scope.businessData = data.businessData;
+      $scope.documents = data.documents;
     });
   }])
   .config(['$locationProvider',function($locationProvider) {
