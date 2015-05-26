@@ -1,0 +1,8 @@
+<form name="complexInputsForm" class="form-horizontal">
+    <div ng-class="{'form-group': true, 'has-error': !complexInputsForm[input.name].$valid, 'has-feedback': complexInputsForm[input.name].$valid}">
+        <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
+        <div class="input">
+            <input type="text" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="dataToSend[input.name]" placeholder="{{'Expecting a JSON value, e.g. {\'property\':\'value\'}'}}">
+        </div>
+    </div>
+</form>
