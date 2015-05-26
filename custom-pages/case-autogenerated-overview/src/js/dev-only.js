@@ -265,32 +265,80 @@
 
     var caseContext =
     {
-      processDefinitionId: '1',
-      processInstanceId: '2',
-      processInstanceInitiatorId: '1',
-      lastClosedTicket: {
+      lastClosedTicket_ref: {
         type : 'com.acme.object.Ticket',
-        value : 7,
+        storageId : 7,
         link : 'API/bdm/businessData/com.acme.object.Ticket/7'
       },
-      lastOpenTicket: {
+      lastOpenTicket_ref: {
         type : 'com.acme.object.Ticket',
-        value : 8,
+        storageId : 8,
         link : 'API/bdm/businessData/com.acme.object.Ticket/8'
       },
-      client: {
+      client_ref: {
         type: 'com.company.model.Client',
-        value: 2,
+        storageId: 2,
         link : 'API/bdm/businessData/com.company.model.Client/2'
       }
       ,
-      multipleBusinessData: {
+      multipleBusinessData_ref: {
         type : 'com.acme.object.Ticket',
-        value : [ 100, 101, 102 ],
+        storageIds : [ 100, 101, 102 ],
         link : 'API/bdm/businessData/com.acme.object.Ticket?q=findByIds&f=ids=100,101,102'
       }
-
+      ,
+      logfile_ref: {
+        id:1,
+        processInstanceId:1006,
+        name:'logfile',
+        author:204,
+        creationDate:1432037836684,
+        fileName:'page.properties',
+        contentMimeType:'text/plain',
+        contentStorageId:'1',
+        url:'documentDownload?fileName=page.properties&contentStorageId=1',
+        description:'',
+        version:'1',
+        index:-1,
+        contentFileName:'page.properties'
+      }
+      ,
+      screenshots_ref:[
+        {
+          id:2,
+          processInstanceId:1006,
+          name:'screenshots',
+          author:204,
+          creationDate:1432037836714,
+          fileName:'index.html',
+          contentMimeType:'text/html',
+          contentStorageId:'2',
+          url:'documentDownload?fileName=index.html&contentStorageId=2',
+          description:null,
+          version:'1',
+          index:0,
+          contentFileName:'index.html'
+        },
+        {
+          id:3,
+          processInstanceId:1006,
+          name:'screenshots',
+          author:204,
+          creationDate:1432037836715,
+          fileName:'page.properties',
+          contentMimeType:'text/plain',
+          contentStorageId:'3',
+          url:'documentDownload?fileName=page.properties&contentStorageId=3',
+          description:null,
+          version:'1',
+          index:1,
+          contentFileName:'page.properties'
+        }
+      ]
     }
+
+
+
 
 
 
