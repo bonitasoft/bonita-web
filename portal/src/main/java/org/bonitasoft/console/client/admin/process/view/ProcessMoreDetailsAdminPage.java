@@ -14,9 +14,9 @@
  */
 package org.bonitasoft.console.client.admin.process.view;
 
-import static org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem.*;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
-import static org.bonitasoft.web.toolkit.client.common.util.MapUtil.*;
+import static org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemItem.FILTER_PROCESS_ID;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.util.MapUtil.asMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
  */
 public class ProcessMoreDetailsAdminPage extends ItemQuickDetailsPage<ProcessItem> {
 
-    public static final String TOKEN = "processmoredetailsadmin";
+    public static final String TOKEN = "gwtprocessmoredetailsadmin";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 

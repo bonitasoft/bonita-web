@@ -6,10 +6,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -22,6 +18,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FormMappingResourceTest extends RestletTest {
@@ -72,6 +72,31 @@ public class FormMappingResourceTest extends RestletTest {
         outputStream.close();
         assertThat(content).isNotNull();
         assertThat(content).contains("\"task\":\"myTask\"");
+        verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+    }
+
+    @Test
+    public void searchFormMappingShouldReturnPrecessDefIdAsString() throws Exception {
+
+        final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
+        final FormMapping formMapping = new FormMapping();
+        formMapping.setTask("myTask");
+        formMapping.setProcessDefinitionId(4871148324840256385L);
+        final List<FormMapping> formMappings = new ArrayList<>();
+        formMappings.add(formMapping);
+        doReturn(formMappings).when(searchResult).getResult();
+        doReturn(1L).when(searchResult).getCount();
+        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+
+        final Response response = request("/form/mapping?p=0&c=10").get();
+
+        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        response.getEntity().write(outputStream);
+        final String content = outputStream.toString();
+        outputStream.close();
+        assertThat(content).isNotNull();
+        assertThat(content).contains("\"processDefinitionId\":\"4871148324840256385\"");
         verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
     }
 

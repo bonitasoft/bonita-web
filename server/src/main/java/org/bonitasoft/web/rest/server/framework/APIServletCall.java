@@ -73,7 +73,7 @@ public class APIServletCall extends ServletCall {
     // REQUEST PARSING
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private API<? extends IItem> api;
+    protected API<? extends IItem> api;
 
     private String apiName;
 
@@ -151,7 +151,7 @@ public class APIServletCall extends ServletCall {
 
         super.parseRequest(request, response);
 
-        }
+    }
 
     void parsePath(final HttpServletRequest request) {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
@@ -178,12 +178,10 @@ public class APIServletCall extends ServletCall {
             }
             // Search
             else {
-
                 final ItemSearchResult<?> result = api.runSearch(Integer.parseInt(getParameter(PARAMETER_PAGE, "0")),
                         Integer.parseInt(getParameter(PARAMETER_LIMIT, "10")), getParameter(PARAMETER_SEARCH),
                         getParameter(PARAMETER_ORDER), parseFilters(getParameterAsList(PARAMETER_FILTER)),
                         getParameterAsList(PARAMETER_DEPLOY), getParameterAsList(PARAMETER_COUNTER));
-
                 head("Content-Range", result.getPage() + "-" + result.getLength() + "/" + result.getTotal());
 
                 output(result.getResults());
@@ -193,6 +191,16 @@ public class APIServletCall extends ServletCall {
             e.setResource(resourceName);
             throw e;
         }
+    }
+
+    @Override
+    protected void output(final Object object) {
+        super.output(object);
+    }
+
+    @Override
+    protected void head(final String name, final String value) {
+        super.head(name, value);
     }
 
     /**
