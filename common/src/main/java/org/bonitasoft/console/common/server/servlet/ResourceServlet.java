@@ -16,10 +16,13 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
-import org.bonitasoft.engine.session.APISession;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
@@ -28,13 +31,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut
@@ -184,7 +185,6 @@ public abstract class ResourceServlet extends HttpServlet {
             response.setContentType(contentType);
             response.setContentLength(content.length);
             response.setBufferSize(content.length);
-            response.setHeader("Cache-Control", "no-cache");
             final OutputStream out = response.getOutputStream();
             out.write(content, 0, content.length);
             response.flushBuffer();
