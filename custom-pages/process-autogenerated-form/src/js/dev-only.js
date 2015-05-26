@@ -83,7 +83,8 @@
               description:null,
               name:'child',
               multiple:false,
-              type:'TEXT'
+              type:'TEXT',
+              inputs:[]
             }
           ]
         },
