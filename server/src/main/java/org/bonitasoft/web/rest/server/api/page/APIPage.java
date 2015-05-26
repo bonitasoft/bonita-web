@@ -101,7 +101,7 @@ APIHasDelete {
 
     private ItemSearchResult<PageItem> searchPagesAlreadyAdded(final int pageId, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
-        final List<String> pagesAlreadyAdded = getPagesAlreadyAdded(filters.get(PAGES_ADDED_FOR_MENU), pageId, resultsByPage, search, orders, filters);
+        final List<String> pagesAlreadyAdded = getPagesAlreadyAdded(filters.get(PAGES_ADDED_FOR_MENU));
         final ItemSearchResult<PageItem> results = getPageDatastore().search(pageId, resultsByPage, search, orders, new HashMap<String, String>());
         final List<PageItem> pages = new ArrayList<PageItem>();
 
@@ -118,9 +118,9 @@ APIHasDelete {
 
     private ItemSearchResult<PageItem> searchWithoutPagesAlreadyAdded(final int pageId, final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
-        final List<String> pagesAlreadyAdded = getPagesAlreadyAdded(filters.get(PAGES_ALLOWED_FOR_MENU), pageId, resultsByPage, search, orders, filters);
-
-        final ItemSearchResult<PageItem> results = getPageDatastore().search(pageId, resultsByPage, search, orders, new HashMap<String, String>());
+        final List<String> pagesAlreadyAdded = getPagesAlreadyAdded(filters.get(PAGES_ALLOWED_FOR_MENU));
+        filters.remove(PAGES_ALLOWED_FOR_MENU);
+        final ItemSearchResult<PageItem> results = getPageDatastore().search(pageId, resultsByPage, search, orders, filters);
 
         final List<PageItem> pages = new ArrayList<PageItem>();
 
@@ -135,8 +135,7 @@ APIHasDelete {
         return results;
     }
 
-    private List<String> getPagesAlreadyAdded(final String profileId, final int pageId, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+    private List<String> getPagesAlreadyAdded(final String profileId) {
         final List<ProfileEntry> profileEntries = createProfileEntryEngineClient().getAllChildsOfAProfileEntry(Long.valueOf(profileId));
         final List<ProfileEntryItem> profileEntyItems = new ProfileEntryItemConverter().convert(profileEntries);
 
