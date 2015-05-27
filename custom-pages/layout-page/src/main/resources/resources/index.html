@@ -5,10 +5,9 @@
   <title>LivingApplicationLayoutPage</title> 
   <link rel="stylesheet" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" href="css/widget.css"> 
- 
-  <link rel="stylesheet" href="../theme/theme.css"> 
-    <script src="js/vendor.min.js"></script> 
+  <script src="js/vendor.min.js"></script> 
   <script src="js/generator.min.js"></script> 
+  <!-- assets attached to the page --> 
   <script>
         angular.module('org.bonitasoft.pagebuilder.generator').requires.push('ui.bootstrap');
     </script> 
@@ -44,7 +43,7 @@
 </script> 
    <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('propertyValuesFactory', function() {
   var resources = {};
-  resources['a2f94771-e43d-41e2-ab87-2f48847b2939'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"selectedMenu":{"type":"data","value":"targetedPage"},"menuList":{"type":"data","value":"pageList"},"applicationName":{"type":"constant","value":"{{application[0].displayName}}"},"targetUrl":{"type":"data","value":"targetedPageUrl"},"contextPath":{"type":"constant","value":"/bonita"}};
+  resources['a2f94771-e43d-41e2-ab87-2f48847b2939'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"selectedMenu":{"type":"data","value":"targetedPage"},"menuList":{"type":"data","value":"pageList"},"applicationName":{"type":"constant","value":"{{application[0].displayName}}"},"targetUrl":{"type":"data","value":"targetedPageUrl"},"contextPath":{"type":"constant","value":"/bonita"},"sticky":{"type":"constant","value":true}};
   resources['9cd7cd7e-d548-410a-aaa3-4318f9280818'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"src":{"type":"data","value":"targetedPageUrl"},"contentHeight":{"type":"constant","value":"700px;"}};
   return {
     get: function(uuid) {

@@ -13,6 +13,7 @@
  **/
 package org.bonitasoft.web.rest.model.application;
 
+import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -186,6 +187,14 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public void setThemeId(final Long themeId) {
         setAttribute(ATTRIBUTE_THEME_ID, themeId);
+    }
+
+    public PageItem getLayout() {
+        return (PageItem) getDeploy(ATTRIBUTE_LAYOUT_ID);
+    }
+
+    public PageItem getTheme() {
+        return (PageItem) getDeploy(ATTRIBUTE_THEME_ID);
     }
 
 }

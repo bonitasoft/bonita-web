@@ -24,7 +24,7 @@ var zip = require('gulp-zip');
 var runSequence = require('run-sequence');
 
 /* javascript */
-var uglify = require('gulp-uglify');
+//var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 
 /* test */
@@ -187,7 +187,7 @@ gulp.task('tdd', function (done) {
   }, done);
 });
 
-gulp.task('zip', ['assets', 'fonts', 'repath'], function (done) {
+gulp.task('zip', ['assets', 'fonts', 'repath'], function () {
   return gulp.src('target/dist/**/*')
     .pipe(zip(customPageName + '.zip'))
     .pipe(gulp.dest('target'));
@@ -197,13 +197,13 @@ gulp.task('e2e', function (done) {
   serve({
     livereload: false
   });
-  gulp.src(["test/e2e/spec/**/*.js"])
+  gulp.src(['test/e2e/spec/**/*.js'])
     .pipe(protractor({
-      configFile: "test/e2e/protractor.conf.js",
+      configFile: 'test/e2e/protractor.conf.js',
       args: ['--baseUrl', 'http://localhost:' + opt.port]
     }))
     .on('error', function (e) {
-      throw e
+      throw e;
     })
     .on('end', function () {
       connect.serverClose();

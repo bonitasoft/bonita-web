@@ -56,6 +56,8 @@ public class PageItemBuilder {
 
     protected long updatedBy = 1L;
 
+    private String zipFileName="/page.zip";
+
     public static PageItemBuilder aPageItem() {
         return new PageItemBuilder();
     }
@@ -72,7 +74,7 @@ public class PageItemBuilder {
         item.setLastUpdateDate(last_update_date);
         item.setUpdatedByUserId(updatedBy);
         item.setContentName(contentName);
-        final URL zipFileUrl = getClass().getResource("/page.zip");
+        final URL zipFileUrl = getClass().getResource(zipFileName);
         final File zipFile = new File(zipFileUrl.toURI());
 
         FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
@@ -113,6 +115,11 @@ public class PageItemBuilder {
 
     public PageItemBuilder isProvided(final boolean isProvided) {
         this.isProvided = isProvided;
+        return this;
+    }
+
+    public PageItemBuilder withZip(String zipFileName){
+        this.zipFileName = zipFileName;
         return this;
     }
 }
