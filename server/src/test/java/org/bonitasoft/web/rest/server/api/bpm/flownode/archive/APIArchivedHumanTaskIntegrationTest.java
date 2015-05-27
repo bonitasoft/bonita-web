@@ -14,6 +14,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
+import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.test.toolkit.bpm.TestProcess;
@@ -54,7 +55,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         defaultHumanTaskProcess.addActor(getInitiator());
         final ProcessInstance processInstance = defaultHumanTaskProcess.startCase(getInitiator()).getProcessInstance();
 
-        waitPendingHumanTask();
+        waitPendingHumanTask(processInstance.getId());
 
         // Retrieve a humanTaskInstance
         final HumanTaskInstance humanTaskInstance = getProcessAPI().getPendingHumanTaskInstances(getInitiator().getId(), 0, 10, null).get(0);
@@ -92,12 +93,16 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
     /**
      * Wait the process contain PendingHumanTaskInstance
      */
-    private void waitPendingHumanTask() throws Exception {
-        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 1000) {
+    private void waitPendingHumanTask(final long processInstanceId) throws Exception {
+
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+        searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
+
+        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 2000) {
 
             @Override
             protected boolean check() throws Exception {
-                return getProcessAPI().getPendingHumanTaskInstances(getInitiator().getId(), 0, 10, null).size() >= 1;
+                return getProcessAPI().searchPendingTasksForUser(getInitiator().getId(), searchOptionsBuilder.done()).getCount() >= 1;
             }
         }.waitUntil());
     }

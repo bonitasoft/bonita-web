@@ -38,8 +38,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ApplicationResourceCacheFilter implements Filter {
 
-	protected FilterConfig filterConfig = null;
-
 	protected Map<String, Integer> expiresMap = new HashMap<String, Integer>();
 
 	/**
@@ -62,8 +60,6 @@ public class ApplicationResourceCacheFilter implements Filter {
 
 	@Override
     public void init(final FilterConfig filterConfig) throws ServletException {
-		this.filterConfig = filterConfig;
-		expiresMap.clear();
 		final Enumeration<?> names = filterConfig.getInitParameterNames();
 		while (names.hasMoreElements()) {
 			try {
@@ -104,7 +100,6 @@ public class ApplicationResourceCacheFilter implements Filter {
 
 	@Override
     public void destroy() {
-		filterConfig = null;
 	}
 
 	private void setResponseHeader(final HttpServletResponse response, final String ext) {
