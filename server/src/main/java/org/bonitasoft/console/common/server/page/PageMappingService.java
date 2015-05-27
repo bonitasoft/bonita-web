@@ -24,13 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.AuthorizationRuleConstants;
 import org.bonitasoft.engine.page.PageURL;
@@ -42,14 +40,14 @@ public class PageMappingService {
     protected static final String PROCESS_DEPLOY = "process_deploy";
 
     public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale,
-            final boolean executeAuthorizationRules) throws NotFoundException, UnauthorizedAccessException, BonitaException {
-        final Map<String, Serializable> context = new HashMap<String, Serializable>();
+            final boolean executeAuthorizationRules) throws BonitaException {
+        final Map<String, Serializable> context = new HashMap<>();
         context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
         context.put(AuthorizationRuleConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-        final PageURL pageURL = processAPI.resolvePageOrURL(mappingKey, context, executeAuthorizationRules);
+        final PageAPI pageAPI = getPageAPI(apiSession);
+        final PageURL pageURL = pageAPI.resolvePageOrURL(mappingKey, context, executeAuthorizationRules);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
     }
 
@@ -60,8 +58,8 @@ public class PageMappingService {
         return userPermissions.contains(PROCESS_DEPLOY);
     }
 
-    protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
+    protected PageAPI getPageAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
             UnknownAPITypeException {
-        return TenantAPIAccessor.getProcessAPI(apiSession);
+        return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
 }
