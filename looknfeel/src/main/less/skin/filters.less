@@ -7,18 +7,9 @@
         display: block;
         padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
         min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
-        &.performed{
-            .bgFilter(@filtersPanel-filters-bgPerformed);
-            &:hover{
-                .bgHoverFilter(@filtersPanel-filters-bgPerformed);
-            }
-        }
+        
     }
-    a.current{
-        &.performed{
-            .bgCurrentFilter(@filtersPanel-filters-bgPerformed-selected);
-        }
-    }
+    
     .body a.current, .body a.current:hover{
         position: relative;
         background-color: @filtersPanel-filtersCurrent-background !important;
@@ -209,9 +200,9 @@
                 }
                 
                 &.humantask{
-                    .bgFilter(@filtersPanel-filters-bgHumanTask);
+                    .bgFilter(@filtersPanel-filters-bgHumanTask-selected);
                     &:hover{
-                        .bgHoverFilter(@filtersPanel-filters-bgHumanTask);
+                        .bgHoverFilter(@filtersPanel-filters-bgHumanTask-selected);
                     }
                     &.current{
                         .bgCurrentFilter(@filtersPanel-filters-bgHumanTask-selected);
