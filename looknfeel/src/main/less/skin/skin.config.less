@@ -43,13 +43,13 @@
 // ****************************************************************************** //
 @link-color: #035;
 
-@button-fontSize: 12;
-@button-paddingY: 0*@h;
+@button-fontSize: 13;
+@button-paddingY: 1*@h;
 @button-paddingX: 2*@w;
 @button-padding: @button-paddingY @button-paddingX;
 @button-minWidth: 18*@w;
 
-@button-height: 5*@h;
+@button-height: 3.6*@h;
 @button-globalHeight: @button-height + @button-paddingY + @button-paddingY + @border-width + @border-width;
 @button-radius: 3px;
 @button-border: @border-width solid;
@@ -63,8 +63,8 @@
 @button-shadowBlur: 2px;
 @button-shadowColor: #d8d8d8;
 
-@btnColor: #dfdfdf; //gray
-@btnTxtColor : @color3;
+@btnColor: #95a5a6; //gray
+@btnTxtColor : #fff;
 @btnTxtStrokeColor: transparent;
 
 @btnActionColor: #2C3E50;
@@ -83,13 +83,54 @@
 @btnColor1TxtColor : #fff;
 @btnColor1TxtStokeColor: darken(@mainAccentColor, 1.5%);
 
-@addCommentButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
-@addSubtaskButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
+@addCommentButton-padding: 0.2*@h 2*@w;
+@addSubtaskButton-padding: 0.2*@h 2*@w;
 @addbutton-width: 20*@w;
-@addbutton-padding: 0 2*@w;
+@addbutton-padding: 1*@h 2*@w;
 @addbutton-txtAlign: center;
 @addbutton-bg: "button-add.png";
 @addbutton-bgWidth: 30px;
+
+@addButton-glyphicon-position: relative;
+@addButton-glyphicon-verticalAlign:  middle;
+@addButton-glyphicon-margin: 0 1*@w 0 0;
+@addButton-glyphicon-display: inline-block;
+@addButton-glyphicon-fontFamily: 'Glyphicons Halflings';
+@addButton-glyphicon-fontStyle: normal;
+@addButton-glyphicon-fontWeight: 400;
+@addButton-glyphicon-lineHeight: inherit;
+@addButton-glyphicon-webkitFontSmoothing: antialiased;
+@addButton-glyphicon-mozOsxFontSmoothing: grayscale;
+@addButton-glyphicon-content: "\2b";
+@addButton-glyphicon-backgroundColor: transparent;
+@addButton-glyphicon-padding:  0 1*@w;
+@addButton-glyphicon-border:  1px solid transparent; 
+@addButton-glyphicon-visibility:  hidden;
+@addButton-glyphicon-borderRadius: 4px;
+@addButton-glyphicon-textAlign: center;
+@addButton-glyphicon-color: white; 
+@addButton-hover-glyphicon-display:inline-block;
+
+
+@moreButton-glyphicon-position: relative;
+@moreButton-glyphicon-verticalAlign:  middle;
+@moreButton-glyphicon-margin: 0 0 0  1*@w;
+@moreButton-glyphicon-display: inline-block;
+@moreButton-glyphicon-fontFamily: 'Glyphicons Halflings';
+@moreButton-glyphicon-fontStyle: normal;
+@moreButton-glyphicon-fontWeight: 400;
+@moreButton-glyphicon-lineHeight: 1.2;
+@moreButton-glyphicon-webkitFontSmoothing: antialiased;
+@moreButton-glyphicon-mozOsxFontSmoothing: grayscale;
+@moreButton-glyphicon-content: "\e234";
+@moreButton-glyphicon-backgroundColor:  white;
+@moreButton-glyphicon-padding:  0 1*@w;
+@moreButton-glyphicon-border:  1px solid darken(@btnColor, 10%); 
+@moreButton-glyphicon-visibility:  hidden;
+@moreButton-glyphicon-borderRadius: 4px;
+@moreButton-glyphicon-textAlign: center;
+@moreButton-glyphicon-color: darken(@btnColor, 10%); 
+@moreButton-hover-glyphicon-display: inline-block;
 
 
 @pager-padding: 1*@h 5*@w 3*@h 0;

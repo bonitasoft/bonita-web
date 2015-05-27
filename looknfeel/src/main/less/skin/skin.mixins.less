@@ -23,23 +23,31 @@
     outline-color: lighten(@btnColor, 10%);
     min-width: @button-minWidth;
     border: @button-border;
-    //border-color: darken(@btnColor, 15%);
     border-color: @btnColor;
     text-transform: uppercase;
     font-family: @skinFont;
-    //.stroke(1px, @strokeColor);
     .fontSize(@button-fontSize);
     .borderRadius(@button-radius);
     .button(@button-height);
-    //.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor, 100%);
     background: @btnColor;
     .pointerAsLink();
-    //.boxShadow(@button-shadowX, @button-shadowY, @button-shadowBlur, @button-shadowColor);
     + .btn, +css3-container +.btn{
         margin-left: @button-marginBetween;
     }
     overflow: hidden;
     zoom: 1;
+
+    //to match with bootstrap styles
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        color: @txtColor;
+        background-color: darken(@btnColor, 10%);
+        border-color: darken(@btnColor, 12%);
+    }
 }
 
 .dynamicStroke(@txtColor) when(lightness(@txtColor) < 50%){
@@ -69,21 +77,32 @@
 }
 .addButton(@btnColor, @txtColor: #fff){
     .specialButton(@btnColor, @txtColor, transparent);
+    
     &:before{
-        position: absolute;
-        content: "";
-        display: block;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: @addbutton-bgWidth;
-        .bg(@addbutton-bg);
+        position: @addButton-glyphicon-position;
+        vertical-align: @addButton-glyphicon-verticalAlign;
+        margin: @addButton-glyphicon-margin;
+        display: @addButton-glyphicon-display;
+        font-family: @addButton-glyphicon-fontFamily;
+        font-style: @addButton-glyphicon-fontStyle;
+        font-weight: @addButton-glyphicon-fontWeight;
+        line-height: @addButton-glyphicon-lineHeight;
+        -webkit-font-smoothing: @addButton-glyphicon-webkitFontSmoothing;
+        -moz-osx-font-smoothing: @addButton-glyphicon-mozOsxFontSmoothing;
+        content: @addButton-glyphicon-content;
+        background-color: @addButton-glyphicon-backgroundColor;
+        padding: @addButton-glyphicon-padding;
+        border: @addButton-glyphicon-border;
+        .borderRadius(@addButton-glyphicon-borderRadius);
+        text-align: @addButton-glyphicon-textAlign;
+        color: @addButton-glyphicon-color;
+    }
+    &:hover&:before{
+        display: @moreButton-hover-glyphicon-display;
     }
     padding: @addbutton-padding;
-    background-image: @addbutton-bg !important;
-    background-position: left center !important;
-    background-repeat: no-repeat !important;
     text-align: @addbutton-txtAlign !important;
+    
 }
 
 .specialButton(@btnColor, @txtColor: #fff, @strokeTxtColor: transparent){
@@ -98,9 +117,18 @@
     .borderRadius(@button-radius);
     .button(@button-height);
     background-color: @btnColor;
-    //.verticalGradient(lighten(@btnColor, 8.5%), 0%, @btnColor, 100%);
     .stroke(1px, @strokeTxtColor);
     position: relative;
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        color: @txtColor;
+        background-color: darken(@btnColor, 10%);
+        border-color: darken(@btnColor, 12%);
+    }
 }
 
 
@@ -115,18 +143,6 @@
 
 .loginButton(@btnColor, @txtColor: #fff){
     .skinButton(@btnColor, @txtColor);
-    //.pointerAsLink();
-    //.borderRadius(@loginPage-form-formactions-button-radius);
-    //color: @txtColor;
-    //padding: @loginPage-form-formactions-button-padding;
-    //outline-color: lighten(@btnColor, 10%);
-    //min-width: @loginPage-form-formactions-button-minWidth;
-    //border: @button-border;
-    //border-color: darken(@btnColor, 2%);
-    //.fontSize(@button-fontSize);
-    //.button(@loginPage-form-formactions-button-height);
-    //background-color: @btnColor;
-    //.boxShadowInner(@loginPage-form-formactions-button-shadowInnerX, @loginPage-form-formactions-button-shadowInnerY, @loginPage-form-formactions-button-shadowInnerBlur, lighten(desaturate(@btnColor, 25%), 29%));
 }
 
 /* filters */
