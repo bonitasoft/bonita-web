@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 03:03+0200\n"
-"PO-Revision-Date: 2015-05-21 10:39-0400\n"
+"POT-Creation-Date: 2015-05-23 03:02+0200\n"
+"PO-Revision-Date: 2015-05-26 03:04-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -21,9 +21,6 @@ msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
 
 msgid " for "
 msgstr " para "
-
-msgid "%applicationName% as page %associationName%"
-msgstr "%applicationName% como página %associationName%"
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
 msgstr "formato de arquivo %attribute% não é permitido. Apenas arquivos %file_formats% são permitidos."
@@ -163,6 +160,18 @@ msgstr "%user%"
 msgid "%value% is not a valid value for %className%"
 msgstr "%value% não é um valor válido para %className%"
 
+msgid "'%applicationName%' as page '%associationName%'"
+msgstr "'%applicationName%' as page '%associationName%'"
+
+msgid "'%layoutName%' is used as layout for:"
+msgstr "'%layoutName%' is used as layout for:"
+
+msgid "'%pageName%' is used by:"
+msgstr "'%pageName%' is used by:"
+
+msgid "'%themeName%' is used as Theme for:"
+msgstr "'%themeName%' is used as Theme for:"
+
 msgid "?"
 msgstr "?"
 
@@ -232,9 +241,6 @@ msgstr "Adicionar uma categoria"
 msgid "Add a comment"
 msgstr "Adicionar um comentário"
 
-msgid "Add a custom page"
-msgstr "Adicionar uma página personalizada"
-
 msgid "Add a group"
 msgstr "Adicionar um grupo"
 
@@ -268,11 +274,11 @@ msgstr "Adicionar uma nova página personalizada"
 msgid "Add a new membership to this user"
 msgstr "Adicionar uma nova associação para este usuário"
 
-msgid "Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "Adicione uma nova página que foi criada usando Groovy e/ou HTML.<br/>O arquivo de página (arquivo .zip) deve conter page.properties,  um arquivo index.html ou  um arquivo Index.groovy e todos os recursos necessários para a página.<br/> Para maiores detalhes, consulte a documentação ou a página de exemplo readme (disponível na lista de páginas personalizadas)."
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 
-msgid "Add a page"
-msgstr "Adicionar uma página"
+msgid "Add a resource"
+msgstr "Add a resource"
 
 msgid "Add a role"
 msgstr "Adicionar uma função"
@@ -294,6 +300,9 @@ msgstr "Adicionar um usuário au perfil %%"
 
 msgid "Add new memberships for %user%"
 msgstr "Adicionar novas associações para %user%"
+
+msgid "Add resource"
+msgstr "Add resource"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Adicionar o(s) grupo(s) selecionado(s) neste perfil"
@@ -349,6 +358,9 @@ msgstr "Todas as páginas"
 msgid "All processes are automatically paused."
 msgstr "Todos os processos são automaticamente suspensos."
 
+msgid "An archive has a .zip extension"
+msgstr "An archive has a .zip extension"
+
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Ocorreu um erro ao implantar o modelo de dados de negócio."
 
@@ -369,6 +381,9 @@ msgstr "Gerenciamento de apps"
 
 msgid "April"
 msgstr "Abril"
+
+msgid "Archive"
+msgstr "Archive"
 
 msgid "Archived"
 msgstr "Arquivados"
@@ -1054,6 +1069,9 @@ msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr "Formato: %namePrefix% seguido somente por caracteres alfanuméricos."
 
+msgid "Forms"
+msgstr "Formulários"
+
 msgid "Fr"
 msgstr "Sex"
 
@@ -1227,6 +1245,9 @@ msgstr "Última atualização em"
 msgid "Lastname"
 msgstr "Sobrenome"
 
+msgid "Layouts"
+msgstr "Layouts"
+
 msgid "Link to the tasks"
 msgstr "Link para as tarefas"
 
@@ -1284,14 +1305,14 @@ msgstr "Gerencie casos de processos que uma entidade com esse perfil pode superv
 msgid "Manage custom pages"
 msgstr "Gerenciar páginas personalizadas"
 
-msgid "Manage pages"
-msgstr "Gerenciar páginas"
-
 msgid "Manage processes that an entity with this profile can supervise as PM."
 msgstr "Gerencie processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 msgid "Manage profiles"
 msgstr "Gerenciar perfis"
+
+msgid "Manage resources"
+msgstr "Manage resources"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Gerencie tarefas de processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
@@ -1484,6 +1505,9 @@ msgstr "Síntese"
 msgid "Page archive"
 msgstr "Arquivo da página"
 
+msgid "Pages"
+msgstr "Páginas"
+
 msgid "Parameters"
 msgstr "Parâmetros"
 
@@ -1609,6 +1633,9 @@ msgstr "Privilégio"
 
 msgid "RESOLVED"
 msgstr "RESOLVED"
+
+msgid "REST API extensions"
+msgstr "REST API extensions"
 
 msgid "Ready since %task_last_update%"
 msgstr "Pronto desde %task_last_update%"
@@ -2096,6 +2123,9 @@ msgstr "A versão do processo"
 
 msgid "The version of the process that created this case"
 msgstr "A versão do processo que criou este caso"
+
+msgid "Themes"
+msgstr "Themes"
 
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "Estes %item_name_plural% e as entradas do perfil relacionado serão excluídos permanentemente."
