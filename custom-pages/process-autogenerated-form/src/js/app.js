@@ -11,9 +11,10 @@
   app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog) {
 
     var processId = $location.search().id;
-    $scope.inputArray = [];
+
     $scope.contract = {};
     $scope.dataToSend = {};
+    $scope.parent = $scope.dataToSend;
     $scope.autofill = {};
     $scope.process = {};
     $scope.message = undefined;
@@ -29,35 +30,6 @@
     processAPI.get({id: processId}, function (result) {
       $scope.process = result;
     });
-
-    $scope.onUploadSuccess = function onUploadSuccess(response, input, $index) {
-      if(input.multiple){
-        if($scope.dataToSend[input.name] === null){
-          $scope.dataToSend[input.name] = [];
-        }
-        $scope.dataToSend[input.name][$index] = response;
-      }else{
-        $scope.dataToSend[input.name] = response;
-      }
-    };
-
-    $scope.appendNewInput = function appendNewInput(input){
-      var newInput = {
-          type: input.type,
-          description: input.description,
-          name: input.name,
-          multiple: input.multiple,
-          inputs: input.inputs
-        };
-      $scope.inputArray[input.name].push(newInput);
-      $scope.autofill[input.name].push(generateValue(input));
-    };
-
-    $scope.removeInput = function removeInput (input, index){
-      $scope.inputArray[input.name].splice(index, 1);
-      $scope.dataToSend[input.name].splice(index, 1);
-      $scope.autofill[input.name].splice(index, 1);
-    };
 
     var jsonify = function (data) {
       var jsonified = {};
@@ -92,15 +64,15 @@
     };
 
 
-    var generateValueForChildrenAttribute = function generateValueForChildrenAttribute(input) {
-      var result = generateValue(input);
+    $scope.generateValueForChildrenAttribute = function generateValueForChildrenAttribute(input) {
+      var result = $scope.generateValue(input);
       if (input.type === 'TEXT') {
         return '"' + result + '"';
       }
       return result;
     };
 
-     var generateValue = function generateValue(input) {
+     $scope.generateValue = function generateValue(input) {
       var result = null;
 
       if (input.type === 'TEXT') {
@@ -124,7 +96,7 @@
           if (i > 0) {
             result += ',';
           }
-          result += '"' + input.inputs[i].name + '":' + generateValueForChildrenAttribute(input.inputs[i]);
+          result += '"' + input.inputs[i].name + '":' + $scope.generateValueForChildrenAttribute(input.inputs[i]);
         }
         result += '}';
       }
@@ -140,7 +112,6 @@
       return !($scope.isSimpleInput(input));
     };
 
-
     $scope.isMultipleInput = function isMultipleInput(input) {
       return (input.multiple);
     };
@@ -149,20 +120,7 @@
       return (!$scope.isMultipleInput(input));
     };
 
-    $scope.initMultipleInput = function initMultipleInput(input) {
-      $scope.dataToSend[input.name]=[];
-      $scope.inputArray[input.name] = [input];
-      $scope.autofill[input.name] = [generateValue(input)];
-    };
 
-    $scope.initSingleInput = function initSingleInput(input) {
-      $scope.dataToSend[input.name] = null;
-      $scope.autofill[input.name] = generateValue(input);
-    };
-
-    $scope.hasSeveralItemsInCollection = function hasSeveralItemsInCollection(input) {
-      return ($scope.inputArray[input.name].length>1);
-    };
 
     /*
     $scope. = function (input) {

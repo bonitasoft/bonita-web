@@ -39,15 +39,15 @@
       <div ng-repeat="input in contract.inputs">
 
         <!-- simple input -->
-        <div ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/simple.html'"></div>
+        <bp-simple ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)"></bp-simple>
         <!-- simple input multiple-->
-        <div ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/multiple.html'"></div>
+        <bp-multiple ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name]=[]; outputData = parent[input.name]; inputArray = [input]"></bp-multiple>
         <!-- complex input -->
-        <div ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/complex.html'"></div>
+        <bp-complex ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = {}; outputData = parent[input.name]"></bp-complex>
         <!-- complex input multiple -->
-        <div ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/complexMultiple.html'"></div>
+        <bp-complex-multiple ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = []; outputData = parent[input.name]; inputArray = [input]"></bp-complex-multiple>
         <!-- file input and multiple file input-->
-        <div ng-if="isFileInput(input)" ng-init="initMultipleInput(input)" ng-include="'templates/files.html'"></div>
+        <bp-files ng-if="isFileInput(input)" ng-init="parent[input.name]=(input.multiple?[]:{}); outputData = parent[input.name]; inputArray = [input]"></bp-files>
 
       </div>
     </div>
@@ -68,6 +68,8 @@
   <script src="js/resources.js"></script>
   <script src="js/app.js"></script>
   <script src="js/contractService.js"></script>
+  <script src="js/directives/directives.js"></script>
+  <script src="js/controllers/controllers.js"></script>
   <!-- endbuild -->
 
   <!-- build:remove -->
