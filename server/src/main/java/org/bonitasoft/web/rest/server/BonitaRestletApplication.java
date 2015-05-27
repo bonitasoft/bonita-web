@@ -6,13 +6,10 @@
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
  * <p/>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p/>
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server;
 
@@ -52,17 +49,28 @@ import org.restlet.routing.Template;
 public class BonitaRestletApplication extends Application {
 
     public static final String ROUTER_EXTENSION_PREFIX = "/extension/";
+
     public static final String BDM_BUSINESS_DATA_URL = "/bdm/businessData";
+
     public static final String BDM_BUSINESS_DATA_REFERENCE_URL = "/bdm/businessDataReference";
+
     public static final String FORM_MAPPING_URL = "/form/mapping";
+
     public static final String BPM_PROCESS_URL = "/bpm/process";
+
     public static final String BPM_USER_TASK_URL = "/bpm/userTask";
+
     public static final String BPM_ARCHIVED_USER_TASK_URL = "/bpm/archivedUserTask";
+
     public static final String BPM_TIMER_EVENT_TRIGGER_URL = "/bpm/timerEventTrigger";
+
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
+
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
+
     public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
-    public static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
+
+    private static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
 
     private final FinderFactory factory;
 
@@ -87,7 +95,8 @@ public class BonitaRestletApplication extends Application {
         // WARNING: if you add a route you need to declare it in org.bonitasoft.web.rest.server.FinderFactory
 
         // GET an activityData:
-        router.attach(BPM_ACTIVITY_VARIABLE_URL + "/{" + ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID + "}/{" + ActivityVariableResource.ACTIVITYDATA_DATA_NAME
+        router.attach(BPM_ACTIVITY_VARIABLE_URL + "/{" + ActivityVariableResource.ACTIVITYDATA_ACTIVITY_ID + "}/{"
+                + ActivityVariableResource.ACTIVITYDATA_DATA_NAME
                 + "}", factory.create(ActivityVariableResource.class));
 
         // GET to search timer event triggers:
@@ -124,14 +133,14 @@ public class BonitaRestletApplication extends Application {
         // GET to search form mappings:
         router.attach(FORM_MAPPING_URL, factory.create(FormMappingResource.class));
 
-        //GET a BusinessData
+        // GET a BusinessData
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}", factory.create(BusinessDataQueryResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}/{id}", factory.create(BusinessDataResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));
 
-        //GET a Multiple BusinessDataReference
+        // GET a Multiple BusinessDataReference
         router.attach(BDM_BUSINESS_DATA_REFERENCE_URL, factory.create(BusinessDataReferencesResource.class));
-        //GET a Simple BusinessDataReference
+        // GET a Simple BusinessDataReference
         router.attach(BDM_BUSINESS_DATA_REFERENCE_URL + "/{caseId}/{dataName}", factory.create(BusinessDataReferenceResource.class));
 
         // api extension
