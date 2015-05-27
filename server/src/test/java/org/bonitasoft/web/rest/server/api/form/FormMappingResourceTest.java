@@ -6,7 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
@@ -27,11 +27,11 @@ import java.util.List;
 public class FormMappingResourceTest extends RestletTest {
 
     @Mock
-    protected ProcessConfigurationAPI processConfigurationAPI;
+    protected ProcessAPI processAPI;
 
     @Override
     protected ServerResource configureResource() {
-        return new FormMappingResource(processConfigurationAPI);
+        return new FormMappingResource(processAPI);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class FormMappingResourceTest extends RestletTest {
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
         doReturn(1L).when(searchResult).getCount();
-        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
 
         final Response response = request("/form/mapping?p=2&c=10&f=type=TASK").get();
 
@@ -61,7 +61,7 @@ public class FormMappingResourceTest extends RestletTest {
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
         doReturn(1L).when(searchResult).getCount();
-        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
 
         final Response response = request("/form/mapping?p=0&c=10").get();
 
@@ -72,7 +72,7 @@ public class FormMappingResourceTest extends RestletTest {
         outputStream.close();
         assertThat(content).isNotNull();
         assertThat(content).contains("\"task\":\"myTask\"");
-        verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        verify(processAPI).searchFormMappings(any(SearchOptions.class));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class FormMappingResourceTest extends RestletTest {
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
         doReturn(1L).when(searchResult).getCount();
-        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
 
         final Response response = request("/form/mapping?p=0&c=10").get();
 
@@ -103,7 +103,7 @@ public class FormMappingResourceTest extends RestletTest {
         assertThat(content).contains("\"processDefinitionId\":\"4871148324840256385\"");
         assertThat(content).contains("\"pageId\":\"1\"");
         assertThat(content).contains("\"lastUpdatedBy\":\"1\"");
-        verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        verify(processAPI).searchFormMappings(any(SearchOptions.class));
     }
 
 }

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -48,8 +48,8 @@ public class PageMappingService {
         context.put(AuthorizationRuleConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());
-        final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(apiSession);
-        final PageURL pageURL = processConfigurationAPI.resolvePageOrURL(mappingKey, context, executeAuthorizationRules);
+        final ProcessAPI processAPI = getProcessAPI(apiSession);
+        final PageURL pageURL = processAPI.resolvePageOrURL(mappingKey, context, executeAuthorizationRules);
         return new PageReference(pageURL.getPageId(), pageURL.getUrl());
     }
 
@@ -60,8 +60,8 @@ public class PageMappingService {
         return userPermissions.contains(PROCESS_DEPLOY);
     }
 
-    protected ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
+    protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
             UnknownAPITypeException {
-        return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
+        return TenantAPIAccessor.getProcessAPI(apiSession);
     }
 }
