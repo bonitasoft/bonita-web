@@ -19,6 +19,7 @@ package org.bonitasoft.web.rest.server.datastore.applicationmenu;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.registration.BonitaRegistration;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.business.application.ApplicationMenu;
 import org.bonitasoft.engine.exception.SearchException;
@@ -58,6 +59,8 @@ DatastoreHasGet<ApplicationMenuItem>, DatastoreHasSearch<ApplicationMenuItem>, D
     public ApplicationMenuItem add(final ApplicationMenuItem item) {
         try {
             final ApplicationMenu applicationMenu = applicationAPI.createApplicationMenu(converter.toApplicationMenuCreator(item));
+            final BonitaRegistration bonitaRegistration = new BonitaRegistration();
+            bonitaRegistration.sendUserInfoIfNotSent();
             return converter.toApplicationMenuItem(applicationMenu);
         } catch (final Exception e) {
             throw new APIException(e);
