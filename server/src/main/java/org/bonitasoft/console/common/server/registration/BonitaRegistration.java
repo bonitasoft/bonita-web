@@ -28,8 +28,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.server.preferences.properties.PlatformPreferencesProperties;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
 import org.bonitasoft.web.rest.server.api.system.BonitaVersion;
 import org.bonitasoft.web.rest.server.api.system.VersionFile;
 
@@ -133,25 +133,31 @@ public class BonitaRegistration {
     public void sendUserInfoIfNotSent() {
         final String register = System.getProperty(BONITA_REGISTER_SYSTEM_PROPERTY);
         if (register != null && register.equals("1")) {
-            final PlatformPreferencesProperties platformPreferencesProperties = PropertiesFactory.getPlatformPreferencesProperties();
+            final SimpleProperties platformPreferencesProperties = getPlatformPreferences();
             final String infoSent = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT);
             if (infoSent == null || !infoSent.equals("1")) {
                 int nbTry = getNbTry(platformPreferencesProperties);
                 if (nbTry <= BonitaRegistration.BONITA_USER_REGISTER_MAXTRY) {
                     platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY, Integer.toString(++nbTry));
                     sendUserInfoAndRecordInPreferences(platformPreferencesProperties);
+                } else {
+                    platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_INFO_SENT, "1");
                 }
             }
         }
 	}
 
-    protected void sendUserInfoAndRecordInPreferences(final PlatformPreferencesProperties platformPreferencesProperties) {
+    protected SimpleProperties getPlatformPreferences() {
+        return PropertiesFactory.getPlatformPreferencesProperties();
+    }
+
+    protected void sendUserInfoAndRecordInPreferences(final SimpleProperties platformPreferencesProperties) {
         if (sendUserInfo()) {
             platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_INFO_SENT, "1");
         }
     }
 
-    protected int getNbTry(final PlatformPreferencesProperties platformPreferencesProperties) {
+    protected int getNbTry(final SimpleProperties platformPreferencesProperties) {
         int nbTry = 0;
         final String nbTryString = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY);
         if (nbTryString != null) {
