@@ -37,20 +37,20 @@ public class SystemInfoSender {
     }
 
     public boolean call(final String data, final String email) {
-    	try {
+        try {
             final URL url = new URL(serviceURL);
-    		final URLConnection conn = createConnection(url);
-    		conn.setDoOutput(true);
+            final URLConnection conn = createConnection(url);
+            conn.setDoOutput(true);
             final OutputStreamWriter wr = sendData(conn, email, data);
             final BufferedReader rd = checkResponse(conn);
-    		wr.close();
-    		rd.close();
-    	} catch (final Exception e) {
+            wr.close();
+            rd.close();
+        } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Could not perform registration", e);
             }
             return false;
-    	}
+        }
         return true;
     }
 
@@ -68,7 +68,7 @@ public class SystemInfoSender {
         while ((line = rd.readLine()) != null) {
             if ("1".equals(line)) {
                 return rd;
-        	}
+            }
         }
         throw new RuntimeException("Error sending data");
     }
