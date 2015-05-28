@@ -1,3 +1,6 @@
+import groovy.json.JsonBuilder
+import org.bonitasoft.console.common.server.page.*
+
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 
@@ -5,6 +8,7 @@ public class Index implements RestApiController {
 
     @Override
     RestApiResponse doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext, RestApiResponseBuilder apiResponseBuilder, RestApiUtil restApiUtil) {
+        Map<String, String> response = [:]
         response.with {
             put "cookie added","myCookie"
             put "header added","awesome header"
