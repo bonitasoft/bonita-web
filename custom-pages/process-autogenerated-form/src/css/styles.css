@@ -1,3 +1,10 @@
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+.repeatable-input-group {
+    margin-bottom: 10px;
+}
 .file-upload-input {
     background: none repeat scroll 0 0 #fff;
     cursor: pointer;

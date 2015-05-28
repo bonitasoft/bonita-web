@@ -125,6 +125,11 @@ gulp.task('fonts', function () {
     .pipe(gulp.dest('target/dist/resources/fonts'));
 });
 
+gulp.task('templates', function () {
+  return gulp.src('src/templates/*')
+      .pipe(gulp.dest('target/dist/resources/templates'));
+});
+
 
 /**
  * JsHint
@@ -187,7 +192,7 @@ gulp.task('tdd', function (done) {
   }, done);
 });
 
-gulp.task('zip', ['assets', 'fonts', 'repath'], function () {
+gulp.task('zip', ['assets', 'fonts', 'repath', 'templates'], function () {
   return gulp.src('target/dist/**/*')
     .pipe(zip(customPageName + '.zip'))
     .pipe(gulp.dest('target'));

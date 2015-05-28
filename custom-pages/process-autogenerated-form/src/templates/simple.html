@@ -1,0 +1,9 @@
+<form name="simpleInputsForm" class="form-horizontal" ng-controller="SimpleCtrl">
+    <div ng-class="{'form-group': true, 'has-error': !simpleInputsForm[input.name].$valid, 'has-feedback': simpleInputsForm[input.name].$valid}">
+        <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
+        <div class="input"  >
+            <input ng-init="initSingleInput(input)" type="{{inputType2HTML(input)}}" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="outputData[input.name]" placeholder="{{'Expecting a ' + input.type + ' value.'}}">
+            <span class="text-danger has-error has-feedback" ng-show="simpleInputsForm[input.name].$error.number">Not a valid number!</span>
+        </div>
+    </div>
+</form>
