@@ -65,7 +65,7 @@ public class BonitaRegistration {
         infos.put("proc.number", String.valueOf(Runtime.getRuntime().availableProcessors()));
         infos.put("mem.total", String.valueOf(Runtime.getRuntime().totalMemory() / 1048576) + "mo");
         infos.put("mem.max", String.valueOf(Runtime.getRuntime().maxMemory() / 1048576) + "mo");
-        infos.put("origin", "business-app");
+        infos.put("origin", "living-app");
         addIpAdressInfo(infos);
         return infos;
     }
