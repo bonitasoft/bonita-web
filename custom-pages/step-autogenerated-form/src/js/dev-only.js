@@ -223,6 +223,92 @@
              multiple:true,
              type:'DECIMAL',
              inputs:[]
+            },
+            {
+              type: 'FILE',
+              description: 'multiple file',
+              name: 'screenShots',
+              multiple: true,
+              inputs: [
+                {
+                  type: 'TEXT',
+                  description: 'Name of the file',
+                  name: 'filename',
+                  multiple: false,
+                  inputs: []
+                },
+                {
+                  type: 'BYTE_ARRAY',
+                  description: 'Content of the file',
+                  name: 'content',
+                  multiple: false,
+                  inputs: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          description:null,
+          name:'expenseLines',
+          multiple:true,
+          inputs:[
+            {
+              description:null,
+              name:'name',
+              multiple:false,
+              type:'TEXT',
+              inputs:[]
+            },
+            {
+              description:null,
+              name:'amount',
+              multiple:true,
+              type:'DECIMAL',
+              inputs:[]
+            },
+            {
+              description:null,
+              name:'complex',
+              multiple:false,
+              inputs:[
+                {
+                  description:null,
+                  name:'child1',
+                  multiple:false,
+                  type:'TEXT',
+                  inputs:[]
+                },
+                {
+                  description:null,
+                  name:'children',
+                  multiple:true,
+                  type:'DECIMAL',
+                  inputs:[]
+                },
+                {
+                  type: 'FILE',
+                  description: 'multiple file',
+                  name: 'screenShots',
+                  multiple: true,
+                  inputs: [
+                    {
+                      type: 'TEXT',
+                      description: 'Name of the file',
+                      name: 'filename',
+                      multiple: false,
+                      inputs: []
+                    },
+                    {
+                      type: 'BYTE_ARRAY',
+                      description: 'Content of the file',
+                      name: 'content',
+                      multiple: false,
+                      inputs: []
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

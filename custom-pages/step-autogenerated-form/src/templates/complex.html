@@ -1,15 +1,15 @@
 <label>{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
-<div class="well">
+<div class="well" ng-init="parent = outputData">
     <div class="input" ng-repeat="input in input.inputs">
         <!-- simple input -->
-        <div ng-if="isSingleInput(input) && !isFileInput(input)" ng-include="'templates/simple.html'"></div>
+        <bp-simple ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)"></bp-simple>
         <!-- simple input multiple-->
-        <div ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/multiple.html'"></div>
+        <bp-multiple ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name]=[]; outputData = parent[input.name]; inputArray = [input]"></bp-multiple>
         <!-- complex input -->
-        <div ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-include="'templates/complex.html'"></div>
+        <div ng-include="'templates/complex.html'" ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = {}; outputData = parent[input.name]"></div>
         <!-- complex input multiple -->
-        <div ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-include="'templates/complexMultiple.html'"></div>
+        <div ng-include="'templates/complexMultiple.html'" ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = []; outputData = parent[input.name]; inputArray = [input]"></div>
         <!-- file input and multiple file input-->
-        <div ng-if="isFileInput(input)" ng-init="initMultipleInput(input)" ng-include="'templates/files.html'"></div>
+        <bp-files ng-if="isFileInput(input)" ng-init="parent[input.name]=(input.multiple?[]:{}); outputData = parent[input.name]; inputArray = [input]"></bp-files>
     </div>
 </div>
