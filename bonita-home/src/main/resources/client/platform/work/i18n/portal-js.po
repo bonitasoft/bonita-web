@@ -468,14 +468,6 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: main/features/admin/processes/details/forms/forms-gathered.html:4
-msgid "Forms list"
-msgstr ""
-
-#: main/features/admin/processes/details/forms/forms-gathered.html:2
-msgid "Forms mapping"
-msgstr ""
-
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
 msgstr ""
@@ -566,7 +558,7 @@ msgid "MIN"
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:3
-msgid "Manage Categories"
+msgid "Manage categories"
 msgstr ""
 
 #: main/features/admin/processes/details/forms/forms.html:7
@@ -617,7 +609,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-msgid "No Mapping"
+msgid "No mapping"
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:18
