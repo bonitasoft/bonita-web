@@ -72,7 +72,7 @@ public class BonitaRegistrationTest {
 
         bonitaRegistration.sendUserInfo();
 
-        verify(systemInfoSender).call(contains(URLEncoder.encode("<value key=\"origin\">business-app</value>", "UTF-8")),
+        verify(systemInfoSender).call(contains(URLEncoder.encode("<value key=\"origin\">living-app</value>", "UTF-8")),
                 eq("email=" + URLEncoder.encode(BonitaRegistration.DEFAULT_EMAIL, "UTF-8")));
     }
 
