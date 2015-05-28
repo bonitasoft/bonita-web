@@ -15,10 +15,25 @@
 	font-weight: normal;
 	font-style: normal;
 }
-@font-face {
+@font-face{
+	font-family:'Glyphicons Halflings';
+	src:url("@{skinFontPath}glyphicons-halflings-regular.eot");
+	src:url("@{skinFontPath}glyphicons-halflings-regular.eot?#iefix") format('embedded-opentype'),url("@{skinFontPath}glyphicons-halflings-regular.woff2") format('woff2'),url("@{skinFontPath}glyphicons-halflings-regular.woff") format('woff'),url("@{skinFontPath}glyphicons-halflings-regular.ttf") format('truetype'),url("@{skinFontPath}glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
   font-family: 'Glyphicons Halflings';
-  src: url('@{skinFontPath}glyphicons-halflings-regular.eot');
-  src: url('@{skinFontPath}glyphicons-halflings-regular.eot#iefix') format('embedded-opentype'), url('@{skinFontPath}glyphicons-halflings-regular.woff') format('woff'), url('@{skinFontPath}glyphicons-halflings-regular.ttf') format('truetype'), url('@{skinFontPath}glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-option-horizontal:before {
+  content: "\e234";
 }
 // -----------------------------------------------------------------------------
 // HTML reset
@@ -48,7 +63,6 @@ h1, h2, h3, h4, h5, h6, h7{
 	.skinFontFamily();
 	font-weight: 300;
 	color: @mainAccentColor;
-	letter-spacing: 0.05em;
 	margin: 0;
 }
 

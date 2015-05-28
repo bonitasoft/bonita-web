@@ -30,8 +30,10 @@
 
   .panel-default > .panel-heading {
     color: @panelHeaderBG;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    .panel-title{
+      line-height: 26px;
+      overflow: hidden;
+    }
   }
 
   .panel-body {
@@ -94,8 +96,10 @@
   }
 
   .paginationBlock {
-    position: relative;
-    bottom: 3px;
+    font-size: 13px;
+    font-weight: normal;
+    font-family: @regularFont, sans-serif;
+    display: inline-block;
   }
 
   tbody {

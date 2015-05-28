@@ -47,7 +47,6 @@
             }
             //TO BE DELETED: once we will have page title in portal, this workaround (BS-448) will be not necessary
             .bigAddButton{
-                padding: 0 10px 0 30px;
                 left: -15px;
             }
         }
@@ -188,17 +187,6 @@
                         .bgCurrentFilter(@filtersPanel-filters-bgAll-selected);
                     }
                 }
-                
-                &.allpagesfilter{
-                    .bgFilter(@customPagefiltersPanel-filters-bgAll-selected);
-                    &:hover{
-                        .bgHoverFilter(@customPagefiltersPanel-filters-bgAll-selected);
-                    }
-                    &.current{
-                        .bgCurrentFilter(@customPagefiltersPanel-filters-bgAll-selected);
-                    }
-                }
-                
                 &.humantask{
                     .bgFilter(@filtersPanel-filters-bgHumanTask-selected);
                     &:hover{
