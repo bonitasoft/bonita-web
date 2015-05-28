@@ -131,18 +131,15 @@ public class BonitaRegistration {
     }
 
     public void sendUserInfoIfNotSent() {
-        final String register = System.getProperty(BONITA_REGISTER_SYSTEM_PROPERTY);
-        if ("1".equals(register)) {
-            final SimpleProperties platformPreferencesProperties = getPlatformPreferences();
-            final String infoSent = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT);
-            if (infoSent == null || !infoSent.equals("1")) {
-                int nbTry = getNbTry(platformPreferencesProperties);
-                if (nbTry <= BonitaRegistration.BONITA_USER_REGISTER_MAXTRY) {
-                    platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY, Integer.toString(++nbTry));
-                    sendUserInfoAndRecordInPreferences(platformPreferencesProperties);
-                } else {
-                    platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_INFO_SENT, "1");
-                }
+        final SimpleProperties platformPreferencesProperties = getPlatformPreferences();
+        final String infoSent = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT);
+        if (infoSent == null || !infoSent.equals("1")) {
+            int nbTry = getNbTry(platformPreferencesProperties);
+            if (nbTry <= BonitaRegistration.BONITA_USER_REGISTER_MAXTRY) {
+                platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY, Integer.toString(++nbTry));
+                sendUserInfoAndRecordInPreferences(platformPreferencesProperties);
+            } else {
+                platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_INFO_SENT, "1");
             }
         }
     }

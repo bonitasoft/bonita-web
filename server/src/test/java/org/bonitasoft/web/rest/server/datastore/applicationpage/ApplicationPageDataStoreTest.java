@@ -5,8 +5,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -14,13 +16,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
+import org.bonitasoft.console.common.server.registration.BonitaRegistration;
 import org.bonitasoft.engine.api.ApplicationAPI;
+import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
@@ -39,6 +44,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 
@@ -52,8 +58,12 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
     private ApplicationAPI applicationAPI;
 
     @Mock
+    private PageAPI pageAPI;
+
+    @Mock
     private ApplicationPageItemConverter converter;
 
+    @Spy
     @InjectMocks
     private ApplicationPageDataStore dataStore;
 
@@ -84,6 +94,81 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
 
         //then
         assertThat(createdItem).isEqualTo(createdItem);
+    }
+
+    @Test
+    public void should_register_app_usage_on_add_when_system_property_set() throws Exception {
+        //given
+        final ApplicationPageItem itemToCreate = new ApplicationPageItem();
+        itemToCreate.setToken("firstPage");
+        itemToCreate.setApplicationId(14L);
+        itemToCreate.setPageId(28L);
+        final ApplicationPageImpl applicationPage = new ApplicationPageImpl(14L, 28L, "firstPage");
+        final Page page = mock(Page.class);
+
+        given(applicationAPI.createApplicationPage(14L, 28L, "firstPage")).willReturn(applicationPage);
+        given(page.isProvided()).willReturn(false);
+        given(pageAPI.getPage(28L)).willReturn(page);
+        doNothing().when(dataStore).registerApplicationUsage();
+
+        try {
+            System.setProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY, "1");
+
+            //when
+            dataStore.add(itemToCreate);
+
+            verify(dataStore).registerApplicationUsageIfNeeded(applicationPage);
+            verify(dataStore).registerApplicationUsage();
+
+        } finally {
+            System.clearProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
+        }
+    }
+
+    @Test
+    public void should_not_register_app_usage_on_add_when_system_property_not_set() throws Exception {
+        //given
+        final ApplicationPageItem itemToCreate = new ApplicationPageItem();
+        itemToCreate.setToken("firstPage");
+        itemToCreate.setApplicationId(14L);
+        itemToCreate.setPageId(28L);
+        final ApplicationPageImpl applicationPage = new ApplicationPageImpl(14L, 28L, "firstPage");
+
+        given(applicationAPI.createApplicationPage(14L, 28L, "firstPage")).willReturn(applicationPage);
+
+        //when
+        dataStore.add(itemToCreate);
+
+        verify(dataStore).registerApplicationUsageIfNeeded(applicationPage);
+        verify(dataStore, never()).registerApplicationUsage();
+    }
+
+    @Test
+    public void should_not_register_app_usage_on_add_when_page_is_provided() throws Exception {
+        //given
+        final ApplicationPageItem itemToCreate = new ApplicationPageItem();
+        itemToCreate.setToken("firstPage");
+        itemToCreate.setApplicationId(14L);
+        itemToCreate.setPageId(28L);
+        final ApplicationPageImpl applicationPage = new ApplicationPageImpl(14L, 28L, "firstPage");
+        final Page page = mock(Page.class);
+
+        given(applicationAPI.createApplicationPage(14L, 28L, "firstPage")).willReturn(applicationPage);
+        given(page.isProvided()).willReturn(true);
+        given(pageAPI.getPage(28L)).willReturn(page);
+
+        try {
+            System.setProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY, "1");
+
+            //when
+            dataStore.add(itemToCreate);
+
+            verify(dataStore).registerApplicationUsageIfNeeded(applicationPage);
+            verify(dataStore, never()).registerApplicationUsage();
+
+        } finally {
+            System.clearProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
+        }
     }
 
     @Test(expected = APIException.class)
