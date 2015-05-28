@@ -15,6 +15,7 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Level;
 
+import org.bonitasoft.web.rest.server.api.bdm.BusinessDataFindByIdsResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
@@ -133,7 +134,8 @@ public class BonitaRestletApplication extends Application {
         // GET to search form mappings:
         router.attach(FORM_MAPPING_URL, factory.create(FormMappingResource.class));
 
-        // GET a BusinessData
+        //GET a BusinessData
+        router.attach(BDM_BUSINESS_DATA_URL + "/{className}/findByIds", factory.create(BusinessDataFindByIdsResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}", factory.create(BusinessDataQueryResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}/{id}", factory.create(BusinessDataResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}/{id}/{fieldName}", factory.create(BusinessDataResource.class));

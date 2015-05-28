@@ -57,7 +57,7 @@ public class BusinessDataReferenceResource extends CommonResource {
     }
 
     static String getValue(MultipleBusinessDataReference multipleBusinessDataReference) {
-        return "?q=findByIds&f=ids="+multipleBusinessDataReference.getStorageIds().toString().replaceAll("[\\[\\] ]","");
+        return "findByIds?ids="+multipleBusinessDataReference.getStorageIds().toString().replaceAll("[\\[\\] ]","");
     }
 
     private static String getUrl(String type, String value) {
