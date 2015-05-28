@@ -71,7 +71,7 @@
 @btnActionTxtColor : #fff;
 @btnActionTxtStokeColor: #000;
 
-@btnPrimaryActionColor: #2c3e50;
+@btnPrimaryActionColor: #267F00;
 @btnPrimaryActionTxtColor: #fff;
 @btnPrimaryActionTxtStokeColor: transparent;
 
@@ -83,16 +83,17 @@
 @btnColor1TxtColor : #fff;
 @btnColor1TxtStokeColor: darken(@mainAccentColor, 1.5%);
 
-@addCommentButton-padding: 0.2*@h 2*@w;
-@addSubtaskButton-padding: 0.2*@h 2*@w;
-@addbutton-width: 20*@w;
 @addbutton-padding: 1*@h 2*@w;
-@addbutton-txtAlign: center;
+@addCommentButton-padding:@addbutton-padding;
+@addSubtaskButton-padding: @addbutton-padding;
+@addbutton-width: 20*@w;
+
+@addbutton-txtAlign: left !important;
 @addbutton-bg: "button-add.png";
 @addbutton-bgWidth: 30px;
 
 @addButton-glyphicon-position: relative;
-@addButton-glyphicon-verticalAlign:  middle;
+@addButton-glyphicon-verticalAlign:  bottom;
 @addButton-glyphicon-margin: 0 1*@w 0 0;
 @addButton-glyphicon-display: inline-block;
 @addButton-glyphicon-fontFamily: 'Glyphicons Halflings';
@@ -123,13 +124,13 @@
 @moreButton-glyphicon-webkitFontSmoothing: antialiased;
 @moreButton-glyphicon-mozOsxFontSmoothing: grayscale;
 @moreButton-glyphicon-content: "\e234";
-@moreButton-glyphicon-backgroundColor:  white;
+@moreButton-glyphicon-backgroundColor: transparent;
 @moreButton-glyphicon-padding:  0 1*@w;
-@moreButton-glyphicon-border:  1px solid darken(@btnColor, 10%); 
+@moreButton-glyphicon-border:  1px solid transparent;//darken(@btnColor, 10%); 
 @moreButton-glyphicon-visibility:  hidden;
 @moreButton-glyphicon-borderRadius: 4px;
 @moreButton-glyphicon-textAlign: center;
-@moreButton-glyphicon-color: darken(@btnColor, 10%); 
+@moreButton-glyphicon-color: white; 
 @moreButton-hover-glyphicon-display: inline-block;
 
 
@@ -298,7 +299,7 @@
 @filtersPanel-width: 40*@w;
 @filtersPanel-minWidth: @filtersPanel-width;
 @filtersPanel-maxWidth: @filtersPanel-width;
-@filtersPanel-bgColor: #d3dde2;
+@filtersPanel-bgColor: #EEE;//#d3dde2;
 
 @detailsPanel-width: 50%;
 
@@ -312,7 +313,8 @@
 @tablesPanel-tableActions-padding: 0 4*@w 0 0;
 
 @tablesPanel-tableActions-textAlign: right;
-@tablesPanel-table-thead-fontSize: 18;
+@tablesPanel-table-thead-letterSpacing:0.07em;
+@tablesPanel-table-thead-fontSize: 16;
 @tablesPanel-table-thead-bgColor: #2c3e50; //@mainAccentColor;
 @tablesPanel-table-thead-height: 3*@h;
 @tablesPanel-table-thead-paddingTop: 3*@h;
@@ -584,7 +586,7 @@
 @detailsPanel-addButton-bgX: center;
 @detailsPanel-addButton-bgY: center;
 @detailsPanel-addButton-width: 8*@w;
-@detailsPanel-addButton-height: 8*@w;
+@detailsPanel-addButton-height: 8*@h;
 
 @detailsPanel-subTasks-addButton-bgColor: @btnPrimaryActionColor;
 @detailsPanel-subTasks-addButton-top: -10*@h;
@@ -895,7 +897,7 @@
 @moreDetails-addButton-bgX: center;
 @moreDetails-addButton-bgY: center;
 @moreDetails-addButton-width: 8*@w;
-@moreDetails-addButton-height: 8*@w;
+@moreDetails-addButton-height: 8*@h;
 
 @moreDetails-configurationState-padding: 0 7*@w 0 0;
 @moreDetails-configurationState-lineHeight: 32px;
