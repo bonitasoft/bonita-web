@@ -132,7 +132,7 @@ public class BonitaRegistration {
 
     public void sendUserInfoIfNotSent() {
         final String register = System.getProperty(BONITA_REGISTER_SYSTEM_PROPERTY);
-        if (register != null && register.equals("1")) {
+        if ("1".equals(register)) {
             final SimpleProperties platformPreferencesProperties = getPlatformPreferences();
             final String infoSent = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT);
             if (infoSent == null || !infoSent.equals("1")) {
