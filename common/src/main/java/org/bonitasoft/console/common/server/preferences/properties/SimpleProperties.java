@@ -51,11 +51,6 @@ public class SimpleProperties {
      */
     protected File propertiesFile;
 
-    /**
-     * Private contructor to prevent instantiation
-     *
-     * @throws IOException
-     */
     public SimpleProperties(final File propertiesFile) {
         this.propertiesFile = propertiesFile;
         InputStream inputStream = null;
@@ -88,6 +83,10 @@ public class SimpleProperties {
 
     protected static File getTenantPropertiesFile(final long tenantId, final String propertiesFileName) {
         return new File(WebBonitaConstantsUtils.getInstance(tenantId).getConfFolder(), propertiesFileName);
+    }
+
+    protected static File getPlatformPropertiesFile(final String propertiesFileName) {
+        return new File(WebBonitaConstantsUtils.getInstance().getConfFolder(), propertiesFileName);
     }
 
     protected void initProperties(final File aPropertiesFile) throws IOException {
