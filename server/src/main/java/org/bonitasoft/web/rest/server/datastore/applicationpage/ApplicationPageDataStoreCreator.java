@@ -29,11 +29,9 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 public class ApplicationPageDataStoreCreator {
 
     public ApplicationPageDataStore create(final APISession session) {
-        ApplicationAPI applicationAPI;
-        PageAPI pageAPI;
         try {
-            applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
-            pageAPI = TenantAPIAccessor.getCustomPageAPI(session);
+            final ApplicationAPI applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
+            final PageAPI pageAPI = TenantAPIAccessor.getCustomPageAPI(session);
             return new ApplicationPageDataStore(session, applicationAPI, pageAPI, new ApplicationPageItemConverter());
         } catch (final Exception e) {
             throw new APIException(e);
