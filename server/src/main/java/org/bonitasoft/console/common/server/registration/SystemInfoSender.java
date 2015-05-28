@@ -38,9 +38,6 @@ public class SystemInfoSender {
 
     public boolean call(final String data, final String email) {
         try {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Performing registration");
-            }
             final URL url = new URL(serviceURL);
             final URLConnection conn = createConnection(url);
             conn.setDoOutput(true);
