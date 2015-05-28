@@ -86,52 +86,28 @@ public class BonitaRegistrationTest {
     }
 
     @Test
-    public void sendUserInfoIfNotSent_should_not_call_service_when_system_property_is_not_set() throws Exception {
-
-        bonitaRegistration.sendUserInfoIfNotSent();
-
-        verify(bonitaRegistration, never()).sendUserInfo();
-    }
-
-    @Test
-    public void sendUserInfoIfNotSent_should_call_service_when_system_property_is_set() throws Exception {
-        try {
-            System.setProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY, "1");
-
+    public void sendUserInfoIfNotSent_should_call_service() throws Exception {
             bonitaRegistration.sendUserInfoIfNotSent();
 
             verify(bonitaRegistration).sendUserInfo();
-        } finally {
-            System.clearProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
-        }
     }
 
     @Test
     public void sendUserInfoIfNotSent_should_not_call_service_when_info_already_sent() throws Exception {
-        try {
-            System.setProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY, "1");
             when(simpleProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT)).thenReturn("1");
 
             bonitaRegistration.sendUserInfoIfNotSent();
 
             verify(bonitaRegistration, never()).sendUserInfo();
-        } finally {
-            System.clearProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
-        }
     }
 
     @Test
     public void sendUserInfoIfNotSent_should_not_call_service_when_max_try_reached() throws Exception {
-        try {
-            System.setProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY, "1");
             when(simpleProperties.getProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY)).thenReturn(
                     Integer.toString(BonitaRegistration.BONITA_USER_REGISTER_MAXTRY + 1));
 
             bonitaRegistration.sendUserInfoIfNotSent();
 
             verify(bonitaRegistration, never()).sendUserInfo();
-        } finally {
-            System.clearProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
-        }
     }
 }
