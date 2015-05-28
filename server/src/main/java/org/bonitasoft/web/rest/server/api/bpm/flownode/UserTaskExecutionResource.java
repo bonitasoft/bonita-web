@@ -58,15 +58,22 @@ public class UserTaskExecutionResource extends CommonResource {
             final ContractDefinition taskContract = processAPI.getUserTaskContract(taskId);
             final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs, maxSizeForTenant, tenantId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs, maxSizeForTenant, tenantId, false);
     		if (userId == null) {
                 processAPI.executeUserTask(taskId, processedInputs);
             } else {
                 processAPI.executeUserTask(Long.parseLong(userId), taskId, processedInputs);
     		}
+            //clean temp files
+            deleteFiles(taskContract, inputs, maxSizeForTenant, tenantId);
+
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");
         }
+    }
+
+    protected void deleteFiles(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
+        typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 
     protected long getTaskIdParameter() {

@@ -52,6 +52,7 @@ var htmlminOpt = {
 
 var useminOpt = {
   css: ['concat', rev()],
+  css2: ['concat', rev()],
   html: [htmlmin(htmlminOpt)],
   js: [uglify(), rev()]
 };

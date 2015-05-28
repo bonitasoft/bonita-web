@@ -248,9 +248,7 @@ public class CommonResource extends ServerResource {
 
     protected void setContentRange(final SearchResult<?> searchResult) {
         final Series<Header> headers = getResponse().getHeaders();
-        final int startIndex = getSearchPageNumber() * getSearchPageSize();
-        headers.add(new Header("Content-range", startIndex + "-" + (startIndex + getSearchPageSize() - 1) + "/"
-                + searchResult.getCount()));
+        headers.add(new Header("Content-range", getSearchPageNumber() + "-" + getSearchPageSize() + "/" + searchResult.getCount()));
     }
 
     protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {

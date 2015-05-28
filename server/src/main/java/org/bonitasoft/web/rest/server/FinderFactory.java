@@ -48,7 +48,6 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignRes
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
-import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionDescriptor;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
 import org.restlet.resource.Finder;
@@ -108,8 +107,8 @@ public class FinderFactory {
         return finder;
     }
 
-    public Finder createExtensionResource(final ResourceExtensionDescriptor resourceExtensionDescriptor) {
-        return new ApiExtensionResourceFinder(resourceExtensionDescriptor);
+    public Finder createExtensionResource() {
+        return new ApiExtensionResourceFinder();
     }
 
     public ResourceFinder getResourceFinderFor(final Serializable object) {
@@ -125,7 +124,7 @@ public class FinderFactory {
     public Serializable getContextResultElement(final Serializable object) {
         final ResourceFinder resourceFinderFor = getResourceFinderFor(object);
         if (resourceFinderFor != null) {
-            return resourceFinderFor.getContextResultElement(object);
+            return resourceFinderFor.toClientObject(object);
         }
         return object;
     }

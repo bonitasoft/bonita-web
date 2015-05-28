@@ -2,22 +2,13 @@ package org.bonitasoft.console.common.server.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.apache.commons.io.FileUtils;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
-import org.bonitasoft.engine.bpm.contract.Type;
-import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +19,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.bonitasoft.engine.bpm.contract.ContractDefinition;
+import org.bonitasoft.engine.bpm.contract.FileInputValue;
+import org.bonitasoft.engine.bpm.contract.InputDefinition;
+import org.bonitasoft.engine.bpm.contract.Type;
+import org.bonitasoft.engine.bpm.contract.impl.ContractDefinitionImpl;
+import org.bonitasoft.engine.bpm.contract.impl.InputDefinitionImpl;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,7 +48,7 @@ public class ContractTypeConverterTest {
 
     long tenantId = 1L;
 
-    String fileName = "file.txt";
+    String filename = "file.txt";
 
     String fileContentString = "content";
 
@@ -65,7 +70,17 @@ public class ContractTypeConverterTest {
         input.put("input1", "value1");
         input.put("input2", "value2");
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+
+        assertThat(processedInput).isEqualTo(input);
+    }
+
+    @Test
+    public void getProcessedInput_when_no_contract() throws Exception {
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition>emptyList());
+        final Map<String, Serializable> input = new HashMap<>();
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(null, input, maxSizeForTenant, tenantId, false);
 
         assertThat(processedInput).isEqualTo(input);
     }
@@ -74,16 +89,16 @@ public class ContractTypeConverterTest {
     public void getProcessedInputs_with_simple_input_should_return_processed_input() throws Exception {
         final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
-        String tempFilePath = "tempFile";
-        File tempFile = generateTempFile();
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
         doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
         final Map<String, Serializable> input = generateInputMap(tempFilePath);
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
 
         assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
-                entry("inputInteger", 125686181L), entry("inputDecimal", 12.8),
-                entry("inputFile", new FileInputValue(fileName, fileContentString.getBytes("UTF-8"))));
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8),
+                entry("inputFile", new FileInputValue(filename, fileContentString.getBytes("UTF-8"))));
     }
 
     @Test
@@ -91,18 +106,18 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        String tempFilePath = "tempFile";
-        File tempFile = generateTempFile();
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
         doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
         final Map<String, Serializable> complexInput = generateInputMap(tempFilePath);
         input.put("inputComplex", (Serializable) complexInput);
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
         assertThat(processedInput).containsKey("inputComplex");
         final Map<String, Serializable> processedComplexInput = (Map<String, Serializable>) processedInput.get("inputComplex");
         assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
-                entry("inputInteger", 125686181L), entry("inputDecimal", 12.8),
-                entry("inputFile", new FileInputValue(fileName, fileContentString.getBytes("UTF-8"))));
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8),
+                entry("inputFile", new FileInputValue(filename, fileContentString.getBytes("UTF-8"))));
     }
 
     @Test
@@ -110,32 +125,127 @@ public class ContractTypeConverterTest {
         final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = new HashMap<>();
-        final Map<String, Serializable> complexInput = generateInputMapWithFile( "tempFile");
+        final Map<String, Serializable> complexInput = generateInputMapWithFile("tempFile");
         final Map<String, Serializable> complexInput2 = generateInputMapWithFile("tempFile2");
         final List<Serializable> multipleComplexInput = new ArrayList<>();
         multipleComplexInput.add((Serializable) complexInput);
         multipleComplexInput.add((Serializable) complexInput2);
         input.put("inputComplex", (Serializable) multipleComplexInput);
 
-        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
         assertThat(processedInput).containsKey("inputComplex");
         final List<Serializable> processedMultipleComplexInput = (List<Serializable>) processedInput.get("inputComplex");
         assertThat(processedMultipleComplexInput).hasSize(2);
         for (final Serializable processedComplexInput : processedMultipleComplexInput) {
             final Map<String, Serializable> processedComplexInputMap = (Map<String, Serializable>) processedComplexInput;
             assertThat(processedComplexInputMap).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
-                    entry("inputInteger", 125686181L), entry("inputDecimal", 12.8),
-                    entry("inputFile", new FileInputValue(fileName, fileContentString.getBytes("UTF-8"))));
+                    entry("inputInteger", 125686181), entry("inputDecimal", 12.8),
+                    entry("inputFile", new FileInputValue(filename, fileContentString.getBytes("UTF-8"))));
         }
     }
 
-    private Map<String, Serializable> generateInputMapWithFile(String tempFilePath) throws IOException {
-        File tempFile = generateTempFile();
+    @Test
+    public void getProcessedInputs_with_simple_input_should_return_processed_input_with_null() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMapWithNull();
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+
+        assertThat(processedInput).containsOnly(entry("inputText", null), entry("inputBoolean", null), entry("inputDate", null),
+                entry("inputInteger", null), entry("inputDecimal", null), entry("inputFile", null));
+    }
+
+    @Test
+    public void getProcessedInputs_with_multiple_complex_input_should_return_processed_input_with_null() throws Exception {
+        final List<InputDefinition> inputDefinition = generateComplexInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final Map<String, Serializable> input = new HashMap<>();
+        final Map<String, Serializable> complexInput = generateInputMapWithFile("tempFile");
+        final Map<String, Serializable> complexInput2 = generateInputMapWithNull();
+        final Map<String, Serializable> complexInput3 = null;
+        final List<Serializable> multipleComplexInput = new ArrayList<>();
+        multipleComplexInput.add((Serializable) complexInput);
+        multipleComplexInput.add((Serializable) complexInput2);
+        multipleComplexInput.add((Serializable) complexInput3);
+        input.put("inputComplex", (Serializable) multipleComplexInput);
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+        assertThat(processedInput).containsKey("inputComplex");
+        final List<Serializable> processedMultipleComplexInput = (List<Serializable>) processedInput.get("inputComplex");
+        assertThat(processedMultipleComplexInput).hasSize(3);
+        final Serializable processedComplexInput1 = processedMultipleComplexInput.get(0);
+        final Map<String, Serializable> processedComplexInputMap1 = (Map<String, Serializable>) processedComplexInput1;
+        assertThat(processedComplexInputMap1).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(43200000L)),
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8),
+                entry("inputFile", new FileInputValue(filename, fileContentString.getBytes("UTF-8"))));
+        final Serializable processedComplexInput2 = processedMultipleComplexInput.get(1);
+        final Map<String, Serializable> processedComplexInputMap2 = (Map<String, Serializable>) processedComplexInput2;
+        assertThat(processedComplexInputMap2).containsOnly(entry("inputText", null), entry("inputBoolean", null), entry("inputDate", null),
+                entry("inputInteger", null), entry("inputDecimal", null), entry("inputFile", null));
+        assertThat(processedMultipleComplexInput.get(2)).isNull();
+    }
+
+    @Test
+    public void getProcessedInputs_without_deleting_contract_temp_files() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMap(tempFilePath);
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+
+        //files should not have been deleted
+        verify(contractTypeConverter, times(0)).deleteFile(any(File.class), anyString());
+    }
+
+    @Test
+    public void getProcessedInputs_deleting_contract_temp_files() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final String tempFilePath = "tempFile";
+        final File tempFile = generateTempFile();
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        final Map<String, Serializable> input = generateInputMap(tempFilePath);
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, true);
+
+        //files should not have been deleted
+        verify(contractTypeConverter, times(1)).deleteFile(any(File.class), anyString());
+    }
+
+
+    @Test
+    public void getAdaptedContractDefinition_should_return_a_converter_contract() throws IOException {
+        //given
+        final ContractDefinitionImpl processContract = new ContractDefinitionImpl();
+        final List<InputDefinition> inputDefinitions = new ArrayList<InputDefinition>();
+        inputDefinitions.add(new InputDefinitionImpl(InputDefinition.FILE_INPUT_FILENAME, Type.TEXT, "Name of the file", false));
+        inputDefinitions.add(new InputDefinitionImpl(InputDefinition.FILE_INPUT_CONTENT, Type.BYTE_ARRAY, "Content of the file", false));
+        processContract.addInput(new InputDefinitionImpl("inputFile", "this is a input file", false, Type.FILE, inputDefinitions));
+
+        //when
+        final ContractDefinition adaptedContractDefinition = contractTypeConverter.getAdaptedContractDefinition(processContract);
+
+        //assert
+        final InputDefinition tempPathFileInputDefinition = adaptedContractDefinition.getInputs().get(0).getInputs().get(1);
+        assertThat(tempPathFileInputDefinition.getType()).isEqualTo(Type.TEXT);
+        assertThat(tempPathFileInputDefinition.getName()).isEqualTo(contractTypeConverter.FILE_TEMP_PATH);
+        assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(contractTypeConverter.TEMP_PATH_DESCRIPTION);
+    }
+
+    private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
+        final File tempFile = generateTempFile();
         doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
         return generateInputMap(tempFilePath);
     }
 
-    private Map<String, Serializable> generateInputMap(String tempFilePath) {
+    private Map<String, Serializable> generateInputMap(final String tempFilePath) {
         final Map<String, Serializable> inputMap = new HashMap<>();
         inputMap.put("inputText", "text");
         inputMap.put("inputBoolean", "true");
@@ -143,10 +253,20 @@ public class ContractTypeConverterTest {
         inputMap.put("inputInteger", 125686181);
         inputMap.put("inputDecimal", "12.8");
         final Map<String, Serializable> fileMap = new HashMap<>();
-        fileMap.put(InputDefinition.FILE_INPUT_FILENAME, fileName);
+        fileMap.put(InputDefinition.FILE_INPUT_FILENAME, filename);
         fileMap.put(ContractTypeConverter.FILE_TEMP_PATH, tempFilePath);
         inputMap.put("inputFile", (Serializable) fileMap);
+        return inputMap;
+    }
 
+    private Map<String, Serializable> generateInputMapWithNull() {
+        final Map<String, Serializable> inputMap = new HashMap<>();
+        inputMap.put("inputText", null);
+        inputMap.put("inputBoolean", null);
+        inputMap.put("inputDate", null);
+        inputMap.put("inputInteger", null);
+        inputMap.put("inputDecimal", null);
+        inputMap.put("inputFile", null);
         return inputMap;
     }
 

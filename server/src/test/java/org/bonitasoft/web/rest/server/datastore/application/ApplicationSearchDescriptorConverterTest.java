@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.bonitasoft.engine.business.application.ApplicationSearchDescriptor;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
-import org.bonitasoft.web.rest.server.datastore.application.ApplicationSearchDescriptorConverter;
 import org.junit.Test;
 
 
@@ -103,4 +102,21 @@ public class ApplicationSearchDescriptorConverterTest {
         assertThat(value).isEqualTo(ApplicationSearchDescriptor.STATE);
     }
 
+    @Test
+    public void should_return_ApplicationSearchDescriptor_layoutid_on_convert_attribute_layoutid() throws Exception {
+        //when
+        final String value = converter.convert(ApplicationItem.ATTRIBUTE_LAYOUT_ID);
+
+        //then
+        assertThat(value).isEqualTo(ApplicationSearchDescriptor.LAYOUT_ID);
+    }
+
+    @Test
+    public void should_return_ApplicationSearchDescriptor_themeid_on_convert_attribute_themeid() throws Exception {
+        //when
+        final String value = converter.convert(ApplicationItem.ATTRIBUTE_THEME_ID);
+
+        //then
+        assertThat(value).isEqualTo(ApplicationSearchDescriptor.THEME_ID);
+    }
 }

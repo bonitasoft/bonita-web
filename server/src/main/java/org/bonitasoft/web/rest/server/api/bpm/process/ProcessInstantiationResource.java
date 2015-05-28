@@ -13,6 +13,8 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -38,6 +40,8 @@ import java.util.Map;
  */
 public class ProcessInstantiationResource extends CommonResource {
 
+    private static final String CASE_ID_ATTRIBUTE = "caseId";
+
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
 
     private static final String USER_PARAM = "user";
@@ -48,7 +52,7 @@ public class ProcessInstantiationResource extends CommonResource {
 
     protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
-    public ProcessInstantiationResource(final ProcessAPI processAPI, APISession apiSession) {
+    public ProcessInstantiationResource(final ProcessAPI processAPI, final APISession apiSession) {
         this.processAPI = processAPI;
         this.apiSession = apiSession;
     }
@@ -62,12 +66,20 @@ public class ProcessInstantiationResource extends CommonResource {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
             final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, false);
+            long processInstanceId;
             if (userId == null) {
-                return convertEngineToConsoleItem(processAPI.startProcessWithInputs(processDefinitionId, processedInputs)).toJson();
+                processInstanceId = processAPI.startProcessWithInputs(processDefinitionId, processedInputs).getId();
             } else {
-                return convertEngineToConsoleItem(processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs)).toJson();
+                processInstanceId = processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs).getId();
             }
+            //clean temp files
+            deleteFiles(processContract, inputs, maxSizeForTenant, tenantId);
+
+            final JsonNodeFactory factory = JsonNodeFactory.instance;
+            final ObjectNode returnedObject = factory.objectNode();
+            returnedObject.put(CASE_ID_ATTRIBUTE, processInstanceId);
+            return returnedObject.toString();
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instantiate process task.");
             return null;
@@ -75,6 +87,10 @@ public class ProcessInstantiationResource extends CommonResource {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    protected void deleteFiles(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
+        typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 
     protected CaseItem convertEngineToConsoleItem(final ProcessInstance item) {

@@ -20,6 +20,7 @@ package org.bonitasoft.console.common.server.preferences.properties;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -40,9 +41,9 @@ public class ResourcesPermissionsMappingTest {
         //when
         final Set<String> getPermissions = resourcesPermissionsMapping.getResourcePermissions("GET", "bpm", "process");
         final Set<String> postPermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process");
-        final Set<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", "6");
+        final Set<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", Arrays.asList("6"));
         final Set<String> putPermissions = resourcesPermissionsMapping.getResourcePermissions("PUT", "bpm", "process");
-        final Set<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", "unknown");
+        final Set<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", Arrays.asList("unknown"));
 
         //then
         Assertions.assertThat(getPermissions).containsOnly("Process visualization", "Process categories", "Process actor mapping visualization",
@@ -51,8 +52,21 @@ public class ResourcesPermissionsMappingTest {
         Assertions.assertThat(postOnSinglePermission).containsOnly("Custom permission");
         Assertions.assertThat(putPermissions).isEmpty();
         Assertions.assertThat(unknown).isEmpty();
+    }
 
+    @Test
+    public void testGetResourcePermissionWithWildCard() throws Exception {
+        //given
+        final String fileContent = "POST|bpm/process [Process Deploy]\n" +
+                "POST|bpm/process/*/instantiation [Custom permission]";
+        final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(fileContent);
 
+        //when
+        final Set<String> postWithResourcesQualifiers = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("POST", "bpm", "process",
+                Arrays.asList("6", "instantiation"));
+
+        //then
+        Assertions.assertThat(postWithResourcesQualifiers).containsOnly("Custom permission");
     }
 
     public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) throws IOException {

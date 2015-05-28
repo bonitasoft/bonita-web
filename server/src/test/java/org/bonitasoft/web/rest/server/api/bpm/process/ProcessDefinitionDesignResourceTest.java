@@ -14,13 +14,16 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import static org.bonitasoft.web.rest.server.utils.ResponseAssert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.impl.internal.DesignProcessDefinitionImpl;
+import org.bonitasoft.web.rest.server.utils.ResponseAssert;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
@@ -74,15 +77,27 @@ public class ProcessDefinitionDesignResourceTest extends RestletTest {
         final Response response = request(TEST_DESIGN_API_URL).get();
 
         //then
-        assertThat(response).hasStatus(Status.SUCCESS_OK);
-        assertThat(response).hasJsonEntityEqualTo(readFile("design.json"));
+        ResponseAssert.assertThat(response).hasStatus(Status.SUCCESS_OK);
+        ResponseAssert.assertThat(response).hasJsonEntityEqualTo(readFile("design.json"));
     }
 
     @Test
     public void should_respond_404_Not_found_when_process_definition_is_not_found_when_getting_contract() throws Exception {
         when(processAPI.getDesignProcessDefinition(PROCESS_DEFINITION_ID)).thenThrow(new ProcessDefinitionNotFoundException("process definition not found"));
         final Response response = request(TEST_DESIGN_API_URL).get();
-        assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        ResponseAssert.assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
+    }
+
+    @Test
+    public void testReplaceLongIdToString() throws Exception {
+        assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"id\": 123}")).isEqualToIgnoringCase("{ \"id\": \"123\"}");
+        assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"id\":123, \"test\": [ otherid: \"zerze\"]}")).isEqualToIgnoringCase(
+                "{ \"id\":\"123\", \"test\": [ otherid: \"zerze\"]}");
+        assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"iaed\": 123}")).isEqualToIgnoringCase("{ \"iaed\": 123}");
+        assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"name\": \"\\\"id\\\": 123\"}")).isEqualToIgnoringCase(
+                "{ \"name\": \"\\\"id\\\": 123\"}");
+        assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"name\": \"\\\"id\\\": 123\"}")).isEqualToIgnoringCase(
+                "{ \"name\": \"\\\"id\\\": 123\"}");
     }
 
 }
