@@ -42,9 +42,9 @@ public class BonitaRegistration {
 
     public static final String SERVICE_URL = "http://stats.bonitasoft.org/stats.php";
     public static final String BONITA_REGISTER_SYSTEM_PROPERTY = "bonita.web.register";
-	public static final String BONITA_USER_REGISTER_TRY = "user.register.try";
-	public static final String BONITA_INFO_SENT = "user.info.sent";
-	public static final int BONITA_USER_REGISTER_MAXTRY = 6;
+    public static final String BONITA_USER_REGISTER_TRY = "user.register.try";
+    public static final String BONITA_INFO_SENT = "user.info.sent";
+    public static final int BONITA_USER_REGISTER_MAXTRY = 6;
     public static final String[] SYSTEM_PROPERTIES_TO_SEND = new String[] { "java.version", "java.vendor", "os.name", "os.arch", "os.version" };
     protected static final String DEFAULT_EMAIL = "nowhere@nowhere.org";
 
@@ -66,7 +66,7 @@ public class BonitaRegistration {
         infos.put("mem.total", String.valueOf(Runtime.getRuntime().totalMemory() / 1048576) + "mo");
         infos.put("mem.max", String.valueOf(Runtime.getRuntime().maxMemory() / 1048576) + "mo");
         infos.put("origin", "business-app");
-		addIpAdressInfo(infos);
+        addIpAdressInfo(infos);
         return infos;
     }
 
@@ -103,17 +103,17 @@ public class BonitaRegistration {
 
     protected boolean sendUserInfo() {
         final Map<String, String> infos = createSystemInfoMap();
-		try {
+        try {
             final String email = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(DEFAULT_EMAIL, "UTF-8");
             final String data = computeEncodedDataToSend(infos);
             return sendUserInfoEncoded(email, data);
-		} catch (final UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
             return false;
-		}
-	}
+        }
+    }
 
     protected String computeEncodedDataToSend(final Map<String, String> infos) throws UnsupportedEncodingException {
         final StringBuilder sb = new StringBuilder();
@@ -145,7 +145,7 @@ public class BonitaRegistration {
                 }
             }
         }
-	}
+    }
 
     protected SimpleProperties getPlatformPreferences() {
         return PropertiesFactory.getPlatformPreferencesProperties();
@@ -171,14 +171,14 @@ public class BonitaRegistration {
             return systemInfoSender.call(data, email);
         } else {
             return false;
-		}
-	}
+        }
+    }
 
     protected boolean isDataValidToSend(final String email, final String data) {
         return data != null
                 && data.length() > 0
                 && email != null
-				&& email.length() > 0;
+                && email.length() > 0;
     }
 
 }
