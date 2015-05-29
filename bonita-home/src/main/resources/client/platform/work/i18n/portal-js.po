@@ -147,6 +147,12 @@ msgid ""
 "loaded in the Portal."
 msgstr ""
 
+msgid "Can't import page or form to the process"
+msgstr ""
+
+msgid "Can't update expression content"
+msgstr ""
+
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:12
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:62
 #: bonita-portal-js/main/features/admin/applications/details/page-list-addPageModal.html:36
@@ -424,6 +430,9 @@ msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/export-application.html:2
 msgid "Export application"
+msgstr ""
+
+msgid "Expression content has been updated"
 msgstr ""
 
 msgid "Failed"
