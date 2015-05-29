@@ -14,6 +14,7 @@
 package org.bonitasoft.web.rest.server.api.resource;
 
 import com.fasterxml.jackson.core.JsonParseException;
+
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -36,9 +37,11 @@ import org.restlet.util.Series;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -215,11 +218,30 @@ public class CommonResource extends ServerResource {
 
     public Long getPathParamAsLong(final String parameterName) {
         final String value = getAttribute(parameterName);
-        try {
+        return convertToLong(value);
+    }
+
+	private Long convertToLong(final String value) {
+		try {
             return Long.parseLong(value);
         } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("[ " + value + " ] must be a number");
         }
+	}
+
+    public List<Long> getParameterAsLongList(final String parameterName) {
+        final String values = getQuery().getValues(parameterName);
+        if (values != null) {
+            final String[] parameterValues = values.split(",");
+            if (parameterValues != null && parameterValues.length > 0) {
+            	final List<Long> longValues = new ArrayList<>();
+            	for (String parameterValue : parameterValues) {
+					longValues.add(convertToLong(parameterValue));
+				}
+            	return longValues;
+            }
+        }
+        return null;
     }
 
     public String getPathParam(final String name) {
