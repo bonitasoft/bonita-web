@@ -1369,10 +1369,10 @@ msgid ""
 "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 msgstr ""
 
-msgid "{{group}} of {{role}}"
+msgid "{{role}} of {{group}}"
 msgstr ""
 
-msgid "{{group}} of {{role}} has been created"
+msgid "{{role}} of {{group}} has been created"
 msgstr ""
 
 msgid "{{nbErrors}} errors on mapping updates"
