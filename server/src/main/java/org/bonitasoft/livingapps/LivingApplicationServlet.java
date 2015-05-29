@@ -3,6 +3,7 @@ package org.bonitasoft.livingapps;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +34,8 @@ public class LivingApplicationServlet extends HttpServlet {
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
-
     @Override
-    protected void doGet(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse)
+    protected void service(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse)
             throws ServletException, IOException {
 
         final APISession session = getSession(hsRequest);

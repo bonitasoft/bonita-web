@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,15 +45,21 @@ public class ApplicationRouter {
             return;
         }
 
-        //If no page name, redirect to Home page
-        if (parsedRequest.getPageToken() == null) {
-            hsResponse.sendRedirect(application.getApplicationHomePage());
+        if ("API".equals(parsedRequest.getPageToken())) {
+            //Support relative calls to the REST API from the application page using ../API/
+            hsRequest.getRequestDispatcher("/" + getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(), parsedRequest.getApplicationName())).forward(
+                    hsRequest, hsResponse);
             return;
         }
 
-        if ("API".equals(parsedRequest.getPageToken())) {
-            //Support relative calls to the REST API from the application page using ../API/
-            hsRequest.getRequestDispatcher("/"+getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(),parsedRequest.getApplicationName())).forward(hsRequest, hsResponse);
+        if (!"GET".equals(hsRequest.getMethod())) {
+            hsResponse.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "http.method_" + hsRequest.getMethod().toLowerCase() + "_not_supported");
+            return;
+        }
+
+        //If no page name, redirect to Home page
+        if (parsedRequest.getPageToken() == null) {
+            hsResponse.sendRedirect(application.getApplicationHomePage());
             return;
         }
 
@@ -75,7 +82,7 @@ public class ApplicationRouter {
             return pathSegments.size() == 2;
     }
 
-    private File getResourceFile(final  PageRenderer pageRenderer, String resourcePath, final List<String> pathSegments, final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
+    private File getResourceFile(final  PageRenderer pageRenderer, final String resourcePath, final List<String> pathSegments, final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
 
         String  pageName;
         if(THEME_TOKEN.equals(pathSegments.get(1))){
