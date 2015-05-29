@@ -1,4 +1,4 @@
-<label>{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
+<label>{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
 <div class="well" ng-init="parent = outputData">
     <div class="input" ng-repeat="input in input.inputs">
         <!-- simple input -->

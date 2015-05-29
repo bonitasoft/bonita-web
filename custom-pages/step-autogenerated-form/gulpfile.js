@@ -32,6 +32,9 @@ var gulp = require('gulp');
 var karma = require('karma').server;
 var protractor = require('gulp-protractor').protractor;
 
+/*i18n*/
+var gettext = require('gulp-angular-gettext');
+
 /**
  * Configuration
  */
@@ -130,7 +133,6 @@ gulp.task('templates', function () {
       .pipe(gulp.dest('target/dist/resources/templates'));
 });
 
-
 /**
  * JsHint
  * Validate js script
@@ -220,3 +222,11 @@ gulp.task('default', function (done) {
   runSequence(['jshint', 'clean'], 'zip', done);
 });
 gulp.task('dev', ['server', 'watch', 'open', 'tdd']);
+
+gulp.task('extract-i18n', function () {
+  return gulp.src(['src/**/*.html', 'src/**/*.js'])
+      .pipe(gettext.extract('i18n-to-copy-into-portalJs-po-file-in-bonitahome.pot', {
+        // options to pass to angular-gettext-tools...
+      }))
+      .pipe(gulp.dest('target/po/'));
+});
