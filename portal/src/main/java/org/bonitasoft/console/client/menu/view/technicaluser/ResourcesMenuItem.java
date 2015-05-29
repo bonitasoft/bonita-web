@@ -20,20 +20,17 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.admin.page.view.PageListingPage;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
-import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 
 /**
  * @author Colin PUY
  *
  */
-public class ResourcesMenuItem extends MenuFolder {
+public class ResourcesMenuItem extends MenuLink {
 
     public ResourcesMenuItem() {
-        super(new JsId("Resources"), _("Resources"));
-        addMenuItem(new MenuLink(new JsId("businessdatamodelimport"),_("Business Data Model"),  _("Business Data Model"), "businessdatamodelimport"));
-//      TO DO: addMenuItem(new MenuLink(new JsId(BDMImportPage.TOKEN), _("Business Data Model"), _("Business Data Model"), BDMImportPage.TOKEN));
-        addMenuItem(new MenuLink(new JsId(PageListingPage.TOKEN), _("Custom Pages"), _("Manage custom pages"), PageListingPage.TOKEN));
+        super(new JsId(PageListingPage.TOKEN), _("Resources"), _("Manage resources"),
+                PageListingPage.TOKEN);
     }
 
 }
