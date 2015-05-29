@@ -1,5 +1,5 @@
 <div ng-controller="MultipleFilesCtrl">
-    <label for="{{input.name}}">{{input.name}}</label> - <i>{{input.description===null?'&lt;no description defined in contract for this input&gt;':input.description}}</i>
+    <label for="{{input.name}}">{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
     <form
             class="form-horizontal"
             action="{{importUrl}}"
