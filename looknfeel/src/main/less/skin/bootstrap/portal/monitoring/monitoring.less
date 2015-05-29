@@ -83,8 +83,7 @@
 
   .refreshBlock {
     position: relative;
-    bottom: 32px;
-    right: 16px;
+    font-size: 14px;
   }
 
   .glyphicon-chevron-up,
@@ -96,7 +95,7 @@
   }
 
   .paginationBlock {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: normal;
     font-family: @regularFont, sans-serif;
     display: inline-block;
@@ -139,7 +138,12 @@
 
   h1 {
     margin-bottom: 5px;
-    //color: @titleColor;
+    span.refreshLabel{
+      font-size: 14px;
+      font-weight: normal;
+      color: @fontColor;
+      font-family: @regularFont;
+    }
   }
 
   .pagination {
