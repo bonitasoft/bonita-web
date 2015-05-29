@@ -5,10 +5,17 @@
     'ngResource',
     'gettext',
     'org.bonita.common.resources',
-    'ngUpload'
+    'ngUpload',
+    'org.bonitasoft.services.i18n',
+    'org.bonitasoft.common.filters.stringTemplater'
   ]);
 
-  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog) {
+  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', 'i18nService', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog, i18nService) {
+
+    i18nService.then(function(){
+      $scope.i18nLoaded = true;
+    });
+
 
     var processId = $location.search().id;
 
