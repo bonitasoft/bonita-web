@@ -1,4 +1,5 @@
 import groovy.json.JsonBuilder
+import org.bonitasoft.console.common.server.page.*
 
 import javax.servlet.http.HttpServletRequest
 import java.util.logging.Logger
