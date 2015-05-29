@@ -66,6 +66,8 @@ msgstr ""
 msgid "Actors"
 msgstr ""
 
+#: templates/complexMultiple.html:9 templates/files.html:26
+#: templates/multiple.html:16
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-menuCreator.html:7
 #: bonita-portal-js/main/features/admin/applications/details/page-list-addPageModal.html:34
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:7
@@ -129,6 +131,14 @@ msgid "Apply"
 msgstr ""
 
 msgid "Archived cases"
+msgstr ""
+
+#: index.html:20
+msgid "Attention"
+msgstr ""
+
+#: index.html:34
+msgid "Autofill"
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/menu.html:4
@@ -419,7 +429,15 @@ msgstr ""
 msgid "Error: value must be an integer"
 msgstr ""
 
+#: index.html:58
+msgid "Execute"
+msgstr ""
+
 msgid "Executing, completing, initializing instances"
+msgstr ""
+
+#: templates/multiple.html:7 templates/simple.html:5
+msgid "Expecting a {} value."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:74
@@ -443,6 +461,10 @@ msgid "Failed Flow Nodes"
 msgstr ""
 
 msgid "Failed instances"
+msgstr ""
+
+#: index.html:34
+msgid "Fill in each form inputs with fake data."
 msgstr ""
 
 msgid "Filter on process"
@@ -646,6 +668,10 @@ msgstr ""
 msgid "No scripts"
 msgstr ""
 
+#: templates/simple.html:6
+msgid "Not a valid number!"
+msgstr ""
+
 #: main/features/admin/processes/details/startForModal.html:22
 msgid "OK"
 msgstr ""
@@ -796,6 +822,10 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
+#: templates/files.html:13
+msgid "Select a file"
+msgstr ""
+
 msgid "Select a group..."
 msgstr ""
 
@@ -872,6 +902,7 @@ msgstr ""
 msgid "Specify the menu structure."
 msgstr ""
 
+#: index.html:58
 #: main/features/admin/processes/details/forms/forms-mapping.html:12
 msgid "Start"
 msgstr ""
@@ -1192,9 +1223,19 @@ msgstr ""
 msgid "items per page"
 msgstr ""
 
+#: templates/complex.html:1 templates/files.html:2 templates/multiple.html:3
+#: templates/simple.html:3
+msgid "no description defined in contract for this input"
+msgstr ""
+
 # Membership 'Role' of 'Group'
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:46
 msgid "of"
+msgstr ""
+
+#: templates/complexMultiple.html:5 templates/files.html:19
+#: templates/multiple.html:9
+msgid "remove"
 msgstr ""
 
 #: main/features/admin/monitoring/monitoring.html:108
@@ -1275,6 +1316,12 @@ msgstr ""
 
 #: main/features/admin/monitoring/monitoring.html:107
 msgid "sort by Version descending"
+msgstr ""
+
+#: index.html:21
+msgid ""
+"this is a temporary form generated automatically for testing. Before you put "
+"your process into production, create and map the necessary forms."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
