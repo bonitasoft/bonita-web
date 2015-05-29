@@ -31,7 +31,7 @@
 @text-color:            #323232;
 
 //** Global textual link color.
-@link-color:            #003355 ;
+@link-color:            #337AB7;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      @link-color;
 //** Link hover decoration.
@@ -48,7 +48,7 @@
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
 
-@font-size-base:          13px;
+@font-size-base:          14px;
 @font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
 @font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
 
@@ -443,19 +443,19 @@
 //##
 
 @pagination-color:                     #fff;
-@pagination-bg:                        @brand-success;
+@pagination-bg:                        @brand-primary;
 @pagination-border:                    transparent;
 
 @pagination-hover-color:               #fff;
-@pagination-hover-bg:                  darken(@brand-success, 15%);
+@pagination-hover-bg:                  darken(@brand-primary, 15%);
 @pagination-hover-border:              transparent;
 
 @pagination-active-color:              #fff;
-@pagination-active-bg:                 darken(@brand-success, 15%);
+@pagination-active-bg:                 darken(@brand-primary, 15%);
 @pagination-active-border:             transparent;
 
 @pagination-disabled-color:            @gray-lighter;
-@pagination-disabled-bg:               lighten(@brand-success, 15%);
+@pagination-disabled-bg:               lighten(@brand-primary, 15%);
 @pagination-disabled-border:           transparent;
 
 
@@ -491,19 +491,19 @@
 //## Define colors for form feedback states and, by default, alerts.
 
 @state-success-text:             @brand-success;
-@state-success-bg:               #fff;
+@state-success-bg:               lighten(@brand-success,50%);
 @state-success-border:           @brand-success;
 
 @state-info-text:                @brand-info;
-@state-info-bg:                  #fff;
+@state-info-bg:                  lighten(@brand-info,50%);
 @state-info-border:              @brand-info;
 
 @state-warning-text:             @brand-warning;
-@state-warning-bg:               #fff;
+@state-warning-bg:               lighten(@brand-warning,50%);
 @state-warning-border:           @brand-warning;
 
 @state-danger-text:              @brand-danger;
-@state-danger-bg:                #fff;
+@state-danger-bg:                lighten(@brand-danger,50%);
 @state-danger-border:            @brand-danger;
 
 

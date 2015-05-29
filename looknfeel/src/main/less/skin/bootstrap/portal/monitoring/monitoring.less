@@ -20,7 +20,6 @@
     color: @panelHeaderBG;
     .panel-title{
       line-height: 26px;
-      overflow: hidden;
     }
   }
 
@@ -79,8 +78,7 @@
 
   .refreshBlock {
     position: relative;
-    bottom: 32px;
-    right: 16px;
+    font-size: 14px;
   }
 
   .glyphicon-chevron-up,
@@ -92,7 +90,7 @@
   }
 
   .paginationBlock {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: normal;
     font-family: @regularFont, sans-serif;
     display: inline-block;
@@ -135,7 +133,15 @@
 
   h1 {
     margin-bottom: 5px;
-    color: @titleColor;
+    .refreshBlock{
+      font-family: @regularFont;
+      span.refreshLabel{
+        font-size: 14px;
+        font-weight: normal;
+        color: @fontColor;
+      }
+    }
+    
   }
 
   .pagination {
