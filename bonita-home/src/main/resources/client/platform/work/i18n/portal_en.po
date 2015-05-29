@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 03:03+0200\n"
-"PO-Revision-Date: 2015-05-21 10:22-0400\n"
+"POT-Creation-Date: 2015-05-23 03:02+0200\n"
+"PO-Revision-Date: 2015-05-26 02:52-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -21,9 +21,6 @@ msgstr " To do so, go to %entitymappingprofilelink%."
 
 msgid " for "
 msgstr " for "
-
-msgid "%applicationName% as page %associationName%"
-msgstr "%applicationName% as page %associationName%"
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
 msgstr "%attribute% file format is not allowed. Only %file_formats% files are allowed."
@@ -163,6 +160,18 @@ msgstr "%user%"
 msgid "%value% is not a valid value for %className%"
 msgstr "%value% is not a valid value for %className%"
 
+msgid "'%applicationName%' as page '%associationName%'"
+msgstr "'%applicationName%' as page '%associationName%'"
+
+msgid "'%layoutName%' is used as layout for:"
+msgstr "'%layoutName%' is used as layout for:"
+
+msgid "'%pageName%' is used by:"
+msgstr "'%pageName%' is used by:"
+
+msgid "'%themeName%' is used as Theme for:"
+msgstr "'%themeName%' is used as Theme for:"
+
 msgid "?"
 msgstr "?"
 
@@ -232,9 +241,6 @@ msgstr "Add a category"
 msgid "Add a comment"
 msgstr "Add a comment"
 
-msgid "Add a custom page"
-msgstr "Add a custom page"
-
 msgid "Add a group"
 msgstr "Add a group"
 
@@ -268,11 +274,11 @@ msgstr "Add a new custom page"
 msgid "Add a new membership to this user"
 msgstr "Add a new membership to this user"
 
-msgid "Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list)."
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 
-msgid "Add a page"
-msgstr "Add a page"
+msgid "Add a resource"
+msgstr "Add a resource"
 
 msgid "Add a role"
 msgstr "Add a role"
@@ -294,6 +300,9 @@ msgstr "Add a user to profile %%"
 
 msgid "Add new memberships for %user%"
 msgstr "Add new memberships for %user%"
+
+msgid "Add resource"
+msgstr "Add resource"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Add selected group(s) to this profile"
@@ -349,6 +358,9 @@ msgstr "All pages"
 msgid "All processes are automatically paused."
 msgstr "All processes are automatically paused."
 
+msgid "An archive has a .zip extension"
+msgstr "An archive has a .zip extension"
+
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "An error has occurred when deploying Business Data Model."
 
@@ -369,6 +381,9 @@ msgstr "Apps management"
 
 msgid "April"
 msgstr "April"
+
+msgid "Archive"
+msgstr "Archive"
 
 msgid "Archived"
 msgstr "Archived"
@@ -1054,6 +1069,9 @@ msgstr "For each actor, check that each entity (user, group, role, membership) h
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr "Format: %namePrefix% followed only by alphanumeric characters."
 
+msgid "Forms"
+msgstr "Forms"
+
 msgid "Fr"
 msgstr "Fr"
 
@@ -1227,6 +1245,9 @@ msgstr "Last updated on"
 msgid "Lastname"
 msgstr "Lastname"
 
+msgid "Layouts"
+msgstr "Layouts"
+
 msgid "Link to the tasks"
 msgstr "Link to the tasks"
 
@@ -1284,14 +1305,14 @@ msgstr "Manage cases of processes that an entity with this profile can supervise
 msgid "Manage custom pages"
 msgstr "Manage custom pages"
 
-msgid "Manage pages"
-msgstr "Manage pages"
-
 msgid "Manage processes that an entity with this profile can supervise as PM."
 msgstr "Manage processes that an entity with this profile can supervise as PM."
 
 msgid "Manage profiles"
 msgstr "Manage profiles"
+
+msgid "Manage resources"
+msgstr "Manage resources"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Manage tasks of processes that an entity with this profile can supervise as PM."
@@ -1484,6 +1505,9 @@ msgstr "Overview"
 msgid "Page archive"
 msgstr "Page archive"
 
+msgid "Pages"
+msgstr "Pages"
+
 msgid "Parameters"
 msgstr "Parameters"
 
@@ -1609,6 +1633,9 @@ msgstr "Profiles"
 
 msgid "RESOLVED"
 msgstr "RESOLVED"
+
+msgid "REST API extensions"
+msgstr "REST API extensions"
 
 msgid "Ready since %task_last_update%"
 msgstr "Ready since %task_last_update%"
@@ -2096,6 +2123,9 @@ msgstr "The version of the process"
 
 msgid "The version of the process that created this case"
 msgstr "The version of the process that created this case"
+
+msgid "Themes"
+msgstr "Themes"
 
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "These %item_name_plural% and related profile entries will be permanently deleted."
