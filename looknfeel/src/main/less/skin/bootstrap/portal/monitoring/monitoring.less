@@ -32,7 +32,6 @@
     color: @panelHeaderBG;
     .panel-title{
       line-height: 26px;
-      overflow: hidden;
     }
   }
 
@@ -138,12 +137,15 @@
 
   h1 {
     margin-bottom: 5px;
-    span.refreshLabel{
-      font-size: 14px;
-      font-weight: normal;
-      color: @fontColor;
+    .refreshBlock{
       font-family: @regularFont;
+      span.refreshLabel{
+        font-size: 14px;
+        font-weight: normal;
+        color: @fontColor;
+      }
     }
+    
   }
 
   .pagination {
