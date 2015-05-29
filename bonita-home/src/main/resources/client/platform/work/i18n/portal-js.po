@@ -7,10 +7,6 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
@@ -472,6 +468,8 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:10
+#: main/features/admin/processes/details/process-managers-mapping.html:12
 #: main/features/admin/processes/details/process-managers-mapping.html
 #: main/features/admin/processes/details/actors-mapping.html
 msgid "Groups"
@@ -539,6 +537,7 @@ msgstr ""
 msgid "Legacy"
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/cases/list/cases-list.html:135
 #: main/features/admin/cases/list/cases-list.html
 msgid "Loading..."
 msgstr ""
@@ -558,6 +557,10 @@ msgid "MIN"
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:3
+msgid "Manage Categories"
+msgstr ""
+
+#: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:3
 msgid "Manage categories"
 msgstr ""
 
@@ -565,6 +568,8 @@ msgstr ""
 msgid "Mapping"
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:11
+#: main/features/admin/processes/details/process-managers-mapping.html:13
 #: main/features/admin/processes/details/process-managers-mapping.html
 #: main/features/admin/processes/details/actors-mapping.html
 msgid "Memberships"
@@ -607,9 +612,6 @@ msgstr ""
 
 #: main/features/admin/processes/details/forms/form-uploader.html:39
 msgid "Next"
-msgstr ""
-
-msgid "No mapping"
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:18
@@ -754,6 +756,7 @@ msgstr ""
 msgid "Remove all"
 msgstr ""
 
+#: main/features/admin/processVisu/processVisu.html:16
 msgid "Reset"
 msgstr ""
 
@@ -761,6 +764,8 @@ msgstr ""
 msgid "Return type"
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:9
+#: main/features/admin/processes/details/process-managers-mapping.html:10
 #: main/features/admin/processes/details/process-managers-mapping.html
 #: main/features/admin/processes/details/actors-mapping.html
 msgid "Roles"
@@ -828,9 +833,6 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-# #-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#
-# #-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#
-# Case Visu - Show Key
 #: main/features/admin/processVisu/visuShowKey.html:2
 msgid "Show key"
 msgstr ""
@@ -916,6 +918,7 @@ msgstr ""
 msgid "Technical error."
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/processes/details/menu.html:16
 msgid "The Process cannot be enabled"
 msgstr ""
 
@@ -1070,6 +1073,8 @@ msgstr ""
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr ""
 
+#: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:8
+#: main/features/admin/processes/details/process-managers-mapping.html:9
 #: main/features/admin/processes/details/process-managers-mapping.html
 #: main/features/admin/processes/details/actors-mapping.html
 msgid "Users"
@@ -1178,7 +1183,6 @@ msgstr ""
 msgid "items per page"
 msgstr ""
 
-# #-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#
 # Membership 'Role' of 'Group'
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:46
 msgid "of"
@@ -1268,14 +1272,6 @@ msgstr ""
 msgid "will be permanently deleted."
 msgstr ""
 
-msgid "{{nbMapping}} Process manager mappings have been deleted"
-msgstr ""
-
-#: main/features/admin/processes/details/scripts/edit-script.html:2
-msgid ""
-"Update content of script {}"
-msgstr ""
-
 msgid ""
 "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination."
 "total}}"
@@ -1297,6 +1293,9 @@ msgid "{{group}} of {{role}} has been created"
 msgstr ""
 
 msgid "{{nbErrors}} errors on mapping updates"
+msgstr ""
+
+msgid "{{nbMapping}} Process manager mappings have been deleted"
 msgstr ""
 
 msgid "{{nbOfDeletedCases}} case deleted"
@@ -1338,7 +1337,6 @@ msgstr ""
 msgid "{} more"
 msgstr ""
 
-# #-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#
 # Membership label: "Member of Acme" (Role of Group) 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:37
 msgid "{} of {}"
