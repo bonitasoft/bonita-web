@@ -19,6 +19,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid ""
+"'Zip file structure error. Check that your .zip contains a well-formed page."
+"properties and either the index.html or the Index.groovy file. For details, "
+"see the documentation or the example page readme (availabe in the custom "
+"page list)"
+msgstr ""
+
 msgid "1 case has been deleted"
 msgstr ""
 
@@ -40,6 +47,9 @@ msgstr ""
 
 #: main/features/admin/monitoring/monitoring.html:14
 msgid "5 min."
+msgstr ""
+
+msgid "A page with this name already exists."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:38
@@ -166,9 +176,10 @@ msgstr ""
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:13
 #: main/features/admin/processes/details/edit-process-connector-implementation.html:24
 #: main/features/admin/processes/details/forms/form-uploader.html:49
-#: main/features/admin/processes/details/scripts/edit-script.html:18
+#: main/features/admin/processes/details/scripts/edit-script.html:19
 #: main/features/admin/processes/details/scripts/scripts.html:42
 #: main/features/admin/processes/details/startForModal.html:23
+#: main/features/admin/processes/details/scripts/edit-script.html:18
 msgid "Cancel"
 msgstr ""
 
@@ -250,6 +261,11 @@ msgstr ""
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
+msgstr ""
+
+msgid ""
+"Compilation failure. Verify that the Index.groovy class implements the "
+"PageController interface."
 msgstr ""
 
 msgid "Completed instances"
@@ -443,6 +459,10 @@ msgid "Failed Flow Nodes"
 msgstr ""
 
 msgid "Failed instances"
+msgstr ""
+
+msgid ""
+"Filename too long. The zip filename must be no longer than 50 characters"
 msgstr ""
 
 msgid "Filter on process"
@@ -786,8 +806,9 @@ msgstr ""
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:30
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:12
 #: main/features/admin/processes/details/edit-process-connector-implementation.html:31
-#: main/features/admin/processes/details/scripts/edit-script.html:13
+#: main/features/admin/processes/details/scripts/edit-script.html:14
 #: main/features/admin/processes/details/scripts/scripts.html:41
+#: main/features/admin/processes/details/scripts/edit-script.html:13
 msgid "Save"
 msgstr ""
 
@@ -970,6 +991,11 @@ msgstr ""
 msgid "The following form mappings are not resolved: [ {} ]"
 msgstr ""
 
+msgid ""
+"The name for the URL must start with custompage_ followed only by "
+"alphanumeric characters."
+msgstr ""
+
 #: main/features/admin/processes/details/forms/form-uploader.html:25
 msgid ""
 "The page allows users with relevant profiles to access the following "
@@ -1049,6 +1075,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+#: main/features/admin/processes/details/scripts/edit-script.html:3
 #: main/features/admin/processes/details/scripts/edit-script.html:2
 msgid "Update content of script {}"
 msgstr ""
