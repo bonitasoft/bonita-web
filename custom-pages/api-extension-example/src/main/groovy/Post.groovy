@@ -1,5 +1,6 @@
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
+import org.bonitasoft.console.common.server.page.*
 
 import javax.servlet.http.HttpServletRequest
 
