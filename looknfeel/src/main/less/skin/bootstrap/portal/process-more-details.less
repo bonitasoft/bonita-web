@@ -5,6 +5,17 @@
         margin-top: 0;
       }
     }
+
+    &form-mapping {
+      td {
+        &.xeditable {
+          width: 70%;
+          .editable-buttons {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
   }
   
   .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
@@ -216,41 +227,6 @@
   .ace_editor { height: 300px; }
 }
 
-button.glyphicon{
-  border: none;
-  font-weight: normal;
-  background-color: transparent;
-  text-align: inherit;
-  padding: 1px 0;
-  white-space: nowrap;
-  text-transform: none !important;
-  min-width: 10px;
-  background: none;
-  box-shadow: none;
-
-  &:hover{
-    color: @color3;
-    background-color: transparent;
-    border-color: transparent;
-  }
-}
-
-#form-mapping {
-  td {
-    color: #6e6f6b;
-    &.xeditable {
-      width: 70%;
-    }
-    input[type="text"]{
-      height: 30px;
-    }
-    button{
-      margin-top: 2px;
-      min-width: 30px;
-      padding: 0 0 0 0;
-    }
-  }
-}
 
 #manage-categories-modal {
  
