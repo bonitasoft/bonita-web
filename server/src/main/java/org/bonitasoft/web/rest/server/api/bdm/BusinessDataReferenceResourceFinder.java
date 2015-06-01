@@ -9,18 +9,14 @@
 
 package org.bonitasoft.web.rest.server.api.bdm;
 
+import java.io.Serializable;
+
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.business.data.BusinessDataReference;
-import org.bonitasoft.engine.business.data.MultipleBusinessDataReference;
-import org.bonitasoft.engine.business.data.SimpleBusinessDataReference;
-import org.bonitasoft.web.rest.server.BonitaRestletApplication;
 import org.bonitasoft.web.rest.server.ResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.ContextResultElement;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.ServerResource;
-
-import java.io.Serializable;
 
 /**
  * @author Baptiste Mesta
@@ -38,9 +34,9 @@ public class BusinessDataReferenceResourceFinder extends ResourceFinder {
         return object instanceof BusinessDataReference;
     }
 
-
     @Override
     public Serializable toClientObject(Serializable object) {
         return BusinessDataReferenceResource.toClient((BusinessDataReference) object);
     }
+
 }

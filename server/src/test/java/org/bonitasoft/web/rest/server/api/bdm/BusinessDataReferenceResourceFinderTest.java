@@ -2,13 +2,12 @@ package org.bonitasoft.web.rest.server.api.bdm;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
-import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
-import org.bonitasoft.web.rest.server.api.bpm.flownode.ContextResultElement;
-import org.junit.Test;
-
 import java.io.Serializable;
 import java.util.Arrays;
+
+import org.bonitasoft.engine.business.data.impl.MultipleBusinessDataReferenceImpl;
+import org.bonitasoft.engine.business.data.impl.SimpleBusinessDataReferenceImpl;
+import org.junit.Test;
 
 public class BusinessDataReferenceResourceFinderTest {
 
@@ -28,7 +27,7 @@ public class BusinessDataReferenceResourceFinderTest {
         assertThat(businessDataReferenceClient.getName()).isEqualTo("Ticket");
         assertThat(businessDataReferenceClient.getType()).isEqualTo("com.acme.object.Ticket");
         assertThat(businessDataReferenceClient.getStorageIds()).containsExactly(7L, 8L);
-        assertThat(businessDataReferenceClient.getLink()).isEqualTo("API/bdm/businessData/com.acme.object.Ticket/?q=findByIds&f=ids=7,8");
+        assertThat(businessDataReferenceClient.getLink()).isEqualTo("API/bdm/businessData/com.acme.object.Ticket/findByIds?ids=7,8");
     }
 
     @Test
