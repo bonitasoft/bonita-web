@@ -39,6 +39,8 @@ public class ArchivedActivitySearchDescriptorConverter extends ArchivedFlowNodeS
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, ArchivedActivityInstanceSearchDescriptor.ASSIGNEE_ID);
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, ArchivedActivityInstanceSearchDescriptor.PRIORITY);
         mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_TYPE, ArchivedActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
+        mapping.put(ArchivedActivityItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID);
+        mapping.put(ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedActivityInstanceSearchDescriptor.ARCHIVE_DATE);
     }
 
     public ArchivedActivitySearchDescriptorConverter() {

@@ -1,9 +1,21 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bonitasoft.console.common.server.i18n.I18n;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
+import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.ArchivedTaskDatastore;
+import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -14,9 +26,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskFinderTest {
@@ -29,14 +38,14 @@ public class TaskFinderTest {
 
     private TaskFinder taskFinder;
 
-    private APIID id = APIID.makeAPIID(658L);
+    private final APIID id = APIID.makeAPIID(658L);
 
     @Before
     public void setUp() throws Exception {
         I18n.getInstance();
         ItemDefinitionFactory.setDefaultFactory(new ItemDefinitionFactory() {
             @Override
-            public ItemDefinition<?> defineItemDefinitions(String token) {
+            public ItemDefinition<?> defineItemDefinitions(final String token) {
                 return null;
             }
         });
@@ -45,23 +54,28 @@ public class TaskFinderTest {
 
     @Test
     public void should_return_task_from_the_journal_when_it_belong_to_the_journal() throws Exception {
-        TaskItem task = new TaskItem();
+        final TaskItem task = new TaskItem();
         task.setId(id);
         when(journal.get(id)).thenReturn(task);
 
-        IItem item = taskFinder.find(id);
+        final IItem item = taskFinder.find(id);
 
         assertThat(item.getId()).isEqualTo(task.getId());
     }
 
     @Test
     public void should_return_task_from_the_archives_when_not_found_in_the_journal() throws Exception {
-        ArchivedTaskItem task = new ArchivedTaskItem();
+        final ArchivedTaskItem task = new ArchivedTaskItem();
         task.setId(id);
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
-        when(archives.get(id)).thenReturn(task);
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
+        final ItemSearchResult<ArchivedTaskItem> result = mock(ItemSearchResult.class);
+        when(result.getResults()).thenReturn(Arrays.asList(task));
+        when(archives.search(0, 1, null, ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE + " "
+                + Order.DESC, filters)).thenReturn(result);
 
-        IItem item = taskFinder.find(id);
+        final IItem item = taskFinder.find(id);
 
         assertThat(item.getId()).isEqualTo(task.getId());
     }
@@ -69,7 +83,10 @@ public class TaskFinderTest {
     @Test(expected = APIItemNotFoundException.class)
     public void should_throw_an_exception_when_the_task_does_not_exist() throws Exception {
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
-        when(archives.get(id)).thenThrow(new APIItemNotFoundException("type", id));
+        final Map<String, String> filters = new HashMap<String, String>();
+        filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
+        when(archives.search(0, 1, null, ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE + " "
+                + Order.DESC, filters)).thenThrow(new APIItemNotFoundException("type", id));
 
         taskFinder.find(id);
     }
