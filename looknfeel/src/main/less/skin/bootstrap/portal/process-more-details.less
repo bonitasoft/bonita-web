@@ -17,11 +17,6 @@
       }
     }
   }
-  
-  .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
-    background-color: @mainAccentColor;
-    border-color: @mainAccentColor;
-  }
 
   .actions {
     padding: 20px 0 10px 0;
@@ -38,80 +33,11 @@
     font-size: 100%;
   }
 
-  .navbar-default {
-    background-color: white;
-    .navbar-nav {
-      > li > a:hover {
-      color: black;
-      }
-      > li > a {
-        color: @mainAccentColor;
-      }
-    }
-
-    .navbar-brand {
-      color: @mainAccentColor;
-    }
-
-    .navbar-brand:hover{
-      color: @mainAccentColor;
-    }
-    .navbar-toggle .icon-bar {
-      background-color: @mainAccentColor;
-    }
-  }
-
-  .label-info {
-    background-color: @mainAccentColor;
-  }
 
   ul.nav > li > a {
     color: #6e6f6b;
   }
 
-  label, a{
-    &.outline{
-      background-color: #ffffff;
-      border: 1px solid @borderColor3;
-      color: @secondAccentColor;
-      @primary-color: #337ab7;
-      @danger-color: #DD0033;
-      &.label-,.btn-{
-        &primary{
-          border-color: @primary-color;
-          &:hover{
-            i, span{
-              &.glyphicon{
-                color: darken(@primary-color,5%);
-              }
-            }
-          }
-        }
-        &danger{
-          border-color: @danger-color;
-          &:hover{
-            i, span{
-              &.glyphicon{
-                color: darken(@danger-color,5%);
-              }
-            }
-          }
-
-        }
-        &default{
-          border-color: @secondAccentColor;
-        }
-        &success{
-          border-color: @btnPrimaryActionColor;
-          i, span{
-            &.glyphicon{
-              color: darken(@btnPrimaryActionColor,5%);
-            }
-          }
-        }
-      }
-    }
-  }
   //Actor mapping
   .actorMappingList, .processManagerMappingList{
     table-layout: fixed;
