@@ -4,15 +4,11 @@ app.controller('SimpleCtrl', ['$scope', function ($scope) {
         $scope.initSingleInput = function initSingleInput(input) {
             $scope.parent[input.name]=null;
             $scope.outputData = $scope.parent;
-            $scope.autofill[input.name] = $scope.generateValue(input);
         };
     }]
 );
 
 app.controller('MultipleCtrl', ['$scope', function ($scope) {
-    $scope.initMultipleInput = function initMultipleInput(input) {
-        $scope.autofill[input.name] = [$scope.generateValue(input)];
-    };
 
     $scope.appendNewInput = function appendNewInput(input){
 
@@ -24,13 +20,11 @@ app.controller('MultipleCtrl', ['$scope', function ($scope) {
             inputs: input.inputs
         };
         $scope.inputArray.push(newInput);
-        $scope.autofill[input.name].push($scope.generateValue(input));
     };
 
     $scope.removeInput = function removeInput (input, index){
         $scope.inputArray.splice(index, 1);
         $scope.outputData.splice(index, 1);
-        $scope.autofill[input.name].splice(index, 1);
     };
 
     $scope.hasSeveralItemsInCollection = function hasSeveralItemsInCollection(input) {

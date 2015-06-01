@@ -1,4 +1,4 @@
-<div ng-init="initMultipleInput(input)" class="well" ng-controller="MultipleCtrl">
+<div class="well" ng-controller="MultipleCtrl">
     <div ng-class="hasSeveralItemsInCollection(input)?'input-group':''" ng-repeat="multipleInput in inputArray">
         <bp-complex ng-init="outputData[$index] = {}; outputData = outputData[$index]"></bp-complex>
         <div ng-class="hasSeveralItemsInCollection(input)?'input-group-btn':''">

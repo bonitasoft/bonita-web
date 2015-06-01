@@ -1,7 +1,7 @@
 <form name="simpleInputsMultipleForm" class="form-horizontal" ng-controller="MultipleCtrl">
     <div ng-class="{'form-group': true, 'has-error': !simpleInputsMultipleForm.$valid, 'has-feedback': simpleInputsMultipleForm.$valid}">
         <label for="{{input.name}}">{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
-        <div ng-init="initMultipleInput(input)">
+        <div>
             <div class="repeatable-input-group" ng-repeat="multipleInput in inputArray" ng-init="formInputName=multipleInput.name+'_'+$index">
                 <div ng-class="{'input-group': hasSeveralItemsInCollection(input)}">
                     <input type="{{inputType2HTML(input)}}" class="form-control input" id="{{formInputName}}" name="{{formInputName}}" ng-model="outputData[$index]" placeholder="{{'Expecting a {} value.' | translate | stringTemplater:multipleInput.type}}">
