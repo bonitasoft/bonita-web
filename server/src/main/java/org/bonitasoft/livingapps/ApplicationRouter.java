@@ -48,12 +48,10 @@ public class ApplicationRouter {
             //Support relative calls to the REST API from the application page using ../API/
             hsRequest.getRequestDispatcher("/" + getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(), parsedRequest.getApplicationName())).forward(
                     hsRequest, hsResponse);
-            return;
         } else if ("GET".equals(hsRequest.getMethod())) {
             displayPageOrResource(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor, parsedRequest, pathSegments);
         } else {
             hsResponse.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "http.method_" + hsRequest.getMethod().toLowerCase() + "_not_supported");
-            return;
         }
     }
 
