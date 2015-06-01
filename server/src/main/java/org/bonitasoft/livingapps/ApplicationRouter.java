@@ -15,7 +15,9 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.livingapps.exception.CreationException;
 
@@ -35,8 +37,6 @@ public class ApplicationRouter {
             throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
-        final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
-
         //Test if url contain at least application name
         final List<String> pathSegments = resourceRenderer.getPathSegments(hsRequest.getPathInfo());
         if (pathSegments.isEmpty()) {
@@ -44,25 +44,29 @@ public class ApplicationRouter {
                     "The name of the application is required.");
             return;
         }
-
         if ("API".equals(parsedRequest.getPageToken())) {
             //Support relative calls to the REST API from the application page using ../API/
             hsRequest.getRequestDispatcher("/" + getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(), parsedRequest.getApplicationName())).forward(
                     hsRequest, hsResponse);
             return;
-        }
-
-        if (!"GET".equals(hsRequest.getMethod())) {
+        } else if ("GET".equals(hsRequest.getMethod())) {
+            displayPageOrResource(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor, parsedRequest, pathSegments);
+        } else {
             hsResponse.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "http.method_" + hsRequest.getMethod().toLowerCase() + "_not_supported");
             return;
         }
+    }
 
+    protected void displayPageOrResource(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session,
+            final PageRenderer pageRenderer, final ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor,
+            final ParsedRequest parsedRequest, final List<String> pathSegments) throws IOException,
+            ApplicationPageNotFoundException, InstantiationException, IllegalAccessException, BonitaException, PageNotFoundException, CreationException {
+        final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
         //If no page name, redirect to Home page
         if (parsedRequest.getPageToken() == null) {
             hsResponse.sendRedirect(application.getApplicationHomePage());
             return;
         }
-
         if (isApplicationPageRequest(pathSegments)) {
             //Application page request
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
