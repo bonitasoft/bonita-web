@@ -22,7 +22,6 @@
     $scope.contract = {};
     $scope.dataToSend = {};
     $scope.parent = $scope.dataToSend;
-    $scope.autofill = {};
     $scope.process = {};
     $scope.message = undefined;
 
@@ -61,54 +60,6 @@
       }, function (reason) {
         $scope.message = reason.data.explanations ? reason.data.explanations : reason.data.message;
       });
-    };
-
-    $scope.fillData = function fillData() {
-      for (var prop in $scope.autofill) {
-        // make a copy of properties from the autofill object to avoid messing up with references
-        $scope.dataToSend[prop] = angular.copy($scope.autofill[prop]);
-      }
-    };
-
-
-    $scope.generateValueForChildrenAttribute = function generateValueForChildrenAttribute(input) {
-      var result = $scope.generateValue(input);
-      if (input.type === 'TEXT') {
-        return '"' + result + '"';
-      }
-      return result;
-    };
-
-     $scope.generateValue = function generateValue(input) {
-      var result = null;
-
-      if (input.type === 'TEXT') {
-        result = input.name;
-      }
-      if (input.type === 'BOOLEAN') {
-        result = input.name.length % 2 === 0;
-      }
-      if (input.type === 'INTEGER') {
-        result = input.name.length;
-      }
-      if (input.type === 'DECIMAL') {
-        result = input.name.length + (input.name.length + 1) / 10;
-      }
-      if (input.type === 'DATE') {
-        result = new Date().toJSON().slice(0, 10);
-      }
-      if (input.inputs.length > 0) {
-        result = '{';
-        for (var i = 0; i < input.inputs.length; i++) {
-          if (i > 0) {
-            result += ',';
-          }
-          result += '"' + input.inputs[i].name + '":' + $scope.generateValueForChildrenAttribute(input.inputs[i]);
-        }
-        result += '}';
-      }
-
-      return result;
     };
 
     $scope.isSimpleInput = function isSimpleInput(input) {

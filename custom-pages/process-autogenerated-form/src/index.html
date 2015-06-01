@@ -28,13 +28,6 @@
         <h1>{{process.displayName}}</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <div style="float: right; width:100px">
-          <button id="autofill" class="btn btn-danger btn-block" ng-click="fillData()" title="{{'Fill in each form inputs with fake data.' | translate}}" ng-if="contract.inputs.length>0">{{'Autofill' | translate}}</button>
-        </div>
-      </div>
-    </div>
 
     <div class="row">
       <div ng-repeat="input in contract.inputs">
