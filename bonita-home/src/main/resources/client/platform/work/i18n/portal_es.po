@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-23 03:02+0200\n"
-"PO-Revision-Date: 2015-05-26 02:54-0400\n"
+"PO-Revision-Date: 2015-06-01 03:40-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -161,16 +161,16 @@ msgid "%value% is not a valid value for %className%"
 msgstr "%value% no es un valor valido para %className%"
 
 msgid "'%applicationName%' as page '%associationName%'"
-msgstr "'%applicationName%' as page '%associationName%'"
+msgstr "%applicationName% como página %associationName%"
 
 msgid "'%layoutName%' is used as layout for:"
-msgstr "'%layoutName%' is used as layout for:"
+msgstr "Se utiliza '%layoutName%' como layout de:"
 
 msgid "'%pageName%' is used by:"
-msgstr "'%pageName%' is used by:"
+msgstr "%pageName% es utilizada por:"
 
 msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' is used as Theme for:"
+msgstr "'%themeName%' se utiliza como tema para:"
 
 msgid "?"
 msgstr "?"
@@ -275,10 +275,10 @@ msgid "Add a new membership to this user"
 msgstr "Añadir una nueva membresía a este usuario"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Añadir un nuevo recurso (página, formulario, layout, tema o extensión de la API REST). <br/> Este archivo (archivo .zip) debe contener un archivo page.properties en la raíz, y una carpeta llamada 'resources'. <br/> Este archivo de propiedades debe definir al menos el nombre, displayName y contentType (contentType por defecto es 'page'). <br/> La carpeta 'resources' debe contener tanto el index.html o el archivo Index.groovy y los recursos necesarios."
 
 msgid "Add a resource"
-msgstr "Add a resource"
+msgstr "Agregar un recurso"
 
 msgid "Add a role"
 msgstr "Añadir un rol"
@@ -302,7 +302,7 @@ msgid "Add new memberships for %user%"
 msgstr "Añadir nuevas membresías para %user%"
 
 msgid "Add resource"
-msgstr "Add resource"
+msgstr "Agregar recurso"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Añadir este perfil a el grupo(s) seleccionado(s)"
@@ -359,7 +359,7 @@ msgid "All processes are automatically paused."
 msgstr "Todos los procesos están automáticamente pausados."
 
 msgid "An archive has a .zip extension"
-msgstr "An archive has a .zip extension"
+msgstr "El archivo tiene la extensión .zip"
 
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Un error ha ocurrido al desplegar el Modelo de Datos de Negocio."
@@ -383,7 +383,7 @@ msgid "April"
 msgstr "Abril"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr "Archivo"
 
 msgid "Archived"
 msgstr "Archivado"
@@ -602,7 +602,7 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 msgid "Confirm Delete?"
-msgstr "Confirm Delete?"
+msgstr "¿Confirmar borrado?"
 
 msgid "Confirm delete ?"
 msgstr "confirmar eliminación?"
@@ -812,7 +812,7 @@ msgid "Do not delete this membership"
 msgstr "No elimine esta membresía"
 
 msgid "Do you still want to delete the selected pages?"
-msgstr "Do you still want to delete the selected pages?"
+msgstr "¿Quiere eliminar las páginas seleccionadas?"
 
 msgid "Done"
 msgstr "Hecho"
@@ -1043,7 +1043,7 @@ msgid "February"
 msgstr "Febrero"
 
 msgid "Filename too long. The zip filename must be no longer than %number% characters"
-msgstr "Filename too long. The zip filename must be no longer than %number% characters"
+msgstr "Nombre de fichero muy largo. El nombre del fichero zip no debe ser superiror a %number% caracteres"
 
 msgid "Filters are not supported by this API"
 msgstr "Los filtros no son soportados con este API"
@@ -1137,8 +1137,8 @@ msgstr "Si se utilizan estas páginas en un perfil, las páginas y entradas rela
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "If you delete a page that is used by a process, the process becomes unresolved.\n"
-"Before deleting a page, you should also check whether it is used in a custom profile navigation."
+msgstr "Si se elimina una página que se utiliza en un proceso, el proceso se marca sin resolver. \n"
+"Antes de borrar una página, también deberá verificar si se utiliza en el menú de un perfil personalizado."
 
 msgid "Image files"
 msgstr "Archivos de imagen"
@@ -1312,7 +1312,7 @@ msgid "Manage profiles"
 msgstr "Administrar perfiles"
 
 msgid "Manage resources"
-msgstr "Manage resources"
+msgstr "Gestionar recursos"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Gestionar las tareas de los procesos que una entidad con este perfil puede supervisar como PM."
@@ -1635,7 +1635,7 @@ msgid "RESOLVED"
 msgstr "RESUELTO"
 
 msgid "REST API extensions"
-msgstr "REST API extensions"
+msgstr "Extensiones API REST"
 
 msgid "Ready since %task_last_update%"
 msgstr "Listo desde %task_last_update%"
@@ -1839,7 +1839,7 @@ msgid "Skipped on %task_last_update% by %executed_by%"
 msgstr "Saltado en %task_last_update% por %executed_by%"
 
 msgid "Some of the pages you selected for deletion are used by processes:"
-msgstr "Some of the pages you selected for deletion are used by processes:"
+msgstr "Algunas de las páginas que ha seleccionado para su eliminación son utilizadas por los procesos:"
 
 msgid "Sorry the variable %variableName% has a type which is not editable"
 msgstr "Perdona, la variable %variableName% tiene un tipo que no es editable"
@@ -2125,7 +2125,7 @@ msgid "The version of the process that created this case"
 msgstr "La versión del proceso que creó este caso"
 
 msgid "Themes"
-msgstr "Themes"
+msgstr "Temas"
 
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "Estos/as %item_name_plural% y sus entradas de perfil correspondientes serán eliminadas permanentemente."
@@ -2134,7 +2134,7 @@ msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Estos %item_name_plural% serán definitivamente eliminados."
 
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
-msgstr "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
+msgstr "Estas páginas no se puede eliminar porque al menos una se utiliza en una aplicación. Debe quitar la página de la aplicación antes de que pueda eliminarla."
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Este/a %item_name% y sus entradas de perfil correspondientes serán eliminadas permanentemente."
@@ -2337,7 +2337,7 @@ msgid "Users who are filling in forms when the services are paused will lose any
 msgstr "Los usuarios que están cumplimentando los formularios perderán cualquier información que no haya sido enviada cuando se interrumpe el servicio,."
 
 msgid "Users with the app above can see this page."
-msgstr "Users with the app above can see this page."
+msgstr "Los usuarios con la aplicación anterior pueden ver esta página."
 
 msgid "Users: %nb_users%"
 msgstr "Usuarios: %nb_users%"
