@@ -148,15 +148,24 @@ public class ContractTypeConverterTest {
     public void getProcessedInputs_with_simple_input_should_return_processed_input_with_null() throws Exception {
         final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
-        final String tempFilePath = "tempFile";
-        final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
         final Map<String, Serializable> input = generateInputMapWithNull();
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
 
         assertThat(processedInput).containsOnly(entry("inputText", null), entry("inputBoolean", null), entry("inputDate", null),
                 entry("inputInteger", null), entry("inputDecimal", null), entry("inputFile", null));
+    }
+
+    @Test
+    public void getProcessedInputs_with_simple_input_should_return_processed_input_with_empty_map() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final Map<String, Serializable> input = generateInputMapWithEmptyFileInput();
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+
+        assertThat(processedInput).containsOnly(entry("inputText", null), entry("inputBoolean", null), entry("inputDate", null),
+                entry("inputInteger", null), entry("inputDecimal", null), entry("inputFile", new HashMap<String, Serializable>()));
     }
 
     @Test
@@ -267,6 +276,17 @@ public class ContractTypeConverterTest {
         inputMap.put("inputInteger", null);
         inputMap.put("inputDecimal", null);
         inputMap.put("inputFile", null);
+        return inputMap;
+    }
+
+    private Map<String, Serializable> generateInputMapWithEmptyFileInput() {
+        final Map<String, Serializable> inputMap = new HashMap<>();
+        inputMap.put("inputText", null);
+        inputMap.put("inputBoolean", null);
+        inputMap.put("inputDate", null);
+        inputMap.put("inputInteger", null);
+        inputMap.put("inputDecimal", null);
+        inputMap.put("inputFile", new HashMap<String, Serializable>());
         return inputMap;
     }
 
