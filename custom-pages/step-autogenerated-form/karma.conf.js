@@ -24,6 +24,7 @@ module.exports = function(config) {
       'node_modules/angular-resource/angular-resource.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/ngUpload/ng-upload.js',
+      'node_modules/angular-cookies/angular-cookies.js',
       'src/**/*.js',
       'test/unit/**/*Spec.js',
       // include fixtures html  in karma webserver, available at /base/dev/fixtures

@@ -70,7 +70,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_404_when_the_application_page_is_not_found() throws Exception {
         doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404, "error");
     }
@@ -81,7 +81,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_404_when_the_custom_page_is_not_associated_to_application() throws Exception {
         doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-         servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404,"error");
     }
@@ -90,7 +90,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_404_when_the_custom_page_is_not_existing() throws Exception {
         doThrow(new PageNotFoundException("PageName")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404, "Unable to find page with name: "+"PageName" );
     }
@@ -99,7 +99,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_500_on_searchException() throws Exception {
         doThrow(new CreationException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404, "error");
     }
@@ -108,7 +108,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_500_on_BonitaHomeNotSetException() throws Exception {
         doThrow(new BonitaHomeNotSetException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(500);
     }
@@ -118,7 +118,7 @@ public class LivingApplicationServletTest {
         given(servlet.createApplicationRouter(session))
         .willThrow(new ServerAPIException(new Exception("")));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(500);
     }
@@ -128,7 +128,7 @@ public class LivingApplicationServletTest {
         given(servlet.createApplicationRouter(session))
         .willThrow(new UnknownAPITypeException("error"));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(500);
     }
@@ -137,7 +137,7 @@ public class LivingApplicationServletTest {
     public void should_send_error_404_when_the_page_is_not_found() throws Exception {
         doThrow(new ApplicationPageNotFoundException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(404, "error");
     }
@@ -146,7 +146,7 @@ public class LivingApplicationServletTest {
     public void should_redirectToValidPageUrl_on_missing_final_slash() throws Exception {
         doReturn("/appToken/pageToken").when(hsRequest).getPathInfo();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
     }
@@ -155,7 +155,7 @@ public class LivingApplicationServletTest {
     public void should_redirectToValidPageUrl_on_missing_final_slash_after_appToken() throws Exception {
         doReturn("/appToken").when(hsRequest).getPathInfo();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
     }
@@ -164,7 +164,7 @@ public class LivingApplicationServletTest {
     public void should_not_redirectToValidPageUrl_on_resource_query() throws Exception {
         doReturn("/appToken/pageToken/file.css").when(hsRequest).getPathInfo();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(customPageRequestModifier, times(0)).redirectToValidPageUrl(hsRequest, hsResponse);
     }

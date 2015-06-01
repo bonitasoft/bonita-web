@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import java.io.File;
 import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,6 +62,7 @@ public class ApplicationRouterTest {
     @Before
     public void beforeEach() throws Exception {
         given(apiSession.getTenantId()).willReturn(1L);
+        given(hsRequest.getMethod()).willReturn("GET");
         given(hsRequest.getContextPath()).willReturn("/bonita");
     }
 
@@ -97,7 +99,7 @@ public class ApplicationRouterTest {
     @Test
     public void should_access_Layout_resource() throws Exception {
         accessAuthorizedPage("HumanResources", "AnyPage/css/file.css");
-        File layoutFolder = new File("layout");
+        final File layoutFolder = new File("layout");
         given(applicationModel.getApplicationLayoutName()).willReturn("layout");
         given(pageRenderer.getPageResourceProvider("layout", 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(layoutFolder);
@@ -111,7 +113,7 @@ public class ApplicationRouterTest {
     @Test
     public void should_access_Theme_resource() throws Exception {
         accessAuthorizedPage("HumanResources", "theme/css/file.css");
-        File themeFolder = new File("theme");
+        final File themeFolder = new File("theme");
         given(applicationModel.getApplicationThemeName()).willReturn("theme");
         given(pageRenderer.getPageResourceProvider("theme", 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(themeFolder);

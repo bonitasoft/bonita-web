@@ -18,6 +18,12 @@
     console.log('**********************************************************************************************');
 
     //--------------------------------------------------------------
+    //-------------------- Templates files  ------------------------
+    //--------------------------------------------------------------
+    $httpBackend.whenGET(/^templates\//).passThrough();
+
+
+    //--------------------------------------------------------------
     //--------------------- Step contract  -------------------------
     //--------------------------------------------------------------
     $httpBackend.whenGET('/bonita/API/bpm/userTask/'+2+'/contract').respond(function() {
@@ -77,7 +83,8 @@
               description:null,
               name:'child',
               multiple:false,
-              type:'TEXT'
+              type:'TEXT',
+              inputs:[]
             }
           ]
         },
@@ -201,7 +208,7 @@
         {
           description:null,
           name:'complex',
-          multiple:true,
+          multiple:false,
           inputs:[
             {
               description:null,
@@ -216,6 +223,92 @@
              multiple:true,
              type:'DECIMAL',
              inputs:[]
+            },
+            {
+              type: 'FILE',
+              description: 'multiple file',
+              name: 'screenShots',
+              multiple: true,
+              inputs: [
+                {
+                  type: 'TEXT',
+                  description: 'Name of the file',
+                  name: 'filename',
+                  multiple: false,
+                  inputs: []
+                },
+                {
+                  type: 'BYTE_ARRAY',
+                  description: 'Content of the file',
+                  name: 'content',
+                  multiple: false,
+                  inputs: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          description:null,
+          name:'expenseLines',
+          multiple:true,
+          inputs:[
+            {
+              description:null,
+              name:'name',
+              multiple:false,
+              type:'TEXT',
+              inputs:[]
+            },
+            {
+              description:null,
+              name:'amount',
+              multiple:true,
+              type:'DECIMAL',
+              inputs:[]
+            },
+            {
+              description:null,
+              name:'complex',
+              multiple:false,
+              inputs:[
+                {
+                  description:null,
+                  name:'child1',
+                  multiple:false,
+                  type:'TEXT',
+                  inputs:[]
+                },
+                {
+                  description:null,
+                  name:'children',
+                  multiple:true,
+                  type:'DECIMAL',
+                  inputs:[]
+                },
+                {
+                  type: 'FILE',
+                  description: 'multiple file',
+                  name: 'screenShots',
+                  multiple: true,
+                  inputs: [
+                    {
+                      type: 'TEXT',
+                      description: 'Name of the file',
+                      name: 'filename',
+                      multiple: false,
+                      inputs: []
+                    },
+                    {
+                      type: 'BYTE_ARRAY',
+                      description: 'Content of the file',
+                      name: 'content',
+                      multiple: false,
+                      inputs: []
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
