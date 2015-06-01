@@ -21,6 +21,8 @@ public class URLProtectorTest {
     @Test
     public void testProtectRedirectUrlShouldNotChangeURL() {
         assertEquals("mobile/#home", urlProtecter.protectRedirectUrl("mobile/#home"));
+        assertEquals("/bonita/mobile/#login", urlProtecter.protectRedirectUrl("/bonita/mobile/#login"));
+        assertEquals("/bonita/portal", urlProtecter.protectRedirectUrl("/bonita/portal"));
     }
 
     @Test
@@ -33,10 +35,16 @@ public class URLProtectorTest {
         assertEquals("portal/homepage#?_p=caselistinguser&test=http://www.google.fr",
                 urlProtecter.protectRedirectUrl("portal/homepage#?_p=caselistinguser&test=http://www.google.fr"));
     }
-    
+
     @Test
     public void it_should_filter_capital_letters(){
-    	assertEquals("://.google.com", urlProtecter.protectRedirectUrl("HTTPS://WWW.google.com"));
+        assertEquals(":.google.com", urlProtecter.protectRedirectUrl("HTTPS://WWW.google.com"));
+    }
+
+    @Test
+    public void it_should_filter_double_backslash() {
+        assertEquals(".google.com", urlProtecter.protectRedirectUrl("//www.google.com"));
+        assertEquals("google.com", urlProtecter.protectRedirectUrl("//google.com"));
     }
 
 }
