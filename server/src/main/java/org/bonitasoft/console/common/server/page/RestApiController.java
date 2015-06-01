@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,12 +23,13 @@ public interface RestApiController {
 
     /**
      * Let the custom page parse request for specific attribute handling.
-     *
      * @param request              the HTTP servlet request intended to be used as in a servlet
      * @param pageResourceProvider provide access to the resources contained in the custom page zip
      * @param pageContext          provide access to the data relative to the context in which the custom page is displayed
-     * @return a Serializable response
+     * @param apiResponseBuilder   provided builder to build response
+     * @param restApiUtil          provided utility class
+     * @return a RestApiResponse response
      * @since 7.0
      */
-    Serializable doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext);
+    RestApiResponse doHandle(HttpServletRequest request, PageResourceProvider pageResourceProvider, PageContext pageContext, RestApiResponseBuilder apiResponseBuilder, RestApiUtil restApiUtil);
 }

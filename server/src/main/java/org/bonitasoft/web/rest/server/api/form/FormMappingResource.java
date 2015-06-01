@@ -14,9 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.form;
 
-import java.util.List;
-
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
@@ -26,6 +24,9 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * REST resource to operate on Form Mapping.
  *
@@ -33,21 +34,31 @@ import org.restlet.resource.ResourceException;
  */
 public class FormMappingResource extends CommonResource {
 
-    protected final ProcessConfigurationAPI processConfigurationAPI;
+    protected final ProcessAPI processAPI;
 
-    public FormMappingResource(final ProcessConfigurationAPI processConfigurationAPI) {
-        this.processConfigurationAPI = processConfigurationAPI;
+    public FormMappingResource(final ProcessAPI processAPI) {
+        this.processAPI = processAPI;
     }
 
     @Get("json")
-    public List<FormMapping> searchFormMapping() throws ResourceException {
+    public List<FormMappingItem> searchFormMapping() throws ResourceException {
         try {
-            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(buildSearchOptions());
+            final SearchResult<FormMapping> searchResult = processAPI.searchFormMappings(buildSearchOptions());
             setContentRange(searchResult);
-            return searchResult.getResult();
+            List<FormMapping> result = searchResult.getResult();
+            List<FormMappingItem> resultConverted = convertMapping(result);
+            return resultConverted;
         } catch (final Exception e) {
             throw new APIException(e);
         }
+    }
+
+    private List<FormMappingItem> convertMapping(List<FormMapping> result) {
+        List<FormMappingItem> convertedResult = new ArrayList<FormMappingItem>();
+        for (FormMapping item: result) {
+            convertedResult.add(new FormMappingItem(item));
+        }
+        return convertedResult;
     }
 
     @Override

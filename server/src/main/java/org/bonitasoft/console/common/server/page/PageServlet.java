@@ -66,6 +66,18 @@ public class PageServlet extends HttpServlet {
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     @Override
+    protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        final String pathInfo = request.getPathInfo();
+        if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
+            //Support relative calls to the REST API from the forms using ../API/
+            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
+            request.getRequestDispatcher(apiPath).forward(request, response);
+        } else {
+            super.service(request, response);
+        }
+    }
+
+    @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         final HttpSession session = request.getSession();
@@ -86,12 +98,12 @@ public class PageServlet extends HttpServlet {
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
-        } else if (pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
-            //Support relative calls to the REST API from the forms using ../API/
-            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
-            request.getRequestDispatcher(apiPath).forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "/content is expected in the URL after the page mapping key");
+            final String message = "/content is expected in the URL after the page mapping key";
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Bad request: " + message);
+            }
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
         }
     }
 
@@ -99,38 +111,48 @@ public class PageServlet extends HttpServlet {
             final String mappingKey, final String resourcePath)
             throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
-            final PageReference page = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
+            final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
                     isNotResourcePath(resourcePath));
-            if (page.getURL() != null) {
-                displayExternalPage(request, response, page.getURL());
-            } else if (page.getPageId() != null) {
-                displayPageOrResource(request, response, apiSession, page, resourcePath);
+            if (pageReference.getURL() != null) {
+                displayExternalPage(request, response, pageReference.getURL());
+            } else if (pageReference.getPageId() != null) {
+                displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath);
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     final String message = "Both URL and pageId are not set in the page mapping for " + mappingKey;
                     LOGGER.log(Level.WARNING, message);
                 }
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
             }
         } catch (final UnauthorizedAccessException e) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+            final String message = "User not Authorized";
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Forbidden: " + message, e);
+            }
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
         } catch (final NotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the form mapping");
+
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Not found: Cannot find the form mapping for key " + mappingKey, e);
+            }
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
         }
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final PageReference page, final String resourcePath)
+            final Long pageId, final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
             if (isNotResourcePath(resourcePath)) {
-                //TODO pass the query params in order to put them in the Context of the custom page
-                pageRenderer.displayCustomPage(request, response, apiSession, page.getPageId());
+                pageRenderer.displayCustomPage(request, response, apiSession, pageId);
             } else {
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, page.getPageId(), resourcePath));
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath));
             }
         } catch (final PageNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the page with ID " + page.getPageId());
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Cannot find the page with ID " + pageId);
+            }
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
         }
     }
 
@@ -144,7 +166,11 @@ public class PageServlet extends HttpServlet {
         final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId, apiSession);
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
         if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "For security reasons, access to this file path is forbidden : " + resourcePath);
+            final String message = "For security reasons, access to this file path is forbidden : " + resourcePath;
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Forbidden: " + message);
+            }
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
         return resourceFile;
     }

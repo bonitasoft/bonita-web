@@ -64,6 +64,7 @@ public class PageServletTest {
 
     @Before
     public void beforeEach() throws Exception {
+        when(hsRequest.getMethod()).thenReturn("GET");
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("apiSession")).thenReturn(apiSession);
@@ -77,7 +78,7 @@ public class PageServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         doThrow(UnauthorizedAccessException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(hsResponse, times(1)).sendError(403, "User not Authorized");
     }
@@ -86,7 +87,7 @@ public class PageServletTest {
     public void should_get_Bad_Request_when_invalid_parameters() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("");
         when(hsRequest.getParameter(anyString())).thenReturn(null);
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
         verify(hsResponse, times(1)).sendError(400, "/content is expected in the URL after the page mapping key");
     }
 
@@ -96,7 +97,7 @@ public class PageServletTest {
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(
                 new PageReference(null, "/externalPage"));
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(pageServlet, times(1)).displayExternalPage(hsRequest, hsResponse, "/externalPage");
         verify(hsResponse, times(1)).encodeRedirectURL("/externalPage");
@@ -108,7 +109,7 @@ public class PageServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(42L, null));
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
     }
@@ -124,21 +125,22 @@ public class PageServletTest {
         when(pageRenderer.getPageResourceProvider(42L, apiSession)).thenReturn(pageResourceProvider);
         when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, pageReference, "path/of/resource.css");
+        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, 42L, "path/of/resource.css");
         verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, 42L, "path/of/resource.css");
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
     }
 
     @Test
     public void should_get_not_found_when_engine_throw_not_found() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        doThrow(NotFoundException.class).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
+        final String key = "process/processName/processVersion";
+        when(hsRequest.getPathInfo()).thenReturn("/" + key + "/content/");
+        doThrow(NotFoundException.class).when(pageMappingService).getPage(hsRequest, apiSession, key, locale, true);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).sendError(404, "Cannot find the form mapping");
+        verify(hsResponse, times(1)).sendError(404, "Form mapping not found");
     }
 
     @Test
@@ -147,20 +149,21 @@ public class PageServletTest {
         final PageReference pageReference = new PageReference(null, null);
         doReturn(pageReference).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).sendError(404, "Cannot find the form mapping");
+        verify(hsResponse, times(1)).sendError(404, "Form mapping not found");
     }
 
     @Test
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(42L, null));
+        final String key = "process/processName/processVersion";
+        when(hsRequest.getPathInfo()).thenReturn("/" + key + "/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, key, locale, true)).thenReturn(new PageReference(42L, null));
         doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).sendError(404, "Cannot find the page with ID 42");
+        verify(hsResponse, times(1)).sendError(404, "Page not found");
     }
 
     @Test
@@ -169,7 +172,7 @@ public class PageServletTest {
         when(hsRequest.getContextPath()).thenReturn("/bonita");
         when(hsRequest.getServletPath()).thenReturn("/portal/resource");
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/resource/process/processName/processVersion/content/");
         verify(hsResponse, times(1)).sendRedirect(anyString());
@@ -182,7 +185,7 @@ public class PageServletTest {
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
         doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", instantiationException);
         verify(hsResponse, times(1)).sendError(500, "instatiation exception");
@@ -195,7 +198,7 @@ public class PageServletTest {
         final IllegalArgumentException illegalArgumentException = new IllegalArgumentException();
         doThrow(illegalArgumentException).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", illegalArgumentException);
         verify(hsResponse, times(1)).sendError(400);
@@ -205,7 +208,7 @@ public class PageServletTest {
     public void should_forward_when_API_call() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/API/bpm/process/1");
 
-        pageServlet.doGet(hsRequest, hsResponse);
+        pageServlet.service(hsRequest, hsResponse);
 
         verify(hsRequest, times(1)).getRequestDispatcher("/API/bpm/process/1");
     }

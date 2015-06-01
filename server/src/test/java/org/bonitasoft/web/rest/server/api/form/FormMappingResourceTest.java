@@ -6,11 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
@@ -23,15 +19,19 @@ import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(MockitoJUnitRunner.class)
 public class FormMappingResourceTest extends RestletTest {
 
     @Mock
-    protected ProcessConfigurationAPI processConfigurationAPI;
+    protected ProcessAPI processAPI;
 
     @Override
     protected ServerResource configureResource() {
-        return new FormMappingResource(processConfigurationAPI);
+        return new FormMappingResource(processAPI);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class FormMappingResourceTest extends RestletTest {
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
         doReturn(1L).when(searchResult).getCount();
-        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
 
         final Response response = request("/form/mapping?p=2&c=10&f=type=TASK").get();
 
@@ -61,7 +61,7 @@ public class FormMappingResourceTest extends RestletTest {
         formMappings.add(formMapping);
         doReturn(formMappings).when(searchResult).getResult();
         doReturn(1L).when(searchResult).getCount();
-        doReturn(searchResult).when(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
 
         final Response response = request("/form/mapping?p=0&c=10").get();
 
@@ -72,7 +72,38 @@ public class FormMappingResourceTest extends RestletTest {
         outputStream.close();
         assertThat(content).isNotNull();
         assertThat(content).contains("\"task\":\"myTask\"");
-        verify(processConfigurationAPI).searchFormMappings(any(SearchOptions.class));
+        verify(processAPI).searchFormMappings(any(SearchOptions.class));
+    }
+
+    @Test
+    public void searchFormMappingShouldReturnLongIdAsString() throws Exception {
+
+        final SearchResult<FormMapping> searchResult = mock(SearchResult.class);
+        final FormMapping formMapping = new FormMapping();
+        formMapping.setId(11125555888888L);
+        formMapping.setTask("myTask");
+        formMapping.setProcessDefinitionId(4871148324840256385L);
+        formMapping.setPageId(1L);
+        formMapping.setLastUpdatedBy(1L);
+        final List<FormMapping> formMappings = new ArrayList<>();
+        formMappings.add(formMapping);
+        doReturn(formMappings).when(searchResult).getResult();
+        doReturn(1L).when(searchResult).getCount();
+        doReturn(searchResult).when(processAPI).searchFormMappings(any(SearchOptions.class));
+
+        final Response response = request("/form/mapping?p=0&c=10").get();
+
+        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        response.getEntity().write(outputStream);
+        final String content = outputStream.toString();
+        outputStream.close();
+        assertThat(content).isNotNull();
+        assertThat(content).contains("\"id\":\"11125555888888\"");
+        assertThat(content).contains("\"processDefinitionId\":\"4871148324840256385\"");
+        assertThat(content).contains("\"pageId\":\"1\"");
+        assertThat(content).contains("\"lastUpdatedBy\":\"1\"");
+        verify(processAPI).searchFormMappings(any(SearchOptions.class));
     }
 
 }

@@ -21,7 +21,7 @@ public class LogoutServletTest {
     @Test
     public void testBuildLoginPageUrlFromMaliciousRedirectShouldReturnBrokenUrl() throws Exception {
         String loginPage = logoutServlet.buildLoginPageUrl("http://www.test.com");
-        assertThat(loginPage).isEqualToIgnoringCase("://.test.com");
+        assertThat(loginPage).isEqualToIgnoringCase(":.test.com");
     }
 
     @Test

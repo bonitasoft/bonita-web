@@ -1,8 +1,21 @@
 .process-details  {
-  
-  .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
-    background-color: @mainAccentColor;
-    border-color: @mainAccentColor;
+  #process-details-{
+    &actors, &information, &params, &connectors, &forms, &script{
+      h2:first-child{
+        margin-top: 0;
+      }
+    }
+
+    &form-mapping {
+      td {
+        &.xeditable {
+          width: 70%;
+          .editable-buttons {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
   }
 
   .actions {
@@ -20,109 +33,11 @@
     font-size: 100%;
   }
 
-  .btn {
-    height: 25px;
-    margin-right: 5px;
-  }
-
-  .bonita-toggle {
-    .btn {
-      position: absolute; 
-      padding: 3px 20px 6px 12px;
-      min-width: 1px;
-      height: 25;
-      margin-right: 0;
-      margin-top: -2px;
-      &.toggle-off {
-        padding-right: 5px;
-      }
-    }
-    span.btn.toggle-handle {
-      position: relative; 
-      padding: 6px 12px 6px 12px;
-      min-width: 1px;
-      height: 25px;
-    }
-    label.btn {
-      height: 25px;
-      padding: 0px 20px 0px 12px;
-    }
-  }
-
-  .navbar-default {
-    background-color: white;
-    .navbar-nav {
-      > li > a:hover {
-      color: black;
-      }
-      > li > a {
-        color: @mainAccentColor;
-      }
-    }
-
-    .navbar-brand {
-      color: @mainAccentColor;
-    }
-
-    .navbar-brand:hover{
-      color: @mainAccentColor;
-    }
-    .navbar-toggle .icon-bar {
-      background-color: @mainAccentColor;
-    }
-  }
-
-  .label-info {
-    background-color: @mainAccentColor;
-  }
 
   ul.nav > li > a {
     color: #6e6f6b;
   }
 
-  label, a{
-    &.outline{
-      background-color: #ffffff;
-      border: 1px solid @borderColor3;
-      color: @secondAccentColor;
-      @primary-color: #337ab7;
-      @danger-color: #b20706;
-      &.label-,.btn-{
-        &primary{
-          border-color: @primary-color;
-          &:hover{
-            i, span{
-              &.glyphicon{
-                color: darken(@primary-color,5%);
-              }
-            }
-          }
-        }
-        &danger{
-          border-color: @danger-color;
-          &:hover{
-            i, span{
-              &.glyphicon{
-                color: darken(@danger-color,5%);
-              }
-            }
-          }
-
-        }
-        &default{
-          border-color: @secondAccentColor;
-        }
-        &success{
-          border-color: @btnPrimaryActionColor;
-          i, span{
-            &.glyphicon{
-              color: darken(@btnPrimaryActionColor,5%);
-            }
-          }
-        }
-      }
-    }
-  }
   //Actor mapping
   .actorMappingList, .processManagerMappingList{
     table-layout: fixed;
@@ -132,8 +47,8 @@
   }
   .members, .managers{
     padding-bottom: 0;
-    a.member, a.manager, label.member, label.manager{
-      margin-right: 0.75em;
+    a.member, a.manager, span.member, span.manager{
+      margin-right: 0.5em;
       display: inline-block;
       margin-bottom: 0.5em;
     }
@@ -205,43 +120,10 @@
   .processDetails-formList {
     padding-top: 10px;
   }
+
+  .ace_editor { height: 300px; }
 }
 
-button.glyphicon{
-  border: none;
-  font-weight: normal;
-  background-color: transparent;
-  text-align: inherit;
-  padding: 1px 0;
-  white-space: nowrap;
-  text-transform: none !important;
-  min-width: 10px;
-  background: none;
-  box-shadow: none;
-
-  &:hover{
-    color: @color3;
-    background-color: transparent;
-    border-color: transparent;
-  }
-}
-
-#form-mapping {
-  td {
-    color: #6e6f6b;
-    &.xeditable {
-      width: 70%;
-    }
-    input[type="text"]{
-      height: 30px;
-    }
-    button{
-      margin-top: 2px;
-      min-width: 30px;
-      padding: 0 0 0 0;
-    }
-  }
-}
 
 #manage-categories-modal {
  

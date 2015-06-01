@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -151,9 +152,13 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected Set<String> getDeclaredPermissions(final String apiName, final String resourceName, final String method, final APIID resourceQualifiers,
             final ResourcesPermissionsMapping resourcesPermissionsMapping) {
-        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceQualifiers.getIds());
+        List<String> resourceQualifiersIds = null;
+        if (resourceQualifiers != null) {
+            resourceQualifiersIds = resourceQualifiers.getIds();
+        }
+        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceQualifiersIds);
         if (resourcePermissions.isEmpty()) {
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissionsWithWildCard(method, apiName, resourceName, resourceQualifiers.getIds());
+            resourcePermissions = resourcesPermissionsMapping.getResourcePermissionsWithWildCard(method, apiName, resourceName, resourceQualifiersIds);
         }
         if (resourcePermissions.isEmpty()) {
             resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-18 03:02+0200\n"
+"POT-Creation-Date: 2015-05-23 03:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,9 +21,6 @@ msgid " To do so, go to %entitymappingprofilelink%."
 msgstr ""
 
 msgid " for "
-msgstr ""
-
-msgid "%applicationName% as page %associationName%"
 msgstr ""
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
@@ -164,6 +161,18 @@ msgstr ""
 msgid "%value% is not a valid value for %className%"
 msgstr ""
 
+msgid "'%applicationName%' as page '%associationName%'"
+msgstr ""
+
+msgid "'%layoutName%' is used as layout for:"
+msgstr ""
+
+msgid "'%pageName%' is used by:"
+msgstr ""
+
+msgid "'%themeName%' is used as Theme for:"
+msgstr ""
+
 msgid "?"
 msgstr ""
 
@@ -233,9 +242,6 @@ msgstr ""
 msgid "Add a comment"
 msgstr ""
 
-msgid "Add a custom page"
-msgstr ""
-
 msgid "Add a group"
 msgstr ""
 
@@ -269,10 +275,10 @@ msgstr ""
 msgid "Add a new membership to this user"
 msgstr ""
 
-msgid "Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list)."
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr ""
 
-msgid "Add a page"
+msgid "Add a resource"
 msgstr ""
 
 msgid "Add a role"
@@ -294,6 +300,9 @@ msgid "Add a user to profile %%"
 msgstr ""
 
 msgid "Add new memberships for %user%"
+msgstr ""
+
+msgid "Add resource"
 msgstr ""
 
 msgid "Add selected group(s) to this profile"
@@ -350,6 +359,9 @@ msgstr ""
 msgid "All processes are automatically paused."
 msgstr ""
 
+msgid "An archive has a .zip extension"
+msgstr ""
+
 msgid "An error has occurred when deploying Business Data Model."
 msgstr ""
 
@@ -369,6 +381,9 @@ msgid "Apps management"
 msgstr ""
 
 msgid "April"
+msgstr ""
+
+msgid "Archive"
 msgstr ""
 
 msgid "Archived"
@@ -587,6 +602,9 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
+msgid "Confirm Delete?"
+msgstr ""
+
 msgid "Confirm delete ?"
 msgstr ""
 
@@ -792,6 +810,9 @@ msgid "Do it"
 msgstr ""
 
 msgid "Do not delete this membership"
+msgstr ""
+
+msgid "Do you still want to delete the selected pages?"
 msgstr ""
 
 msgid "Done"
@@ -1049,6 +1070,9 @@ msgstr ""
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr ""
 
+msgid "Forms"
+msgstr ""
+
 msgid "Fr"
 msgstr ""
 
@@ -1110,6 +1134,11 @@ msgid "If these pages are used in a profile, the pages and related profile entri
 msgstr ""
 
 msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid ""
+"If you delete a page that is used by a process, the process becomes unresolved.\n"
+"Before deleting a page, you should also check whether it is used in a custom profile navigation."
 msgstr ""
 
 msgid "Image files"
@@ -1217,6 +1246,9 @@ msgstr ""
 msgid "Lastname"
 msgstr ""
 
+msgid "Layouts"
+msgstr ""
+
 msgid "Link to the tasks"
 msgstr ""
 
@@ -1274,13 +1306,13 @@ msgstr ""
 msgid "Manage custom pages"
 msgstr ""
 
-msgid "Manage pages"
-msgstr ""
-
 msgid "Manage processes that an entity with this profile can supervise as PM."
 msgstr ""
 
 msgid "Manage profiles"
+msgstr ""
+
+msgid "Manage resources"
 msgstr ""
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
@@ -1331,9 +1363,6 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-msgid "More (BETA)"
-msgstr ""
-
 msgid "Move this element after the next one"
 msgstr ""
 
@@ -1373,9 +1402,6 @@ msgstr ""
 msgid "Name of the variable"
 msgstr ""
 
-msgid "New process more details view"
-msgstr ""
-
 msgid "Next"
 msgstr ""
 
@@ -1395,9 +1421,6 @@ msgid "No description."
 msgstr ""
 
 msgid "No opened task"
-msgstr ""
-
-msgid "No pages will be deleted as some of them are used in applications."
 msgstr ""
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
@@ -1481,6 +1504,9 @@ msgid "Overview"
 msgstr ""
 
 msgid "Page archive"
+msgstr ""
+
+msgid "Pages"
 msgstr ""
 
 msgid "Parameters"
@@ -1607,6 +1633,9 @@ msgid "Profiles"
 msgstr ""
 
 msgid "RESOLVED"
+msgstr ""
+
+msgid "REST API extensions"
 msgstr ""
 
 msgid "Ready since %task_last_update%"
@@ -1808,6 +1837,9 @@ msgid "Skip this task"
 msgstr ""
 
 msgid "Skipped on %task_last_update% by %executed_by%"
+msgstr ""
+
+msgid "Some of the pages you selected for deletion are used by processes:"
 msgstr ""
 
 msgid "Sorry the variable %variableName% has a type which is not editable"
@@ -2093,10 +2125,16 @@ msgstr ""
 msgid "The version of the process that created this case"
 msgstr ""
 
+msgid "Themes"
+msgstr ""
+
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr ""
 
 msgid "These %item_name_plural% will be definitively deleted."
+msgstr ""
+
+msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
 msgstr ""
 
 msgid "This %item_name% and related profile entries will be permanently deleted."

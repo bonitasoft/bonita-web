@@ -60,11 +60,14 @@ public class AddCustomPage extends Page {
     protected static final String TOKEN_DESCRIPTION = _("Format: %namePrefix% followed only by alphanumeric characters.", new Arg("namePrefix",
             CustomPageWithFrame.TOKEN));
 
-    private static final String POPUP_CONTEXT_MESSAGE = _("Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list).");
+    private static final String POPUP_CONTEXT_MESSAGE = _("Add a new resource (page, form, layout, theme, or REST API extension).<br/>" +
+            "This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>" +
+            "This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>" +
+            "The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed.");
 
     @Override
     public void defineTitle() {
-        this.setTitle(_("Add a custom page"));
+        this.setTitle(_("Add resource"));
     }
 
     @Override
@@ -76,10 +79,10 @@ public class AddCustomPage extends Page {
     public void buildView() {
         addBody(new UiComponent(new HTML(POPUP_CONTEXT_MESSAGE)));
         final Form form = new Form(new JsId("pageUploadForm"));
-        final FileUpload pageUploader = new FileUpload(PAGE_UPLOAD_URL + ACTION_ADD, FILE_ENTRY_JS_ID, _("Page archive"),
-                _("A page archive has a .zip extension"));
+        final FileUpload pageUploader = new FileUpload(PAGE_UPLOAD_URL + ACTION_ADD, FILE_ENTRY_JS_ID, _("Archive"),
+                _("An archive has a .zip extension"));
         form.addEntry(pageUploader);
-        form.addButton(INSTALL_BUTTON_JS_ID, _("Next >"), _("Add a page"), new OpenValidationPopupAction(pageUploader)).addCancelButton();
+        form.addButton(INSTALL_BUTTON_JS_ID, _("Next >"), _("Add a resource"), new OpenValidationPopupAction(pageUploader)).addCancelButton();
         pageUploader.addValidator(new AbstractStringFormatValidator(UPLOAD_SERVLET_VALID_RESPONSE_REGEXP) {
 
             @Override
@@ -93,3 +96,4 @@ public class AddCustomPage extends Page {
         addBody(form);
     }
 }
+

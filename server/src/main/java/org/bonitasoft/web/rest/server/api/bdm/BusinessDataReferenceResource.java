@@ -41,15 +41,23 @@ public class BusinessDataReferenceResource extends CommonResource {
     public static BusinessDataReferenceClient toClient(BusinessDataReference object) {
         if (object instanceof SimpleBusinessDataReference) {
             final SimpleBusinessDataReference businessDataReference = (SimpleBusinessDataReference) object;
-            return new SimpleBusinessDataReferenceClient(object.getName(), object.getType(), getUrl(object.getType(), businessDataReference.getStorageId().toString()), businessDataReference.getStorageId());
+            return new SimpleBusinessDataReferenceClient(object.getName(), object.getType(), getUrl(object.getType(), getStorageIdString(businessDataReference)), businessDataReference.getStorageId());
         } else {
             final MultipleBusinessDataReference businessDataReference = (MultipleBusinessDataReference) object;
             return new MultipleBusinessDataReferenceClient(object.getName(), object.getType(), getUrl(businessDataReference.getType(), getValue(businessDataReference)), businessDataReference.getStorageIds());
         }
     }
 
+    private static String getStorageIdString(SimpleBusinessDataReference businessDataReference) {
+        Long storageId = businessDataReference.getStorageId();
+        if (storageId != null) {
+            return storageId.toString();
+        }
+        return "";
+    }
+
     static String getValue(MultipleBusinessDataReference multipleBusinessDataReference) {
-        return "?q=findByIds&f=ids="+multipleBusinessDataReference.getStorageIds().toString().replaceAll("[\\[\\] ]","");
+        return "findByIds?ids="+multipleBusinessDataReference.getStorageIds().toString().replaceAll("[\\[\\] ]","");
     }
 
     private static String getUrl(String type, String value) {

@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,15 +67,17 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
 
     public Set<String> getResourcePermissionsWithWildCard(final String method, final String apiName, final String resourceName,
             final List<String> resourceQualifiers) {
-        for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
-            final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
-            final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
-            final Set<String> permissions = getPropertyAsSet(key);
-            if (!permissions.isEmpty()) {
-                return permissions;
+        if (resourceQualifiers != null) {
+            for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
+                final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
+                final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
+                final Set<String> permissions = getPropertyAsSet(key);
+                if (!permissions.isEmpty()) {
+                    return permissions;
+                }
             }
         }
-        return null;
+        return Collections.emptySet();
     }
 
     protected List<String> getResourceQualifiersWithWildCard(final List<String> resourceQualifiers, final int wildCardPosition) {

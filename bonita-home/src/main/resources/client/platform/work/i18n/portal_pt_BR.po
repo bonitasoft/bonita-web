@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-18 03:02+0200\n"
-"PO-Revision-Date: 2015-05-04 04:51-0400\n"
+"POT-Creation-Date: 2015-05-23 03:02+0200\n"
+"PO-Revision-Date: 2015-05-26 03:04-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -21,9 +21,6 @@ msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
 
 msgid " for "
 msgstr " para "
-
-msgid "%applicationName% as page %associationName%"
-msgstr "%applicationName% como página %associationName%"
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
 msgstr "formato de arquivo %attribute% não é permitido. Apenas arquivos %file_formats% são permitidos."
@@ -163,6 +160,18 @@ msgstr "%user%"
 msgid "%value% is not a valid value for %className%"
 msgstr "%value% não é um valor válido para %className%"
 
+msgid "'%applicationName%' as page '%associationName%'"
+msgstr "'%applicationName%' as page '%associationName%'"
+
+msgid "'%layoutName%' is used as layout for:"
+msgstr "'%layoutName%' is used as layout for:"
+
+msgid "'%pageName%' is used by:"
+msgstr "'%pageName%' is used by:"
+
+msgid "'%themeName%' is used as Theme for:"
+msgstr "'%themeName%' is used as Theme for:"
+
 msgid "?"
 msgstr "?"
 
@@ -232,9 +241,6 @@ msgstr "Adicionar uma categoria"
 msgid "Add a comment"
 msgstr "Adicionar um comentário"
 
-msgid "Add a custom page"
-msgstr "Adicionar uma página personalizada"
-
 msgid "Add a group"
 msgstr "Adicionar um grupo"
 
@@ -268,11 +274,11 @@ msgstr "Adicionar uma nova página personalizada"
 msgid "Add a new membership to this user"
 msgstr "Adicionar uma nova associação para este usuário"
 
-msgid "Add a new page that was created using Groovy and/or HTML.<br/>The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page.<br/>For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "Adicione uma nova página que foi criada usando Groovy e/ou HTML.<br/>O arquivo de página (arquivo .zip) deve conter page.properties,  um arquivo index.html ou  um arquivo Index.groovy e todos os recursos necessários para a página.<br/> Para maiores detalhes, consulte a documentação ou a página de exemplo readme (disponível na lista de páginas personalizadas)."
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 
-msgid "Add a page"
-msgstr "Adicionar uma página"
+msgid "Add a resource"
+msgstr "Add a resource"
 
 msgid "Add a role"
 msgstr "Adicionar uma função"
@@ -294,6 +300,9 @@ msgstr "Adicionar um usuário au perfil %%"
 
 msgid "Add new memberships for %user%"
 msgstr "Adicionar novas associações para %user%"
+
+msgid "Add resource"
+msgstr "Add resource"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Adicionar o(s) grupo(s) selecionado(s) neste perfil"
@@ -349,6 +358,9 @@ msgstr "Todas as páginas"
 msgid "All processes are automatically paused."
 msgstr "Todos os processos são automaticamente suspensos."
 
+msgid "An archive has a .zip extension"
+msgstr "An archive has a .zip extension"
+
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Ocorreu um erro ao implantar o modelo de dados de negócio."
 
@@ -369,6 +381,9 @@ msgstr "Gerenciamento de apps"
 
 msgid "April"
 msgstr "Abril"
+
+msgid "Archive"
+msgstr "Archive"
 
 msgid "Archived"
 msgstr "Arquivados"
@@ -586,6 +601,9 @@ msgstr "Configurar serviços BPM para manutenção"
 msgid "Confirm"
 msgstr "Confirmar"
 
+msgid "Confirm Delete?"
+msgstr "Confirm Delete?"
+
 msgid "Confirm delete ?"
 msgstr "Confirmar exclusão?"
 
@@ -792,6 +810,9 @@ msgstr "Fazer"
 
 msgid "Do not delete this membership"
 msgstr "Não excluir esta associação"
+
+msgid "Do you still want to delete the selected pages?"
+msgstr "Do you still want to delete the selected pages?"
 
 msgid "Done"
 msgstr "Feito"
@@ -1048,6 +1069,9 @@ msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr "Formato: %namePrefix% seguido somente por caracteres alfanuméricos."
 
+msgid "Forms"
+msgstr "Formulários"
+
 msgid "Fr"
 msgstr "Sex"
 
@@ -1110,6 +1134,11 @@ msgstr "Se estas páginas são usadas em um perfil, as páginas e perfis relacio
 
 msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
 msgstr "Se esta páginas é usada em um perfil, a página e o perfil relacionados serão excluídos permanentemente."
+
+msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
+"Before deleting a page, you should also check whether it is used in a custom profile navigation."
+msgstr "If you delete a page that is used by a process, the process becomes unresolved.\n"
+"Before deleting a page, you should also check whether it is used in a custom profile navigation."
 
 msgid "Image files"
 msgstr "Arquivos de imagem"
@@ -1216,6 +1245,9 @@ msgstr "Última atualização em"
 msgid "Lastname"
 msgstr "Sobrenome"
 
+msgid "Layouts"
+msgstr "Layouts"
+
 msgid "Link to the tasks"
 msgstr "Link para as tarefas"
 
@@ -1273,14 +1305,14 @@ msgstr "Gerencie casos de processos que uma entidade com esse perfil pode superv
 msgid "Manage custom pages"
 msgstr "Gerenciar páginas personalizadas"
 
-msgid "Manage pages"
-msgstr "Gerenciar páginas"
-
 msgid "Manage processes that an entity with this profile can supervise as PM."
 msgstr "Gerencie processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
 
 msgid "Manage profiles"
 msgstr "Gerenciar perfis"
+
+msgid "Manage resources"
+msgstr "Manage resources"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Gerencie tarefas de processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
@@ -1330,9 +1362,6 @@ msgstr "Monitoramento"
 msgid "More"
 msgstr "Mais"
 
-msgid "More (BETA)"
-msgstr "More (BETA)"
-
 msgid "Move this element after the next one"
 msgstr "Mover este elemento abaixo do próximo"
 
@@ -1372,9 +1401,6 @@ msgstr "Nome do usuário que iniciou este caso"
 msgid "Name of the variable"
 msgstr "Nome da variável"
 
-msgid "New process more details view"
-msgstr "New process more details view"
-
 msgid "Next"
 msgstr "Próximo"
 
@@ -1395,9 +1421,6 @@ msgstr "Nenhuma descrição."
 
 msgid "No opened task"
 msgstr "Nenhuma tarefa aberta"
-
-msgid "No pages will be deleted as some of them are used in applications."
-msgstr "As páginas não serão excluídas, pois algumas delas são usadas em aplicações."
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "Nenhuma resposta foi recebida até o momento, mas a operação ainda pode estar em andamento. Aguarde alguns segundos antes de recarregar a página."
@@ -1471,14 +1494,19 @@ msgstr "Nome original"
 msgid "Other"
 msgstr "Outros"
 
-msgid "Oups... This item is not available anymore.\nYou will be redirected to a safest place."
-msgstr "Oups... Este item não está mais disponível. \n Você será redirecionado para um lugar mais seguro."
+msgid "Oups... This item is not available anymore.\n"
+"You will be redirected to a safest place."
+msgstr "Oups... Este item não está mais disponível. \n"
+" Você será redirecionado para um lugar mais seguro."
 
 msgid "Overview"
 msgstr "Síntese"
 
 msgid "Page archive"
 msgstr "Arquivo da página"
+
+msgid "Pages"
+msgstr "Páginas"
 
 msgid "Parameters"
 msgstr "Parâmetros"
@@ -1605,6 +1633,9 @@ msgstr "Privilégio"
 
 msgid "RESOLVED"
 msgstr "RESOLVED"
+
+msgid "REST API extensions"
+msgstr "REST API extensions"
 
 msgid "Ready since %task_last_update%"
 msgstr "Pronto desde %task_last_update%"
@@ -1807,6 +1838,9 @@ msgstr "Pular esta tarefa"
 msgid "Skipped on %task_last_update% by %executed_by%"
 msgstr "Ignorado em %task_last_update% por %executed_by%"
 
+msgid "Some of the pages you selected for deletion are used by processes:"
+msgstr "Some of the pages you selected for deletion are used by processes:"
+
 msgid "Sorry the variable %variableName% has a type which is not editable"
 msgstr "Desculpe, a variável %variableName% é de um tipo não editável"
 
@@ -1915,8 +1949,10 @@ msgstr "Os serviços de BPM devem ser suspensos antes de importar um novo Modelo
 msgid "The Business Data Model was successfully installed."
 msgstr "O Modelo de Dados de Negócio foi instalado com sucesso."
 
-msgid "The Business Data Model will now be installed.\nPlease note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "O Modelo de Dados de Negócio será instalado agora. \nSaiba que as tabelas do banco de dados de negócio existente serão modificadas definitivamente. Esta ação não pode ser revertida. É altamente recomendável fazer uma cópia de segurança do banco de dados antes de prosseguir."
+msgid "The Business Data Model will now be installed.\n"
+"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
+msgstr "O Modelo de Dados de Negócio será instalado agora. \n"
+"Saiba que as tabelas do banco de dados de negócio existente serão modificadas definitivamente. Esta ação não pode ser revertida. É altamente recomendável fazer uma cópia de segurança do banco de dados antes de prosseguir."
 
 msgid "The Process cannot be enabled"
 msgstr "O processo não pode ser ativado"
@@ -1933,8 +1969,10 @@ msgstr "O administrador pode instalar um processo, gerenciar a organização e m
 msgid "The application encountered an error."
 msgstr "Ocorreu um erro na aplicação."
 
-msgid "The application encountered an unexpected error. Please try again.\nIf the error persists, please contact Bonitasoft support"
-msgstr "O aplicativo encontrou um erro inesperado. Por favor, tente novamente.\nSe o erro persistir, contacte o suporte da Bonitasoft"
+msgid "The application encountered an unexpected error. Please try again.\n"
+"If the error persists, please contact Bonitasoft support"
+msgstr "O aplicativo encontrou um erro inesperado. Por favor, tente novamente.\n"
+"Se o erro persistir, contacte o suporte da Bonitasoft"
 
 msgid "The configuration state of the process"
 msgstr "O estado da configuração do processo"
@@ -2086,11 +2124,17 @@ msgstr "A versão do processo"
 msgid "The version of the process that created this case"
 msgstr "A versão do processo que criou este caso"
 
+msgid "Themes"
+msgstr "Themes"
+
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "Estes %item_name_plural% e as entradas do perfil relacionado serão excluídos permanentemente."
 
 msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Estes %item_name_plural% serão definitivamente excluídos."
+
+msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
+msgstr "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Este %item_name% e as entradas do perfil relacionadas serão excluídas permanentemente."
@@ -2116,8 +2160,10 @@ msgstr "Esta associação já foi designada como ator"
 msgid "This membership is already added to user"
 msgstr "Esta associação já foi adicionada ao usuário"
 
-msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n update the page definition to specify the list of resources used."
-msgstr "Esta página não tem nenhuma autorização definida. Caso a página use recursos REST e verificação de autorização está ativada, \n atualize a definição da página para especificar a lista de recursos utilizados."
+msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
+" update the page definition to specify the list of resources used."
+msgstr "Esta página não tem nenhuma autorização definida. Caso a página use recursos REST e verificação de autorização está ativada, \n"
+" atualize a definição da página para especificar a lista de recursos utilizados."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Este perfil estará disponível no próximo login para os usuários que são mapeadas. Se você mapeou o perfil para você mesmo, ele estará disponível depois que você atualizar a página no seu navegador."
@@ -2341,8 +2387,14 @@ msgstr "Você está logado como usuário técnico. Este utilizador tem direitos 
 msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
 msgstr "É necessário suspender o serviço BPM para fazer atualizações que não podem ser feitas enquanto há usuários ativos. Quando o serviço é suspenso:"
 
-msgid "You risk interrupting one or more processes.\n\nDeactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\nBefore proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\nAre you sure you want to deactivate this user now ?"
-msgstr "Existe o risco de interromper um ou mais processos.\n\nDesativar o único usuário capaz de executar uma tarefa causará a interrupção do processo.\n\nAntes de continuar, talvez deseje ir para a página 'Mais' do processo e verificar o mapeamento de atores.\n\nTem certeza que deseja desativar este usuário agora ?"
+msgid "You risk interrupting one or more processes.\n\n"
+"Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
+"Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
+"Are you sure you want to deactivate this user now ?"
+msgstr "Existe o risco de interromper um ou mais processos.\n\n"
+"Desativar o único usuário capaz de executar uma tarefa causará a interrupção do processo.\n\n"
+"Antes de continuar, talvez deseje ir para a página 'Mais' do processo e verificar o mapeamento de atores.\n\n"
+"Tem certeza que deseja desativar este usuário agora ?"
 
 msgid "You will be rediected"
 msgstr "Você será redirecionado"

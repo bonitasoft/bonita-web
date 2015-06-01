@@ -5,18 +5,20 @@
 @height: @h;
 @w: 5px; // std width
 @width: @w;
-@mainAccentColor: #b20706; //the main skin color (red)
+@mainAccentColor: #DD0033; //the main skin color (red)
 //@mainAccentColor: #2674b0; //the main skin color (blue)
-@secondAccentColor: #313433;
+//@secondAccentColor: #313433;
+@secondAccentColor: #2c3e50;
 @color3: #666666; //calendar links, button3 text color
 @color4: #035;//link color
 
 @browserFontSize: 16;//default browser font size in px, don't change this value
-@skinFontSize: 13;
+@skinFontSize: 14;
 @calcFontSize: (@skinFontSize / @browserFontSize);
 
 @fontSize: ~"@{calcFontSize}em";
 @skinFont: "Signika-Semibold", sans-serif;
+@regularFont: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @skinFontPath: "themeResource?theme=portal&location=skin/fonts/";
 @skinpath: "themeResource?theme=portal&location=skin/images/";
 @fontColor: #6e6f6b;
@@ -24,6 +26,8 @@
 @borderColor2: #a6a9b0;
 @borderColor3: #d9d9d9;
 @borderColor4: #ededed;
+@diagram-ready-bgColor:#267F00;
+
 @defaultRadius: 1*@w;
 @border-width: 1px;
 
@@ -39,15 +43,15 @@
 // ****************************************************************************** //
 // 								BUTTONS											  //
 // ****************************************************************************** //
-@link-color: #035;
+@link-color: #337AB7;
 
-@button-fontSize: 12;
-@button-paddingY: 0*@h;
+@button-fontSize: 14;
+@button-paddingY: 1*@h;
 @button-paddingX: 2*@w;
 @button-padding: @button-paddingY @button-paddingX;
 @button-minWidth: 18*@w;
 
-@button-height: 5*@h;
+@button-height: 3.6*@h;
 @button-globalHeight: @button-height + @button-paddingY + @button-paddingY + @border-width + @border-width;
 @button-radius: 3px;
 @button-border: @border-width solid;
@@ -61,15 +65,15 @@
 @button-shadowBlur: 2px;
 @button-shadowColor: #d8d8d8;
 
-@btnColor: #dfdfdf; //gray
-@btnTxtColor : @color3;
+@btnColor: #95a5a6; //gray
+@btnTxtColor: #fff;
 @btnTxtStrokeColor: transparent;
 
-@btnActionColor: #272727;//black
+@btnActionColor: #2C3E50;
 @btnActionTxtColor : #fff;
 @btnActionTxtStokeColor: #000;
 
-@btnPrimaryActionColor: #7bb800;
+@btnPrimaryActionColor: #1A7899;
 @btnPrimaryActionTxtColor: #fff;
 @btnPrimaryActionTxtStokeColor: transparent;
 
@@ -78,16 +82,58 @@
 @btnDisabledTxtStrokeColor: transparent;
 
 @btnColor1: @mainAccentColor;
-@btnColor1TxtColor : #fff;
+@btnColor1TxtColor: #fff;
 @btnColor1TxtStokeColor: darken(@mainAccentColor, 1.5%);
 
-@addCommentButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
-@addSubtaskButton-padding: 0.2*@h 2*@w 0*@h 6*@w;
+@addbutton-padding: 1*@h 2*@w;
+@addCommentButton-padding:@addbutton-padding;
+@addSubtaskButton-padding: @addbutton-padding;
 @addbutton-width: 20*@w;
-@addbutton-padding: 0 2*@w;
-@addbutton-txtAlign: center;
+
+@addbutton-txtAlign: left !important;
 @addbutton-bg: "button-add.png";
 @addbutton-bgWidth: 30px;
+
+@addButton-glyphicon-position: relative;
+@addButton-glyphicon-verticalAlign:  bottom;
+@addButton-glyphicon-margin: 0 1*@w 0 0;
+@addButton-glyphicon-display: inline-block;
+@addButton-glyphicon-fontFamily: 'Glyphicons Halflings';
+@addButton-glyphicon-fontStyle: normal;
+@addButton-glyphicon-fontWeight: 400;
+@addButton-glyphicon-lineHeight: inherit;
+@addButton-glyphicon-webkitFontSmoothing: antialiased;
+@addButton-glyphicon-mozOsxFontSmoothing: grayscale;
+@addButton-glyphicon-content: "\2b";
+@addButton-glyphicon-backgroundColor: transparent;
+@addButton-glyphicon-padding:  0 1*@w;
+@addButton-glyphicon-border:  1px solid transparent; 
+@addButton-glyphicon-visibility:  hidden;
+@addButton-glyphicon-borderRadius: 4px;
+@addButton-glyphicon-textAlign: center;
+@addButton-glyphicon-color: white; 
+@addButton-hover-glyphicon-display:inline-block;
+
+
+@moreButton-glyphicon-position: relative;
+@moreButton-glyphicon-verticalAlign:  middle;
+@moreButton-glyphicon-margin: 0 0 0  1*@w;
+@moreButton-glyphicon-display: inline-block;
+@moreButton-glyphicon-fontFamily: 'Glyphicons Halflings';
+@moreButton-glyphicon-fontStyle: normal;
+@moreButton-glyphicon-fontWeight: 400;
+@moreButton-glyphicon-lineHeight: 1.2;
+@moreButton-glyphicon-webkitFontSmoothing: antialiased;
+@moreButton-glyphicon-mozOsxFontSmoothing: grayscale;
+@moreButton-glyphicon-content: "\e234";
+@moreButton-glyphicon-backgroundColor: transparent;
+@moreButton-glyphicon-padding:  0 1*@w;
+@moreButton-glyphicon-border:  1px solid transparent;//darken(@btnColor, 10%); 
+@moreButton-glyphicon-visibility:  hidden;
+@moreButton-glyphicon-borderRadius: 4px;
+@moreButton-glyphicon-textAlign: center;
+@moreButton-glyphicon-color: white; 
+@moreButton-hover-glyphicon-display: inline-block;
 
 
 @pager-padding: 1*@h 5*@w 3*@h 0;
@@ -120,7 +166,7 @@
 // Reset
 // ----------------------------------------------------------------------------
 @body-background: #fff;
-@secondary-background: #f5f4f4;
+@secondary-background: #fff;
 // ----------------------------------------------------------------------------
 // Icon Size
 // ----------------------------------------------------------------------------
@@ -170,10 +216,10 @@
 @header-menu-height: @header-menu-fontSize + @header-menu-link-paddingY * 2;
 @header-menu-margin: 0 0 0 @filtersPanel-width;
 @header-menu-background: @mainAccentColor;
-@header-menu-gradientColor1: lighten(@mainAccentColor, 5.5%);
+@header-menu-gradientColor1: @mainAccentColor;
 @header-menu-gradientColor2: @mainAccentColor;
 
-@header-menu-gradientColor1Hover: lighten(@mainAccentColor, 13%);
+@header-menu-gradientColor1Hover: lighten(@mainAccentColor, 5%);
 @header-menu-gradientColor2Hover: @mainAccentColor;
 
 
@@ -255,7 +301,7 @@
 @filtersPanel-width: 40*@w;
 @filtersPanel-minWidth: @filtersPanel-width;
 @filtersPanel-maxWidth: @filtersPanel-width;
-@filtersPanel-bgColor: @mainAccentColor;
+@filtersPanel-bgColor: #EEE;//#d3dde2;
 
 @detailsPanel-width: 50%;
 
@@ -269,14 +315,16 @@
 @tablesPanel-tableActions-padding: 0 4*@w 0 0;
 
 @tablesPanel-tableActions-textAlign: right;
-@tablesPanel-table-thead-fontSize: 18;
-@tablesPanel-table-thead-bgColor: lighten(@mainAccentColor, 8.5%);
+@tablesPanel-table-thead-letterSpacing:0.07em;
+@tablesPanel-table-thead-fontSize: 16;
+@tablesPanel-table-thead-bgColor: #2c3e50; //@mainAccentColor;
 @tablesPanel-table-thead-height: 3*@h;
 @tablesPanel-table-thead-paddingTop: 3*@h;
 @tablesPanel-table-thead-paddingBottom: 3*@h;
 @tablesPanel-table-thead-textColor: #fff;
 @tablesPanel-table-thead-margin: @tablesPanel-table-line-margin;
-@tablesPanel-table-thead-tr-gradientColor1:  lighten(@mainAccentColor, 7.5%);
+//@tablesPanel-table-thead-tr-gradientColor1:  lighten(@mainAccentColor, 7.5%);
+@tablesPanel-table-thead-tr-gradientColor1:  #2c3e50;//@mainAccentColor;
 @tablesPanel-table-sort-textAlign: right;
 @tablesPanel-table-thead-tr-gradientPosition1: 0%;
 @tablesPanel-table-thead-tr-gradientColor2: lighten(@mainAccentColor, 1.5%);
@@ -284,15 +332,15 @@
 @tablesPanel-table-thead-cellCheckbox-padding:  0 2*@w 0 2*@w;
 
 @tablesPanel-table-thead-cell-borderWidth: @border-width;
-@tablesPanel-table-thead-cell-borderLeft: @tablesPanel-table-thead-cell-borderWidth solid lighten(@mainAccentColor, 8.5%);
-@tablesPanel-table-thead-cell-borderRight: @tablesPanel-table-thead-cell-borderWidth solid darken(@mainAccentColor, 7%);
+@tablesPanel-table-thead-cell-borderLeft: @tablesPanel-table-thead-cell-borderWidth solid rgba(255,255,255,.5);//#d3dde2;//lighten(@mainAccentColor, 8.5%);
+@tablesPanel-table-thead-cell-borderRight: @tablesPanel-table-thead-cell-borderWidth solid rgba(255,255,255,.5);//#d3dde2;//darken(@mainAccentColor, 7%);
 
 @tablesPanel-table-line-textColor: #323232;
 @tablesPanel-table-line-fontSize: 12;
 @tablesPanel-table-line-height: 8*@h;
 @tablesPanel-table-line-paddingTop: 3*@h;
 @tablesPanel-table-line-paddingBottom: 0;
-@tablesPanel-table-line-gradientColor1: rgba(0,0,0,0.03);
+@tablesPanel-table-line-gradientColor1: rgba(0,0,0,0.05);
 @tablesPanel-table-line-gradientPosition1: 0%;
 @tablesPanel-table-line-gradientColor2: rgba(0,0,0,0.1);
 @tablesPanel-table-line-gradientPosition2: 100%;
@@ -342,10 +390,10 @@
 // ----------------------------------------------------------------------------
 // Lists : filters
 // ----------------------------------------------------------------------------
-@filtersPanel-titleColor: #fff;
+@filtersPanel-titleColor: @secondAccentColor;
 @filtersPanel-display: block;
 @filtersPanel-padding-left: 1*@w;
-@filtersPanel-padding: 7*@h 0 0 0;
+@filtersPanel-padding: 13*@h 0 0 0;
 @filtersPanel-margin: 0;
 @filtersPanel-font: @skinFont;
 @filtersPanel-position: relative;
@@ -354,7 +402,7 @@
 @filtersPanel-actions-positionLeft: 6*@w;
 @filtersPanel-actions-addButton-bgColor: @btnPrimaryActionColor;
 @filtersPanel-actions-addButton-txtColor: #fff;
-@filtersPanel-textColor: #fff;
+@filtersPanel-textColor: #2c3e50;
 @filtersPanel-fontSize: 15;
 @filtersPanel-fontWeight: normal;
 @filtersPanel-subfilters-fontSize: 13;
@@ -369,6 +417,9 @@
 @filtersPanel-subfilters-paddingLeft: 14*@w;
 @filtersPanel-filters-paddingRight: 3*@w;
 
+@filtersPanel-filters-hover-bgColor: #B4B9C2;
+@filtersPanel-filters-hover-txtColor: @secondAccentColor;
+
 @filtersPanel-filters-users-tasks-todo: "filters-users-tasks-todo.png";
 @filtersPanel-filters-users-tasks-todo-selected: "filters-users-tasks-todo-selected.png";
 @filtersPanel-filters-users-tasks-available: "filters-users-tasks-available.png";
@@ -381,41 +432,61 @@
 @filtersPanel-filters-users-tasks-performed-selected: "filters-users-tasks-performed-selected.png";
 
 @filtersPanel-filters-bgAvailable: "filters-available.png";
-@filtersPanel-filters-bgAvailableSelected: "filters-available-selected.png";
+@filtersPanel-filters-bgAvailable-selected: "filters-available-selected.png";
 
 @filtersPanel-filters-bgUnassigned: "filters-unassigned.png";
-@filtersPanel-filters-bgUnassignedSelected: "filters-unassigned-selected.png";
+@filtersPanel-filters-bgUnassigned-selected: "filters-unassigned-selected.png";
 
 @filtersPanel-filters-bgAssigned: "filters-assigned.png";
-@filtersPanel-filters-bgAssignedSelected: "filters-assigned-selected.png";
+@filtersPanel-filters-bgAssigned-selected: "filters-assigned-selected.png";
 
 @filtersPanel-filters-bgIgnored: "filters-ignored.png";
-@filtersPanel-filters-bgIgnoredSelected: "filters-ignored-selected.png";
+@filtersPanel-filters-bgIgnored-selected: "filters-ignored-selected.png";
 
 @filtersPanel-filters-bgPerformed: "filters-users-tasks-performed.png";
-@filtersPanel-filters-bgPerformedSelected: "filters-users-tasks-performed-selected.png";
+@filtersPanel-filters-bgPerformed-selected: "filters-users-tasks-performed-selected.png";
 
 @filtersPanel-filters-bgMyCases: "filters-mycases.png";
-@filtersPanel-filters-bgMyCasesSelected: "filters-mycases-selected.png";
+@filtersPanel-filters-bgMyCases-selected: "filters-mycases-selected.png";
 
 @filtersPanel-filters-bgWorkedOn: "filters-workedon.png";
-@filtersPanel-filters-bgWorkedOnSelected: "filters-workedon-selected.png";
+@filtersPanel-filters-bgWorkedOn-selected: "filters-workedon-selected.png";
 
 @filtersPanel-filters-bgArchived: "filters-archived.png";
-@filtersPanel-filters-bgArchivedSelected: "filters-archived-selected.png";
+@filtersPanel-filters-bgArchived-selected: "filters-archived-selected.png";
 
 
 @filtersPanel-filters-bgAll: "filters-all.png";
-@filtersPanel-filters-bgAllSelected: "filters-all-selected.png";
+@filtersPanel-filters-bgAll-selected: "filters-all-selected.png";
 
 @customPagefiltersPanel-filters-bgAll: "filters-all-custom-page.png";
-@customPagefiltersPanel-filters-bgAllSelected: "filters-all-custom-pages-selected.png";
+@customPagefiltersPanel-filters-bgAll-selected: "filters-all-custom-pages-selected.png";
 
 @filtersPanel-filters-bgHumanTask: "filters-human.png";
-@filtersPanel-filters-bgHumanTaskSelected: "filters-human-selected.png";
+@filtersPanel-filters-bgHumanTask-selected: "filters-human-selected.png";
 
 @filtersPanel-filters-bgFailed: "filters-failed.png";
-@filtersPanel-filters-bgFailedSelected: "filters-failed-selected.png";
+@filtersPanel-filters-bgFailed-selected: "filters-failed-selected.png";
+
+
+@filtersPanel-filters-bg-resolved:"filters-resolved.png";
+@filtersPanel-filters-bg-resolved:"filters-resolved.png";
+@filtersPanel-filters-bg-resolved-selected:"filters-resolved-selected.png";
+@filtersPanel-filters-bg-unresolved:"filters-unresolved.png";
+@filtersPanel-filters-bg-unresolved:"filters-unresolved.png";
+@filtersPanel-filters-bg-unresolved-selected:"filters-unresolved-selected.png";
+@filtersPanel-filters-bg-monitoring:"filters-monitoring.png";
+@filtersPanel-filters-bg-monitoring:"filters-monitoring.png";
+@filtersPanel-filters-bg-monitoring-selected:"filters-monitoring-selected.png";
+@filtersPanel-filters-bg-reporting:"filters-reporting.png";
+@filtersPanel-filters-bg-reporting:"filters-reporting.png";
+@filtersPanel-filters-bg-reporting-selected:"filters-reporting-selected.png";
+@filtersPanel-filters-bg-user-active:"filters-user-active.png";
+@filtersPanel-filters-bg-user-active:"filters-user-active.png";
+@filtersPanel-filters-bg-user-active-selected:"filters-user-active-selected.png";
+@filtersPanel-filters-bg-user-inactive:"filters-user-inactive.png";
+@filtersPanel-filters-bg-user-inactive:"filters-user-inactive.png";
+@filtersPanel-filters-bg-user-inactive-selected:"filters-user-inactive-selected.png";
 
 
 @filtersPanel-filtersCurrent-background: @tablesPanel-bgColor;
@@ -426,7 +497,7 @@
 @filtersPanel-filtersCurrent-borderRadiusSize: 1*@w;
 @filtersPanel-filtersCurrent-arrow-background: "arrow-filter.png";
 
-@filtersPanel-filterHover-bgColor: fadein(@mainAccentColor,15%);
+@filtersPanel-filterHover-bgColor: #b4b9c2;//fadein(@mainAccentColor,15%);
 
 @filtersPanel-filtersResourceTitle-paddingTop: 2*@h;
 @filtersPanel-filtersResourceTitle-paddingBottom:  2*@h;
@@ -517,7 +588,7 @@
 @detailsPanel-addButton-bgX: center;
 @detailsPanel-addButton-bgY: center;
 @detailsPanel-addButton-width: 8*@w;
-@detailsPanel-addButton-height: 8*@w;
+@detailsPanel-addButton-height: 8*@h;
 
 @detailsPanel-subTasks-addButton-bgColor: @btnPrimaryActionColor;
 @detailsPanel-subTasks-addButton-top: -10*@h;
@@ -727,7 +798,7 @@
 // ----------------------------------------------------------------------------
 @pageListAdmin-header-description-display: none;
 @pageListAdmin-header-lastUpdateDate-float: right;
-@pageListAdmin-displayname-width: 77*@w;
+@pageListAdmin-displayname-width: 48*@w;
 @pageListAdmin-displayname-margin:  0 1*@w 0 0;
 @pageListAdmin-description-top: @tablesPanel-table-line-paddingTop + @tablesPanel-table-cell-fontSize + 8px;
 @pageListAdmin-description-left: 37px;
@@ -828,7 +899,7 @@
 @moreDetails-addButton-bgX: center;
 @moreDetails-addButton-bgY: center;
 @moreDetails-addButton-width: 8*@w;
-@moreDetails-addButton-height: 8*@w;
+@moreDetails-addButton-height: 8*@h;
 
 @moreDetails-configurationState-padding: 0 7*@w 0 0;
 @moreDetails-configurationState-lineHeight: 32px;
@@ -868,7 +939,7 @@
 // ----------------------------------------------------------------------------
 @sectionsPanel-width: 40*@w;
 @sectionsPanel-padding: 7*@h 0 0 1*@w;
-@sectionsPanel-bgColor: @mainAccentColor;
+@sectionsPanel-bgColor: @filtersPanel-bgColor;
 
 @twoCols-min-width: 250 * @w;
 @twoCols-body-top: @header-login-height + @header-menu-height;

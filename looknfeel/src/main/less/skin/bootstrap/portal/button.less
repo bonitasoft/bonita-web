@@ -1,55 +1,4 @@
-.btn {
-  position: relative;
-  color: @color3;
-  padding: 0 10px;
-  min-width: 90px;
-  border: 1px solid @buttonBorderColor;
-  text-transform: uppercase;
-  font-family: @skinFont;
-  text-shadow: none;
-  font-size: .9em;
-  border-radius: 3px;
-  height: 25px;
-  line-height: 25px !important;
-  text-decoration: none;
-  vertical-align: middle;
-  text-align: center;
-  display: inline-block;
-  white-space: nowrap;
-  user-select: none;
-  background: @button-linear-gradient;
-  box-shadow: 2px 2px @button-shadowBlur @button-shadowColor;
-  /*overflow: hidden;*/
-
-  &.btn-success {
-    color: @btnColor1TxtColor;
-    border-color: @buttonSuccessBorderColor;
-    background: @button-success-linear-gradient;
-  }
-
-  &.btn-primary {
-    color: #fff;
-    border-color: #010101;
-    background-color: #3d3d3d;
-    background: -webkit-linear-gradient(top, #3d3d3d 0%, #272727 100%);
-    background: linear-gradient(to bottom, #3d3d3d 0%, #272727 100%)
-
-  }
-  &.btn-primary:hover {
-    background: -webkit-linear-gradient(to bottom, #3d3d3d 0%, #555 100%);
-    background: linear-gradient(to bottom, #3d3d3d 0%, #555 100%)
-  }
-
-}
-
-.btn-toolbar {margin-bottom: 20px}
-
-.btn-group .btn {min-width: 30px}
-.btn-action-toggle {margin-right: .5em; visibility: hidden}
-
-.btn-option-list .btn {text-transform: lowercase}
-.btn-option-list .btn:first-letter {text-transform: uppercase}
-
+[class*="btn-action-icon"]{font-family: 'iconfont'}
 [class*="btn-action-"] {
   margin-top: -5px;
   background-color: transparent;
@@ -58,14 +7,10 @@
   cursor: pointer;
   transition: color .2s ease-in;
 }
-
-[class*="btn-action-"]:hover {text-decoration: none; color: #2a6496}
-.btn-action-toggle {margin-right: .5em; visibility: hidden}
-.btn-action-edit {color: black}
-.btn-group .btn {min-width: 30px}
-.btn-small {font-size: 8px}
-
-[class*="btn-action-icon"]{font-family: 'iconfont'}
-
-.btn-action-icon-sort-up::before {content: "\f106"}
-.btn-action-icon-sort-down::before {content: "\f107"}
+.btn-action-icon-sort-{
+	&up::before {content: "\f106"}
+	&down::before {content: "\f107"}
+}
+.btn{
+	text-transform: uppercase;
+}
