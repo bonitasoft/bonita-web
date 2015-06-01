@@ -151,30 +151,33 @@ public class ContractTypeConverter {
         if (inputValue instanceof Map) {
             @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
-            final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
-            final FileInputValue fileInputValue = new FileInputValue(filename, retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH), deleteFile));
-            return fileInputValue;
-        } else {
-            return inputValue;
+            if (mapOfValues.containsKey(InputDefinition.FILE_INPUT_FILENAME) && mapOfValues.containsKey(FILE_TEMP_PATH)) {
+                final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
+                final FileInputValue fileInputValue = new FileInputValue(filename, retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH),
+                        deleteFile));
+                return fileInputValue;
+            }
         }
+        return inputValue;
     }
 
     protected byte[] retrieveFileAndGetContent(final String fileTempPath, final boolean deleteFile) throws FileNotFoundException {
-        final File sourceFile;
         byte[] fileContent = null;
-        try {
-            sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
-            if (sourceFile.exists()) {
-                fileContent = getFileContent(sourceFile, fileTempPath, deleteFile);
-            } else {
-                throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
+        if (fileTempPath != null) {
+            try {
+                final File sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
+                if (sourceFile.exists()) {
+                    fileContent = getFileContent(sourceFile, fileTempPath, deleteFile);
+                } else {
+                    throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
+                }
+            } catch (final FileNotFoundException e) {
+                throw new FileNotFoundException(e.getMessage());
+            } catch (final IOException e) {
+                throw new RuntimeException(e);
+            } catch (final DocumentException e) {
+                throw new RuntimeException(e);
             }
-        } catch(final FileNotFoundException e) {
-            throw new FileNotFoundException(e.getMessage());
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        } catch (final DocumentException e) {
-            throw new RuntimeException(e);
         }
         return fileContent;
     }
