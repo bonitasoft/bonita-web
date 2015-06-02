@@ -66,6 +66,18 @@ public class PageServlet extends HttpServlet {
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     @Override
+    protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        final String pathInfo = request.getPathInfo();
+        if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
+            //Support relative calls to the REST API from the forms using ../API/
+            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
+            request.getRequestDispatcher(apiPath).forward(request, response);
+        } else {
+            super.service(request, response);
+        }
+    }
+
+    @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         final HttpSession session = request.getSession();
@@ -86,10 +98,6 @@ public class PageServlet extends HttpServlet {
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
-        } else if (pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
-            //Support relative calls to the REST API from the forms using ../API/
-            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
-            request.getRequestDispatcher(apiPath).forward(request, response);
         } else {
             final String message = "/content is expected in the URL after the page mapping key";
             if (LOGGER.isLoggable(Level.FINE)) {

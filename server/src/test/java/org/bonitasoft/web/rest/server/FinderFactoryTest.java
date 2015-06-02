@@ -19,7 +19,6 @@ import java.util.Collections;
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResourceFinder;
@@ -70,9 +69,6 @@ public class FinderFactoryTest {
 
     @Mock
     private CommandAPI commandAPI;
-
-    @Mock
-    private ProcessConfigurationAPI processConfigurationAPI;
 
     @Mock
     private APISession apiSession;
@@ -228,7 +224,7 @@ public class FinderFactoryTest {
     @Test
     public void should_return_FormMappingResource_for_FormMappingResourceFinder() {
         final FormMappingResourceFinder formMappingResourceFinder = spy(new FormMappingResourceFinder());
-        doReturn(processConfigurationAPI).when(formMappingResourceFinder).getProcessConfigurationAPI(any(Request.class));
+        doReturn(processAPI).when(formMappingResourceFinder).getProcessAPI(any(Request.class));
         final ServerResource serverResource = formMappingResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(FormMappingResource.class);
     }

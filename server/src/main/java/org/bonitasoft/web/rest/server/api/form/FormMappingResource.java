@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.api.form;
 
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
@@ -34,16 +34,16 @@ import java.util.List;
  */
 public class FormMappingResource extends CommonResource {
 
-    protected final ProcessConfigurationAPI processConfigurationAPI;
+    protected final ProcessAPI processAPI;
 
-    public FormMappingResource(final ProcessConfigurationAPI processConfigurationAPI) {
-        this.processConfigurationAPI = processConfigurationAPI;
+    public FormMappingResource(final ProcessAPI processAPI) {
+        this.processAPI = processAPI;
     }
 
     @Get("json")
     public List<FormMappingItem> searchFormMapping() throws ResourceException {
         try {
-            final SearchResult<FormMapping> searchResult = processConfigurationAPI.searchFormMappings(buildSearchOptions());
+            final SearchResult<FormMapping> searchResult = processAPI.searchFormMappings(buildSearchOptions());
             setContentRange(searchResult);
             List<FormMapping> result = searchResult.getResult();
             List<FormMappingItem> resultConverted = convertMapping(result);

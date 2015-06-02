@@ -1,0 +1,11 @@
+<div class="well" ng-controller="MultipleCtrl">
+    <div ng-class="hasSeveralItemsInCollection(input)?'input-group':''" ng-repeat="multipleInput in inputArray">
+        <bp-complex ng-init="outputData[$index] = {}; outputData = outputData[$index]"></bp-complex>
+        <div ng-class="hasSeveralItemsInCollection(input)?'input-group-btn':''">
+            <input type="button" class="btn btn-danger " value="{{'remove'|translate}}" ng-click="removeInput(input, $index)" ng-if="hasSeveralItemsInCollection(input)">
+        </div>
+    </div>
+    <div class="input-group">
+        <button type="button" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
+    </div>
+</div>
