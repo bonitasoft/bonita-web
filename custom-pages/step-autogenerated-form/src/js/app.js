@@ -5,16 +5,23 @@
     'ngResource',
     'gettext',
     'org.bonita.common.resources',
-    'ngUpload'
+    'ngUpload',
+    'org.bonitasoft.services.i18n',
+    'org.bonitasoft.common.filters.stringTemplater'
   ]);
 
-  app.controller('MainCtrl', ['$scope','$location', 'contractSrvc','$window', 'humanTaskAPI', 'gettextCatalog', function ($scope, $location, contractSrvc, $window, humanTaskAPI, gettextCatalog) {
+  app.controller('MainCtrl', ['$scope','$location', 'contractSrvc','$window', 'humanTaskAPI', 'gettextCatalog', 'i18nService', function ($scope, $location, contractSrvc, $window, humanTaskAPI, gettextCatalog, i18nService) {
+
+    i18nService.then(function(){
+      $scope.i18nLoaded = true;
+    });
+
 
     var taskId = $location.search().id;
-    $scope.inputArray = [];
+
     $scope.contract = {};
     $scope.dataToSend = {};
-    $scope.autofill = {};
+    $scope.parent = $scope.dataToSend;
     $scope.task = {};
     $scope.message = undefined;
 
@@ -29,35 +36,6 @@
     humanTaskAPI.get({id:taskId}, function (result) {
       $scope.task = result;
     });
-
-    $scope.onUploadSuccess = function onUploadSuccess(response, input, $index) {
-      if(input.multiple){
-        if($scope.dataToSend[input.name] === null){
-          $scope.dataToSend[input.name] = [];
-        }
-        $scope.dataToSend[input.name][$index] = response;
-      }else{
-        $scope.dataToSend[input.name] = response;
-      }
-    };
-
-    $scope.appendNewInput = function appendNewInput(input){
-      var newInput = {
-          type: input.type,
-          description: input.description,
-          name: input.name,
-          multiple: input.multiple,
-          inputs: input.inputs
-        };
-      $scope.inputArray[input.name].push(newInput);
-      $scope.autofill[input.name].push(generateValue(input));
-    };
-
-    $scope.removeInput = function removeInput (input, index){
-      $scope.inputArray[input.name].splice(index, 1);
-      $scope.dataToSend[input.name].splice(index, 1);
-      $scope.autofill[input.name].splice(index, 1);
-    };
 
     var jsonify = function (data) {
       var jsonified = {};
@@ -84,54 +62,6 @@
       });
     };
 
-    $scope.fillData = function fillData() {
-      for (var prop in $scope.autofill) {
-        // make a copy of properties from the autofill object to avoid messing up with references
-        $scope.dataToSend[prop] = angular.copy($scope.autofill[prop]);
-      }
-    };
-
-
-    var generateValueForChildrenAttribute = function generateValueForChildrenAttribute(input) {
-      var result = generateValue(input);
-      if (input.type === 'TEXT') {
-        return '"' + result + '"';
-      }
-      return result;
-    };
-
-     var generateValue = function generateValue(input) {
-      var result = null;
-
-      if (input.type === 'TEXT') {
-        result = input.name;
-      }
-      if (input.type === 'BOOLEAN') {
-        result = input.name.length % 2 === 0;
-      }
-      if (input.type === 'INTEGER') {
-        result = input.name.length;
-      }
-      if (input.type === 'DECIMAL') {
-        result = input.name.length + (input.name.length + 1) / 10;
-      }
-      if (input.type === 'DATE') {
-        result = new Date().toJSON().slice(0, 10);
-      }
-      if (input.inputs.length > 0) {
-        result = '{';
-        for (var i = 0; i < input.inputs.length; i++) {
-          if (i > 0) {
-            result += ',';
-          }
-          result += '"' + input.inputs[i].name + '":' + generateValueForChildrenAttribute(input.inputs[i]);
-        }
-        result += '}';
-      }
-
-      return result;
-    };
-
     $scope.isSimpleInput = function isSimpleInput(input) {
       return (input.inputs.length===0);
     };
@@ -139,7 +69,6 @@
     $scope.isComplexInput = function isComplexInput(input) {
       return !($scope.isSimpleInput(input));
     };
-
 
     $scope.isMultipleInput = function isMultipleInput(input) {
       return (input.multiple);
@@ -149,20 +78,7 @@
       return (!$scope.isMultipleInput(input));
     };
 
-    $scope.initMultipleInput = function initMultipleInput(input) {
-      $scope.dataToSend[input.name]=[];
-      $scope.inputArray[input.name] = [input];
-      $scope.autofill[input.name] = [generateValue(input)];
-    };
 
-    $scope.initSingleInput = function initSingleInput(input) {
-      $scope.dataToSend[input.name] = null;
-      $scope.autofill[input.name] = generateValue(input);
-    };
-
-    $scope.hasSeveralItemsInCollection = function hasSeveralItemsInCollection(input) {
-      return ($scope.inputArray[input.name].length>1);
-    };
 
     /*
     $scope. = function (input) {

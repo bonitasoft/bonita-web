@@ -53,4 +53,8 @@ public class PropertiesFactory {
     public static PlatformTenantConfigProperties getPlatformTenantConfigProperties() {
         return PlatformTenantConfigProperties.getInstance();
     }
+
+    public static PlatformPreferencesProperties getPlatformPreferencesProperties() {
+        return PlatformPreferencesProperties.getInstance();
+    }
 }

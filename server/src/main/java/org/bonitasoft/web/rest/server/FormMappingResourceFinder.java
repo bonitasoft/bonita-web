@@ -9,7 +9,7 @@
 
 package org.bonitasoft.web.rest.server;
 
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -22,7 +22,7 @@ public class FormMappingResourceFinder extends ResourceFinder {
 
     @Override
     public ServerResource create(final Request request, final Response response) {
-        final ProcessConfigurationAPI processConfigurationAPI = getProcessConfigurationAPI(request);
-        return new FormMappingResource(processConfigurationAPI);
+        final ProcessAPI processAPI = getProcessAPI(request);
+        return new FormMappingResource(processAPI);
     }
 }
