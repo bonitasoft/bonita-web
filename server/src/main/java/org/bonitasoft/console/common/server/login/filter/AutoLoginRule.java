@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bonitasoft.console.common.server.login.CredentialsManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
@@ -68,12 +67,10 @@ public class AutoLoginRule extends AuthenticationRule {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "login exception : " + e.getMessage(), e);
             }
-            if (ExceptionUtils.getRootCause(e) instanceof TenantStatusException) {
-                throw new TenantIsPausedRedirectionToMaintenancePageException(e.getMessage(), tenantId);
-            }
             return false;
+        } catch (final TenantStatusException e) {
+            throw new TenantIsPausedRedirectionToMaintenancePageException(e.getMessage(), tenantId);
         }
-
     }
 
     private boolean isAutoLogin(final HttpServletRequestAccessor request, final long tenantId) {

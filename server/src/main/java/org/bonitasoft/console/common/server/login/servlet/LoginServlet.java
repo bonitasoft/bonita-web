@@ -179,9 +179,6 @@ public class LoginServlet extends HttpServlet {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
-    /*
-     * Overriden in SP
-     */
     protected void doLogin(final HttpServletRequest request) throws LoginManagerNotFoundException, LoginFailedException, ServletException {
         try {
             final long tenantId = getTenantId(request);
