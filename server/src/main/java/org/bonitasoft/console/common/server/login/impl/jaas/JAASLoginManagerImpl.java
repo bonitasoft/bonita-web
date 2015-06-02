@@ -16,6 +16,9 @@
  */
 package org.bonitasoft.console.common.server.login.impl.jaas;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,12 +31,9 @@ import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.user.User;
 
 /**
  *
@@ -58,7 +58,7 @@ public class JAASLoginManagerImpl implements LoginManager {
      * {@inheritDoc}
      */
     @Override
-    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuffer url = new StringBuffer();
         final String context = request.getContextPath();
         url.append(context).append(LoginManager.LOGIN_PAGE).append("?");
@@ -70,7 +70,7 @@ public class JAASLoginManagerImpl implements LoginManager {
     }
 
     @Override
-    public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
+    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
         final long tenantId = credentials.getTenantId();
         final CallbackHandler handler = createConsoleCallbackHandler(request, String.valueOf(tenantId));
         try {
@@ -78,33 +78,17 @@ public class JAASLoginManagerImpl implements LoginManager {
             final LoginContext loginContext = new LoginContext(loginContextName, handler);
             loginContext.login();
             loginContext.logout();
+            return Collections.emptyMap();
         } catch (final LoginException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, e.getMessage());
             }
             throw new LoginFailedException(e.getMessage(), e);
         }
-
-        String local = DEFAULT_LOCALE;
-        if (request.getParameterMap().get("_l") != null
-                && request.getParameterMap().get("_l").length >= 0) {
-            local = request.getParameterMap().get("_l")[0];
-        }
-        final User user = new User(request.getUsername(), local);
-        final APISession apiSession = createUserLogger().doLogin(credentials);
-        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(apiSession);
-        SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
     }
 
     private ConsoleCallbackHandler createConsoleCallbackHandler(final HttpServletRequestAccessor request, final String tenantId) {
         return new ConsoleCallbackHandler(request.getUsername(), request.getPassword(), tenantId);
-    }
-
-    /**
-     * Overridden in SP
-     */
-    protected UserLogger createUserLogger() {
-        return new UserLogger();
     }
 
     protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
@@ -119,6 +103,11 @@ public class JAASLoginManagerImpl implements LoginManager {
             loginContextName = JAAS_AUTH_LOGIN_CONTEXT;
         }
         return loginContextName;
+    }
+
+    @Override
+    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+        return null;
     }
 
 }

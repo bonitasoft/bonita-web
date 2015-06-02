@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -153,9 +154,9 @@ public class LoginServletTest {
 
         //given
         final LoginServlet servlet = spy(new LoginServlet());
-        doReturn(tenantId).when(servlet).getTenantId();
+        doReturn(tenantId).when(servlet).getTenantId(req);
         doReturn(httpSession).when(req).getSession();
-        doReturn(apiSession).when(httpSession).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(true).when(apiSession).isTechnicalUser();
         doReturn(null).when(req).getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doNothing().when(servlet).doLogin(req);

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -34,6 +33,7 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -76,7 +76,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
         final String pathInfo = request.getPathInfo();
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
 
         // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
         if (pathInfo.endsWith(RESOURCE_PATH_SEPARATOR)) {
@@ -98,7 +98,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
 
-                String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
+                final String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
@@ -140,13 +140,13 @@ public class LivingApplicationPageServlet extends HttpServlet {
     private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws IOException, ServletException {
         try {
             return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
-        } catch (ApplicationPageNotFoundException e) {
+        } catch (final ApplicationPageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Cannot found the page" + pageToken + "for the application" + appToken + ".");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }
         return null;
@@ -154,15 +154,15 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws ServletException, IOException {
         try {
-            Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
+            final Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
             return getPageApi(apiSession).getPage(customPageId).getName();
-        } catch (PageNotFoundException e) {
+        } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Cannot found the page"+pageToken+"for the application"+appToken+".");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }
         return "";

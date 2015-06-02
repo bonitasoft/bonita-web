@@ -13,7 +13,9 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.standard;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,12 +24,9 @@ import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Chong Zhao
@@ -35,7 +34,7 @@ import org.bonitasoft.web.rest.model.user.User;
 public class StandardLoginManagerImpl implements LoginManager {
 
     @Override
-    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
         String context = request.getContextPath();
         final String servletPath = request.getServletPath();
@@ -51,24 +50,16 @@ public class StandardLoginManagerImpl implements LoginManager {
     }
 
     @Override
-    public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
-        String local = DEFAULT_LOCALE;
-        if (request.getParameterMap().get("_l") != null
-                && request.getParameterMap().get("_l").length >= 0) {
-            local = request.getParameterMap().get("_l")[0];
-        }
-        final User user = new User(request.getUsername(), local);
-        final APISession session = createUserLogger().doLogin(credentials);
-        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
-        final Set<String> permissions = permissionsBuilder.getPermissions();
-        SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
+    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
+        return Collections.emptyMap();
     }
 
     protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
         return PermissionsBuilderAccessor.createPermissionBuilder(session);
     }
 
-    protected UserLogger createUserLogger() {
-        return new UserLogger();
+    @Override
+    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+        return null;
     }
 }

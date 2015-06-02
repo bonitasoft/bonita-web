@@ -56,6 +56,8 @@ public class AuthenticationFilter implements Filter {
 
     private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(portal/scripts)|(portal/formsService)";
 
+    protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
+
     /** the Pattern of url not to filter */
     protected Pattern excludePattern = null;
 
@@ -145,12 +147,47 @@ public class AuthenticationFilter implements Filter {
             final FilterChain chain) throws ServletException, IOException {
 
         for (final AuthenticationRule rule : getRules()) {
-            if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
-                chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
-                return true;
+            try {
+                if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
+                    chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
+                    return true;
+                }
+            } catch (final ServletException e) {
+                if (e.getCause() instanceof TenantIsPausedRedirectionToMaintenancePageException) {
+                    return handleTenantPausedException(requestAccessor, responseAccessor, e);
+                } else {
+                    throw e;
+                }
             }
         }
         return false;
+    }
+
+    protected boolean handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponseAccessor responseAccessor,
+            final ServletException e) throws ServletException {
+        final TenantIsPausedRedirectionToMaintenancePageException tenantIsPausedException = (TenantIsPausedRedirectionToMaintenancePageException) e.getCause();
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
+        }
+        redirectToMaintenance(requestAccessor, responseAccessor, tenantIsPausedException.getTenantId());
+        return false;
+    }
+
+    /**
+     * manage redirection to maintenance page
+     *
+     * @param request
+     * @param response
+     */
+    protected void redirectToMaintenance(final HttpServletRequestAccessor request, final HttpServletResponseAccessor response, final long tenantId)
+            throws ServletException {
+        try {
+            ((HttpServletResponse) response.asServletResponse()).sendRedirect(request.asHttpServletRequest().getContextPath() + MAINTENANCE_JSP);
+        } catch (final IOException e) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, e.getMessage());
+            }
+        }
     }
 
     protected LinkedList<AuthenticationRule> getRules() {

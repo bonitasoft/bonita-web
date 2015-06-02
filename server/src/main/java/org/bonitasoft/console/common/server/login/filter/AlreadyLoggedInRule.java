@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
@@ -49,7 +49,7 @@ public class AlreadyLoggedInRule extends AuthenticationRule {
     }
 
     private void ensureUserSession(final HttpServletRequest request, final HttpSession session, final APISession apiSession) {
-        if (session.getAttribute(LoginManager.USER_SESSION_PARAM_KEY) == null) {
+        if (session.getAttribute(SessionUtil.USER_SESSION_PARAM_KEY) == null) {
             reCreateUser(request, session, apiSession);
         }
     }
@@ -57,7 +57,7 @@ public class AlreadyLoggedInRule extends AuthenticationRule {
     private void reCreateUser(final HttpServletRequest request, final HttpSession session, final APISession apiSession) {
         final String locale = getLocale(request);
         final User user = new User(apiSession.getUserName(), locale);
-        session.setAttribute(LoginManager.USER_SESSION_PARAM_KEY, user);
+        session.setAttribute(SessionUtil.USER_SESSION_PARAM_KEY, user);
     }
 
     private String getLocale(final HttpServletRequest request) {

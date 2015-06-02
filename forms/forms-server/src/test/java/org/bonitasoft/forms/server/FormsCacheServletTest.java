@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.exception.ApplicationFormDefinitionNotFoundException;
@@ -61,7 +61,7 @@ public class FormsCacheServletTest {
 
         doReturn("12").when(request).getParameter(FormServiceProviderUtil.PROCESS_UUID);
         doReturn(session).when(request).getSession();
-        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(session).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(Locale.ENGLISH).when(request).getLocale();
         doReturn(formDefinitionAPI).when(formsCacheServlet).getDefinitionAPI(any(HttpServletRequest.class), anyMap(), anyString());
         final List<String> formIDs = new ArrayList<String>();
@@ -83,7 +83,7 @@ public class FormsCacheServletTest {
 
         doReturn("/12/processName--1.0$ENTRY").when(request).getPathInfo();
         doReturn(session).when(request).getSession();
-        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(session).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(Locale.ENGLISH).when(request).getLocale();
         final Map<String, Object> context = new HashMap<String, Object>();
         doReturn(context).when(formsCacheServlet).initContext(any(HttpServletRequest.class), anyMap(), any(Locale.class));
@@ -100,7 +100,7 @@ public class FormsCacheServletTest {
 
         doReturn("/12/processName--1.0$ENTRY").when(request).getPathInfo();
         doReturn(session).when(request).getSession();
-        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(session).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(Locale.ENGLISH).when(request).getLocale();
         final Map<String, Object> context = new HashMap<String, Object>();
         doReturn(context).when(formsCacheServlet).initContext(any(HttpServletRequest.class), anyMap(), any(Locale.class));
@@ -117,7 +117,7 @@ public class FormsCacheServletTest {
 
         doReturn("/12/processName--1.0$ENTRY").when(request).getPathInfo();
         doReturn(session).when(request).getSession();
-        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(session).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(Locale.ENGLISH).when(request).getLocale();
         final Map<String, Object> context = new HashMap<String, Object>();
         doReturn(context).when(formsCacheServlet).initContext(any(HttpServletRequest.class), anyMap(), any(Locale.class));
@@ -135,7 +135,7 @@ public class FormsCacheServletTest {
 
         doReturn("12").when(request).getParameter(FormServiceProviderUtil.PROCESS_UUID);
         doReturn(session).when(request).getSession();
-        doReturn(apiSession).when(session).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(session).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(Locale.ENGLISH).when(request).getLocale();
         doThrow(FormNotFoundException.class).when(formsCacheServlet).getDefinitionAPI(any(HttpServletRequest.class), anyMap(), anyString());
         doReturn(1l).when(formsCacheServlet).getTenantID(request);

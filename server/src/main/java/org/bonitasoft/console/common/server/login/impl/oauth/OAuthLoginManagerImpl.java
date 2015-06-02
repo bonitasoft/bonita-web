@@ -13,6 +13,9 @@
  **/
 package org.bonitasoft.console.common.server.login.impl.oauth;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,14 +25,11 @@ import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.user.User;
 import org.scribe.model.Token;
 
 /**
@@ -44,7 +44,7 @@ public class OAuthLoginManagerImpl implements LoginManager {
     private static final Logger LOGGER = Logger.getLogger(OAuthLoginManagerImpl.class.getName());
 
     @Override
-    public String getLoginpageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
+    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
         long resolvedTenantId = tenantId;
         if (tenantId == -1L) {
             resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
@@ -56,28 +56,13 @@ public class OAuthLoginManagerImpl implements LoginManager {
     }
 
     @Override
-    public void login(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
+    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws LoginFailedException {
         if (request.getOAuthVerifier() == null) {
             throw new LoginFailedException();
         }
         final long tenantId = credentials.getTenantId();
-
-        String local = DEFAULT_LOCALE;
-        if (request.getParameterMap().get("_l") != null
-                && request.getParameterMap().get("_l").length >= 0) {
-            local = request.getParameterMap().get("_l")[0];
-        }
-        final User user = new User(getOAuthUserId(request, tenantId), local);
-        final APISession apiSession = createUserLogger().doLogin(credentials);
-        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(apiSession);
-        SessionUtil.sessionLogin(user, apiSession, permissionsBuilder.getPermissions(), request.getHttpSession());
-    }
-
-    /**
-     * Overridden in SP
-     */
-    protected UserLogger createUserLogger() {
-        return new UserLogger();
+        getOAuthUserId(request, tenantId);
+        return Collections.emptyMap();
     }
 
     protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
@@ -107,6 +92,11 @@ public class OAuthLoginManagerImpl implements LoginManager {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
+    }
+
+    @Override
+    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws OAuthConsumerNotFoundException {
+        return getLoginPageURL(request, tenantId, redirectURL);
     }
 
 }

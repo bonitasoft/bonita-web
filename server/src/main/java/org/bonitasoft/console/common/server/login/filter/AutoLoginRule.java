@@ -17,16 +17,31 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import java.io.Serializable;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.bonitasoft.console.common.server.login.CredentialsManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.AutoLoginCredentials;
+import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
+import org.bonitasoft.engine.exception.TenantStatusException;
+import org.bonitasoft.engine.session.APISession;
 
 public class AutoLoginRule extends AuthenticationRule {
+
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(AutoLoginRule.class.getName());
 
     @Override
     public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
@@ -38,11 +53,24 @@ public class AutoLoginRule extends AuthenticationRule {
     private boolean doAutoLogin(final HttpServletRequestAccessor request,
                                 final long tenantId) throws ServletException {
         try {
-            getLoginManager(tenantId).login(
-                    request,
-                    new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId));
+            final AutoLoginCredentials userCredentials = new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId);
+            final Map<String, Serializable> credentialsMap = getLoginManager(tenantId).authenticate(request, userCredentials);
+            APISession apiSession;
+            if (credentialsMap == null || credentialsMap.isEmpty()) {
+                apiSession = createUserLogger().doLogin(userCredentials);
+            } else {
+                apiSession = createUserLogger().doLogin(credentialsMap);
+            }
+            final CredentialsManager credentialsManager = getCredentialsManager();
+            credentialsManager.storeCredentials(request, apiSession);
             return true;
         } catch (final LoginFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "login exception : " + e.getMessage(), e);
+            }
+            if (ExceptionUtils.getRootCause(e) instanceof TenantStatusException) {
+                throw new TenantIsPausedRedirectionToMaintenancePageException(e.getMessage(), tenantId);
+            }
             return false;
         }
 
@@ -51,6 +79,10 @@ public class AutoLoginRule extends AuthenticationRule {
     private boolean isAutoLogin(final HttpServletRequestAccessor request, final long tenantId) {
         return request.isAutoLoginRequested()
                 && getSecurityProperties(request, tenantId).allowAutoLogin();
+    }
+
+    protected UserLogger createUserLogger() {
+        return new UserLogger();
     }
 
     // protected for testing

@@ -22,7 +22,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProcessConfigurationAPI;
@@ -296,7 +296,7 @@ public class ProcessFormServiceTest {
     public void isAllowedAsAdminOrProcessSupervisor_should_return_false() throws Exception {
         final long processDefinitionId = 2L;
         final Set<String> userPermissions = new HashSet<String>();
-        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
         when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(false);
 
         final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
@@ -309,7 +309,7 @@ public class ProcessFormServiceTest {
     public void isAllowedAsAdminOrProcessSupervisor_should_return_true_if_process_supervisor() throws Exception {
         final long processDefinitionId = 2L;
         final Set<String> userPermissions = new HashSet<String>();
-        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
         when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(true);
 
         final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
@@ -323,7 +323,7 @@ public class ProcessFormServiceTest {
         final long processDefinitionId = 2L;
         final Set<String> userPermissions = new HashSet<String>();
         userPermissions.add(ProcessFormService.PROCESS_DEPLOY);
-        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
         when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(false);
 
         final boolean isAllowedAsAdminOrProcessSupervisor = processFormService.isAllowedAsAdminOrProcessSupervisor(hsRequest, apiSession, processDefinitionId,
@@ -338,7 +338,7 @@ public class ProcessFormServiceTest {
         final long doForUser = 5L;
         final long taskId = 42L;
         final Set<String> userPermissions = new HashSet<String>();
-        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
         when(processAPI.isUserProcessSupervisor(processDefinitionId, 1L)).thenReturn(true);
         when(processAPI.getHumanTaskInstance(taskId)).thenReturn(mock(HumanTaskInstance.class));
 

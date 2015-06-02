@@ -49,7 +49,7 @@ public class LoginUrl implements Locator {
             throws LoginUrlException {
         try {
 
-            return loginManager.getLoginpageURL(request, tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
+            return loginManager.getLoginPageURL(request, tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
         } catch (final UnsupportedEncodingException e) {
             throw new LoginUrlException(e);
         } catch (final OAuthConsumerNotFoundException e) {

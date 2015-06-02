@@ -5,27 +5,29 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.common.server.login;
 
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
+
+import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class HttpServletRequestAccessor {
 
@@ -88,7 +90,7 @@ public class HttpServletRequestAccessor {
     }
 
     public APISession getApiSession() {
-        return (APISession) getHttpSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        return (APISession) getHttpSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
     }
 
     @SuppressWarnings("unchecked")

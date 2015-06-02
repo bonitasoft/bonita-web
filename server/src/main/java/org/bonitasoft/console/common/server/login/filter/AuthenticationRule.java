@@ -19,6 +19,7 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import javax.servlet.ServletException;
 
+import org.bonitasoft.console.common.server.login.CredentialsManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.LoginManagerFactory;
@@ -45,6 +46,10 @@ public abstract class AuthenticationRule {
         } catch (final LoginManagerNotFoundException e) {
             throw new ServletException(e);
         }
+    }
+
+    protected CredentialsManager getCredentialsManager() {
+        return new CredentialsManager();
     }
 
 }

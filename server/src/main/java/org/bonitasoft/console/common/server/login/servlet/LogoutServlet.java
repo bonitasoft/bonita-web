@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.impl.oauth.OAuthLoginManagerImpl;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.LoginAPI;
@@ -46,9 +45,9 @@ import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 
 /**
  * Servlet used to logout from the applications
- * 
+ *
  * @author Zhiheng Yang, Chong Zhao
- * 
+ *
  */
 public class LogoutServlet extends HttpServlet {
 
@@ -93,7 +92,7 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void logout(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         long tenantId = -1L;
         if (apiSession != null) {
             tenantId = apiSession.getTenantId();
@@ -111,8 +110,9 @@ public class LogoutServlet extends HttpServlet {
             if (redirectAfterLogin) {
                 final LoginManager loginManager = LoginManagerFactory.getLoginManager(tenantId);
                 final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
-                if (loginManager instanceof OAuthLoginManagerImpl) {
-                    loginPage = loginManager.getLoginpageURL(request, tenantId, encodedRedirectURL);
+                final String logoutPage = loginManager.getLogoutPageURL(request, tenantId, encodedRedirectURL);
+                if (logoutPage != null) {
+                    loginPage = logoutPage;
                 } else {
                     final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
                     if (StringUtils.isNotEmpty(loginURL)) {
