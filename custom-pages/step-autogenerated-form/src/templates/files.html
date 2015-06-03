@@ -1,0 +1,28 @@
+<div ng-controller="MultipleFilesCtrl">
+    <label for="{{input.name}}">{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
+    <form
+            class="form-horizontal"
+            action="{{importUrl}}"
+            name="uploadForm_{{$index}}"
+            ng-upload="onUploadSuccess(content, input, $index)"
+            ng-repeat="multipleInput in inputArray"
+            >
+        <div class="form-group">
+            <div>
+                <div class="input-group file-upload">
+                    <input type="text" readonly="" disabled placeholder="{{'Select a file'| translate}}" value="{{multipleInput.value}}" name="{{input.name}}" class="form-control">
+                    <div class="input-group-btn">
+                        <div class="btn" ng-class="{'btn-default disabled':$isUploading, 'btn-primary':!$isUploading}">
+                            <input class="file-upload-input" ng-class="{'file-upload-input--disabled':$isUploading}" name="file" type="file" ng-model="multipleInput.value" required id="auto_uploading_file_input_{{$index}}" file-input-auto-submit/>
+                            <span class="fa" ng-class="{'fa fa-spinner fa-pulse':$isUploading, 'fa fa-folder':!$isUploading}" ></span>
+                        </div>
+                        <input type="button" class="btn btn-danger" value="{{'remove'|translate}}" ng-click="removeInput(multipleInput,  $index)" ng-if="inputArray.length>1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="input-group">
+        <button type="button" ng-if="input.multiple" class="btn btn-primary" ng-click="appendNewInput(input)">{{'Add'|translate}}</button>
+    </div>
+</div>

@@ -165,7 +165,7 @@ public class SecurityProperties {
         InputStream inputStream = null;
         try {
             if (isValidProcessDefinition(processDefinitionId)) {
-                inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(SECURITY_DEFAULT_CONFIG_FILE_NAME);
+                inputStream = getClass().getClassLoader().getResourceAsStream(SECURITY_DEFAULT_CONFIG_FILE_NAME);
                 if (inputStream == null) {
                     inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils, processDefinitionId));
                 }

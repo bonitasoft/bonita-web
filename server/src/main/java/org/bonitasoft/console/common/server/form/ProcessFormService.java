@@ -29,7 +29,6 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
@@ -241,11 +240,6 @@ public class ProcessFormService {
 
     protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getProcessAPI(apiSession);
-    }
-
-    protected ProcessConfigurationAPI getProcessConfigurationAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException,
-            UnknownAPITypeException {
-        return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
     }
 
     protected CommandAPI getCommandAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {

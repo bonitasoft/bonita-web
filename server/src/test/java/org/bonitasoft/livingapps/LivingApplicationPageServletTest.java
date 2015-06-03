@@ -17,6 +17,7 @@ package org.bonitasoft.livingapps;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -50,6 +51,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LivingApplicationPageServletTest {
+
     MockHttpServletRequest hsRequest = new MockHttpServletRequest();
 
     @Mock
@@ -99,6 +101,7 @@ public class LivingApplicationPageServletTest {
     @Before
     public void beforeEach() throws Exception {
         hsRequest.setSession(httpSession);
+        hsRequest.setMethod("GET");
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
         doReturn(applicationAPI).when(servlet).getApplicationApi(apiSession);
         doReturn(pageAPI).when(servlet).getPageApi(apiSession);
@@ -117,7 +120,7 @@ public class LivingApplicationPageServletTest {
         doReturn(page).when(pageAPI).getPage(2L);
         doReturn("customPageName").when(page).getName();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(403 ,"User not Authorized");
     }
@@ -126,7 +129,7 @@ public class LivingApplicationPageServletTest {
     public void should_get_badRequest_Status_when_page_name_is_not_set() throws Exception {
         hsRequest.setPathInfo("/AppToken/content/");
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(400, "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
     }
@@ -135,7 +138,7 @@ public class LivingApplicationPageServletTest {
     public void should_redirect_to_valide_url_on_missing_slash() throws Exception {
         hsRequest.setPathInfo("/AppToken/pageToken/content");
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
     }
@@ -158,7 +161,7 @@ public class LivingApplicationPageServletTest {
         doReturn(page).when(pageAPI).getPage(2L);
         doReturn("customPage_"+pageToken).when(page).getName();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, "customPage_"+pageToken);
     }
@@ -177,7 +180,7 @@ public class LivingApplicationPageServletTest {
         doReturn(page).when(pageAPI).getPage(2L);
         doReturn("customPage_"+"htmlexample").when(page).getName();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"));
     }
@@ -197,9 +200,18 @@ public class LivingApplicationPageServletTest {
         doReturn(page).when(pageAPI).getPage(2L);
         doReturn("customPage_"+"htmlexample").when(page).getName();
 
-        servlet.doGet(hsRequest, hsResponse);
+        servlet.service(hsRequest, hsResponse);
     }
 
+    @Test
+    public void should_forward_when_API_call() throws Exception {
+        hsRequest.setPathInfo("/AppToken/htmlexample/API/bpm/process/1");
+        given(resourceRenderer.getPathSegments("/AppToken/htmlexample/API/bpm/process/1")).willReturn(
+                Arrays.asList("AppToken", "htmlexample", "API", "bpm", "process", "1"));
 
+        servlet.service(hsRequest, hsResponse);
+
+        verify(servlet, never()).doGet(hsRequest, hsResponse);
+    }
 
 }

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
@@ -59,8 +58,6 @@ public class ProcessFormServiceTest {
     @Mock
     CommandAPI commandAPI;
 
-    @Mock
-    ProcessConfigurationAPI processConfigurationAPI;
 
     @Mock
     HttpServletRequest hsRequest;
@@ -76,7 +73,6 @@ public class ProcessFormServiceTest {
         when(hsRequest.getSession()).thenReturn(httpSession);
         doReturn(processAPI).when(processFormService).getProcessAPI(apiSession);
         doReturn(commandAPI).when(processFormService).getCommandAPI(apiSession);
-        doReturn(processConfigurationAPI).when(processFormService).getProcessConfigurationAPI(apiSession);
         when(apiSession.getUserId()).thenReturn(1L);
     }
 
