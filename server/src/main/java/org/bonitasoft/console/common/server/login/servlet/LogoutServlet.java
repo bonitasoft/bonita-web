@@ -5,18 +5,19 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,11 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
+import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.impl.oauth.OAuthLoginManagerImpl;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.LoginAPI;
@@ -46,9 +47,9 @@ import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 
 /**
  * Servlet used to logout from the applications
- * 
+ *
  * @author Zhiheng Yang, Chong Zhao
- * 
+ *
  */
 public class LogoutServlet extends HttpServlet {
 
@@ -92,46 +93,26 @@ public class LogoutServlet extends HttpServlet {
      * Console logout
      */
     protected void logout(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-        final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
+        final HttpSession session = requestAccessor.getHttpSession();
+        final APISession apiSession = requestAccessor.getApiSession();
         long tenantId = -1L;
         if (apiSession != null) {
             tenantId = apiSession.getTenantId();
         }
-        String loginPage = null;
-
         try {
+            engineLogout(apiSession);
+            SessionUtil.sessionLogout(session);
+
             boolean redirectAfterLogin = true;
-            final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-            final String localeStr = request.getParameter(UrlOption.LANG);
+            final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
             // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
             if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
                 redirectAfterLogin = false;
             }
             if (redirectAfterLogin) {
-                final LoginManager loginManager = LoginManagerFactory.getLoginManager(tenantId);
-                final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
-                if (loginManager instanceof OAuthLoginManagerImpl) {
-                    loginPage = loginManager.getLoginpageURL(request, tenantId, encodedRedirectURL);
-                } else {
-                    final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-                    if (StringUtils.isNotEmpty(loginURL)) {
-                        loginPage = buildLoginPageUrl(loginURL);
-                    } else {
-                        if (localeStr != null) {
-                            // Append tenant parameter in url parameters
-                            loginPage = LOGIN_PAGE + "?" + UrlOption.LANG + "=" + localeStr + "&" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
-                        } else {
-                            loginPage = LOGIN_PAGE + "?" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
-                        }
-                    }
-                }
-                engineLogout(apiSession);
-                SessionUtil.sessionLogout(session);
+                final String loginPage = getURLToRedirectTo(requestAccessor, tenantId);
                 response.sendRedirect(loginPage);
-            } else {
-                engineLogout(apiSession);
-                SessionUtil.sessionLogout(session);
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -139,6 +120,43 @@ public class LogoutServlet extends HttpServlet {
             }
             throw new ServletException(e);
         }
+    }
+
+    protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor, final long tenantId)
+            throws AuthenticationManagerNotFoundException, UnsupportedEncodingException, ConsumerNotFoundException, ServletException {
+        final AuthenticationManager loginManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+        final HttpServletRequest request = requestAccessor.asHttpServletRequest();
+        final String tenantIdStr = requestAccessor.getTenantId();
+        final String localeStr = request.getParameter(UrlOption.LANG);
+
+        final StringBuffer tempURL = new StringBuffer(LOGIN_PAGE);
+        tempURL.append("?");
+
+        if (localeStr != null) {
+            // Append tenant parameter in url parameters
+            tempURL.append(UrlOption.LANG).append("=").append(localeStr).append("&");
+        }
+
+        if (tenantIdStr != null && !tenantIdStr.isEmpty()) {
+            // Append tenant parameter in url parameters
+            tempURL.append(AuthenticationManager.TENANT).append("=").append(tenantIdStr).append("&");
+        }
+        final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
+        tempURL.append(AuthenticationManager.REDIRECT_URL).append("=").append(encodedRedirectURL);
+
+        final String logoutPage = loginManager.getLogoutPageURL(requestAccessor, encodedRedirectURL);
+        String redirectionPage = null;
+        if (logoutPage != null) {
+            redirectionPage = logoutPage;
+        } else {
+            final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
+            if (loginURL != null) {
+                redirectionPage = buildLoginPageUrl(loginURL);
+            } else {
+                redirectionPage = tempURL.toString();
+            }
+        }
+        return redirectionPage;
     }
 
     protected String buildLoginPageUrl(final String loginURL) {
@@ -162,10 +180,10 @@ public class LogoutServlet extends HttpServlet {
      * Overridden in SP
      */
     protected String getDefaultRedirectUrl() {
-        return LoginManager.DEFAULT_DIRECT_URL;
+        return AuthenticationManager.DEFAULT_DIRECT_URL;
     }
 
-    private void engineLogout(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
+    protected void engineLogout(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
             SessionNotFoundException, LogoutException {
         if (apiSession != null) {
             final LoginAPI loginAPI = TenantAPIAccessor.getLoginAPI();

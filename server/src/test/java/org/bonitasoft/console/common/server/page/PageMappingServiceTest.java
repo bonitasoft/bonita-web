@@ -16,7 +16,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.AuthorizationRuleConstants;
 import org.bonitasoft.engine.page.PageURL;
@@ -67,7 +67,7 @@ public class PageMappingServiceTest {
         context.put(URLAdapterConstants.CONTEXT_PATH, "/bonita");
         when(pageAPI.resolvePageOrURL("process/processName/processVersion", context, true)).thenReturn(pageURL);
         final Set<String> userPermissions = new HashSet<>();
-        when(httpSession.getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
+        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
 
         final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"),
                 true);

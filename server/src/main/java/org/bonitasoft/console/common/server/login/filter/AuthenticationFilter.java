@@ -32,11 +32,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
 import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
@@ -55,6 +55,8 @@ public class AuthenticationFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());
 
     private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(portal/scripts)|(portal/formsService)";
+
+    protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
 
     /** the Pattern of url not to filter */
     protected Pattern excludePattern = null;
@@ -145,12 +147,47 @@ public class AuthenticationFilter implements Filter {
             final FilterChain chain) throws ServletException, IOException {
 
         for (final AuthenticationRule rule : getRules()) {
-            if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
-                chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
-                return true;
+            try {
+                if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
+                    chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
+                    return true;
+                }
+            } catch (final ServletException e) {
+                if (e.getCause() instanceof TenantIsPausedRedirectionToMaintenancePageException) {
+                    return handleTenantPausedException(requestAccessor, responseAccessor, e);
+                } else {
+                    throw e;
+                }
             }
         }
         return false;
+    }
+
+    protected boolean handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponseAccessor responseAccessor,
+            final ServletException e) throws ServletException {
+        final TenantIsPausedRedirectionToMaintenancePageException tenantIsPausedException = (TenantIsPausedRedirectionToMaintenancePageException) e.getCause();
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
+        }
+        redirectToMaintenance(requestAccessor, responseAccessor, tenantIsPausedException.getTenantId());
+        return false;
+    }
+
+    /**
+     * manage redirection to maintenance page
+     *
+     * @param request
+     * @param response
+     */
+    protected void redirectToMaintenance(final HttpServletRequestAccessor request, final HttpServletResponseAccessor response, final long tenantId)
+            throws ServletException {
+        try {
+            ((HttpServletResponse) response.asServletResponse()).sendRedirect(request.asHttpServletRequest().getContextPath() + MAINTENANCE_JSP);
+        } catch (final IOException e) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, e.getMessage());
+            }
+        }
     }
 
     protected LinkedList<AuthenticationRule> getRules() {
@@ -162,10 +199,10 @@ public class AuthenticationFilter implements Filter {
     }
 
     // protected for test stubbing
-    protected LoginManager getLoginManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return LoginManagerFactory.getLoginManager(tenantIdAccessor.ensureTenantId());
-        } catch (final LoginManagerNotFoundException e) {
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
+        } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
     }
@@ -205,9 +242,8 @@ public class AuthenticationFilter implements Filter {
 
     protected LoginUrl createLoginUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return new LoginUrl(getLoginManager(tenantIdAccessor),
-                    tenantIdAccessor.getRequestedTenantId(),
-                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor.asHttpServletRequest());
+            return new LoginUrl(getAuthenticationManager(tenantIdAccessor),
+                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
         } catch (final LoginUrlException e) {
             throw new ServletException(e);
         }
