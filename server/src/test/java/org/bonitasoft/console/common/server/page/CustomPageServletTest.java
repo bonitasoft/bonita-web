@@ -124,14 +124,15 @@ public class CustomPageServletTest {
     public void getResource_should_call_the_resource_renderer() throws Exception {
         hsRequest.setPathInfo("/custompage_htmlexample/css/file.css");
         final File pageDir = new File("/pageDir");
-        given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList("custompage_htmlexample", "css", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample",1L);
+        final String pageName = "custompage_htmlexample";
+        given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList(pageName, "css", "file.css"));
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName,1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"));
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"), apiSession, pageName);
     }
 
     @Test(expected=ServletException.class)

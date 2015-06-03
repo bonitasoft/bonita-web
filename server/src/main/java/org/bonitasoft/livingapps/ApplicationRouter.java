@@ -33,7 +33,8 @@ public class ApplicationRouter {
         this.applicationModelFactory = applicationModelFactory;
     }
 
-    public void route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final  PageRenderer pageRenderer, final  ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
+    public void route(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session, final PageRenderer pageRenderer,
+            final ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
             throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
         final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
@@ -69,31 +70,26 @@ public class ApplicationRouter {
             //Application page request
             if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
                 pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
-            }else{
+            } else {
                 hsResponse.sendError(HttpServletResponse.SC_FORBIDDEN,
-                        "Unauthorized access for the page "+ parsedRequest.getPageToken()+" of the application "+ parsedRequest.getApplicationName());
+                        "Unauthorized access for the page " + parsedRequest.getPageToken() + " of the application " + parsedRequest.getApplicationName());
             }
         } else {
             //Layout or theme resource file request
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
-            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
+            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session, getPageName(pathSegments, application));
         }
     }
 
     private boolean isApplicationPageRequest(final List<String> pathSegments) {
-            return pathSegments.size() == 2;
+        return pathSegments.size() == 2;
     }
 
-    private File getResourceFile(final  PageRenderer pageRenderer, final String resourcePath, final List<String> pathSegments, final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException, BonitaException {
-
-        String  pageName;
-        if(THEME_TOKEN.equals(pathSegments.get(1))){
-            pageName =  application.getApplicationThemeName();
-        }else{
-            pageName = application.getApplicationLayoutName();
-        }
-
-        final PageResourceProvider pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+    private File getResourceFile(final PageRenderer pageRenderer, final String resourcePath, final List<String> pathSegments,
+            final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException,
+            BonitaException {
+        final String pageName = getPageName(pathSegments, application);
+        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePath(resourcePath, pathSegments.get(0), pathSegments.get(1)));
 
@@ -101,6 +97,16 @@ public class ApplicationRouter {
             throw new BonitaException("Unauthorized access to the file " + resourcePath);
         }
         return resourceFile;
+    }
+
+    private String getPageName(List<String> pathSegments, ApplicationModel application) throws PageNotFoundException {
+        String pageName;
+        if (THEME_TOKEN.equals(pathSegments.get(1))) {
+            pageName = application.getApplicationThemeName();
+        } else {
+            pageName = application.getApplicationLayoutName();
+        }
+        return pageName;
     }
 
     private String getResourcePath(final String fullResourcePath, final String applicationName, final String pageToken) {
@@ -118,19 +124,19 @@ public class ApplicationRouter {
     }
 
     private String getResourcePathWithoutPageToken(final String resourcePath, final String pageToken) {
-            return resourcePath.substring(pageToken.length() + 1);
+        return resourcePath.substring(pageToken.length() + 1);
     }
 
     private ParsedRequest parse(final String context, final String uri) {
         final Pattern pattern = Pattern.compile("^" + context + "/apps/(.*)$");
         final Matcher matcher = pattern.matcher(uri);
-        if(!matcher.find()) {
+        if (!matcher.find()) {
             throw new RuntimeException("URI badly formed.");
         }
         final String[] fragments = matcher.group(1).split("/");
         String pageToken = null;
-        if(fragments.length > 1) {
-            pageToken =  fragments[1];
+        if (fragments.length > 1) {
+            pageToken = fragments[1];
         }
         return new ParsedRequest(fragments[0], pageToken);
     }
