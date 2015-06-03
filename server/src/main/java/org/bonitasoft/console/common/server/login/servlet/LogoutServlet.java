@@ -91,8 +91,9 @@ public class LogoutServlet extends HttpServlet {
      * Console logout
      */
     protected void logout(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-        final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
+        final HttpSession session = requestAccessor.getHttpSession();
+        final APISession apiSession = requestAccessor.getApiSession();
         long tenantId = -1L;
         if (apiSession != null) {
             tenantId = apiSession.getTenantId();
@@ -110,7 +111,7 @@ public class LogoutServlet extends HttpServlet {
             if (redirectAfterLogin) {
                 final AuthenticationManager loginManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
                 final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
-                final String logoutPage = loginManager.getLogoutPageURL(request, tenantId, encodedRedirectURL);
+                final String logoutPage = loginManager.getLogoutPageURL(requestAccessor, encodedRedirectURL);
                 if (logoutPage != null) {
                     loginPage = logoutPage;
                 } else {

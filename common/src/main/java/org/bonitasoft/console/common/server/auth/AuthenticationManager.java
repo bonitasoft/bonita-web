@@ -19,12 +19,14 @@ package org.bonitasoft.console.common.server.auth;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 
 /**
+ * Interface to implement in order to delegate the authentication to an external provider
+ *
  * @author Ruiheng Fan, Anthony Birembaut
  */
 public interface AuthenticationManager {
@@ -57,42 +59,42 @@ public interface AuthenticationManager {
     /**
      * Get Login Page URL
      *
-     * @param request the HttpServletRequest
-     * @param tenantId
-     *        user tenantId
+     * @param request
+     *        HTTP request accessor object
      * @param redirectURL
      *        redirect url
      * @return new redirect url
      * @throws ConsumerNotFoundException
+     * @throws ServletException
      */
-    String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws ConsumerNotFoundException;
+    String getLoginPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ConsumerNotFoundException, ServletException;
 
     /**
      * Authenticate the user (If no exception is thrown, an engine login will then be performed with the credentials)
      *
      * @param request
-     *        HTTP request
-     * @param redirectURL
-     *        redirect url
-     * @param tenantId
-     *        tenant id
+     *        HTTP request accessor object
+     * @param credentials
+     *        credentials extracted from the request or from the auto-login config
      * @return a map of credententials which if not null or empty will be used to login on the engine. Otherwise, the username and password contained in the
-     *         Credentials object will be used
+     *         credentials will be used
      * @throws AuthenticationFailedException
+     * @throws ServletException
      */
-    Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, Credentials credentials) throws AuthenticationFailedException;
+    Map<String, Serializable> authenticate(final HttpServletRequestAccessor requestAccessor, final Credentials credentials)
+            throws AuthenticationFailedException, ServletException;
 
     /**
      * Get Logout Page URL
      * If the LoginManager implementation of this method is to return null the default login page will be displayed
      *
-     * @param request the HttpServletRequest
-     * @param tenantId
-     *        user tenantId
+     * @param request
+     *        HTTP request accessor object
      * @param redirectURL
      *        redirect url
      * @return new redirect url
      * @throws ConsumerNotFoundException
+     * @throws ServletException
      */
-    String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws ConsumerNotFoundException;
+    String getLogoutPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ConsumerNotFoundException, ServletException;
 }

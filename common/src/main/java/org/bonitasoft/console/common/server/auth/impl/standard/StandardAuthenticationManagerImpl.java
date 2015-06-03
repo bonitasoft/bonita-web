@@ -17,8 +17,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
@@ -35,23 +33,24 @@ import org.bonitasoft.engine.session.APISession;
 public class StandardAuthenticationManagerImpl implements AuthenticationManager {
 
     @Override
-    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
-        String context = request.getContextPath();
-        final String servletPath = request.getServletPath();
+        String context = request.asHttpServletRequest().getContextPath();
+        final String servletPath = request.asHttpServletRequest().getServletPath();
         if (StringUtils.isNotBlank(servletPath) && servletPath.startsWith("/mobile")) {
             context += "/mobile";
         }
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
-        if (tenantId != -1L) {
-            url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
+        if (request.getTenantId() != null) {
+            url.append(AuthenticationManager.TENANT).append("=").append(request.getTenantId()).append("&");
         }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
     }
 
     @Override
-    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws AuthenticationFailedException {
+    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor requestAccessor, final Credentials credentials)
+            throws AuthenticationFailedException {
         return Collections.emptyMap();
     }
 
@@ -60,7 +59,7 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     }
 
     @Override
-    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
         return null;
     }
 }

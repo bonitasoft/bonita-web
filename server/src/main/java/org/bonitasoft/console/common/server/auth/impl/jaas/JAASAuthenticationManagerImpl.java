@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
@@ -59,12 +58,12 @@ public class JAASAuthenticationManagerImpl implements AuthenticationManager {
      * {@inheritDoc}
      */
     @Override
-    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
         final StringBuffer url = new StringBuffer();
-        final String context = request.getContextPath();
+        final String context = request.asHttpServletRequest().getContextPath();
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
-        if (tenantId != -1L) {
-            url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
+        if (request.getTenantId() != null) {
+            url.append(AuthenticationManager.TENANT).append("=").append(request.getTenantId()).append("&");
         }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
@@ -107,7 +106,7 @@ public class JAASAuthenticationManagerImpl implements AuthenticationManager {
     }
 
     @Override
-    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) {
+    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
         return null;
     }
 

@@ -21,7 +21,7 @@ import static org.junit.Assert.fail;
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
+import org.bonitasoft.console.common.server.login.datastore.StandardCredentials;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
@@ -53,7 +53,7 @@ public class StandardAuthenticationManagerImplIntegrationTest extends AbstractJU
         try {
             new StandardAuthenticationManagerImpl()
                     .authenticate(request,
-                            new UserCredentials(TECHNICAL_USER_USERNAME, TECHNICAL_USER_PASSWORD, -1L));
+                            new StandardCredentials(TECHNICAL_USER_USERNAME, TECHNICAL_USER_PASSWORD, -1L));
         } catch (final AuthenticationFailedException e) {
             fail("Cannot login " + e);
         }

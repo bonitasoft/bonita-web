@@ -21,7 +21,7 @@ import static org.junit.Assert.fail;
 import org.bonitasoft.console.common.server.AbstractJUnitWebTest;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
+import org.bonitasoft.console.common.server.login.datastore.StandardCredentials;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.test.toolkit.server.MockHttpServletRequest;
@@ -51,7 +51,7 @@ public class JAASAuthenticationManagerImplIntegrationTest extends AbstractJUnitW
     public void testLogin() {
         final HttpServletRequestAccessor requestAccessor = buildMockHttpServletAccessor();
         try {
-            jaasLoginManagerImpl.authenticate(requestAccessor, new UserCredentials(TECH_USERNAME, TECH_PASSWORD, -1L));
+            jaasLoginManagerImpl.authenticate(requestAccessor, new StandardCredentials(TECH_USERNAME, TECH_PASSWORD, -1L));
         } catch (final AuthenticationFailedException e) {
             fail("Cannot login " + e);
         }

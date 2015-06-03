@@ -19,13 +19,14 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
@@ -45,9 +46,9 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     private static final Logger LOGGER = Logger.getLogger(OAuthAuthenticationManagerImpl.class.getName());
 
     @Override
-    public String getLoginPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws ConsumerNotFoundException {
-        long resolvedTenantId = tenantId;
-        if (tenantId == -1L) {
+    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
+        long resolvedTenantId = new TenantIdAccessor(request).getRequestedTenantId();
+        if (resolvedTenantId == -1L) {
             resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
         }
         final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(resolvedTenantId, redirectURL);
@@ -57,7 +58,8 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     }
 
     @Override
-    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws AuthenticationFailedException {
+    public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials)
+            throws AuthenticationFailedException, ServletException {
         if (request.getOAuthVerifier() == null) {
             throw new AuthenticationFailedException();
         }
@@ -93,8 +95,8 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     }
 
     @Override
-    public String getLogoutPageURL(final HttpServletRequest request, final long tenantId, final String redirectURL) throws ConsumerNotFoundException {
-        return getLoginPageURL(request, tenantId, redirectURL);
+    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
+        return getLoginPageURL(request, redirectURL);
     }
 
 }

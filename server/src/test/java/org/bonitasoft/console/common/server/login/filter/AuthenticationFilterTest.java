@@ -138,7 +138,7 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfTenantIdIsNotAddedToRedirectUrlIfNotInRequest() throws Exception {
         authenticationFilter.addRule(createFailingRule());
-        doReturn(-1L).when(tenantIdAccessor).getRequestedTenantId();
+        doReturn(null).when(request).getTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
@@ -150,7 +150,7 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfTenantIdIsAddedToRedirectUrlWhenInRequest() throws Exception {
         authenticationFilter.addRule(createFailingRule());
-        doReturn(12L).when(tenantIdAccessor).getRequestedTenantId();
+        doReturn("12").when(request).getTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");

@@ -243,8 +243,7 @@ public class AuthenticationFilter implements Filter {
     protected LoginUrl createLoginUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
             return new LoginUrl(getAuthenticationManager(tenantIdAccessor),
-                    tenantIdAccessor.getRequestedTenantId(),
-                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor.asHttpServletRequest());
+                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
         } catch (final LoginUrlException e) {
             throw new ServletException(e);
         }

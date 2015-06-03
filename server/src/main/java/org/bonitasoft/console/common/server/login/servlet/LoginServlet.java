@@ -31,7 +31,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
+import org.bonitasoft.console.common.server.login.datastore.StandardCredentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -182,7 +182,7 @@ public class LoginServlet extends HttpServlet {
         try {
             final long tenantId = getTenantId(request);
             final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-            final UserCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
+            final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
             final LoginManager loginManager = getLoginManager();
             loginManager.login(requestAccessor, tenantId, createUserLogger(), userCredentials);
         } catch (final AuthenticationFailedException e) {
@@ -200,8 +200,8 @@ public class LoginServlet extends HttpServlet {
         return new LoginManager();
     }
 
-    protected UserCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
-        return new UserCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
+        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
     }
 
     protected AuthenticationManager getLoginManager(final long tenantId) throws AuthenticationManagerNotFoundException {
