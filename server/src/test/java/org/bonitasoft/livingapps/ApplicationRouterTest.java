@@ -105,29 +105,31 @@ public class ApplicationRouterTest {
     public void should_access_Layout_resource() throws Exception {
         accessAuthorizedPage("HumanResources", "layout/css/file.css");
         final File layoutFolder = new File("layout");
-        given(applicationModel.getApplicationLayoutName()).willReturn("layout");
-        given(pageRenderer.getPageResourceProvider("layout", 1L)).willReturn(pageResourceProvider);
+        final String customPageLayoutName = "custompage_layout";
+        given(applicationModel.getApplicationLayoutName()).willReturn(customPageLayoutName);
+        given(pageRenderer.getPageResourceProvider(customPageLayoutName, 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(layoutFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession, "layout");
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession, customPageLayoutName);
     }
 
     @Test
     public void should_access_Theme_resource() throws Exception {
         accessAuthorizedPage("HumanResources", "theme/css/file.css");
         final File themeFolder = new File("theme");
-        given(applicationModel.getApplicationThemeName()).willReturn("theme");
+        final String customPageThemeName = "custompage_theme";
+        given(applicationModel.getApplicationThemeName()).willReturn(customPageThemeName);
 
-        given(pageRenderer.getPageResourceProvider("theme", 1L)).willReturn(pageResourceProvider);
+        given(pageRenderer.getPageResourceProvider(customPageThemeName, 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(themeFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession, "theme");
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession,customPageThemeName);
     }
 
     @Test
