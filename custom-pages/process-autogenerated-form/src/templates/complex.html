@@ -1,0 +1,15 @@
+<label>{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
+<div class="well" ng-init="parent = outputData">
+    <div class="input" ng-repeat="input in input.inputs">
+        <!-- simple input -->
+        <bp-simple ng-if="isSimpleInput(input) && isSingleInput(input) && !isFileInput(input)"></bp-simple>
+        <!-- simple input multiple-->
+        <bp-multiple ng-if="isSimpleInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name]=[]; outputData = parent[input.name]; inputArray = [input]"></bp-multiple>
+        <!-- complex input -->
+        <div ng-include="'templates/complex.html'" ng-if="isComplexInput(input) && isSingleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = {}; outputData = parent[input.name]"></div>
+        <!-- complex input multiple -->
+        <div ng-include="'templates/complexMultiple.html'" ng-if="isComplexInput(input) && isMultipleInput(input) && !isFileInput(input)" ng-init="parent[input.name] = []; outputData = parent[input.name]; inputArray = [input]"></div>
+        <!-- file input and multiple file input-->
+        <bp-files ng-if="isFileInput(input)" ng-init="parent[input.name]=(input.multiple?[]:{}); outputData = parent[input.name]; inputArray = [input]"></bp-files>
+    </div>
+</div>

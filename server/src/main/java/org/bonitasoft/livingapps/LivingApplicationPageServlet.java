@@ -72,6 +72,19 @@ public class LivingApplicationPageServlet extends HttpServlet {
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     @Override
+    protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        final String pathInfo = request.getPathInfo();
+        final List<String> pathSegments = resourceRenderer.getPathSegments(pathInfo);
+        if (isValidPathForToken(API_PATH_SEPARATOR, pathSegments)) {
+            //Support relative calls to the REST API from the forms using ../API/
+            final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
+            request.getRequestDispatcher(apiPath).forward(request, response);
+        } else {
+            super.service(request, response);
+        }
+    }
+
+    @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         final String pathInfo = request.getPathInfo();
@@ -98,7 +111,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
 
-                String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
+                final String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
@@ -121,10 +134,6 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 //Support relative calls to the THEME from the application page using ../theme/
                 final String themePath = pathInfo.substring(pathInfo.indexOf(THEME_PATH_SEPARATOR + "/"));
                 request.getRequestDispatcher("/apps/" + appToken + themePath).forward(request, response);
-            } else if (isValidPathForToken(API_PATH_SEPARATOR, pathSegments)) {
-                //Support relative calls to the REST API from the application page using ../API/
-                final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
-                request.getRequestDispatcher(apiPath).forward(request, response);
             } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
@@ -140,13 +149,13 @@ public class LivingApplicationPageServlet extends HttpServlet {
     private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws IOException, ServletException {
         try {
             return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
-        } catch (ApplicationPageNotFoundException e) {
+        } catch (final ApplicationPageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Cannot found the page" + pageToken + "for the application" + appToken + ".");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }
         return null;
@@ -154,22 +163,22 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws ServletException, IOException {
         try {
-            Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
+            final Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
             return getPageApi(apiSession).getPage(customPageId).getName();
-        } catch (PageNotFoundException e) {
+        } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Cannot found the page"+pageToken+"for the application"+appToken+".");
-        } catch (Exception e) {
+        } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }
         return "";
     }
 
     private boolean isValidPathForToken(final String TokenSeparator, final List<String> pathSegments) {
-        return pathSegments.get(2).equals(TokenSeparator.substring(1));
+        return pathSegments.size() > 2 && pathSegments.get(2).equals(TokenSeparator.substring(1));
     }
 
     private boolean isNotResourcePath(final String resourcePath) {

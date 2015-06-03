@@ -12,7 +12,6 @@ package org.bonitasoft.web.rest.server;
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProcessConfigurationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -46,15 +45,6 @@ public abstract class ResourceFinder extends Finder {
         final APISession apiSession = getAPISession(request);
         try {
             return TenantAPIAccessor.getProcessAPI(apiSession);
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    protected ProcessConfigurationAPI getProcessConfigurationAPI(final Request request) {
-        final APISession apiSession = getAPISession(request);
-        try {
-            return TenantAPIAccessor.getProcessConfigurationAPI(apiSession);
         } catch (final Exception e) {
             throw new APIException(e);
         }

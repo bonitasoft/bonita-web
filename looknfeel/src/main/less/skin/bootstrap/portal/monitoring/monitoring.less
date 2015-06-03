@@ -1,6 +1,20 @@
 @panelHeaderBG: #333;
 @fontLightColor: #6e6f6b;
 @titleColor: #DD0033;
+.monitoring-page, .process-details {
+  .totalMonitoring {
+    font-size: 20px;
+    .label.ready-bg-color{
+      background-color: @diagram-ready-bgColor;
+    }
+  }
+  .totalLabel {
+    font-weight: bold;
+    margin: 5px 0px 10px;
+  }
+}
+
+
 
 .monitoring-page {
 
@@ -18,8 +32,9 @@
 
   .panel-default > .panel-heading {
     color: @panelHeaderBG;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    .panel-title{
+      line-height: 26px;
+    }
   }
 
   .panel-body {
@@ -29,14 +44,6 @@
   .center {
     margin: 10px 0px 10px 0px;
     text-align: center;
-  }
-
-  .totalMonitoring {
-    font-size: 20px;
-  }
-
-  .totalLabel {
-    margin: 5px 0px 10px;
   }
 
   .right {
@@ -77,8 +84,7 @@
 
   .refreshBlock {
     position: relative;
-    bottom: 32px;
-    right: 16px;
+    font-size: 14px;
   }
 
   .glyphicon-chevron-up,
@@ -90,8 +96,10 @@
   }
 
   .paginationBlock {
-    position: relative;
-    bottom: 3px;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: @regularFont, sans-serif;
+    display: inline-block;
   }
 
   tbody {
@@ -131,7 +139,15 @@
 
   h1 {
     margin-bottom: 5px;
-    color: @titleColor;
+    .refreshBlock{
+      font-family: @regularFont;
+      span.refreshLabel{
+        font-size: 14px;
+        font-weight: normal;
+        color: @fontColor;
+      }
+    }
+    
   }
 
   .pagination {

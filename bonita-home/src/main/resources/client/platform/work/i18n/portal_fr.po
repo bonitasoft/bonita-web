@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-23 03:02+0200\n"
-"PO-Revision-Date: 2015-05-26 02:52-0400\n"
+"PO-Revision-Date: 2015-06-01 03:37-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -161,16 +161,16 @@ msgid "%value% is not a valid value for %className%"
 msgstr "%value% n'est pas valide pour la valeur de %className%"
 
 msgid "'%applicationName%' as page '%associationName%'"
-msgstr "'%applicationName%' as page '%associationName%'"
+msgstr "%applicationName% , menu %associationName%"
 
 msgid "'%layoutName%' is used as layout for:"
-msgstr "'%layoutName%' is used as layout for:"
+msgstr "«%layoutName% » est utilisé comme layout d'application pour :"
 
 msgid "'%pageName%' is used by:"
-msgstr "'%pageName%' is used by:"
+msgstr "%pageName% est utilisée par :"
 
 msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' is used as Theme for:"
+msgstr "«%themeName% » est utilisé comme thème d'application pour :"
 
 msgid "?"
 msgstr "?"
@@ -275,10 +275,10 @@ msgid "Add a new membership to this user"
 msgstr "Ajouter une adhésion à cet utilisateur"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension d'API REST). <br/> Cette archive .zip doit contenir un fichier page.properties à la racine et un dossier nommé « ressources ». <br/> Ce fichier de propriétés doit définir au moins le nom, le displayName et le contentType (\"page\" par défaut).  <br/> Le dossier « ressources » doit contenir soit le fichier index.html soit le fichier Index.groovy ainsi que ressources nécessaires."
 
 msgid "Add a resource"
-msgstr "Add a resource"
+msgstr "Ajouter une ressource"
 
 msgid "Add a role"
 msgstr "Ajouter un rôle"
@@ -302,7 +302,7 @@ msgid "Add new memberships for %user%"
 msgstr "Ajouter une nouvelle adhésion pour l'utilisateur %user%"
 
 msgid "Add resource"
-msgstr "Add resource"
+msgstr "Ajouter une ressource"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Ajouter le ou les groupes sélectionnés à ce profil"
@@ -359,7 +359,7 @@ msgid "All processes are automatically paused."
 msgstr "Tous les processus sont automatiquement mis en pause."
 
 msgid "An archive has a .zip extension"
-msgstr "An archive has a .zip extension"
+msgstr "Une archive possède une extension .zip"
 
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Une erreur est survenue au déploiement du Modèle de Données Métier."
@@ -602,7 +602,7 @@ msgid "Confirm"
 msgstr "Confirmer"
 
 msgid "Confirm Delete?"
-msgstr "Confirm Delete?"
+msgstr "Confirmez-vous la suppression ?"
 
 msgid "Confirm delete ?"
 msgstr "Confirmez-vous la suppression ?"
@@ -812,7 +812,7 @@ msgid "Do not delete this membership"
 msgstr "Ne pas supprimer cette adhésion"
 
 msgid "Do you still want to delete the selected pages?"
-msgstr "Do you still want to delete the selected pages?"
+msgstr "Voulez-vous vraiment supprimer les pages sélectionnées ?"
 
 msgid "Done"
 msgstr "Fait"
@@ -1043,7 +1043,7 @@ msgid "February"
 msgstr "Février"
 
 msgid "Filename too long. The zip filename must be no longer than %number% characters"
-msgstr "Filename too long. The zip filename must be no longer than %number% characters"
+msgstr "Le nom du fichier .zip est trop long. Sa taille ne doit pas excéder %number% caractères"
 
 msgid "Filters are not supported by this API"
 msgstr "Les filtres ne sont pas supportés par cette API"
@@ -1118,7 +1118,7 @@ msgid "Human Task"
 msgstr "Tâche humaine"
 
 msgid "Human task"
-msgstr "Human task"
+msgstr "Tâche humaine"
 
 msgid "ID"
 msgstr "Id"
@@ -1137,8 +1137,8 @@ msgstr "Si cette page est liée à des profils, les éléments de menus correspo
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "If you delete a page that is used by a process, the process becomes unresolved.\n"
-"Before deleting a page, you should also check whether it is used in a custom profile navigation."
+msgstr "Si vous supprimez une page ou un formulaire qui est utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \n"
+"Vérifiez aussi leur utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Fichier image"
@@ -1312,7 +1312,7 @@ msgid "Manage profiles"
 msgstr "Gérer les profils"
 
 msgid "Manage resources"
-msgstr "Manage resources"
+msgstr "Gérer les ressources"
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Gérer les tâches de processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
@@ -1635,7 +1635,7 @@ msgid "RESOLVED"
 msgstr "Configurées"
 
 msgid "REST API extensions"
-msgstr "REST API extensions"
+msgstr "Extensions des API REST"
 
 msgid "Ready since %task_last_update%"
 msgstr "En attente depuis %task_last_update%"
@@ -1839,7 +1839,7 @@ msgid "Skipped on %task_last_update% by %executed_by%"
 msgstr "Annulée le %task_last_update% par %executed_by%"
 
 msgid "Some of the pages you selected for deletion are used by processes:"
-msgstr "Some of the pages you selected for deletion are used by processes:"
+msgstr "Certaines pages en passe d'être supprimées sont utilisées par les processus :"
 
 msgid "Sorry the variable %variableName% has a type which is not editable"
 msgstr "Le type de la variable %variableName% ne peut être édité"
@@ -2125,7 +2125,7 @@ msgid "The version of the process that created this case"
 msgstr "La version du processus dont est issu ce cas"
 
 msgid "Themes"
-msgstr "Themes"
+msgstr "Thèmes"
 
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "Ces %item_name_plural% et les entrées relatives aux profils seront supprimées définitivement."
@@ -2134,7 +2134,7 @@ msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
-msgstr "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
+msgstr "Ces pages ne peuvent pas être supprimées car une au moins est utilisée par une application. Supprimez les pages des applications avant de la supprimer des ressources."
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Cette %item_name% et les entrées relatives aux profils seront supprimées définitivement."
@@ -2337,7 +2337,7 @@ msgid "Users who are filling in forms when the services are paused will lose any
 msgstr "Les informations en cours de soumission lors de la suspension du service seront perdues."
 
 msgid "Users with the app above can see this page."
-msgstr "Users with the app above can see this page."
+msgstr "Cette page est visible par les utilisateurs de l'application nommée ci-dessus."
 
 msgid "Users: %nb_users%"
 msgstr "Utilisateurs: %nb_users%"
@@ -2442,7 +2442,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr "human task"
+msgstr "tâche humaine"
 
 msgid "import/export organization"
 msgstr "importer/exporter l'organisation"
