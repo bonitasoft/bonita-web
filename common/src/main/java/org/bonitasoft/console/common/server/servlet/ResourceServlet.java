@@ -33,8 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -203,7 +203,7 @@ public abstract class ResourceServlet extends HttpServlet {
         long tenantId = 1;
         final String tenantFromRequest = request.getParameter(TENANT_PARAM);
         if (tenantFromRequest == null) {
-            final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
             if (apiSession != null) {
                 tenantId = apiSession.getTenantId();
             }
