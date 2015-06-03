@@ -76,7 +76,7 @@ public class ApplicationRouter {
         } else {
             //Layout or theme resource file request
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
-            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
+            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session, parsedRequest.getPageToken());
         }
     }
 

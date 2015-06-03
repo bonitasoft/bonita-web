@@ -11,6 +11,7 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
@@ -47,11 +48,15 @@ public class ApplicationRouterTest {
     @Mock
     PageRenderer pageRenderer;
 
-    @Spy
-    ResourceRenderer resourceRenderer;
-
     @Mock
     PageResourceProvider pageResourceProvider;
+
+    @Mock
+    CustomPageService customPageService;
+
+    @Spy
+    @InjectMocks
+    ResourceRenderer resourceRenderer;
 
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
@@ -98,7 +103,7 @@ public class ApplicationRouterTest {
 
     @Test
     public void should_access_Layout_resource() throws Exception {
-        accessAuthorizedPage("HumanResources", "AnyPage/css/file.css");
+        accessAuthorizedPage("HumanResources", "layout/css/file.css");
         final File layoutFolder = new File("layout");
         given(applicationModel.getApplicationLayoutName()).willReturn("layout");
         given(pageRenderer.getPageResourceProvider("layout", 1L)).willReturn(pageResourceProvider);
@@ -107,7 +112,7 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"));
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession, "layout");
     }
 
     @Test
@@ -115,13 +120,14 @@ public class ApplicationRouterTest {
         accessAuthorizedPage("HumanResources", "theme/css/file.css");
         final File themeFolder = new File("theme");
         given(applicationModel.getApplicationThemeName()).willReturn("theme");
+
         given(pageRenderer.getPageResourceProvider("theme", 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(themeFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"));
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession, "theme");
     }
 
     @Test
@@ -130,8 +136,9 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
-        verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,
+                "Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
+        verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
     @Test
@@ -140,8 +147,9 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,"Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
-        verify( pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,
+                "Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
+        verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
     private void accessAuthorizedPage(final String applicationToken, final String pageToken) throws Exception {
