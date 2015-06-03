@@ -10,14 +10,9 @@
     'org.bonitasoft.common.filters.stringTemplater'
   ]);
 
-  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', 'i18nService', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog, i18nService) {
+  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', 'i18nService', '$http', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog, i18nService, $http) {
 
-    i18nService.then(function(){
-      $scope.i18nLoaded = true;
-    });
-
-
-    var processId = $location.search().id;
+   var processId = $location.search().id;
 
     $scope.contract = {};
     $scope.dataToSend = {};
@@ -28,14 +23,26 @@
     $scope.importUrl = '/bonita/API/formFileUpload';
     $scope.filename = '';
 
+    $http({ method: 'GET', url: '/bonita/API/system/session/unusedId' })
+        .success(function(data, status, headers) {
+          $http.defaults.headers.common['X-Bonita-API-Token'] = headers('X-Bonita-API-Token');
+          init();
+        }
+    );
 
-    contractSrvc.fetchContract(processId).then(function (result) {
-      $scope.contract = result.data;
-    });
+    var init = function() {
+        i18nService.then(function(){
+            $scope.i18nLoaded = true;
+        });
 
-    processAPI.get({id: processId}, function (result) {
-      $scope.process = result;
-    });
+        contractSrvc.fetchContract(processId).then(function (result) {
+            $scope.contract = result.data;
+        });
+
+        processAPI.get({id: processId}, function (result) {
+            $scope.process = result;
+        });
+    };
 
     var jsonify = function (data) {
       var jsonified = {};
@@ -77,8 +84,6 @@
     $scope.isSingleInput = function isSingleInput(input) {
       return (!$scope.isMultipleInput(input));
     };
-
-
 
     /*
     $scope. = function (input) {
