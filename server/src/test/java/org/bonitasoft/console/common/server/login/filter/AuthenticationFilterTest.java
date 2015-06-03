@@ -89,7 +89,7 @@ public class AuthenticationFilterTest {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
-        doReturn(new StandardAuthenticationManagerImpl()).when(authenticationFilter).getLoginManager(any(TenantIdAccessor.class));
+        doReturn(new StandardAuthenticationManagerImpl()).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
     }
 

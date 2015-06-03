@@ -199,7 +199,7 @@ public class AuthenticationFilter implements Filter {
     }
 
     // protected for test stubbing
-    protected AuthenticationManager getLoginManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
             return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
         } catch (final AuthenticationManagerNotFoundException e) {
@@ -242,7 +242,7 @@ public class AuthenticationFilter implements Filter {
 
     protected LoginUrl createLoginUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return new LoginUrl(getLoginManager(tenantIdAccessor),
+            return new LoginUrl(getAuthenticationManager(tenantIdAccessor),
                     tenantIdAccessor.getRequestedTenantId(),
                     makeRedirectUrl(requestAccessor).getUrl(), requestAccessor.asHttpServletRequest());
         } catch (final LoginUrlException e) {
