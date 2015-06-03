@@ -6,8 +6,8 @@ angular.module('org.bonitasoft.pagebuilder.widgets')
     var iframe = $element.find('iframe')[0];
     
     var polling = $interval(function() {
-        if(iframe.contentWindow.document.body){
-			iframe.style.height = (iframe.contentWindow.document.body.scrollHeight || 400) + "px";
+        if(iframe.contentDocument.documentElement){
+			iframe.style.height = (iframe.contentDocument.documentElement.scrollHeight || 400) + "px";
 		}
     }, 100);
     
