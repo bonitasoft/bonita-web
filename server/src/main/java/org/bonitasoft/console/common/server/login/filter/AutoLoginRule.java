@@ -52,7 +52,7 @@ public class AutoLoginRule extends AuthenticationRule {
         try {
             final AutoLoginCredentials userCredentials = new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId);
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(request, tenantId, createUserLogger(), userCredentials);
+            loginManager.login(request, createUserLogger(), userCredentials);
             return true;
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {

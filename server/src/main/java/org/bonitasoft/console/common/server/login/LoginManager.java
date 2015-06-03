@@ -43,9 +43,9 @@ public class LoginManager {
      */
     private static final String DEFAULT_LOCALE = "en";
 
-    public void login(final HttpServletRequestAccessor request, final long tenantId, final UserLogger userLoger, final Credentials credentials)
+    public void login(final HttpServletRequestAccessor request, final UserLogger userLoger, final Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
-        final Map<String, Serializable> credentialsMap = getAuthenticationManager(tenantId).authenticate(request, credentials);
+        final Map<String, Serializable> credentialsMap = getAuthenticationManager(credentials.getTenantId()).authenticate(request, credentials);
         APISession apiSession;
         if (credentialsMap == null || credentialsMap.isEmpty()) {
             apiSession = userLoger.doLogin(credentials);
@@ -72,6 +72,10 @@ public class LoginManager {
         final User user = new User(request.getUsername(), local);
         final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
         final Set<String> permissions = permissionsBuilder.getPermissions();
+        initSession(request, session, user, permissions);
+    }
+
+    protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, final Set<String> permissions) {
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
 

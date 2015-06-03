@@ -184,7 +184,7 @@ public class LoginServlet extends HttpServlet {
             final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
             final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(requestAccessor, tenantId, createUserLogger(), userCredentials);
+            loginManager.login(requestAccessor, createUserLogger(), userCredentials);
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
