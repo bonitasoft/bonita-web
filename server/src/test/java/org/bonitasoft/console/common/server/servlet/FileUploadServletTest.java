@@ -4,17 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -53,5 +53,113 @@ public class FileUploadServletTest {
         final String responseString = fileUploadServlet.generateResponseString(request, "originalFileName", uploadedFile);
 
         assertThat(responseString).isEqualTo("uploadedFile.txt::originalFileName");
+    }
+
+    @Test
+     public void getExtension_should_return_proper_extension() throws IOException {
+        // given
+        String filename = "C:\\Users\\Desktop\\process.bar";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo(".bar");
+    }
+
+    @Test
+    public void getExtension_should_return_an_empty_extension() throws IOException {
+        // given
+        String filename = "C:\\Users\\Desktop\\process";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo("");
+    }
+
+    @Test
+    public void getExtension_should_return_a_proper_extension_without_taking_care_of_dots() throws IOException {
+        // given
+        String filename = "C:\\Users\\Deskt.op\\proc.ess.bar";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo(".bar");
+    }
+
+    @Test
+    public void getExtension_should_return_proper_extension_for_short_filename() throws IOException {
+        // given
+        String filename = "process.bar";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo(".bar");
+    }
+
+    @Test
+    public void getExtension_should_return_proper_extension_for_linux_like_paths() throws IOException {
+        // given
+        String filename = "/Users/Deskt.op/proc.ess.bar";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo(".bar");
+    }
+
+    @Test
+    public void getExtension_should_return_an_empty_extension_for_parent_folder_filename() throws IOException {
+        // given
+        String filename = "../../../";
+
+        // when
+        String extension = fileUploadServlet.getExtension(filename);
+
+        // then
+        assertThat(extension).isEqualTo("");
+    }
+
+    @Test
+    public void getFilenameLastSegment_should_return_proper_filename() {
+        // given
+        String filename = "C:\\Users\\Desktop\\process.bar";
+
+        // when
+        String filenameLastSegment = fileUploadServlet.getFilenameLastSegment(filename);
+
+        // then
+        assertThat(filenameLastSegment).isEqualTo("process.bar");
+    }
+
+    @Test
+    public void getFilenameLastSegment_should_return_proper_filename_for_linux_paths() {
+        // given
+        String filename = "/Users/Deskt.op/process.bar";
+
+        // when
+        String filenameLastSegment = fileUploadServlet.getFilenameLastSegment(filename);
+
+        // then
+        assertThat(filenameLastSegment).isEqualTo("process.bar");
+    }
+
+    @Test
+    public void getFilenameLastSegment_should_return_an_empty_filename_for_parent_folder_filename() throws IOException {
+        // given
+        String filename = "../../../";
+
+        // when
+        String filenameLastSegment = fileUploadServlet.getFilenameLastSegment(filename);
+
+        // then
+        assertThat(filenameLastSegment).isEqualTo("");
     }
 }
