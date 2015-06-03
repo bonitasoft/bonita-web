@@ -27,17 +27,17 @@ import java.util.logging.Logger;
  *
  */
 public class DefaultValidatorsProperties {
-    
+
     /**
      * Default name of the form definition file
      */
     private static final String FORM_VALIDATORS_CONFIG_FILE_NAME = "forms-validators.properties";
-    
+
     /**
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(DefaultValidatorsProperties.class.getName());
-    
+
     /**
      * Instance attribute
      */
@@ -47,7 +47,7 @@ public class DefaultValidatorsProperties {
      * properties
      */
     private Properties defaultProperties;
-    
+
     /**
      * @return the {@link DefaultValidatorsProperties} instance
      */
@@ -64,7 +64,7 @@ public class DefaultValidatorsProperties {
     private DefaultValidatorsProperties(){
         loadProperties();
     }
-    
+
     /**
      * Load the properties
      */
@@ -72,7 +72,7 @@ public class DefaultValidatorsProperties {
         defaultProperties = new Properties();
         // Read properties file.
         try {
-            defaultProperties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(FORM_VALIDATORS_CONFIG_FILE_NAME));
+            defaultProperties.load(getClass().getClassLoader().getResourceAsStream(FORM_VALIDATORS_CONFIG_FILE_NAME));
         } catch (final IOException e) {
             LOGGER.log(Level.WARNING, "default forms config file " + FORM_VALIDATORS_CONFIG_FILE_NAME + " is missing form the classpath");
         }
