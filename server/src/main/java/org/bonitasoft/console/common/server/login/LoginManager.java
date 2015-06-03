@@ -17,6 +17,8 @@ package org.bonitasoft.console.common.server.login;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
@@ -32,11 +34,17 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
-
 /**
+ * This class performs the authentication, the login and initialize the HTTP session
+ * 
  * @author Anthony Birembaut
  */
 public class LoginManager {
+
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
 
     /**
      * default locale
@@ -45,11 +53,20 @@ public class LoginManager {
 
     public void login(final HttpServletRequestAccessor request, final UserLogger userLoger, final Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "User authentication using the configured AuthenticationManager");
+        }
         final Map<String, Serializable> credentialsMap = getAuthenticationManager(credentials.getTenantId()).authenticate(request, credentials);
         APISession apiSession;
         if (credentialsMap == null || credentialsMap.isEmpty()) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Engine login using the username and password");
+            }
             apiSession = userLoger.doLogin(credentials);
         } else {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Engine login using the map of credentials retrieved from the request");
+            }
             apiSession = userLoger.doLogin(credentialsMap);
         }
         storeCredentials(request, apiSession);
@@ -57,7 +74,11 @@ public class LoginManager {
 
     protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+            final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Using the AuthenticationManager implementation: " + authenticationManager.getClass().getName());
+            }
+            return authenticationManager;
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
@@ -76,6 +97,9 @@ public class LoginManager {
     }
 
     protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, final Set<String> permissions) {
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "HTTP session initialization");
+        }
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
 

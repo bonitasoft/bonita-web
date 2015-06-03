@@ -71,6 +71,10 @@ public class JAASAuthenticationManagerImpl implements AuthenticationManager {
 
     @Override
     public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws AuthenticationFailedException {
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "#authenticate (this implementation of " + AuthenticationManager.class.getName()
+                    + " performs a login on the login context " + JAAS_AUTH_LOGIN_CONTEXT + "[_<tenantId>])");
+        }
         final long tenantId = credentials.getTenantId();
         final CallbackHandler handler = createConsoleCallbackHandler(request, String.valueOf(tenantId));
         try {

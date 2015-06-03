@@ -60,6 +60,10 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     @Override
     public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials)
             throws AuthenticationFailedException, ServletException {
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "#authenticate (this implementation of " + AuthenticationManager.class.getName()
+                    + " is an exemple of Oauth authentication working with Linkedin service provider)");
+        }
         if (request.getOAuthVerifier() == null) {
             throw new AuthenticationFailedException();
         }
