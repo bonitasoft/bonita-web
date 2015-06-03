@@ -1,6 +1,6 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

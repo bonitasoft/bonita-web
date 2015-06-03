@@ -115,7 +115,7 @@ class CasePermissionRule implements PermissionRule {
                     opts.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, sourceCase);
                     def result = processAPI.searchArchivedProcessInstancesInvolvingUser(currentUserId, opts.done())
                     def archivedProcessInstance = processAPI.getFinalArchivedProcessInstance(sourceCase)
-                    return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstanceGetProcessDefinitionId, currentUserId)
+                    return result.getCount() == 1 || processAPI.isUserProcessSupervisor(archivedProcessInstance.getProcessDefinitionId(), currentUserId)
                 }
             }
         } catch (BonitaException e) {
