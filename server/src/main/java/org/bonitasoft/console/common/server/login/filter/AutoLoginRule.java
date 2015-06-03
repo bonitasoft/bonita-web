@@ -17,23 +17,21 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.io.Serializable;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import org.bonitasoft.console.common.server.login.CredentialsManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.AutoLoginCredentials;
 import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.bonitasoft.engine.exception.TenantStatusException;
-import org.bonitasoft.engine.session.APISession;
 
 public class AutoLoginRule extends AuthenticationRule {
 
@@ -53,16 +51,14 @@ public class AutoLoginRule extends AuthenticationRule {
                                 final long tenantId) throws ServletException {
         try {
             final AutoLoginCredentials userCredentials = new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId);
-            final Map<String, Serializable> credentialsMap = getLoginManager(tenantId).authenticate(request, userCredentials);
-            APISession apiSession;
-            if (credentialsMap == null || credentialsMap.isEmpty()) {
-                apiSession = createUserLogger().doLogin(userCredentials);
-            } else {
-                apiSession = createUserLogger().doLogin(credentialsMap);
-            }
-            final CredentialsManager credentialsManager = getCredentialsManager();
-            credentialsManager.storeCredentials(request, apiSession);
+            final LoginManager loginManager = getLoginManager();
+            loginManager.login(request, tenantId, createUserLogger(), userCredentials);
             return true;
+        } catch (final AuthenticationFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
+            }
+            return false;
         } catch (final LoginFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "login exception : " + e.getMessage(), e);

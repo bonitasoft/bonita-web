@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,12 +21,12 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.impl.oauth.OAuthConsumerNotFoundException;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 
 /**
  * @author Vincent Elcrin
- * 
+ *
  */
 public class LoginUrl implements Locator {
 
@@ -36,7 +36,7 @@ public class LoginUrl implements Locator {
      * @throws LoginUrlException
      *             If the login page Url couldn't be retrieved
      */
-    public LoginUrl(final LoginManager loginManager, final long tenantId, final String redirectUrl, HttpServletRequest request) {
+    public LoginUrl(final AuthenticationManager loginManager, final long tenantId, final String redirectUrl, final HttpServletRequest request) {
         location = getLoginPageUrl(loginManager, redirectUrl, tenantId, request);
     }
 
@@ -45,14 +45,14 @@ public class LoginUrl implements Locator {
         return location;
     }
 
-    private String getLoginPageUrl(final LoginManager loginManager, final String redirectURL, final long tenantId, HttpServletRequest request)
+    private String getLoginPageUrl(final AuthenticationManager loginManager, final String redirectURL, final long tenantId, final HttpServletRequest request)
             throws LoginUrlException {
         try {
 
             return loginManager.getLoginPageURL(request, tenantId, URLEncoder.encode(redirectURL, "UTF-8"));
         } catch (final UnsupportedEncodingException e) {
             throw new LoginUrlException(e);
-        } catch (final OAuthConsumerNotFoundException e) {
+        } catch (final ConsumerNotFoundException e) {
             throw new LoginUrlException(e);
         }
     }

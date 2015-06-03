@@ -28,9 +28,9 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManagerProperties;
-import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
@@ -115,8 +115,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      */
     protected final LocaleUtil localeUtil = new LocaleUtil();
 
-    /** the factory to retrieve LoginManager Properties */
-    public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+    /** the factory to retrieve AuthenticationManager Properties */
+    public static final AuthenticationManagerPropertiesFactory authenticationManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     /**
      * {@inheritDoc}
@@ -918,11 +918,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      */
     private void manageLogoutDisplay(final User user, final long tenantId) {
         final List<String> features = user.getFeatures();
-        if (features != null && (!features.contains(LoginManagerProperties.LOGOUT_ENABLED) || !features.contains(LoginManagerProperties.LOGOUT_DISABLED))) {
-            if (loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
-                features.add(LoginManagerProperties.LOGOUT_DISABLED);
+        if (features != null
+                && (!features.contains(AuthenticationManagerProperties.LOGOUT_ENABLED) || !features.contains(AuthenticationManagerProperties.LOGOUT_DISABLED))) {
+            if (authenticationManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
+                features.add(AuthenticationManagerProperties.LOGOUT_DISABLED);
             } else {
-                features.add(LoginManagerProperties.LOGOUT_ENABLED);
+                features.add(AuthenticationManagerProperties.LOGOUT_ENABLED);
             }
         }
     }

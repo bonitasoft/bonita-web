@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
@@ -31,7 +32,7 @@ import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
  */
 public class HttpServletRequestAccessor {
 
-    protected static final String REDIRECT_URL = LoginManager.REDIRECT_URL;
+    protected static final String REDIRECT_URL = AuthenticationManager.REDIRECT_URL;
 
     public static final String USERNAME_PARAM = "username";
 
@@ -45,7 +46,7 @@ public class HttpServletRequestAccessor {
 
     private final static String OAUTH_TOKEN = "oauth_token";
 
-    private final static String TENANT_ID = LoginManager.TENANT;
+    private final static String TENANT_ID = AuthenticationManager.TENANT;
 
     private final HttpServletRequest httpServletRequest;
 

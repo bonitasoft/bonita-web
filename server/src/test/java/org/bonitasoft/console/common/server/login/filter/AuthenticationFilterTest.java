@@ -37,10 +37,10 @@ import javax.servlet.http.HttpSession;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
+import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
 import org.bonitasoft.console.common.server.login.localization.Locator;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
 import org.junit.Before;
@@ -89,7 +89,7 @@ public class AuthenticationFilterTest {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
-        doReturn(new StandardLoginManagerImpl()).when(authenticationFilter).getLoginManager(any(TenantIdAccessor.class));
+        doReturn(new StandardAuthenticationManagerImpl()).when(authenticationFilter).getLoginManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
     }
 

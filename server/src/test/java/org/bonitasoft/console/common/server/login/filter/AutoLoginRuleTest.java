@@ -26,7 +26,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.bonitasoft.console.common.server.login.CredentialsManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
@@ -84,9 +84,9 @@ public class AutoLoginRuleTest {
         doReturn("process1--1.0").when(request).getAutoLoginScope();
         doReturn(1L).when(tenantAccessor).ensureTenantId();
         // avoid having an exception result into an authorized false
-        doReturn(mock(LoginManager.class)).when(rule).getLoginManager(anyLong());
+        doReturn(mock(AuthenticationManager.class)).when(rule).getAuthenticationManager(anyLong());
         doReturn(mock(UserLogger.class)).when(rule).createUserLogger();
-        doReturn(mock(CredentialsManager.class)).when(rule).getCredentialsManager();
+        doReturn(mock(LoginManager.class)).when(rule).getLoginManager();
         final SecurityProperties secu = autoLoginAllowedSecurityConfig();
         doReturn(secu).when(rule).getSecurityProperties(any(HttpServletRequestAccessor.class), anyLong());
 

@@ -28,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.LoginAPI;
@@ -101,14 +101,14 @@ public class LogoutServlet extends HttpServlet {
 
         try {
             boolean redirectAfterLogin = true;
-            final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+            final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
             final String localeStr = request.getParameter(UrlOption.LANG);
             // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
             if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
                 redirectAfterLogin = false;
             }
             if (redirectAfterLogin) {
-                final LoginManager loginManager = LoginManagerFactory.getLoginManager(tenantId);
+                final AuthenticationManager loginManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
                 final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
                 final String logoutPage = loginManager.getLogoutPageURL(request, tenantId, encodedRedirectURL);
                 if (logoutPage != null) {
@@ -120,9 +120,9 @@ public class LogoutServlet extends HttpServlet {
                     } else {
                         if (localeStr != null) {
                             // Append tenant parameter in url parameters
-                            loginPage = LOGIN_PAGE + "?" + UrlOption.LANG + "=" + localeStr + "&" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
+                            loginPage = LOGIN_PAGE + "?" + UrlOption.LANG + "=" + localeStr + "&" + AuthenticationManager.REDIRECT_URL + "=" + encodedRedirectURL;
                         } else {
-                            loginPage = LOGIN_PAGE + "?" + LoginManager.REDIRECT_URL + "=" + encodedRedirectURL;
+                            loginPage = LOGIN_PAGE + "?" + AuthenticationManager.REDIRECT_URL + "=" + encodedRedirectURL;
                         }
                     }
                 }
@@ -162,7 +162,7 @@ public class LogoutServlet extends HttpServlet {
      * Overridden in SP
      */
     protected String getDefaultRedirectUrl() {
-        return LoginManager.DEFAULT_DIRECT_URL;
+        return AuthenticationManager.DEFAULT_DIRECT_URL;
     }
 
     private void engineLogout(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,

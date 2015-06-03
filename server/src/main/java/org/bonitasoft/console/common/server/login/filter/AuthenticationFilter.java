@@ -32,11 +32,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
 import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
@@ -199,10 +199,10 @@ public class AuthenticationFilter implements Filter {
     }
 
     // protected for test stubbing
-    protected LoginManager getLoginManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected AuthenticationManager getLoginManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return LoginManagerFactory.getLoginManager(tenantIdAccessor.ensureTenantId());
-        } catch (final LoginManagerNotFoundException e) {
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
+        } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
     }

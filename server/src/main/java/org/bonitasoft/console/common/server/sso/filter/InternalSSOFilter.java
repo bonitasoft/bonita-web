@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
@@ -61,7 +61,7 @@ public class InternalSSOFilter implements Filter {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
      */
     @Override
@@ -70,7 +70,7 @@ public class InternalSSOFilter implements Filter {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
     @Override
@@ -91,11 +91,11 @@ public class InternalSSOFilter implements Filter {
                     } else {
                         request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
                         long tenantId = -1L;
-                        final String tenantIdStr = httpRequest.getParameter(LoginManager.TENANT);
+                        final String tenantIdStr = httpRequest.getParameter(AuthenticationManager.TENANT);
                         if (tenantIdStr != null) {
                             tenantId = Long.parseLong(tenantIdStr);
                         }
-                        final String redirectURL = URLEncoder.encode(LoginManager.DEFAULT_DIRECT_URL, "UTF-8");
+                        final String redirectURL = URLEncoder.encode(AuthenticationManager.DEFAULT_DIRECT_URL, "UTF-8");
                         ((HttpServletResponse) response).sendRedirect(getLoginpageURL(tenantId, redirectURL));
                     }
                 }
@@ -112,17 +112,17 @@ public class InternalSSOFilter implements Filter {
 
     protected String getLoginpageURL(final long tenantId, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
-        url.append("src/main").append(LoginManager.LOGIN_PAGE).append("?");
+        url.append("src/main").append(AuthenticationManager.LOGIN_PAGE).append("?");
         if (tenantId != -1L) {
-            url.append(LoginManager.TENANT).append("=").append(tenantId).append("&");
+            url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
         }
-        url.append(LoginManager.REDIRECT_URL).append("=").append(redirectURL);
+        url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
     }
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.servlet.Filter#destroy()
      */
     @Override
