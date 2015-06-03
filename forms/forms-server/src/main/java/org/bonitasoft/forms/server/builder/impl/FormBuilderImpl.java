@@ -139,7 +139,7 @@ public class FormBuilderImpl implements IFormBuilder {
         documentBuilderFactory.setIgnoringElementContentWhitespace(true);
         // select xml schema as the schema language (a.o.t. DTD)
         documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
-        final URL xsdURL = Thread.currentThread().getContextClassLoader().getResource("forms.xsd");
+        final URL xsdURL = getClass().getClassLoader().getResource("forms.xsd");
         documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdURL.toExternalForm());
 
         try {
@@ -359,7 +359,7 @@ public class FormBuilderImpl implements IFormBuilder {
 
     /**
      * Add a condition expression on a form action
-     * 
+     *
      * @param name
      * @param content
      * @param expressionType
