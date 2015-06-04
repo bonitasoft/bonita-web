@@ -17,8 +17,6 @@
  */
 package org.bonitasoft.forms.server.filter;
 
-import static org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil.computeIndex;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -412,7 +410,7 @@ public class BPMURLSupportFilter implements Filter {
      * @return SearchOptionsBuilder object
      */
     protected SearchOptionsBuilder buildSearchOptions(final int pageIndex, final int numberOfResults, final String sort, final String search) {
-        final SearchOptionsBuilder builder = new SearchOptionsBuilder(computeIndex(pageIndex, numberOfResults), numberOfResults);
+        final SearchOptionsBuilder builder = new SearchOptionsBuilder(pageIndex * numberOfResults, numberOfResults);
         if (sort != null) {
             final String[] order = sort.split(" ");
             if (order.length == 2) {

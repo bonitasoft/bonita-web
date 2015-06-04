@@ -20,29 +20,47 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * @author Ruiheng.Fan
- * @author Baptiste Mesta: add tenant id in session
- *
+ * @author Baptiste Mesta
  */
 public class SessionUtil {
 
+    /**
+     * the session param for the engine API session
+     */
+    public static final String API_SESSION_PARAM_KEY = "apiSession";
+
+    /**
+     * the session param for the user
+     */
+    public static final String USER_SESSION_PARAM_KEY = "user";
+
+    /**
+     * the session param for the username
+     */
+    public static final String USERNAME_SESSION_PARAM = "username";
+
+    /**
+     * the session param for the permissions
+     */
+    public static final String PERMISSIONS_SESSION_PARAM_KEY = "permissions";
+
     public static void sessionLogin(final User user, final APISession apiSession, final Set<String> permissions, final HttpSession session) {
-        session.setAttribute(LoginManager.USERNAME_SESSION_PARAM, user.getUsername());
-        session.setAttribute(LoginManager.USER_SESSION_PARAM_KEY, user);
-        session.setAttribute(LoginManager.API_SESSION_PARAM_KEY, apiSession);
-        session.setAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY, permissions);
+        session.setAttribute(USERNAME_SESSION_PARAM, user.getUsername());
+        session.setAttribute(USER_SESSION_PARAM_KEY, user);
+        session.setAttribute(API_SESSION_PARAM_KEY, apiSession);
+        session.setAttribute(PERMISSIONS_SESSION_PARAM_KEY, permissions);
     }
 
     public static void sessionLogout(final HttpSession session) {
-        session.removeAttribute(LoginManager.API_SESSION_PARAM_KEY);
-        session.removeAttribute(LoginManager.USERNAME_SESSION_PARAM);
-        session.removeAttribute(LoginManager.USER_SESSION_PARAM_KEY);
-        session.removeAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
+        session.removeAttribute(API_SESSION_PARAM_KEY);
+        session.removeAttribute(USERNAME_SESSION_PARAM);
+        session.removeAttribute(USER_SESSION_PARAM_KEY);
+        session.removeAttribute(PERMISSIONS_SESSION_PARAM_KEY);
         session.invalidate();
     }
 }

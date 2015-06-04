@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.CharEncoding;
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
@@ -74,16 +74,16 @@ public class FormLayoutDownloadServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
-        final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final String bodyContentId = request.getParameter(BODY_CONTENT_ID);
-        
+
         final Map<String, Object> urlContext = buildUrlContext(request);
         final Map<String, Object> context = new HashMap<String, Object>();
-        context.put(LoginManager.API_SESSION_PARAM_KEY, apiSession);
+        context.put(SessionUtil.API_SESSION_PARAM_KEY, apiSession);
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, resolveLocale(getLocale(request)));
 
-        String bodyContent = getBodyContent(request, apiSession, bodyContentId, context);
+        final String bodyContent = getBodyContent(request, apiSession, bodyContentId, context);
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -100,7 +100,7 @@ public class FormLayoutDownloadServlet extends HttpServlet {
             if (bodyContent == null) {
                 response.setContentLength(0);
             } else {
-                byte[] bodyContentbytes = bodyContent.getBytes(CharEncoding.UTF_8);
+                final byte[] bodyContentbytes = bodyContent.getBytes(CharEncoding.UTF_8);
                 response.setContentLength(bodyContentbytes.length);
                 out.write(bodyContentbytes);
             }
@@ -164,7 +164,7 @@ public class FormLayoutDownloadServlet extends HttpServlet {
     protected String getLocale(final HttpServletRequest request) {
         String localeStr = null;
         final HttpSession session = request.getSession();
-        final User user = (User) session.getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+        final User user = (User) session.getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
         if (user != null) {
             localeStr = getFormLocale(request);
         }
