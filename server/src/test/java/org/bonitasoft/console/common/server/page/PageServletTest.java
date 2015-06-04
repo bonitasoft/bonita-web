@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
+import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -32,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class PageServletTest {
 
+    public static final long PAGE_ID = 42L;
     @Mock
     PageRenderer pageRenderer;
 
@@ -40,6 +42,12 @@ public class PageServletTest {
 
     @Mock
     PageMappingService pageMappingService;
+
+    @Mock
+    CustomPageService customPageService;
+
+    @Mock
+    Page page;
 
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
@@ -107,29 +115,36 @@ public class PageServletTest {
     @Test
     public void should_display_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(PAGE_ID, null));
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
     }
 
     @Test
     public void should_display_customPage_resource() throws Exception {
+        //given
+        String pageName="custompage_name";
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/path/of/resource.css");
-        final PageReference pageReference = new PageReference(42L, null);
+        final PageReference pageReference = new PageReference(PAGE_ID, null);
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, false)).thenReturn(pageReference);
+        when(customPageService.getPage(apiSession, PAGE_ID)).thenReturn(page);
+        when(page.getName()).thenReturn(pageName);
+
         final PageResourceProvider pageResourceProvider = mock(PageResourceProvider.class);
         final File resourceFile = mock(File.class);
         when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
-        when(pageRenderer.getPageResourceProvider(42L, apiSession)).thenReturn(pageResourceProvider);
+        when(pageRenderer.getPageResourceProvider(PAGE_ID, apiSession)).thenReturn(pageResourceProvider);
         when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
 
+        //when
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, 42L, "path/of/resource.css");
-        verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, 42L, "path/of/resource.css");
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
+        //then
+        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
+        verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession, pageName);
     }
 
     @Test
@@ -158,8 +173,8 @@ public class PageServletTest {
     public void should_get_not_found_if_the_page_does_not_exist() throws Exception {
         final String key = "process/processName/processVersion";
         when(hsRequest.getPathInfo()).thenReturn("/" + key + "/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, key, locale, true)).thenReturn(new PageReference(42L, null));
-        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
+        when(pageMappingService.getPage(hsRequest, apiSession, key, locale, true)).thenReturn(new PageReference(PAGE_ID, null));
+        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
 
         pageServlet.service(hsRequest, hsResponse);
 
@@ -181,9 +196,9 @@ public class PageServletTest {
     @Test
     public void should_get_server_error_when_issue_with_customPage() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(PAGE_ID, null));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
-        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
+        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
 
         pageServlet.service(hsRequest, hsResponse);
 
@@ -194,7 +209,7 @@ public class PageServletTest {
     @Test
     public void should_get_bad_request_when_issue_with_parameters() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
-        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(42L, null));
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(PAGE_ID, null));
         final IllegalArgumentException illegalArgumentException = new IllegalArgumentException();
         doThrow(illegalArgumentException).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
 

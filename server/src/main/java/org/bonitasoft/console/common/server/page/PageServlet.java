@@ -55,15 +55,17 @@ public class PageServlet extends HttpServlet {
 
     public static final String API_PATH_SEPARATOR = "/API";
 
-    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
-
-    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
-
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected PageMappingService pageMappingService = new PageMappingService();
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
+
+    protected CustomPageService customPageService = new CustomPageService();
+
+    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(customPageService);
+
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
     @Override
     protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -140,13 +142,13 @@ public class PageServlet extends HttpServlet {
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final Long pageId, final String resourcePath)
+                                         final Long pageId, final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
             if (isNotResourcePath(resourcePath)) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId);
             } else {
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath));
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession, customPageService.getPage(apiSession,pageId).getName());
             }
         } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {

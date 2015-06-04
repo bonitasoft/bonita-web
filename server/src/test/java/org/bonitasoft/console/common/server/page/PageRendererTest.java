@@ -91,12 +91,13 @@ public class PageRendererTest {
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(page).when(pageResourceProvider).getPage(pageAPI);
+        doReturn(pageName).when(page).getName();
         when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, pageName);
     }
 
     @Test
@@ -109,12 +110,13 @@ public class PageRendererTest {
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(page).when(pageResourceProvider).getPage(pageAPI);
+        doReturn(pageName).when(page).getName();
         when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
 
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, pageName);
     }
 
     @Test
