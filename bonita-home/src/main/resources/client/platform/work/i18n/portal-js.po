@@ -1378,6 +1378,9 @@ msgstr ""
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr ""
 
+msgid "{{nbMapping}} Process manager mappings could not be deleted"
+msgstr ""
+
 msgid "{{nbMapping}} Process manager mappings have been deleted"
 msgstr ""
 

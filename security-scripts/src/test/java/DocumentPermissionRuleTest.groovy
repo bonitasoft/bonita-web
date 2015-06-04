@@ -22,8 +22,9 @@ import org.bonitasoft.engine.api.Logger
 import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
+import org.bonitasoft.engine.bpm.document.Document
 import org.bonitasoft.engine.bpm.process.ProcessInstance
-import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.BonitaException
 import org.bonitasoft.engine.exception.SearchException
 import org.bonitasoft.engine.identity.User
 import org.bonitasoft.engine.session.APISession
@@ -65,7 +66,7 @@ public class DocumentPermissionRuleTest {
     @Test
     public void should_check_verify_filters_on_GET_with_user_not_involved_nor_supervisor() {
         //given
-        havingFilters([processInstanceId: "46"])
+        havingFilters([caseId: "46"])
         def processInstance = mock(ProcessInstance.class)
         doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(46l)
@@ -79,7 +80,7 @@ public class DocumentPermissionRuleTest {
     @Test
     public void should_check_verify_filters_on_GET_with_user_not_involved_but_supervisor() {
         //given
-        havingFilters([processInstanceId: "46"])
+        havingFilters([caseId: "46"])
         def processInstance = mock(ProcessInstance.class)
         doReturn(1024l).when(processInstance).getProcessDefinitionId()
         doReturn(processInstance).when(processAPI).getProcessInstance(46l)
@@ -100,19 +101,24 @@ public class DocumentPermissionRuleTest {
         doReturn(currentUserId).when(apiSession).getUserId()
         doReturn(true).when(apiCallContext).isGET()
         doReturn("77").when(apiCallContext).getResourceId()
-        doReturn(["processInstanceId":"77"]).when(apiCallContext).getFilters()
+        def document = mock(Document.class)
+        doReturn(document).when(processAPI).getDocument(77L)
+        doReturn(123L).when(document).getProcessInstanceId()
         def instance = mock(ProcessInstance.class)
-        doReturn(instance).when(processAPI).getProcessInstance(77L);
+        doReturn(instance).when(processAPI).getProcessInstance(123L);
         doReturn(2048L).when(instance).getProcessDefinitionId()
         doReturn(false).when(processAPI).isUserProcessSupervisor(2048L, currentUserId)
-        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 77L);
-        doReturn(isInvolvedAsManager).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 77L);
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 123L);
+        doReturn(isInvolvedAsManager).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 123L);
     }
 
     @Test
     public void should_check_verify_filters_on_GET_with_user_involved() {
         //given
-        havingFilters([processInstanceId: "45"])
+        havingFilters([caseId: "45"])
+        def instance = mock(ProcessInstance.class)
+        doReturn(instance).when(processAPI).getProcessInstance(45L);
+        doReturn(1024L).when(instance).getProcessDefinitionId()
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -153,7 +159,7 @@ public class DocumentPermissionRuleTest {
     public void should_allow_user_when_isManager_throws_exception() {
         //given
         havingResourceId(false, false)
-        doThrow(new BonitaException("cause")).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 77L);
+        doThrow(new BonitaException("cause")).when(processAPI).isManagerOfUserInvolvedInProcessInstance(currentUserId, 123L);
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -175,12 +181,14 @@ public class DocumentPermissionRuleTest {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn('''
             {
-                "processInstanceId":"154",
+                "caseId":"154",
                 "other":"sample"
             }
         ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
-
+        def instance = mock(ProcessInstance.class)
+        doReturn(instance).when(processAPI).getProcessInstance(154L);
+        doReturn(1024L).when(instance).getProcessDefinitionId()
 
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
@@ -194,11 +202,14 @@ public class DocumentPermissionRuleTest {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn('''
             {
-                "processInstanceId":"154",
+                "caseId":"154",
                 "other":"sample"
             }
         ''').when(apiCallContext).getBody()
         doReturn(false).when(processAPI).isInvolvedInProcessInstance(currentUserId, 154l);
+        def instance = mock(ProcessInstance.class)
+        doReturn(instance).when(processAPI).getProcessInstance(154L);
+        doReturn(1024L).when(instance).getProcessDefinitionId()
 
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
