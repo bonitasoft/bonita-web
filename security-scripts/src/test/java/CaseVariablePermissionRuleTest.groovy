@@ -61,6 +61,18 @@ public class CaseVariablePermissionRuleTest {
         doReturn(currentUserId).when(apiSession).getUserId()
     }
 
+    def havingProcessInstance(boolean isSupervisor) {
+        def instance = mock(ProcessInstance.class)
+        doReturn(425l).when(instance).getProcessDefinitionId()
+        doReturn(instance).when(processAPI).getProcessInstance(158l)
+        doReturn(isSupervisor).when(processAPI).isUserProcessSupervisor(425l,currentUserId)
+    }
+
+    def havingFilters(Map filters) {
+        doReturn(true).when(apiCallContext).isGET()
+        doReturn(filters).when(apiCallContext).getFilters()
+    }
+
     @Test
     public void should_check_return_false_on_delete() {
         doReturn(true).when(apiCallContext).isDELETE()
@@ -74,13 +86,10 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_true_on_get() {
+        //given
         doReturn(true).when(apiCallContext).isGET()
-        doReturn("158").when(apiCallContext).getResourceId()
-
-        def instance = mock(ProcessInstance.class)
-        doReturn(425l).when(instance).getProcessDefinitionId()
-        doReturn(instance).when(processAPI).getProcessInstance(158l)
-        doReturn(true).when(processAPI).isUserProcessSupervisor(425l,currentUserId)
+        doReturn("158/myData").when(apiCallContext).getResourceId()
+        havingProcessInstance(true)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -90,13 +99,10 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_false_on_get_if_not_process_owner() {
+        //given
         doReturn(true).when(apiCallContext).isGET()
-        doReturn("158").when(apiCallContext).getResourceId()
-
-        def instance = mock(ProcessInstance.class)
-        doReturn(425l).when(instance).getProcessDefinitionId()
-        doReturn(instance).when(processAPI).getProcessInstance(158l)
-        doReturn(false).when(processAPI).isUserProcessSupervisor(425l,currentUserId)
+        doReturn("158/myData").when(apiCallContext).getResourceId()
+        havingProcessInstance(false)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
@@ -106,17 +112,36 @@ public class CaseVariablePermissionRuleTest {
 
     @Test
     public void should_check_return_true_on_put() {
+        //given
         doReturn(true).when(apiCallContext).isPUT()
-        doReturn("158").when(apiCallContext).getResourceId()
-
-        def instance = mock(ProcessInstance.class)
-        doReturn(425l).when(instance).getProcessDefinitionId()
-        doReturn(instance).when(processAPI).getProcessInstance(158l)
-        doReturn(true).when(processAPI).isUserProcessSupervisor(425l,currentUserId)
+        doReturn("158/myData").when(apiCallContext).getResourceId()
+        havingProcessInstance(true)
         //when
         def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
         //then
         Assertions.assertThat(isAuthorized).isTrue();
+
+    }
+
+    @Test
+    public void should_check_return_true_on_search_if_supervisor() {
+        havingFilters([case_id: "158"])
+        havingProcessInstance(true)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+
+    }
+
+    @Test
+    public void should_check_return_false_on_search_if_not_supervisor() {
+        havingFilters([case_id: "158"])
+        havingProcessInstance(false)
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        //then
+        Assertions.assertThat(isAuthorized).isFalse();
 
     }
 
