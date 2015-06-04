@@ -82,8 +82,11 @@ public class ContractTypeConverter {
         final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
         final Map<String, Serializable> contractDefinitionMap = processContract == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(processContract.getInputs());
 
-        for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
-            processedInputs.put(inputEntry.getKey(), convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey()), deleteFile));
+        if (inputs != null) {
+            for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
+                processedInputs.put(inputEntry.getKey(),
+                        convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey()), deleteFile));
+            }
         }
         return processedInputs;
     }
