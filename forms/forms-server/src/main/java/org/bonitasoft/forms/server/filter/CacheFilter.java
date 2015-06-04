@@ -16,69 +16,75 @@
  */
 package org.bonitasoft.forms.server.filter;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Haojie Yuan
- * 
+ *
  */
 public class CacheFilter implements Filter {
 
-	protected FilterConfig filterConfig = null;
-	
-	protected HashMap expiresMap = new HashMap();
-	
+	protected Map<String, Integer> expiresMap = new HashMap<String, Integer>();
+
 	/**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(CacheFilter.class.getName());
 
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterConfig = filterConfig;
-		expiresMap.clear();
-		Enumeration names = filterConfig.getInitParameterNames();
+	@Override
+    public void init(final FilterConfig filterConfig) throws ServletException {
+		final Enumeration<?> names = filterConfig.getInitParameterNames();
 		while (names.hasMoreElements()) {
             final String name = (String) names.nextElement();
             final String value = filterConfig.getInitParameter(name);
             try {
                 final Integer expire = Integer.valueOf(value);
                 expiresMap.put(name, expire);
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 LOGGER.log(Level.WARNING, name + " parameter value should be an integer");
             }
         }
     }
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+	@Override
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+		final HttpServletRequest req = (HttpServletRequest) request;
+		final HttpServletResponse res = (HttpServletResponse) response;
 
-		final String uri = req.getRequestURI();
-		if (!uri.endsWith("nocache.js")) {
-    		String ext = null;
-    		int dot = uri.lastIndexOf(".");
-    		if (dot != -1) {
-    			ext = uri.substring(dot + 1);
-    		}
-    		setResponseHeader(res, ext);
-	    }
 		chain.doFilter(req, res);
+
+        final String uri = req.getRequestURI();
+        if (!uri.endsWith("nocache.js")) {
+            String ext = null;
+            final int dot = uri.lastIndexOf(".");
+            if (dot != -1) {
+                ext = uri.substring(dot + 1);
+            }
+            setResponseHeader(res, ext);
+        }
 	}
 
-	public void destroy() {
-		this.filterConfig = null;
-	}
+    @Override
+    public void destroy() {
+    }
 
-	private void setResponseHeader(HttpServletResponse response, String ext) {
+	private void setResponseHeader(final HttpServletResponse response, final String ext) {
 		if (ext != null && ext.length() > 0) {
-			final Integer expires = (Integer) expiresMap.get(ext);
+			final Integer expires = expiresMap.get(ext);
 			if (expires != null) {
 				if (expires.intValue() > 0) {
 					response.setHeader("Cache-Control", "max-age=" + expires.intValue()); // HTTP 1.1

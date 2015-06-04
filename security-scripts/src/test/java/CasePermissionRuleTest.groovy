@@ -227,6 +227,24 @@ public class CasePermissionRuleTest {
     }
     
     @Test
+    public void should_check_verify_archived_filters_sourceObjectId_on_GET_not_involved_but_supervisor() {
+        //given
+        havingFilters([sourceObjectId: "123"])
+        doReturn("archivedCase").when(apiCallContext).getResourceName()
+        doReturn(new SearchResultImpl<ArchivedProcessInstance>(0, [])).when(processAPI).searchArchivedProcessInstancesInvolvingUser(eq(currentUserId), any(SearchOptions.class));
+        def archivedInstance = mock(ArchivedProcessInstance.class)
+        doReturn(archivedInstance).when(processAPI).getFinalArchivedProcessInstance(123l)
+        doReturn(1024l).when(archivedInstance).getProcessDefinitionId()
+        doReturn(true).when(processAPI).isUserProcessSupervisor(1024l, currentUserId)
+        
+        //when
+        def isAuthorized = rule.isAllowed(apiSession, apiCallContext, apiAccessor, logger)
+        
+        //then
+        Assertions.assertThat(isAuthorized).isTrue();
+    }
+    
+    @Test
     public void should_allow_when_isManager_throws_Exception_on_GET() {
         //given
         havingResourceId(false)
