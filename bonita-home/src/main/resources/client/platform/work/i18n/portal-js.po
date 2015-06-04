@@ -515,6 +515,9 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
+msgid "Form cannot be empty"
+msgstr ""
+
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
 msgstr ""
@@ -562,6 +565,9 @@ msgid "Import an application"
 msgstr ""
 
 msgid "Internal"
+msgstr ""
+
+msgid "Instantiation"
 msgstr ""
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
