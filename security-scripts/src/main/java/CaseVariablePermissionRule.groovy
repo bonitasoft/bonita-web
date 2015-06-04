@@ -45,7 +45,9 @@ class CaseVariablePermissionRule implements PermissionRule {
         def processAPI = apiAccessor.getProcessAPI()
         try {
             if ((apiCallContext.isPUT() || apiCallContext.isGET()) && resourceId != null) {
-                def processInstance = processAPI.getProcessInstance(Long.valueOf(resourceId))
+                // Resource format: <processInstanceId>/<caseVariableName>
+                def caseId = Long.valueOf(resourceId.tokenize("/").first())
+                def processInstance = processAPI.getProcessInstance(caseId)
                 return processAPI.isUserProcessSupervisor(processInstance.getProcessDefinitionId(), currentUserId)
             }
 

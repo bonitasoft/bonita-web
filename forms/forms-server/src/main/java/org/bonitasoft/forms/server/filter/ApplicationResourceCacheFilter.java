@@ -19,6 +19,7 @@ package org.bonitasoft.forms.server.filter;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,19 +34,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Haojie Yuan
- * 
+ *
  */
 public class ApplicationResourceCacheFilter implements Filter {
 
-	protected FilterConfig filterConfig = null;
+	protected Map<String, Integer> expiresMap = new HashMap<String, Integer>();
 
-	protected HashMap expiresMap = new HashMap();
-	
 	/**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(ApplicationResourceCacheFilter.class.getName());
-	
+
 	/**
 	 * resource : indicate the path of the resource
 	 */
@@ -59,26 +58,26 @@ public class ApplicationResourceCacheFilter implements Filter {
 	private static final String FILE_EXT_JS		= "js";
 
 
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterConfig = filterConfig;
-		expiresMap.clear();
-		Enumeration names = filterConfig.getInitParameterNames();
+	@Override
+    public void init(final FilterConfig filterConfig) throws ServletException {
+		final Enumeration<?> names = filterConfig.getInitParameterNames();
 		while (names.hasMoreElements()) {
 			try {
 				final String name = (String) names.nextElement();
 				final String value = filterConfig.getInitParameter(name);
 				final Integer expire = Integer.valueOf(value);
 				expiresMap.put(name, expire);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				LOGGER.log(Level.SEVERE, "Error while init the ApplicationResourceCacheFilter in session");
 				throw new ServletException(e);
 			}
 		}
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+	@Override
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+		final HttpServletRequest req = (HttpServletRequest) request;
+		final HttpServletResponse res = (HttpServletResponse) response;
 
 		String ext = null;
 		final String location = req.getParameter(RESOURCE_PATH_PARAM);
@@ -94,17 +93,18 @@ public class ApplicationResourceCacheFilter implements Filter {
 			ext = FILE_EXT_JS;
 		}
 
-		setResponseHeader(res, ext);
 		chain.doFilter(req, res);
+
+        setResponseHeader(res, ext);
 	}
 
-	public void destroy() {
-		this.filterConfig = null;
+	@Override
+    public void destroy() {
 	}
 
-	private void setResponseHeader(HttpServletResponse response, String ext) {
+	private void setResponseHeader(final HttpServletResponse response, final String ext) {
 		if (ext != null && ext.length() > 0) {
-			final Integer expires = (Integer) expiresMap.get(ext);
+			final Integer expires = expiresMap.get(ext);
 			if (expires != null) {
 				if (expires.intValue() > 0) {
 					response.setHeader("Cache-Control", "max-age=" + expires.intValue()); // HTTP 1.1
