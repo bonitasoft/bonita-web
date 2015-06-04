@@ -17,16 +17,28 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.AutoLoginCredentials;
+import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
+import org.bonitasoft.engine.exception.TenantStatusException;
 
 public class AutoLoginRule extends AuthenticationRule {
+
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(AutoLoginRule.class.getName());
 
     @Override
     public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
@@ -38,14 +50,23 @@ public class AutoLoginRule extends AuthenticationRule {
     private boolean doAutoLogin(final HttpServletRequestAccessor request,
                                 final long tenantId) throws ServletException {
         try {
-            getLoginManager(tenantId).login(
-                    request,
-                    new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId));
+            final AutoLoginCredentials userCredentials = new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId);
+            final LoginManager loginManager = getLoginManager();
+            loginManager.login(request, createUserLogger(), userCredentials);
             return true;
-        } catch (final LoginFailedException e) {
+        } catch (final AuthenticationFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
+            }
             return false;
+        } catch (final LoginFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "login exception : " + e.getMessage(), e);
+            }
+            return false;
+        } catch (final TenantStatusException e) {
+            throw new TenantIsPausedRedirectionToMaintenancePageException(e.getMessage(), tenantId);
         }
-
     }
 
     private boolean isAutoLogin(final HttpServletRequestAccessor request, final long tenantId) {
@@ -53,7 +74,10 @@ public class AutoLoginRule extends AuthenticationRule {
                 && getSecurityProperties(request, tenantId).allowAutoLogin();
     }
 
-    // protected for testing
+    protected UserLogger createUserLogger() {
+        return new UserLogger();
+    }
+
     protected SecurityProperties getSecurityProperties(final HttpServletRequestAccessor httpRequest, final long tenantId) {
         return SecurityProperties.getInstance(tenantId,
                 new ProcessIdentifier(httpRequest.getAutoLoginScope()));

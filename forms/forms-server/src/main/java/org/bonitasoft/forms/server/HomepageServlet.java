@@ -31,11 +31,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.themes.CompilableFile;
 import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.ThemeAPI;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -234,6 +234,6 @@ public class HomepageServlet extends ThemeResourceServlet {
 
     protected static APISession getEngineSession(final HttpServletRequest request) {
         final HttpSession session = request.getSession();
-        return (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        return (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
     }
 }

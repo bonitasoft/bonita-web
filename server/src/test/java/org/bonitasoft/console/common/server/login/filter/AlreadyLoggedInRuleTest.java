@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.Before;
@@ -63,7 +63,7 @@ public class AlreadyLoggedInRuleTest {
 
     @Mock
     HttpServletRequest httpServletRequest;
-    
+
     @Spy
     AlreadyLoggedInRule rule;
 
@@ -78,7 +78,7 @@ public class AlreadyLoggedInRuleTest {
     public void testIfRuleAuthorizeAlreadyLoggedUser() throws Exception {
         doReturn(apiSession).when(request).getApiSession();
         // ensure we won't recreate user session
-        doReturn("").when(httpSession).getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+        doReturn("").when(httpSession).getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
 
         final boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
@@ -97,7 +97,7 @@ public class AlreadyLoggedInRuleTest {
     @Test
     public void testIfUserSessionIsRecreatedWhenMissing() throws Exception {
         doReturn(apiSession).when(request).getApiSession();
-        doReturn(null).when(httpSession).getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+        doReturn(null).when(httpSession).getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
         // configure user that will be created
         doReturn(new Locale("en")).when(httpServletRequest).getLocale();
         doReturn("myUser").when(apiSession).getUserName();
@@ -105,7 +105,7 @@ public class AlreadyLoggedInRuleTest {
         rule.doAuthorize(request, tenantAccessor);
 
         verify(httpSession).setAttribute(
-                eq(LoginManager.USER_SESSION_PARAM_KEY),
+                eq(SessionUtil.USER_SESSION_PARAM_KEY),
                 argThat(new UserMatcher("myUser", "en")));
     }
 

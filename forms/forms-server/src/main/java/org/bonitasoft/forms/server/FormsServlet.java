@@ -28,10 +28,9 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerProperties;
-import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
@@ -116,8 +115,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      */
     protected final LocaleUtil localeUtil = new LocaleUtil();
 
-    /** the factory to retrieve LoginManager Properties */
-    public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+    /** the factory to retrieve AuthenticationManager Properties */
+    public static final AuthenticationManagerPropertiesFactory authenticationManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     /**
      * {@inheritDoc}
@@ -304,7 +303,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     protected Map<String, Object> initContext(final Map<String, Object> urlContext, final Locale locale) {
         final HttpServletRequest request = getThreadLocalRequest();
         final HttpSession httpSession = request.getSession();
-        final APISession aAPISession = (APISession) httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession aAPISession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final Map<String, Object> context = new HashMap<String, Object>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, locale);
@@ -886,7 +885,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
         try {
             final HttpServletRequest request = getThreadLocalRequest();
             final HttpSession session = request.getSession();
-            final User user = (User) session.getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+            final User user = (User) session.getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
             if (user == null) {
                 final String errorMessage = "There is no user in the HTTP session.";
                 if (LOGGER.isLoggable(Level.WARNING)) {
@@ -894,7 +893,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 }
                 throw new NoCredentialsInSessionException(errorMessage);
             }
-            final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
             long tenantId = 0L;
             if (apiSession != null) {
                 tenantId = apiSession.getTenantId();
@@ -919,11 +918,12 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      */
     private void manageLogoutDisplay(final User user, final long tenantId) {
         final List<String> features = user.getFeatures();
-        if (features != null && (!features.contains(LoginManagerProperties.LOGOUT_ENABLED) || !features.contains(LoginManagerProperties.LOGOUT_DISABLED))) {
-            if (loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
-                features.add(LoginManagerProperties.LOGOUT_DISABLED);
+        if (features != null
+                && (!features.contains(AuthenticationManagerProperties.LOGOUT_ENABLED) || !features.contains(AuthenticationManagerProperties.LOGOUT_DISABLED))) {
+            if (authenticationManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled()) {
+                features.add(AuthenticationManagerProperties.LOGOUT_DISABLED);
             } else {
-                features.add(LoginManagerProperties.LOGOUT_ENABLED);
+                features.add(AuthenticationManagerProperties.LOGOUT_ENABLED);
             }
         }
     }
@@ -935,7 +935,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     public String generateTemporaryToken() throws RPCException, SessionTimeoutException {
         final HttpServletRequest request = getThreadLocalRequest();
         final HttpSession httpSession = request.getSession();
-        final APISession aAPISession = (APISession) httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession aAPISession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         String userToken = null;
         if (aAPISession != null) {
             userToken = InternalSSOManager.getInstance().add(aAPISession);
@@ -950,8 +950,8 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
     public void logout() throws RPCException, SessionTimeoutException {
         final HttpServletRequest request = getThreadLocalRequest();
         final HttpSession session = request.getSession();
-        session.removeAttribute(LoginManager.USER_SESSION_PARAM_KEY);
-        session.removeAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        session.removeAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
+        session.removeAttribute(SessionUtil.API_SESSION_PARAM_KEY);
     }
 
     /**
@@ -964,7 +964,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      */
     protected APISession getAPISession(final HttpServletRequest request) throws NoCredentialsInSessionException {
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         if (apiSession == null) {
             final String errorMessage = "There is no engine API session in the HTTP session.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -989,7 +989,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             throws NoCredentialsInSessionException {
         final HttpSession session = request.getSession();
 
-        final User user = (User) session.getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+        final User user = (User) session.getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
         if (user == null) {
             final String errorMessage = "There is no user in the HTTP session.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -998,7 +998,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             throw new NoCredentialsInSessionException(errorMessage);
         }
         // The API session is not mandatory (it is when using the default form service provider)
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         context.put(FormServiceProviderUtil.API_SESSION, apiSession);
         context.put(FormServiceProviderUtil.USER, user);
         return apiSession.getTenantId();

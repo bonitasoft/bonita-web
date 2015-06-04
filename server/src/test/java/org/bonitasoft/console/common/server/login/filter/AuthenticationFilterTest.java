@@ -37,10 +37,10 @@ import javax.servlet.http.HttpSession;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
+import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl;
 import org.bonitasoft.console.common.server.login.localization.Locator;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
 import org.junit.Before;
@@ -89,7 +89,7 @@ public class AuthenticationFilterTest {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
-        doReturn(new StandardLoginManagerImpl()).when(authenticationFilter).getLoginManager(any(TenantIdAccessor.class));
+        doReturn(new StandardAuthenticationManagerImpl()).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
     }
 
@@ -138,7 +138,7 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfTenantIdIsNotAddedToRedirectUrlIfNotInRequest() throws Exception {
         authenticationFilter.addRule(createFailingRule());
-        doReturn(-1L).when(tenantIdAccessor).getRequestedTenantId();
+        doReturn(null).when(request).getTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
@@ -150,7 +150,7 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfTenantIdIsAddedToRedirectUrlWhenInRequest() throws Exception {
         authenticationFilter.addRule(createFailingRule());
-        doReturn(12L).when(tenantIdAccessor).getRequestedTenantId();
+        doReturn("12").when(request).getTenantId();
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
