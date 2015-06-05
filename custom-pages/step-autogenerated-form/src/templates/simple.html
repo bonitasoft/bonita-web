@@ -2,7 +2,7 @@
     <div ng-class="{'form-group': true, 'has-error': !simpleInputsForm[input.name].$valid, 'has-feedback': simpleInputsForm[input.name].$valid}">
         <label for="{{input.name}}">{{input.name}}</label> - <i ng-if="input.description">{{input.description}}</i> <i ng-if="!input.description">&lt;{{'no description defined in contract for this input' | translate}}&gt;</i>
         <div class="input"  >
-            <input ng-init="initSingleInput(input)" type="{{inputType2HTML(input)}}" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="outputData[input.name]" placeholder="{{'Expecting a {} value.' | translate | stringTemplater:input.type}}{{isDateInput(input)?' (YYYY-MM-DD)':''}}">
+            <input ng-init="initSingleInput(input)" type="{{inputType2HTML(input)}}" class="form-control" id="{{input.name}}" name="{{input.name}}" ng-model="outputData[input.name]" placeholder="{{'Expecting a {} value.' | translate | stringTemplater:input.type}}{{isDateInput(input)?' (2015-05-31)':''}}">
             <span class="text-danger has-error has-feedback" ng-show="simpleInputsForm[input.name].$error.number" translate>Not a valid number!</span>
         </div>
     </div>

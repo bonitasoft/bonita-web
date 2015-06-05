@@ -128,6 +128,9 @@ describe('custom page', function() {
     expect(element(by.id('ticket_account')).getAttribute('placeholder')).toEqual('Expecting a BOOLEAN value.');
   });
 
+  it('should have a ticket_date date form input', function() {
+	    expect(element(by.id('ticket_date')).getAttribute('placeholder')).toEqual('Expecting a DATE value. (2015-05-31)');
+  });
 
   it('should have a autofill button', function() {
     expect($$('#autofill').count()).toBe(1)
