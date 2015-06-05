@@ -186,6 +186,9 @@
         <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
         <!-- <url-pattern>/portal/downloadDocument</url-pattern> -->
         <!--  Add more servlet mappings here -->
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>
