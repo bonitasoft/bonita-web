@@ -2,7 +2,7 @@
   'use strict';
   angular.module('caseOverview').factory('contextSrvc', ['$http', function($http) {
 
-    var ROOT_PATH = '../../../../../../';
+    var ROOT_PATH = '../';
 
     return {
       fetchCaseContext: function (caseId) {

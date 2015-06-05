@@ -2,7 +2,7 @@
 
 describe('Case Overview test', function () {
 
-  var ROOT_PATH = '../../../../../../';
+  var ROOT_PATH = '../';
 
   var $httpBackend, contextSrvc;
 

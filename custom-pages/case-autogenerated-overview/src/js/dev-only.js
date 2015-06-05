@@ -6,7 +6,7 @@
   /* Make the module depends on a Mock Backend to simulate API calls. */
   var app = angular.module('devMode', ['ngMockE2E']);
 
-  var ROOT_PATH = '../../../../../../';
+  var ROOT_PATH = '../';
 
   // define mock answers coming from the backend
   app.run(function($httpBackend) {

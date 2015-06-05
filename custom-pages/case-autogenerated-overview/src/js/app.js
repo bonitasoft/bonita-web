@@ -17,7 +17,7 @@
 
     var caseId = $location.search().id;
 
-    $http({ method: 'GET', url: '../../../../../../API/system/session/unusedId' })
+    $http({ method: 'GET', url: '../API/system/session/unusedId' })
     .success(function(data, status, headers) {
             $http.defaults.headers.common['X-Bonita-API-Token'] = headers('X-Bonita-API-Token');
             init();
