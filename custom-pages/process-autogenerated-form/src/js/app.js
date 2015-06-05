@@ -20,10 +20,10 @@
     $scope.process = {};
     $scope.message = undefined;
 
-    $scope.importUrl = '/bonita/API/formFileUpload';
+    $scope.importUrl = '../API/formFileUpload';
     $scope.filename = '';
 
-    $http({ method: 'GET', url: '/bonita/API/system/session/unusedId' })
+    $http({ method: 'GET', url: '../API/system/session/unusedId' })
         .success(function(data, status, headers) {
           $http.defaults.headers.common['X-Bonita-API-Token'] = headers('X-Bonita-API-Token');
           init();
