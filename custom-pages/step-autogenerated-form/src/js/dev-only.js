@@ -22,7 +22,7 @@
     //--------------------------------------------------------------
     $httpBackend.whenGET(/^templates\//).passThrough();
 
-    $httpBackend.whenGET('/bonita/API/system/session/unusedId').respond(function() {
+    $httpBackend.whenGET('../API/system/session/unusedId').respond(function() {
       console.log('Getting mock response for session.');
       return [200, session, {}];
     });
@@ -30,22 +30,22 @@
     //--------------------------------------------------------------
     //--------------------- Step contract  -------------------------
     //--------------------------------------------------------------
-    $httpBackend.whenGET('/bonita/API/bpm/userTask/'+2+'/contract').respond(function() {
+    $httpBackend.whenGET('../API/bpm/userTask/'+2+'/contract').respond(function() {
       console.log('Getting mock response for Step 2 Contract.');
       return [200, contractStep2, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/userTask/'+2+'/execution').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/userTask/'+2+'/execution').respond(function() {
       console.log('Getting mock response for execution of Step 2');
       return [204, {}, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/userTask/'+4+'/execution').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/userTask/'+4+'/execution').respond(function() {
       console.log('Getting mock ERROR response for execution of Step 4');
       return [400, step4ExecutionFailed, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/userTask/'+5+'/execution').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/userTask/'+5+'/execution').respond(function() {
       console.log('Getting mock ERROR response for execution of Step 5');
       return [500, step5ExecutionFailed, {}];
     });
@@ -124,27 +124,27 @@
     //-----------------------------------------------------------------
     //--------------------- Process contract  -------------------------
     //-----------------------------------------------------------------
-    $httpBackend.whenGET('/bonita/API/bpm/process/'+2).respond(function() {
+    $httpBackend.whenGET('../API/bpm/process/'+2).respond(function() {
       console.log('Getting mock response for Process 2.');
       return [200, process2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/process/'+2+'/contract').respond(function() {
+    $httpBackend.whenGET('../API/bpm/process/'+2+'/contract').respond(function() {
       console.log('Getting mock response for Process 2 Contract.');
       return [200, contractProcess2, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/process/'+2+'/instantiation').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/process/'+2+'/instantiation').respond(function() {
       console.log('Getting mock response for Process 2 instantiation');
       return [204, {}, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/process/'+4+'/instantiation').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/process/'+4+'/instantiation').respond(function() {
       console.log('Getting mock ERROR response for Process 4 instantiation');
       return [400, process4InstantiationFailed, {}];
     });
 
-    $httpBackend.whenPOST('/bonita/API/bpm/process/'+5+'/instantiation').respond(function() {
+    $httpBackend.whenPOST('../API/bpm/process/'+5+'/instantiation').respond(function() {
       console.log('Getting mock ERROR response for Process 5 instantiation');
       return [500, process5InstantiationFailed, {}];
     });
@@ -391,7 +391,7 @@
     //---------------------  Human Tasks  -------------------------
     //-------------------------------------------------------------
 
-    $httpBackend.whenGET('/bonita/API/bpm/humanTask/'+2).respond(function() {
+    $httpBackend.whenGET('../API/bpm/humanTask/'+2).respond(function() {
       console.log('Getting mock response for Human Task 2.');
       return [200, step2, {}];
     });
@@ -404,47 +404,47 @@
     // http://localhost:8080/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3Dindex&o=reached_state_date+DESC&p=0
     //[{'displayDescription:'','executedBySubstitute:'26','processId:'8902137890939378455','parentCaseId:'1024','state:'completed','rootContainerId:'1024','type:'USER_TASK','assigned_id:'26','id:'80105','sourceObjectId:'20085','executedBy:{'last_connection:'2015-04-01 14:54:27.483','created_by_user_id:'-1','creation_date:'2015-03-30 17:20:16.052','id:'26','icon:'/default/icon_user.png','enabled:'true','title:'Mr','manager_id:'25','job_title:'Human resources benefits','userName:'walter.bates','lastname:'Bates','firstname:'Walter','password:'','last_update_date:'2015-03-30 17:20:16.052'},'caseId:'1024','priority:'normal','actorId:'115','description:'','name:'Ticket review','reached_state_date:'2015-03-31 14:35:54.918','rootCaseId:'1024','archivedDate:'2015-03-31 14:35:54.936','displayName:'Ticket review','dueDate:'2015-03-31 15:34:18.937','last_update_date:'2015-03-31 14:35:54.918'}]
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+2+'&o=reached_state_date+DESC&p=0').respond(function() {
+    $httpBackend.whenGET('../API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+2+'&o=reached_state_date+DESC&p=0').respond(function() {
       console.log('Getting mock response for archivedHumanTask.');
       return [200, archivedHumanTask, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/' + 2 + '/context').respond(function() {
+    $httpBackend.whenGET('../API/bpm/case/' + 2 + '/context').respond(function() {
       console.log('Getting mock response for context.');
       return [200, caseContext, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/BusinessData/com.acme.object.Ticket/7').respond(function() {
+    $httpBackend.whenGET('../API/bdm/BusinessData/com.acme.object.Ticket/7').respond(function() {
       console.log('Getting mock response for business Data: Ticket 7.');
       return [200, Ticket7, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/BusinessData/com.acme.object.Ticket/8').respond(function() {
+    $httpBackend.whenGET('../API/bdm/BusinessData/com.acme.object.Ticket/8').respond(function() {
       console.log('Getting mock response for business Data: Ticket 8.');
       return [200, Ticket8, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/BusinessData/com.company.model.Client/2').respond(function() {
+    $httpBackend.whenGET('../API/bdm/BusinessData/com.company.model.Client/2').respond(function() {
       console.log('Getting mock response for business Data: Client 2.');
       return [200, Client2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bdm/BusinessData/com.acme.object.Ticket?q=findByIds&f=ids=100,101,102').respond(function() {
+    $httpBackend.whenGET('../API/bdm/BusinessData/com.acme.object.Ticket?q=findByIds&f=ids=100,101,102').respond(function() {
       console.log('Getting mock response for business Data: Tickets.');
       return [200, tickets, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/2').respond(function() {
+    $httpBackend.whenGET('../API/bpm/case/2').respond(function() {
       console.log('Getting mock response for case: Case2.');
       return [200, case2, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/case/4').respond(function() {
+    $httpBackend.whenGET('../API/bpm/case/4').respond(function() {
       console.log('Getting 404 mock response for case 4.');
       return [404, {}, {}];
     });
 
-    $httpBackend.whenGET('/bonita/API/bpm/archivedCase/4').respond(function() {
+    $httpBackend.whenGET('../API/bpm/archivedCase/4').respond(function() {
       console.log('Getting mock response for archived case: Case4.');
       return [200, archivedCased4, {}];
     });
