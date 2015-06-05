@@ -171,18 +171,19 @@ public class LivingApplicationPageServletTest {
         hsRequest.setPathInfo("/AppToken/htmlexample/content/css/file.css");
         final File pageDir = new File("/pageDir");
         given(resourceRenderer.getPathSegments("/AppToken/htmlexample/content/css/file.css")).willReturn(Arrays.asList("AppToken", "htmlexample", "content", "css", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("customPage_"+"htmlexample", 1L);
+        final String pageName = "customPage_htmlexample";
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         doReturn(applicationPage).when(applicationAPI).getApplicationPage("AppToken","htmlexample");
         doReturn(2L).when(applicationPage).getPageId();
         doReturn(page).when(pageAPI).getPage(2L);
-        doReturn("customPage_"+"htmlexample").when(page).getName();
+        doReturn(pageName).when(page).getName();
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"));
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"), apiSession, pageName);
     }
 
     @Test(expected=ServletException.class)

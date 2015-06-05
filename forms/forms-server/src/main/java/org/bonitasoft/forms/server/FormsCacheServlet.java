@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
@@ -196,7 +196,7 @@ public class FormsCacheServlet extends HttpServlet {
     protected Map<String, Object> initContext(final HttpServletRequest request, final Map<String, Object> urlContext, final Locale userLocale)
             throws NoCredentialsInSessionException {
         final HttpSession httpSession = request.getSession();
-        final APISession apiSession = (APISession) httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         if (apiSession != null) {
             final Map<String, Object> context = new HashMap<String, Object>();
             context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
@@ -210,7 +210,7 @@ public class FormsCacheServlet extends HttpServlet {
 
     protected long getTenantID(final HttpServletRequest request) {
         final HttpSession httpSession = request.getSession();
-        final APISession aAPISession = (APISession) httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession aAPISession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         return aAPISession.getTenantId();
     }
 }

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -34,6 +33,7 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -63,7 +63,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     public static final String THEME_PATH_SEPARATOR = "/theme";
 
-    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
+    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(new CustomPageService());
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
@@ -89,7 +89,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
         final String pathInfo = request.getPathInfo();
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
 
         // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
         if (pathInfo.endsWith(RESOURCE_PATH_SEPARATOR)) {
@@ -125,7 +125,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                     } else {
                         final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
-                        resourceRenderer.renderFile(request, response, resourceFile);
+                        resourceRenderer.renderFile(request, response, resourceFile, apiSession, customPageName);
                     }
                 } catch (final Exception e) {
                     handleException(customPageName, e);

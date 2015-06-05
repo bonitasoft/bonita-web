@@ -24,15 +24,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.CharEncoding;
+import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
-import org.bonitasoft.console.common.server.login.datastore.UserCredentials;
+import org.bonitasoft.console.common.server.login.datastore.StandardCredentials;
+import org.bonitasoft.console.common.server.login.datastore.UserLogger;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -56,6 +61,12 @@ public class LoginServlet extends HttpServlet {
      */
     protected static final String LOGIN_FAIL_MESSAGE = "loginFailMessage";
 
+
+        /**
+     * the Tenant In maintenance message key
+     */
+    protected static final String TENANT_IN_MAINTENACE_MESSAGE = "tenantInMaintenanceMessage";
+
     /**
      * the URL param for the login page
      */
@@ -74,29 +85,35 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-        
+
         // force post request body to UTF-8
         try {
             request.setCharacterEncoding(CharEncoding.UTF_8);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             // should never appear
             throw new ServletException(e);
         }
-        
-        boolean redirectAfterLogin = hasRedirection(request);
-        String redirectURL = getRedirectUrl(request, redirectAfterLogin);
+
+        final boolean redirectAfterLogin = hasRedirection(request);
+        final String redirectURL = getRedirectUrl(request, redirectAfterLogin);
         try {
             doLogin(request);
-            final APISession apiSession = (APISession) request.getSession().getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+            final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
                 if (apiSession.isTechnicalUser() || TenantsManagementUtils.hasProfileForUser(apiSession)) {
                     response.sendRedirect(createRedirectUrl(request, redirectURL));
                 } else {
                     request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
-                    getServletContext().getRequestDispatcher(LoginManager.LOGIN_PAGE).forward(request, response);
+                    getServletContext().getRequestDispatcher(AuthenticationManager.LOGIN_PAGE).forward(request, response);
                 }
             }
+        } catch (final AuthenticationManagerNotFoundException e) {
+            final String message = "Can't get login manager";
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, message, e);
+            }
+            throw new ServletException(e);
         } catch (final LoginFailedException e) {
             handleLoginFailedException(request, response, redirectAfterLogin, e);
         } catch (final Exception e) {
@@ -105,7 +122,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private void handleLoginFailedException(final HttpServletRequest request, final HttpServletResponse response, boolean redirectAfterLogin,
+    private void handleLoginFailedException(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin,
             final LoginFailedException e) throws ServletException {
         // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
         if (redirectAfterLogin) {
@@ -113,7 +130,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
                 String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
                 if (loginURL == null) {
-                    loginURL = LoginManager.LOGIN_PAGE;
+                    loginURL = AuthenticationManager.LOGIN_PAGE;
                     getServletContext().getRequestDispatcher(loginURL).forward(request, response);
                 } else {
                     getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL)).forward(request, response);
@@ -132,13 +149,13 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private String getRedirectUrl(final HttpServletRequest request, boolean redirectAfterLogin) {
-        String redirectURL = request.getParameter(LoginManager.REDIRECT_URL);
+    private String getRedirectUrl(final HttpServletRequest request, final boolean redirectAfterLogin) {
+        String redirectURL = request.getParameter(AuthenticationManager.REDIRECT_URL);
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
-            redirectURL = LoginManager.DEFAULT_DIRECT_URL;
+            redirectURL = AuthenticationManager.DEFAULT_DIRECT_URL;
         } else {
             if (redirectURL != null) {
                 redirectURL = new URLProtector().protectRedirectUrl(redirectURL);
@@ -149,7 +166,7 @@ public class LoginServlet extends HttpServlet {
 
     private boolean hasRedirection(final HttpServletRequest request) {
         boolean redirectAfterLogin = true;
-        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
         if (redirectAfterLoginStr != null && Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
             redirectAfterLogin = false;
@@ -161,27 +178,44 @@ public class LoginServlet extends HttpServlet {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
-    /*
-     * Overriden in SP 
-     */
-    protected void doLogin(final HttpServletRequest request) throws LoginManagerNotFoundException, LoginFailedException, ServletException {
-        final long tenantId = getTenantId();
-        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        getLoginManager(tenantId).login(requestAccessor, createUserCredentials(tenantId, requestAccessor));
+    protected void doLogin(final HttpServletRequest request) throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException {
+        try {
+            final long tenantId = getTenantId(request);
+            final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
+            final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
+            final LoginManager loginManager = getLoginManager();
+            loginManager.login(requestAccessor, createUserLogger(), userCredentials);
+        } catch (final AuthenticationFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
+            }
+            throw new LoginFailedException(e);
+        } catch (final TenantStatusException e) {
+            request.setAttribute(TENANT_IN_MAINTENACE_MESSAGE, TENANT_IN_MAINTENACE_MESSAGE);
+            throw new LoginFailedException(TENANT_IN_MAINTENACE_MESSAGE, e);
+        }
     }
 
-    private UserCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
-        return new UserCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    protected LoginManager getLoginManager() {
+        return new LoginManager();
     }
 
-    private LoginManager getLoginManager(final long tenantId) throws LoginManagerNotFoundException {
-        return LoginManagerFactory.getLoginManager(tenantId);
+    protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
+        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    }
+
+    protected AuthenticationManager getLoginManager(final long tenantId) throws AuthenticationManagerNotFoundException {
+        return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+    }
+
+    protected UserLogger createUserLogger() {
+        return new UserLogger();
     }
 
     /*
      * protected for testing
      */
-    protected long getTenantId() throws ServletException {
+    protected long getTenantId(final HttpServletRequest request) throws ServletException {
         long tenantId = -1L;
         try {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),

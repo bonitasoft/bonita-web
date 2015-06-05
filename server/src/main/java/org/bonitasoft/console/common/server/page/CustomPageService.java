@@ -96,6 +96,12 @@ public class CustomPageService {
         return buildPageClassloader(apiSession, pageResourceProvider);
     }
 
+    public void ensurePageFolderIsUpToDate(final APISession apiSession, String pageName) throws BonitaException, IOException {
+        final Page page = getPageAPI(apiSession).getPageByName(pageName);
+        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
+        ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+    }
+
     public void ensurePageFolderIsUpToDate(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
         final File pageFolder = pageResourceProvider.getPageDirectory();
         if (!pageResourceProvider.getPageDirectory().exists()) {

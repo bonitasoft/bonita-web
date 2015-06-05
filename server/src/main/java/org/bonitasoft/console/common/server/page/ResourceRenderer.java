@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 /**
@@ -44,13 +45,24 @@ public class ResourceRenderer {
      */
     private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
 
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile)
+    private final CustomPageService customPageService;
+
+    private ResourceRenderer(CustomPageService customPageService) {
+        this.customPageService = customPageService;
+    }
+
+    public static ResourceRenderer resourceRendererFactory(CustomPageService customPageService) {
+        return new ResourceRenderer(customPageService);
+    }
+
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, APISession apiSession, String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
         response.setCharacterEncoding("UTF-8");
 
         try {
+            customPageService.ensurePageFolderIsUpToDate(apiSession,pageName);
             content = getFileContent(resourceFile, response);
 
             response.setContentType(request.getSession().getServletContext()

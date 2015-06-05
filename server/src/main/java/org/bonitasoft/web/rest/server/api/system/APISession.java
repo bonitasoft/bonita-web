@@ -17,8 +17,8 @@ package org.bonitasoft.web.rest.server.api.system;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.console.common.server.login.LoginManagerProperties;
-import org.bonitasoft.console.common.server.login.LoginManagerPropertiesFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
@@ -36,7 +36,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
  */
 public class APISession extends ConsoleAPI<SessionItem> {
 
-    public static final LoginManagerPropertiesFactory loginManagerPropertiesFactory = new LoginManagerPropertiesFactory();
+    public static final AuthenticationManagerPropertiesFactory loginManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     @Override
     protected SessionDefinition defineItemDefinition() {
@@ -88,7 +88,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
                 .build();
         // TODO restrict the current user from being able to call the logout directly as a profileEntry (is it possible)?
         if (isLogoutDisabled(session.getTenantId())) {
-            rights.add(LoginManagerProperties.LOGOUT_DISABLED);
+            rights.add(AuthenticationManagerProperties.LOGOUT_DISABLED);
         }
         return JSonSerializer.serialize(rights);
     }

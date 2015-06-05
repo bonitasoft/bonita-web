@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -34,9 +34,9 @@ import org.bonitasoft.engine.session.PlatformSession;
 
 /**
  * Servlet used to logout from the applications
- * 
+ *
  * @author Ruiheng Fan
- * 
+ *
  */
 public class PlatformLogoutServlet extends HttpServlet {
 
@@ -91,7 +91,7 @@ public class PlatformLogoutServlet extends HttpServlet {
         session.removeAttribute(PlatformLoginServlet.PLATFORMSESSION);
         session.invalidate();
 
-        final String redirectAfterLoginStr = request.getParameter(LoginManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
         if (!Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
             response.sendRedirect(PLATFORM_LOGIN_PAGE);

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,13 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.sso.InternalSSOManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Yongtao Guo
- * 
+ *
  */
 public class RedirectServlet extends HttpServlet {
 
@@ -70,7 +70,7 @@ public class RedirectServlet extends HttpServlet {
 
         final String redirectURL = request.getParameter(REDIRECT_URL_PARAM);
         final HttpSession httpSession = request.getSession();
-        final APISession aAPISession = (APISession) httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession aAPISession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         if (aAPISession != null) {
             // InternalSSO
             final String userToken = InternalSSOManager.getInstance().add(aAPISession);
@@ -96,7 +96,7 @@ public class RedirectServlet extends HttpServlet {
 
     /**
      * Build the redirection URL
-     * 
+     *
      * @param redirectURL
      * @param locale
      * @param temporaryToken
