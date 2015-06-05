@@ -19,10 +19,11 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import javax.servlet.ServletException;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.LoginManagerFactory;
-import org.bonitasoft.console.common.server.login.LoginManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 
 /**
@@ -38,13 +39,17 @@ public abstract class AuthenticationRule {
     public abstract boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException;
 
     // protected for purpose of testing but engine could really provide a singleton
-    protected LoginManager getLoginManager(final long tenantId) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
         try {
             // should really not use the static like.
-            return LoginManagerFactory.getLoginManager(tenantId);
-        } catch (final LoginManagerNotFoundException e) {
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+        } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
+    }
+
+    protected LoginManager getLoginManager() {
+        return new LoginManager();
     }
 
 }

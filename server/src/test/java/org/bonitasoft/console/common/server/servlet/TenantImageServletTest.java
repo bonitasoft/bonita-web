@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.junit.After;
@@ -51,7 +51,7 @@ public class TenantImageServletTest {
         tenantImageServlet.setDirectoryPath("./temp");
 
         when(req.getSession()).thenReturn(httpSession);
-        when(httpSession.getAttribute(LoginManager.API_SESSION_PARAM_KEY)).thenReturn(session);
+        when(httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY)).thenReturn(session);
         when(session.getTenantId()).thenReturn(1L);
 
         try {

@@ -38,9 +38,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.NotFoundException;
@@ -77,7 +77,7 @@ public class RestAPIAuthorizationFilterTest {
     public void before() {
         doReturn(httpSession).when(request).getSession();
         doReturn("").when(request).getQueryString();
-        doReturn(apiSession).when(httpSession).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(1l).when(apiSession).getTenantId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn("john").when(apiSession).getUserName();
@@ -90,7 +90,7 @@ public class RestAPIAuthorizationFilterTest {
 
     private Set<String> initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy, final Set<String> permissions) throws ServletException {
         doReturn("GET").when(request).getMethod();
-        doReturn(permissions).when(httpSession).getAttribute(LoginManager.PERMISSIONS_SESSION_PARAM_KEY);
+        doReturn(permissions).when(httpSession).getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         doReturn(resourcesPermissionsMapping).when(restAPIAuthorizationFilterSpy).getResourcesPermissionsMapping(1);
         doReturn(dynamicPermissionsChecks).when(restAPIAuthorizationFilterSpy).getDynamicPermissionsChecks(1);
         doReturn("").when(restAPIAuthorizationFilterSpy).getRequestBody(request);
@@ -488,7 +488,7 @@ public class RestAPIAuthorizationFilterTest {
 
     @Test
     public void should_checkValidCondition_check_unauthorized_if_no_tenant_session() throws ServletException {
-        doReturn(null).when(httpSession).getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        doReturn(null).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
         //when
         final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);

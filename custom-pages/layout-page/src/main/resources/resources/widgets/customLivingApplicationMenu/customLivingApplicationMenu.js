@@ -18,7 +18,7 @@ angular.module('org.bonitasoft.pagebuilder.widgets')
     }
     
     this.filterChildren = function (parentId) {
-        return ctrl.applicationMenuList.filter(function(menu){
+        return (ctrl.applicationMenuList||[]).filter(function(menu){
             return menu.parentMenuId === '' + parentId;
         });
         

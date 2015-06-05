@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
@@ -55,15 +55,17 @@ public class PageServlet extends HttpServlet {
 
     public static final String API_PATH_SEPARATOR = "/API";
 
-    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
-
-    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
-
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected PageMappingService pageMappingService = new PageMappingService();
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
+
+    protected CustomPageService customPageService = new CustomPageService();
+
+    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(customPageService);
+
+    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
     @Override
     protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -81,7 +83,7 @@ public class PageServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         final HttpSession session = request.getSession();
-        final APISession apiSession = (APISession) session.getAttribute(LoginManager.API_SESSION_PARAM_KEY);
+        final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final String pathInfo = request.getPathInfo();
         // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
         if (pathInfo.endsWith(RESOURCE_PATH_SEPARATOR)) {
@@ -140,13 +142,13 @@ public class PageServlet extends HttpServlet {
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final Long pageId, final String resourcePath)
+                                         final Long pageId, final String resourcePath)
             throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
             if (isNotResourcePath(resourcePath)) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId);
             } else {
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath));
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession, customPageService.getPage(apiSession,pageId).getName());
             }
         } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {

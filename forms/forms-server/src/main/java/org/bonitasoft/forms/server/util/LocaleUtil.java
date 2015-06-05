@@ -6,7 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.login.LoginManager;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.web.rest.model.user.User;
 
 public class LocaleUtil {
@@ -42,7 +42,7 @@ public class LocaleUtil {
     public String getLocale(final HttpServletRequest request) {
         String localeStr = null;
         final HttpSession session = request.getSession();
-        final User user = (User) session.getAttribute(LoginManager.USER_SESSION_PARAM_KEY);
+        final User user = (User) session.getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
         if (user != null) {
             localeStr = getFormLocale(request);
         }
