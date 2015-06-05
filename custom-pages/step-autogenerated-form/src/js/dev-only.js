@@ -22,6 +22,10 @@
     //--------------------------------------------------------------
     $httpBackend.whenGET(/^templates\//).passThrough();
 
+    $httpBackend.whenGET('/bonita/API/system/session/unusedId').respond(function() {
+      console.log('Getting mock response for session.');
+      return [200, session, {}];
+    });
 
     //--------------------------------------------------------------
     //--------------------- Step contract  -------------------------
@@ -45,6 +49,16 @@
       console.log('Getting mock ERROR response for execution of Step 5');
       return [500, step5ExecutionFailed, {}];
     });
+
+    var session = {
+      user_name: 'walter.bates',
+      session_id: '6828327860732619327',
+      is_technical_user: 'false',
+      user_id: '4',
+      conf: ['27AEAAC83E32421B114AF21F1380F2A2F0E169D3'],
+      copyright:'Bonitasoft © 2015',
+      'version': '7.0.0-SNAPSHOT'
+    }
 
     var step5ExecutionFailed = {
       'exception':'class org.bonitasoft.engine.bpm.process.ProcessExecutionException','message':'USERNAME=walter.bates | org.bonitasoft.engine.core.process.instance.api.exceptions.SProcessInstanceCreationException: PROCESS_DEFINITION_ID=7374665373110548746 | PROCESS_NAME=GettingStartedPool | PROCESS_VERSION=1.0 | org.bonitasoft.engine.expression.exception.SExpressionEvaluationException: Groovy script throws an exception of type class java.lang.NumberFormatException with message = For input string: \'bjh\'\nExpression : SExpressionImpl [name=initBD, content=import com.company.model.TravelRequest;\n\nfinal TravelRequest tr = new TravelRequest();\ntr.setApprovalNumber(Long.valueOf(approvalNumber));\n//tr.setDepartureDate(new Date());\ntr.setDestination(destination);\ntr.setHotelNeeded(Boolean.valueOf(hotelNeeded));\ntr.setNumberOfNights(Integer.valueOf(numberOfNights));\ntr.setPreApproved(Boolean.valueOf(preApproved));\ntr.setReasonForTravel(reasonForTravel);\nreturn tr;, returnType=com.company.model.TravelRequest, dependencies=[SExpressionImpl [name=reasonForTravel, content=reasonForTravel, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=numberOfNights, content=numberOfNights, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=destination, content=destination, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=preApproved, content=preApproved, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]], SExpressionImpl [name=hotelNeeded, content=hotelNeeded, returnType=java.lang.String, dependencies=[], expressionKind=ExpressionKind [interpreter=NONE, type=TYPE_CONTRACT_INPUT]]], expressionKind=ExpressionKind [interpreter=GROOVY, type=TYPE_READ_ONLY_SCRIPT]]'

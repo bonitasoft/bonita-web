@@ -10,12 +10,7 @@
     'org.bonitasoft.common.filters.stringTemplater'
   ]);
 
-  app.controller('MainCtrl', ['$scope','$location', 'contractSrvc','$window', 'humanTaskAPI', 'gettextCatalog', 'i18nService', function ($scope, $location, contractSrvc, $window, humanTaskAPI, gettextCatalog, i18nService) {
-
-    i18nService.then(function(){
-      $scope.i18nLoaded = true;
-    });
-
+  app.controller('MainCtrl', ['$scope','$location', 'contractSrvc','$window', 'humanTaskAPI', 'gettextCatalog', 'i18nService', '$http', function ($scope, $location, contractSrvc, $window, humanTaskAPI, gettextCatalog, i18nService, $http) {
 
     var taskId = $location.search().id;
 
@@ -29,13 +24,26 @@
     $scope.filename = '';
 
 
-    contractSrvc.fetchContract(taskId).then(function (result) {
-      $scope.contract = result.data;
-    });
+    $http({ method: 'GET', url: '/bonita/API/system/session/unusedId' })
+      .success(function(data, status, headers) {
+          $http.defaults.headers.common['X-Bonita-API-Token'] = headers('X-Bonita-API-Token');
+          init();
+      }
+    );
 
-    humanTaskAPI.get({id:taskId}, function (result) {
-      $scope.task = result;
-    });
+    var init = function() {
+        i18nService.then(function(){
+            $scope.i18nLoaded = true;
+        });
+
+        contractSrvc.fetchContract(taskId).then(function (result) {
+            $scope.contract = result.data;
+        });
+
+        humanTaskAPI.get({id:taskId}, function (result) {
+            $scope.task = result;
+        });
+    };
 
     var jsonify = function (data) {
       var jsonified = {};
