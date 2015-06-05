@@ -42,7 +42,9 @@ import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentExceptio
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
+import org.bonitasoft.engine.page.PageSearchDescriptor;
 import org.bonitasoft.engine.page.PageUpdater;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
@@ -66,7 +68,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 
 public class PageDatastore extends CommonDatastore<PageItem, Page> implements DatastoreHasAdd<PageItem>, DatastoreHasUpdate<PageItem>,
-        DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
+DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     private static final String INDEX_GROOVY = "Index.groovy";
 
@@ -207,7 +209,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
     }
 
     protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException,
-            UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
+    UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
 
         try {
             final byte[] zipContent = readZipFile(zipFile);
@@ -307,8 +309,21 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
 
     protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders, getSearchDescriptorConverter()), new Filters(filters,
+
+        final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
+                getSearchDescriptorConverter()), new Filters(filters,
                 new PageFilterCreator(getSearchDescriptorConverter())));
+        final SearchOptionsBuilder builder = searchOptionsCreator.getBuilder();
+
+        if (filters.containsKey(PageItem.FILTER_CONTENT_TYPE)
+                && "processPage".equalsIgnoreCase(filters.get(PageSearchDescriptor.CONTENT_TYPE))) {
+            builder.leftParenthesis().filter(PageSearchDescriptor.CONTENT_TYPE, "form")
+            .or().filter(PageSearchDescriptor.CONTENT_TYPE, "page")
+            .rightParenthesis();
+        } else {
+            addStringFilterToSearchBuilder(filters, builder, PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE);
+        }
+        return searchOptionsCreator;
     }
 
     /**
@@ -373,7 +388,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page> implements Da
     }
 
     protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
-            CompilationFailedException, BonitaException {
+    CompilationFailedException, BonitaException {
         if (zipFile != null) {
             final Long pageId = id.toLong();
             customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
