@@ -93,6 +93,10 @@
       return (input.type=='FILE');
     };
 
+    $scope.isDateInput = function isDateInput(input) {
+        return (input.type=='DATE');
+    };
+    
     $scope.inputType2HTML = function inputType2HTML(input) {
       var result;
 
