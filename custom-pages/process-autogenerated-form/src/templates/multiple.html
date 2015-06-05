@@ -4,7 +4,7 @@
         <div>
             <div class="repeatable-input-group" ng-repeat="multipleInput in inputArray" ng-init="formInputName=multipleInput.name+'_'+$index">
                 <div ng-class="{'input-group': hasSeveralItemsInCollection(input)}">
-                    <input type="{{inputType2HTML(input)}}" class="form-control input" id="{{formInputName}}" name="{{formInputName}}" ng-model="outputData[$index]" placeholder="{{'Expecting a {} value.' | translate | stringTemplater:multipleInput.type}}">
+                    <input type="{{inputType2HTML(input)}}" class="form-control input" id="{{formInputName}}" name="{{formInputName}}" ng-model="outputData[$index]" placeholder="{{'Expecting a {} value.' | translate | stringTemplater:multipleInput.type}}{{isDateInput(multipleInput)?' (2015-05-31)':''}}">
                     <div ng-class="{'input-group-btn': hasSeveralItemsInCollection(input)}">
                         <input type="button" class="btn btn-danger " value="{{'remove'|translate}}" ng-click="removeInput(multipleInput, $index)" ng-if="hasSeveralItemsInCollection(input)">
                     </div>
