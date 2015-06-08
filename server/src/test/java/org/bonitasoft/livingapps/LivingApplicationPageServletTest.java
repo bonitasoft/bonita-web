@@ -183,7 +183,9 @@ public class LivingApplicationPageServletTest {
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, new File(pageDir, File.separator+"resources"+File.separator+"css"+File.separator+"file.css"), apiSession, pageName);
+        verify(pageRenderer, times(1)).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse,
+                new File(pageDir, File.separator + "resources" + File.separator + "css" + File.separator + "file.css"), apiSession);
     }
 
     @Test(expected=ServletException.class)

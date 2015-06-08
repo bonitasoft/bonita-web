@@ -61,9 +61,7 @@ public class PageServlet extends HttpServlet {
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
-    protected CustomPageService customPageService = new CustomPageService();
-
-    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(customPageService);
+    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
@@ -148,7 +146,7 @@ public class PageServlet extends HttpServlet {
             if (isNotResourcePath(resourcePath)) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId);
             } else {
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession, customPageService.getPage(apiSession,pageId).getName());
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession);
             }
         } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -174,6 +172,7 @@ public class PageServlet extends HttpServlet {
             }
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
+        pageRenderer.ensurePageFolderIsPresent(apiSession, pageResourceProvider);
         return resourceFile;
     }
 
