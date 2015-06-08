@@ -125,7 +125,7 @@ public class PageServletTest {
     @Test
     public void should_display_customPage_resource() throws Exception {
         //given
-        String pageName="custompage_name";
+        final String pageName="custompage_name";
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/path/of/resource.css");
         final PageReference pageReference = new PageReference(PAGE_ID, null);
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, false)).thenReturn(pageReference);
@@ -144,7 +144,8 @@ public class PageServletTest {
         //then
         verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
         verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession, pageName);
+        verify(pageRenderer, times(1)).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
     }
 
     @Test

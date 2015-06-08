@@ -49,7 +49,7 @@ public class CustomPageServlet extends HttpServlet {
 
     public static final String APP_TOKEN_PARAM = "appToken";
 
-    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(new CustomPageService());
+    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
@@ -90,7 +90,8 @@ public class CustomPageServlet extends HttpServlet {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageName);
             } else {
                 final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
-                resourceRenderer.renderFile(request, response, resourceFile, apiSession, pageName);
+                pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId()));
+                resourceRenderer.renderFile(request, response, resourceFile, apiSession);
             }
 
         } catch (final Exception e) {

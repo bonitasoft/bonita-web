@@ -45,24 +45,13 @@ public class ResourceRenderer {
      */
     private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
 
-    private final CustomPageService customPageService;
-
-    private ResourceRenderer(CustomPageService customPageService) {
-        this.customPageService = customPageService;
-    }
-
-    public static ResourceRenderer resourceRendererFactory(CustomPageService customPageService) {
-        return new ResourceRenderer(customPageService);
-    }
-
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, APISession apiSession, String pageName)
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
         response.setCharacterEncoding("UTF-8");
 
         try {
-            customPageService.ensurePageFolderIsUpToDate(apiSession,pageName);
             content = getFileContent(resourceFile, response);
 
             response.setContentType(request.getSession().getServletContext()

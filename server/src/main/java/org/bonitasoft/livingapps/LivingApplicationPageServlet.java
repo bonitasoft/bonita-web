@@ -63,7 +63,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     public static final String THEME_PATH_SEPARATOR = "/theme";
 
-    protected ResourceRenderer resourceRenderer = ResourceRenderer.resourceRendererFactory(new CustomPageService());
+    protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
@@ -125,7 +125,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                     } else {
                         final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
-                        resourceRenderer.renderFile(request, response, resourceFile, apiSession, customPageName);
+                        pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName, apiSession.getTenantId()));
+                        resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                     }
                 } catch (final Exception e) {
                     handleException(customPageName, e);

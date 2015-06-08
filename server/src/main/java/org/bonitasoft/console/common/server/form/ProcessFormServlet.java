@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
-import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageServlet;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
@@ -75,7 +74,7 @@ public class ProcessFormServlet extends HttpServlet {
 
     protected ProcessFormService processFormService = new ProcessFormService();
 
-    private final ResourceRenderer resourceRenderer= ResourceRenderer.resourceRendererFactory(new CustomPageService());
+    private final ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 
