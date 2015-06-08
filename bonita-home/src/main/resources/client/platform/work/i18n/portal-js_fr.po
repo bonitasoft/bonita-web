@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-01 03:37-0400\n"
+"PO-Revision-Date: 2015-06-04 03:20-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1317,6 +1317,9 @@ msgstr "{{role}} de {{group}} a été créée"
 
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
+
+msgid "{{nbMapping}} Process manager mappings could not be deleted"
+msgstr "{{nbMapping}} Process manager mappings could not be deleted"
 
 msgid "{{nbMapping}} Process manager mappings have been deleted"
 msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été supprimés"

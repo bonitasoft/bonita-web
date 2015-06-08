@@ -1384,10 +1384,10 @@ msgstr ""
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr ""
 
-msgid "{{nbMapping}} Process manager mappings could not be deleted"
+msgid "{{nbMapping}} Process manager mappings could not be updated"
 msgstr ""
 
-msgid "{{nbMapping}} Process manager mappings have been deleted"
+msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr ""
 
 msgid "{{nbOfDeletedCases}} case deleted"
