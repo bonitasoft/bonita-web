@@ -2735,8 +2735,8 @@
             "key": "Start"
         }];
 
-        $httpBackend.whenGET('/bonita/API/system/i18ntranslation?f=locale%3Dfr').respond(french);
-        $httpBackend.whenGET('/bonita/API/system/i18ntranslation?f=locale%3Den').respond(function() {
+        $httpBackend.whenGET('../API/system/i18ntranslation?f=locale%3Dfr').respond(french);
+        $httpBackend.whenGET('../API/system/i18ntranslation?f=locale%3Den').respond(function() {
             console.log('Getting french translations for english');
             return [200, french, {}];
         });

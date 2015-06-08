@@ -6,7 +6,7 @@
    * @description
    * Define the resources accessible from the Bonita API
    */
-  var ROOT_PATH = '../../../../../../';
+  var ROOT_PATH = '../';
   var API_PATH = ROOT_PATH + 'API/';
 
   /**

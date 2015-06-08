@@ -14,6 +14,16 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.codehaus.jettison.json.JSONObject;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,17 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Servlet allowing to upload a File.
@@ -182,7 +181,7 @@ public abstract class FileUploadServlet extends HttpServlet {
             responseString = uploadedFile.getName();
         }
         if (alsoReturnOriginalFilename) {
-            responseString = responseString + RESPONSE_SEPARATOR + fileName;
+            responseString = responseString + RESPONSE_SEPARATOR + getFilenameLastSegment(fileName);
         }
         return responseString;
     }
@@ -190,7 +189,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     protected String generateResponseJson(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
         final Map<String, String> responseMap = new HashMap<String, String>();
         if (alsoReturnOriginalFilename) {
-            responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, fileName);
+            responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
         }
         if (returnFullPathInResponse) {
             responseMap.put(TEMP_PATH_RESPONSE_ATTRIBUTE, uploadedFile.getPath());
@@ -201,18 +200,27 @@ public abstract class FileUploadServlet extends HttpServlet {
     }
 
     protected File makeUniqueFilename(final File targetDirectory, final String fileName) throws IOException {
+        final File uploadedFile = File.createTempFile("tmp_", getExtension(fileName), targetDirectory);
+        uploadedFile.deleteOnExit();
+        return uploadedFile;
+    }
+
+    protected String getExtension(String fileName) {
         String extension = "";
+        String filenameLastSegment = getFilenameLastSegment(fileName);
+        final int dotPos = filenameLastSegment.lastIndexOf('.');
+        if (dotPos > -1) {
+            extension = filenameLastSegment.substring(dotPos);
+        }
+        return extension;
+    }
+
+    protected String getFilenameLastSegment(String fileName) {
         int slashPos = fileName.lastIndexOf("/");
         if (slashPos == -1) {
             slashPos = fileName.lastIndexOf("\\");
         }
-        final int dotPos = fileName.lastIndexOf('.');
-        if (dotPos > slashPos && dotPos > -1) {
-            extension = fileName.substring(dotPos);
-        }
-        final File uploadedFile = File.createTempFile("tmp_", extension, targetDirectory);
-        uploadedFile.deleteOnExit();
-        return uploadedFile;
+        return fileName.substring(slashPos+1);
     }
 
     protected void outputMediaTypeError(final HttpServletResponse response, final PrintWriter responsePW) {

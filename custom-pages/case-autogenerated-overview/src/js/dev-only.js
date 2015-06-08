@@ -6,7 +6,7 @@
   /* Make the module depends on a Mock Backend to simulate API calls. */
   var app = angular.module('devMode', ['ngMockE2E']);
 
-  var ROOT_PATH = '../../../../../../';
+  var ROOT_PATH = '../';
 
   // define mock answers coming from the backend
   app.run(function($httpBackend) {
@@ -22,6 +22,11 @@
     //-----------------------------------------------------------------------------------
     // http://localhost:8080/API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3Dindex&o=reached_state_date+DESC&p=0
     //[{'displayDescription:'','executedBySubstitute:'26','processId:'8902137890939378455','parentCaseId:'1024','state:'completed','rootContainerId:'1024','type:'USER_TASK','assigned_id:'26','id:'80105','sourceObjectId:'20085','executedBy':{'last_connection:'2015-04-01 14:54:27.483','created_by_user_id:'-1','creation_date:'2015-03-30 17:20:16.052','id:'26','icon:'/default/icon_user.png','enabled:'true','title:'Mr','manager_id:'25','job_title:'Human resources benefits','userName:'walter.bates','lastname:'Bates','firstname:'Walter','password:'','last_update_date:'2015-03-30 17:20:16.052'},'caseId:'1024','priority:'normal','actorId:'115','description:'','name:'Ticket review','reached_state_date:'2015-03-31 14:35:54.918','rootCaseId:'1024','archivedDate:'2015-03-31 14:35:54.936','displayName:'Ticket review','dueDate:'2015-03-31 15:34:18.937','last_update_date:'2015-03-31 14:35:54.918'}]
+
+    $httpBackend.whenGET(ROOT_PATH + 'API/system/session/unusedId').respond(function() {
+      console.log('Getting mock response for session.');
+      return [200, session, {}];
+    });
 
     $httpBackend.whenGET(ROOT_PATH + 'API/bpm/archivedHumanTask?c=50&d=executedBy&f=caseId%3D'+2+'&o=reached_state_date+DESC&p=0').respond(function() {
       console.log('Getting mock response for archivedHumanTask.');
@@ -72,6 +77,16 @@
       console.log('Getting mock response for archived case: Case4.');
       return [200, archivedCased4, {}];
     });
+
+    var session = {
+        user_name: 'walter.bates',
+        session_id: '6828327860732619327',
+        is_technical_user: 'false',
+        user_id: '4',
+        conf: ['27AEAAC83E32421B114AF21F1380F2A2F0E169D3'],
+        copyright:'Bonitasoft © 2015',
+        'version': '7.0.0-SNAPSHOT'
+    }
 
     var archivedCased4 = [{
       id: '4',
