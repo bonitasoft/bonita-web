@@ -97,7 +97,7 @@ public class PageRendererTest {
 
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, pageName);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class PageRendererTest {
 
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, pageName);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession);
     }
 
     @Test

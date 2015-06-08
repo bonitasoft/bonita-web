@@ -77,7 +77,9 @@ public class ApplicationRouter {
         } else {
             //Layout or theme resource file request
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
-            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session, getPageName(pathSegments, application));
+            pageRenderer
+                    .ensurePageFolderIsPresent(session, pageRenderer.getPageResourceProvider(getPageName(pathSegments, application), session.getTenantId()));
+            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session);
         }
     }
 
@@ -99,7 +101,7 @@ public class ApplicationRouter {
         return resourceFile;
     }
 
-    private String getPageName(List<String> pathSegments, ApplicationModel application) throws PageNotFoundException {
+    private String getPageName(final List<String> pathSegments, final ApplicationModel application) throws PageNotFoundException {
         String pageName;
         if (THEME_TOKEN.equals(pathSegments.get(1))) {
             pageName = application.getApplicationThemeName();
