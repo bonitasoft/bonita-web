@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-01 03:40-0400\n"
+"PO-Revision-Date: 2015-06-08 03:18-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -492,6 +492,9 @@ msgstr "Lista de formulario"
 msgid "Forms"
 msgstr "Formularios"
 
+msgid "Form cannot be empty"
+msgstr "Form cannot be empty"
+
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
 msgstr "General"
@@ -540,6 +543,9 @@ msgstr "Importar una aplicación"
 
 msgid "Internal"
 msgstr "Interno"
+
+msgid "Instantiation"
+msgstr "Instantiation"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
@@ -671,7 +677,7 @@ msgstr "No es un número válido!"
 
 #: main/features/admin/processes/details/startForModal.html:22
 msgid "OK"
-msgstr "Aprovado"
+msgstr "Aprobado"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:58
 msgid "One or more connectors on case start or case end failed"
@@ -766,7 +772,7 @@ msgstr "Perfil"
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:76
 #: main/features/admin/processes/details/process-managers-mapping.html:75
 msgid "Profiles"
-msgstr "Privilegios"
+msgstr "Perfiles"
 
 msgid "Ready, waiting instances"
 msgstr "Instancias listas, en espera"
@@ -1317,8 +1323,11 @@ msgstr "{{role}} de {{group}} ha sido creado"
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "{{nbErrors}} errores en la actualización de mapeos"
 
-msgid "{{nbMapping}} Process manager mappings have been deleted"
-msgstr "{{nbMapping}} mapeos de Gestor de Procesos han sido borrados"
+msgid "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "{{nbMapping}} Process manager mappings could not be updated"
+
+msgid "{{nbMapping}} Process manager mappings have been updated"
+msgstr "{{nbMapping}} Process manager mappings have been updated"
 
 msgid "{{nbOfDeletedCases}} case deleted"
 msgstr "{{nbOfDeletedCases}} caso eliminado"

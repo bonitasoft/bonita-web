@@ -90,7 +90,8 @@ public class CustomPageServlet extends HttpServlet {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageName);
             } else {
                 final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
-                resourceRenderer.renderFile(request, response, resourceFile);
+                pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId()));
+                resourceRenderer.renderFile(request, response, resourceFile, apiSession);
             }
 
         } catch (final Exception e) {

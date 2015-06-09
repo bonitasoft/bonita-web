@@ -16,14 +16,14 @@
       fetchContract: function (id) {
         // fetch contract from server
         return $http({
-          url: '/bonita/API/bpm/process/' + id + '/contract',
+          url: '../API/bpm/process/' + id + '/contract',
           method: 'GET'
         });
       },
       startProcess: function(id, dataToSend) {
         // submit data to start process on server
         return $http({
-          url: '/bonita/API/bpm/process/' + id + '/instantiation',
+          url: '../API/bpm/process/' + id + '/instantiation',
           method: 'POST',
           data: dataToSend,
           transformRequest: appendTransform($http.defaults.transformRequest, function(value, headers) {

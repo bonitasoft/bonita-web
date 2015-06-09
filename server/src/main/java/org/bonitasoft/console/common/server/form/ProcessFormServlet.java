@@ -74,7 +74,7 @@ public class ProcessFormServlet extends HttpServlet {
 
     protected ProcessFormService processFormService = new ProcessFormService();
 
-    private final ResourceRenderer resourceRenderer= new ResourceRenderer();
+    private final ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
 

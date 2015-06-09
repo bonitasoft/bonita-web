@@ -125,7 +125,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                     } else {
                         final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
-                        resourceRenderer.renderFile(request, response, resourceFile);
+                        pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName, apiSession.getTenantId()));
+                        resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                     }
                 } catch (final Exception e) {
                     handleException(customPageName, e);

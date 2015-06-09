@@ -77,12 +77,20 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInput_when_no_contract() throws Exception {
-        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition>emptyList());
         final Map<String, Serializable> input = new HashMap<>();
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(null, input, maxSizeForTenant, tenantId, false);
 
         assertThat(processedInput).isEqualTo(input);
+    }
+
+    @Test
+    public void getProcessedInput_when_null_input() throws Exception {
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, null, maxSizeForTenant, tenantId, false);
+
+        assertThat(processedInput).isEqualTo(new HashMap<>());
     }
 
     @Test

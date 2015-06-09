@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 /**
@@ -44,7 +45,7 @@ public class ResourceRenderer {
      */
     private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
 
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile)
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;

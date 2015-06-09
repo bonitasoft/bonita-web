@@ -515,6 +515,9 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
+msgid "Form cannot be empty"
+msgstr ""
+
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
 msgstr ""
@@ -562,6 +565,9 @@ msgid "Import an application"
 msgstr ""
 
 msgid "Internal"
+msgstr ""
+
+msgid "Instantiation"
 msgstr ""
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
@@ -1378,10 +1384,10 @@ msgstr ""
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr ""
 
-msgid "{{nbMapping}} Process manager mappings could not be deleted"
+msgid "{{nbMapping}} Process manager mappings could not be updated"
 msgstr ""
 
-msgid "{{nbMapping}} Process manager mappings have been deleted"
+msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr ""
 
 msgid "{{nbOfDeletedCases}} case deleted"

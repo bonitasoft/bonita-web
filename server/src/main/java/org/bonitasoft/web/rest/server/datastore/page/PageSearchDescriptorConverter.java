@@ -39,14 +39,19 @@ public class PageSearchDescriptorConverter implements AttributeConverter {
         mapping.put(PageItem.ATTRIBUTE_CREATED_BY_USER_ID, PageSearchDescriptor.INSTALLED_BY);
         mapping.put(PageItem.ATTRIBUTE_CREATION_DATE, PageSearchDescriptor.INSTALLATION_DATE);
         mapping.put(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, PageSearchDescriptor.LAST_MODIFICATION_DATE);
-        mapping.put(PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE);
+        //CONTENT_TYPE is managed differently in order to accept a OR with form and page
+        //mapping.put(PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE);
         mapping.put(PageItem.ATTRIBUTE_PROCESS_ID, PageSearchDescriptor.PROCESS_DEFINITION_ID);
         return mapping;
     }
 
     @Override
     public String convert(final String attribute) {
-        return MapUtil.getMandatory(mapping, attribute);
+        if (PageItem.FILTER_CONTENT_TYPE.equals(attribute)) {
+            return MapUtil.getValue(mapping, attribute, "");
+        } else {
+            return MapUtil.getMandatory(mapping, attribute);
+        }
     }
 
     protected final void extendsMapping(final Map<String, String> extension) {

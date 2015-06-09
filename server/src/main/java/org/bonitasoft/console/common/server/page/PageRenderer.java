@@ -60,12 +60,16 @@ public class PageRenderer {
 
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final long pageId)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
-
-        final PageResourceProvider pageResourceProvider = getPageResourceProvider(pageId, apiSession);
-        displayCustomPage(request, response, apiSession, pageResourceProvider);
+        displayCustomPage(request, response, apiSession, getPageResourceProvider(pageId, apiSession));
     }
 
-    private void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException, InstantiationException, IllegalAccessException {
+    public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
+        customPageService.ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+    }
+
+    private void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+            final PageResourceProvider pageResourceProvider) throws BonitaException, IOException, InstantiationException,
+            IllegalAccessException {
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         if (isGroovyPage(pageResourceProvider)) {
             displayGroovyPage(request, response, apiSession, pageResourceProvider);
@@ -80,11 +84,12 @@ public class PageRenderer {
         return indexGroovy.exists();
     }
 
-    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final PageResourceProvider pageResourceProvider)
+    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+            final PageResourceProvider pageResourceProvider)
             throws IOException, InstantiationException, BonitaException, IllegalAccessException {
 
         final File resourceFile = getIndexFile(pageResourceProvider, apiSession);
-        resourceRenderer.renderFile(request, response, resourceFile);
+        resourceRenderer.renderFile(request, response, resourceFile, apiSession);
     }
 
     private File getIndexFile(final PageResourceProvider pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
@@ -100,7 +105,8 @@ public class PageRenderer {
         return new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY);
     }
 
-    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final PageResourceProvider pageResourceProvider)
+    private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+            final PageResourceProvider pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
@@ -137,11 +143,9 @@ public class PageRenderer {
         return new PageResourceProvider(pageName, tenantId);
     }
 
-
     public PageResourceProvider getPageResourceProvider(final long pageId, final APISession apiSession) throws BonitaException {
         final Page page = customPageService.getPage(apiSession, pageId);
         return new PageResourceProvider(page, apiSession.getTenantId());
     }
-
 
 }

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-01 03:37-0400\n"
+"PO-Revision-Date: 2015-06-08 11:07-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -492,6 +492,9 @@ msgstr "Liste des formulaires"
 msgid "Forms"
 msgstr "Formulaires"
 
+msgid "Form cannot be empty"
+msgstr "Form cannot be empty"
+
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
 msgstr "Général"
@@ -540,6 +543,9 @@ msgstr "Importer une application"
 
 msgid "Internal"
 msgstr "Interne"
+
+msgid "Instantiation"
+msgstr "Instantiation"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
@@ -1318,8 +1324,11 @@ msgstr "{{role}} de {{group}} a été créée"
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
 
-msgid "{{nbMapping}} Process manager mappings have been deleted"
-msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été supprimés"
+msgid "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "{{nbMapping}} Process manager mappings could not be updated"
+
+msgid "{{nbMapping}} Process manager mappings have been updated"
+msgstr "{{nbMapping}} Process manager mappings have been updated"
 
 msgid "{{nbOfDeletedCases}} case deleted"
 msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"

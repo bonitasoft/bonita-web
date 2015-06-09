@@ -35,10 +35,13 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -65,54 +68,69 @@ public class ResourceRendererTest {
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
 
+    @Mock
+    private CustomPageService customPageService;
+
+    @Spy
+    @InjectMocks
     ResourceRenderer resourceRenderer;
+
+    @Mock
+    private APISession apiSession;
 
     @Before
     public void setup() throws IOException {
-        resourceRenderer = new ResourceRenderer();
+
+//        doReturn(customPageService).when(resourceRenderer).getCustomPageService();
+
         when(req.getSession()).thenReturn(httpSession);
         when(res.getOutputStream()).thenReturn(outputStream);
         when(httpSession.getServletContext()).thenReturn(servletContext);
     }
 
     @Test
-    public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException, InstantiationException {
-        final File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
+    public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException,
+            InstantiationException {
+        final File resourceFile = getResourceFile();
         final long contentLength = resourceFile.length();
         when(servletContext.getMimeType("file.css")).thenReturn("text/css");
-        resourceRenderer.renderFile(req, res, resourceFile);
+        resourceRenderer.renderFile(req, res, resourceFile, apiSession);
 
         verify(res).setCharacterEncoding("UTF-8");
         verify(servletContext).getMimeType("file.css");
         verify(res).setContentType("text/css");
-        verify(res).setContentLength((int)contentLength);
-        verify(res).setBufferSize((int)contentLength);
+        verify(res).setContentLength((int) contentLength);
+        verify(res).setBufferSize((int) contentLength);
         verify(res).setHeader("Cache-Control", "no-cache");
-        verify(outputStream).write(any(byte[].class), eq(0), eq((int)contentLength));
+        verify(outputStream).write(any(byte[].class), eq(0), eq((int) contentLength));
         verify(res).flushBuffer();
         verify(outputStream).close();
     }
 
-    @Test(expected = BonitaException.class)
-    public void renderFile_should_throw_bonita_exception_on_ioexception() throws BonitaException, URISyntaxException, IOException, IllegalAccessException, InstantiationException {
-        final File resourceFile = new File(ResourceRendererTest.class.getResource("file.css").toURI());
-        doThrow(new IOException()).when(outputStream).write(any(byte[].class), any(int.class), any(int.class));
-
-        resourceRenderer.renderFile(req, res, resourceFile);
+    private File getResourceFile() throws URISyntaxException {
+        return new File(ResourceRendererTest.class.getResource("file.css").toURI());
     }
 
+    @Test(expected = BonitaException.class)
+    public void renderFile_should_throw_bonita_exception_on_ioexception() throws BonitaException, URISyntaxException, IOException, IllegalAccessException,
+            InstantiationException {
+        final File resourceFile = getResourceFile();
+        doThrow(new IOException()).when(outputStream).write(any(byte[].class), any(int.class), any(int.class));
 
-    @Test(expected=BonitaException.class)
+        resourceRenderer.renderFile(req, res, resourceFile, apiSession);
+    }
+
+    @Test(expected = BonitaException.class)
     public void getResourceFile_should_throw_BonitaException_on_passing_null_resources_folder() throws
             Exception {
-        resourceRenderer.renderFile(req, res, null);
+        resourceRenderer.renderFile(req, res, null, apiSession);
     }
 
     @Test
     public void getResourceFile_should_sendError404_on_passing_none_existing_resources() throws
             Exception {
         final File noneExistingFile = new File("NoneExistingFile.css");
-        resourceRenderer.renderFile(req, res, noneExistingFile);
+        resourceRenderer.renderFile(req, res, noneExistingFile, apiSession);
         verify(res).sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the resource file " + noneExistingFile.getName());
     }
 
@@ -121,7 +139,7 @@ public class ResourceRendererTest {
         when(req.getPathInfo()).thenReturn("a/b");
 
         final List<String> tokens = resourceRenderer.getPathSegments("a/b");
-        assertThat(tokens).hasSize(2).containsExactly("a","b");
+        assertThat(tokens).hasSize(2).containsExactly("a", "b");
     }
 
     @Test
@@ -129,7 +147,7 @@ public class ResourceRendererTest {
         when(req.getPathInfo()).thenReturn("a//b");
 
         final List<String> tokens = resourceRenderer.getPathSegments("a//b");
-        assertThat(tokens).hasSize(2).containsExactly("a","b");
+        assertThat(tokens).hasSize(2).containsExactly("a", "b");
     }
 
     @Test
