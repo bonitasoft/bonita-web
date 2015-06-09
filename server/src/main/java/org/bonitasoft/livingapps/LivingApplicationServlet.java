@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
-import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -82,6 +81,6 @@ public class LivingApplicationServlet extends HttpServlet {
     }
 
     ResourceRenderer getResourceRenderer(){
-        return ResourceRenderer.resourceRendererFactory(new CustomPageService());
+        return new ResourceRenderer();
     }
 }

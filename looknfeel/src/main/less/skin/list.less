@@ -104,6 +104,12 @@
 							display: block;
 							border-right: @tablesPanel-table-thead-cell-borderRight;
 						}
+						&.th_1, &.th_icon + .th_2{
+							border-left:none;
+							&:before{
+								border-right:none;
+							}
+						}
 						&.sortable{
 							padding: @detailsPanel-section-sort-padding;
 							.bg(@detailsPanel-section-sort-bg, no-repeat, transparent, @detailsPanel-section-sort-bgX, @detailsPanel-section-sort-bgY);

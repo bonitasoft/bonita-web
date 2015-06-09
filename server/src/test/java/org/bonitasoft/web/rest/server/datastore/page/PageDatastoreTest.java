@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.assertj.core.groups.Tuple;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
@@ -64,6 +65,8 @@ import org.bonitasoft.engine.page.PageCreator;
 import org.bonitasoft.engine.page.PageCreator.PageField;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.page.PageUpdater;
+import org.bonitasoft.engine.search.SearchFilterOperation;
+import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -147,8 +150,8 @@ public class PageDatastoreTest extends APITestWithMock {
     public void setUp() throws Exception {
         final Date mockedDate = new Date(0l);
 
-        File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
-        File pageZipFile = deployZipFileToTarget(PAGE_ZIP);
+        final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
+        final File pageZipFile = deployZipFileToTarget(PAGE_ZIP);
 
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
@@ -198,7 +201,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
     }
 
-    private File deployZipFileToTarget(String zipFileName) throws IOException, URISyntaxException {
+    private File deployZipFileToTarget(final String zipFileName) throws IOException, URISyntaxException {
         final File file = new File(getClass().getResource(zipFileName).toURI());
         assertThat(file).as("file should exists " + file.getAbsolutePath()).exists();
         FileUtils.copyFileToDirectory(file, new File("target"));
@@ -313,7 +316,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
         final HashSet<String> resourcePermissions = new HashSet<String>(Arrays.asList("Case Visualization", "Organization Visualization"));
         doReturn(resourcePermissions).when(customPageService)
-                .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
+        .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
 
         // When
         pageDatastore.add(pageToBeAdded);
@@ -368,11 +371,11 @@ public class PageDatastoreTest extends APITestWithMock {
         final APIID id = APIID.makeAPIID(mockedApiExtension.getId());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
 
-        File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
+        final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
         doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
 
         // When
-        Map<String, String> attributes = new HashMap<>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR
                 + apiExtensionZipFile.getName());
         pageDatastore.update(id, attributes);
@@ -633,6 +636,50 @@ public class PageDatastoreTest extends APITestWithMock {
         } catch (final Exception e) {
             assertThat(e).isInstanceOf(APIException.class);
         }
+    }
+
+    @Test
+    public void makeSearchOptionCreator_with_empty_filter_map_should_return_empty_filter_list() throws Exception {
+        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC", new HashMap<String, String>());
+        final List<SearchFilter> filters = searchOptionsCreator.create().getFilters();
+        assertThat(filters).isEmpty();
+    }
+
+    @Test
+    public void makeSearchOptionCreator_with_ATTRIBUTE_PROCESS_ID_filter_map_should_return_ATTRIBUTE_PROCESS_ID_in_filter_list() throws Exception {
+        final Map<String, String> filters = new HashMap<>();
+        final String processID = "2124654";
+        filters.put(PageItem.ATTRIBUTE_PROCESS_ID, processID);
+        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC", filters);
+        final List<SearchFilter> filtersResult = searchOptionsCreator.create().getFilters();
+        assertThat(filtersResult).extracting("field", "operation", "value").contains(new Tuple("processDefinitionId", SearchFilterOperation.EQUALS, processID));
+    }
+
+    @Test
+    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_form_filter_map_should_return_FILTER_CONTENT_TYPE_in_filter_list() throws Exception {
+        final Map<String, String> filters = new HashMap<>();
+        final String form = "form";
+        filters.put(PageItem.FILTER_CONTENT_TYPE, form);
+        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC", filters);
+        final List<SearchFilter> filtersResult = searchOptionsCreator.create().getFilters();
+        assertThat(filtersResult).extracting("field", "operation", "value").contains(new Tuple("contentType", SearchFilterOperation.EQUALS, form));
+    }
+
+    @Test
+    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_processPage_filter_map_should_return_FILTER_CONTENT_TYPE_form_or_page_in_filter_list()
+            throws Exception {
+        final Map<String, String> filters = new HashMap<>();
+        final String form = "processPage";
+        filters.put(PageItem.FILTER_CONTENT_TYPE, form);
+        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC", filters);
+        final List<SearchFilter> filtersResult = searchOptionsCreator.create().getFilters();
+        assertThat(filtersResult).extracting("field", "operation", "value").contains(
+                new Tuple(null, SearchFilterOperation.L_PARENTHESIS, null),
+                new Tuple("contentType", SearchFilterOperation.EQUALS, "form"),
+                new Tuple(null, SearchFilterOperation.OR, null),
+                new Tuple("contentType", SearchFilterOperation.EQUALS, "page"),
+                new Tuple(null, SearchFilterOperation.R_PARENTHESIS, null)
+                );
     }
 
 }

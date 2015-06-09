@@ -113,7 +113,8 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession, customPageLayoutName);
+        verify(pageRenderer).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession);
     }
 
     @Test
@@ -129,7 +130,8 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession,customPageThemeName);
+        verify(pageRenderer).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession);
     }
 
     @Test

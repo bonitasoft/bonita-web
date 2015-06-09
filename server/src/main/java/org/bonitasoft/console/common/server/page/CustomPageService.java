@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import groovy.lang.GroovyClassLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +30,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -96,10 +97,10 @@ public class CustomPageService {
         return buildPageClassloader(apiSession, pageResourceProvider);
     }
 
-    public void ensurePageFolderIsUpToDate(final APISession apiSession, String pageName) throws BonitaException, IOException {
-        final Page page = getPageAPI(apiSession).getPageByName(pageName);
-        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
-        ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
+    public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
+        if (!pageResourceProvider.getPageDirectory().exists()) {
+            retrievePageZipContent(apiSession, pageResourceProvider);
+        }
     }
 
     public void ensurePageFolderIsUpToDate(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
@@ -129,7 +130,7 @@ public class CustomPageService {
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider, String classFileName)
+    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider, final String classFileName)
             throws CompilationFailedException, IOException {
         final File PageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(), classFileName);
         return pageClassLoader.parseClass(PageControllerFile);
@@ -272,7 +273,7 @@ public class CustomPageService {
         return getPageFile(pageDirectory, PAGE_CONTROLLER_FILENAME);
     }
 
-    public File getPageFile(File pageDirectory, String fileName) {
+    public File getPageFile(final File pageDirectory, final String fileName) {
         return new File(pageDirectory, fileName);
     }
 
@@ -368,37 +369,37 @@ public class CustomPageService {
         return getPageAPI(apiSession).getPage(pageId);
     }
 
-    public void removeRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider, APISession apiSession) throws IOException, BonitaException {
+    public void removeRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping, final PageResourceProvider pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
         ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
-        for (String key : permissionsMapping.keySet()) {
+        for (final String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.removeProperty(key);
         }
 
     }
 
-    public void addRestApiExtensionPermissions(ResourcesPermissionsMapping resourcesPermissionsMapping, PageResourceProvider pageResourceProvider, APISession apiSession) throws IOException, BonitaException {
+    public void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping, final PageResourceProvider pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
         ensurePageFolderIsUpToDate(apiSession,pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
-        for (String key : permissionsMapping.keySet()) {
+        for (final String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));
         }
     }
 
-    private Map<String, String> getPermissionMapping(PageResourceProvider pageResourceProvider) {
+    private Map<String, String> getPermissionMapping(final PageResourceProvider pageResourceProvider) {
         Map<String, String> permissionsMapping;
         final File pageProperties = pageResourceProvider.getResourceAsFile("page.properties");
         permissionsMapping = getApiExtensionResourcesPermissionsMapping(pageProperties);
         return permissionsMapping;
     }
 
-    private Map<String, String> getApiExtensionResourcesPermissionsMapping(File pagePropertyFile) {
+    private Map<String, String> getApiExtensionResourcesPermissionsMapping(final File pagePropertyFile) {
         final SimpleProperties pageProperties = new SimpleProperties(pagePropertyFile);
-        Map<String, String> permissionsMap = new HashMap<>();
+        final Map<String, String> permissionsMap = new HashMap<>();
         if (ContentType.API_EXTENSION.equals(pageProperties.getProperty(PROPERTY_CONTENT_TYPE))) {
             final String apiExtensionList = pageProperties.getProperty(PROPERTY_API_EXTENSIONS);
             final String[] apiExtensions = apiExtensionList.split(EXTENSION_SEPARATOR);
-            for (String apiExtension : apiExtensions) {
+            for (final String apiExtension : apiExtensions) {
                 final String method = pageProperties.getProperty(String.format(PROPERTY_METHOD_MASK, apiExtension.trim()));
                 final String pathTemplate = pageProperties.getProperty(String.format(PROPERTY_PATH_TEMPLATE_MASK, apiExtension.trim()));
                 final String permissions = pageProperties.getProperty(String.format(PROPERTY_PERMISSIONS_MASK, apiExtension.trim()));
@@ -408,7 +409,7 @@ public class CustomPageService {
         return permissionsMap;
     }
 
-    public PageResourceProvider getPageResourceProvider(Page page, long tenantId) {
+    public PageResourceProvider getPageResourceProvider(final Page page, final long tenantId) {
         return new PageResourceProvider(page,tenantId);
     }
 }
