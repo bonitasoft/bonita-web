@@ -40,7 +40,7 @@
 
     $httpBackend.whenGET(ROOT_PATH + 'API/bpm/case/' + 2 + '/context').respond(function() {
       console.log('Getting mock response for context.');
-      return [200, caseContextRC2, {}];
+      return [200, caseContext, {}];
     });
 
     $httpBackend.whenGET(ROOT_PATH + 'API/bdm/businessData/com.acme.object.Ticket/7').respond(function() {
@@ -277,8 +277,6 @@
         }
       ]
     };
-
-    var caseContextRC2 = {"aaaa_ref":null,"bdata_ref":{"name":"bdata","type":"com.company.model.BusinessObject1","link":"API/bdm/businessData/com.company.model.BusinessObject1/","storageId":null}};
 
     var caseContext =
     {
