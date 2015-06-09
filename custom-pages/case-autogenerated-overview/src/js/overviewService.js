@@ -3,7 +3,7 @@
   angular.module('caseOverview').factory('overviewSrvc', ['$http', 'archivedTaskAPI', 'contextSrvc', '$q', 'caseAPI', 'archivedCaseAPI','dataSrvc', function($http, archivedTaskAPI, contextSrvc, $q, caseAPI, archivedCaseAPI, dataSrvc) {
 
     var businessData;
-    var documentRefs = [];
+    var documentRefs;
     var responses = 0;
     var awaitedResponses = 0;
 
@@ -15,13 +15,20 @@
         fetchDataFromTypeAndStorageId(valueToFetch, deferred);
       } else if(angular.isObject(valueToFetch) && angular.isArray(valueToFetch.storageIds)) {
         fetchDataFromLink(valueToFetch, deferred);
-      } else {
+      } else if(angular.isObject(valueToFetch) && valueToFetch.fileName){
         /* Element in context is a reference to a document */
+        if(!angular.isDefined(documentRefs)) {
+          documentRefs = [];
+        }
         if(angular.isArray(valueToFetch)){
           documentRefs = documentRefs.concat(valueToFetch);
         } else {
           documentRefs.push(valueToFetch);
         }
+        notifyResponse(deferred);
+      } else {
+        console.log('ignoring context entry', valueToFetch);
+        // ignore value as it is not initialised.
         notifyResponse(deferred);
       }
     };
