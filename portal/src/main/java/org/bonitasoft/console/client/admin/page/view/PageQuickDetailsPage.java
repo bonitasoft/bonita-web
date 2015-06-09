@@ -24,6 +24,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.common.metadata.PageMetadataBuilder;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
@@ -118,64 +119,75 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
     private AbstractComponent contentSection(final PageItem page) {
         final Section contentSection;
         if (page.isProvided()) {
+            contentSection = new Section("More information");
+            if (ContentType.PAGE.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Page"),
+                                _("Content type is 'page'."),
+                                _("To view an imported page, add it to an application page list and navigation.")));
+            }
+            if (ContentType.FORM.equals(page.getContentType())) {
+                contentSection
+                        .addBody(
+                        contentTypeParagraph(
+                                _("Form"),
+                                _("Content type is 'form'."),
+                                _("A form is a page mapped to case start or a human task."),
+                                _("Create a form from the contract in Bonita BPM Studio."),
+                                _("By default, forms are included in the process bar file for deployment."),
+                                _("Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."),
+                                _("To share a form between processes, upload the zip and map it to the relevant processes and tasks.")));
 
-            final Html separator = new Html("<p></p>");
+            }
+            if (ContentType.LAYOUT.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Layout"),
+                                _("Content type is 'layout'.")));
+            }
+            if (ContentType.THEME.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Theme"),
+                                _("Content type is 'theme'."),
+                                _("The index file must be present in the zip but is ignored, so can be empty.")));
 
-            contentSection = new Section("")
-                    .addBody(
-                            new Paragraph(
-                                    _("A resource is imported as a zip archive containing a page.properties file and a resources folder.")),
-
-                            new Paragraph(
-                                    _("The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources.")
-                                            +
-                                            _("The content type is defined in page.properties.")),
-
-                            new Paragraph(
-                                    _("If you create a resource with the UI Designer, the exported zip automatically has the correct format. ")),
-
-                            separator,
-
-                            new Paragraph(
-                                    _("Page: Content type is 'page'.")),
-                            new Paragraph(
-                                    _("To view an imported page, add it to an application page list and navigation.")),
-
-                            separator,
-
-                            new Paragraph(
-                                    _("Form: Content type is 'form'.")),
-                            new Paragraph(
-                                    _("A form is a page mapped to case start or a human task.") +
-                                    _("Create a form from the contract in Bonita BPM Studio.") +
-                                    _("By default, forms are included in the process bar file for deployment.")),
-
-                            separator,
-
-                            new Paragraph(
-                                    _("Layout: Content type is 'layout'.")),
-                            new Paragraph(
-                                    _("A form is a page mapped to case start or a human task.") +
-                                            _("Create a form from the contract in Bonita BPM Studio.") +
-                                            _("By default, forms are included in the process bar file for deployment.")),
-
-                            separator,
-
-                            new Paragraph(
-                                    _("Theme: Content type is 'theme'.")),
-                            new Paragraph(
-                                    _("The index file must be present in the zip but is ignored, so can be empty.")),
-
-                            new Paragraph(
-                                    _("Rest API extension: Content type is 'apiExtension'."))
-                           
-                    );
+            }
+            if (ContentType.API_EXTENSION.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Rest API extension"),
+                                _("Content type is 'apiExtension'.")));
+            }
         } else {
             contentSection = new Section(_("Content")).addBody(new Paragraph(page.getContentName()));
             contentSection.addClass("content");
         }
         contentSection.setId(CssId.QD_SECTION_PAGE_CONTENT);
         return contentSection;
+    }
+
+    private Html contentTypeParagraph(String contentType, String contentTypeDescription, String... contentTypeParagraphs) {
+        StringBuilder htmlBuilder = new StringBuilder();
+        appendParagraph(htmlBuilder, _("A resource is imported as a zip archive containing a page.properties file and a resources folder."));
+        appendParagraph(htmlBuilder,
+                _("The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."));
+        appendParagraph(htmlBuilder, _("The content type is defined in page.properties."));
+        appendParagraph(htmlBuilder, _("If you create a resource with the UI designer, the exported zip automatically has the correct format."));
+
+        htmlBuilder.append("<br>");
+
+        htmlBuilder.append("<p>").append("<label>").append(contentType).append(":</label>").append(contentTypeDescription).append("</p>");
+        for (String paragraph : contentTypeParagraphs) {
+            appendParagraph(htmlBuilder, paragraph);
+        }
+
+        return new Html(htmlBuilder.toString());
+    }
+
+    private void appendParagraph(StringBuilder htmlBuilder, String paragraph) {
+        htmlBuilder.append("<p>").append(paragraph).append("</p>");
     }
 
     private AbstractComponent visibleToSection(final PageItem page) {
