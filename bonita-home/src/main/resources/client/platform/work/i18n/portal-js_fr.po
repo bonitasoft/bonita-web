@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-05-21 10:23-0400\n"
+"PO-Revision-Date: 2015-06-09 03:43-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -174,7 +174,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
 msgstr "Désactivé, aucun nouveau cas peut être démarré"
@@ -274,7 +274,7 @@ msgid "Columns selection"
 msgstr "Sélection des colonnes"
 
 msgid "Table settings"
-msgstr "Table settings"
+msgstr "Paramètres du tableau"
 
 msgid "Hide"
 msgstr "Masquer"
