@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-23 03:02+0200\n"
-"PO-Revision-Date: 2015-06-01 03:37-0400\n"
+"PO-Revision-Date: 2015-06-09 03:42-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -227,7 +227,7 @@ msgid "Actor name"
 msgstr "Nom de l'acteur"
 
 msgid "Actors: %ok_ko%"
-msgstr "Acteurs: %ok_ko%"
+msgstr "Acteurs : %ok_ko%"
 
 msgid "Add"
 msgstr "Ajouter"
@@ -2166,7 +2166,7 @@ msgstr "Aucune autorisation n'est définit pour cette page. Si elle utilise des 
 " mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
-msgstr "Ce profil sera disponible pour les utilisateurs associés lors de leur prochaine connexion . Si vous vous êtes associé ce profil, rafraîchissez la page de votre navigateur pour le rendre disponible."
+msgstr "Les utilisateurs qui viennent d'être associés à ce profil pourront l'utiliser lors de leur prochaine connexion. Si vous vous êtes attribué ce profil, rafraîchissez la page de votre navigateur pour pouvoir l'utiliser."
 
 msgid "This role has already been mapped to actor"
 msgstr "Ce rôle est déjà lié à l'acteur"

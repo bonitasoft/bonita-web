@@ -1,62 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
  <head> 
+  <title>apiExtensionViewer</title> 
+  <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>demoRestExtensions2</title> 
   <link rel="stylesheet" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" href="css/widget.css"> 
+  <link rel="stylesheet" href="../theme/theme.css"> 
   <script src="js/vendor.min.js"></script> 
   <script src="js/generator.min.js"></script> 
+  <!-- assets attached to the page --> 
   <!-- widget need to be injected at runtime --> 
+  <script src="widgets/pbTitle/pbTitle.js"></script> 
   <script src="widgets/customRestApiCall/customRestApiCall.js"></script> 
   <script src="widgets/pbSelect/pbSelect.js"></script> 
-  <script src="widgets/pbParagraph/pbParagraph.js"></script> 
+  <script src="widgets/pbText/pbText.js"></script> 
  </head> 
- <body ng-app="org.bonitasoft.pagebuilder.generator" pb-model="eb1bc8c2-116d-401d-a92e-c75bdd207b18"> 
-    <div class="container-fluid">
-      <div class="row">
-          <div class="component col-lg-12  col-md-8  col-sm-12  col-xs-12 ">
-              <div>
-                  <h1>REST API extension overview</h1>
-              </div>
-          </div>
-      </div>
-    <div class="row">
-    <div class="component col-lg-12  col-md-8  col-sm-12  col-xs-12 " pb-property-values="515f5192-332f-4db8-a8ab-9ae83021f33b"> 
+ <body ng-app="org.bonitasoft.pagebuilder.generator" pb-model="d703ac2d-9d95-40de-956c-6db02456ed0c"> 
+  <div class="container-fluid"> 
+   <div class="row"> 
+    <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="90b08c92-891b-4ec8-8b78-45b85024da91"> 
+     <div ng-if="!properties.hidden">
+      <pb-title></pb-title>
+     </div> 
+    </div> 
+   </div> 
+   <div class="row"> 
+    <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="9c08e890-1bb6-4773-9d74-8d0225f2f374"> 
      <div ng-if="!properties.hidden">
       <pb-select></pb-select>
      </div> 
     </div> 
    </div> 
    <div class="row"> 
-    <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="60b4d1c9-de5b-4586-9219-d04d577f4a40"> 
+    <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="83362852-fc2c-421e-a6b4-beec6b5c44f1"> 
      <div ng-if="!properties.hidden">
-      <pb-paragraph></pb-paragraph>
+      <custom-rest-api-call></custom-rest-api-call>
      </div> 
     </div> 
    </div> 
    <div class="row"> 
-    <div pb-property-values="acf3df18-36a9-4f56-8a1f-fb5c9e4756d1"> 
-     <div class="col-lg-12  col-md-12  col-sm-12  col-xs-12 " ng-if="!properties.hidden"> 
-      <div class="row"> 
-       <div pb-property-values="6c3e85c2-64d6-4e79-887e-bd2b193293ab"> 
-        <div class="col-lg-12  col-md-12  col-sm-12  col-xs-12 " ng-if="!properties.hidden"> 
-         <div class="row"> 
-          <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="fa26a4ca-f87f-46b0-bc9d-3ab8cea207c1"> 
-           <div ng-if="!properties.hidden">
-            <custom-rest-api-call></custom-rest-api-call>
-           </div> 
-          </div> 
-         </div> 
-        </div> 
-       </div> 
-      </div> 
+    <div class="component col-lg-12  col-md-12  col-sm-12  col-xs-12 " pb-property-values="ec1fbb95-5345-4d55-af4f-45ce7a13f63e"> 
+     <div ng-if="!properties.hidden">
+      <pb-text></pb-text>
      </div> 
     </div> 
    </div> 
+   <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('modelPropertiesFactory', function() {
+  var resources = {};
+  return {
+    get: function(uuid) {
+      return resources[uuid];
+    }
+  };
+});
+</script> 
    <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('dataModelFactory', function() {
   var resources = {};
-  resources['eb1bc8c2-116d-401d-a92e-c75bdd207b18'] =  {"apiExtensions":{"type":"json","value":" [\n    {\n      \"description\": \"Get resource return a simple echo of query parameters\",\n      \"method\": \"GET\",\n      \"pathTemplate\": \"demo/getExample\",\n      \"classFileName\": \"Get.groovy\",\n      \"permissions\": \"demoPermission\",\n      \"queryString\":\"param1=value1&param2=value2\"\n    },\n    {\n      \"description\": \"Customize response with additional header, cookie and response code\",\n      \"method\": \"GET\",\n      \"pathTemplate\": \"demo/headerExample\",\n      \"classFileName\": \"Index.groovy\",\n      \"permissions\": \"demoPermission\"\n    },\n    {\n      \"description\": \"Use a provided logger\",\n      \"method\": \"GET\",\n      \"pathTemplate\": \"demo/logExample\",\n      \"classFileName\": \"Log.groovy\",\n      \"permissions\": \"demoPermission\"\n    },\n    {\n      \"description\": \"Return an XML content with specific media type and character set\",\n      \"method\": \"GET\",\n      \"pathTemplate\": \"demo/xmlExample\",\n      \"classFileName\": \"Xml.groovy\",\n      \"permissions\": \"demoPermission\"\n    },\n    {\n      \"description\": \"Post resources with Json payload and return a simple echo of parameters\",\n      \"method\": \"POST\",\n      \"pathTemplate\": \"demo/postExample\",\n      \"classFileName\": \"Post.groovy\",\n      \"permissions\": \"demoPermission\"\n    },\n    {\n      \"description\": \"Call to external SOAP webservice\",\n      \"method\": \"GET\",\n      \"pathTemplate\": \"demo/soapExample\",\n      \"classFileName\": \"Soap.groovy\",\n      \"permissions\": \"demoPermission\",\n       \"queryString\":\"year=2015\"\n    }\n  ]","exposed":false},"requestPayload":{"type":"json","value":"{\"param1\":\"value1\", \"numberParameter\":123,\"booleanParameter\":true }","exposed":false},"currentApi":{"type":"json","value":"{}","exposed":false}};
+  resources['d703ac2d-9d95-40de-956c-6db02456ed0c'] =  {"apiExtensions":{"type":"json","value":"[\n    {\n        \"description\": \"Get resource return a simple echo of query parameters\",\n        \"method\": \"GET\",\n        \"pathTemplate\": \"demo/getExample\",\n        \"classFileName\": \"Get.groovy\",\n        \"permissions\": \"demoPermission\",\n        \"queryString\": \"param1=value1&param2=value2\"\n    },\n    {\n        \"description\": \"Customize response with additional header, cookie and response code\",\n        \"method\": \"GET\",\n        \"pathTemplate\": \"demo/headerExample\",\n        \"classFileName\": \"Index.groovy\",\n        \"permissions\": \"demoPermission\"\n    },\n    {\n        \"description\": \"Use a provided logger\",\n        \"method\": \"GET\",\n        \"pathTemplate\": \"demo/logExample\",\n        \"classFileName\": \"Log.groovy\",\n        \"permissions\": \"demoPermission\"\n    },\n    {\n        \"description\": \"Return an XML content with specific media type and character set\",\n        \"method\": \"GET\",\n        \"pathTemplate\": \"demo/xmlExample\",\n        \"classFileName\": \"Xml.groovy\",\n        \"permissions\": \"demoPermission\"\n    },\n    {\n        \"description\": \"Post resources with Json payload and return a simple echo of parameters\",\n        \"method\": \"POST\",\n        \"pathTemplate\": \"demo/postExample\",\n        \"classFileName\": \"Post.groovy\",\n        \"permissions\": \"demoPermission\"\n    },\n    {\n        \"description\": \"Call to external SOAP webservice\",\n        \"method\": \"GET\",\n        \"pathTemplate\": \"demo/soapExample\",\n        \"classFileName\": \"Soap.groovy\",\n        \"permissions\": \"demoPermission\",\n        \"queryString\": \"year=2015\"\n    }\n]","exposed":false},"currentApi":{"type":"json","value":"{}","exposed":false}};
+  return {
+    get: function(uuid) {
+      return resources[uuid];
+    }
+  };
+});
+</script> 
+   <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('modelPropertiesFactory', function() {
+  var resources = {};
   return {
     get: function(uuid) {
       return resources[uuid];
@@ -66,11 +76,10 @@
 </script> 
    <script>angular.module('org.bonitasoft.pagebuilder.generator.services').factory('propertyValuesFactory', function() {
   var resources = {};
-  resources['515f5192-332f-4db8-a8ab-9ae83021f33b'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"disabled":{"type":"constant","value":false},"labelHidden":{"type":"constant","value":false},"label":{"type":"constant","value":"Choose a REST API example:"},"labelPosition":{"type":"constant","value":"top"},"labelWidth":{"type":"constant","value":4},"placeholder":{"type":"constant","value":"Select an example"},"availableValues":{"type":"data","value":"apiExtensions"},"value":{"type":"data","value":"currentApi"},"displayedKey":{"type":"constant","value":"description"},"returnedKey":{"type":"constant","value":null}};
-  resources['acf3df18-36a9-4f56-8a1f-fb5c9e4756d1'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"repeatedCollection":{"type":"data","value":""}};
-  resources['60b4d1c9-de5b-4586-9219-d04d577f4a40'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":true},"text":{"type":"data","value":"currentApi | json"},"alignment":{"type":"constant","value":"left"}};
-  resources['6c3e85c2-64d6-4e79-887e-bd2b193293ab'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"repeatedCollection":{"type":"constant","value":""}};
-  resources['fa26a4ca-f87f-46b0-bc9d-3ab8cea207c1'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"data","value":""},"method":{"type":"data","value":"currentApi.method"},"pathTemplate":{"type":"data","value":"currentApi.pathTemplate"},"description":{"type":"data","value":"currentApi.description"},"queryString":{"type":"data","value":"currentApi.queryString"}};
+  resources['9c08e890-1bb6-4773-9d74-8d0225f2f374'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"disabled":{"type":"constant","value":false},"required":{"type":"constant","value":false},"labelHidden":{"type":"constant","value":false},"label":{"type":"constant","value":"Choose a REST API example"},"labelPosition":{"type":"constant","value":"top"},"labelWidth":{"type":"constant","value":6},"placeholder":{"type":"constant","value":"Select an option"},"availableValues":{"type":"data","value":"apiExtensions"},"value":{"type":"data","value":"currentApi"},"displayedKey":{"type":"constant","value":"description"},"returnedKey":{"type":"constant","value":null}};
+  resources['ec1fbb95-5345-4d55-af4f-45ce7a13f63e'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":true},"text":{"type":"data","value":"currentApi | json"},"alignment":{"type":"constant","value":"left"}};
+  resources['83362852-fc2c-421e-a6b4-beec6b5c44f1'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"method":{"type":"data","value":"currentApi.method"},"pathTemplate":{"type":"data","value":"currentApi.pathTemplate"},"description":{"type":"data","value":"currentApi.Description"},"queryString":{"type":"data","value":"currentApi.queryString"}};
+  resources['90b08c92-891b-4ec8-8b78-45b85024da91'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"text":{"type":"constant","value":"REST API extension overview"},"level":{"type":"constant","value":"Level 2"},"alignment":{"type":"constant","value":"left"}};
   return {
     get: function(uuid) {
       return resources[uuid];
