@@ -21,14 +21,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
 import org.bonitasoft.console.client.common.metadata.PageMetadataBuilder;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
-import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.SHA1;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
@@ -48,11 +49,8 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetail
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
-import com.google.gwt.core.client.GWT;
-
 /**
  * @author Fabio Lombardi
- *
  */
 public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
 
@@ -121,24 +119,47 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
     private AbstractComponent contentSection(final PageItem page) {
         final Section contentSection;
         if (page.isProvided()) {
-            final String rightToAccessProfilePage = hasRightToAccessProfilePage();
-            Html profileParagraph;
-            if (AvailableTokens.tokens.contains(rightToAccessProfilePage)) {
-                profileParagraph = new Html("<p>" + _("To preview a custom page, attach it to a custom profile. To do so, go to ")
-                        + "<a href=\"#_p=profilelisting\">" + _("Profiles") + "</a>.</p>");
-            } else {
-                profileParagraph = new Html("<p>" + _("To preview a custom page, attach it to a custom profile. To do so, contact your Administrator.")
-                        + "</p>");
+            contentSection = new Section("More information");
+            if (ContentType.PAGE.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Page"),
+                                _("Content type is 'page'."),
+                                _("To view an imported page, add it to an application page list and navigation.")));
             }
-            contentSection = new Section("")
-                    .addBody(
-                            new Paragraph(
-                                    _("A custom page is a zip archive containing at least an Index.groovy class or an index.html file and, optionally, some additional resources.")),
-                            new Paragraph(
-                                    _("To create your own custom page, export the example, add your content, and zip the archive, as explained in the archive readme.")),
-                            new Paragraph(_("To add a custom page, click Add at the top left of this screen and import your page archive.")),
-                            profileParagraph
-                    );
+            if (ContentType.FORM.equals(page.getContentType())) {
+                contentSection
+                        .addBody(
+                        contentTypeParagraph(
+                                _("Form"),
+                                _("Content type is 'form'."),
+                                _("A form is a page mapped to case start or a human task."),
+                                _("Create a form from the contract in Bonita BPM Studio."),
+                                _("By default, forms are included in the process bar file for deployment."),
+                                _("Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."),
+                                _("To share a form between processes, upload the zip and map it to the relevant processes and tasks.")));
+
+            }
+            if (ContentType.LAYOUT.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Layout"),
+                                _("Content type is 'layout'.")));
+            }
+            if (ContentType.THEME.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Theme"),
+                                _("Content type is 'theme'."),
+                                _("The index file must be present in the zip but is ignored, so can be empty.")));
+
+            }
+            if (ContentType.API_EXTENSION.equals(page.getContentType())) {
+                contentSection.addBody(
+                        contentTypeParagraph(
+                                _("Rest API extension"),
+                                _("Content type is 'apiExtension'.")));
+            }
         } else {
             contentSection = new Section(_("Content")).addBody(new Paragraph(page.getContentName()));
             contentSection.addClass("content");
@@ -147,12 +168,34 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
         return contentSection;
     }
 
+    private Html contentTypeParagraph(String contentType, String contentTypeDescription, String... contentTypeParagraphs) {
+        StringBuilder htmlBuilder = new StringBuilder();
+        appendParagraph(htmlBuilder, _("A resource is imported as a zip archive containing a page.properties file and a resources folder."));
+        appendParagraph(htmlBuilder,
+                _("The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."));
+        appendParagraph(htmlBuilder, _("The content type is defined in page.properties."));
+        appendParagraph(htmlBuilder, _("If you create a resource with the UI designer, the exported zip automatically has the correct format."));
+
+        htmlBuilder.append("<br>");
+
+        htmlBuilder.append("<p>").append("<label>").append(contentType).append(":</label>").append(contentTypeDescription).append("</p>");
+        for (String paragraph : contentTypeParagraphs) {
+            appendParagraph(htmlBuilder, paragraph);
+        }
+
+        return new Html(htmlBuilder.toString());
+    }
+
+    private void appendParagraph(StringBuilder htmlBuilder, String paragraph) {
+        htmlBuilder.append("<p>").append(paragraph).append("</p>");
+    }
+
     private AbstractComponent visibleToSection(final PageItem page) {
         final Section visibleToSection = new Section(_("Visible to"), profileTable(page).setView(VIEW_TYPE.VIEW_LIST));
 
         if (!page.isProvided()) {
-        	visibleToSection.addBody(new Html("<p>"
-                        + _("Users with the app above can see this page.") + "</p>"));
+            visibleToSection.addBody(new Html("<p>"
+                    + _("Users with the app above can see this page.") + "</p>"));
         }
         visibleToSection.setId(CssId.QD_SECTION_PAGE_VISIBLETO);
         visibleToSection.addClass("visibleTo");
