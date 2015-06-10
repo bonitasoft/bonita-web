@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 03:02+0200\n"
+"POT-Creation-Date: 2015-06-10 11:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,13 +182,16 @@ msgstr ""
 msgid "A business archive has a .bar extension"
 msgstr ""
 
-msgid "A custom page is a zip archive containing at least an Index.groovy class or an index.html file and, optionally, some additional resources."
+msgid "A form is a page mapped to case start or a human task."
 msgstr ""
 
 msgid "A page archive has a .zip extension"
 msgstr ""
 
 msgid "A page with this name already exists."
+msgstr ""
+
+msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 msgstr ""
 
 msgid "Aborted by:"
@@ -467,6 +470,9 @@ msgstr ""
 msgid "Business card"
 msgstr ""
 
+msgid "By default, forms are included in the process bar file for deployment."
+msgstr ""
+
 msgid "Call activity"
 msgstr ""
 
@@ -659,10 +665,28 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+msgid "Content type is 'apiExtension'."
+msgstr ""
+
+msgid "Content type is 'form'."
+msgstr ""
+
+msgid "Content type is 'layout'."
+msgstr ""
+
+msgid "Content type is 'page'."
+msgstr ""
+
+msgid "Content type is 'theme'."
+msgstr ""
+
 msgid "Country"
 msgstr ""
 
 msgid "Create"
+msgstr ""
+
+msgid "Create a form from the contract in Bonita BPM Studio."
 msgstr ""
 
 msgid "Create a group"
@@ -1067,6 +1091,9 @@ msgstr ""
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr ""
 
+msgid "Form"
+msgstr ""
+
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr ""
 
@@ -1134,6 +1161,9 @@ msgid "If these pages are used in a profile, the pages and related profile entri
 msgstr ""
 
 msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid "If you create a resource with the UI designer, the exported zip automatically has the correct format."
 msgstr ""
 
 msgid ""
@@ -1244,6 +1274,9 @@ msgid "Last updated on"
 msgstr ""
 
 msgid "Lastname"
+msgstr ""
+
+msgid "Layout"
 msgstr ""
 
 msgid "Layouts"
@@ -1503,6 +1536,9 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
 msgid "Page archive"
 msgstr ""
 
@@ -1669,6 +1705,9 @@ msgid "Resources"
 msgstr ""
 
 msgid "Resources not recognized:"
+msgstr ""
+
+msgid "Rest API extension"
 msgstr ""
 
 msgid "Resume"
@@ -1902,6 +1941,9 @@ msgstr ""
 msgid "Subprocess version"
 msgstr ""
 
+msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
+msgstr ""
+
 msgid "Success"
 msgstr ""
 
@@ -1978,6 +2020,9 @@ msgstr ""
 msgid "The configuration state of the process"
 msgstr ""
 
+msgid "The content type is defined in page.properties."
+msgstr ""
+
 msgid "The current state of the case"
 msgstr ""
 
@@ -2047,6 +2092,9 @@ msgstr ""
 msgid "The id of the related case"
 msgstr ""
 
+msgid "The index file must be present in the zip but is ignored, so can be empty."
+msgstr ""
+
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr ""
 
@@ -2078,6 +2126,9 @@ msgid "The priority of the task"
 msgstr ""
 
 msgid "The process responsible for the creation of this task"
+msgstr ""
+
+msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
 msgstr ""
 
 msgid "The server is not available"
@@ -2123,6 +2174,9 @@ msgid "The version of the process"
 msgstr ""
 
 msgid "The version of the process that created this case"
+msgstr ""
+
+msgid "Theme"
 msgstr ""
 
 msgid "Themes"
@@ -2187,13 +2241,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-msgid "To add a custom page, click Add at the top left of this screen and import your page archive."
-msgstr ""
-
 msgid "To change the content of this custom page, specify a new zip file in the field below."
-msgstr ""
-
-msgid "To create your own custom page, export the example, add your content, and zip the archive, as explained in the archive readme."
 msgstr ""
 
 msgid "To do"
@@ -2202,10 +2250,10 @@ msgstr ""
 msgid "To do so, contact your administrator"
 msgstr ""
 
-msgid "To preview a custom page, attach it to a custom profile. To do so, contact your Administrator."
+msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 msgstr ""
 
-msgid "To preview a custom page, attach it to a custom profile. To do so, go to "
+msgid "To view an imported page, add it to an application page list and navigation."
 msgstr ""
 
 msgid "Tu"
