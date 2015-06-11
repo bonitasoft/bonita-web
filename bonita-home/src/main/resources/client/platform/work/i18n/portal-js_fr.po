@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-09 03:42-0400\n"
+"PO-Revision-Date: 2015-06-10 01:46-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -838,7 +838,7 @@ msgid "Select all"
 msgstr "Tout sélectionner "
 
 msgid "Select groups..."
-msgstr "Sélectionnez des groupes..."
+msgstr "Sélectionnez les groupes..."
 
 msgid "Select none"
 msgstr "Tout désélectionner"
@@ -992,7 +992,7 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "Les éléments suivants ne sont associés à aucun formulaire : [{}]"
+msgstr "Les éléments suivants n'ont pas de formulaire associé : [{}]"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
@@ -1003,7 +1003,7 @@ msgstr "La page donne aux profils utilisateurs concernés les autorisations suiv
 
 #: main/features/admin/processes/details/forms/form-uploader.html:8
 msgid "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "L'archive .zip doit contenir le fichier page.properties, puis soit le fichier index.html soir le fichier Index.groovy, et enfin les ressources nécessaires pour la page ou le formulaire. Pour plus d'informations, consultez la documentation ou le fichier readme de la page d'exemple (menu Resources)."
+msgstr "L'archive de la page (.zip) doit contenir le fichier page.properties, puis soit le fichier index.html soit le fichier Index.groovy, et enfin les ressources nécessaires pour la page ou le formulaire. Pour plus d'informations, consultez la documentation ou le fichier readme de la page d'exemple (menu Ressources)."
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:64
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:17
@@ -1022,7 +1022,7 @@ msgstr "Ces cas supprimés disparaîtront définitivement des archives."
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\\n"
 " update the page definition to specify the list of resources used."
 msgstr "Cette page n'a besoin d'aucune autorisation spécifique. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \n"
-" la définition de cette page doit être mise à jour pour y spécifier la liste des ressources utilisées."
+" mettez à jour la définition de cette page pour y spécifier la liste des ressources utilisées."
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:19
 msgid "To create an application, click New or Import."
@@ -1031,10 +1031,10 @@ msgstr "Pour créer une application, cliquez sur Nouveau ou Importer."
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:76
 #: main/features/admin/processes/details/process-managers-mapping.html:75
 msgid "To do so, go to"
-msgstr "Pour ce faire, consultez la page"
+msgstr "Pour cela, consultez la page"
 
 msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "Pour utiliser cette fonctionnalité, ouvrez le processus dans un Bonita BPM Studio 6.4 ou ultérieures, générez le fichier .bar puis déployez-le dans le portail."
+msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du processus dans un Bonita BPM Studio version 6.4 ou ultérieure, générez le fichier .bar puis déployez-le dans le portail."
 
 #: main/features/admin/monitoring/monitoring.html:25
 msgid "Totals"
@@ -1047,7 +1047,7 @@ msgid "Type"
 msgstr "Type"
 
 msgid "Type here to search for a user..."
-msgstr "Tapez ici pour rechercher un utilisateur..."
+msgstr "Saisissez le nom d'un utilisateur..."
 
 msgid "Type here to search..."
 msgstr "Rechercher..."
@@ -1300,7 +1300,7 @@ msgstr "tri par Version, décroissant"
 
 #: index.html:21
 msgid "this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms."
-msgstr "Ceci est un formulaire temporaire généré automatiquement à des fins de test. Avant de passer votre processus en production, vous devrez créer des formulaires définitifs et les associer à un processus."
+msgstr "il s'agit d'un formulaire temporaire généré automatiquement à des fins de test. Avant de passer votre processus en production, vous devrez créer les formulaires définitifs et les associer au processus et aux tâches humaines."
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "will be permanently deleted."
@@ -1313,7 +1313,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{role}} of {{group}}"
 msgstr "{{role}} de {{group}}"
@@ -1331,7 +1331,7 @@ msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été mis à jour"
 
 msgid "{{nbOfDeletedCases}} case deleted"
-msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
+msgstr "{{nbOfDeletedCases}} cas a été supprimé avec succès"
 
 msgid "{{nbOfDeletedCases}} cases deleted"
 msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
