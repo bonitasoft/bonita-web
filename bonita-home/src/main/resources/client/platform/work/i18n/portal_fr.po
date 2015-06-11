@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-23 03:02+0200\n"
-"PO-Revision-Date: 2015-06-09 03:42-0400\n"
+"PO-Revision-Date: 2015-06-10 01:46-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -275,7 +275,7 @@ msgid "Add a new membership to this user"
 msgstr "Ajouter une adhésion à cet utilisateur"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension d'API REST). <br/> Cette archive .zip doit contenir un fichier page.properties à la racine et un dossier nommé « ressources ». <br/> Ce fichier de propriétés doit définir au moins le nom, le displayName et le contentType (\"page\" par défaut).  <br/> Le dossier « ressources » doit contenir soit le fichier index.html soit le fichier Index.groovy ainsi que ressources nécessaires."
+msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension d'API REST). <br/> Ce fichier .zip doit contenir un fichier page.properties à la racine et un dossier nommé « ressources ». <br/> Le fichier page.properties doit définir au moins le nom, le displayName et le contentType (\"page\" par défaut).  <br/> Le dossier « ressources » doit contenir soit le fichier index.html soit le fichier Index.groovy ainsi que ressources nécessaires."
 
 msgid "Add a resource"
 msgstr "Ajouter une ressource"
@@ -359,7 +359,7 @@ msgid "All processes are automatically paused."
 msgstr "Tous les processus sont automatiquement mis en pause."
 
 msgid "An archive has a .zip extension"
-msgstr "Une archive possède une extension .zip"
+msgstr "Une archive a une extension .zip"
 
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Une erreur est survenue au déploiement du Modèle de Données Métier."
@@ -1138,7 +1138,7 @@ msgstr "Si cette page est liée à des profils, les éléments de menus correspo
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
 msgstr "Si vous supprimez une page ou un formulaire qui est utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \n"
-"Vérifiez aussi leur utilisation éventuelle dans les menus des profils personnalisés."
+"Avant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Fichier image"
@@ -1839,7 +1839,7 @@ msgid "Skipped on %task_last_update% by %executed_by%"
 msgstr "Annulée le %task_last_update% par %executed_by%"
 
 msgid "Some of the pages you selected for deletion are used by processes:"
-msgstr "Certaines pages en passe d'être supprimées sont utilisées par les processus :"
+msgstr "Certaines pages sur le point d'être supprimées sont utilisées par les processus :"
 
 msgid "Sorry the variable %variableName% has a type which is not editable"
 msgstr "Le type de la variable %variableName% ne peut être édité"
@@ -2134,7 +2134,7 @@ msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
-msgstr "Ces pages ne peuvent pas être supprimées car une au moins est utilisée par une application. Supprimez les pages des applications avant de la supprimer des ressources."
+msgstr "Ces pages ne peuvent pas être supprimées car l'une d'entre elles au moins est utilisée par une application. Supprimez les pages des applications avant de les supprimer des ressources."
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Cette %item_name% et les entrées relatives aux profils seront supprimées définitivement."
@@ -2337,7 +2337,7 @@ msgid "Users who are filling in forms when the services are paused will lose any
 msgstr "Les informations en cours de soumission lors de la suspension du service seront perdues."
 
 msgid "Users with the app above can see this page."
-msgstr "Cette page est visible par les utilisateurs de l'application nommée ci-dessus."
+msgstr "Cette page est accessible aux utilisateurs de(s) l'application(s) ci-dessus."
 
 msgid "Users: %nb_users%"
 msgstr "Utilisateurs: %nb_users%"
