@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-08 03:18-0400\n"
+"PO-Revision-Date: 2015-06-10 01:48-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -493,7 +493,7 @@ msgid "Forms"
 msgstr "Formularios"
 
 msgid "Form cannot be empty"
-msgstr "Form cannot be empty"
+msgstr "El formulario no puede estar vacío"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
@@ -545,7 +545,7 @@ msgid "Internal"
 msgstr "Interno"
 
 msgid "Instantiation"
-msgstr "Instantiation"
+msgstr "Instanciación"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
@@ -1324,10 +1324,10 @@ msgid "{{nbErrors}} errors on mapping updates"
 msgstr "{{nbErrors}} errores en la actualización de mapeos"
 
 msgid "{{nbMapping}} Process manager mappings could not be updated"
-msgstr "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "El mapeo del Gestor de Procesos {{nbMapping}} no puede ser modificado"
 
 msgid "{{nbMapping}} Process manager mappings have been updated"
-msgstr "{{nbMapping}} Process manager mappings have been updated"
+msgstr "El mapeo del Gestor de Procesos {{nbMapping}} ha sido modificado"
 
 msgid "{{nbOfDeletedCases}} case deleted"
 msgstr "{{nbOfDeletedCases}} caso eliminado"
