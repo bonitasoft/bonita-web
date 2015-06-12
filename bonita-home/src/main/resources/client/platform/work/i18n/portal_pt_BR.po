@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 03:02+0200\n"
-"PO-Revision-Date: 2015-05-26 03:04-0400\n"
+"POT-Creation-Date: 2015-06-10 11:19+0200\n"
+"PO-Revision-Date: 2015-06-11 05:24-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /release-7.0.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
@@ -181,14 +181,17 @@ msgstr "Um Modelo de Dados de Negócio tem a extensão  .%fileExtension%"
 msgid "A business archive has a .bar extension"
 msgstr "Um arquivo de negócios tem uma extensão .bar"
 
-msgid "A custom page is a zip archive containing at least an Index.groovy class or an index.html file and, optionally, some additional resources."
-msgstr "Uma página personalizada é um arquivo zip que contém pelo menos uma classe Index.groovy ou um arquivo index. html e, opcionalmente, alguns recursos adicionais."
+msgid "A form is a page mapped to case start or a human task."
+msgstr "A form is a page mapped to case start or a human task."
 
 msgid "A page archive has a .zip extension"
 msgstr "Um arquivo de página a extensão .zip"
 
 msgid "A page with this name already exists."
 msgstr "Já existe uma página com este nome."
+
+msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
+msgstr "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 
 msgid "Aborted by:"
 msgstr "Abortada por:"
@@ -466,6 +469,9 @@ msgstr "Business archive"
 msgid "Business card"
 msgstr "Cartão de visita"
 
+msgid "By default, forms are included in the process bar file for deployment."
+msgstr "By default, forms are included in the process bar file for deployment."
+
 msgid "Call activity"
 msgstr "Atividade de Chamada"
 
@@ -530,7 +536,7 @@ msgid "Case variables"
 msgstr "Variável de processo"
 
 msgid "Cases"
-msgstr "Instâncias de processo"
+msgstr "Casos"
 
 msgid "Cases I have started"
 msgstr "Casos que eu iniciei"
@@ -658,11 +664,29 @@ msgstr "Conectores: %ok_ko%"
 msgid "Content"
 msgstr "Conteúdo"
 
+msgid "Content type is 'apiExtension'."
+msgstr "Content type is 'apiExtension'."
+
+msgid "Content type is 'form'."
+msgstr "Content type is 'form'."
+
+msgid "Content type is 'layout'."
+msgstr "Content type is 'layout'."
+
+msgid "Content type is 'page'."
+msgstr "Content type is 'page'."
+
+msgid "Content type is 'theme'."
+msgstr "Content type is 'theme'."
+
 msgid "Country"
 msgstr "País"
 
 msgid "Create"
 msgstr "Criar"
+
+msgid "Create a form from the contract in Bonita BPM Studio."
+msgstr "Create a form from the contract in Bonita BPM Studio."
 
 msgid "Create a group"
 msgstr "Criar um grupo"
@@ -1066,6 +1090,9 @@ msgstr "Nome"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
 
+msgid "Form"
+msgstr "Formulário"
+
 msgid "Format: %namePrefix% followed only by alphanumeric characters."
 msgstr "Formato: %namePrefix% seguido somente por caracteres alfanuméricos."
 
@@ -1134,6 +1161,9 @@ msgstr "Se estas páginas são usadas em um perfil, as páginas e perfis relacio
 
 msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
 msgstr "Se esta páginas é usada em um perfil, a página e o perfil relacionados serão excluídos permanentemente."
+
+msgid "If you create a resource with the UI designer, the exported zip automatically has the correct format."
+msgstr "If you create a resource with the UI designer, the exported zip automatically has the correct format."
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
@@ -1244,6 +1274,9 @@ msgstr "Última atualização em"
 
 msgid "Lastname"
 msgstr "Sobrenome"
+
+msgid "Layout"
+msgstr "Layout"
 
 msgid "Layouts"
 msgstr "Layouts"
@@ -1502,6 +1535,9 @@ msgstr "Oups... Este item não está mais disponível. \n"
 msgid "Overview"
 msgstr "Síntese"
 
+msgid "Page"
+msgstr "Página"
+
 msgid "Page archive"
 msgstr "Arquivo da página"
 
@@ -1669,6 +1705,9 @@ msgstr "Recursos"
 
 msgid "Resources not recognized:"
 msgstr "Recursos não reconhecidos:"
+
+msgid "Rest API extension"
+msgstr "Rest API extension"
 
 msgid "Resume"
 msgstr "Relançar"
@@ -1901,6 +1940,9 @@ msgstr "Sub-processo"
 msgid "Subprocess version"
 msgstr "Versão do subprocesso"
 
+msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
+msgstr "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
+
 msgid "Success"
 msgstr "Sucesso"
 
@@ -1977,6 +2019,9 @@ msgstr "O aplicativo encontrou um erro inesperado. Por favor, tente novamente.\n
 msgid "The configuration state of the process"
 msgstr "O estado da configuração do processo"
 
+msgid "The content type is defined in page.properties."
+msgstr "The content type is defined in page.properties."
+
 msgid "The current state of the case"
 msgstr "O estado atual da instância de processo"
 
@@ -2046,6 +2091,9 @@ msgstr "O caminho de acesso do grupo pai"
 msgid "The id of the related case"
 msgstr "A identificação da instância de processo relacionada"
 
+msgid "The index file must be present in the zip but is ignored, so can be empty."
+msgstr "The index file must be present in the zip but is ignored, so can be empty."
+
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr "O item que você está tentando editar não pôde ser recuperado devido a um problema de conexão. Por favor, contate o administrador."
 
@@ -2078,6 +2126,9 @@ msgstr "Prioridade da tarefa"
 
 msgid "The process responsible for the creation of this task"
 msgstr "O processo responsável pela criação desta tarefa"
+
+msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
+msgstr "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
 
 msgid "The server is not available"
 msgstr "O servidor não está disponível"
@@ -2123,6 +2174,9 @@ msgstr "A versão do processo"
 
 msgid "The version of the process that created this case"
 msgstr "A versão do processo que criou este caso"
+
+msgid "Theme"
+msgstr "Theme"
 
 msgid "Themes"
 msgstr "Themes"
@@ -2186,14 +2240,8 @@ msgstr "Esta ação importará um arquivo que contém os dados de toda a organiz
 msgid "Title"
 msgstr "Título"
 
-msgid "To add a custom page, click Add at the top left of this screen and import your page archive."
-msgstr "Para adicionar uma página personalizada, clique em Adicionar no canto superior esquerdo desta tela e importe o arquivo de página."
-
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "Para alterar o conteúdo desta página personalizada, especifique um novo arquivo zip no campo abaixo."
-
-msgid "To create your own custom page, export the example, add your content, and zip the archive, as explained in the archive readme."
-msgstr "Para criar sua própria página personalizada, exporte o exemplo, adicione um conteúdo e crie um arquivo zip, conforme explicado no arquivo readme."
 
 msgid "To do"
 msgstr "Para fazer"
@@ -2201,11 +2249,11 @@ msgstr "Para fazer"
 msgid "To do so, contact your administrator"
 msgstr "Para fazer isso, contate o administrador"
 
-msgid "To preview a custom page, attach it to a custom profile. To do so, contact your Administrator."
-msgstr "Para visualizar uma página personalizada, anexe-a a um perfil personalizado. Para fazer isso, contate o administrador."
+msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
+msgstr "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 
-msgid "To preview a custom page, attach it to a custom profile. To do so, go to "
-msgstr "Para pré-visualizar uma página personalizada, anexe-a a um perfil personalizado. Para fazer isso, vá para "
+msgid "To view an imported page, add it to an application page list and navigation."
+msgstr "To view an imported page, add it to an application page list and navigation."
 
 msgid "Tu"
 msgstr "Ter"
