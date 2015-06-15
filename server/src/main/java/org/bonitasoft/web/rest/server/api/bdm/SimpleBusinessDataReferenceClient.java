@@ -14,6 +14,8 @@
 
 package org.bonitasoft.web.rest.server.api.bdm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author Baptiste Mesta
  */
@@ -21,9 +23,13 @@ public class SimpleBusinessDataReferenceClient extends BusinessDataReferenceClie
 
     private Long storageId;
 
+    @JsonProperty("storageId_string")
+    private String storageIdAsString;
+
     public SimpleBusinessDataReferenceClient(String name, String type, String link, Long storageId) {
         super(name, type, link);
         this.storageId = storageId;
+        this.storageIdAsString = storageId.toString();
     }
 
     public Long getStorageId() {
@@ -32,5 +38,13 @@ public class SimpleBusinessDataReferenceClient extends BusinessDataReferenceClie
 
     public void setStorageId(Long storageId) {
         this.storageId = storageId;
+    }
+
+    public String getStorageIdAsString() {
+        return storageIdAsString;
+    }
+
+    public void setStorageIdAsString(String storageIdAsString) {
+        this.storageIdAsString = storageIdAsString;
     }
 }
