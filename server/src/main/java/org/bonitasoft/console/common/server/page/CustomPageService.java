@@ -314,7 +314,7 @@ public class CustomPageService {
                 } catch (final PageNotFoundException e) {
                     try {
                         pageAPI.getPageByName(pageName);
-                        throw new AlreadyExistsException("A page with name " + pageName + " already exists for the process " + processDefinitionId);
+                        throw new AlreadyExistsException("A page with name " + pageName + " already exists for the tenant");
                     } catch (final PageNotFoundException e1) {
                         //Do nothing (if the page was not found, it means a page with the same name doesn't already exist)
                     }
