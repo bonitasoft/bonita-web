@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,13 +18,14 @@ package org.bonitasoft.web.rest.server.datastore.utils;
 
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 
 /**
  * Convenient object to deal with datastore sort options
- * 
+ *
  * Default sort order is ASCENDING
- * 
+ *
  * @author Colin PUY
  */
 public class Sort {
@@ -33,31 +34,34 @@ public class Sort {
 
     private static final String SEPARATOR = " ";
 
-    private String field;
+    private final String field;
 
-    private Order order;
+    private final Order order;
 
-    private AttributeConverter converter;
+    private final AttributeConverter converter;
 
-    public Sort(String sortValue, AttributeConverter converter) {
+    public Sort(final String sortValue, final AttributeConverter converter) throws AttributeConverterException {
         this.converter = converter;
         field = getSortedFieldValue(sortValue);
+        if (field == null) {
+            throw new AttributeConverterException("Unable to convert search field " + sortValue + ", unknown value");
+        }
         order = getOrder(sortValue);
     }
 
-    public Sort(String sortValue) {
+    public Sort(final String sortValue) {
         this(sortValue, new EmptyAttributeConverter());
     }
 
-    private Order getOrder(String sortValue) {
-        String[] split = sortValue.split(SEPARATOR);
+    private Order getOrder(final String sortValue) {
+        final String[] split = sortValue.split(SEPARATOR);
         if (split.length > 1) {
             return Order.valueOf(split[1].toUpperCase());
         }
         return DEFAULT_ORDER;
     }
 
-    private String getSortedFieldValue(String sortValue) {
+    private String getSortedFieldValue(final String sortValue) {
         return converter.convert(sortValue.split(SEPARATOR)[0]);
     }
 
@@ -70,22 +74,28 @@ public class Sort {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
 
-        Sort other = (Sort) obj;
+        final Sort other = (Sort) obj;
         if (field == null) {
-            if (other.field != null)
+            if (other.field != null) {
                 return false;
-        } else if (!field.equals(other.field))
+            }
+        } else if (!field.equals(other.field)) {
             return false;
-        if (order != other.order)
+        }
+        if (order != other.order) {
             return false;
+        }
         return true;
     }
 
