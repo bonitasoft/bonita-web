@@ -14,7 +14,10 @@
 
 package org.bonitasoft.web.rest.server.api.bdm;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Baptiste Mesta
@@ -23,9 +26,17 @@ public class MultipleBusinessDataReferenceClient extends BusinessDataReferenceCl
 
     private List<Long> storageIds;
 
+    @JsonProperty("storageIds_string")
+    private List<String> storageIdsAsString;
+
     public MultipleBusinessDataReferenceClient(String name, String type, String link, List<Long> storageIds) {
         super(name, type, link);
         this.storageIds = storageIds;
+        storageIdsAsString=new ArrayList<>();
+        for (Long storageId : storageIds) {
+            storageIdsAsString.add(storageId.toString());
+        }
+
     }
 
     public List<Long> getStorageIds() {
@@ -35,4 +46,9 @@ public class MultipleBusinessDataReferenceClient extends BusinessDataReferenceCl
     public void setStorageIds(List<Long> storageIds) {
         this.storageIds = storageIds;
     }
+
+    public List<String> getStorageIdsAsString() {
+        return storageIdsAsString;
+    }
+
 }
