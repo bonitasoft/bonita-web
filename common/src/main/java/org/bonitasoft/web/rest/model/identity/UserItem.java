@@ -158,7 +158,7 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
         return "true".equals(getAttributeValue(ATTRIBUTE_ENABLED));
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         setAttribute(ATTRIBUTE_ENABLED, String.valueOf(enabled));
     }
 
@@ -166,12 +166,12 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
 
     @Override
     public void setId(final String id) {
-        this.setAttribute("id", id);
+        this.setAttribute(ATTRIBUTE_ID, id);
     }
 
     @Override
     public void setId(final Long id) {
-        this.setAttribute("id", id.toString());
+        this.setAttribute(ATTRIBUTE_ID, id.toString());
     }
 
     public void setFirstName(final String firstName) {
