@@ -114,9 +114,12 @@
 	
 	.exportCell{
 		a{
-			.skinButton(@btnColor, @btnTxtColor, @btnTxtStrokeColor);
+			.skinButton(@btnActionColor, @btnActionTxtColor, @btnActionTxtStokeColor);
 			float: right;
 			position: relative;
+			span{
+				color:@btnTxtColor;
+			}
 		}
 	}
 	form#report-form{
@@ -140,38 +143,36 @@
 		.report-form {
 			text-align: left;
 		}
-        
+		
 		.formentries {
-            .buttons {
-                width: 100%;
-                text-align: center;
-                vertical-align: middle;
-                height: 30px;
-                input.btn {
-                    height: @button-height + @border-width + @border-width;
-                }
-                .btn {
-                    height: @button-height;
-                }
-            }
-            
-            .formentry {
-                height: auto;
-                float: left;
-                width: 250px;
-                margin: 5px;
-                
-                &.select .input select{
-                    background: none repeat scroll 0 0 transparent;
-                    border: 0 none;
-                    border-radius: 0 0 0 0;
-                    font-family: inherit;
-                    font-size: inherit;
-                    padding: 4px 5px;
-                    width: 120%;
-                }
-            }  
-        } 
+			.buttons {
+				width: 100%;
+				text-align: center;
+				vertical-align: middle;
+				height: 30px;
+				input.btn{
+					height: @button-globalHeight;
+					min-width: @button-globalWidth;
+				}
+			}
+			
+			.formentry {
+				height: auto;
+				float: left;
+				width: 250px;
+				margin: 5px;
+				
+				&.select .input select{
+					background: none repeat scroll 0 0 transparent;
+					border: 0 none;
+					border-radius: 0 0 0 0;
+					font-family: inherit;
+					font-size: inherit;
+					padding: 4px 5px;
+					width: 120%;
+				}
+			}  
+		} 
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// CHARLY REPORT CSS IMPLEMENTATION
@@ -191,21 +192,21 @@
 	
 	.table_report .thead {
 		border-collapse: separate;
-	    color: #363637;
-	    display: table-header-group;
-	    float: none;
-	    width: 100%;
+		color: #363637;
+		display: table-header-group;
+		float: none;
+		width: 100%;
 	}
 	.table_report tr{
 		display:none;
 	}
 	.table_report .thead tr.tr{
 		background: linear-gradient(to bottom, #FFFFFF 0%, #F7F7F7 100%) repeat scroll 0 0 transparent;
-	    display: table-row;
-	    float: none;
-	    
-	    /* chrome */
-	    background: -webkit-gradient(linear, center top, center bottom, from(#FFFFFF), to(#F7F7F7));
+		display: table-row;
+		float: none;
+		
+		/* chrome */
+		background: -webkit-gradient(linear, center top, center bottom, from(#FFFFFF), to(#F7F7F7));
 	
 	}
 	.table_report .thead .tr .th_1:before {
@@ -217,43 +218,43 @@
 	}
 	.table_report .thead .tr .th {
 		border-left: 1px solid #D9D9D9;
-	    content: "";
-	    display: block;
-	    margin: -5px 0 0 -20px;
-	    position: absolute;
-	    width: 0;
-	    display: table-cell;
-	    float: none;
-	    height: 20px;
-	    padding: 5px 10px;
-	    position: relative;
+		content: "";
+		display: block;
+		margin: -5px 0 0 -20px;
+		position: absolute;
+		width: 0;
+		display: table-cell;
+		float: none;
+		height: 20px;
+		padding: 5px 10px;
+		position: relative;
 		text-align: left;
-        vertical-align: middle;
-        font-size: 120%;
+		vertical-align: middle;
+		font-size: 120%;
 	}
-    
-    .table_report.small-table-header .thead .tr .th {
-        font-size: 110%;
-    }
-    
+	
+	.table_report.small-table-header .thead .tr .th {
+		font-size: 110%;
+	}
+	
 	.table_report .tbody {
 		display: table-row-group;
-	    float: none;
-	    width: 100%;
+		float: none;
+		width: 100%;
 	}
 	
 	.table_report .tbody tr.tr {
 		display: table-row;
-	    float: none;
-	    width: 100%;
+		float: none;
+		width: 100%;
 	}
 	
 	.table_report .tbody .tr .td {
 		border: 1px solid #EDEDED;
-	    display: table-cell;
-	    float: none;
-	    padding: 5px 10px;
-	    vertical-align: middle;
+		display: table-cell;
+		float: none;
+		padding: 5px 10px;
+		vertical-align: middle;
 	}
 	
 	.table_report .tbody .tr .td a{
