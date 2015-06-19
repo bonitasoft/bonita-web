@@ -57,7 +57,7 @@ public abstract class RestletTest {
     protected Application configureApplication() {
         final ServerResource resource = configureResource();
         final FinderFactory finderFactory = getFinderFactory(resource);
-        return new BonitaRestletApplication(finderFactory);
+        return new BonitaRestletApplication(finderFactory,new BonitaJacksonConverter());
     }
 
 
