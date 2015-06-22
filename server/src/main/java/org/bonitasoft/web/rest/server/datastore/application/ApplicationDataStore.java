@@ -56,8 +56,6 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     private final ApplicationItemConverter converter;
     private final PageAPI pageAPI;
     private static final String CUSTOMPAGE_HOME = "custompage_home";
-    private static final String DEFAULT_LAYOUT = "custompage_layout";
-    private static final String DEFAULT_THEME = "custompage_theme";
 
     public ApplicationDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI, final ApplicationItemConverter converter) {
         super(engineSession);
