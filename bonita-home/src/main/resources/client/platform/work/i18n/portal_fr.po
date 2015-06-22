@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-10 11:19+0200\n"
-"PO-Revision-Date: 2015-06-12 09:26-0400\n"
+"POT-Creation-Date: 2015-06-16 03:01+0200\n"
+"PO-Revision-Date: 2015-06-19 08:30-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -277,8 +277,8 @@ msgstr "Ajouter une nouvelle page personnalisée"
 msgid "Add a new membership to this user"
 msgstr "Ajouter une adhésion à cet utilisateur"
 
-msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension d'API REST). <br/> Ce fichier .zip doit contenir un fichier page.properties à la racine et un dossier nommé « resources ». <br/> Le fichier page.properties doit définir au moins les propriétés name,  displayName et contentType (\"page\" par défaut).  <br/> Le dossier « resources » doit contenir soit le fichier index.html soit le fichier Index.groovy ainsi que ressources nécessaires."
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension des API REST). <br/> Cette ressource sera installée au niveau global (ni processus, ni application). <br/> Cette archive (fichier .zip) doit contenir un fichier page.properties à la racine et un dossier nommé « resources ». <br/> Le fichier properties doit définir au moins name, displayName et contentType (qui, par défaut, est « page »). <br/> Le dossier « resources » doit contenir soit le fichier index.html, soit le fichier Index.groovy, et les ressources nécessaires à la page."
 
 msgid "Add a resource"
 msgstr "Ajouter une ressource"
@@ -470,7 +470,7 @@ msgid "Business card"
 msgstr "Carte de visite"
 
 msgid "By default, forms are included in the process bar file for deployment."
-msgstr "Par défaut, les formulaires sont inclus dans le fichier de processus .bar pour déploiement."
+msgstr "Par défaut, les formulaires sont inclus dans le fichier .bar du processus pour déploiement."
 
 msgid "Call activity"
 msgstr "Activité appelante"
@@ -665,19 +665,19 @@ msgid "Content"
 msgstr "Contenu"
 
 msgid "Content type is 'apiExtension'."
-msgstr "Le type de contenu est « apiExtension »."
+msgstr "Le type de contenu (contentType) est « apiExtension »."
 
 msgid "Content type is 'form'."
-msgstr "Le type de contenu est « form »."
+msgstr "Le type de contenu (contentType) est « form »."
 
 msgid "Content type is 'layout'."
-msgstr "Le type de contenu est « layout »."
+msgstr "Le type de contenu (contentType) est « layout »."
 
 msgid "Content type is 'page'."
-msgstr "Le type de contenu est « page »."
+msgstr "Le type de contenu (contentType) est « page »."
 
 msgid "Content type is 'theme'."
-msgstr "Le type de contenu est « thème »."
+msgstr "Le type de contenu (contentType) est « theme »."
 
 msgid "Country"
 msgstr "Pays"
@@ -686,7 +686,7 @@ msgid "Create"
 msgstr "Créer"
 
 msgid "Create a form from the contract in Bonita BPM Studio."
-msgstr "Créer un formulaire à partir du contrat défini dans le Studio de Bonita BPM."
+msgstr "Créer un formulaire à partir du contrat dans le Bonita BPM Studio."
 
 msgid "Create a group"
 msgstr "Créer un groupe"
@@ -1395,6 +1395,9 @@ msgstr "Monitoring"
 msgid "More"
 msgstr "Détails"
 
+msgid "More information"
+msgstr "Plus d'informations"
+
 msgid "Move this element after the next one"
 msgstr "Déplacer cet élément après le suivant"
 
@@ -1941,7 +1944,7 @@ msgid "Subprocess version"
 msgstr "Version du sous-processus"
 
 msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
-msgstr "Editions Souscription: pour remplacer un formulaire dans un processus déjà déployé, Télécharger le zip contenant le nouveau formulaire et mettre à jour le mapping  de formulaire la vue processus de portail."
+msgstr "Editions Souscription : pour remplacer un formulaire dans un processus déjà déployé, chargez le zip du nouveau formulaire au niveau du processus puis mettez à jour le mapping de formulaire."
 
 msgid "Success"
 msgstr "Succès"
@@ -2092,7 +2095,7 @@ msgid "The id of the related case"
 msgstr "L'id du cas"
 
 msgid "The index file must be present in the zip but is ignored, so can be empty."
-msgstr "Le fichier index doit être présent dans le zip mais est ignoré, il peut donc être vide."
+msgstr "Le fichier index doit être présent dans le zip mais son contenu est ignoré ; il peut donc être laissé vide."
 
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr "Dû a un problème de connexion, l'élément ne peut pas être édité."
@@ -2128,7 +2131,7 @@ msgid "The process responsible for the creation of this task"
 msgstr "Le processus dont est issue la tâche"
 
 msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
-msgstr "Le dossier des ressources doit contenir une classe de Index.groovy ou un fichier index.html et éventuellement peut contenir des ressources supplémentaires."
+msgstr "Le dossier \"resources\" doit contenir une classe Index.groovy ou un fichier index.html ; il peut éventuellement contenir des ressources supplémentaires."
 
 msgid "The server is not available"
 msgstr "Le serveur n'est pas disponible"
@@ -2250,10 +2253,10 @@ msgid "To do so, contact your administrator"
 msgstr "Pour ce faire, contactez votre administrateur"
 
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
-msgstr "Pour partager un formulaire entre les processus, chargez le fichier zip et mappez-le sur les tâches et les processus correspondants."
+msgstr "Pour utiliser le même formulaire dans plusieurs processus, chargez le fichier zip dans les Ressources du portail puis associez-le aux tâches et processus correspondants."
 
 msgid "To view an imported page, add it to an application page list and navigation."
-msgstr "Pour afficher une page importée, ajoutez-la à la liste de pages d'application et da la navigation de l'application."
+msgstr "Pour visualiser une page, ajoutez-la à la liste de pages d'une application puis associez-lui un menu de navigation."
 
 msgid "Tu"
 msgstr "Mar"
