@@ -6,6 +6,7 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
+import org.bonitasoft.web.rest.server.utils.BonitaJacksonConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -18,10 +19,13 @@ public class BonitaRestletApplicationTest {
     @Mock
     FinderFactory finderFactory;
 
+    @Mock
+    BonitaJacksonConverter bonitaJacksonConverter;
+
     @Test
     public void should_application_register_bdm_resources() throws Exception {
         //given
-        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory);
+        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory, bonitaJacksonConverter);
 
         //when
         bonitaSPRestletApplication.buildRouter();
@@ -36,7 +40,7 @@ public class BonitaRestletApplicationTest {
     @Test
     public void should_application_register_extension_resources() throws Exception {
         //given
-        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory);
+        final BonitaRestletApplication bonitaSPRestletApplication = new BonitaRestletApplication(finderFactory, bonitaJacksonConverter);
 
         //when
         bonitaSPRestletApplication.buildRouter();
@@ -44,6 +48,5 @@ public class BonitaRestletApplicationTest {
         //then
         Mockito.verify(finderFactory).createExtensionResource();
     }
-
 
 }
