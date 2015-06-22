@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,26 +21,25 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 /**
  * @author Vincent Elcrin
- *
+ * 
  *         Build list of sorts from a string order following the pattern
  *         <attribute asc>,<attibute desc>,...
- *
+ * 
  */
 public class Sorts {
 
-    private final List<Sort> sorts;
+    private List<Sort> sorts;
 
-    public Sorts(final String orders, final AttributeConverter converter) {
+    public Sorts(String orders, AttributeConverter converter) {
         sorts = parseOrders(orders, converter);
     }
 
-    public Sorts(final String orders) {
+    public Sorts(String orders) {
         this(orders, new EmptyAttributeConverter());
     }
 
@@ -54,19 +53,15 @@ public class Sorts {
 
     /**
      * Convert orders and build list of sort adding items to sorts parameter
-     *
+     * 
      * @param sorts
      * @param orders
      * @param converter
      */
     private List<Sort> buildSortList(final String orders, final AttributeConverter converter) {
         final List<Sort> sorts = new ArrayList<Sort>();
-        for (final String order : Arrays.asList(orders.split(","))) {
-            try {
-                sorts.add(new Sort(order, converter));
-            } catch (final AttributeConverterException e) {
-                sorts.add(new Sort(order));
-            }
+        for (String order : Arrays.asList(orders.split(","))) {
+            sorts.add(new Sort(order, converter));
         }
         return sorts;
     }
