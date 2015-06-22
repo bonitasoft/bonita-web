@@ -23,7 +23,6 @@ import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_MANAGER_
 import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_USERNAME;
 import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_GROUP_ID;
 import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_ROLE_ID;
-import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId.ATTRIBUTE_ID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,6 @@ public class UserSearchAttributeConverter implements AttributeConverter {
     static Map<String, String> mapping = new HashMap<String, String>();
 
     static {
-        mapping.put(ATTRIBUTE_ID, UserSearchDescriptor.ID);
         mapping.put(ATTRIBUTE_FIRSTNAME, UserSearchDescriptor.FIRST_NAME);
         mapping.put(ATTRIBUTE_LASTNAME, UserSearchDescriptor.LAST_NAME);
         mapping.put(ATTRIBUTE_USERNAME, UserSearchDescriptor.USER_NAME);
