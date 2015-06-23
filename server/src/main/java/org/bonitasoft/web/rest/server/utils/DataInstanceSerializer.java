@@ -14,38 +14,38 @@
 package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
-import java.io.Serializable;
-
-import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 
 /**
  * @author Laurent Leseigneur
  */
-public class DataInstanceSerializerHelper {
+public class DataInstanceSerializer extends JsonSerializer<DataInstanceImpl> {
 
-    protected String getStringValue(Serializable value) {
-        if (value == null) {
-            return null;
-        }
-        return String.valueOf(value);
-    }
+    JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
 
-    protected void writeValueAndStringValue(JsonGenerator jgen, String fieldName, Serializable value) throws IOException {
-        jgen.writeObjectField(fieldName, value);
-        jgen.writeObjectField(fieldName + "_string", getStringValue(value));
-    }
-
-    public void writeDataInstanceFields(JsonGenerator jgen, DataInstanceImpl value) throws IOException {
+    @Override
+    public void serialize(DataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+        jgen.writeStartObject();
         jgen.writeObjectField("name", value.getName());
         jgen.writeObjectField("description", value.getDescription());
         jgen.writeObjectField("transientData", value.isTransientData());
         jgen.writeObjectField("className", value.getClassName());
         jgen.writeObjectField("containerType", value.getContainerType());
 
-        writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
-        writeValueAndStringValue(jgen, "id", value.getId());
-        writeValueAndStringValue(jgen, "containerId", value.getContainerId());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "id", value.getId());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "containerId", value.getContainerId());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "value", value.getValue());
+        jgen.writeEndObject();
+    }
+
+    @Override
+    public Class<DataInstanceImpl> handledType() {
+        return DataInstanceImpl.class;
     }
 }

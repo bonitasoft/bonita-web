@@ -19,25 +19,28 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.bonitasoft.engine.bpm.data.impl.LongDataInstanceImpl;
+import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 
 /**
  * @author Laurent Leseigneur
  */
-public class LongDataInstanceSerializer extends JsonSerializer<LongDataInstanceImpl> {
+public class TimerEventTriggerInstanceSerializer extends JsonSerializer<TimerEventTriggerInstance> {
 
-    DataInstanceSerializerHelper dataInstanceSerializerHelper = new DataInstanceSerializerHelper();
+    JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
 
     @Override
-    public void serialize(LongDataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+    public void serialize(TimerEventTriggerInstance timerEventTriggerInstance, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+            JsonProcessingException {
         jgen.writeStartObject();
-        dataInstanceSerializerHelper.writeDataInstanceFields(jgen, value);
-        dataInstanceSerializerHelper.writeValueAndStringValue(jgen, "value", value.getValue());
+        jgen.writeObjectField("eventInstanceName", timerEventTriggerInstance.getEventInstanceName());
+        jgen.writeObjectField("executionDate", timerEventTriggerInstance.getExecutionDate());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "id", timerEventTriggerInstance.getId());
+        jacksonSerializerHelper.writeValueAndStringValue(jgen, "eventInstanceId", timerEventTriggerInstance.getEventInstanceId());
         jgen.writeEndObject();
     }
 
     @Override
-    public Class<LongDataInstanceImpl> handledType() {
-        return LongDataInstanceImpl.class;
+    public Class<TimerEventTriggerInstance> handledType() {
+        return TimerEventTriggerInstance.class;
     }
 }

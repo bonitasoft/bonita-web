@@ -14,19 +14,21 @@
 
 package org.bonitasoft.web.rest.server.utils;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.restlet.data.MediaType;
 import org.restlet.ext.jackson.JacksonConverter;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.representation.Representation;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+
 /**
  * @author Laurent Leseigneur
  */
 public class BonitaJacksonConverter extends JacksonConverter {
+
     @Override
     protected <T> JacksonRepresentation<T> create(MediaType mediaType, T source) {
         ObjectMapper mapper = createMapper();
@@ -43,17 +45,15 @@ public class BonitaJacksonConverter extends JacksonConverter {
         return jr;
     }
 
-
     private ObjectMapper createMapper() {
         JsonFactory jsonFactory = new JsonFactory();
         jsonFactory.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
         ObjectMapper mapper = new ObjectMapper(jsonFactory);
 
-        SimpleModule simpleModule=new SimpleModule();
-        simpleModule.addSerializer(new LongDataInstanceSerializer());
-        simpleModule.addSerializer(new FloatDataInstanceSerializer());
-        simpleModule.addSerializer(new DoubleDataInstanceSerializer());
-
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(new DataInstanceSerializer());
+        simpleModule.addSerializer(new TimerEventTriggerInstanceSerializer());
+        
         mapper.registerModule(simpleModule);
         return mapper;
     }

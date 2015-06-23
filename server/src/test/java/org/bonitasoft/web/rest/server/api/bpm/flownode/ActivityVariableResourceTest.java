@@ -7,7 +7,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
-import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.data.DataInstance;
@@ -169,10 +168,6 @@ public class ActivityVariableResourceTest extends RestletTest {
 
         //then
         assertJsonEquals(getJson(jsonFile), response.getEntityAsText());
-    }
-
-    private String getJson(String jsonFile) throws Exception {
-        return new String(IOUtils.toByteArray(this.getClass().getResourceAsStream(jsonFile)));
     }
 
 }

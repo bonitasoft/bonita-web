@@ -14,30 +14,24 @@
 package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import org.bonitasoft.engine.bpm.data.impl.FloatDataInstanceImpl;
 
 /**
  * @author Laurent Leseigneur
  */
-public class FloatDataInstanceSerializer extends JsonSerializer<FloatDataInstanceImpl> {
+public class JacksonSerializerHelper {
 
-    DataInstanceSerializerHelper dataInstanceSerializerHelper = new DataInstanceSerializerHelper();
-
-    @Override
-    public void serialize(FloatDataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
-        jgen.writeStartObject();
-        dataInstanceSerializerHelper.writeDataInstanceFields(jgen, value);
-        dataInstanceSerializerHelper.writeValueAndStringValue(jgen,"value", value.getValue());
-        jgen.writeEndObject();
+    protected String getStringValue(Serializable value) {
+        if (value == null) {
+            return null;
+        }
+        return String.valueOf(value);
     }
 
-    @Override
-    public Class<FloatDataInstanceImpl> handledType() {
-        return FloatDataInstanceImpl.class;
+    protected void writeValueAndStringValue(JsonGenerator jgen, String fieldName, Serializable value) throws IOException {
+        jgen.writeObjectField(fieldName, value);
+        jgen.writeObjectField(fieldName + "_string", getStringValue(value));
     }
 }
