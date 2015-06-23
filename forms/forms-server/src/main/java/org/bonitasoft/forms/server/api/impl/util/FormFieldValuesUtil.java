@@ -516,7 +516,7 @@ public class FormFieldValuesUtil {
      */
     protected void addFormWidgetAvailableValuesExpressions(final FormWidget formWidget, final List<Expression> expressionsToEvaluate) {
         final String widgetId = formWidget.getId();
-        if (formWidget.getAvailableValuesExpression() != null) {
+        if (formWidget.getAvailableValuesExpression() != null && !WidgetType.SUGGESTBOX_ASYNC.equals(formWidget.getType())) {
             final Expression availableValuesExpression = formWidget.getAvailableValuesExpression();
             availableValuesExpression.setName(widgetId + EXPRESSION_KEY_SEPARATOR + WIDGET_AVAILABLE_VALUES);
             expressionsToEvaluate.add(availableValuesExpression);

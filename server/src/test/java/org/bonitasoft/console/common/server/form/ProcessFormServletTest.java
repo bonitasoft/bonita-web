@@ -98,6 +98,7 @@ public class ProcessFormServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName");
+        when(processFormService.encodePathSegment("taskName")).thenReturn("taskName");
         when(processFormService.getProcessPath(apiSession, 1L)).thenReturn("processName/processVersion");
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -113,6 +114,7 @@ public class ProcessFormServletTest {
         when(processFormService.getTaskInstanceId(apiSession, 42L, "taskName", -1L)).thenReturn(1L);
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, 42L, 1L)).thenReturn(2L);
         when(processFormService.getTaskName(apiSession, 1L)).thenReturn("taskName");
+        when(processFormService.encodePathSegment("taskName")).thenReturn("taskName");
         when(processFormService.getProcessPath(apiSession, 2L)).thenReturn("processName/processVersion");
 
         formServlet.doGet(hsRequest, hsResponse);
@@ -141,13 +143,14 @@ public class ProcessFormServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName é+ø");
+        when(processFormService.encodePathSegment("taskName é+ø")).thenReturn("taskName%20%C3%A9%2B%C3%B8");
         when(processFormService.getProcessPath(apiSession, 1L)).thenReturn("processName/processVersion");
 
         formServlet.doGet(hsRequest, hsResponse);
 
         verify(formServlet, times(1)).redirectToPageServlet(hsRequest, hsResponse, apiSession, 1L, -1L, 42L, "taskName é+ø");
         verify(hsResponse, times(1)).encodeRedirectURL(
-                "/bonita/portal/resource/taskInstance/processName/processVersion/taskName+%C3%A9%2B%C3%B8/content/?id=42");
+                "/bonita/portal/resource/taskInstance/processName/processVersion/taskName%20%C3%A9%2B%C3%B8/content/?id=42");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
@@ -156,6 +159,7 @@ public class ProcessFormServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/taskInstance/42");
         when(processFormService.ensureProcessDefinitionId(apiSession, -1L, -1L, 42L)).thenReturn(1L);
         when(processFormService.getTaskName(apiSession, 42L)).thenReturn("taskName/é+ø");
+        when(processFormService.encodePathSegment("taskName/é+ø")).thenReturn("taskName/%C3%A9%2B%C3%B8");
         when(processFormService.getProcessPath(apiSession, 1L)).thenReturn("processName/processVersion");
 
         formServlet.doGet(hsRequest, hsResponse);
