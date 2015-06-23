@@ -32,13 +32,8 @@ public class FloatDataInstanceSerializer extends JsonSerializer<FloatDataInstanc
     public void serialize(FloatDataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
         jgen.writeStartObject();
         dataInstanceSerializerHelper.writeDataInstanceFields(jgen, value);
-        writeFloatAndStringField(jgen, "value", value.getValue());
+        dataInstanceSerializerHelper.writeValueAndStringValue(jgen,"value", value.getValue());
         jgen.writeEndObject();
-    }
-
-    private void writeFloatAndStringField(JsonGenerator jgen, String fieldName, Float value) throws IOException {
-        jgen.writeObjectField(fieldName, fieldName);
-        jgen.writeObjectField(fieldName + "_string", dataInstanceSerializerHelper.getStringValue(fieldName));
     }
 
     @Override

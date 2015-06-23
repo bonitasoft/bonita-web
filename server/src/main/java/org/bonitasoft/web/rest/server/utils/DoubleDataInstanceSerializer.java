@@ -32,13 +32,8 @@ public class DoubleDataInstanceSerializer extends JsonSerializer<DoubleDataInsta
     public void serialize(DoubleDataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
         jgen.writeStartObject();
         dataInstanceSerializerHelper.writeDataInstanceFields(jgen, value);
-        writeDoubleAndStringField(jgen, "value", value.getValue());
+        dataInstanceSerializerHelper.writeValueAndStringValue(jgen, "value", value.getValue());
         jgen.writeEndObject();
-    }
-
-    private void writeDoubleAndStringField(JsonGenerator jgen, String fieldName, Double doubleValue) throws IOException {
-        jgen.writeObjectField(fieldName, doubleValue);
-        jgen.writeObjectField(fieldName + "_string", dataInstanceSerializerHelper.getStringValue(doubleValue));
     }
 
     @Override

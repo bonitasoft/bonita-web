@@ -32,9 +32,9 @@ public class DataInstanceSerializerHelper {
         return String.valueOf(value);
     }
 
-    protected void writeLongAndStringField(JsonGenerator jgen, String fieldName, Long longValue) throws IOException {
-        jgen.writeObjectField(fieldName, longValue);
-        jgen.writeObjectField(fieldName + "_string", getStringValue(longValue));
+    protected void writeValueAndStringValue(JsonGenerator jgen, String fieldName, Serializable value) throws IOException {
+        jgen.writeObjectField(fieldName, value);
+        jgen.writeObjectField(fieldName + "_string", getStringValue(value));
     }
 
     public void writeDataInstanceFields(JsonGenerator jgen, DataInstanceImpl value) throws IOException {
@@ -44,8 +44,8 @@ public class DataInstanceSerializerHelper {
         jgen.writeObjectField("className", value.getClassName());
         jgen.writeObjectField("containerType", value.getContainerType());
 
-        writeLongAndStringField(jgen, "tenantId", value.getTenantId());
-        writeLongAndStringField(jgen, "id", value.getId());
-        writeLongAndStringField(jgen, "containerId", value.getContainerId());
+        writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
+        writeValueAndStringValue(jgen, "id", value.getId());
+        writeValueAndStringValue(jgen, "containerId", value.getContainerId());
     }
 }

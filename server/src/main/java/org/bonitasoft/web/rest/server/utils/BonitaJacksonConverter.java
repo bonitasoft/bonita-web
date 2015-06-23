@@ -55,7 +55,6 @@ public class BonitaJacksonConverter extends JacksonConverter {
         simpleModule.addSerializer(new DoubleDataInstanceSerializer());
 
         mapper.registerModule(simpleModule);
-        mapper.enableDefaultTyping();
         return mapper;
     }
 

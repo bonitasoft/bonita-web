@@ -32,7 +32,7 @@ public class LongDataInstanceSerializer extends JsonSerializer<LongDataInstanceI
     public void serialize(LongDataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
         jgen.writeStartObject();
         dataInstanceSerializerHelper.writeDataInstanceFields(jgen, value);
-        dataInstanceSerializerHelper.writeLongAndStringField(jgen, "value", value.getValue());
+        dataInstanceSerializerHelper.writeValueAndStringValue(jgen, "value", value.getValue());
         jgen.writeEndObject();
     }
 
