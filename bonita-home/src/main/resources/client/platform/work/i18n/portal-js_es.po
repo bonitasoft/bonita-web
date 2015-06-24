@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-06-10 01:48-0400\n"
+"PO-Revision-Date: 2015-06-24 03:19-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /7.0.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "Error en la estructura del archivo ZIP. Verifique que los archivos page.properties e index.html o Index.groovy existan y que sean válidos. Para obtener más información, consulte la documentación o el readme de página ejemplo (disponible en la lista de páginas personalizadas)"
@@ -1128,7 +1128,7 @@ msgstr "Ver diseño de caso"
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:119
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:70
 msgid "View case details"
-msgstr "Ver detalles de caso"
+msgstr "Ver detalles del caso"
 
 #: main/features/admin/monitoring/monitoring.html:134
 msgid "View case list"
