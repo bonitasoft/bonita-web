@@ -53,7 +53,7 @@ public class BonitaJacksonConverter extends JacksonConverter {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(new DataInstanceSerializer());
         simpleModule.addSerializer(new TimerEventTriggerInstanceSerializer());
-        
+
         mapper.registerModule(simpleModule);
         return mapper;
     }

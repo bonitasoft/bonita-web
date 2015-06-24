@@ -15,6 +15,7 @@ import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.DoubleDataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.FloatDataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.LongDataInstanceImpl;
+import org.bonitasoft.engine.bpm.data.impl.ShortTextDataInstanceImpl;
 import org.bonitasoft.engine.bpm.process.ModelFinderVisitor;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.web.rest.server.BonitaRestletApplication;
@@ -90,6 +91,14 @@ public class ActivityVariableResourceTest extends RestletTest {
         assertThat(dataInstanceResult).isEqualTo(dataInstance);
     }
 
+    private DataInstanceImpl createShortTextDataInstance(String value) {
+        DataDefinition dataDefinition = createDataDefinition();
+        final ShortTextDataInstanceImpl dataInstance = new ShortTextDataInstanceImpl(dataDefinition, value);
+        fillIds(dataInstance);
+        return dataInstance;
+    }
+
+
     private DataInstanceImpl createLongDataInstance(Long value) {
         DataDefinition dataDefinition = createDataDefinition();
         final LongDataInstanceImpl dataInstance = new LongDataInstanceImpl(dataDefinition, value);
@@ -155,6 +164,7 @@ public class ActivityVariableResourceTest extends RestletTest {
     @Test
     public void should_DataInstance_return_number_as_strings() throws Exception {
         checkJsonDataInstance(createLongDataInstance(123L), "longDataInstance.json");
+        checkJsonDataInstance(createShortTextDataInstance("abc"), "stringDataInstance.json");
         checkJsonDataInstance(createFloatDataInstance(123.456F), "floatDataInstance.json");
         checkJsonDataInstance(createDoubleDataInstance(123.5D), "doubleDataInstance.json");
     }

@@ -15,6 +15,10 @@ package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
@@ -22,6 +26,15 @@ import com.fasterxml.jackson.core.JsonGenerator;
  * @author Laurent Leseigneur
  */
 public class JacksonSerializerHelper {
+
+    private final Set<String> numberTypes;
+
+    public JacksonSerializerHelper() {
+        numberTypes = new HashSet<>();
+        numberTypes.add(Long.class.getCanonicalName());
+        numberTypes.add(Float.class.getCanonicalName());
+        numberTypes.add(Double.class.getCanonicalName());
+    }
 
     protected String getStringValue(Serializable value) {
         if (value == null) {
@@ -32,6 +45,23 @@ public class JacksonSerializerHelper {
 
     protected void writeValueAndStringValue(JsonGenerator jgen, String fieldName, Serializable value) throws IOException {
         jgen.writeObjectField(fieldName, value);
-        jgen.writeObjectField(fieldName + "_string", getStringValue(value));
+        if (numberTypes.contains(value.getClass().getCanonicalName())) {
+            jgen.writeObjectField(fieldName + "_string", getStringValue(value));
+        }
+    }
+
+    public void serializeDataInstance(DataInstanceImpl value, JsonGenerator jgen) throws IOException {
+        jgen.writeStartObject();
+        jgen.writeObjectField("name", value.getName());
+        jgen.writeObjectField("description", value.getDescription());
+        jgen.writeObjectField("transientData", value.isTransientData());
+        jgen.writeObjectField("className", value.getClassName());
+        jgen.writeObjectField("containerType", value.getContainerType());
+
+        writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
+        writeValueAndStringValue(jgen, "id", value.getId());
+        writeValueAndStringValue(jgen, "containerId", value.getContainerId());
+        writeValueAndStringValue(jgen, "value", value.getValue());
+        jgen.writeEndObject();
     }
 }
