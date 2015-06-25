@@ -66,6 +66,7 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Frame;
@@ -391,6 +392,7 @@ public class FormPagesViewController {
             buildViewMode(pageHTMLPanel, formPage, hasAlreadyBeenDisplayed, isNextPage, onloadAttributeValue);
         }
         domUtils.overrideBrowserNativeInputs();
+        resizeFrame();
         domUtils.hideLoading();
 
     }
@@ -1307,6 +1309,21 @@ public class FormPagesViewController {
 
             enableButtons(true);
         }
+    }
+
+     /**
+     * If the page is contained in a form, resize the frame to fit the page height
+     */
+    protected void resizeFrame() {
+
+        final Timer timer = new Timer() {
+            @Override
+            public void run() {
+                if (domUtils.isPageInFrame()) {
+               }
+            }
+        };
+        timer.schedule(300);
     }
 
     public void setMandatoryFieldSymbol(final String mandatoryFieldSymbol) {
