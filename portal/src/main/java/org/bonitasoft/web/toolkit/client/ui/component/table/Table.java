@@ -17,13 +17,14 @@ package org.bonitasoft.web.toolkit.client.ui.component.table;
 import static com.google.gwt.query.client.GQuery.$;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.ui.CheckBox;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ModifierEngine;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
@@ -44,14 +45,12 @@ import org.bonitasoft.web.toolkit.client.ui.html.XML;
 import org.bonitasoft.web.toolkit.client.ui.html.XMLAttributes;
 import org.bonitasoft.web.toolkit.client.ui.utils.Filler;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Random;
-import com.google.gwt.user.client.ui.CheckBox;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Séverin Moussel
@@ -388,10 +387,11 @@ public class Table extends AbstractTable implements Refreshable {
             rootElement.appendChild(makeGroupedActions());
         }
 
-        disableActionLinks();
+        setActionLinksEnableDisable();
 
         return rootElement;
     }
+
 
     public void updateHtml() {
         final int nbPages = getNbPages();
@@ -467,7 +467,7 @@ public class Table extends AbstractTable implements Refreshable {
             clearSelectedIds();
         }
 
-        disableActionLinks();
+        setActionLinksEnableDisable();
 
         if (lines.size() == 0) {
             addCheckAllCheckbox();
@@ -576,11 +576,11 @@ public class Table extends AbstractTable implements Refreshable {
         // Set datatable class to to inform about selected or not
         if ($(".td_checkboxes input", Table.this.getElement()).filter(":checked").length() > 0) {
             $(getElement()).addClass("linechecked");
-            enableActionsLinks();
         } else {
             $(getElement()).removeClass("linechecked");
-            disableActionLinks();
         }
+
+        setActionLinksEnableDisable();
     }
 
     private void onUncheckItem(final GQuery labels, String itemId) {
@@ -646,6 +646,13 @@ public class Table extends AbstractTable implements Refreshable {
         }
     }
 
+    private void setActionLinksEnableDisable() {
+        if (selectedIds.size() > 0) {
+            enableActionsLinks();
+        } else {
+            disableActionLinks();
+        }
+    }
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GROUPED ACTIONS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -654,7 +661,7 @@ public class Table extends AbstractTable implements Refreshable {
 
     /**
      * Add action to the table and enable checkboxes
-     * 
+     *
      * @param link
      *            link to add
      * @param force
