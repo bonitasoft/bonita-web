@@ -356,4 +356,16 @@ public class ProcessFormServiceTest {
 
         assertEquals("processName/processVersion", uuid);
     }
+
+    @Test
+    public void getProcessDefinitionUUID_should_return_valid_UUID_with_special_characters() throws Exception {
+        final ProcessDeploymentInfo processDeploymentInfo = mock(ProcessDeploymentInfo.class);
+        when(processDeploymentInfo.getName()).thenReturn("process Name/é");
+        when(processDeploymentInfo.getVersion()).thenReturn("process Version ø");
+        when(processAPI.getProcessDeploymentInfo(1L)).thenReturn(processDeploymentInfo);
+
+        final String uuid = processFormService.getProcessPath(apiSession, 1L);
+
+        assertEquals("process%20Name/%C3%A9/process%20Version%20%C3%B8", uuid);
+    }
 }

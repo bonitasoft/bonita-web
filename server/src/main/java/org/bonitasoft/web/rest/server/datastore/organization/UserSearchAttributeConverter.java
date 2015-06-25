@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,36 +21,35 @@ import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_MANAGER_
 import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_USERNAME;
 import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_GROUP_ID;
 import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_ROLE_ID;
+import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId.ATTRIBUTE_ID;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 
 /**
- * @author Colin PUY
- * 
+ * @author Colin PUY, Anthony Birembaut
  */
 public class UserSearchAttributeConverter implements AttributeConverter {
 
+    static Map<String, String> mapping = new HashMap<String, String>();
+
+    static {
+        mapping.put(ATTRIBUTE_ID, UserSearchDescriptor.ID);
+        mapping.put(ATTRIBUTE_FIRSTNAME, UserSearchDescriptor.FIRST_NAME);
+        mapping.put(ATTRIBUTE_LASTNAME, UserSearchDescriptor.LAST_NAME);
+        mapping.put(ATTRIBUTE_USERNAME, UserSearchDescriptor.USER_NAME);
+        mapping.put(ATTRIBUTE_ENABLED, UserSearchDescriptor.ENABLED);
+        mapping.put(ATTRIBUTE_MANAGER_ID, UserSearchDescriptor.MANAGER_USER_ID);
+        mapping.put(FILTER_GROUP_ID, UserSearchDescriptor.GROUP_ID);
+        mapping.put(FILTER_ROLE_ID, UserSearchDescriptor.ROLE_ID);
+    }
+
     @Override
-    public String convert(String attribute) {
-        if (attribute == null) {
-            return null;
-        }
-        if (ATTRIBUTE_FIRSTNAME.equals(attribute))
-            return UserSearchDescriptor.FIRST_NAME;
-        if (ATTRIBUTE_LASTNAME.equals(attribute))
-            return UserSearchDescriptor.LAST_NAME;
-        if (ATTRIBUTE_USERNAME.equals(attribute))
-            return UserSearchDescriptor.USER_NAME;
-        if (ATTRIBUTE_ENABLED.equals(attribute)) 
-            return UserSearchDescriptor.ENABLED;
-        if (ATTRIBUTE_MANAGER_ID.equals(attribute))
-            return UserSearchDescriptor.MANAGER_USER_ID;
-        if (FILTER_GROUP_ID.equals(attribute))
-            return UserSearchDescriptor.GROUP_ID;
-        if (FILTER_ROLE_ID.equals(attribute))
-            return UserSearchDescriptor.ROLE_ID;
-        throw new AttributeConverterException("Unable to convert search field " + attribute + ", unknown value");
+    public String convert(final String attribute) {
+
+        return mapping.get(attribute);
     }
 }
