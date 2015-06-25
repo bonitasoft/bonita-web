@@ -311,7 +311,7 @@ public class FormPagesViewController {
                 });
                 theRequestBuilder.send();
             } catch (final Exception e) {
-                GWT.log("Error while trying to query the form layout :" + e.getMessage());
+                Window.alert("Error while trying to query the form layout :" + e.getMessage());
             }
 
         }
@@ -615,7 +615,7 @@ public class FormPagesViewController {
                 pageHTMLPanel.add(widget, widgetParentElement);
                 widgetParentElement.addClassName(widgetStyle);
             } else {
-                GWT.log("An element with id " + formWidgetData.getId() + " is missing from the page template.");
+                Window.alert("An element with id " + formWidgetData.getId() + " is missing from the page template.");
             }
         }
     }
@@ -1140,7 +1140,7 @@ public class FormPagesViewController {
                         if (validatorElement != null) {
                             DOM.appendChild(validatorElement, formValidationMessageWidget.getElement());
                         } else {
-                            GWT.log("An element with id " + validatorId + " is missing from the page template.");
+                            Window.alert("An element with id " + validatorId + " is missing from the page template.");
                         }
                     }
                 }
@@ -1200,7 +1200,7 @@ public class FormPagesViewController {
                     if (RootPanel.get(validatorId) != null) {
                         RootPanel.get(validatorId).add(formValidationMessageWidget);
                     } else {
-                        GWT.log("An element with id " + validatorId + " is missing from the page template.");
+                        Window.alert("An element with id " + validatorId + " is missing from the page template.");
                     }
                 }
                 enableButtons(true);
