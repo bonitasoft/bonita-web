@@ -113,6 +113,10 @@ public abstract class RestletTest {
         }
     }
 
+    protected String getJson(String jsonFile) throws Exception {
+        return new String(IOUtils.toByteArray(this.getClass().getResourceAsStream(jsonFile)));
+    }
+
     protected class MockFinderFactory extends FinderFactory {
 
         private final ServerResource serverResource;

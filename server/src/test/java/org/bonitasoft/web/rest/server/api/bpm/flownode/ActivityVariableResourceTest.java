@@ -7,7 +7,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
-import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataDefinition;
 import org.bonitasoft.engine.bpm.data.DataInstance;
@@ -16,6 +15,7 @@ import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.DoubleDataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.FloatDataInstanceImpl;
 import org.bonitasoft.engine.bpm.data.impl.LongDataInstanceImpl;
+import org.bonitasoft.engine.bpm.data.impl.ShortTextDataInstanceImpl;
 import org.bonitasoft.engine.bpm.process.ModelFinderVisitor;
 import org.bonitasoft.engine.expression.Expression;
 import org.bonitasoft.web.rest.server.BonitaRestletApplication;
@@ -91,6 +91,14 @@ public class ActivityVariableResourceTest extends RestletTest {
         assertThat(dataInstanceResult).isEqualTo(dataInstance);
     }
 
+    private DataInstanceImpl createShortTextDataInstance(String value) {
+        DataDefinition dataDefinition = createDataDefinition();
+        final ShortTextDataInstanceImpl dataInstance = new ShortTextDataInstanceImpl(dataDefinition, value);
+        fillIds(dataInstance);
+        return dataInstance;
+    }
+
+
     private DataInstanceImpl createLongDataInstance(Long value) {
         DataDefinition dataDefinition = createDataDefinition();
         final LongDataInstanceImpl dataInstance = new LongDataInstanceImpl(dataDefinition, value);
@@ -156,6 +164,7 @@ public class ActivityVariableResourceTest extends RestletTest {
     @Test
     public void should_DataInstance_return_number_as_strings() throws Exception {
         checkJsonDataInstance(createLongDataInstance(123L), "longDataInstance.json");
+        checkJsonDataInstance(createShortTextDataInstance("abc"), "stringDataInstance.json");
         checkJsonDataInstance(createFloatDataInstance(123.456F), "floatDataInstance.json");
         checkJsonDataInstance(createDoubleDataInstance(123.5D), "doubleDataInstance.json");
     }
@@ -169,10 +178,6 @@ public class ActivityVariableResourceTest extends RestletTest {
 
         //then
         assertJsonEquals(getJson(jsonFile), response.getEntityAsText());
-    }
-
-    private String getJson(String jsonFile) throws Exception {
-        return new String(IOUtils.toByteArray(this.getClass().getResourceAsStream(jsonFile)));
     }
 
 }
