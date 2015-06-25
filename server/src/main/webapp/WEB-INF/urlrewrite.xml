@@ -292,7 +292,7 @@
     </rule>
     <rule>
         <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/fileUpload$</from>
-        <to qsappend="true">/portal/fileUpload</to>
+        <to>/portal/fileUpload</to>
     </rule>
     <rule>
         <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/documentDownload?(.*)$</from>
