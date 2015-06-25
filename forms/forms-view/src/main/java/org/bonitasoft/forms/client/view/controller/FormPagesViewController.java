@@ -63,6 +63,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -311,8 +312,8 @@ public class FormPagesViewController {
                     }
                 });
                 theRequestBuilder.send();
-            } catch (final Exception e) {
-                Window.alert("Error while trying to query the form layout :" + e.getMessage());
+            } catch (final RequestException e) {
+                GWT.log("Error while trying to query the form layout :" + e.getMessage());
             }
 
         }
@@ -617,7 +618,7 @@ public class FormPagesViewController {
                 pageHTMLPanel.add(widget, widgetParentElement);
                 widgetParentElement.addClassName(widgetStyle);
             } else {
-                Window.alert("An element with id " + formWidgetData.getId() + " is missing from the page template.");
+                GWT.log("An element with id " + formWidgetData.getId() + " is missing from the page template.");
             }
         }
     }
@@ -1142,7 +1143,7 @@ public class FormPagesViewController {
                         if (validatorElement != null) {
                             DOM.appendChild(validatorElement, formValidationMessageWidget.getElement());
                         } else {
-                            Window.alert("An element with id " + validatorId + " is missing from the page template.");
+                            GWT.log("An element with id " + validatorId + " is missing from the page template.");
                         }
                     }
                 }
@@ -1202,7 +1203,7 @@ public class FormPagesViewController {
                     if (RootPanel.get(validatorId) != null) {
                         RootPanel.get(validatorId).add(formValidationMessageWidget);
                     } else {
-                        Window.alert("An element with id " + validatorId + " is missing from the page template.");
+                        GWT.log("An element with id " + validatorId + " is missing from the page template.");
                     }
                 }
                 enableButtons(true);

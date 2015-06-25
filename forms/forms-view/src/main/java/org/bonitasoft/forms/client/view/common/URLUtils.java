@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.forms.client.view.common;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -566,8 +565,7 @@ public class URLUtils {
         return hashBuilder.toString();
     }
 
-    public String buildLayoutURL(final String bodyContentId, final String formID, final String taskId, final boolean isPageLayout)
-            throws UnsupportedEncodingException {
+    public String buildLayoutURL(final String bodyContentId, final String formID, final String taskId, final boolean isPageLayout) {
         final StringBuffer theURL = new StringBuffer(GWT.getModuleBaseURL()).append(FORM_LAYOUT_DOWNLOAD);
         if (bodyContentId != null) {
             theURL.append("?" + BODY_CONTENT_ID + "=").append(URL.encodeQueryString(bodyContentId));
