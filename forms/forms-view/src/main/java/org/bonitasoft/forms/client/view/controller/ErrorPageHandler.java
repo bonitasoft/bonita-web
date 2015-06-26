@@ -175,6 +175,6 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
     public void onUnhandledFailure(final Throwable t) {
         // Hide the loading message.
         DOM.getElementById("loading").getStyle().setProperty("display", "none");
-        GWT.log(FormsResourceBundle.getErrors().errorTempateError(), t);
+        GWT.log(FormsResourceBundle.getErrors().errorTempateError());
     }
 }
