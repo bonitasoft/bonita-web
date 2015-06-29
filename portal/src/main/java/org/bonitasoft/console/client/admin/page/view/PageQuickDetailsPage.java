@@ -119,7 +119,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
     private AbstractComponent contentSection(final PageItem page) {
         final Section contentSection;
         if (page.isProvided()) {
-            contentSection = new Section("More information");
+            contentSection = new Section(_("More information"));
             if (ContentType.PAGE.equals(page.getContentType())) {
                 contentSection.addBody(
                         contentTypeParagraph(

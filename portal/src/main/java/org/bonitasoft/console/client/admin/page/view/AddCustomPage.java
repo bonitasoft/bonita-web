@@ -35,7 +35,6 @@ import com.google.gwt.user.client.ui.HTML;
 
 /**
  * @author Anthony Birembaut
- *
  */
 public class AddCustomPage extends Page {
 
@@ -61,6 +60,7 @@ public class AddCustomPage extends Page {
             CustomPageWithFrame.TOKEN));
 
     private static final String POPUP_CONTEXT_MESSAGE = _("Add a new resource (page, form, layout, theme, or REST API extension).<br/>" +
+            "This resource will be installed at global scope (not at process or application level).<br/>" +
             "This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>" +
             "This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>" +
             "The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed.");
@@ -96,4 +96,3 @@ public class AddCustomPage extends Page {
         addBody(form);
     }
 }
-
