@@ -275,12 +275,28 @@
         <to qsappend="true" type="redirect">%{context-path}/portal/pageResource?fix=true</to>
     </rule>
     <rule>
+        <from>^/portal/custom-page/(.*)/fileUpload$</from>
+        <to>/portal/fileUpload</to>
+    </rule>
+    <rule>
+        <from>^/portal/custom-page/(.*)/documentDownload?(.*)$</from>
+        <to qsappend="true">/portal/documentDownload?$2</to>
+    </rule>
+    <rule>
         <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/themeResource?(.*)$</from>
         <to qsappend="true">/portal/themeResource?$3</to>
     </rule>
     <rule>
         <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/pageResource?(.*)$</from>
         <to qsappend="true">/portal/pageResource?$3</to>
+    </rule>
+    <rule>
+        <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/fileUpload$</from>
+        <to>/portal/fileUpload</to>
+    </rule>
+    <rule>
+        <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/documentDownload?(.*)$</from>
+        <to qsappend="true">/portal/documentDownload?$3</to>
     </rule>
 
     <!--  Only used in dev mode  -->
