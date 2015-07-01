@@ -44,12 +44,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -195,8 +195,8 @@ public class PageflowViewController {
                         }
                     });
                     theRequestBuilder.send();
-                } catch (final Exception e) {
-                    Window.alert("Error while trying to query the form layout :" + e.getMessage());
+                } catch (final RequestException e) {
+                    GWT.log("Error while trying to query the form layout :" + e.getMessage());
                 }
             } else {
                 final String processUUIDStr = (String) urlContext.get(URLUtils.PROCESS_ID_PARAM);

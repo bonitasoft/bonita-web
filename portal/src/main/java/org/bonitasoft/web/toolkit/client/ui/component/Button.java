@@ -23,24 +23,29 @@ import com.google.gwt.uibinder.client.UiConstructor;
 
 /**
  * A standard push-button component of the USerXP toolkit
- * 
+ *
  * @author Séverin Moussel
  */
 public class Button extends Link {
 
     @UiConstructor
-    public Button(String label) {
+    public Button(final String label) {
         super(label, null, (Action) null);
     }
     /**
      * This constructor must be prefered to other
      */
-    public Button(String id, String label, String tooltip, Action action) {
+    public Button(final String id, final String label, final String tooltip, final Action action) {
         super(label, tooltip, action);
         setId(id);
     }
-    
-    public Button(String id, String label, String tooltip, TypedString link) {
+
+    public Button(final String id, final JsId jsid, final String label, final String tooltip, final Action action) {
+        super(jsid, label, tooltip, action);
+        setId(id);
+    }
+
+    public Button(final String id, final String label, final String tooltip, final TypedString link) {
         super(label, tooltip, link);
         setId(id);
     }
@@ -83,7 +88,7 @@ public class Button extends Link {
 
     @Override
     protected void postProcessHtml() {
-        this.element.addClassName("btn");
+        element.addClassName("btn");
         super.postProcessHtml();
     }
 

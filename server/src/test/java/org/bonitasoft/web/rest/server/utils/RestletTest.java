@@ -57,7 +57,7 @@ public abstract class RestletTest {
     protected Application configureApplication() {
         final ServerResource resource = configureResource();
         final FinderFactory finderFactory = getFinderFactory(resource);
-        return new BonitaRestletApplication(finderFactory);
+        return new BonitaRestletApplication(finderFactory,new BonitaJacksonConverter());
     }
 
 
@@ -111,6 +111,10 @@ public abstract class RestletTest {
         } else {
             return new FinderFactory();
         }
+    }
+
+    protected String getJson(String jsonFile) throws Exception {
+        return new String(IOUtils.toByteArray(this.getClass().getResourceAsStream(jsonFile)));
     }
 
     protected class MockFinderFactory extends FinderFactory {

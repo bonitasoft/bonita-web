@@ -66,6 +66,7 @@ public class ContractTypeConverter {
 
     public ContractTypeConverter(final String[] datePatterns) {
         convertUtilsBean = new ConvertUtilsBean();
+        convertUtilsBean.register(true, false, 0);
         final DateConverter dateConverter = new DateConverter();
         dateConverter.setPatterns(datePatterns);
         convertUtilsBean.register(dateConverter, Date.class);
@@ -273,7 +274,8 @@ public class ContractTypeConverter {
         try {
             return convertUtilsBean.convert(parameterValue, clazz);
         } catch (final ConversionException e) {
-            throw new IllegalArgumentException("unable to parse '" + parameterValue + "' to type " + clazz.getName());
+            LOGGER.log(Level.INFO, "unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
+            return parameterValue;
         }
     }
 

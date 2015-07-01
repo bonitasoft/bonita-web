@@ -94,8 +94,20 @@ public class ContractTypeConverterTest {
     }
 
     @Test
+    public void getProcessedInputs_with_invalid_inputs_should_return_unmodified_inputs() throws Exception {
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(false);
+        when(contractDefinition.getInputs()).thenReturn(inputDefinition);
+        final Map<String, Serializable> input = generateInvalidInputMap();
+
+        final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
+
+        assertThat(processedInput).containsOnly(entry("inputText", "0"), entry("inputBoolean", "hello"), entry("inputDate", 0),
+                entry("inputInteger", "hello"), entry("inputDecimal", "hello"));
+    }
+
+    @Test
     public void getProcessedInputs_with_simple_input_should_return_processed_input() throws Exception {
-        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(true);
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
@@ -154,7 +166,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_with_simple_input_should_return_processed_input_with_null() throws Exception {
-        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(true);
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = generateInputMapWithNull();
 
@@ -166,7 +178,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_with_simple_input_should_return_processed_input_with_empty_map() throws Exception {
-        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(true);
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final Map<String, Serializable> input = generateInputMapWithEmptyFileInput();
 
@@ -208,7 +220,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_without_deleting_contract_temp_files() throws Exception {
-        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(true);
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
@@ -223,7 +235,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_deleting_contract_temp_files() throws Exception {
-        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition();
+        final List<InputDefinition> inputDefinition = generateSimpleInputDefinition(true);
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
@@ -252,8 +264,8 @@ public class ContractTypeConverterTest {
         //assert
         final InputDefinition tempPathFileInputDefinition = adaptedContractDefinition.getInputs().get(0).getInputs().get(1);
         assertThat(tempPathFileInputDefinition.getType()).isEqualTo(Type.TEXT);
-        assertThat(tempPathFileInputDefinition.getName()).isEqualTo(contractTypeConverter.FILE_TEMP_PATH);
-        assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(contractTypeConverter.TEMP_PATH_DESCRIPTION);
+        assertThat(tempPathFileInputDefinition.getName()).isEqualTo(ContractTypeConverter.FILE_TEMP_PATH);
+        assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(ContractTypeConverter.TEMP_PATH_DESCRIPTION);
     }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
@@ -267,12 +279,22 @@ public class ContractTypeConverterTest {
         inputMap.put("inputText", "text");
         inputMap.put("inputBoolean", "true");
         inputMap.put("inputDate", "1970-01-01T13:00:00.000Z");
-        inputMap.put("inputInteger", 125686181);
+        inputMap.put("inputInteger", "125686181");
         inputMap.put("inputDecimal", "12.8");
         final Map<String, Serializable> fileMap = new HashMap<>();
         fileMap.put(InputDefinition.FILE_INPUT_FILENAME, filename);
         fileMap.put(ContractTypeConverter.FILE_TEMP_PATH, tempFilePath);
         inputMap.put("inputFile", (Serializable) fileMap);
+        return inputMap;
+    }
+
+    private Map<String, Serializable> generateInvalidInputMap() {
+        final Map<String, Serializable> inputMap = new HashMap<>();
+        inputMap.put("inputText", 0);
+        inputMap.put("inputBoolean", "hello");
+        inputMap.put("inputDate", 0);
+        inputMap.put("inputInteger", "hello");
+        inputMap.put("inputDecimal", "hello");
         return inputMap;
     }
 
@@ -298,6 +320,17 @@ public class ContractTypeConverterTest {
         return inputMap;
     }
 
+    private List<InputDefinition> generateSimpleInputDefinition(final boolean withFile) {
+        final List<InputDefinition> inputDefinitions = generateSimpleInputDefinition();
+        if (withFile) {
+            final InputDefinition fileInputDefinition = mock(InputDefinitionImpl.class);
+            when(fileInputDefinition.getType()).thenReturn(Type.FILE);
+            when(fileInputDefinition.getName()).thenReturn("inputFile");
+            inputDefinitions.add(fileInputDefinition);
+        }
+        return inputDefinitions;
+    }
+
     private List<InputDefinition> generateSimpleInputDefinition() {
         final List<InputDefinition> inputDefinitions = new ArrayList<>();
         final InputDefinition textInputDefinition = mock(InputDefinitionImpl.class);
@@ -320,10 +353,6 @@ public class ContractTypeConverterTest {
         when(decimalInputDefinition.getType()).thenReturn(Type.DECIMAL);
         when(decimalInputDefinition.getName()).thenReturn("inputDecimal");
         inputDefinitions.add(decimalInputDefinition);
-        final InputDefinition fileInputDefinition = mock(InputDefinitionImpl.class);
-        when(fileInputDefinition.getType()).thenReturn(Type.FILE);
-        when(fileInputDefinition.getName()).thenReturn("inputFile");
-        inputDefinitions.add(fileInputDefinition);
         return inputDefinitions;
     }
 
@@ -332,7 +361,7 @@ public class ContractTypeConverterTest {
         final InputDefinition inputDefinition = mock(InputDefinition.class);
         when(inputDefinition.getName()).thenReturn("inputComplex");
         when(inputDefinition.hasChildren()).thenReturn(true);
-        final List<InputDefinition> childInputDefinitions = generateSimpleInputDefinition();
+        final List<InputDefinition> childInputDefinitions = generateSimpleInputDefinition(true);
         when(inputDefinition.getInputs()).thenReturn(childInputDefinitions);
         inputDefinitions.add(inputDefinition);
         return inputDefinitions;
