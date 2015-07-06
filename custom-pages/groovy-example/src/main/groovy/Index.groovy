@@ -166,7 +166,6 @@ public class Index implements PageController {
             </div>
             </div>
             </div>
-            <div id="footer">Bonitasoft © 2015</div>
             </body>
             </html>
             """)

@@ -47,12 +47,25 @@
   &[disabled],
   fieldset[disabled] & {
     cursor: @cursor-disabled;
-    pointer-events: none; // Future-proof disabling of clicks
     .opacity(.65);
     .box-shadow(none);
   }
-}
 
+  a& {
+    &.disabled,
+    fieldset[disabled] & {
+      pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
+    }
+  }
+}
+.btn.a{
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: @cursor-disabled;
+    pointer-events: none; // Future-proof disabling of clicks
+  }
+}
 
 // Alternate buttons
 // --------------------------------------------------

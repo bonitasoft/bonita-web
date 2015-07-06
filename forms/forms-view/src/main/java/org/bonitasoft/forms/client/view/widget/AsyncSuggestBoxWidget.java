@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Generic form flow AsyncSuggestBox widget
- * 
+ *
  * @author qixiang.zhang
  */
 public class AsyncSuggestBoxWidget extends Composite {
@@ -92,7 +92,7 @@ public class AsyncSuggestBoxWidget extends Composite {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param formAsyncSuggestBoxData
      *            the Suggestbox data
      * @param formID
@@ -106,22 +106,22 @@ public class AsyncSuggestBoxWidget extends Composite {
             final FormFieldValue fieldValue) {
         this.formID = formID;
         this.contextMap = contextMap;
-        this.formWidget = formAsyncSuggestBoxData;
-        this.flowPanel = new FlowPanel();
+        formWidget = formAsyncSuggestBoxData;
+        flowPanel = new FlowPanel();
 
         createWidget(formAsyncSuggestBoxData, fieldValue);
 
-        initWidget(this.flowPanel);
+        initWidget(flowPanel);
     }
 
     /**
      * Create AsyncSuggestBox
-     * 
+     *
      * @param formAsyncSuggestBoxData
      * @param fieldValue
      */
     protected void createWidget(final ReducedFormWidget formAsyncSuggestBoxData, final FormFieldValue fieldValue) {
-        this.widgetType = formAsyncSuggestBoxData.getType();
+        widgetType = formAsyncSuggestBoxData.getType();
         final TextBox textBox = new TextBox();
         textBox.setReadOnly(formAsyncSuggestBoxData.isReadOnly());
         final DefaultSuggestionDisplay suggestionDisplay = new DefaultSuggestionDisplay();
@@ -133,44 +133,44 @@ public class AsyncSuggestBoxWidget extends Composite {
         for (final ReducedFormFieldAvailableValue availableValue : formAsyncSuggestBoxData.getAvailableValues()) {
             oracle.add(availableValue.getValue());
         }
-        this.asyncSuggestBox = new SuggestBox(oracle, textBox, suggestionDisplay);
+        asyncSuggestBox = new SuggestBox(oracle, textBox, suggestionDisplay);
         int refreshDelay = formAsyncSuggestBoxData.getDelayMillis();
         if (refreshDelay <= 0) {
             refreshDelay = DEFAULT_REFRESH_DELAY;
         }
-        this.asyncSuggestBox.addKeyUpHandler(new AsyncSuggestBoxKeyUpHandler(refreshDelay));
-        this.asyncSuggestBox.addKeyPressHandler(new AsyncSuggestBoxKeyPressHandler());
-        this.asyncSuggestBox.setValue(getStringValue(fieldValue));
+        asyncSuggestBox.addKeyUpHandler(new AsyncSuggestBoxKeyUpHandler(refreshDelay));
+        asyncSuggestBox.addKeyPressHandler(new AsyncSuggestBoxKeyPressHandler());
+        asyncSuggestBox.setValue(getStringValue(fieldValue));
         if (formAsyncSuggestBoxData.getMaxItems() > 0) {
-            this.asyncSuggestBox.setLimit(formAsyncSuggestBoxData.getMaxItems() - 1);
+            asyncSuggestBox.setLimit(formAsyncSuggestBoxData.getMaxItems() - 1);
         }
-        this.flowPanel.add(this.asyncSuggestBox);
+        flowPanel.add(asyncSuggestBox);
     }
 
     /**
      * @return AsyncSuggestBox type
      */
     public WidgetType getWidgetType() {
-        return this.widgetType;
+        return widgetType;
     }
 
     /**
      * @return the suggest box widget
      */
     public SuggestBox getAsyncSuggestBox() {
-        return this.asyncSuggestBox;
+        return asyncSuggestBox;
     }
 
     /**
      * @return async SuggestBox of value
      */
     public String getValue() {
-        return this.asyncSuggestBox.getValue();
+        return asyncSuggestBox.getValue();
     }
 
     /**
      * Get the string value of a {@link FormFieldValue}
-     * 
+     *
      * @param fieldValue
      *            the {@link FormFieldValue}
      * @return a String
@@ -187,33 +187,33 @@ public class AsyncSuggestBoxWidget extends Composite {
 
     /**
      * Set the value of the AsyncSuggestBox
-     * 
+     *
      * @param fieldValue
      */
     public void setValue(final String value, final boolean fireEvents) {
-        this.asyncSuggestBox.setValue(value, fireEvents);
+        asyncSuggestBox.setValue(value, fireEvents);
     }
 
     /**
      * Set the available values of the widget (for list widgets only)
-     * 
+     *
      * @param availableValues
      */
     public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
 
-        final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) this.asyncSuggestBox.getSuggestOracle();
+        final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) asyncSuggestBox.getSuggestOracle();
         oracle.clear();
         for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
             oracle.add(availableValue.getValue());
         }
         if (fireEvents) {
-            DomEvent.fireNativeEvent(Document.get().createChangeEvent(), this.asyncSuggestBox);
+            DomEvent.fireNativeEvent(Document.get().createChangeEvent(), asyncSuggestBox);
         }
     }
 
     /**
      * AsyncSuggestBox KeyPressHandler
-     * 
+     *
      */
     protected class AsyncSuggestBoxKeyPressHandler implements KeyPressHandler {
 
@@ -222,14 +222,14 @@ public class AsyncSuggestBoxWidget extends Composite {
          */
         @Override
         public void onKeyPress(final KeyPressEvent event) {
-            AsyncSuggestBoxWidget.this.oldValue = AsyncSuggestBoxWidget.this.asyncSuggestBox.getText();
+            oldValue = asyncSuggestBox.getText();
         }
 
     }
 
     /**
      * AsyncSuggestBox KeyUpHandler
-     * 
+     *
      */
     protected class AsyncSuggestBoxKeyUpHandler implements KeyUpHandler {
 
@@ -245,7 +245,7 @@ public class AsyncSuggestBoxWidget extends Composite {
 
         /**
          * Default constructor.
-         * 
+         *
          * @param delayMillis
          */
         public AsyncSuggestBoxKeyUpHandler(final int delayMillis) {
@@ -258,10 +258,10 @@ public class AsyncSuggestBoxWidget extends Composite {
             public void run() {
 
                 final FormsServiceAsync formsServiceAsync = RpcFormsServices.getFormsService();
-                final FormFieldValue currentFieldValue = new FormFieldValue(AsyncSuggestBoxKeyUpHandler.this.content, String.class.getName());
+                final FormFieldValue currentFieldValue = new FormFieldValue(content, SupportedFieldTypes.JAVA_STRING_CLASSNAME);
                 // RPC Call
-                formsServiceAsync.getFormAsyncAvailableValues(AsyncSuggestBoxWidget.this.formID, AsyncSuggestBoxWidget.this.contextMap,
-                        AsyncSuggestBoxWidget.this.formWidget, currentFieldValue, new GetAsyncAvailableValuesHandler());
+                formsServiceAsync.getFormAsyncAvailableValues(formID, contextMap,
+                        formWidget, currentFieldValue, new GetAsyncAvailableValuesHandler());
             }
 
         };
@@ -272,12 +272,12 @@ public class AsyncSuggestBoxWidget extends Composite {
         @Override
         public void onKeyUp(final KeyUpEvent event) {
             if (!event.isUpArrow() && !event.isDownArrow()) {
-                ((DefaultSuggestionDisplay) AsyncSuggestBoxWidget.this.asyncSuggestBox.getSuggestionDisplay()).hideSuggestions();
+                ((DefaultSuggestionDisplay) asyncSuggestBox.getSuggestionDisplay()).hideSuggestions();
             }
-            this.timer.cancel();
-            this.content = AsyncSuggestBoxWidget.this.asyncSuggestBox.getText();
-            if (this.content.trim().length() > 0 && !this.content.equals(AsyncSuggestBoxWidget.this.oldValue)) {
-                this.timer.schedule(this.delayMillis);
+            timer.cancel();
+            content = asyncSuggestBox.getText();
+            if (content.trim().length() > 0 && !content.equals(oldValue)) {
+                timer.schedule(delayMillis);
             }
 
         }
@@ -286,23 +286,23 @@ public class AsyncSuggestBoxWidget extends Composite {
 
     /**
      * Handler for available values update
-     * 
+     *
      */
     protected class GetAsyncAvailableValuesHandler extends FormsAsyncCallback<List<ReducedFormFieldAvailableValue>> {
 
         @Override
         public void onSuccess(final List<ReducedFormFieldAvailableValue> result) {
-            final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) AsyncSuggestBoxWidget.this.asyncSuggestBox.getSuggestOracle();
+            final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) asyncSuggestBox.getSuggestOracle();
             oracle.clear();
             for (final ReducedFormFieldAvailableValue resultValue : result) {
                 oracle.add(resultValue.getValue());
             }
-            AsyncSuggestBoxWidget.this.asyncSuggestBox.showSuggestionList();
+            asyncSuggestBox.showSuggestionList();
         }
 
         @Override
-        public void onUnhandledFailure(Throwable caught) {
-            final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) AsyncSuggestBoxWidget.this.asyncSuggestBox.getSuggestOracle();
+        public void onUnhandledFailure(final Throwable caught) {
+            final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) asyncSuggestBox.getSuggestOracle();
             oracle.clear();
             GWT.log("Async SuggestBox KeyUpHandler", caught);
         }

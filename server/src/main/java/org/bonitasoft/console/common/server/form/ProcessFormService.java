@@ -66,8 +66,13 @@ public class ProcessFormService {
 
     public String getProcessPath(final APISession apiSession, final long processDefinitionId) throws BonitaException, UnsupportedEncodingException {
         final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
-        return URLEncoder.encode(processDeploymentInfo.getName(), "UTF-8").replaceAll("%2F", "/") + "/"
-                + URLEncoder.encode(processDeploymentInfo.getVersion(), "UTF-8").replaceAll("%2F", "/");
+        return encodePathSegment(processDeploymentInfo.getName())
+                + "/"
+                + encodePathSegment(processDeploymentInfo.getVersion());
+    }
+
+    public String encodePathSegment(final String stringToEncode) throws UnsupportedEncodingException {
+        return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/");
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
