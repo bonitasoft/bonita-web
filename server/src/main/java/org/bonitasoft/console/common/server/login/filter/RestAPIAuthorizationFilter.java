@@ -56,7 +56,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     public static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
 
-    private static final String PLATFORM_API_URI = "API/platform/";
+    private static final String PLATFORM_API_URI = "APIToolkit/platform/";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
     private final Boolean reload;

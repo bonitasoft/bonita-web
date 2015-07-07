@@ -23,3 +23,7 @@
 .file-upload{
     overflow: hidden;
 }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}

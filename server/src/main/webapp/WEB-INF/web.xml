@@ -197,6 +197,7 @@
         <url-pattern>/APIToolkit/system/session/*</url-pattern>
         <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/system/session/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>InternalSSOFilter</filter-name>
