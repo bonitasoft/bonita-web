@@ -56,7 +56,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     public static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
 
-    private static final String PLATFORM_API_URI = "APIToolkit/platform/";
+    private static final String PLATFORM_API_URI_REGEXP = ".*(API|APIToolkit)/platform/.*";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
     private final Boolean reload;
@@ -79,7 +79,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     @Override
     protected boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
         try {
-            if (httpRequest.getRequestURI().contains(PLATFORM_API_URI)) {
+            if (httpRequest.getRequestURI().matches(PLATFORM_API_URI_REGEXP)) {
                 return platformAPIsCheck(httpRequest, httpResponse);
             } else {
                 return tenantAPIsCheck(httpRequest, httpResponse);
