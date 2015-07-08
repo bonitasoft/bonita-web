@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,17 +22,17 @@ import org.bonitasoft.forms.client.model.exception.RPCException;
 import org.bonitasoft.forms.client.view.FormsAsyncCallback;
 import org.bonitasoft.forms.client.view.common.DOMUtils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * Handler allowing to display the error template
- * 
+ *
  * @author Anthony Birembaut , Ruiheng Fan
- * 
+ *
  */
 public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
 
@@ -80,7 +80,7 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
 
     /**
      * Constructor.
-     * 
+     *
      * @param applicationHTMLPanel
      * @param formID
      * @param currentPageHTMLPanel
@@ -94,7 +94,7 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
 
     /**
      * Constructor.
-     * 
+     *
      * @param applicationHTMLPanel
      * @param formID
      * @param errorMessage
@@ -106,12 +106,12 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
         this.formID = formID;
         this.elementId = elementId;
         this.errorMessage = errorMessage;
-        this.causeMessage = "";
+        causeMessage = "";
     }
 
     /**
      * Constructor.
-     * 
+     *
      * @param processHTMLPanel
      * @param formID
      * @param currentPageHTMLPanel
@@ -126,7 +126,7 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
 
     /**
      * Constructor.
-     * 
+     *
      * @param applicationHTMLPanel
      * @param formID
      * @param errorMessage
@@ -141,26 +141,27 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
         this.elementId = elementId;
         this.errorMessage = errorMessage;
         if (throwable instanceof RPCException) {
-            this.causeMessage = ((RPCException) throwable).getMessage();
+            causeMessage = ((RPCException) throwable).getMessage();
         }
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void onSuccess(final ReducedHtmlTemplate result) {
 
         if (currentPageHTMLPanel != null) {
             applicationHTMLPanel.remove(currentPageHTMLPanel);
         }
-        HTMLPanel pageHTMLPanel = new HTMLPanel(result.getBodyContent());
+        final HTMLPanel pageHTMLPanel = new HTMLPanel(result.getBodyContent());
         final String onloadAttributeValue = domUtils.insertPageTemplate(result.getHeadNodes(), pageHTMLPanel, result.getBodyAttributes(), applicationHTMLPanel,
                 elementId);
         domUtils.insertInElement(pageHTMLPanel, ERROR_MESSAGE_ELEMENT_ID, errorMessage);
         domUtils.insertInElement(pageHTMLPanel, CAUSE_MESSAGE_ELEMENT_ID, causeMessage);
         // Hide the loading message.
 
-        Element loadingElement = DOM.getElementById("loading");
+        final Element loadingElement = DOM.getElementById("loading");
         if (loadingElement != null) {
             loadingElement.getStyle().setProperty("display", "none");
         }
@@ -171,9 +172,9 @@ public class ErrorPageHandler extends FormsAsyncCallback<ReducedHtmlTemplate> {
     }
 
     @Override
-    public void onUnhandledFailure(Throwable t) {
+    public void onUnhandledFailure(final Throwable t) {
         // Hide the loading message.
         DOM.getElementById("loading").getStyle().setProperty("display", "none");
-        Window.alert(FormsResourceBundle.getErrors().errorTempateError() + t.getMessage());
+        GWT.log(FormsResourceBundle.getErrors().errorTempateError());
     }
 }
