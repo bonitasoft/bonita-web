@@ -180,21 +180,30 @@ public class CommonResource extends ServerResource {
         super.doCatch(t);
 
         final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
-        if (getLogger().isLoggable(Level.INFO)) {
-            getLogger().log(Level.INFO, "*** " + message);
-        }
+
         getResponse().setStatus(getStatus(), message);
 
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
+            logError(Level.INFO, message);
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
         else if (t instanceof FileNotFoundException) {
+            logError(Level.INFO, message);
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
         }
         else if (t instanceof NotFoundException) {
+            logError(Level.INFO, message);
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        } else if (t instanceof RuntimeException){
+            logError(Level.SEVERE, t.getMessage());
         }
         getResponse().setEntity(new ErrorMessage(t).toEntity());
+    }
+
+    private void logError(Level level, String message) {
+        if (getLogger().isLoggable(level)) {
+            getLogger().log(level, "*** " + message);
+        }
     }
 
     @Override
