@@ -101,4 +101,17 @@ msgstr  "sort by End date ascendant"
 msgid  "sort by End date descendant"
 msgstr  "sort by End date descendant"
 
+msgid "Search Key 1"
+msgstr "Search Key 1"
 
+msgid "Search Key 2"
+msgstr "Search Key 2"
+
+msgid "Search Key 3"
+msgstr "Search Key 3"
+
+msgid "Search Key 4"
+msgstr "Search Key 4"
+
+msgid "Search Key 5"
+msgstr "Search Key 5"
