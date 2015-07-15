@@ -185,17 +185,20 @@ $(function() {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// fix input texts when clickin into the loader image
+// fix inputs text when clicking into the loader image
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(function() {
 	$.uiManager.addMaker(function(context) {
-		if ($.browser.msie){
-			$("input[type=\"text\"], input[type=\"textarea\"], input[type=\"password\"] ",context).click(function(){
-				$(this).blur();
-				$(this).focus();
-			});
-		}
+		addFocusEventForIE(context);
 	});
 });
 
+function addFocusEventForIE(context){
+	if ($.browser.msie){
+		$('input[type="text"], input[type="textarea"], input[type="password"]',context).click(function(){
+			$(this).blur();
+			$(this).focus();
+		});
+	}
+}
 
