@@ -1228,6 +1228,7 @@ public class FormPagesViewController {
      * Detach the data fields of the page
      */
     protected void detachPageWidgets() {
+        pressedButton = null;
         final ReducedFormPage formPage = formPages.get(followedPagesIds.get(currentPageIndex));
         for (final ReducedFormWidget formWidget : formPage.getFormWidgets()) {
             final String widgetId = formWidget.getId();
