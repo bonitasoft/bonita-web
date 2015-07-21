@@ -59,7 +59,6 @@ import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 
 /**
  * @author Séverin Moussel
@@ -553,9 +552,6 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         return form;
     }
 
-    public boolean isInternetExplorer() {
-        return "Microsoft Internet Explorer".equals(Window.Navigator.getAppName());
-    }
 
     private native void addFocusEventForIE(Element form)
     /*-{
