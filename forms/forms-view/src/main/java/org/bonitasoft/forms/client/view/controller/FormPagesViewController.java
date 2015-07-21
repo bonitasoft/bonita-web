@@ -422,7 +422,7 @@ public class FormPagesViewController {
         while (fieldWidgestIterator.hasNext() && !focused) {
             final Entry<String, FormFieldWidget> reducedFormWidget = fieldWidgestIterator.next();
             final FormFieldWidget formFieldWidget = reducedFormWidget.getValue();
-            if (formFieldWidget!=null &&  formFieldWidget.getType()!=null && widgetTypesToFocus.contains(formFieldWidget.getType())) {
+            if (formFieldWidget != null && widgetTypesToFocus.contains(formFieldWidget.getType())) {
                 if (formFieldWidget.getType().equals(WidgetType.RICH_TEXTAREA)) {
                     formFieldWidget.getElement().focus();
                 } else {
