@@ -158,16 +158,8 @@
           scope.$on('$destroy', function () {
             elem.off('change', update);
           });
-
         }
       };
-    })
-    .config(['$locationProvider', function ($locationProvider) {
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      });
-    }]);
-
+    });
 
 })();
