@@ -23,10 +23,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.bonitasoft.forms.client.i18n.FormsResourceBundle;
 import org.bonitasoft.forms.client.model.FormFieldValue;
@@ -154,7 +156,7 @@ public class FormPagesViewController {
     /**
      * Map of form fields already displayed in the page flow
      */
-    protected Map<String, FormFieldWidget> fieldWidgets = new HashMap<String, FormFieldWidget>();
+    protected Map<String, FormFieldWidget> fieldWidgets = new TreeMap<String, FormFieldWidget>();
 
     /**
      * Map of form buttons already displayed in the page flow
@@ -216,6 +218,20 @@ public class FormPagesViewController {
      * The map of URL parameters
      */
     protected Map<String, Object> urlContext;
+
+    /**
+     * Widget type to focused when loading is hidden
+     *
+     */
+    protected List<WidgetType> widgetTypesToFocus = Arrays.asList(
+            WidgetType.TEXTAREA,
+            WidgetType.TEXTBOX,
+            WidgetType.SUGGESTBOX,
+            WidgetType.RICH_TEXTAREA,
+            WidgetType.SUGGESTBOX_ASYNC,
+            WidgetType.PASSWORD,
+            WidgetType.FILEUPLOAD
+            );
 
     /**
      * Constructor
@@ -395,8 +411,32 @@ public class FormPagesViewController {
         domUtils.overrideBrowserNativeInputs();
         resizeFrame();
         domUtils.hideLoading();
+        focusFirstField();
 
     }
+
+    /**
+     * Focus the first field "focusable"
+     */
+    protected void focusFirstField() {
+        final Iterator<Entry<String, FormFieldWidget>> fieldWidgestIterator = fieldWidgets.entrySet().iterator();
+
+        boolean focused = false;
+        while (fieldWidgestIterator.hasNext() && !focused) {
+            final Entry<String, FormFieldWidget> reducedFormWidget = fieldWidgestIterator.next();
+            final FormFieldWidget formFieldWidget = reducedFormWidget.getValue();
+            if (formFieldWidget != null && widgetTypesToFocus.contains(formFieldWidget.getType())) {
+                if (formFieldWidget.getType().equals(WidgetType.RICH_TEXTAREA)) {
+                    formFieldWidget.getElement().focus();
+                } else {
+                    formFieldWidget.setFocusOn();
+                }
+                focused = true;
+            }
+        }
+
+    }
+
 
     /**
      * Insert the widgets in the page for the view mode
@@ -894,6 +934,7 @@ public class FormPagesViewController {
         }
         if (hideLoader) {
             domUtils.hideLoading();
+            focusFirstField();
         }
     }
 

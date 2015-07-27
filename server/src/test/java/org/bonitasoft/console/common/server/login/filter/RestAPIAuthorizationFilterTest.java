@@ -476,6 +476,16 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
+    public void should_checkValidCondition_check_session_is_platform_with_API_toolkit() throws ServletException {
+        doReturn("APIToolkit/platform/plop").when(request).getRequestURI();
+        doReturn(mock(PlatformSession.class)).when(httpSession).getAttribute(RestAPIAuthorizationFilter.PLATFORM_SESSION_PARAM_KEY);
+        //when
+        final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);
+
+        assertThat(isValid).isTrue();
+    }
+
+    @Test
     public void should_checkValidCondition_check_unauthorized_if_no_platform_session() throws ServletException {
         doReturn("API/platform/plop").when(request).getRequestURI();
         doReturn(null).when(httpSession).getAttribute(RestAPIAuthorizationFilter.PLATFORM_SESSION_PARAM_KEY);

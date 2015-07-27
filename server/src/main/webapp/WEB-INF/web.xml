@@ -43,6 +43,14 @@
             <param-value>i18ntranslation</param-value>
         </init-param>
     </filter>
+    <filter>
+        <filter-name>RestAPIAuthorizationFilterToolkit</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.RestAPIAuthorizationFilter</filter-class>
+        <init-param>
+            <param-name>excludePatterns</param-name>
+            <param-value>i18ntranslation</param-value>
+        </init-param>
+    </filter>
     <!-- Token Filter -->
     <filter>
         <filter-name>TokenGeneratorFilter</filter-name>
@@ -192,11 +200,18 @@
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
     <filter-mapping>
+        <filter-name>RestAPIAuthorizationFilterToolkit</filter-name>
+        <url-pattern>/APIToolkit/*</url-pattern>
+        <!-- No need to handle the forward as requests forwarded to this URL are already filtered by RestAPIAuthorizationFilter -->
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>TokenGeneratorFilter</filter-name>
         <url-pattern>/API/system/session/*</url-pattern>
         <url-pattern>/APIToolkit/system/session/*</url-pattern>
         <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/system/session/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>InternalSSOFilter</filter-name>
