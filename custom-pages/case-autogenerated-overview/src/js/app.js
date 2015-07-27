@@ -7,7 +7,7 @@
     'angular-timeline'
     ]);
 
-  app.controller('MainCtrl', ['$scope','$window', 'archivedTaskAPI', '$location', 'overviewSrvc', '$http', function ($scope, $window, archivedTaskAPI, $location, overviewSrvc, $http) {
+  app.controller('MainCtrl', ['$scope','$window', 'archivedTaskAPI', '$location', 'overviewSrvc', 'urlParser', '$http', function ($scope, $window, archivedTaskAPI, $location, overviewSrvc,urlParser, $http) {
 
     $scope.case = {};
 
@@ -15,7 +15,9 @@
      return (propertyName === 'persistenceId') || (propertyName === 'persistenceVersion')|| (propertyName === 'links');
     };
 
-    var caseId = $location.search().id;
+
+
+    var caseId = urlParser.getQueryStringParamValue('id');
 
     $http({ method: 'GET', url: '../API/system/session/unusedId' })
     .success(function(data, status, headers) {
@@ -36,13 +38,6 @@
             $scope.documents = data.documents;
         });
     };
-  }])
-
-  .config(['$locationProvider',function($locationProvider) {
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
   }]);
 
 
