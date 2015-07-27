@@ -10,9 +10,9 @@
     'org.bonitasoft.common.filters.stringTemplater'
   ]);
 
-  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', '$window', 'processAPI', 'gettextCatalog', 'i18nService', '$http', function ($scope, $location, contractSrvc, $window, processAPI, gettextCatalog, i18nService, $http) {
+  app.controller('MainCtrl', ['$scope', '$location', 'contractSrvc', 'urlParser', '$window', 'processAPI', 'gettextCatalog', 'i18nService', '$http', function ($scope, $location, contractSrvc, urlParser, $window, processAPI, gettextCatalog, i18nService, $http) {
 
-   var processId = $location.search().id;
+    var processId = urlParser.getQueryStringParamValue('id');
 
     $scope.contract = {};
     $scope.dataToSend = {};
@@ -161,13 +161,7 @@
 
         }
       };
-    })
-    .config(['$locationProvider', function ($locationProvider) {
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      });
-    }]);
+    });
 
 
 })();
