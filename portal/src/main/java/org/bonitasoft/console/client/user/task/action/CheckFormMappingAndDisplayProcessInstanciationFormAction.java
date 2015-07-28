@@ -21,7 +21,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -29,6 +31,7 @@ import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -43,6 +46,8 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 
 /**
  * @author Nicolas Tith, Anthony Birembaut
@@ -91,8 +96,9 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
     protected void searchFormMappingForProcess(final TreeIndexed<String> parameters) {
         final String processId = parameters.getValue(ProcessItem.ATTRIBUTE_ID);
         RequestBuilder requestBuilder;
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId + "&f=" +
-                ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_START_FORM_MAPPING);
+        final String processIdFilter = UrlSerializer.serialize(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId);
+        final String mappingTypeFilter = UrlSerializer.serialize(ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_START_FORM_MAPPING);
+        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + mappingTypeFilter);
         requestBuilder.setCallback(new FormMappingCallback(processId, parameters));
         try {
             requestBuilder.send();
@@ -165,18 +171,24 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
             final JSONValue root = JSONParser.parseLenient(response);
             final JSONObject processInstance = root.isObject();
             final String caseId = processInstance.get("caseId").toString();
-            final String caseListURL = getCaseListURL();
-            final String confirmationMessage = _("The case %caseId% has been started.<br/>To view it go to the <a href='%caseListURL%'>case list</a>", new Arg(
-                    "caseId", caseId), new Arg("caseListURL", caseListURL));
+            final String confirmationMessage = _("The case %caseId% has been started successfully.", new Arg(
+                    "caseId", caseId));
             ViewController.closePopup();
             showConfirmation(confirmationMessage);
+            final Timer redirectTimer = new Timer() {
+                @Override
+                public void run() {
+                    redirectToCaseMoredetails(caseId);
+                }
+            };
+            redirectTimer.schedule(1500);
         }
 
         @Override
         public void onError(final String message, final Integer errorCode) {
             if (errorCode == Response.SC_BAD_REQUEST) {
                 GWT.log("Error while instantiating process " + processId + " : " + message);
-                final String errorMessage = _("Error while trying to start the case. The process may require some values for its contract input.");
+                final String errorMessage = _("Error while trying to start the case. Some required information is missing (contract not fulfilled).");
                 ViewController.closePopup();
                 showError(errorMessage);
             } else {
@@ -185,14 +197,18 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
         }
     }
 
-    protected String getCaseListURL() {
-        return "#?_p=" + CaseListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId();
+    protected void redirectToCaseMoredetails(final String caseId) {
+        String caseMoreDetailsToken;
+        if (ProcessListingAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
+            caseMoreDetailsToken = CaseMoreDetailsAdminPage.TOKEN;
+        } else {
+            caseMoreDetailsToken = CaseMoreDetailsPage.TOKEN;
+        }
+        History.newItem("?_p=" + caseMoreDetailsToken + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     protected void showConfirmation(final String confirmationMessage) {
         Message.info(confirmationMessage);
-        //final MessagePage messagePopup = new MessagePage(TYPE.SUCCESS, confirmationMessage);
-        //ViewController.showPopup(messagePopup);
     }
 
     protected void showError(final String errorMessage) {
