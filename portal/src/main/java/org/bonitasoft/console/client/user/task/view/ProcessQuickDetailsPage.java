@@ -27,7 +27,7 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
-import org.bonitasoft.console.client.user.task.action.AddProcesIdToCookieThenDisplayProcessInstanciationFormAction;
+import org.bonitasoft.console.client.user.task.action.CheckFormMappingAndDisplayProcessInstanciationFormAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -67,7 +67,7 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
     private Link newStartButton(final ProcessItem item) {
         final RawView view = new StartProcessFormPage();
         view.setParameters(StartProcessFormPage.getItemParams(item));
-        final AddProcesIdToCookieThenDisplayProcessInstanciationFormAction action = new AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(view);
+        final CheckFormMappingAndDisplayProcessInstanciationFormAction action = new CheckFormMappingAndDisplayProcessInstanciationFormAction(view);
         action.setOnFinish(new ClosePopUpAction());
         return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this process"), action);
     }
