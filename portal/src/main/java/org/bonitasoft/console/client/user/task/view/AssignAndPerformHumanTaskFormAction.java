@@ -33,7 +33,7 @@ public class AssignAndPerformHumanTaskFormAction extends FormAction {
                 final HumanTaskItem updatedHumanTaskItem = (HumanTaskItem) JSonItemReader.parseItem(response, humanTaskItem.getItemDefinition());
                 final PerformTaskPage performTaskPage = new PerformTaskPage(humanTaskItem.getId());
                 final Action displayPerformTaskPageAction = new CheckFormMappingAndDisplayPerformTaskPageAction(humanTaskItem.getProcessId().toString(),
-                        humanTaskItem.getName(), performTaskPage);
+                        humanTaskItem.getRootCaseId().toString(), humanTaskItem.getName(), humanTaskItem.getDisplayName(), performTaskPage);
                 if (updatedHumanTaskItem.getAssignedId() == null) {
                     // assign the task to the logged user
                     final HashMap<String, String> attributesToUpdate = new HashMap<String, String>();

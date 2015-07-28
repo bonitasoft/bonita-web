@@ -21,7 +21,9 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
+import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
+import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
+import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -43,6 +45,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
 
 /**
  * @author Nicolas Tith, Anthony Birembaut
@@ -165,11 +168,11 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
             final JSONValue root = JSONParser.parseLenient(response);
             final JSONObject processInstance = root.isObject();
             final String caseId = processInstance.get("caseId").toString();
-            final String caseListURL = getCaseListURL();
-            final String confirmationMessage = _("The case %caseId% has been started.<br/>To view it go to the <a href='%caseListURL%'>case list</a>", new Arg(
-                    "caseId", caseId), new Arg("caseListURL", caseListURL));
+            final String confirmationMessage = _("The case %caseId% has been started.", new Arg(
+                    "caseId", caseId));
             ViewController.closePopup();
             showConfirmation(confirmationMessage);
+            redirectToCaseMoredetails(caseId);
         }
 
         @Override
@@ -185,8 +188,14 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
         }
     }
 
-    protected String getCaseListURL() {
-        return "#?_p=" + CaseListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId();
+    protected void redirectToCaseMoredetails(final String caseId) {
+        String caseMoreDetailsToken;
+        if (ProcessListingAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
+            caseMoreDetailsToken = CaseMoreDetailsAdminPage.TOKEN;
+        } else {
+            caseMoreDetailsToken = CaseMoreDetailsPage.TOKEN;
+        }
+        History.newItem("?_p=" + caseMoreDetailsToken + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     protected void showConfirmation(final String confirmationMessage) {

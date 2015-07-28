@@ -18,13 +18,20 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
+import org.bonitasoft.console.client.common.view.CommentSubmitionForm;
+import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT;
@@ -49,11 +56,18 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
     protected final String taskName;
 
+    protected final String taskDisplayName;
+
     protected final String processDefinitionId;
 
-    public CheckFormMappingAndDisplayPerformTaskPageAction(final String processDefinitionId, final String taskName, final RawView performTaskview) {
+    protected final String processInstanceId;
+
+    public CheckFormMappingAndDisplayPerformTaskPageAction(final String processDefinitionId, final String processInstanceId, final String taskName,
+            final String taskDisplayName, final RawView performTaskview) {
         this.processDefinitionId = processDefinitionId;
+        this.processInstanceId = processInstanceId;
         this.taskName = taskName;
+        this.taskDisplayName = taskDisplayName;
         this.performTaskview = performTaskview;
     }
 
@@ -90,14 +104,14 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
             if (formMappings.size() == 1) {
                 final JSONValue formMappingValue = formMappings.get(0);
                 final JSONObject formMapping = formMappingValue.isObject();
+                ViewController.closePopup();
                 if (formMapping.containsKey(ATTRIBUTE_FORM_MAPPING_TARGET)
                         && NONE_FORM_MAPPING_TARGET.equals(formMapping.get(ATTRIBUTE_FORM_MAPPING_TARGET).isString().stringValue())) {
                     //skip the form and execute the task
                     final String taskId = parameters.getValue(FlowNodeItem.ATTRIBUTE_ID);
-                    executeTask(taskId, parameters);
+                    ViewController.showPopup(new PerformTaskConfirmationPopup(taskId, parameters));
                 } else {
                     //display the form
-                    ViewController.closePopup();
                     ViewController.showView(performTaskview);
                 }
             } else {
@@ -110,6 +124,65 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
             GWT.log("Error while getting the form mapping for process " + processDefinitionId + " and task " + taskName);
             super.onError(message, errorCode);
         }
+    }
+
+    protected class PerformTaskConfirmationPopup extends Page {
+
+        public final static String TOKEN = "skipUserTaskForm";
+
+        private final TreeIndexed<String> parameters;
+
+        private final String taskId;
+
+        public PerformTaskConfirmationPopup(final String taskId, final TreeIndexed<String> parameters) {
+            this.taskId = taskId;
+            this.parameters = parameters;
+        }
+
+        @Override
+        public void defineTitle() {
+            this.setTitle(taskDisplayName);
+
+        }
+
+        @Override
+        public String defineToken() {
+            return TOKEN;
+        }
+
+        @Override
+        public void buildView() {
+            addBody(new Paragraph(_("No input expected for this task."),
+                    new Paragraph(_("You can enter a comment."))));
+            final CommentSubmitionForm comment = new CommentSubmitionForm(APIID.makeAPIID(processInstanceId), getSubmitionAction(taskId, parameters));
+            comment.setDefaultValue("\"" + taskDisplayName + "\"\n");
+            addBody(comment);
+        }
+    }
+
+    protected FormAction getSubmitionAction(final String taskId, final TreeIndexed<String> parameters) {
+        return getAddCommentAction(createPerformTaskCallback(taskId, parameters));
+    }
+
+    protected FormAction getAddCommentAction(final APICallback callback) {
+        return new FormAction() {
+
+            @Override
+            public void execute() {
+                new APICaller(CommentDefinition.get()).add(getForm(), callback);
+            }
+
+        };
+    }
+
+    protected APICallback createPerformTaskCallback(final String taskId, final TreeIndexed<String> parameters) {
+        return new APICallback() {
+
+            @Override
+            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                executeTask(taskId, parameters);
+            }
+        };
     }
 
     protected void executeTask(final String taskId, final TreeIndexed<String> parameters) {
