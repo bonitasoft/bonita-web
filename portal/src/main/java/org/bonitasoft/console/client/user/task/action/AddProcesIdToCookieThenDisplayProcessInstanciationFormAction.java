@@ -100,9 +100,7 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
         try {
             requestBuilder.send();
         } catch (final RequestException e) {
-            final String errorLog = "Error while creating the from mapping request";
-            GWT.log(errorLog, e);
-            addError(errorLog);
+            GWT.log("Error while creating the from mapping request", e);
         }
     }
 
@@ -126,21 +124,21 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
                 final JSONObject formMapping = formMappingValue.isObject();
                 if (formMapping.containsKey(ATTRIBUTE_FORM_MAPPING_TARGET)
                         && NONE_FORM_MAPPING_TARGET.equals(formMapping.get(ATTRIBUTE_FORM_MAPPING_TARGET).isString().stringValue())) {
+                    //skip the form and instantiate the process
                     instantiateProcess(processId, parameters);
                 } else {
+                    //display the form
                     setAlreadyStartedCookie(processId);
+                    ViewController.closePopup();
                     ViewController.showView(view.getToken(), parameters);
                 }
             } else {
-                final String errorLog = "There is no form mapping for process " + processId;
-                GWT.log(errorLog);
-                addError(errorLog);
+                GWT.log("There is no form mapping for process " + processId);
             }
         }
 
         @Override
         public void onError(final String message, final Integer errorCode) {
-            addError(message);
             GWT.log("Error while getting the form mapping for process " + processId);
             super.onError(message, errorCode);
         }
@@ -153,9 +151,7 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
         try {
             requestBuilder.send();
         } catch (final RequestException e) {
-            final String errorLog = "Error while creating the process instantiation request";
-            GWT.log(errorLog, e);
-            addError(errorLog);
+            GWT.log("Error while creating the process instantiation request", e);
         }
     }
 
@@ -172,19 +168,19 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
             final JSONValue root = JSONParser.parseLenient(response);
             final JSONObject processInstance = root.isObject();
             final String caseId = processInstance.get("caseId").toString();
-            final String caseListURL = "#?_p=" + CaseListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId();
+            final String caseListURL = getCaseListURL();
             final String confirmationMessage = _("The case %caseId% has been started.<br/>To view it go to the <a href='%caseListURL%'>case list</a>", new Arg(
-                    "caseId",
-                    caseId), new Arg("caseListURL", caseListURL));
+                    "caseId", caseId), new Arg("caseListURL", caseListURL));
+            ViewController.closePopup();
             showProcessInstantiationConfirmation(confirmationMessage);
         }
 
         @Override
         public void onError(final String message, final Integer errorCode) {
-            addError(message);
             if (errorCode == Response.SC_BAD_REQUEST) {
                 GWT.log("Error while instantiating process " + processId + " : " + message);
                 final String errorMessage = _("Error while trying to start the case. The process may require some values for its contract input.");
+                ViewController.closePopup();
                 showProcessInstantiationError(errorMessage);
             } else {
                 super.onError(message, errorCode);
@@ -192,18 +188,17 @@ public class AddProcesIdToCookieThenDisplayProcessInstanciationFormAction extend
         }
     }
 
+    protected String getCaseListURL() {
+        return "#?_p=" + CaseListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId();
+    }
+
     protected void showProcessInstantiationConfirmation(final String confirmationMessage) {
-        Message.alert(confirmationMessage);
+        Message.info(confirmationMessage);
+        //final MessagePage messagePopup = new MessagePage(TYPE.SUCCESS, confirmationMessage);
+        //ViewController.showPopup(messagePopup);
     }
 
     protected void showProcessInstantiationError(final String errorMessage) {
         Message.alert(errorMessage);
-    }
-
-    @Override
-    protected void showErrors() {
-        for (final String error : getErrors()) {
-            GWT.log(error);
-        }
     }
 }
