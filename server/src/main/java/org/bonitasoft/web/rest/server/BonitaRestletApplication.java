@@ -13,9 +13,6 @@
  ******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
-import java.util.List;
-import java.util.logging.Level;
-
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataFindByIdsResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
@@ -46,6 +43,9 @@ import org.restlet.engine.converter.ConverterHelper;
 import org.restlet.ext.jackson.JacksonConverter;
 import org.restlet.routing.Router;
 import org.restlet.routing.Template;
+
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author Matthieu Chaffotte
@@ -174,5 +174,4 @@ public class BonitaRestletApplication extends Application {
         Engine.setRestletLogLevel(Level.OFF);
         super.handle(request, response);
     }
-
 }

@@ -54,6 +54,7 @@ public class DisplayCaseFormPage extends Page {
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
+        PRIVILEGES.add("caselistingpm");
         PRIVILEGES.add("reportlistingadminext");
     }
 

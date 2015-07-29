@@ -13,8 +13,10 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Map;
+
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -31,9 +33,8 @@ import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Map;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author Nicolas Tith
@@ -83,13 +84,10 @@ public class ProcessInstantiationResource extends CommonResource {
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot instantiate process task.");
             return null;
-        } catch (final Exception e) {
-            e.printStackTrace();
-            throw e;
         }
     }
 
-    protected void deleteFiles(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
+    protected void deleteFiles(final ContractDefinition processContract, final Map<String, Serializable> inputs, final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
         typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 

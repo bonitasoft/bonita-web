@@ -15,7 +15,6 @@
   "license": "GPL",
   "devDependencies": {
     "angular": "1.3.15",
-    "angular-bootstrap": "^0.12.0",
     "angular-mocks": "~1.3",
     "bootstrap": "^3.3.2",
     "connect-modrewrite": "^0.7.9",
@@ -44,8 +43,9 @@
     "run-sequence": "^1.0.1"
   },
   "dependencies": {
-    "bootstrap": "^3.3.2",
-    "angular-resource": "1.3.0",
-    "angular-timeline": "rpocklin/angular-timeline#v1.2.0"
+	"bootstrap": "^3.3.2",    "angular-resource": "1.3.0",
+    "angular-timeline": "rpocklin/angular-timeline#v1.2.0",
+    "angular-bootstrap": "0.12.2",
+    "angular-gettext": "~0.4.0"
   }
 }
