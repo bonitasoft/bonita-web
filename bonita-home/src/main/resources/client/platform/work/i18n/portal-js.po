@@ -1439,3 +1439,19 @@ msgstr ""
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:87
 msgid "{}-{} of {}"
 msgstr ""
+
+
+msgid "Search Key 1"
+msgstr ""
+
+msgid "Search Key 2"
+msgstr ""
+
+msgid "Search Key 3"
+msgstr ""
+
+msgid "Search Key 4"
+msgstr ""
+
+msgid "Search Key 5"
+msgstr ""
