@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-07-01 05:34-0400\n"
+"PO-Revision-Date: 2015-07-28 10:52-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1377,5 +1377,5 @@ msgstr "{} di {}"
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:24
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:87
 msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+msgstr "{}-{} di {}"
 
