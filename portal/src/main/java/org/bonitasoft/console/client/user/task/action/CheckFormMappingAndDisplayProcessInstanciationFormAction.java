@@ -31,7 +31,6 @@ import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -41,6 +40,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -96,8 +96,8 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
     protected void searchFormMappingForProcess(final TreeIndexed<String> parameters) {
         final String processId = parameters.getValue(ProcessItem.ATTRIBUTE_ID);
         RequestBuilder requestBuilder;
-        final String processIdFilter = UrlSerializer.serialize(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId);
-        final String mappingTypeFilter = UrlSerializer.serialize(ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_START_FORM_MAPPING);
+        final String processIdFilter = URL.encodeQueryString(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId);
+        final String mappingTypeFilter = URL.encodeQueryString(ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_START_FORM_MAPPING);
         requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + mappingTypeFilter);
         requestBuilder.setCallback(new FormMappingCallback(processId, parameters));
         try {

@@ -30,7 +30,6 @@ import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -45,6 +44,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -88,8 +88,8 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
     protected void searchFormMappingForTask(final TreeIndexed<String> parameters) {
         RequestBuilder requestBuilder;
-        final String processIdFilter = UrlSerializer.serialize(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processDefinitionId);
-        final String taskNameFilter = UrlSerializer.serialize(ATTRIBUTE_FORM_MAPPING_TASK + "=" + taskName);
+        final String processIdFilter = URL.encodeQueryString(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processDefinitionId);
+        final String taskNameFilter = URL.encodeQueryString(ATTRIBUTE_FORM_MAPPING_TASK + "=" + taskName);
         requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + taskNameFilter);
         requestBuilder.setCallback(new FormMappingCallback(parameters));
         try {
