@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,8 +30,15 @@ import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupCloseAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
+import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
+import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT;
@@ -148,13 +153,54 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
     }
 
     protected void instantiateProcess(final String processId, final TreeIndexed<String> parameters) {
-        RequestBuilder requestBuilder;
-        requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
-        requestBuilder.setCallback(new InstantiateProcessCallback(processId));
-        try {
-            requestBuilder.send();
-        } catch (final RequestException e) {
-            GWT.log("Error while creating the process instantiation request", e);
+        final String processDisplayName = parameters.getValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME);
+        ViewController.showPopup(new StartCaseConfirmationPopup(processId, processDisplayName));
+    }
+
+    protected class StartCaseConfirmationPopup extends Page {
+
+        public final static String TOKEN = "skipProcessForm";
+
+        private final String processId;
+
+        private final String processDisplayName;
+
+        public StartCaseConfirmationPopup(final String processId, final String processDisplayName) {
+            this.processId = processId;
+            this.processDisplayName = processDisplayName;
+        }
+
+        @Override
+        public void defineTitle() {
+            this.setTitle(processDisplayName);
+        }
+
+        @Override
+        public String defineToken() {
+            return TOKEN;
+        }
+
+        @Override
+        public void buildView() {
+            addBody(new Paragraph(_("You are going to start a new case. No form is needed.")));
+            final Container<Button> formactions = new Container<Button>();
+            addBody(formactions.addClass("formactions"));
+            formactions.append(
+                    new FormSubmitButton(new JsId("btn-primary-action"), _("Start"), _("Start a case"), new Action() {
+
+                        @Override
+                        public void execute() {
+                            RequestBuilder requestBuilder;
+                            requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
+                            requestBuilder.setCallback(new InstantiateProcessCallback(processId));
+                            try {
+                                requestBuilder.send();
+                            } catch (final RequestException e) {
+                                GWT.log("Error while creating the process instantiation request", e);
+                            }
+                        }
+                    }),
+                    new Button(_("cancel"), _("Cancel this action"), new PopupCloseAction()));
         }
     }
 
@@ -176,6 +222,7 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
             ViewController.closePopup();
             showConfirmation(confirmationMessage);
             final Timer redirectTimer = new Timer() {
+
                 @Override
                 public void run() {
                     redirectToCaseMoredetails(caseId);
