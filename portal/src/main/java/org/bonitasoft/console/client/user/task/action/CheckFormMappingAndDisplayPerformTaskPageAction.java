@@ -18,13 +18,27 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
+import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
+import org.bonitasoft.console.client.common.view.CommentSubmitionForm;
+import org.bonitasoft.console.client.user.task.view.TasksListingPage;
+import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
+import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
+import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.form.FormAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT;
@@ -35,6 +49,8 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 
 
 public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
@@ -49,11 +65,18 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
     protected final String taskName;
 
+    protected final String taskDisplayName;
+
     protected final String processDefinitionId;
 
-    public CheckFormMappingAndDisplayPerformTaskPageAction(final String processDefinitionId, final String taskName, final RawView performTaskview) {
+    protected final String processInstanceId;
+
+    public CheckFormMappingAndDisplayPerformTaskPageAction(final String processDefinitionId, final String processInstanceId, final String taskName,
+            final String taskDisplayName, final RawView performTaskview) {
         this.processDefinitionId = processDefinitionId;
+        this.processInstanceId = processInstanceId;
         this.taskName = taskName;
+        this.taskDisplayName = taskDisplayName;
         this.performTaskview = performTaskview;
     }
 
@@ -65,8 +88,9 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
     protected void searchFormMappingForTask(final TreeIndexed<String> parameters) {
         RequestBuilder requestBuilder;
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + PageItem.ATTRIBUTE_PROCESS_ID + "=" + processDefinitionId
-                + "&f=" + ATTRIBUTE_FORM_MAPPING_TASK + "=" + taskName);
+        final String processIdFilter = UrlSerializer.serialize(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processDefinitionId);
+        final String taskNameFilter = UrlSerializer.serialize(ATTRIBUTE_FORM_MAPPING_TASK + "=" + taskName);
+        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + taskNameFilter);
         requestBuilder.setCallback(new FormMappingCallback(parameters));
         try {
             requestBuilder.send();
@@ -90,14 +114,14 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
             if (formMappings.size() == 1) {
                 final JSONValue formMappingValue = formMappings.get(0);
                 final JSONObject formMapping = formMappingValue.isObject();
+                ViewController.closePopup();
                 if (formMapping.containsKey(ATTRIBUTE_FORM_MAPPING_TARGET)
                         && NONE_FORM_MAPPING_TARGET.equals(formMapping.get(ATTRIBUTE_FORM_MAPPING_TARGET).isString().stringValue())) {
                     //skip the form and execute the task
                     final String taskId = parameters.getValue(FlowNodeItem.ATTRIBUTE_ID);
-                    executeTask(taskId, parameters);
+                    ViewController.showPopup(new PerformTaskConfirmationPopup(taskId, parameters));
                 } else {
                     //display the form
-                    ViewController.closePopup();
                     ViewController.showView(performTaskview);
                 }
             } else {
@@ -110,6 +134,80 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
             GWT.log("Error while getting the form mapping for process " + processDefinitionId + " and task " + taskName);
             super.onError(message, errorCode);
         }
+    }
+
+    protected class PerformTaskConfirmationPopup extends Page {
+
+        public final static String TOKEN = "skipUserTaskForm";
+
+        private final TreeIndexed<String> parameters;
+
+        private final String taskId;
+
+        public PerformTaskConfirmationPopup(final String taskId, final TreeIndexed<String> parameters) {
+            this.taskId = taskId;
+            this.parameters = parameters;
+        }
+
+        @Override
+        public void defineTitle() {
+            this.setTitle(taskDisplayName);
+        }
+
+        @Override
+        public String defineToken() {
+            return TOKEN;
+        }
+
+        @Override
+        public void buildView() {
+            addBody(new Paragraph(_("The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel.")));
+            final CommentSubmitionForm comment = new CommentSubmitionForm(APIID.makeAPIID(processInstanceId), getSubmitionAction(taskId, parameters),
+                    getCancelAction());
+            comment.setDefaultValue("\"" + taskDisplayName + "\"\n");
+            addBody(comment);
+        }
+    }
+
+    protected FormAction getSubmitionAction(final String taskId, final TreeIndexed<String> parameters) {
+        return getAddCommentAction(createPerformTaskCallback(taskId, parameters));
+    }
+
+    protected FormAction getCancelAction() {
+        return new FormAction() {
+
+            @Override
+            public void execute() {
+                ViewController.closePopup();
+                showCancel();
+            }
+        };
+    }
+
+    protected void showCancel() {
+        Message.info(_("The task %taskName% has not been executed. ", new Arg("taskName",
+                taskDisplayName)) + _("It is still assigned to you until you release it."));
+    }
+
+    protected FormAction getAddCommentAction(final APICallback callback) {
+        return new FormAction() {
+
+            @Override
+            public void execute() {
+                new APICaller(CommentDefinition.get()).add(getForm(), callback);
+            }
+
+        };
+    }
+
+    protected APICallback createPerformTaskCallback(final String taskId, final TreeIndexed<String> parameters) {
+        return new APICallback() {
+
+            @Override
+            public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+                executeTask(taskId, parameters);
+            }
+        };
     }
 
     protected void executeTask(final String taskId, final TreeIndexed<String> parameters) {
@@ -133,17 +231,24 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            final String confirmationMessage = _("The task has been executed. The page is going to be refreshed...");
-            //TODO: timer + refresh the page
+            final String confirmationMessage = _("The task %taskName% has been executed. The task list is being refreshed.", new Arg("taskName",
+                    taskDisplayName));
             ViewController.closePopup();
             showConfirmation(confirmationMessage);
+            final Timer redirectTimer = new Timer() {
+                @Override
+                public void run() {
+                    redirectToTaskList();
+                }
+            };
+            redirectTimer.schedule(1500);
         }
 
         @Override
         public void onError(final String message, final Integer errorCode) {
             if (errorCode == Response.SC_BAD_REQUEST) {
                 GWT.log("Error while executing the task " + taskId + " : " + message);
-                final String errorMessage = _("Error while trying to execute the task. The task may require some values for its contract input.");
+                final String errorMessage = _("Error while trying to execute the task. Some required information is missing (contract not fulfilled).");
                 ViewController.closePopup();
                 showError(errorMessage);
             } else {
@@ -152,10 +257,18 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
         }
     }
 
+    protected void redirectToTaskList() {
+        if (TaskMoreDetailsAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
+            History.newItem("?_p=" + TaskListingAdminPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
+        } else if (HumanTaskMoreDetailsPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
+            History.newItem("?_p=" + TasksListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
+        } else {
+            ViewController.refreshCurrentPage();
+        }
+    }
+
     protected void showConfirmation(final String confirmationMessage) {
         Message.info(confirmationMessage);
-        //final MessagePage messagePopup = new MessagePage(TYPE.SUCCESS, confirmationMessage);
-        //ViewController.showPopup(messagePopup);
     }
 
     protected void showError(final String errorMessage) {
