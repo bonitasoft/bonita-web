@@ -208,7 +208,7 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
     }
 
     protected void showConfirmation(final String confirmationMessage) {
-        Message.info(confirmationMessage);
+        Message.success(confirmationMessage);
     }
 
     protected void showError(final String errorMessage) {

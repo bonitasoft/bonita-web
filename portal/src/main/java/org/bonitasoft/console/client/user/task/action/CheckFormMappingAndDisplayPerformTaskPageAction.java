@@ -185,7 +185,7 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
     }
 
     protected void showCancel() {
-        Message.info(_("The task %taskName% has not been executed. ", new Arg("taskName",
+        Message.warning(_("The task %taskName% has not been executed. ", new Arg("taskName",
                 taskDisplayName)) + _("It is still assigned to you until you release it."));
     }
 
@@ -268,7 +268,7 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
     }
 
     protected void showConfirmation(final String confirmationMessage) {
-        Message.info(confirmationMessage);
+        Message.success(confirmationMessage);
     }
 
     protected void showError(final String errorMessage) {
