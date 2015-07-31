@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,12 +27,13 @@ import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
-import org.bonitasoft.console.client.user.task.action.AddProcesIdToCookieThenDisplayProcessInstanciationFormAction;
+import org.bonitasoft.console.client.user.task.action.CheckFormMappingAndDisplayProcessInstanciationFormAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
+import org.bonitasoft.web.toolkit.client.ui.action.ClosePopUpAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
@@ -41,7 +42,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickD
 
 /**
  * @author Paul AMAR
- * 
+ *
  */
 public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> implements PluginProcess {
 
@@ -64,9 +65,10 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
     }
 
     private Link newStartButton(final ProcessItem item) {
-        RawView view = new StartProcessFormPage();
+        final RawView view = new StartProcessFormPage();
         view.setParameters(StartProcessFormPage.getItemParams(item));
-        AddProcesIdToCookieThenDisplayProcessInstanciationFormAction action = new AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(view);
+        final CheckFormMappingAndDisplayProcessInstanciationFormAction action = new CheckFormMappingAndDisplayProcessInstanciationFormAction(view);
+        action.setOnFinish(new ClosePopUpAction());
         return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this process"), action);
     }
 
