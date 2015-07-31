@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-07-28 10:52-0400\n"
+"PO-Revision-Date: 2015-07-30 09:34-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -182,7 +182,7 @@ msgid "Cancel"
 msgstr "Annulla"
 
 msgid "Cancelled, skipped instances"
-msgstr "Cancelled, skipped instances"
+msgstr "Istanze cancellate, saltate"
 
 msgid "Cannot upload the file"
 msgstr "Impossibile caricare il file"
@@ -257,13 +257,13 @@ msgstr "Colonne"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr "Columns selection"
+msgstr "Selezione delle colonne"
 
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Errore di compilazione. Verificare che la classe Index.groovy implementi l'interfaccia PageController."
 
 msgid "Completed instances"
-msgstr "Completed instances"
+msgstr "Istanze completate"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:6
 msgid "Configuration state"
@@ -430,7 +430,7 @@ msgid "Execute"
 msgstr "Esegui"
 
 msgid "Executing, completing, initializing instances"
-msgstr "Executing, completing, initializing instances"
+msgstr "Istanze in esecuzione, in completamento, durante l'inizializzazione"
 
 #: templates/multiple.html:7 templates/simple.html:5
 msgid "Expecting a {} value."
@@ -457,7 +457,7 @@ msgid "Failed Flow Nodes"
 msgstr "Flow Node falliti"
 
 msgid "Failed instances"
-msgstr "Failed instances"
+msgstr "Istanze non riuscite"
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "Nome del file troppo lungo. Il nome del file zip deve essere non più di 50 caratteri"
@@ -549,7 +549,7 @@ msgstr "Creazione di un'istanza"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Items per page"
+msgstr "Elementi per pagina"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"
@@ -775,7 +775,7 @@ msgid "Profiles"
 msgstr "Privilegi"
 
 msgid "Ready, waiting instances"
-msgstr "Ready, waiting instances"
+msgstr "Istanze in stato ready, aspettando (pending)"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:10
 #: main/features/admin/monitoring/monitoring.html:8
@@ -872,7 +872,7 @@ msgstr "Visualizza"
 
 #: main/features/admin/processVisu/visuShowKey.html:2
 msgid "Show key"
-msgstr "Show key"
+msgstr "Visualizza la legenda"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:32
 msgid "Sort by URL"
@@ -936,7 +936,7 @@ msgstr "Categorie aggiornato con successo"
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:5
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
-msgstr "Table settings"
+msgstr "Configurazioni della tabella"
 
 msgid "Target is not set"
 msgstr "Target non è impostato"
@@ -1123,12 +1123,12 @@ msgstr "Versione"
 #: main/features/admin/cases/list/caseVisuDirective.html:2
 #: main/features/admin/cases/list/caseVisuDirective.html:3
 msgid "View case design"
-msgstr "View case design"
+msgstr "Visualizza il diagramma del caso"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:119
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:70
 msgid "View case details"
-msgstr "View case details"
+msgstr "Visualizza i dettagli del caso"
 
 #: main/features/admin/monitoring/monitoring.html:134
 msgid "View case list"
@@ -1146,7 +1146,7 @@ msgid "View process"
 msgstr "Vusualizza il processo"
 
 msgid "View process design"
-msgstr "View process design"
+msgstr "Rappresentazione grafica del processo"
 
 msgid "Wait ..."
 msgstr "Attendere ..."
@@ -1312,7 +1312,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
 msgid "{{role}} of {{group}}"
 msgstr "{{role}} di {{group}}"
