@@ -14,7 +14,6 @@
 package org.bonitasoft.web.rest.server.api.resource;
 
 import com.fasterxml.jackson.core.JsonParseException;
-
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -37,7 +36,6 @@ import org.restlet.util.Series;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -47,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Emmanuel Duchastenier
@@ -54,6 +53,11 @@ import java.util.logging.Level;
 public class CommonResource extends ServerResource {
 
     private APISession sessionSingleton = null;
+
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(CommonResource.class.getName());
 
     /**
      * Get the tenant session to access the engine APIs
@@ -180,19 +184,28 @@ public class CommonResource extends ServerResource {
         super.doCatch(t);
 
         final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
-        if (getLogger().isLoggable(Level.INFO)) {
-            getLogger().log(Level.INFO, "*** " + message);
-        }
+
         getResponse().setStatus(getStatus(), message);
 
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "***" + message);
+            }
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
         else if (t instanceof FileNotFoundException) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "***" + message);
+            }
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
         }
         else if (t instanceof NotFoundException) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "***" + message);
+            }
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+        } else {
+            LOGGER.log(Level.SEVERE, t.getMessage(), t);
         }
         getResponse().setEntity(new ErrorMessage(t).toEntity());
     }
