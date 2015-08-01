@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-16 03:01+0200\n"
+"POT-Creation-Date: 2015-08-01 03:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -332,6 +332,9 @@ msgstr ""
 msgid "Add this user to %actor_name%"
 msgstr ""
 
+msgid "Add your comment"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -588,6 +591,9 @@ msgid "Close"
 msgstr ""
 
 msgid "Close without saving"
+msgstr ""
+
+msgid "Comment"
 msgstr ""
 
 msgid "Comments"
@@ -1037,6 +1043,12 @@ msgstr ""
 msgid "Error when updating user"
 msgstr ""
 
+msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr ""
+
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr ""
+
 msgid "Executed by"
 msgstr ""
 
@@ -1220,6 +1232,9 @@ msgid "Installed on"
 msgstr ""
 
 msgid "Invalid Business Data Model content"
+msgstr ""
+
+msgid "It is still assigned to you until you release it."
 msgstr ""
 
 msgid "Item not found"
@@ -1896,6 +1911,9 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Start a case"
+msgstr ""
+
 msgid "Start an instance of process %app_name%"
 msgstr ""
 
@@ -1936,6 +1954,12 @@ msgid "Su"
 msgstr ""
 
 msgid "Sub groups"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Submit a comment"
 msgstr ""
 
 msgid "Subprocess"
@@ -2018,6 +2042,9 @@ msgstr ""
 msgid ""
 "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
+msgstr ""
+
+msgid "The case %caseId% has been started successfully."
 msgstr ""
 
 msgid "The configuration state of the process"
@@ -2147,6 +2174,15 @@ msgid "The state of the task"
 msgstr ""
 
 msgid "The sub process responsible for the creation of this task"
+msgstr ""
+
+msgid "The task %taskName% has been executed. The task list is being refreshed."
+msgstr ""
+
+msgid "The task %taskName% has not been executed. "
+msgstr ""
+
+msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr ""
 
 msgid "The type of the task"
@@ -2433,6 +2469,9 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
+msgid "You are going to start a new case. No form is needed."
+msgstr ""
+
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr ""
 
@@ -2471,6 +2510,9 @@ msgid "ascending"
 msgstr ""
 
 msgid "by"
+msgstr ""
+
+msgid "cancel"
 msgstr ""
 
 msgid "create"
