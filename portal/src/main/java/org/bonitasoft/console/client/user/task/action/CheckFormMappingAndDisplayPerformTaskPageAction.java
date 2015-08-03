@@ -191,7 +191,8 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
             @Override
             public void execute() {
-                if (getForm().getEntry(new JsId(CommentItem.ATTRIBUTE_CONTENT)).getValue() != null) {
+                final String comment = getForm().getEntry(new JsId(CommentItem.ATTRIBUTE_CONTENT)).getValue();
+                if (comment != null && !comment.isEmpty()) {
                     new APICaller<CommentItem>(CommentDefinition.get()).add(getForm(), createPerformTaskCallback(taskId, parameters));
                 } else {
                     executeTask(taskId, parameters);
