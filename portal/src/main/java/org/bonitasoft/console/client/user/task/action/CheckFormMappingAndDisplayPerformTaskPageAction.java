@@ -24,6 +24,7 @@ import org.bonitasoft.console.client.common.view.CommentSubmitionForm;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
+import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -33,6 +34,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
+import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
@@ -162,15 +164,10 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
         @Override
         public void buildView() {
             addBody(new Paragraph(_("The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel.")));
-            final CommentSubmitionForm comment = new CommentSubmitionForm(APIID.makeAPIID(processInstanceId), getSubmitionAction(taskId, parameters),
-                    getCancelAction());
-            comment.setDefaultValue("\"" + taskDisplayName + "\"\n");
+            final CommentSubmitionForm comment = new CommentSubmitionForm(APIID.makeAPIID(processInstanceId), getAddCommentOrSubmitAction(taskId, parameters),
+                    getCancelAction(), false);
             addBody(comment);
         }
-    }
-
-    protected FormAction getSubmitionAction(final String taskId, final TreeIndexed<String> parameters) {
-        return getAddCommentAction(createPerformTaskCallback(taskId, parameters));
     }
 
     protected FormAction getCancelAction() {
@@ -189,12 +186,16 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
                 taskDisplayName)) + _("It is still assigned to you until you release it."));
     }
 
-    protected FormAction getAddCommentAction(final APICallback callback) {
+    protected FormAction getAddCommentOrSubmitAction(final String taskId, final TreeIndexed<String> parameters) {
         return new FormAction() {
 
             @Override
             public void execute() {
-                new APICaller(CommentDefinition.get()).add(getForm(), callback);
+                if (getForm().getEntry(new JsId(CommentItem.ATTRIBUTE_CONTENT)).getValue() != null) {
+                    new APICaller<CommentItem>(CommentDefinition.get()).add(getForm(), createPerformTaskCallback(taskId, parameters));
+                } else {
+                    executeTask(taskId, parameters);
+                }
             }
 
         };

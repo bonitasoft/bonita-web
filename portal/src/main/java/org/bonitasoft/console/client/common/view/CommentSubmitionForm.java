@@ -35,21 +35,21 @@ public class CommentSubmitionForm extends Form {
     private String defaultValue = null;
 
     public CommentSubmitionForm(final APIID caseId, final FormAction callback) {
-        this(caseId, callback, null);
+        this(caseId, callback, null, true);
     }
 
-    public CommentSubmitionForm(final APIID caseId, final FormAction callback, final FormAction cancelCallback) {
+    public CommentSubmitionForm(final APIID caseId, final FormAction callback, final FormAction cancelCallback, final boolean isMandatory) {
         super(new JsId("commentForm"));
-        buildContent(caseId, callback, cancelCallback);
+        buildContent(caseId, callback, cancelCallback, isMandatory);
     }
 
     public void setDefaultValue(final String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
-    private void buildContent(final APIID caseId, final FormAction callback, final FormAction cancelCallback) {
+    private void buildContent(final APIID caseId, final FormAction callback, final FormAction cancelCallback, final boolean isMandatory) {
         addHiddenEntry(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, caseId.toString());
-        addEntry(createTextArea());
+        addEntry(createTextArea(isMandatory));
         addAction(createSubmitionButton(callback));
         if (cancelCallback == null) {
             addCancelButton();
@@ -62,9 +62,11 @@ public class CommentSubmitionForm extends Form {
         return new FormSubmitButton(new JsId("submit"), _("Submit"), _("Submit a comment"), wrappeCallback(callback));
     }
 
-    private Textarea createTextArea() {
-        final Textarea textarea = new Textarea(new JsId("content"), _("Comment"), _("Add your comment"), defaultValue);
-        textarea.addValidator(new MandatoryValidator());
+    private Textarea createTextArea(final boolean isMandatory) {
+        final Textarea textarea = new Textarea(new JsId(CommentItem.ATTRIBUTE_CONTENT), _("Comment"), _("Add your comment"), defaultValue);
+        if (isMandatory) {
+            textarea.addValidator(new MandatoryValidator());
+        }
         return textarea;
     }
 
