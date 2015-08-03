@@ -14,9 +14,6 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.component.form;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
 
-import com.google.gwt.query.client.GQuery;
 import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -59,6 +55,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
@@ -98,7 +95,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Default Constructor.
-     * 
+     *
      * @param jsid
      */
     public AbstractForm(final JsId jsid, final HashMap<String, String> hiddens) {
@@ -112,41 +109,41 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected final void addHidden(final String name, final String value) {
-        AbstractTreeNode<String> node = this.hiddens.get(name);
+        AbstractTreeNode<String> node = hiddens.get(name);
 
         if (node == null) {
-            this.hiddens.addNode(name, new TreeLeaf<String>(value));
+            hiddens.addNode(name, new TreeLeaf<String>(value));
 
         } else if (node instanceof TreeLeaf<?>) {
             final String oldValue = ((TreeLeaf<String>) node).getValue();
 
             if (!oldValue.equals(value)) {
-                this.hiddens.removeNode(name);
+                hiddens.removeNode(name);
 
                 node = new Tree<String>();
-                this.hiddens.addNode(name, node);
+                hiddens.addNode(name, node);
 
                 ((Tree<String>) node).addValue(oldValue);
                 ((Tree<String>) node).addValue(value);
             }
 
         } else if (node instanceof Tree<?>) {
-            ((Tree<String>) this.hiddens.get(name)).addValue(value);
+            ((Tree<String>) hiddens.get(name)).addValue(value);
         }
 
     }
 
     protected final void addHidden(final String name, final List<String> values) {
-        this.hiddens.addNode(name, new Tree<String>().addValues(values));
+        hiddens.addNode(name, new Tree<String>().addValues(values));
     }
 
     protected final void addHidden(final String name, final TreeNode<String> values) {
-        this.hiddens.addNode(name, values);
+        hiddens.addNode(name, values);
     }
 
     /**
      * Get the value of an entry as an array using its JsId
-     * 
+     *
      * @param jsid
      * @return This function returns the current value filled in the entry as a String.
      */
@@ -154,7 +151,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         final List<String> results = new ArrayList<String>();
 
         // Search in hidden fields
-        final AbstractTreeNode<String> hiddenValue = this.hiddens.get(jsid.toString());
+        final AbstractTreeNode<String> hiddenValue = hiddens.get(jsid.toString());
         if (hiddenValue != null) {
             if (hiddenValue instanceof Tree<?>) {
                 results.addAll(((Tree<String>) hiddenValue).getValues());
@@ -173,14 +170,14 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Get the value of an entry using its JsId
-     * 
+     *
      * @param jsid
      * @return This function returns the current value filled in the entry as a String.
      */
     public String getEntryValue(final JsId jsid) {
 
         // Search in hidden fields
-        final AbstractTreeNode<String> result = this.hiddens.get(jsid.toString());
+        final AbstractTreeNode<String> result = hiddens.get(jsid.toString());
 
         if (result != null) {
 
@@ -218,26 +215,26 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     }
 
     public void setEntryValue(final String name, final String value) {
-        if (this.entriesIndex.get(name) != null) {
-            this.entriesIndex.get(name).setValue(value);
+        if (entriesIndex.get(name) != null) {
+            entriesIndex.get(name).setValue(value);
 
-        } else if (this.hiddens.containsKey(name)) {
-            this.hiddens.removeNode(name);
+        } else if (hiddens.containsKey(name)) {
+            hiddens.removeNode(name);
             this.addHidden(name, value);
         }
     }
 
     public AbstractForm resetEntries() {
-        this.entriesIndex = new HashMap<String, ValuedFormEntry>();
-        this.containers = new Stack<Container<FormNode>>();
-        this.buttons = new Container<FormButton>(new JsId("formactions"));
+        entriesIndex = new HashMap<String, ValuedFormEntry>();
+        containers = new Stack<Container<FormNode>>();
+        buttons = new Container<FormButton>(new JsId("formactions"));
         openSection(new FormEntries());
         return this;
     }
 
     /**
      * Empty all inputs
-     * 
+     *
      * @return This method returns "this" to allow cascading calls.
      */
     public AbstractForm reset() {
@@ -263,7 +260,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * @return the entriesIndex
      */
     public HashMap<String, ValuedFormEntry> getEntriesIndex() {
-        return this.entriesIndex;
+        return entriesIndex;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,35 +269,35 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Open a new section and make it the target of the next <i>addEntry</i> and <i>addSection</i> until <i>closeLastSection</i> is called.
-     * 
+     *
      * @param section
-     *            The section to add
+     *        The section to add
      */
     public final AbstractForm openSection(final Section section) {
         // A section can't contain a section as direct child
-        if (this.containers.size() > 1 && this.containers.lastElement() instanceof FormEntries) {
+        if (containers.size() > 1 && containers.lastElement() instanceof FormEntries) {
             closeSection();
         }
 
-        if (this.containers.size() > 0) {
+        if (containers.size() > 0) {
             getLastContainer().append(section);
         }
-        this.containers.push(section);
+        containers.push(section);
 
         addValuableEntry(section);
 
         return this;
     }
 
-    private void addValuableEntries(LinkedList<FormNode> nodes) {
-        for (FormNode node : nodes) {
+    private void addValuableEntries(final LinkedList<FormNode> nodes) {
+        for (final FormNode node : nodes) {
             addValuableEntry(node);
         }
     }
 
-    private void addValuableEntry(FormNode node) {
+    private void addValuableEntry(final FormNode node) {
         if (isValuable(node)) {
-            this.entriesIndex.put(node.getJsId().toString(), (ValuedFormEntry) node);
+            entriesIndex.put(node.getJsId().toString(), (ValuedFormEntry) node);
         }
 
         if (isContainer(node)) {
@@ -308,11 +305,11 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         }
     }
 
-    private boolean isValuable(FormNode node) {
+    private boolean isValuable(final FormNode node) {
         return node instanceof ValuedFormEntry;
     }
 
-    private boolean isContainer(FormNode node) {
+    private boolean isContainer(final FormNode node) {
         return node instanceof Section;
     }
 
@@ -321,7 +318,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * If no section stacked, the function does nothing
      */
     public final AbstractForm closeSection() {
-        this.containers.pop();
+        containers.pop();
         return this;
     }
 
@@ -330,10 +327,10 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      */
     protected Container<FormNode> getLastContainer() {
         // If no formEntries container exists, open a new one
-        if (this.containers.size() == 0) {
-            this.containers.push(new Section());
+        if (containers.size() == 0) {
+            containers.push(new Section());
         }
-        return this.containers.lastElement();
+        return containers.lastElement();
     }
 
     @SuppressWarnings("unchecked")
@@ -358,10 +355,10 @@ public abstract class AbstractForm extends Component implements JsonSerializable
         }
     }
 
-    
-    /**
+
+        /**
      * Section is the highest container implementing FormNode
-     * 
+     *
      * @param section
      */
     private void addEntry(final Section section) {
@@ -370,7 +367,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Add an entry to the form in the last opened section if it exists
-     * 
+     *
      * @param entry
      */
     private void addEntry(final FormEntry entry) {
@@ -378,14 +375,14 @@ public abstract class AbstractForm extends Component implements JsonSerializable
             ((AutoCompleteEntry) entry).addInputHandler(createInputCompleteHandler(), InputCompleteEvent.TYPE);
         }
         getLastContainer().append(entry);
-        this.entriesIndex.put(entry.getJsId().toString(), entry);
+        entriesIndex.put(entry.getJsId().toString(), entry);
     }
-    
+
     private InputCompleteHandler createInputCompleteHandler() {
         return new InputCompleteHandler() {
 
             @Override
-            public void onComplete(InputCompleteEvent event) {
+            public void onComplete(final InputCompleteEvent event) {
                 AbstractForm.this.resetErrors();
             }
         };
@@ -393,36 +390,36 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Add an entry to the form in the last opened section if it exists
-     * 
+     *
      * @param entry
      */
     protected final void addEntryBefore(final FormEntry entry, final JsId jsid) {
         getLastContainer().prepend(entry);
-        this.entriesIndex.put(entry.getJsId().toString(), entry);
+        entriesIndex.put(entry.getJsId().toString(), entry);
     }
 
     /**
      * Add an entry to the form in the last opened section if it exists
-     * 
+     *
      * @param entry
      */
     protected final void addEntryAfter(final FormEntry entry, final JsId jsid) {
         getLastContainer().append(entry);
-        this.entriesIndex.put(entry.getJsId().toString(), entry);
+        entriesIndex.put(entry.getJsId().toString(), entry);
     }
 
     /**
      * Get an entry by its jsid
-     * 
+     *
      * @param jsid
      */
     public ValuedFormEntry getEntry(final JsId jsid) {
-        return this.entriesIndex.get(jsid.toString());
+        return entriesIndex.get(jsid.toString());
     }
 
     /**
      * JQuery reading of an input value by its name
-     * 
+     *
      * @param form
      * @param name
      * @return
@@ -430,7 +427,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     private native String getFormParameter(final Element form, final String name)
     /*-{
         var input = $wnd.$(form).find('[name=' + name + ']');
-        
+
         if (input.is(':checkbox') || input.is(':radio')) {
             input = $wnd.$(form).find('[name=' + name + ']:checked');
         }
@@ -442,7 +439,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     }
 
     public boolean isChecked(final String jsid) {
-        return _isChecked(this.element, jsid);
+        return _isChecked(element, jsid);
     }
 
     private native boolean _isChecked(final Element form, final String name)
@@ -470,7 +467,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     private native String _getFormInputParameter(final Element element)
     /*-{
         var input = $wnd.$(element);
-        
+
         if ((input.is(':checkbox') || input.is(':radio')) && !input.is(':checked')) {
             return null;
         }
@@ -481,14 +478,14 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     private native void setFormParameter(Element form, String name, String value)
     /*-{
          var input = $wnd.$(form).find('[name=' + name + ']');
-        
+
         if (input.is(':checkbox')) {
             input.check(input.val() == value);
         } else if (input.is(':radio')) {
             input
                 .uncheck()
                 .filter('[value=' + value + ']').check();
-        } else { 
+        } else {
             input.val(value);
         }
     }-*/;
@@ -503,7 +500,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
      * @return the defaultAction
      */
     protected final Action getDefaultAction() {
-        return this.defaultAction;
+        return defaultAction;
     }
 
     /**
@@ -516,14 +513,14 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     /**
      * Add an action to the action container
-     * 
+     *
      * @param button
      */
     protected void addAction(final FormButton button) {
-        if (this.defaultAction == null) {
-            this.defaultAction = button.getAction();
+        if (defaultAction == null) {
+            defaultAction = button.getAction();
         }
-        this.buttons.append(button);
+        buttons.append(button);
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -538,22 +535,32 @@ public abstract class AbstractForm extends Component implements JsonSerializable
             form.addClassName(getJsId().toString("form"));
         }
 
-        form.appendChild(this.containers.firstElement().getElement());
-        form.appendChild(this.buttons.getElement());
+        form.appendChild(containers.firstElement().getElement());
+        form.appendChild(buttons.getElement());
 
         GQuery.$(form).submit(new Function() {
 
             @Override
             public boolean f(final Event e) {
                 e.stopPropagation();
-                AbstractForm.this.defaultAction.execute();
+                defaultAction.execute();
                 return false;
             }
 
         });
-
+        addFocusEventForIE(form);
         return form;
     }
+
+
+    private native void addFocusEventForIE(Element form)
+    /*-{
+        try {
+            $wnd.addFocusEventForIE(form);
+        } catch(e) {
+            //do nothing
+        }
+    }-*/;
 
     @Override
     public String toJson() {
@@ -562,10 +569,10 @@ public abstract class AbstractForm extends Component implements JsonSerializable
 
     public TreeIndexed<String> getValues() {
 
-        final TreeIndexed<String> allParameters = this.hiddens.copy();
+        final TreeIndexed<String> allParameters = hiddens.copy();
 
         // Get the entries values
-        for (final Entry<String, ValuedFormEntry> entry : this.entriesIndex.entrySet()) {
+        for (final Entry<String, ValuedFormEntry> entry : entriesIndex.entrySet()) {
             if (entry.getValue() != null) {
                 allParameters.addValue(entry.getKey(), getEntryValue(entry.getKey()));
             }
@@ -647,7 +654,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     }
 
     public boolean hasNonStaticEntry() {
-        for (final ValuedFormEntry entry : this.entriesIndex.values()) {
+        for (final ValuedFormEntry entry : entriesIndex.values()) {
             if (!(entry instanceof StaticText)) {
                 return true;
             }
@@ -692,7 +699,7 @@ public abstract class AbstractForm extends Component implements JsonSerializable
     public Map<String, List<Validator>> getValidators() {
         final Map<String, List<Validator>> validators = new HashMap<String, List<Validator>>();
 
-        for (final java.util.Map.Entry<String, ValuedFormEntry> entry : this.entriesIndex.entrySet()) {
+        for (final java.util.Map.Entry<String, ValuedFormEntry> entry : entriesIndex.entrySet()) {
             validators.put(entry.getKey(), entry.getValue().getValidators());
         }
 

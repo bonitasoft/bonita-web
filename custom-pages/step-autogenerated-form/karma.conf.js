@@ -20,7 +20,7 @@ module.exports = function(config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'node_modules/angular-bootstrap/dist/ui-bootstrap.js',
+      'node_modules/angular-bootstrap/ui-bootstrap.js',
       'node_modules/angular-resource/angular-resource.js',
       'node_modules/angular-gettext/dist/angular-gettext.js',
       'node_modules/ngUpload/ng-upload.js',
