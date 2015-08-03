@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,9 +20,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.MessageTyped;
 
 /**
  * Notification class based on Noty2 : http://needim.github.com/noty/
- * 
+ *
  * @author Séverin Moussel
- * 
+ *
  */
 public class Noty implements MessageTyped {
 
@@ -30,7 +30,20 @@ public class Noty implements MessageTyped {
 
     private final String message;
 
-    private int timeout = 15000;
+    private int timeout = 3000;
+
+    private enum layout {
+        topCenter,
+        topLeft,
+        topRight,
+        bottomCenter,
+        bottomLeft,
+        bottomRight,
+        center,
+        centerLeft,
+        centerRight,
+        inline
+    }
 
     public Noty(final TYPE type, final String message) {
         super();
@@ -47,18 +60,22 @@ public class Noty implements MessageTyped {
         return this;
     }
 
-    public void show() {
-        _show(this.type.toString(), this.message, this.timeout);
+    public void show(final String layout) {
+        _show(type.toString(), message, timeout, layout);
     }
 
-    private native void _show(String type, String message, int timeout)
+    public void show() {
+        _show(type.toString(), message, timeout, layout.topCenter.toString());
+    }
+
+    private native void _show(String type, String message, int timeout, String layout)
     /*-{
         $wnd.noty({
             text:message,
             type:type,
             timeout:timeout,
-            layout:"bottomRight",
-             closeWith: ['click', 'button']
+            layout:layout,
+            closeWith: ['click', 'button']
         });
     }-*/;
 

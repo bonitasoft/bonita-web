@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,7 +24,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.MessageTyped;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public abstract class Message {
 
@@ -46,12 +46,15 @@ public abstract class Message {
             case WARNING:
                 warning(message);
                 break;
+            case SUCCESS:
+                success(message);
+                break;
         }
     }
 
     /**
      * Log the message on the server
-     * 
+     *
      * @param message
      */
     public static void log(final String message) {
@@ -61,7 +64,7 @@ public abstract class Message {
 
     /**
      * Display a non modal message of type INFO
-     * 
+     *
      * @param message
      */
     public static void info(final String message) {
@@ -69,8 +72,17 @@ public abstract class Message {
     }
 
     /**
+     * Display a non modal message of type SUCCESS
+     *
+     * @param message
+     */
+    public static void success(final String message) {
+        Noty.success(message);
+    }
+
+    /**
      * Display a non modal message of type WARNING
-     * 
+     *
      * @param message
      */
     public static void warning(final String message) {
@@ -79,7 +91,7 @@ public abstract class Message {
 
     /**
      * Display a modal message of type ALERT
-     * 
+     *
      * @param message
      */
     public static void alert(final String message) {
@@ -88,7 +100,7 @@ public abstract class Message {
 
     /**
      * Display a modal message of type ALERT
-     * 
+     *
      * @param message
      */
     public static void alert(final String message, final Action onClose) {
@@ -97,7 +109,7 @@ public abstract class Message {
 
     /**
      * Display a modal message of type ERROR
-     * 
+     *
      * @param message
      */
     public static void error(final String message) {
@@ -106,7 +118,7 @@ public abstract class Message {
 
     /**
      * Display a modal message of type ERROR
-     * 
+     *
      * @param message
      */
     public static void error(final String message, final Action onClose) {
@@ -115,7 +127,7 @@ public abstract class Message {
 
     /**
      * Log the exception's message on the server
-     * 
+     *
      * @param exception
      */
 
