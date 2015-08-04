@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class AngularIFrameView extends RawView {
 
-    public static final String CASE_LISTING_TOKEN = "caselisting";
+    public static final String CASE_LISTING_TOKEN = "caselistinguser";
 
     public static final String CASE_LISTING_ADMIN_TOKEN = "caselistingadmin";
 
