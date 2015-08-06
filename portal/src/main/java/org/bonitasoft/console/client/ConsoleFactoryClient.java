@@ -1,11 +1,6 @@
 package org.bonitasoft.console.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gwt.core.shared.GWT;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -74,7 +69,6 @@ import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportWarning
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseQuickDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseQuickDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
@@ -95,7 +89,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
-import com.google.gwt.core.shared.GWT;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * console client page
@@ -112,6 +110,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      * Default Constructor.
      */
     public ConsoleFactoryClient() {
+        AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_TOKEN, "/user/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
@@ -316,8 +315,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new StartProcessFormPage();
 
             // Visualize Cases
-        } else if (CaseListingPage.TOKEN.equals(token) && isUserAuthorized(CaseListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new CaseListingPage();
         } else if (CaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(CaseQuickDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new CaseQuickDetailsPage();
         } else if (ArchivedCaseQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ArchivedCaseQuickDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -462,7 +459,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
         pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
         pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
-        pagePrivileges.put(CaseListingPage.TOKEN, CaseListingPage.PRIVILEGES);
         pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);
         pagePrivileges.put(ArchivedCaseQuickDetailsPage.TOKEN, ArchivedCaseQuickDetailsPage.PRIVILEGES);
         pagePrivileges.put(ArchivedCaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.PRIVILEGES);

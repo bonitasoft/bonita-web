@@ -18,26 +18,27 @@ package org.bonitasoft.console.client.user.task.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
-import org.bonitasoft.console.client.user.task.action.AddProcesIdToCookieThenDisplayProcessInstanciationFormAction;
+import org.bonitasoft.console.client.user.task.action.CheckFormMappingAndDisplayProcessInstanciationFormAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.RawView;
+import org.bonitasoft.web.toolkit.client.ui.action.ClosePopUpAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonPrimaryAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Paul AMAR
@@ -64,9 +65,10 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
     }
 
     private Link newStartButton(final ProcessItem item) {
-        RawView view = new StartProcessFormPage();
+        final RawView view = new StartProcessFormPage();
         view.setParameters(StartProcessFormPage.getItemParams(item));
-        AddProcesIdToCookieThenDisplayProcessInstanciationFormAction action = new AddProcesIdToCookieThenDisplayProcessInstanciationFormAction(view);
+        final CheckFormMappingAndDisplayProcessInstanciationFormAction action = new CheckFormMappingAndDisplayProcessInstanciationFormAction(view);
+        action.setOnFinish(new ClosePopUpAction());
         return new ButtonPrimaryAction("btn-start", _("Start"), _("Start this process"), action);
     }
 
