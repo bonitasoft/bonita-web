@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -246,7 +244,6 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
      * @param inputStyle
      * @param labelPosition
      * @param mandatory
-     * @param popupToolTip
      */
     public FormWidget(final String id, final int maxLength, final int maxHeight, final WidgetType type, final String style, final String labelStyle,
             final String inputStyle, final ItemPosition labelPosition, final boolean mandatory) {
@@ -271,7 +268,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
 
     /**
      * @param filePaths
-     *            the filePaths to set
+     *        the filePaths to set
      */
     public void setFilePaths(final String filePaths) {
         if (filePaths != null) {
@@ -558,7 +555,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     public void setMultiple(final boolean multiple) {
         reducedFormWidget.setMultiple(multiple);
     }
-	
+
     public boolean isMultiple() {
         return reducedFormWidget.isMultiple();
     }
@@ -1187,9 +1184,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
     }
 
     /**
-     * Compare this form widget to another form widget using alphabetical order on their Id
-     * 
-     * {@inheritDoc}
+     * Compare this form widget to another form widget using alphabetical order on their Id {@inheritDoc}
      */
     @Override
     public int compareTo(final FormWidget otherFormWidget) {

@@ -135,7 +135,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
     @After
     public void tearDown() throws Exception {
         processAPI.disableProcess(processDefinition.getId());
-        processAPI.deleteProcess(processDefinition.getId());
+        processAPI.deleteProcessDefinition(processDefinition.getId());
     }
 
     @Test

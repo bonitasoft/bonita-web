@@ -348,7 +348,7 @@ public class BPMURLSupportFilter implements Filter {
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(session);
             final SearchOptionsBuilder builder = buildSearchOptions(0, 100, ProcessDeploymentInfoSearchDescriptor.DEPLOYMENT_DATE + " DESC", null);
             builder.filter(ProcessDeploymentInfoSearchDescriptor.NAME, processName[0]);
-            final SearchResult<ProcessDeploymentInfo> deploymentInfoResult = processAPI.searchProcessDeploymentInfos(userId, builder.done());
+            final SearchResult<ProcessDeploymentInfo> deploymentInfoResult = processAPI.searchProcessDeploymentInfosCanBeStartedBy(userId, builder.done());
             if (deploymentInfoResult != null && deploymentInfoResult.getCount() > 0) {
                 processUUID = deploymentInfoResult.getResult().get(0).getProcessId();
             } else {
