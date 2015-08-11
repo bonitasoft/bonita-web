@@ -17,7 +17,9 @@ package org.bonitasoft.forms.server.api.impl;
 import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 import java.io.File;
 import java.io.Serializable;
@@ -482,6 +484,10 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
     @After
     public void tearDown() throws Exception {
         processAPI.disableProcess(processDefinition.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(processDefinition.getId(), 0, 20) > 0);
+        do {
+        } while (processAPI.deleteArchivedProcessInstances(processDefinition.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(processDefinition.getId());
 
     }

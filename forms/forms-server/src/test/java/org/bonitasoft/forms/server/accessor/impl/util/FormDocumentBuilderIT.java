@@ -113,6 +113,8 @@ public class FormDocumentBuilderIT extends FormsTestCase {
                 Assert.fail();
             }
         } finally {
+            do {
+            } while (processAPI.deleteProcessInstances(bonitaProcess.getId(), 0, 20) > 0);
             processAPI.deleteProcessDefinition(bonitaProcess.getId());
         }
     }

@@ -135,6 +135,10 @@ public class FormServiceProviderImplIT extends FormsTestCase {
     @After
     public void tearDown() throws Exception {
         processAPI.disableProcess(processDefinition.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(processDefinition.getId(), 0, 20) > 0);
+        do {
+        } while (processAPI.deleteArchivedProcessInstances(processDefinition.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(processDefinition.getId());
     }
 
@@ -608,8 +612,14 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         processAPI.disableProcess(processDefinition.getId());
         processAPI.disableProcess(intermediateSubProcessDefinition.getId());
         processAPI.disableProcess(subProcessDefinition.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(processDefinition.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(processDefinition.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(intermediateSubProcessDefinition.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(intermediateSubProcessDefinition.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(subProcessDefinition.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(subProcessDefinition.getId());
     }
 
