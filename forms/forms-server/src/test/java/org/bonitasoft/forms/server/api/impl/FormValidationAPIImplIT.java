@@ -108,6 +108,8 @@ public class FormValidationAPIImplIT extends FormsTestCase {
         processAPI.disableProcess(bonitaProcess.getId());
         do {
         } while (processAPI.deleteProcessInstances(bonitaProcess.getId(), 0, 20) > 0);
+        do {
+        } while (processAPI.deleteArchivedProcessInstances(bonitaProcess.getId(), 0, 20) > 0);
         processAPI.deleteProcessDefinition(bonitaProcess.getId());
     }
 
