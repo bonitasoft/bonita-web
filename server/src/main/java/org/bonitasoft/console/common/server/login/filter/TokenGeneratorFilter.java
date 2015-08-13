@@ -34,6 +34,8 @@ import org.bonitasoft.console.common.server.api.token.APIToken;
  */
 public class TokenGeneratorFilter implements Filter {
 
+    public static final String X_BONITA_API_TOKEN = "X-Bonita-API-Token";
+
     protected static final Logger LOGGER = Logger.getLogger(TokenGeneratorFilter.class.getName());
 
     @Override
@@ -50,8 +52,11 @@ public class TokenGeneratorFilter implements Filter {
                 LOGGER.log(Level.FINE, "Bonita BPM API Token generated: " + apiTokenFromClient);
             }
         }
-
-        res.addHeader("X-Bonita-API-Token", apiTokenFromClient.toString());
+        if(res.containsHeader(X_BONITA_API_TOKEN)){
+            res.setHeader(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
+        } else {
+            res.addHeader(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
+        }
         chain.doFilter(req, res);
     }
 
