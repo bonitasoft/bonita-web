@@ -14,9 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
@@ -41,6 +38,9 @@ import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -153,6 +153,7 @@ DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
             final ProcessAPI processApi = getProcessAPI();
             for (final APIID id : ids) {
                 processApi.deleteProcessInstance(id.toLong());
+                processApi.deleteArchivedProcessInstancesInAllStates(id.toLong());
             }
         } catch (final Exception e) {
             throw new APIException(e);
