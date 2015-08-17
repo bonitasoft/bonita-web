@@ -1,11 +1,11 @@
 package org.bonitasoft.web.rest.server.api.form;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.form.FormMappingTarget;
 import org.bonitasoft.engine.form.FormMappingType;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Fabio Lombardi
@@ -22,28 +22,30 @@ public class FormMappingItem implements Serializable {
     private String pageMappingKey;
     private String lastUpdatedBy;
     private Date lastUpdateDate;
+    private boolean formRequired;
 
-    public FormMappingItem(FormMapping item) {
-        this.id = String.valueOf(item.getId());
-        this.processDefinitionId = String.valueOf(item.getProcessDefinitionId());
-        this.type = item.getType();
-        this.target = item.getTarget();
-        this.task = item.getTask();
-        this.pageId = null;
+    public FormMappingItem(final FormMapping item) {
+        id = String.valueOf(item.getId());
+        processDefinitionId = String.valueOf(item.getProcessDefinitionId());
+        type = item.getType();
+        target = item.getTarget();
+        task = item.getTask();
+        pageId = null;
         if (item.getPageId() != null) {
-            this.pageId = String.valueOf(item.getPageId());
+            pageId = String.valueOf(item.getPageId());
         }
-        this.pageURL = item.getURL();
-        this.pageMappingKey = item.getPageMappingKey();
-        this.lastUpdatedBy = String.valueOf(item.getLastUpdatedBy());
-        this.lastUpdateDate = item.getLastUpdateDate();
+        pageURL = item.getURL();
+        pageMappingKey = item.getPageMappingKey();
+        lastUpdatedBy = String.valueOf(item.getLastUpdatedBy());
+        lastUpdateDate = item.getLastUpdateDate();
+        formRequired = item.isFormRequired();
     }
 
     public String getProcessDefinitionId() {
         return processDefinitionId;
     }
 
-    public void setProcessDefinitionId(String processDefinitionId) {
+    public void setProcessDefinitionId(final String processDefinitionId) {
         this.processDefinitionId = processDefinitionId;
     }
 
@@ -51,7 +53,7 @@ public class FormMappingItem implements Serializable {
         return pageMappingKey;
     }
 
-    public void setPageMappingKey(String pageMappingKey) {
+    public void setPageMappingKey(final String pageMappingKey) {
         this.pageMappingKey = pageMappingKey;
     }
 
@@ -59,7 +61,7 @@ public class FormMappingItem implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -67,7 +69,7 @@ public class FormMappingItem implements Serializable {
         return task;
     }
 
-    public void setTask(String task) {
+    public void setTask(final String task) {
         this.task = task;
     }
 
@@ -75,7 +77,7 @@ public class FormMappingItem implements Serializable {
         return pageId;
     }
 
-    public void setPageId(String pageId) {
+    public void setPageId(final String pageId) {
         this.pageId = pageId;
     }
 
@@ -83,7 +85,7 @@ public class FormMappingItem implements Serializable {
         return pageURL;
     }
 
-    public void setPageURL(String pageURL) {
+    public void setPageURL(final String pageURL) {
         this.pageURL = pageURL;
     }
 
@@ -91,7 +93,7 @@ public class FormMappingItem implements Serializable {
         return type;
     }
 
-    public void setType(FormMappingType type) {
+    public void setType(final FormMappingType type) {
         this.type = type;
     }
 
@@ -99,7 +101,7 @@ public class FormMappingItem implements Serializable {
         return lastUpdatedBy;
     }
 
-    public void setLastUpdatedBy(String lastUpdatedBy) {
+    public void setLastUpdatedBy(final String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
@@ -107,7 +109,7 @@ public class FormMappingItem implements Serializable {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
+    public void setLastUpdateDate(final Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -115,8 +117,16 @@ public class FormMappingItem implements Serializable {
         return target;
     }
 
-    public void setTarget(FormMappingTarget target) {
+    public void setTarget(final FormMappingTarget target) {
         this.target = target;
+    }
+
+    public boolean isFormRequired() {
+        return formRequired;
+    }
+
+    public void setFormRequired(final boolean formRequired) {
+        this.formRequired = formRequired;
     }
 
 }

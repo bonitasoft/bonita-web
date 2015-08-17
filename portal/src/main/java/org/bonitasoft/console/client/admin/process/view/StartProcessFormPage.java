@@ -18,11 +18,7 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.google.gwt.user.client.Element;
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -36,7 +32,10 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.user.client.Element;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -113,6 +112,7 @@ public class StartProcessFormPage extends Page {
     public static final Map<String, String> getItemParams(final IItem item) {
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getAttributeValue(ProcessItem.ATTRIBUTE_NAME));
+        processParams.put(ProcessItem.ATTRIBUTE_DISPLAY_NAME, item.getAttributeValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getAttributeValue(ProcessItem.ATTRIBUTE_VERSION));
         processParams.put(ProcessItem.ATTRIBUTE_ID, item.getAttributeValue(ProcessItem.ATTRIBUTE_ID));
         processParams.put("token", TOKEN);
