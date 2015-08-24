@@ -134,8 +134,16 @@ public class FormServiceProviderImplIT extends FormsTestCase {
 
     @After
     public void tearDown() throws Exception {
-        processAPI.disableProcess(processDefinition.getId());
-        processAPI.deleteProcess(processDefinition.getId());
+        deleteProcess(processDefinition.getId());
+    }
+
+    protected void deleteProcess(final long processDefinitionId) throws ProcessDefinitionNotFoundException, ProcessActivationException, DeletionException {
+        processAPI.disableProcess(processDefinitionId);
+        do {
+        } while (processAPI.deleteProcessInstances(processDefinitionId, 0, 20) > 0);
+        do {
+        } while (processAPI.deleteArchivedProcessInstances(processDefinitionId, 0, 20) > 0);
+        processAPI.deleteProcessDefinition(processDefinitionId);
     }
 
     @Test
@@ -604,13 +612,9 @@ public class FormServiceProviderImplIT extends FormsTestCase {
             final ProcessDefinition processDefinition,
             final Long parentProcessInstanceId) throws DeletionException, ProcessDefinitionNotFoundException, ProcessActivationException {
 
-        processAPI.deleteProcessInstance(parentProcessInstanceId);
-        processAPI.disableProcess(processDefinition.getId());
-        processAPI.disableProcess(intermediateSubProcessDefinition.getId());
-        processAPI.disableProcess(subProcessDefinition.getId());
-        processAPI.deleteProcessDefinition(processDefinition.getId());
-        processAPI.deleteProcessDefinition(intermediateSubProcessDefinition.getId());
-        processAPI.deleteProcessDefinition(subProcessDefinition.getId());
+        deleteProcess(processDefinition.getId());
+        deleteProcess(intermediateSubProcessDefinition.getId());
+        deleteProcess(subProcessDefinition.getId());
     }
 
     protected ProcessDefinition createParentProcess(final org.bonitasoft.engine.identity.User user) throws InvalidExpressionException,

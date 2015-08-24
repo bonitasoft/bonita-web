@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,9 +55,9 @@ import org.junit.Test;
 
 /**
  * Unit test for the implementation of the form validation API
- * 
+ *
  * @author Anthony Birembaut
- * 
+ *
  */
 public class FormValidationAPIImplIT extends FormsTestCase {
 
@@ -79,7 +79,7 @@ public class FormValidationAPIImplIT extends FormsTestCase {
                 .addUserTask("Approval", "myActor");
         processBuilder.addTransition("Request_Approval", "Approval");
 
-        DesignProcessDefinition designProcessDefinition = processBuilder.done();
+        final DesignProcessDefinition designProcessDefinition = processBuilder.done();
         final BusinessArchiveBuilder businessArchiveBuilder = new BusinessArchiveBuilder().createNewBusinessArchive();
         final BusinessArchive businessArchive = businessArchiveBuilder
                 .setFormMappings(TestProcess.createDefaultProcessFormMapping(designProcessDefinition))
@@ -87,15 +87,15 @@ public class FormValidationAPIImplIT extends FormsTestCase {
         processAPI = TenantAPIAccessor.getProcessAPI(getSession());
         bonitaProcess = processAPI.deploy(businessArchive);
 
-        IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getSession());
+        final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getSession());
         User user;
         try {
             user = identityAPI.getUserByUserName(USERNAME);
-        } catch (UserNotFoundException e) {
+        } catch (final UserNotFoundException e) {
             user = identityAPI.createUser(USERNAME, PASSWORD);
         }
 
-        ActorInstance processActor = processAPI.getActors(bonitaProcess.getId(), 0, 1, ActorCriterion.NAME_ASC).get(0);
+        final ActorInstance processActor = processAPI.getActors(bonitaProcess.getId(), 0, 1, ActorCriterion.NAME_ASC).get(0);
         processAPI.addUserToActor(processActor.getId(), user.getId());
 
         processAPI.enableProcess(bonitaProcess.getId());
@@ -106,18 +106,22 @@ public class FormValidationAPIImplIT extends FormsTestCase {
     @After
     public void tearDown() throws Exception {
         processAPI.disableProcess(bonitaProcess.getId());
-        processAPI.deleteProcess(bonitaProcess.getId());
+        do {
+        } while (processAPI.deleteProcessInstances(bonitaProcess.getId(), 0, 20) > 0);
+        do {
+        } while (processAPI.deleteArchivedProcessInstances(bonitaProcess.getId(), 0, 20) > 0);
+        processAPI.deleteProcessDefinition(bonitaProcess.getId());
     }
 
     @Test
     public void testValidateField() throws Exception {
-        IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
-        List<FormValidator> validators = new ArrayList<FormValidator>();
-        FormValidator formValidator = new FormValidator("validatorId", CharFieldValidator.class.getName(), "");
+        final IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
+        final List<FormValidator> validators = new ArrayList<FormValidator>();
+        final FormValidator formValidator = new FormValidator("validatorId", CharFieldValidator.class.getName(), "");
         formValidator.setLabelExpression(new Expression(null, "validator label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         validators.add(formValidator);
-        FormFieldValue value = new FormFieldValue("a", String.class.getName());
+        final FormFieldValue value = new FormFieldValue("a", String.class.getName());
         Assert.assertEquals(0,
                 api.validateInstanceField(getSession(), processInstanceID, validators, "field", value, null, Locale.ENGLISH, new HashMap<String, Serializable>())
                         .size());
@@ -125,13 +129,13 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
     @Test
     public void testValidateFieldUsingInstanceID() throws Exception {
-        IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
-        List<FormValidator> validators = new ArrayList<FormValidator>();
-        FormValidator formValidator = new FormValidator("validatorId", InstanceIDTestFieldValidator.class.getName(), "");
+        final IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
+        final List<FormValidator> validators = new ArrayList<FormValidator>();
+        final FormValidator formValidator = new FormValidator("validatorId", InstanceIDTestFieldValidator.class.getName(), "");
         formValidator.setLabelExpression(new Expression(null, "validator label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         validators.add(formValidator);
-        FormFieldValue value = new FormFieldValue(processInstanceID, String.class.getName());
+        final FormFieldValue value = new FormFieldValue(processInstanceID, String.class.getName());
         Assert.assertEquals(0,
                 api.validateInstanceField(getSession(), processInstanceID, validators, "field", value, null, Locale.ENGLISH, new HashMap<String, Serializable>())
                         .size());
@@ -139,20 +143,20 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
     @Test
     public void testValidateFieldWithRegex() throws Exception {
-        IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
+        final IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
         List<FormValidator> validators = new ArrayList<FormValidator>();
-        FormValidator formValidator = new FormValidator("validatorId", RegexFieldValidator.class.getName(), "");
+        final FormValidator formValidator = new FormValidator("validatorId", RegexFieldValidator.class.getName(), "");
         formValidator.setLabelExpression(new Expression(null, "validator label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         formValidator.setParameterExpression(new Expression(null, "[a-z0-9_]*", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         validators.add(formValidator);
-        FormFieldValue value = new FormFieldValue("abc123_def", null);
+        final FormFieldValue value = new FormFieldValue("abc123_def", null);
         Assert.assertEquals(0,
                 api.validateInstanceField(getSession(), processInstanceID, validators, "field", value, null, Locale.ENGLISH, new HashMap<String, Serializable>())
                         .size());
         validators = new ArrayList<FormValidator>();
-        FormValidator formValidator2 = new FormValidator("validatorId", RegexFieldValidator.class.getName(), null);
+        final FormValidator formValidator2 = new FormValidator("validatorId", RegexFieldValidator.class.getName(), null);
         formValidator2.setLabelExpression(new Expression(null, "validator label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         formValidator2.setParameterExpression(new Expression(null, "[a-z_]*", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
@@ -165,16 +169,16 @@ public class FormValidationAPIImplIT extends FormsTestCase {
 
     @Test
     public void testValidatePage() throws Exception {
-        IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
-        List<FormValidator> validators = new ArrayList<FormValidator>();
-        FormValidator formValidator = new FormValidator("validatorId", DateOrderTestPageValidator.class.getName(), null);
+        final IFormValidationAPI api = FormAPIFactory.getFormValidationAPI();
+        final List<FormValidator> validators = new ArrayList<FormValidator>();
+        final FormValidator formValidator = new FormValidator("validatorId", DateOrderTestPageValidator.class.getName(), null);
         formValidator.setLabelExpression(new Expression(null, "validator label", ExpressionType.TYPE_CONSTANT.name(), String.class.getName(), null,
                 new ArrayList<Expression>()));
         validators.add(formValidator);
-        Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
-        FormFieldValue value1 = new FormFieldValue("07-15-2009", Date.class.getName(), "mm-dd-yyyy");
+        final Map<String, FormFieldValue> fieldValues = new HashMap<String, FormFieldValue>();
+        final FormFieldValue value1 = new FormFieldValue("07-15-2009", Date.class.getName(), "mm-dd-yyyy");
         fieldValues.put("fieldId1", value1);
-        FormFieldValue value2 = new FormFieldValue("06-10-2010", Date.class.getName(), "mm-dd-yyyy");
+        final FormFieldValue value2 = new FormFieldValue("06-10-2010", Date.class.getName(), "mm-dd-yyyy");
         fieldValues.put("fieldId2", value2);
         Assert.assertEquals(0,
                 api.validateInstancePage(getSession(), processInstanceID, validators, fieldValues, null, Locale.ENGLISH, new HashMap<String, Serializable>())

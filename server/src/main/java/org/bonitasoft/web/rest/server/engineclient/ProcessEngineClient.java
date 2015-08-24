@@ -196,7 +196,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchUncategorizedProcessDefinitionsUserCanStart(final long userId, final SearchOptions searchOptions) {
         try {
-            return getProcessApi().searchUncategorizedProcessDeploymentInfosUserCanStart(userId, searchOptions);
+            return getProcessApi().searchUncategorizedProcessDeploymentInfosCanBeStartedBy(userId, searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching uncategorized process definition which can be started by user " + userId, e);
         }
@@ -248,7 +248,7 @@ public class ProcessEngineClient {
 
     public SearchResult<ProcessDeploymentInfo> searchProcessDeploymentInfos(final long userId, final SearchOptions searchOptions) {
         try {
-            return getProcessApi().searchProcessDeploymentInfos(userId, searchOptions);
+            return getProcessApi().searchProcessDeploymentInfosCanBeStartedBy(userId, searchOptions);
         } catch (final SearchException e) {
             throw new APIException("Error when searching process user can start", e);
         }

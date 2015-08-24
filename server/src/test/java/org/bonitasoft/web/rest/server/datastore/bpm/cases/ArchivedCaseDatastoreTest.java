@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -103,7 +104,7 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     public void should_delete_all_archived_cases_when_one_id_is_given() throws DeletionException, ProcessInstanceNotFoundException,
             ArchivedProcessInstanceNotFoundException {
         //given
-        final List<APIID> idList = Arrays.asList(APIID.makeAPIID(archivedProcessInstanceId1));
+        final List<APIID> idList = Collections.singletonList(APIID.makeAPIID(archivedProcessInstanceId1));
 
         //when
         datastore.delete(idList);
@@ -111,14 +112,14 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
         //then
         verify(processAPI).getArchivedProcessInstance(archivedProcessInstanceId1);
         verify(processAPI, times(1)).getArchivedProcessInstance(archivedProcessInstanceId1);
-        verify(processAPI).deleteArchivedProcessInstancesInAllStates(Arrays.asList(sourceProcessInstanceId1));
+        verify(processAPI).deleteArchivedProcessInstancesInAllStates(Collections.singletonList(sourceProcessInstanceId1));
     }
 
     @Test(expected = APIException.class)
     public void should_throw_an_api_exception_when_deletion_exception_is_rised() throws DeletionException {
         //given
         doThrow(new DeletionException("exception!")).when(processAPI).deleteArchivedProcessInstancesInAllStates(anyList());
-        final List<APIID> idList = Arrays.asList(APIID.makeAPIID(archivedProcessInstanceId1));
+        final List<APIID> idList = Collections.singletonList(APIID.makeAPIID(archivedProcessInstanceId1));
 
         //when
         datastore.delete(idList);
