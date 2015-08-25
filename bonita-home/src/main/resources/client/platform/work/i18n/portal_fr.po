@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 03:02+0200\n"
-"PO-Revision-Date: 2015-08-04 02:50-0400\n"
+"POT-Creation-Date: 2015-08-07 03:02+0200\n"
+"PO-Revision-Date: 2015-08-24 09:19-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -331,6 +331,9 @@ msgstr "Ajouter ce rôle à %actor_name%"
 msgid "Add this user to %actor_name%"
 msgstr "Ajouter cet utilisateur à %actor_name%"
 
+msgid "Add your comment"
+msgstr "Ajoutez votre commentaire"
+
 msgid "Address"
 msgstr "Adresse"
 
@@ -588,6 +591,9 @@ msgstr "Fermer"
 
 msgid "Close without saving"
 msgstr "Fermer sans enregistrer les modifications"
+
+msgid "Comment"
+msgstr "Commentaire"
 
 msgid "Comments"
 msgstr "Commentaires"
@@ -1036,6 +1042,12 @@ msgstr "Erreur lors de l'actualisation des informations de déploiement du proce
 msgid "Error when updating user"
 msgstr "Erreur lors de l'actualisation des données de l'utilisateur"
 
+msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+
 msgid "Executed by"
 msgstr "Exécuté par"
 
@@ -1220,6 +1232,9 @@ msgstr "Installé le"
 
 msgid "Invalid Business Data Model content"
 msgstr "Le contenu du Modèle de Données Métier est invalide"
+
+msgid "It is still assigned to you until you release it."
+msgstr "It is still assigned to you until you release it."
 
 msgid "Item not found"
 msgstr "Item non trouvé"
@@ -1895,6 +1910,9 @@ msgstr "Le tri n'est pas supporté par cette API"
 msgid "Start"
 msgstr "Démarrer"
 
+msgid "Start a case"
+msgstr "Démarrer un cas"
+
 msgid "Start an instance of process %app_name%"
 msgstr "Démarrer une instance de processus %app_name%"
 
@@ -1936,6 +1954,12 @@ msgstr "Dim"
 
 msgid "Sub groups"
 msgstr "Sous-groupes"
+
+msgid "Submit"
+msgstr "Soumettre"
+
+msgid "Submit a comment"
+msgstr "Soumettre un commentaire"
 
 msgid "Subprocess"
 msgstr "Sous-processus"
@@ -2016,8 +2040,11 @@ msgstr "L'application a rencontré une erreur."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "L'application a rencontré une erreur inattendue. Eessayez de nouveau. \n"
+msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau. \n"
 " Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
+
+msgid "The case %caseId% has been started successfully."
+msgstr "The case %caseId% has been started successfully."
 
 msgid "The configuration state of the process"
 msgstr "L'état de configuration du processus"
@@ -2147,6 +2174,15 @@ msgstr "L'état du cas"
 
 msgid "The sub process responsible for the creation of this task"
 msgstr "Le sous-processus qui a créé cette tâche"
+
+msgid "The task %taskName% has been executed. The task list is being refreshed."
+msgstr "The task %taskName% has been executed. The task list is being refreshed."
+
+msgid "The task %taskName% has not been executed. "
+msgstr "The task %taskName% has not been executed. "
+
+msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 
 msgid "The type of the task"
 msgstr "Le type de la tâche"
@@ -2432,6 +2468,9 @@ msgstr "En cours"
 msgid "Yes"
 msgstr "Oui"
 
+msgid "You are going to start a new case. No form is needed."
+msgstr "You are going to start a new case. No form is needed."
+
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr "Vous êtes connecté en tant qu'utilisateur technique. Cet utilisateur a des droits limités, son but est d'initialiser l'organisation et activer le Modèle de Données métier, le cas échéant."
 
@@ -2470,6 +2509,9 @@ msgstr "ascendant"
 
 msgid "by"
 msgstr "par"
+
+msgid "cancel"
+msgstr "annuler"
 
 msgid "create"
 msgstr "créer"

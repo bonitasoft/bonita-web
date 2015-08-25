@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-07-28 10:48-0400\n"
+"PO-Revision-Date: 2015-08-24 09:19-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1183,7 +1183,7 @@ msgstr "une application"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:30
 msgid "application has been partially imported. The following items are not loaded in the Portal."
-msgstr "L'application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
+msgstr "application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:28
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
@@ -1381,17 +1381,17 @@ msgid "{}-{} of {}"
 msgstr "{}-{} de {}"
 
 msgid "Search Key 1"
-msgstr "Mot-clé 1"
+msgstr "Clé de recherche 1"
 
 msgid "Search Key 2"
-msgstr "Mot-clé 2"
+msgstr "Clé de recherche 2"
 
 msgid "Search Key 3"
-msgstr "Mot-clé 3"
+msgstr "Clé de recherche 3"
 
 msgid "Search Key 4"
-msgstr "Mot-clé 4"
+msgstr "Clé de recherche 4"
 
 msgid "Search Key 5"
-msgstr "Mot-clé 5"
+msgstr "Clé de recherche 5"
 
