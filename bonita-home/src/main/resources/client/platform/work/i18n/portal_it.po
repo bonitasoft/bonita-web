@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 03:02+0200\n"
-"PO-Revision-Date: 2015-08-04 02:55-0400\n"
+"POT-Creation-Date: 2015-08-07 03:02+0200\n"
+"PO-Revision-Date: 2015-08-24 09:23-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -331,6 +331,9 @@ msgstr "Aggiungi questo ruolo a %actor_name%"
 msgid "Add this user to %actor_name%"
 msgstr "Aggiungi questo utente a %actor_name%"
 
+msgid "Add your comment"
+msgstr "Aggiungi il tuo commento"
+
 msgid "Address"
 msgstr "Indirizzo"
 
@@ -588,6 +591,9 @@ msgstr "Chiudi"
 
 msgid "Close without saving"
 msgstr "Chiudi senza salvare"
+
+msgid "Comment"
+msgstr "Commento"
 
 msgid "Comments"
 msgstr "Commenti"
@@ -1036,6 +1042,12 @@ msgstr "Errore durante l'aggiornamento delle informazioni di distribuzione del p
 msgid "Error when updating user"
 msgstr "Errore durante l'aggiornamento dell'utente"
 
+msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+
 msgid "Executed by"
 msgstr "Eseguito da"
 
@@ -1220,6 +1232,9 @@ msgstr "Installato il"
 
 msgid "Invalid Business Data Model content"
 msgstr "Contenuto del Business Data Model non valido"
+
+msgid "It is still assigned to you until you release it."
+msgstr "It is still assigned to you until you release it."
 
 msgid "Item not found"
 msgstr "Elemento non trovato"
@@ -1895,6 +1910,9 @@ msgstr "L'ordinamento non è supportato da questa API"
 msgid "Start"
 msgstr "Inizia"
 
+msgid "Start a case"
+msgstr "Inizia un caso"
+
 msgid "Start an instance of process %app_name%"
 msgstr "Avviare un'istanza di processo %app_name%"
 
@@ -1936,6 +1954,12 @@ msgstr "Do"
 
 msgid "Sub groups"
 msgstr "Sottogruppi"
+
+msgid "Submit"
+msgstr "Riferisci"
+
+msgid "Submit a comment"
+msgstr "Invia un commento"
 
 msgid "Subprocess"
 msgstr "Sottoprocesso"
@@ -2018,6 +2042,9 @@ msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
 msgstr "L'applicazione ha rilevato un errore imprevisto. Si prega di riprovare. \n"
 " se l'errore persiste, contattare il supporto di Bonitasoft"
+
+msgid "The case %caseId% has been started successfully."
+msgstr "The case %caseId% has been started successfully."
 
 msgid "The configuration state of the process"
 msgstr "Lo stato di configurazione del processo"
@@ -2147,6 +2174,15 @@ msgstr "Lo stato del task"
 
 msgid "The sub process responsible for the creation of this task"
 msgstr "Il sotto processo responsabile della creazione di questa attività"
+
+msgid "The task %taskName% has been executed. The task list is being refreshed."
+msgstr "The task %taskName% has been executed. The task list is being refreshed."
+
+msgid "The task %taskName% has not been executed. "
+msgstr "The task %taskName% has not been executed. "
+
+msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 
 msgid "The type of the task"
 msgstr "Il tipo di task"
@@ -2432,6 +2468,9 @@ msgstr "Lavorato il"
 msgid "Yes"
 msgstr "Sì"
 
+msgid "You are going to start a new case. No form is needed."
+msgstr "You are going to start a new case. No form is needed."
+
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr "Si è connessi come utente tecnico. Questo utente ha diritti limitati. Il suo scopo è quello di inizializzare l'organizzazione e attivare un Business Data Model, se necessario."
 
@@ -2470,6 +2509,9 @@ msgstr "ascendente"
 
 msgid "by"
 msgstr "da"
+
+msgid "cancel"
+msgstr "Cancella"
 
 msgid "create"
 msgstr "crea"
