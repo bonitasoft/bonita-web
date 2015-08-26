@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 03:02+0200\n"
-"PO-Revision-Date: 2015-08-04 02:54-0400\n"
+"POT-Creation-Date: 2015-08-07 03:02+0200\n"
+"PO-Revision-Date: 2015-08-24 05:03-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -331,6 +331,9 @@ msgstr "Hinzufügen dieser Rolle zu %actor_name%"
 msgid "Add this user to %actor_name%"
 msgstr "Hinzufügen dieses Benutzers zu %actor_name%"
 
+msgid "Add your comment"
+msgstr "Fügen Sie Ihren Kommentar hinzu"
+
 msgid "Address"
 msgstr "Adresse"
 
@@ -588,6 +591,9 @@ msgstr "Schließen"
 
 msgid "Close without saving"
 msgstr "Schließen ohne zu speichern"
+
+msgid "Comment"
+msgstr "Kommentar"
 
 msgid "Comments"
 msgstr "Kommentare"
@@ -1036,6 +1042,12 @@ msgstr "Error when updating process deployment informations"
 msgid "Error when updating user"
 msgstr "Fehler beim Aktualisieren des Benutzers"
 
+msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+
 msgid "Executed by"
 msgstr "Ausgeführt von"
 
@@ -1220,6 +1232,9 @@ msgstr "Installiert am"
 
 msgid "Invalid Business Data Model content"
 msgstr "Ungültiger Geschäftsdatenmodell-Inhalt"
+
+msgid "It is still assigned to you until you release it."
+msgstr "It is still assigned to you until you release it."
 
 msgid "Item not found"
 msgstr "Element nicht gefunden"
@@ -1895,6 +1910,9 @@ msgstr "Sortieren wird nicht durch diese API unterstützt"
 msgid "Start"
 msgstr "Start"
 
+msgid "Start a case"
+msgstr "Fall starten"
+
 msgid "Start an instance of process %app_name%"
 msgstr "Starten einer Instanz von Prozess-%app_name%"
 
@@ -1936,6 +1954,12 @@ msgstr "So"
 
 msgid "Sub groups"
 msgstr "Untergruppen"
+
+msgid "Submit"
+msgstr "Senden"
+
+msgid "Submit a comment"
+msgstr "Kommentar senden"
 
 msgid "Subprocess"
 msgstr "Teilprozess"
@@ -2018,6 +2042,9 @@ msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
 msgstr "In der Anwendung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.\n"
 "Wenn der Fehler weiterhin auftritt, kontaktieren Sie bitte den Bonitasoft Support"
+
+msgid "The case %caseId% has been started successfully."
+msgstr "The case %caseId% has been started successfully."
 
 msgid "The configuration state of the process"
 msgstr "Den Konfigurationsstatus des Prozesses"
@@ -2147,6 +2174,15 @@ msgstr "Der Zustand der Aufgabe"
 
 msgid "The sub process responsible for the creation of this task"
 msgstr "Der Teilprozess ist verantwortlich für die Erstellung dieser Aufgabe"
+
+msgid "The task %taskName% has been executed. The task list is being refreshed."
+msgstr "The task %taskName% has been executed. The task list is being refreshed."
+
+msgid "The task %taskName% has not been executed. "
+msgstr "The task %taskName% has not been executed. "
+
+msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 
 msgid "The type of the task"
 msgstr "Der Typ der Aufgabe"
@@ -2432,6 +2468,9 @@ msgstr "Bearbeitet"
 msgid "Yes"
 msgstr "Ja"
 
+msgid "You are going to start a new case. No form is needed."
+msgstr "You are going to start a new case. No form is needed."
+
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr "Sie sind als technischer Benutzer angemeldet. Dieser Benutzer hat eingeschränkte Rechte. Dient dem Initialisieren der Organisation und dem Aktivieren des Geschäftsdatenmodells, wenn dies nötig ist."
 
@@ -2470,6 +2509,9 @@ msgstr "aufsteigend"
 
 msgid "by"
 msgstr "von"
+
+msgid "cancel"
+msgstr "Abbrechen"
 
 msgid "create"
 msgstr "Erstellen"
