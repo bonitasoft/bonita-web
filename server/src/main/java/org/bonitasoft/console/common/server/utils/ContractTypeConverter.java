@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +70,7 @@ public class ContractTypeConverter {
         convertUtilsBean.register(true, false, 0);
         final DateConverter dateConverter = new DateConverter();
         dateConverter.setPatterns(datePatterns);
+        dateConverter.setTimeZone(TimeZone.getTimeZone("GMT"));
         convertUtilsBean.register(dateConverter, Date.class);
     }
 
