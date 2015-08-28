@@ -9,18 +9,19 @@
 
 package org.bonitasoft.web.rest.server;
 
+import java.io.Serializable;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.api.BusinessDataAPI;
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.Request;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.resource.Finder;
-
-import javax.servlet.http.HttpSession;
-import java.io.Serializable;
 
 public abstract class ResourceFinder extends Finder {
 
@@ -62,6 +63,11 @@ public abstract class ResourceFinder extends Finder {
     protected APISession getAPISession(final Request request) {
         final HttpSession httpSession = ServletUtils.getRequest(request).getSession();
         return (APISession) httpSession.getAttribute("apiSession");
+    }
+
+    protected PlatformSession getPlatformSession(final Request request) {
+        final HttpSession httpSession = ServletUtils.getRequest(request).getSession();
+        return (PlatformSession) httpSession.getAttribute("platformSession");
     }
 
     public void setFinderFactory(FinderFactory finderFactory) {
