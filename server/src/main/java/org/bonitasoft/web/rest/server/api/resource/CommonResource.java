@@ -206,7 +206,6 @@ public class CommonResource extends ServerResource {
                 LOGGER.log(Level.FINE, "***" + message);
             }
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
-            errorMessage.setMessage("File Not Found");
         } else {
             LOGGER.log(Level.SEVERE, t.getMessage(), t);
         }
