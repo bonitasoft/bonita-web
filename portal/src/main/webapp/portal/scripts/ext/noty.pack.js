@@ -582,7 +582,6 @@ function noty(options) {
 			object: '<ul id="noty_topCenter_layout_container" class="growl-container growl-fixed"/>',
 			selector: 'ul#noty_topCenter_layout_container',
 			style: function() {
-				console.log($(this));
 				$(this).css({
 					top: 100,
 					left: 0,
