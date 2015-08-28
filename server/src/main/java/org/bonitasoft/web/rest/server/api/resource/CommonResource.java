@@ -184,6 +184,7 @@ public class CommonResource extends ServerResource {
         super.doCatch(t);
 
         final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
+        ErrorMessage errorMessage = new ErrorMessage(t);
 
         getResponse().setStatus(getStatus(), message);
 
@@ -198,6 +199,7 @@ public class CommonResource extends ServerResource {
                 LOGGER.log(Level.FINE, "***" + message);
             }
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+            errorMessage.setMessage("File Not Found");
         }
         else if (t instanceof NotFoundException) {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -207,7 +209,7 @@ public class CommonResource extends ServerResource {
         } else {
             LOGGER.log(Level.SEVERE, t.getMessage(), t);
         }
-        getResponse().setEntity(new ErrorMessage(t).toEntity());
+        getResponse().setEntity(errorMessage.toEntity());
     }
 
     @Override
