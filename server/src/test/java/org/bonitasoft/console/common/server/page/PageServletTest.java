@@ -4,6 +4,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -227,5 +228,14 @@ public class PageServletTest {
         pageServlet.service(hsRequest, hsResponse);
 
         verify(hsRequest, times(1)).getRequestDispatcher("/API/bpm/process/1");
+    }
+
+    @Test
+    public void should_return_200_when_THEME_call() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(hsRequest, never()).getRequestDispatcher(anyString());
     }
 }
