@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /release-7.0.3/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /7.0.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "Erro na estrutura do arquivo zip. Verifique que o .zip contém um arquivo page.properties bem formado e um arquivo index.html ou Index.groovy. Para maiores detalhes, consulte a documentação ou o arquivo readme da página de exemplo (disponível na lista de páginas)"
