@@ -247,7 +247,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             if (attributes.containsKey(HumanTaskItem.ATTRIBUTE_PRIORITY)) {
                 getProcessAPI().setTaskPriority(
                         id.toLong(),
-                        TaskPriority.valueOf(attributes.get(HumanTaskItem.ATTRIBUTE_PRIORITY)));
+                        TaskPriority.valueOf(attributes.get(HumanTaskItem.ATTRIBUTE_PRIORITY).toUpperCase()));
             }
 
             // Due date

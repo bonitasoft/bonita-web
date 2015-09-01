@@ -55,6 +55,8 @@ public class PageServlet extends HttpServlet {
 
     public static final String API_PATH_SEPARATOR = "/API";
 
+    public static final String THEME_PATH_SEPARATOR = "/theme";
+
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected PageMappingService pageMappingService = new PageMappingService();
@@ -72,6 +74,12 @@ public class PageServlet extends HttpServlet {
             //Support relative calls to the REST API from the forms using ../API/
             final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
             request.getRequestDispatcher(apiPath).forward(request, response);
+        }
+        if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
+            //BS-14188 : as theme are only currently managed in living app, we cannot currently serve
+            // theme request from Forms. But, it shouldn't produce any 400 request error either
+            // thus, we return 200
+            return ;
         } else {
             super.service(request, response);
         }
@@ -109,7 +117,7 @@ public class PageServlet extends HttpServlet {
 
     protected void resolveAndDisplayPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final String mappingKey, final String resourcePath)
-            throws BonitaException, IOException, InstantiationException, IllegalAccessException {
+                    throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
             final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
                     isNotResourcePath(resourcePath));
@@ -140,8 +148,8 @@ public class PageServlet extends HttpServlet {
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-                                         final Long pageId, final String resourcePath)
-            throws InstantiationException, IllegalAccessException, IOException, BonitaException {
+            final Long pageId, final String resourcePath)
+                    throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
             if (isNotResourcePath(resourcePath)) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId);
