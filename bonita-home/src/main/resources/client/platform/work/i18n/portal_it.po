@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-07 03:02+0200\n"
-"PO-Revision-Date: 2015-08-24 09:23-0400\n"
+"PO-Revision-Date: 2015-09-01 04:47-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1043,10 +1043,10 @@ msgid "Error when updating user"
 msgstr "Errore durante l'aggiornamento dell'utente"
 
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
-msgstr "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr "Errore durante l'esecuzione del task. Alcune delle informazioni richieste sono mancanti (contratto non soddisfatto)."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Errore durante l'inizializzazione del caso. Alcune delle informazioni richieste sono mancanti (contratto non soddisfatto)."
 
 msgid "Executed by"
 msgstr "Eseguito da"
@@ -1234,7 +1234,7 @@ msgid "Invalid Business Data Model content"
 msgstr "Contenuto del Business Data Model non valido"
 
 msgid "It is still assigned to you until you release it."
-msgstr "It is still assigned to you until you release it."
+msgstr "Sarà sempre assegnato fin tanto che non sarà rilasciato."
 
 msgid "Item not found"
 msgstr "Elemento non trovato"
@@ -2044,7 +2044,7 @@ msgstr "L'applicazione ha rilevato un errore imprevisto. Si prega di riprovare. 
 " se l'errore persiste, contattare il supporto di Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
-msgstr "The case %caseId% has been started successfully."
+msgstr "Il caso %caseId% è stato avviato correttamente."
 
 msgid "The configuration state of the process"
 msgstr "Lo stato di configurazione del processo"
@@ -2176,13 +2176,13 @@ msgid "The sub process responsible for the creation of this task"
 msgstr "Il sotto processo responsabile della creazione di questa attività"
 
 msgid "The task %taskName% has been executed. The task list is being refreshed."
-msgstr "The task %taskName% has been executed. The task list is being refreshed."
+msgstr "Il task %taskName% è stato eseguito. L'elenco dei task è stato aggiornato."
 
 msgid "The task %taskName% has not been executed. "
-msgstr "The task %taskName% has not been executed. "
+msgstr "Il task %taskName% non è stato eseguito. "
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
-msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr "Il task sta per essere eseguito. Nessun form è necessario. È possibile immettere un commento e confermare o annullare."
 
 msgid "The type of the task"
 msgstr "Il tipo di task"
@@ -2469,7 +2469,7 @@ msgid "Yes"
 msgstr "Sì"
 
 msgid "You are going to start a new case. No form is needed."
-msgstr "You are going to start a new case. No form is needed."
+msgstr "Si sta per avviare un nuovo caso. Nessun form è necessario."
 
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr "Si è connessi come utente tecnico. Questo utente ha diritti limitati. Il suo scopo è quello di inizializzare l'organizzazione e attivare un Business Data Model, se necessario."
