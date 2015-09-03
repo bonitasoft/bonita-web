@@ -48,7 +48,7 @@ public class CompilableFileTest {
 
         final byte[] compilation = new CompilableFile("style.less", "style.css").compile(modifier);
 
-        assertThat(new String(compilation, "UTF-8")).isEqualTo("body {\n  width: 1px;\n}\n\r\n");
+        assertThat(new String(compilation, "UTF-8").replace("\r", "")).isEqualTo("body {\n  width: 1px;\n}\n\n");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CompilableFileTest {
         given(modifier.resolve("style.less")).willReturn(lessStyle);
 
         new CompilableFile("style.less", "style.css").compile(modifier);
-        final byte[] emptyExpectedFile = "\r\n".getBytes();
+        final byte[] emptyExpectedFile = System.lineSeparator().getBytes();
 
         verify(modifier).add("style.css", emptyExpectedFile);
     }
