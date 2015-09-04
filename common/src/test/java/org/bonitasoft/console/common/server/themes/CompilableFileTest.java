@@ -42,23 +42,24 @@ public class CompilableFileTest {
 
     @Test
     public void should_compile_less_into_css() throws Exception {
-        File lessStyle = directory.newFile("style.less");
-        FileUtils.writeStringToFile(lessStyle, "body{width:1px}");
+        final File lessStyle = directory.newFile("style.less");
+        FileUtils.writeStringToFile(lessStyle, "@myvar:1px;body{width:@myvar}");
         given(modifier.resolve("style.less")).willReturn(lessStyle);
 
-        byte[] compilation = new CompilableFile("style.less", "style.css").compile(modifier);
+        final byte[] compilation = new CompilableFile("style.less", "style.css").compile(modifier);
 
-        assertThat(new String(compilation, "UTF-8")).isEqualTo("body {\n  width: 1px;\n}\n");
+        assertThat(new String(compilation, "UTF-8").replace("\r", "")).isEqualTo("body {\n  width: 1px;\n}\n\n");
     }
 
     @Test
     public void should_add_compiled_file_to_compile_less_into_css() throws Exception {
-        File lessStyle = directory.newFile("style.less");
+        final File lessStyle = directory.newFile("style.less");
         given(modifier.resolve("style.less")).willReturn(lessStyle);
 
         new CompilableFile("style.less", "style.css").compile(modifier);
+        final byte[] emptyExpectedFile = System.lineSeparator().getBytes();
 
-        verify(modifier).add("style.css", new byte[0]);
+        verify(modifier).add("style.css", emptyExpectedFile);
     }
 
     @Test(expected = LessCompilationException.class)
@@ -70,7 +71,7 @@ public class CompilableFileTest {
 
     @Test(expected = LessCompilationException.class)
     public void should_throw_LessCompilationException_when_fail_to_compile_input_file() throws Exception {
-        File lessStyle = directory.newFile("style.less");
+        final File lessStyle = directory.newFile("style.less");
         FileUtils.writeStringToFile(lessStyle, "not compilable content");
         given(modifier.resolve("style.less")).willReturn(lessStyle);
 
