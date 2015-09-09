@@ -49,8 +49,9 @@ public class PageLister {
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), _("Manage Look and Feel"), _("Look and Feel")));
         pages.add(new BonitaPageItem("pagelisting", _("Manage custom pages"), _("Manage custom pages"), _("Custom Pages")));
         pages.add(new BonitaPageItem("applicationslistingadmin", _("Manage applications"), _("Manage applications"), _("Applications")));
-        pages.add(new BonitaPageItem("monitoringadmin", _("Monitoring"), _("Monitoring"), _("Apps management")));
-        pages.add(new BonitaPageItem("monitoringpm", _("Monitoring"), _("Monitoring"), _("Apps management")));
+        pages.add(new BonitaPageItem("monitoringadmin", _("Monitoring"), _("Monitoring"), _("Monitoring")));
+        pages.add(new BonitaPageItem("monitoringpm", _("Monitoring"), _("Monitoring"), _("Monitoring")));
+        pages.add(new BonitaPageItem("licensemonitoringadmin", _("License"), _("License"), _("License")));
     }
 
     public List<BonitaPageItem> getPages() {
