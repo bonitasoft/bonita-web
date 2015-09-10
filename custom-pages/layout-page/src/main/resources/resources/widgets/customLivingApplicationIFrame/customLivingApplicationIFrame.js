@@ -17,6 +17,6 @@ angular.module('bonitasoft.ui.widgets')
         return $sce.trustAsResourceUrl($scope.properties.src);
     }
 },
-      template: '<iframe width="100%" style="border: 0" scrolling="no" ng-src="{{secureUrl(properties.src)}}"></iframe>'
+      template: '<iframe width="100%" style="border: 0" scrolling="no" ng-src="{{secureUrl()}}"></iframe>'
     };
   });
