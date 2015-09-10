@@ -24,27 +24,29 @@ import org.lesscss.LessException;
 
 public class CompilableFile {
 
-    private String input;
+    private final String input;
 
-    private String output;
+    private final String output;
 
     public static final CompilableFile[] ALWAYS_COMPILED_FILES = new CompilableFile[] {
             new CompilableFile("skin/bootstrap/portal/main.less", "bonita-skin.css"),
     };
 
-    public CompilableFile(String input, String output) {
+    public CompilableFile(final String input, final String output) {
         this.input = input;
         this.output = output;
     }
 
-    public byte[] compile(ThemeArchive.ThemeModifier modifier) {
+    public byte[] compile(final ThemeArchive.ThemeModifier modifier) {
         try {
-            byte[] compilation = new LessCompiler().compile(modifier.resolve(input)).getBytes();
+            final LessCompiler lessCompiler = new LessCompiler();
+            lessCompiler.setEncoding("UTF-8");
+            final byte[] compilation = lessCompiler.compile(modifier.resolve(input)).getBytes("UTF-8");
             modifier.add(output, compilation);
             return compilation;
-        } catch (LessException e) {
+        } catch (final LessException e) {
             throw new LessCompilationException("Failed to compile " + input, e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new LessCompilationException("Failed to compile " + input, e);
         }
     }
