@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-07 03:02+0200\n"
+"POT-Creation-Date: 2015-09-10 03:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -381,9 +381,6 @@ msgid "Analytics"
 msgstr ""
 
 msgid "Applications"
-msgstr ""
-
-msgid "Apps management"
 msgstr ""
 
 msgid "April"
@@ -1295,6 +1292,9 @@ msgid "Layout"
 msgstr ""
 
 msgid "Layouts"
+msgstr ""
+
+msgid "License"
 msgstr ""
 
 msgid "Link to the tasks"
