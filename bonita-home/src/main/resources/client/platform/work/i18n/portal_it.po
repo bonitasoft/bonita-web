@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-07 03:02+0200\n"
-"PO-Revision-Date: 2015-09-01 04:47-0400\n"
+"POT-Creation-Date: 2015-09-10 03:02+0200\n"
+"PO-Revision-Date: 2015-09-11 02:50-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -381,9 +381,6 @@ msgstr "Statistiche"
 
 msgid "Applications"
 msgstr "Applicazioni"
-
-msgid "Apps management"
-msgstr "Gestione applicazioni"
 
 msgid "April"
 msgstr "Aprile"
@@ -1295,6 +1292,9 @@ msgstr "Layout"
 
 msgid "Layouts"
 msgstr "Layout"
+
+msgid "License"
+msgstr "Licenza"
 
 msgid "Link to the tasks"
 msgstr "Collegamento ai task"
