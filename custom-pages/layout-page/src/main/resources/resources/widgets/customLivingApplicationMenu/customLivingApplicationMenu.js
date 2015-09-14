@@ -44,6 +44,7 @@ angular.module('bonitasoft.ui.widgets')
     getApplication().then(function(response) {
         var application = response.data[0];
         ctrl.applicationName = application.displayName;
+        $window.document.title = application.displayName;
         return application.id;
     }).then(getApplicationMenuList).then(setTargetedUrl);
     
