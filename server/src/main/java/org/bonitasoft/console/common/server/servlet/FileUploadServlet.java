@@ -14,16 +14,6 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.codehaus.jettison.json.JSONObject;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,6 +22,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.bonitasoft.forms.server.exception.FileTooBigException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Servlet allowing to upload a File.
@@ -100,6 +102,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected abstract void defineUploadDirectoryPath(final HttpServletRequest request);
 
+    protected abstract void checkUploadSize(final HttpServletRequest request, FileItem item) throws FileTooBigException;
+
     protected void setUploadDirectoryPath(final String uploadDirectoryPath) {
         this.uploadDirectoryPath = uploadDirectoryPath;
     }
@@ -118,6 +122,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 return;
             }
 
+
             final File targetDirectory = new File(uploadDirectoryPath);
             if (!targetDirectory.exists()) {
                 targetDirectory.mkdirs();
@@ -135,6 +140,8 @@ public abstract class FileUploadServlet extends HttpServlet {
                 }
 
                 final String fileName = item.getName();
+
+                checkUploadSize(request, item);
 
                 // Check if extension is allowed
                 if (!isSupportedExtention(fileName)) {
@@ -173,6 +180,8 @@ public abstract class FileUploadServlet extends HttpServlet {
         }
     }
 
+
+
     protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
         String responseString;
         if (returnFullPathInResponse) {
@@ -205,9 +214,9 @@ public abstract class FileUploadServlet extends HttpServlet {
         return uploadedFile;
     }
 
-    protected String getExtension(String fileName) {
+    protected String getExtension(final String fileName) {
         String extension = "";
-        String filenameLastSegment = getFilenameLastSegment(fileName);
+        final String filenameLastSegment = getFilenameLastSegment(fileName);
         final int dotPos = filenameLastSegment.lastIndexOf('.');
         if (dotPos > -1) {
             extension = filenameLastSegment.substring(dotPos);
@@ -215,7 +224,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         return extension;
     }
 
-    protected String getFilenameLastSegment(String fileName) {
+    protected String getFilenameLastSegment(final String fileName) {
         int slashPos = fileName.lastIndexOf("/");
         if (slashPos == -1) {
             slashPos = fileName.lastIndexOf("\\");
