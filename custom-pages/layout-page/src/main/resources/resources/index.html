@@ -11,16 +11,16 @@
   <script src="js/generator.min.js"></script> 
   <!-- assets attached to the page --> 
   <script>
-            angular.module('pb.generator').requires.push('ui.bootstrap');
+            angular.module('bonitasoft.ui').requires.push('ui.bootstrap');
         </script> 
   <!-- widget need to be injected at runtime --> 
   <script src="widgets/customLivingApplicationMenu/customLivingApplicationMenu.js"></script> 
   <script src="widgets/customLivingApplicationIFrame/customLivingApplicationIFrame.js"></script> 
  </head> 
- <body ng-app="pb.generator" pb-model="5432837c-2fa0-43b1-8d14-a870ee100dda"> 
+ <body ng-app="bonitasoft.ui" pb-model="5432837c-2fa0-43b1-8d14-a870ee100dda"> 
   <div class="container-fluid"> 
    <div class="row"> 
-    <div pb-property-values="a2f94771-e43d-41e2-ab87-2f48847b2939"> 
+    <div pb-property-values="c49a2cd8-39d5-4bef-a264-c0e18ed3ba3c"> 
      <div ng-if="!properties.hidden" class="component col-lg-12  col-md-12  col-sm-12  col-xs-12" ng-class="properties.cssClasses"> 
       <custom-living-application-menu></custom-living-application-menu> 
      </div> 
@@ -33,7 +33,7 @@
      </div> 
     </div> 
    </div> 
-   <script>angular.module('pb.generator.services').factory('modelPropertiesFactory', function() {
+   <script>angular.module('bonitasoft.ui.services').factory('modelPropertiesFactory', function() {
   var resources = {};
   return {
     get: function(uuid) {
@@ -42,9 +42,9 @@
   };
 });
 </script> 
-   <script>angular.module('pb.generator.services').factory('dataModelFactory', function() {
+   <script>angular.module('bonitasoft.ui.services').factory('dataModelFactory', function() {
   var resources = {};
-  resources['5432837c-2fa0-43b1-8d14-a870ee100dda'] =  {"AuthorizeApplicationAPI":{"type":"url","value":"../API/living/application","exposed":false},"AuthorizeApplicationPageAPI":{"type":"url","value":"../API/living/application-page","exposed":false},"AuthorizeApplicationMenuAPI":{"type":"url","value":"../API/living/application-menu","exposed":false},"targetedPageUrl":{"type":"constant","value":null,"exposed":false}};
+  resources['5432837c-2fa0-43b1-8d14-a870ee100dda'] =  {"AuthorizeApplicationAPI":{"type":"url","value":"../API/living/application","exposed":false},"AuthorizeApplicationPageAPI":{"type":"url","value":"../API/living/application-page","exposed":false},"AuthorizeApplicationMenuAPI":{"type":"url","value":"../API/living/application-menu","exposed":false},"targetedPageUrl":{"type":"constant","value":"","exposed":false}};
   return {
     get: function(uuid) {
       return resources[uuid];
@@ -52,7 +52,7 @@
   };
 });
 </script> 
-   <script>angular.module('pb.generator.services').factory('modelPropertiesFactory', function() {
+   <script>angular.module('bonitasoft.ui.services').factory('modelPropertiesFactory', function() {
   var resources = {};
   return {
     get: function(uuid) {
@@ -61,10 +61,10 @@
   };
 });
 </script> 
-   <script>angular.module('pb.generator.services').factory('propertyValuesFactory', function() {
+   <script>angular.module('bonitasoft.ui.services').factory('propertyValuesFactory', function() {
   var resources = {};
-  resources['a2f94771-e43d-41e2-ab87-2f48847b2939'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"selectedMenu":{"type":"data","value":"targetedPage"},"menuList":{"type":"data","value":"pageList"},"applicationName":{"type":"constant","value":"{{application[0].displayName}}"},"targetUrl":{"type":"data","value":"targetedPageUrl"},"contextPath":{"type":"constant","value":"/bonita"},"sticky":{"type":"constant","value":true}};
-  resources['9cd7cd7e-d548-410a-aaa3-4318f9280818'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"src":{"type":"data","value":"targetedPageUrl"},"contentHeight":{"type":"constant","value":"700px;"}};
+  resources['9cd7cd7e-d548-410a-aaa3-4318f9280818'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"src":{"type":"expression","value":"targetedPageUrl"},"contentHeight":{"type":"constant","value":"700px;"}};
+  resources['c49a2cd8-39d5-4bef-a264-c0e18ed3ba3c'] =  {"cssClasses":{"type":"constant","value":""},"hidden":{"type":"constant","value":false},"targetUrl":{"type":"variable","value":"targetedPageUrl"},"sticky":{"type":"constant","value":true}};
   return {
     get: function(uuid) {
       return resources[uuid];
