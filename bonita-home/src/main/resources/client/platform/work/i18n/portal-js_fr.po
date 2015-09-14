@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-09-11 02:45-0400\n"
+"PO-Revision-Date: 2015-09-14 03:19-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /7.1.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "Erreur dans la structure du fichier .zip. Vérifiez qu'il contient bien un fichier page.properties au bon format, et un fichier index.html ou un fichier Index.groovy. Pour plus d'informations, consultez la documentation ou le fichier readme des pages d'exemple (menu Resources)"
@@ -597,7 +597,7 @@ msgstr "Erreur interne du serveur."
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Eléments par page"
+msgstr "Éléments par page"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"
@@ -861,7 +861,7 @@ msgid "Profiles"
 msgstr "Profils"
 
 msgid "Ready, waiting instances"
-msgstr "Instances en état ready, waiting (pending)"
+msgstr "Instances en état ready, waiting (en attente)"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:10
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:10
@@ -1272,7 +1272,7 @@ msgstr "Version"
 #: main/features/admin/cases/list/caseVisuDirective.html:2
 #: main/features/admin/cases/list/caseVisuDirective.html:3
 msgid "View case design"
-msgstr "Vue graphique du cas"
+msgstr "Voir la modélisation du cas"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:143
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:80
@@ -1303,7 +1303,7 @@ msgid "View process"
 msgstr "Voir le processus"
 
 msgid "View process design"
-msgstr "Vue graphique du processus"
+msgstr "Voir la modélisation du processus"
 
 msgid "Wait ..."
 msgstr "Patientez ..."
