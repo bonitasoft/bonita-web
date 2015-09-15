@@ -74,8 +74,7 @@ public class PageServlet extends HttpServlet {
             //Support relative calls to the REST API from the forms using ../API/
             final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
             request.getRequestDispatcher(apiPath).forward(request, response);
-        }
-        if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
+        } else if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
             //BS-14188 : as theme are only currently managed in living app, we cannot currently serve
             // theme request from Forms. But, it shouldn't produce any 400 request error either
             // thus, we return 200
