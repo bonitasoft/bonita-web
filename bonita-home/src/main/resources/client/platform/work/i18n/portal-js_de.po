@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-09-11 02:49-0400\n"
+"PO-Revision-Date: 2015-09-14 03:21-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: de\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /7.1.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
@@ -289,7 +289,7 @@ msgstr "Spalten"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr "Spalten-Auswahl"
+msgstr "Columns selection"
 
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Fehler bei der Kompilierung. Stellen Sie sicher, dass die Index.groovy-Klasse die PageController-Schnittstelle implementiert."
@@ -597,7 +597,7 @@ msgstr "Internal server error."
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Elemente pro Seite"
+msgstr "Items per page"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"

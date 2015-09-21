@@ -21,22 +21,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class SimpleBusinessDataReferenceClient extends BusinessDataReferenceClient {
 
+    /**
+     * UID
+     */
+    private static final long serialVersionUID = 4377973199157064562L;
+
     private Long storageId;
 
     @JsonProperty("storageId_string")
     private String storageIdAsString;
 
-    public SimpleBusinessDataReferenceClient(String name, String type, String link, Long storageId) {
+    public SimpleBusinessDataReferenceClient(final String name, final String type, final String link, final Long storageId) {
         super(name, type, link);
         this.storageId = storageId;
-        this.storageIdAsString = storageId.toString();
+        if (storageId != null) {
+            storageIdAsString = storageId.toString();
+        }
     }
 
     public Long getStorageId() {
         return storageId;
     }
 
-    public void setStorageId(Long storageId) {
+    public void setStorageId(final Long storageId) {
         this.storageId = storageId;
     }
 
@@ -44,7 +51,7 @@ public class SimpleBusinessDataReferenceClient extends BusinessDataReferenceClie
         return storageIdAsString;
     }
 
-    public void setStorageIdAsString(String storageIdAsString) {
+    public void setStorageIdAsString(final String storageIdAsString) {
         this.storageIdAsString = storageIdAsString;
     }
 }
