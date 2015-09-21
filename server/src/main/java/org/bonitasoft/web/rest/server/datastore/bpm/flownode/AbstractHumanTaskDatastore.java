@@ -90,6 +90,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_TEAM_MANAGER_ID, HumanTaskInstanceSearchDescriptor.TEAM_MANAGER_ID);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
+        addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_NAME, HumanTaskInstanceSearchDescriptor.NAME);
 
         return builder;
     }
