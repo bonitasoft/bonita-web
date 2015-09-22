@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-09-14 03:22-0400\n"
+"PO-Revision-Date: 2015-09-16 03:32-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: it\n"
-"X-Crowdin-File: /7.1.x/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "Errore di struttura del file Zip. Controllare che lo. zip contiene un page.properties ben formattato e un index.html o un Index.groovy. Per ulteriori informazioni, vedere la documentazione o la pagina di esempio readme (disponibile nell'elenco delle pagine personalizzate)"
@@ -406,7 +406,7 @@ msgstr "Creazione del diagramma del processo in corso..."
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:4
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-actionBar.html:4
 msgid "Edit"
-msgstr "modifica"
+msgstr "Modifica"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:7
 msgid "Edit menu"
@@ -441,7 +441,7 @@ msgid "Enter user"
 msgstr "Immettere l'utente"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "I mapping delle entità devono essere risolti prima di attivare il processo."
+msgstr "I mapping delle entità devono essere risolte prima di attivare il processo."
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:5
 msgid "Error"
@@ -995,7 +995,7 @@ msgstr "Visualizza"
 
 #: main/features/admin/processVisu/visuShowKey.html:2
 msgid "Show key"
-msgstr "Visualizza la legenda"
+msgstr "Vedere la legenda"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:24
 msgid "Sort by URL"
@@ -1484,7 +1484,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} su {{getEndIndexOfPage()}} di {{getTotalProcesses()}}"
 
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "{{nbErrors}} errori sulla mappatura aggiornamenti"
