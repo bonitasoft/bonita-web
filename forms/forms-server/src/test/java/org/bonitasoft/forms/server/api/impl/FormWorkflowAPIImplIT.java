@@ -148,7 +148,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetTaskFieldValue() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -170,7 +170,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testExecuteActionsAndTerminate() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -190,7 +190,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         formWorkflowApi.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -208,7 +208,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
     @Test
     public void testExecuteActionsAndTerminateWithExternalDocument() throws Exception {
         final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -229,7 +229,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -247,7 +247,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
     @Test
     public void testExecuteActionsAndTerminateWithInternalDocument() throws Exception {
         final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -288,7 +288,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -316,7 +316,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
     @Test
     public void testExecuteActionsAndTerminateWithEmptyDocument() throws Exception {
         final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -350,7 +350,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -377,7 +377,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
     @Test
     public void testExecuteActionsAndTerminateWithAPIAccessor() throws Exception {
         final IFormWorkflowAPI api = FormAPIFactory.getFormWorkflowAPI();
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -403,7 +403,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         api.executeActionsAndTerminate(getSession(), getSession().getUserId(), humanTaskInstance.getId(), fieldValues, formActions, Locale.ENGLISH,
                 "submitButtonId",
                 new HashMap<String, Serializable>());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -435,7 +435,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetRelatedProcessesNextTask() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -447,7 +447,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
         Assert.assertNotNull(humanTaskInstance);
         processAPI.assignUserTask(humanTaskInstance.getId(), getSession().getUserId());
         processAPI.executeFlowNode(humanTaskInstance.getId());
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -464,7 +464,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetRelatedProcessesNextTaskAfterInstantiation() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -483,7 +483,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetAnyTodoListTaskForProcessDefinition() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -504,7 +504,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetAnyTodoListTaskForProcessInstance() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -575,7 +575,7 @@ public class FormWorkflowAPIImplIT extends FormsTestCase {
 
     @Test
     public void testGetActivityAttributesActor() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
