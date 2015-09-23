@@ -65,6 +65,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -326,7 +327,7 @@ public class FormPagesViewController {
                     }
                 });
                 theRequestBuilder.send();
-            } catch (final Exception e) {
+            } catch (final RequestException e) {
                 GWT.log("Error while trying to query the form layout :" + e.getMessage());
             }
 
