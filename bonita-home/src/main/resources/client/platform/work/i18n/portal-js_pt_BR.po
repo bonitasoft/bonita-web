@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-05-04 04:53-0400\n"
+"PO-Revision-Date: 2015-09-28 04:51-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -23,7 +23,7 @@ msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination
 msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
 
 msgid "{}-{} of {}"
-msgstr "{}-{} of {}"
+msgstr "{}-{} de {}"
 
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "O caso será permanentemente excluído e não será armazenado nos arquivos."
@@ -68,7 +68,7 @@ msgid "items per page"
 msgstr "itens por página"
 
 msgid "View case details"
-msgstr "View case details"
+msgstr "Ver detalhes do casos"
 
 msgid "columns selection"
 msgstr "seleção de colunas"
@@ -174,7 +174,7 @@ msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcess
 msgstr "{{getStartIndexOfPage()}} a {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
 
 msgid "Disabled, no new case can be started"
 msgstr "Desativado, nenhum novo caso pode ser iniciado"
@@ -273,7 +273,7 @@ msgid "Columns selection"
 msgstr "Seleção de colunas"
 
 msgid "Table settings"
-msgstr "Table settings"
+msgstr "Parâmetros da tabela"
 
 msgid "Hide"
 msgstr "Ocultar"
