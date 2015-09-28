@@ -322,7 +322,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         long activityInstanceId = waitForPendingTask();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -690,7 +690,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
     }
 
     protected void terminateProcessInstance(final long processInstanceId) throws Exception, UpdateException, FlowNodeExecutionException {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 2000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -700,7 +700,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         long activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 2000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -710,7 +710,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         activityInstanceId = processAPI.getPendingHumanTaskInstances(getSession().getUserId(), 0, 1, ActivityInstanceCriterion.NAME_ASC).get(0).getId();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
-        Assert.assertTrue("no archived process isnatnce was found", new WaitUntil(50, 2000) {
+        Assert.assertTrue("no archived process isnatnce was found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -722,7 +722,7 @@ public class FormServiceProviderImplIT extends FormsTestCase {
     }
 
     protected long waitForPendingTask() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 2000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {

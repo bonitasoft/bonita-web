@@ -164,7 +164,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
     @Test
     public void testEvaluateExpressionOnActivityDataWithNoInitialValue() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -280,7 +280,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
     @Test
     public void testEvaluateExpressionOnInstanceWithInitialValues() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -298,7 +298,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         dependencies.add(new Expression("application", "application", ExpressionType.TYPE_VARIABLE.name(), String.class.getName(), null, null));
         final Expression expression = new Expression(null, "application", ExpressionType.TYPE_READ_ONLY_SCRIPT.name(), String.class.getName(), "GROOVY",
                 dependencies);
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -328,7 +328,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
         processAPI.updateProcessDataInstance("application", processInstance.getId(), "Excel");
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -340,7 +340,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
         activityInstanceId = humanTaskInstance.getId();
         processAPI.assignUserTask(activityInstanceId, getSession().getUserId());
         processAPI.executeFlowNode(activityInstanceId);
-        Assert.assertTrue("Process instance still not archived", new WaitUntil(50, 1000) {
+        Assert.assertTrue("Process instance still not archived", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
@@ -365,7 +365,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
 
     @Test
     public void testEvaluateExpressionOnInstanceWithCurrentValues() throws Exception {
-        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending user task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
