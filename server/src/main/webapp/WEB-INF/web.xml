@@ -302,6 +302,10 @@
             <param-name>ReturnOriginalFilename</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>CheckUploadedFileSize</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>processUploadServlet</servlet-name>
