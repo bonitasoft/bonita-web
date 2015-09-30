@@ -626,9 +626,6 @@
                 </property>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <modules>
-                <module>custom-pages</module>
-            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -687,9 +684,6 @@
                 <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
                 <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
-            <modules>
-                <module>custom-pages</module>
-            </modules>
 
             <build>
                 <plugins>
