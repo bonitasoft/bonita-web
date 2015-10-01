@@ -17,6 +17,7 @@ package org.bonitasoft.console.common.server.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
 
-    private String uploadDirectoryPath = null;
+    protected String uploadDirectoryPath = null;
 
     public static final String RESPONSE_SEPARATOR = "::";
 
@@ -60,6 +61,8 @@ public abstract class FileUploadServlet extends HttpServlet {
     protected static final String RETURN_FULL_SERVER_PATH_PARAM = "ReturnFullPath";
 
     protected static final String RETURN_ORIGINAL_FILENAME_PARAM = "ReturnOriginalFilename";
+
+    protected static final String CHECK_UPLOADED_FILE_SIZE = "CheckUploadedFileSize";
 
     protected static final String RESPONSE_CONTENT_TYPE_PARAM = "ContentType";
 
@@ -77,6 +80,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected boolean alsoReturnOriginalFilename = false;
 
+    protected boolean checkUploadedFileSize = false;
+
     protected String responseContentType = TEXT_CONTENT_TYPE;
 
     @Override
@@ -86,18 +91,13 @@ public abstract class FileUploadServlet extends HttpServlet {
         if (supportedExtensionsParam != null) {
             supportedExtensionsList = supportedExtensionsParam.split(SUPPORTED_EXTENSIONS_SEPARATOR);
         }
-        final String alsoReturnOriginalFilenameParam = getInitParameter(RETURN_ORIGINAL_FILENAME_PARAM);
-        if (alsoReturnOriginalFilenameParam != null) {
-            alsoReturnOriginalFilename = Boolean.parseBoolean(alsoReturnOriginalFilenameParam);
-        }
-        final String returnFullPathInResponseParam = getInitParameter(RETURN_FULL_SERVER_PATH_PARAM);
-        if (returnFullPathInResponseParam != null) {
-            returnFullPathInResponse = Boolean.parseBoolean(returnFullPathInResponseParam);
-        }
+        alsoReturnOriginalFilename = Boolean.parseBoolean(getInitParameter(RETURN_ORIGINAL_FILENAME_PARAM));
+        returnFullPathInResponse = Boolean.parseBoolean(getInitParameter(RETURN_FULL_SERVER_PATH_PARAM));
         final String responseContentTypeParam = getInitParameter(RESPONSE_CONTENT_TYPE_PARAM);
         if (responseContentTypeParam != null) {
             responseContentType = responseContentTypeParam;
         }
+        checkUploadedFileSize = Boolean.parseBoolean(getInitParameter(CHECK_UPLOADED_FILE_SIZE));
     }
 
     protected abstract void defineUploadDirectoryPath(final HttpServletRequest request);
@@ -117,6 +117,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         defineUploadDirectoryPath(request);
         response.setContentType("text/plain;charset=UTF-8");
+        PrintWriter responsePW = null;
         try {
             if (!ServletFileUpload.isMultipartContent(request)) {
                 return;
@@ -128,10 +129,10 @@ public abstract class FileUploadServlet extends HttpServlet {
                 targetDirectory.mkdirs();
             }
 
-            final PrintWriter responsePW = response.getWriter();
+            responsePW = response.getWriter();
 
             final FileItemFactory fileItemFactory = new DiskFileItemFactory();
-            final ServletFileUpload serviceFileUpload = new ServletFileUpload(fileItemFactory);
+            final ServletFileUpload serviceFileUpload = createServletFileUpload(fileItemFactory);
             final List<FileItem> items = serviceFileUpload.parseRequest(request);
 
             for (final FileItem item : items) {
@@ -141,7 +142,9 @@ public abstract class FileUploadServlet extends HttpServlet {
 
                 final String fileName = item.getName();
 
-                checkUploadSize(request, item);
+                if (checkUploadedFileSize) {
+                    checkUploadSize(request, item);
+                }
 
                 // Check if extension is allowed
                 if (!isSupportedExtention(fileName)) {
@@ -171,6 +174,15 @@ public abstract class FileUploadServlet extends HttpServlet {
                 responsePW.print(responseString);
                 responsePW.flush();
             }
+        } catch (final FileTooBigException e) {
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "File is Too Big", e);
+            }
+            response.setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
+            if (JSON_CONTENT_TYPE.equals(responseContentType)) {
+                responsePW.print("{\"type\":\"error\", \"message\": \"" + e.getFileName() + " is too big, limit is set to " + e.getMaxSize() + "Mb\"}");
+                responsePW.flush();
+            }
         } catch (final Exception e) {
             final String theErrorMessage = "Exception while uploading file.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -178,6 +190,14 @@ public abstract class FileUploadServlet extends HttpServlet {
             }
             throw new ServletException(theErrorMessage, e);
         }
+    }
+
+    /**
+     * @param fileItemFactory
+     * @return
+     */
+    protected ServletFileUpload createServletFileUpload(final FileItemFactory fileItemFactory) {
+        return new ServletFileUpload(fileItemFactory);
     }
 
 
