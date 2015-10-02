@@ -63,7 +63,7 @@ public class APIArchivedActivityIT extends AbstractConsoleTest {
      * Wait the process contain PendingHumanTaskInstance
      */
     private void waitPendingHumanTask() throws Exception {
-        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 1000) {
+        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
