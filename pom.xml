@@ -607,6 +607,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
                     <excludes>
                         <!--the following are failsafe conventions -->
                         <exclude>**/*IT.java</exclude>
@@ -625,9 +626,6 @@
                 </property>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <modules>
-                <module>custom-pages</module>
-            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -686,9 +684,6 @@
                 <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
                 <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
-            <modules>
-                <module>custom-pages</module>
-            </modules>
 
             <build>
                 <plugins>
@@ -732,7 +727,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <argLine>${jacoco.agent.ut.arg}</argLine>
+                            <argLine>-Dfile.encoding=UTF-8 ${jacoco.agent.ut.arg}</argLine>
                             <properties>
                                 <property>
                                     <name>listener</name>
