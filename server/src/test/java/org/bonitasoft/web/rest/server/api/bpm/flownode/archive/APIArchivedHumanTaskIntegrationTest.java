@@ -98,7 +98,7 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
 
-        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 2000) {
+        Assert.assertTrue("no pending task instances are found", new WaitUntil(50, 3000) {
 
             @Override
             protected boolean check() throws Exception {
