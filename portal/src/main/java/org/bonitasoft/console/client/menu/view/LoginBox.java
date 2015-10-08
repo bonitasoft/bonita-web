@@ -158,7 +158,7 @@ public class LoginBox extends RawView {
 
     protected void updateProfileMenu(final ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
         if (!profiles.isEmpty()) {
-            ensureProfileId(profiles.get(0));
+            ensureProfileId(profiles);
             profileMenuItem.addItems(profiles);
             for (final ProfileItem profile : profiles) {
                 if (profile.getId().toString().equals(getProfileIdFromURL())) {
@@ -180,18 +180,18 @@ public class LoginBox extends RawView {
         new APICaller(ProfileDefinition.get()).search(0, 100, null, null, filter, callback);
     }
 
-    protected void ensureProfileId(final ProfileItem profile) {
+    protected void ensureProfileId(final List<ProfileItem> profiles) {
         if (getProfileIdFromURL() == null) {
-            String profileId = getProfileIdFromStorage();
+            String profileId = getProfileIdFromStorage(profiles);
             if (profileId == null) {
-                profileId = profile.getId().toString();
+                profileId = profiles.get(0).getId().toString();
                 setProfileIdToStorage(profileId);
             }
             setProfileIdToURL(profileId);
         }
     }
 
-    protected void setProfileIdToURL(String profileId) {
+    protected void setProfileIdToURL(final String profileId) {
         ClientApplicationURL.setProfileId(profileId);
     }
 
@@ -203,8 +203,14 @@ public class LoginBox extends RawView {
         ParameterStorageWithSessionStorage.setParameter(UrlOption.PROFILE, profileId);
     }
 
-    protected String getProfileIdFromStorage() {
-        return ParameterStorageWithSessionStorage.getParameter(UrlOption.PROFILE);
+    protected String getProfileIdFromStorage(final List<ProfileItem> authorizedProfiles) {
+        final String profileIdFromStorage = ParameterStorageWithSessionStorage.getParameter(UrlOption.PROFILE);
+        for (final ProfileItem profileItem : authorizedProfiles) {
+            if (profileIdFromStorage.equals(profileItem.getId().toString())) {
+                return profileIdFromStorage;
+            }
+        }
+        return null;
     }
 
     private void loadNavigationMenu() {
