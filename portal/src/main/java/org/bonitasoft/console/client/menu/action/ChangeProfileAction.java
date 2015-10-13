@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,39 +22,42 @@ import org.bonitasoft.console.client.menu.view.navigation.MenuListCreator;
 import org.bonitasoft.console.client.menu.view.navigation.NavigationMenuView;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.ParameterStorageWithSessionStorage;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public final class ChangeProfileAction extends Action {
 
     private final String profileId;
 
-    private MenuFolder menu;
+    private final MenuFolder menu;
 
-    private IItem profileItem;
+    private final IItem profileItem;
 
-    private MenuListCreator menuListCreator;
+    private final MenuListCreator menuListCreator;
 
-    public ChangeProfileAction(final IItem profileItem, final MenuFolder menu, MenuListCreator menuListCreator) {
+    public ChangeProfileAction(final IItem profileItem, final MenuFolder menu, final MenuListCreator menuListCreator) {
         this.profileItem = profileItem;
         this.menuListCreator = menuListCreator;
-        this.profileId = profileItem.getId().toString();
+        profileId = profileItem.getId().toString();
         this.menu = menu;
     }
 
     @Override
     public void execute() {
-        if (this.menu != null) {
-            this.menu.setLabel(_(this.profileItem.getAttributeValue(ProfileItem.ATTRIBUTE_NAME)));
+        if (menu != null) {
+            menu.setLabel(_(profileItem.getAttributeValue(ProfileItem.ATTRIBUTE_NAME)));
         }
 
-        ClientApplicationURL.setProfileId(this.profileId);
+        ParameterStorageWithSessionStorage.setParameter(UrlOption.PROFILE, profileId);
+        ClientApplicationURL.setProfileId(profileId);
         // to use the default Token
         ClientApplicationURL.setPageToken(null, false);
         showMenuView();

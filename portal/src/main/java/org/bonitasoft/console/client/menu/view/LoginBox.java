@@ -32,6 +32,7 @@ import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.AvailableTokens;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.ParameterStorageWithSessionStorage;
 import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.UrlBuilder;
@@ -137,14 +138,14 @@ public class LoginBox extends RawView {
         handler.check();
     }
 
-    private void addCurrentUserProfileMenu() {
+    protected void addCurrentUserProfileMenu() {
         userNameMenu.addFiller(new CurrentUserAvatarFiller());
         final ProfileMenuItem profileMenuItem = new ProfileMenuItem(getMenuListCreator());
         addBody(new Menu(profileMenuItem));
         getProfiles(Session.getUserId(), fillProfileMenuOnCallback(profileMenuItem));
     }
 
-    private APICallback fillProfileMenuOnCallback(final ProfileMenuItem profileMenuItem) {
+    protected APICallback fillProfileMenuOnCallback(final ProfileMenuItem profileMenuItem) {
         return new APICallback() {
 
             @Override
@@ -155,12 +156,12 @@ public class LoginBox extends RawView {
         };
     }
 
-    private void updateProfileMenu(final ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
+    protected void updateProfileMenu(final ProfileMenuItem profileMenuItem, final List<ProfileItem> profiles) {
         if (!profiles.isEmpty()) {
-            ensureProfileId(profiles.get(0));
+            ensureProfileId(profiles);
             profileMenuItem.addItems(profiles);
             for (final ProfileItem profile : profiles) {
-                if (profile.getId().toString().equals(ClientApplicationURL.getProfileId())) {
+                if (profile.getId().toString().equals(getProfileIdFromURL())) {
                     loadNavigationMenu();
                     return;
                 }
@@ -179,10 +180,37 @@ public class LoginBox extends RawView {
         new APICaller(ProfileDefinition.get()).search(0, 100, null, null, filter, callback);
     }
 
-    private void ensureProfileId(final ProfileItem profile) {
-        if (ClientApplicationURL.getProfileId() == null) {
-            ClientApplicationURL.setProfileId(profile.getId().toString());
+    protected void ensureProfileId(final List<ProfileItem> profiles) {
+        if (getProfileIdFromURL() == null) {
+            String profileId = getProfileIdFromStorage(profiles);
+            if (profileId == null) {
+                profileId = profiles.get(0).getId().toString();
+                setProfileIdToStorage(profileId);
+            }
+            setProfileIdToURL(profileId);
         }
+    }
+
+    protected void setProfileIdToURL(final String profileId) {
+        ClientApplicationURL.setProfileId(profileId);
+    }
+
+    protected String getProfileIdFromURL() {
+        return ClientApplicationURL.getProfileId();
+    }
+
+    protected void setProfileIdToStorage(final String profileId) {
+        ParameterStorageWithSessionStorage.setParameter(UrlOption.PROFILE, profileId);
+    }
+
+    protected String getProfileIdFromStorage(final List<ProfileItem> authorizedProfiles) {
+        final String profileIdFromStorage = ParameterStorageWithSessionStorage.getParameter(UrlOption.PROFILE);
+        for (final ProfileItem profileItem : authorizedProfiles) {
+            if (profileIdFromStorage.equals(profileItem.getId().toString())) {
+                return profileIdFromStorage;
+            }
+        }
+        return null;
     }
 
     private void loadNavigationMenu() {
