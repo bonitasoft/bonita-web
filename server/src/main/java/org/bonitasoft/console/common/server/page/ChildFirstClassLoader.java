@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.bonitasoft.console.common.server.utils.BDMClientDependenciesResolver;
 
 /**
  * @author Elias Ricken de Medeiros
@@ -44,10 +45,16 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
 
     private final CustomPageDependenciesResolver customPageDependenciesResolver;
 
+    private final String version;
 
-    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver, ClassLoader parent) {
+    private final BDMClientDependenciesResolver bdmDependenciesResolver;
+
+    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver,
+            BDMClientDependenciesResolver bdmDependenciesResolver, ClassLoader parent) {
         super(pageName, new URL[] {}, parent);
         this.customPageDependenciesResolver = customPageDependenciesResolver;
+        this.bdmDependenciesResolver = bdmDependenciesResolver;
+        this.version = bdmDependenciesResolver.getBusinessDataModelVersion();
     }
 
     public void addCustomPageResources() {

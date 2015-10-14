@@ -33,6 +33,7 @@ import org.bonitasoft.console.common.server.preferences.properties.ConsoleProper
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
+import org.bonitasoft.console.common.server.utils.BDMClientDependenciesResolver;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -175,8 +176,11 @@ public class CustomPageService {
             throws CompilationFailedException, IOException {
         final String pageName = pageResourceProvider.getPageName();
         GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
-        if (pageClassLoader == null || getConsoleProperties(apiSession).isPageInDebugMode()) {
-            pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName, new CustomPageDependenciesResolver(pageResourceProvider, getWebBonitaConstantsUtils(apiSession))));
+        if (pageClassLoader == null || PropertiesFactory.getConsoleProperties(apiSession.getTenantId()).isPageInDebugMode()) {
+            final CustomPageDependenciesResolver customPageDependenciesResolver = new CustomPageDependenciesResolver(pageResourceProvider,
+                    getWebBonitaConstantsUtils(apiSession));
+            pageClassLoader = new GroovyClassLoader(
+                    getParentClassloader(pageName, customPageDependenciesResolver, new BDMClientDependenciesResolver(apiSession)));
             pageClassLoader.addClasspath(pageResourceProvider.getPageDirectory().getPath());
             PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
         }
@@ -189,6 +193,12 @@ public class CustomPageService {
 
     protected WebBonitaConstantsUtils getWebBonitaConstantsUtils(final APISession apiSession) {
         return WebBonitaConstantsUtils.getInstance(apiSession.getTenantId());
+    }
+
+    protected ClassLoader getParentClassloader(final String pageName, final CustomPageDependenciesResolver customPageDependenciesResolver, final BDMClientDependenciesResolver bdmClientDependenciesResolver) throws IOException {
+        return new ChildFirstClassLoader(pageName, customPageDependenciesResolver, bdmClientDependenciesResolver,
+                Thread.currentThread().getContextClassLoader());
+
     }
 
     protected ClassLoader getParentClassloader(final String pageName, final CustomPageDependenciesResolver customPageDependenciesResolver) throws IOException {
