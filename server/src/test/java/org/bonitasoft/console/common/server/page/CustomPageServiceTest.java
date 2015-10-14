@@ -17,10 +17,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import groovy.lang.GroovyClassLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
+import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -44,8 +45,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import groovy.lang.GroovyClassLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -53,8 +55,7 @@ public class CustomPageServiceTest {
     public static final String PAGE_NO_API_EXTENSION_PROPERTIES = "pageNoApiExtension.properties";
     public static final String PAGE_PROPERTIES = "page.properties";
 
-    @Spy
-    private final CustomPageService customPageService = spy(new CustomPageService());
+    private CustomPageService customPageService;
 
     @Mock
     CompoundPermissionsMapping compoundPermissionsMapping;
@@ -82,10 +83,15 @@ public class CustomPageServiceTest {
 
     @Mock
     private Page mockedPage;
+    @Mock
+    private ConsoleProperties consoleProperties;
 
     @Before
-    public void before() {
+    public void before() throws IOException {
+        customPageService = spy(new CustomPageService());
+        CustomPageService.clearCachedClassloaders();
         when(apiSession.getTenantId()).thenReturn(1L);
+        doReturn(consoleProperties).when(customPageService).getConsoleProperties(apiSession);
     }
 
     @Test
@@ -367,6 +373,7 @@ public class CustomPageServiceTest {
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page2"));
+        when(consoleProperties.isPageInDebugMode()).thenReturn(true);
 
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
 
@@ -452,5 +459,16 @@ public class CustomPageServiceTest {
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
+
+    @Test
+    public void should_add_page_root_folder_in_classpath() throws Exception {
+        final File pageDir = new File(getClass().getResource("/ARootPageFolder").getFile());
+        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
+        final GroovyClassLoader classloader = customPageService.buildPageClassloader(apiSession, pageResourceProvider);
+        assertThat(classloader.loadClass("AbstractIndex")).isNotNull();
+        assertThat(classloader.loadClass("Index")).isNotNull();
+        assertThat(classloader.loadClass("org.company.test.Util")).isNotNull();
+        assertThat(classloader.getResource("org/company/test/config.properties")).isNotNull();
+    }
 
 }
