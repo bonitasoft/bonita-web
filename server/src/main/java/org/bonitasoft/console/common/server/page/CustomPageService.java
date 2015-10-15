@@ -175,12 +175,26 @@ public class CustomPageService {
             throws CompilationFailedException, IOException {
         final String pageName = pageResourceProvider.getPageName();
         GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
-        if (pageClassLoader == null || getConsoleProperties(apiSession).isPageInDebugMode()) {
-            pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName, new CustomPageDependenciesResolver(pageResourceProvider, getWebBonitaConstantsUtils(apiSession))));
+        final BDMClientDependenciesResolver bdmDependenciesResolver = new BDMClientDependenciesResolver(apiSession);
+        if (pageClassLoader == null
+                || getConsoleProperties(apiSession).isPageInDebugMode()
+                || isOutdated(pageClassLoader,bdmDependenciesResolver)) {
+            pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
+                    new CustomPageDependenciesResolver(pageResourceProvider, getWebBonitaConstantsUtils(apiSession)),
+                    bdmDependenciesResolver));
             pageClassLoader.addClasspath(pageResourceProvider.getPageDirectory().getPath());
             PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
         }
         return pageClassLoader;
+    }
+
+    private boolean isOutdated(GroovyClassLoader pageClassLoader, BDMClientDependenciesResolver bdmDependenciesResolver) {
+        final ClassLoader parent = pageClassLoader.getParent();
+        if(!(parent instanceof VersionedClassloader)){
+            throw new IllegalStateException("Parent classloader should be versioned.");
+        }
+        final VersionedClassloader cachedClassloader = (VersionedClassloader) parent;
+        return !cachedClassloader.hasVersion(bdmDependenciesResolver.getBusinessDataModelVersion());
     }
 
     protected ConsoleProperties getConsoleProperties(final APISession apiSession) {
@@ -191,8 +205,10 @@ public class CustomPageService {
         return WebBonitaConstantsUtils.getInstance(apiSession.getTenantId());
     }
 
-    protected ClassLoader getParentClassloader(final String pageName, final CustomPageDependenciesResolver customPageDependenciesResolver) throws IOException {
-        final ChildFirstClassLoader classLoader = new ChildFirstClassLoader(pageName, customPageDependenciesResolver, Thread.currentThread().getContextClassLoader());
+    protected ClassLoader getParentClassloader(final String pageName,
+            final CustomPageDependenciesResolver customPageDependenciesResolver,
+            final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
+        final CustomPageChildFirstClassLoader classLoader = new CustomPageChildFirstClassLoader(pageName, customPageDependenciesResolver, bdmDependenciesResolver,Thread.currentThread().getContextClassLoader());
         classLoader.addCustomPageResources();
         return classLoader;
     }

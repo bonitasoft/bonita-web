@@ -1,11 +1,6 @@
 /**
-<<<<<<< Upstream, based on origin/CoreProduct
- * Copyright (C) 2015 BonitaSoft S.A.
- * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
-=======
  * Copyright (C) 2015 Bonitasoft S.A.
  * Bonitasoft, 32 rue Gustave Eiffel - 38000 Grenoble
->>>>>>> ab47426 Add tests
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
@@ -68,7 +63,7 @@ public class CustomPageDependenciesResolverTest {
         assertThat(dependenciesContent).containsKeys("resource.properties",
                 "bdm-client.jar",
                 "bdm-dao.jar",
-                "javassist-1.18.1-GA.jar",
+                "javassist-3.18.1-GA.jar",
                 "util.jar");
         assertThat(CustomPageDependenciesResolver.PAGES_LIB_TMPDIR).containsKey("myCustomPage");
         final File cachedTmpFoler = CustomPageDependenciesResolver.PAGES_LIB_TMPDIR.get("myCustomPage");

@@ -1,17 +1,16 @@
 /**
- * Copyright (C) 2014-2015 BonitaSoft S.A.
- * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2.0 of the License, or
- * (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+ * Copyright (C) 2011-2015 Bonitasoft S.A.
+ * Bonitasoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation
+ * version 2.1 of the License.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+ * Floor, Boston, MA 02110-1301, USA.
+ **/
 package org.bonitasoft.console.common.server.page;
 
 import static org.apache.commons.io.FileUtils.deleteQuietly;
@@ -23,33 +22,39 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.utils.BDMClientDependenciesResolver;
+
 
 /**
  * @author Elias Ricken de Medeiros
  * @author Charles Souillard
  * @author Baptiste Mesta
  * @author Matthieu Chaffotte
+ * @author Romain Bioteau
+ *         A Classloader adding given custom page resources and bdm resources in its classpath.
+ *         This classloader is versioned with a runtime bdm version and should be discard when bdm is updated
  */
-public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
+public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoader implements VersionedClassloader{
 
     protected Map<String, byte[]> nonJarResources = new HashMap<String, byte[]>();
 
     private boolean isActive = true;
 
-    private static final Logger LOGGER = Logger.getLogger(ChildFirstClassLoader.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CustomPageChildFirstClassLoader.class.getName());
 
     private final CustomPageDependenciesResolver customPageDependenciesResolver;
 
-    private final String version;
-
     private final BDMClientDependenciesResolver bdmDependenciesResolver;
 
-    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver, BDMClientDependenciesResolver bdmDependenciesResolver,
+    private final String version;
+
+    CustomPageChildFirstClassLoader(String pageName,
+            CustomPageDependenciesResolver customPageDependenciesResolver,
+            BDMClientDependenciesResolver bdmDependenciesResolver,
             ClassLoader parent) {
         super(pageName, new URL[] {}, parent);
         this.customPageDependenciesResolver = customPageDependenciesResolver;
@@ -58,9 +63,23 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
     }
 
     public void addCustomPageResources() {
+        addBDMDependencies();
+        addOtherDependencies();
+    }
+
+    private void addBDMDependencies() {
+        try {
+            addURLs(bdmDependenciesResolver.getBDMDependencies());
+        } catch (final IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to add BDM dependencies in ClassLoader", e);
+        }
+    }
+
+
+    private void addOtherDependencies() {
         final Map<String, byte[]> customPageDependencies = customPageDependenciesResolver.resolveCustomPageDependencies();
         for (final Map.Entry<String, byte[]> resource : customPageDependencies.entrySet()) {
-            if (resource.getKey().matches(".*\\.jar")) {
+            if (resource.getKey().matches(".*\\.jar") && !bdmDependenciesResolver.isABDMDependency(resource.getKey())) {
                 final byte[] data = resource.getValue();
                 try {
                     final File file = File.createTempFile(resource.getKey(), null, customPageDependenciesResolver.getTempFolder());
@@ -77,6 +96,7 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
             }
         }
     }
+
 
     @Override
     public InputStream getResourceAsStream(final String name) {
@@ -150,5 +170,15 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
     @Override
     public String toString() {
         return super.toString() + ", name=" + getName() + ", isActive: " + isActive + ", parent= " + getParent();
+    }
+
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
+    @Override
+    public boolean hasVersion(String version) {
+        return Objects.equals(getVersion(), version);
     }
 }

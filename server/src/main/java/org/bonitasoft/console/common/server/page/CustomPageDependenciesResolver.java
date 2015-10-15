@@ -41,10 +41,13 @@ public class CustomPageDependenciesResolver {
 
     private static final Logger LOGGER = Logger.getLogger(CustomPageDependenciesResolver.class.getName());
 
+
     private final PageResourceProvider pageResourceProvider;
     private File libTempFolder;
 
     private final WebBonitaConstantsUtils webBonitaConstantsUtils;
+
+
 
     public CustomPageDependenciesResolver(final PageResourceProvider pageResourceProvider,
             final WebBonitaConstantsUtils webBonitaConstantsUtils) {
@@ -108,4 +111,5 @@ public class CustomPageDependenciesResolver {
         }
         return libTempFolder;
     }
+
 }
