@@ -30,6 +30,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -132,7 +133,12 @@ public class TenantFileUploadServletTest {
         fileUploadServlet.doPost(request, response);
 
         verify(response).setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
-        verify(printer).print("{\"statusCode\":413,\"message\":\"uploadedFile.zip is too large, limit is set to 0Mb\",\"type\":\"EntityTooLarge\"}");
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(printer).print(captor.capture());
+        assertThat(captor.getValue())
+        .contains("\"statusCode\":413")
+        .contains("\"message\":\"uploadedFile.zip is too large, limit is set to 0Mb\"")
+        .contains("\"type\":\"EntityTooLarge\"");
         verify(printer).flush();
         verify(item).getSize();
     }
