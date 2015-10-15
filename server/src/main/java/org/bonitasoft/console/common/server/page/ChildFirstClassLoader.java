@@ -49,8 +49,8 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
 
     private final BDMClientDependenciesResolver bdmDependenciesResolver;
 
-    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver,
-            BDMClientDependenciesResolver bdmDependenciesResolver, ClassLoader parent) {
+    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver, BDMClientDependenciesResolver bdmDependenciesResolver,
+            ClassLoader parent) {
         super(pageName, new URL[] {}, parent);
         this.customPageDependenciesResolver = customPageDependenciesResolver;
         this.bdmDependenciesResolver = bdmDependenciesResolver;
