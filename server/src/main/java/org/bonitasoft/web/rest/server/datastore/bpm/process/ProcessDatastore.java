@@ -20,17 +20,29 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.page.CustomPageService;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
+import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
-import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
+import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
+import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.PageSearchDescriptor;
+import org.bonitasoft.engine.search.SearchOptionsBuilder;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
@@ -63,10 +75,14 @@ DatastoreHasSearch<ProcessItem>,
 DatastoreHasDelete
 {
 
+    private static final Logger logger = Logger.getLogger(ProcessDatastore.class.getName());
+
     /**
      * process file
      */
     private static final String FILE_UPLOAD = "fileupload";
+
+    private static final int DELETE_PAGES_BUNCH_SIZE = 100;
 
     public ProcessDatastore(final APISession engineSession) {
         super(engineSession);
@@ -168,8 +184,58 @@ DatastoreHasDelete
 
     @Override
     public void delete(final List<APIID> ids) {
+        for (final APIID id : ids) {
+            removeProcessPagesFromHome(id);
+        }
         final ProcessEngineClient engineClient = getProcessEngineClient();
         engineClient.deleteDisabledProcesses(APIID.toLongList(ids));
+    }
+
+    protected void removeProcessPagesFromHome(final APIID id) {
+        try {
+            int startIndex = 0;
+            int count = 0;
+            do {
+                final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(startIndex, DELETE_PAGES_BUNCH_SIZE);
+                searchOptionsBuilder.filter(PageSearchDescriptor.PROCESS_DEFINITION_ID, id.toLong());
+                final SearchResult<Page> result = getPageAPI().searchPages(searchOptionsBuilder.done());
+                if (count == 0) {
+                    count = (int) result.getCount();
+                }
+                startIndex = startIndex + result.getResult().size();
+                for (final Page page : result.getResult()) {
+                    final CustomPageService customPageService = getCustomPageService();
+                    customPageService.removeRestApiExtensionPermissions(getResourcesPermissionsMapping(),
+                            customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()), getEngineSession());
+                    customPageService.removePage(getEngineSession(), page.getName());
+                    getCompoundPermissionsMapping().removeProperty(page.getName());
+                }
+            } while (startIndex < count);
+        } catch (final Exception e) {
+            if (logger.isLoggable(Level.WARNING)) {
+                logger.log(Level.WARNING, "Error when deleting pages for process with ID " + id, e);
+            }
+        }
+    }
+
+    protected SimpleProperties getCompoundPermissionsMapping() {
+        return PropertiesFactory.getCompoundPermissionsMapping(getEngineSession().getTenantId());
+    }
+
+    protected ResourcesPermissionsMapping getResourcesPermissionsMapping() {
+        return PropertiesFactory.getResourcesPermissionsMapping(getEngineSession().getTenantId());
+    }
+
+    protected CustomPageService getCustomPageService() {
+        return new CustomPageService();
+    }
+
+    protected PageAPI getPageAPI() {
+        try {
+            return TenantAPIAccessor.getCustomPageAPI(getEngineSession());
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
     }
 
     @Override
