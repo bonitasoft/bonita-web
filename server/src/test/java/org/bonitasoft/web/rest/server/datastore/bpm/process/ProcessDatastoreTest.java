@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.PageAPI;
@@ -61,9 +60,6 @@ public class ProcessDatastoreTest extends APITestWithMock {
     private CompoundPermissionsMapping compoundPermissionsMapping;
 
     @Mock
-    private ResourcesPermissionsMapping resourcesPermissionsMapping;
-
-    @Mock
     private SearchResult<Page> searchResult;
 
     private final ProcessItem processItem = new ProcessItem();
@@ -76,7 +72,6 @@ public class ProcessDatastoreTest extends APITestWithMock {
         doReturn(customPageService).when(processDatastore).getCustomPageService();
         doReturn(pageAPI).when(processDatastore).getPageAPI();
         doReturn(compoundPermissionsMapping).when(processDatastore).getCompoundPermissionsMapping();
-        doReturn(resourcesPermissionsMapping).when(processDatastore).getResourcesPermissionsMapping();
         doReturn(searchResult).when(pageAPI).searchPages(any(SearchOptions.class));
     }
 

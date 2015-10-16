@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -204,10 +203,7 @@ DatastoreHasDelete
                 }
                 startIndex = startIndex + result.getResult().size();
                 for (final Page page : result.getResult()) {
-                    final CustomPageService customPageService = getCustomPageService();
-                    customPageService.removeRestApiExtensionPermissions(getResourcesPermissionsMapping(),
-                            customPageService.getPageResourceProvider(page, getEngineSession().getTenantId()), getEngineSession());
-                    customPageService.removePage(getEngineSession(), page.getName());
+                    getCustomPageService().removePage(getEngineSession(), page.getName());
                     getCompoundPermissionsMapping().removeProperty(page.getName());
                 }
             } while (startIndex < count);
@@ -220,10 +216,6 @@ DatastoreHasDelete
 
     protected SimpleProperties getCompoundPermissionsMapping() {
         return PropertiesFactory.getCompoundPermissionsMapping(getEngineSession().getTenantId());
-    }
-
-    protected ResourcesPermissionsMapping getResourcesPermissionsMapping() {
-        return PropertiesFactory.getResourcesPermissionsMapping(getEngineSession().getTenantId());
     }
 
     protected CustomPageService getCustomPageService() {
