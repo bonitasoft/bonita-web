@@ -90,7 +90,7 @@ public class CustomPageService {
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
-        return buildPageClassloader(apiSession, pageResourceProvider);
+        return buildPageClassloader(apiSession, pageResourceProvider.getPageName(), pageResourceProvider.getPageDirectory());
     }
 
     public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
@@ -126,22 +126,21 @@ public class CustomPageService {
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider, final String classFileName)
-            throws CompilationFailedException, IOException {
+    public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider,
+            final String classFileName)
+                    throws CompilationFailedException, IOException {
         final File pageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(), classFileName);
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public void verifyPageClass(final File tempPageDirectory) throws IOException, CompilationFailedException {
+    public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException, CompilationFailedException {
         final File pageControllerFile = getPageFile(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
-            final GroovyClassLoader pageClassLoader = new GroovyClassLoader();
-            final File customPageLibDirectory = getCustomPageLibDirectory(tempPageDirectory);
-            if (customPageLibDirectory.exists()) {
-                addLibsToClassPath(customPageLibDirectory, pageClassLoader);
-            }
-            pageClassLoader.addClasspath(tempPageDirectory.getPath());
+            final String classloaderName = String.valueOf(System.currentTimeMillis());
+            final GroovyClassLoader pageClassLoader = buildPageClassloader(session, classloaderName, tempPageDirectory);
             pageClassLoader.parseClass(pageControllerFile);
+            final GroovyClassLoader classLoader = PAGES_CLASSLOADERS.remove(classloaderName);
+            classLoader.close();
         }
     }
 
@@ -162,8 +161,10 @@ public class CustomPageService {
 
     private static void closeClassloader(final String pageName) throws IOException {
         final GroovyClassLoader classloader = PAGES_CLASSLOADERS.remove(pageName);
-        classloader.clearCache();
-        classloader.close();
+        if (classloader != null) {
+            classloader.clearCache();
+            classloader.close();
+        }
     }
 
     protected void retrievePageZipContent(final APISession apiSession, final String pageName) throws BonitaException, IOException {
@@ -171,18 +172,17 @@ public class CustomPageService {
         retrievePageZipContent(apiSession, pageResourceProvider);
     }
 
-    protected GroovyClassLoader buildPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
+    protected GroovyClassLoader buildPageClassloader(final APISession apiSession, final String pageName, final File pageDirectory)
             throws CompilationFailedException, IOException {
-        final String pageName = pageResourceProvider.getPageName();
         GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
         final BDMClientDependenciesResolver bdmDependenciesResolver = new BDMClientDependenciesResolver(apiSession);
         if (pageClassLoader == null
                 || getConsoleProperties(apiSession).isPageInDebugMode()
-                || isOutdated(pageClassLoader,bdmDependenciesResolver)) {
+                || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
             pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
-                    new CustomPageDependenciesResolver(pageResourceProvider, getWebBonitaConstantsUtils(apiSession)),
+                    new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
                     bdmDependenciesResolver));
-            pageClassLoader.addClasspath(pageResourceProvider.getPageDirectory().getPath());
+            pageClassLoader.addClasspath(pageDirectory.getPath());
             PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
         }
         return pageClassLoader;
@@ -190,7 +190,7 @@ public class CustomPageService {
 
     private boolean isOutdated(GroovyClassLoader pageClassLoader, BDMClientDependenciesResolver bdmDependenciesResolver) {
         final ClassLoader parent = pageClassLoader.getParent();
-        if(!(parent instanceof VersionedClassloader)){
+        if (!(parent instanceof VersionedClassloader)) {
             throw new IllegalStateException("Parent classloader should be versioned.");
         }
         final VersionedClassloader cachedClassloader = (VersionedClassloader) parent;
@@ -208,7 +208,8 @@ public class CustomPageService {
     protected ClassLoader getParentClassloader(final String pageName,
             final CustomPageDependenciesResolver customPageDependenciesResolver,
             final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
-        final CustomPageChildFirstClassLoader classLoader = new CustomPageChildFirstClassLoader(pageName, customPageDependenciesResolver, bdmDependenciesResolver,Thread.currentThread().getContextClassLoader());
+        final CustomPageChildFirstClassLoader classLoader = new CustomPageChildFirstClassLoader(pageName, customPageDependenciesResolver,
+                bdmDependenciesResolver, Thread.currentThread().getContextClassLoader());
         classLoader.addCustomPageResources();
         return classLoader;
     }
@@ -274,8 +275,8 @@ public class CustomPageService {
 
     public Properties getPageProperties(final APISession apiSession, final byte[] zipContent, final boolean checkIfItAlreadyExists,
             final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
-    InvalidPageZipInconsistentException,
-    InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
+                    InvalidPageZipInconsistentException,
+                    InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
         final PageAPI pageAPI = getPageAPI(apiSession);
         Properties properties;
         if (processDefinitionId == null) {

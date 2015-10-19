@@ -35,8 +35,6 @@ public class CustomPageDependenciesResolverTest {
 
     @Mock
     private WebBonitaConstantsUtils webBonitaConstantsUtils;
-    @Mock
-    private PageResourceProvider pageResourceProvider;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -45,7 +43,7 @@ public class CustomPageDependenciesResolverTest {
 
     @Test
     public void should_throw_an_IllegalStateException_when_accessing_tmp_folder_before_resolving_libraries() throws Exception {
-        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver();
+        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver(null);
 
         expectedException.expect(IllegalStateException.class);
 
@@ -54,9 +52,7 @@ public class CustomPageDependenciesResolverTest {
 
     @Test
     public void should_resolve_dependencies_content() throws Exception {
-        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver();
-        when(pageResourceProvider.getPageDirectory()).thenReturn(testPageFolder());
-        when(pageResourceProvider.getPageName()).thenReturn("myCustomPage");
+        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver(testPageFolder());
 
         final Map<String, byte[]> dependenciesContent = resolver.resolveCustomPageDependencies();
 
@@ -73,9 +69,7 @@ public class CustomPageDependenciesResolverTest {
 
     @Test
     public void should_delete_temporary_lib_foler() throws Exception {
-        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver();
-        when(pageResourceProvider.getPageDirectory()).thenReturn(testPageFolder());
-        when(pageResourceProvider.getPageName()).thenReturn("myCustomPage");
+        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver(testPageFolder());
         resolver.resolveCustomPageDependencies();
 
         assertThat(CustomPageDependenciesResolver.PAGES_LIB_TMPDIR).containsKey("myCustomPage");
@@ -89,8 +83,7 @@ public class CustomPageDependenciesResolverTest {
 
     @Test
     public void should_resolve_dependencies_return_an_empty_map_if_no_lib_folder_is_found_in_custom_page() throws Exception {
-        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver();
-        when(pageResourceProvider.getPageDirectory()).thenReturn(null);
+        final CustomPageDependenciesResolver resolver = newCustomPageDependenciesResolver(null);
 
         final Map<String, byte[]> dependenciesContent = resolver.resolveCustomPageDependencies();
 
@@ -101,9 +94,9 @@ public class CustomPageDependenciesResolverTest {
         return new File(CustomPageDependenciesResolverTest.class.getResource("/ARootPageFolder").getFile());
     }
 
-    private CustomPageDependenciesResolver newCustomPageDependenciesResolver() throws IOException {
+    private CustomPageDependenciesResolver newCustomPageDependenciesResolver(File folder) throws IOException {
         when(webBonitaConstantsUtils.getTempFolder()).thenReturn(tmpFolder.newFolder());
-        return new CustomPageDependenciesResolver(pageResourceProvider,webBonitaConstantsUtils);
+        return new CustomPageDependenciesResolver("myCustomPage", folder, webBonitaConstantsUtils);
     }
 
 }

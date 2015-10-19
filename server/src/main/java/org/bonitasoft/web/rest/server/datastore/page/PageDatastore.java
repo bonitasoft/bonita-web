@@ -132,7 +132,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                     resourcesPermissionsMapping, false);
             final Page page = createEnginePage(pageItem, zipFile);
             final PageItem addedPage = convertEngineToConsoleItem(page);
-            savePageInBonitahome(addedPage.getUrlToken(), unzipPageTempFolder);
+            savePageInBonitahome(addedPage.getUrlToken(), unzipPageTempFolder, engineSession);
             customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
                     customPageService.getPageResourceProvider(page, tenantId), engineSession);
             customPageService.addPermissionsToCompoundPermissions(addedPage.getUrlToken(), customPagePermissions, compoundPermissionsMapping,
@@ -241,8 +241,8 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         return pageCreator;
     }
 
-    protected void savePageInBonitahome(final String urlToken, final File unzipPageTempFolder) throws IOException {
-        customPageService.verifyPageClass(unzipPageTempFolder);
+    protected void savePageInBonitahome(final String urlToken, final File unzipPageTempFolder, APISession session) throws IOException {
+        customPageService.verifyPageClass(unzipPageTempFolder, session);
         final File pagesFolder = new File(constants.getPagesFolder(), urlToken);
         FileUtils.copyDirectory(unzipPageTempFolder, pagesFolder);
         deleteTempDirectory(unzipPageTempFolder);
@@ -369,7 +369,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                     updatePageContent(id, zipFile, oldURLToken);
                     final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
                     updatedPage = convertEngineToConsoleItem(page);
-                    savePageInBonitahome(updatedPage.getUrlToken(), unzipPageTempFolder);
+                    savePageInBonitahome(updatedPage.getUrlToken(), unzipPageTempFolder, engineSession);
                     if (oldURLToken != updatedPage.getUrlToken()) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
                     }

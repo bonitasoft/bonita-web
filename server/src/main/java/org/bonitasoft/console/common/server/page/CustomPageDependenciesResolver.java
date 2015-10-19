@@ -42,22 +42,24 @@ public class CustomPageDependenciesResolver {
     private static final Logger LOGGER = Logger.getLogger(CustomPageDependenciesResolver.class.getName());
 
 
-    private final PageResourceProvider pageResourceProvider;
     private File libTempFolder;
 
     private final WebBonitaConstantsUtils webBonitaConstantsUtils;
 
+    private final File pageDirectory;
 
+    private final String pageName;
 
-    public CustomPageDependenciesResolver(final PageResourceProvider pageResourceProvider,
+    public CustomPageDependenciesResolver(final String pageName,
+            final File pageDirectory,
             final WebBonitaConstantsUtils webBonitaConstantsUtils) {
-        this.pageResourceProvider = pageResourceProvider;
+        this.pageName = pageName;
+        this.pageDirectory = pageDirectory;
         this.webBonitaConstantsUtils = webBonitaConstantsUtils;
     }
 
     public Map<String, byte[]> resolveCustomPageDependencies() {
-        final String pageName = this.pageResourceProvider.getPageName();
-        final File customPageLibDirectory = new File(this.pageResourceProvider.getPageDirectory(), LIB_FOLDER_NAME);
+        final File customPageLibDirectory = new File(pageDirectory, LIB_FOLDER_NAME);
         if (customPageLibDirectory.exists()) {
             this.libTempFolder = new File(this.webBonitaConstantsUtils.getTempFolder(), pageName
                     + Long.toString(new Date().getTime()));

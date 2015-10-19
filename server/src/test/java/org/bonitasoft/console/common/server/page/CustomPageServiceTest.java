@@ -484,8 +484,7 @@ public class CustomPageServiceTest {
     @Test
     public void should_add_page_root_folder_in_classpath() throws Exception {
         final File pageDir = new File(getClass().getResource("/ARootPageFolder").getFile());
-        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
-        final GroovyClassLoader classloader = customPageService.buildPageClassloader(apiSession, pageResourceProvider);
+        final GroovyClassLoader classloader = customPageService.buildPageClassloader(apiSession, "pageName", pageDir);
         assertThat(classloader.loadClass("AbstractIndex")).isNotNull();
         assertThat(classloader.loadClass("Index")).isNotNull();
         assertThat(classloader.loadClass("org.company.test.Util")).isNotNull();
