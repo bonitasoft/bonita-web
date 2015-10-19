@@ -31,6 +31,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -85,6 +86,8 @@ public class CustomPageServiceTest {
     private Page mockedPage;
     @Mock
     private ConsoleProperties consoleProperties;
+    @Mock
+    private WebBonitaConstantsUtils webBonitaConstantUtils;
 
     @Before
     public void before() throws IOException {
@@ -92,6 +95,7 @@ public class CustomPageServiceTest {
         CustomPageService.clearCachedClassloaders();
         when(apiSession.getTenantId()).thenReturn(1L);
         doReturn(consoleProperties).when(customPageService).getConsoleProperties(apiSession);
+        doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils(apiSession);
     }
 
     @Test
@@ -104,7 +108,8 @@ public class CustomPageServiceTest {
         doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
-        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
+        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(),
+                any(CustomPageDependenciesResolver.class));
 
         when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
@@ -131,7 +136,8 @@ public class CustomPageServiceTest {
         doReturn(pageFile).when(customPageService).getPageFile(any(File.class), anyString());
         final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
         doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
-        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(), any(File.class), anyString());
+        doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(),
+                any(CustomPageDependenciesResolver.class));
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);

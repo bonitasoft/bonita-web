@@ -1,29 +1,30 @@
 /**
- * Copyright (C) 2011-2012 BonitaSoft S.A.
+ * Copyright (C) 2014-2015 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation
- * version 2.1 of the License.
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
- * Floor, Boston, MA 02110-1301, USA.
- **/
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.console.common.server.page;
 
 import static org.apache.commons.io.FileUtils.deleteQuietly;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
@@ -35,55 +36,37 @@ import org.apache.commons.io.FileUtils;
  */
 public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
 
-    private final String name;
-
-    protected Map<String, byte[]> nonJarResources;
-
-    protected Set<URL> urls;
-
-    private final File temporaryFolder;
+    protected Map<String, byte[]> nonJarResources = new HashMap<String, byte[]>();
 
     private boolean isActive = true;
 
-    /**
-     * Logger
-     */
-    // TODO logger
+    private static final Logger LOGGER = Logger.getLogger(ChildFirstClassLoader.class.getName());
 
-    ChildFirstClassLoader(final Map<String, byte[]> resources, final String name, final String temporaryFolder, final ClassLoader parent) {
-        super(name, new URL[] {}, parent);
-        this.name = name;
+    private final CustomPageDependenciesResolver customPageDependenciesResolver;
 
-        nonJarResources = new HashMap<String, byte[]>();
-        urls = new HashSet<URL>();
-        this.temporaryFolder = new File(temporaryFolder);
-        if (!this.temporaryFolder.exists()) {
-            this.temporaryFolder.mkdirs();
-        }
-        addResources(resources);
-        addURLs(urls.toArray(new URL[urls.size()]));
+
+    ChildFirstClassLoader(String pageName, CustomPageDependenciesResolver customPageDependenciesResolver, ClassLoader parent) {
+        super(pageName, new URL[] {}, parent);
+        this.customPageDependenciesResolver = customPageDependenciesResolver;
     }
 
-    protected void addResources(final Map<String, byte[]> resources) {
-        if (resources != null) {
-            for (final Map.Entry<String, byte[]> resource : resources.entrySet()) {
-                if (resource.getKey().matches(".*\\.jar")) {
-                    final byte[] data = resource.getValue();
-                    try {
-                        final File file = File.createTempFile(resource.getKey(), null, temporaryFolder);
-                        file.deleteOnExit();
-                        FileUtils.writeByteArrayToFile(file, data);
-                        final String path = file.getAbsolutePath();
-                        final URL url = new File(path).toURI().toURL();
-                        urls.add(url);
-                    } catch (final MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (final Exception e) {
-                        e.printStackTrace();
+    public void addCustomPageResources() {
+        final Map<String, byte[]> customPageDependencies = customPageDependenciesResolver.resolveCustomPageDependencies();
+        for (final Map.Entry<String, byte[]> resource : customPageDependencies.entrySet()) {
+            if (resource.getKey().matches(".*\\.jar")) {
+                final byte[] data = resource.getValue();
+                try {
+                    final File file = File.createTempFile(resource.getKey(), null, customPageDependenciesResolver.getTempFolder());
+                    file.deleteOnExit();
+                    FileUtils.writeByteArrayToFile(file, data);
+                    addURL(new File(file.getAbsolutePath()).toURI().toURL());
+                } catch (final IOException e) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, String.format("Failed to add file %s in classpath", resource.getKey()), e);
                     }
-                } else {
-                    nonJarResources.put(resource.getKey(), resource.getValue());
                 }
+            } else {
+                nonJarResources.put(resource.getKey(), resource.getValue());
             }
         }
     }
@@ -115,10 +98,7 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
     }
 
     private byte[] loadProcessResource(final String resourceName) {
-        if (nonJarResources == null) {
-            return new byte[0];
-        }
-        return nonJarResources.get(resourceName);
+        return nonJarResources.containsKey(resourceName) ? nonJarResources.get(resourceName) : new byte[0];
     }
 
     @Override
@@ -156,21 +136,12 @@ public class ChildFirstClassLoader extends MonoParentJarFileClassLoader {
     }
 
     public void release() {
-        deleteQuietly(temporaryFolder);
+        deleteQuietly(customPageDependenciesResolver.getTempFolder());
         isActive = false;
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    public File getTemporaryFolder() {
-        return temporaryFolder;
-    }
-
-    @Override
     public String toString() {
-        return super.toString() + ", name=" + name + ", isActive: " + isActive + ", parent= " + getParent();
+        return super.toString() + ", name=" + getName() + ", isActive: " + isActive + ", parent= " + getParent();
     }
 }
