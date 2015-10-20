@@ -20,11 +20,14 @@ import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.EMPTY_MAP;
 import static org.junit.Assert.assertTrue;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -38,11 +41,24 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
 
     private APIUser apiUser;
 
+    private String savedBonitaHomeProperty;
+
     @Override
     public void consoleTestSetUp() throws Exception {
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         apiUser = new APIUser();
         apiUser.setCaller(getAPICaller(getInitiator().getSession(), "API/identity/user"));
 
+    }
+
+    @After
+    public void teardown() throws Exception {
+        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
+            System.clearProperty(WebBonitaConstants.BONITA_HOME);
+        } else {
+            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
+        }
     }
 
     @Override
