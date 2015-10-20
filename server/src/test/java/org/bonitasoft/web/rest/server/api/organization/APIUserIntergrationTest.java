@@ -36,13 +36,14 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
     private static final String ASCENDING = " asc";
     private static final String DESCENDING = " desc";
 
-    private APIUser apiUser;
-
     @Override
     public void consoleTestSetUp() throws Exception {
-        apiUser = new APIUser();
-        apiUser.setCaller(getAPICaller(getInitiator().getSession(), "API/identity/user"));
+    }
 
+    protected APIUser getAPIUser() {
+        final APIUser apiUser = new APIUser();
+        apiUser.setCaller(getAPICaller(getInitiator().getSession(), "API/identity/user"));
+        return apiUser;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_FIRSTNAME + ASCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_FIRSTNAME + ASCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserFirstName = searchResult.getResults().get(0).getFirstName();
@@ -76,7 +77,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_FIRSTNAME + DESCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_FIRSTNAME + DESCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserFirstName = searchResult.getResults().get(0).getFirstName();
@@ -89,7 +90,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_LASTNAME + ASCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_LASTNAME + ASCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserLastName = searchResult.getResults().get(0).getLastName();
@@ -102,7 +103,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_LASTNAME + DESCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_LASTNAME + DESCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserLastName = searchResult.getResults().get(0).getLastName();
@@ -115,7 +116,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_USERNAME + ASCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_USERNAME + ASCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserUserName = searchResult.getResults().get(0).getUserName();
@@ -128,7 +129,7 @@ public class APIUserIntergrationTest extends AbstractConsoleTest {
         TestUserFactory.getRidleyScott();
         TestUserFactory.getJohnCarpenter();
 
-        final ItemSearchResult<UserItem> searchResult = apiUser.runSearch(0, 10, null, UserItem.ATTRIBUTE_USERNAME + DESCENDING,
+        final ItemSearchResult<UserItem> searchResult = getAPIUser().runSearch(0, 10, null, UserItem.ATTRIBUTE_USERNAME + DESCENDING,
                 EMPTY_MAP, EMPTY_LIST, EMPTY_LIST);
 
         final String firstUserUserName = searchResult.getResults().get(0).getUserName();
