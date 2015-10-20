@@ -163,8 +163,15 @@ public class CustomPageService {
         removePageLibTempFolder(pageName);
     }
 
+    public void removePage(final APISession apiSession, final Page page) throws IOException {
+        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
+        PAGES_CLASSLOADERS.remove(pageResourceProvider.getFullPageName());
+        removePageZipContent(apiSession, pageResourceProvider);
+        removePageLibTempFolder(pageResourceProvider.getFullPageName());
+    }
+
     protected void removePageLibTempFolder(final String pageName) {
-        final File libTempFolder = PAGES_LIB_DIRECTORIES.get(pageName);
+        final File libTempFolder = PAGES_LIB_DIRECTORIES.remove(pageName);
         if (libTempFolder != null) {
             try {
                 FileUtils.deleteDirectory(libTempFolder);
@@ -194,7 +201,7 @@ public class CustomPageService {
                         + Long.toString(new Date().getTime()));
                 // FileUtils.copyDirectory(customPageLibDirectory, libTempFolder);
                 removePageLibTempFolder(pageResourceProvider.getPageName());
-                PAGES_LIB_DIRECTORIES.put(pageResourceProvider.getPageName(), libTempFolder);
+                PAGES_LIB_DIRECTORIES.put(pageResourceProvider.getFullPageName(), libTempFolder);
                 parentClassLoader = getParentClassloader(pageResourceProvider.getPageName(), customPageLibDirectory, libTempFolder.getAbsolutePath());
             } else {
                 parentClassLoader = Thread.currentThread().getContextClassLoader();

@@ -203,7 +203,7 @@ DatastoreHasDelete
                 }
                 startIndex = startIndex + result.getResult().size();
                 for (final Page page : result.getResult()) {
-                    getCustomPageService().removePage(getEngineSession(), page.getName());
+                    getCustomPageService().removePage(getEngineSession(), page);
                     getCompoundPermissionsMapping().removeProperty(page.getName());
                 }
             } while (startIndex < count);
