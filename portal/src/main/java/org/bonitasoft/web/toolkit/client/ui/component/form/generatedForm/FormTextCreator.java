@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,16 +24,18 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text;
 
 /**
  * @author Nicolas Tith
- * 
+ *
  */
 public class FormTextCreator implements FormNodeCreator {
 
-    public FormNode create(ItemBinding item) {
-        return create(item, ItemAttribute.MAX_LENGTH_STRING);
+    @Override
+    public FormNode create(final ItemBinding item) {
+        return create(item, ItemAttribute.MAX_LENGTH_TEXT);
     }
 
-    public FormNode create(ItemBinding item, int maxLength) {
-        Text text = new Text(new JsId(item.getAttributeName()), item.getLabel(), item.getTooltip(), item.getValue());
+    @Override
+    public FormNode create(final ItemBinding item, final int maxLength) {
+        final Text text = new Text(new JsId(item.getAttributeName()), item.getLabel(), item.getTooltip(), item.getValue());
         text.addValidator(new StringMaxLengthValidator(maxLength));
         text.setMaxLength(maxLength);
         return text;
