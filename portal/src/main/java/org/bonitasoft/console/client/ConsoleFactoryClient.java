@@ -1,6 +1,11 @@
 package org.bonitasoft.console.client;
 
-import com.google.gwt.core.shared.GWT;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -89,11 +94,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gwt.core.shared.GWT;
 
 /**
  * console client page
@@ -114,6 +115,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
+
     }
 
     protected List<String> getCurrentUserAccessRights() {
