@@ -5,16 +5,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.toolkit.client.data.api.callback;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,15 +26,13 @@ import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 import org.bonitasoft.web.toolkit.client.ui.utils.Url;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 /**
  * An APICallback define the action to do once an API called has ended (success and error)
  * <p>
  * This class extends RequestCallback but make it easier to use by parsing the headers and the error message.
- * 
+ *
  * @author Séverin Moussel
- * 
+ *
  */
 public abstract class APICallback extends HttpCallback {
 
@@ -47,6 +47,9 @@ public abstract class APICallback extends HttpCallback {
         if (isNotFound(errorCode)) {
             on404NotFound(message);
             return true;
+        } else if (isForbidden(errorCode)) {
+            on403Forbidden(message);
+            return true;
         }
         return false;
     }
@@ -55,14 +58,29 @@ public abstract class APICallback extends HttpCallback {
      * @param errorCode
      * @return
      */
-    private boolean isNotFound(Integer errorCode) {
+    private boolean isNotFound(final Integer errorCode) {
         return errorCode != null && errorCode.equals(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    /**
+     * @param errorCode
+     * @return
+     */
+    private boolean isForbidden(final Integer errorCode) {
+        return errorCode != null && errorCode.equals(HttpServletResponse.SC_FORBIDDEN);
     }
 
     /**
      * @param message
      */
-    protected void on404NotFound(String message) {
+    protected void on404NotFound(final String message) {
+    }
+
+    /**
+     * @param message
+     */
+    protected void on403Forbidden(final String message) {
+        Message.error(_("Permission denied: you do not have the rights to perform this action."));
     }
 
     private void handlesErrorGenerically(final String message, final Integer errorCode) {
