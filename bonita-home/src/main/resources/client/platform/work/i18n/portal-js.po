@@ -10,6 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -51,42 +56,6 @@ msgstr ""
 
 #: main/features/admin/monitoring/monitoring.html:13
 msgid "5 min."
-msgstr ""
-
-#: main/features/admin/license/monitoring/license-monitoring.html:75
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases "
-"provisioned for the period\n"
-"        <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| "
-"dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license."
-"endPeriodTimestamp|\n"
-"          dateI18n : 'LL'}}</strong>. Remember to renew your license in time "
-"if your license expires before the count\n"
-"        end date."
-msgstr ""
-
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases "
-"provisioned for the period <strong>{{ LicenseMonitoringCtrl.license."
-"startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>"
-"{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</"
-"strong>. Remember to renew your license in time if your license expires "
-"before the count end date."
-msgstr ""
-
-#: main/features/admin/license/monitoring/license-monitoring.html:80
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases "
-"available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>. To provision more cases, contact your "
-"sales person."
-msgstr ""
-
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases "
-"available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| "
-"dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales "
-"person."
 msgstr ""
 
 msgid "A page with this name already exists."
@@ -214,7 +183,7 @@ msgid ""
 "loaded in the Portal."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:89
+#: main/features/admin/license/monitoring/license-monitoring.html:92
 msgid "CPU information"
 msgstr ""
 
@@ -1173,17 +1142,11 @@ msgid ""
 "enabling the process."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:83
+#: main/features/admin/license/monitoring/license-monitoring.html:85
 msgid ""
-"The case counter will be reset to the value in your license on <strong>"
-"{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>."
-msgstr ""
-
-msgid ""
-"The case counter will be reset to the value in your license on <strong>"
-"{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</"
-"strong>."
+"The case counter will be reset to the value in your license on\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
@@ -1443,34 +1406,23 @@ msgstr ""
 msgid "You must add a page before you can reference it in a menu."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:91
+
+#: main/features/admin/license/monitoring/license-monitoring.html:94
 msgid ""
 "Your current license permits you to use\n"
-"        <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> "
-"cores."
+"        {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
 msgstr ""
 
-msgid ""
-"Your current license permits you to use <strong>{{LicenseMonitoringCtrl."
-"license.numberOfCPUCores}}</strong> cores."
-msgstr ""
+
 
 #: main/features/admin/license/monitoring/license-monitoring.html:55
 msgid ""
-"Your license expires <strong>{{ LicenseMonitoringCtrl.license."
+"Your license expires {{ LicenseMonitoringCtrl.license."
 "licenseExpirationTimestamp | dateAgo\n"
-"      }}</strong>, on <strong>{{LicenseMonitoringCtrl.license."
-"licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>.\n"
+"      }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | "
+"dateI18n : 'LL'}}.\n"
 "      To renew your license, generate a license key and go to the Customer "
 "Portal, or contact your sales person."
-msgstr ""
-
-msgid ""
-"Your license expires <strong>{{ LicenseMonitoringCtrl.license."
-"licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>"
-"{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : "
-"'LL'}}</strong>. To renew your license, generate a license key and go to the "
-"Customer Portal, or contact your sales person."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
@@ -1619,6 +1571,26 @@ msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "will be permanently deleted."
+msgstr ""
+
+#: main/features/admin/license/monitoring/license-monitoring.html:75
+msgid ""
+"{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the "
+"period\n"
+"        {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : "
+"'LL'}} to\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. Remember to renew your license in time if your "
+"license expires before the count\n"
+"        end date."
+msgstr ""
+
+#: main/features/admin/license/monitoring/license-monitoring.html:81
+msgid ""
+"{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. To provision more cases, contact your sales "
+"person."
 msgstr ""
 
 msgid ""
