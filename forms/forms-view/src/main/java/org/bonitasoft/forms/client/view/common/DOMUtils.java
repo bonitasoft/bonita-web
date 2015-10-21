@@ -503,7 +503,7 @@ public class DOMUtils {
         if(isError) {
             message = "error:" + message;
         }
-        $wnd.top.postMessage(message, '*');
+        $wnd.parent.postMessage(message, '*');
     }-*/;
 
     /**

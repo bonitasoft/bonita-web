@@ -34,7 +34,7 @@ import org.junit.Test;
  * @author Colin PUY
  */
 @SuppressWarnings("unchecked")
-public class APIUserIntergrationTest extends AbstractConsoleTest {
+public class APIUserIntegrationTest extends AbstractConsoleTest {
 
     private static final String ASCENDING = " asc";
     private static final String DESCENDING = " desc";
