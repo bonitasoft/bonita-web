@@ -13,6 +13,9 @@
  ******************************************************************************/
 package org.bonitasoft.web.rest.server;
 
+import java.util.List;
+import java.util.logging.Level;
+
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataFindByIdsResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
@@ -31,6 +34,7 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
+import org.bonitasoft.web.rest.server.api.system.I18nTanslationResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Request;
@@ -43,9 +47,6 @@ import org.restlet.engine.converter.ConverterHelper;
 import org.restlet.ext.jackson.JacksonConverter;
 import org.restlet.routing.Router;
 import org.restlet.routing.Template;
-
-import java.util.List;
-import java.util.logging.Level;
 
 /**
  * @author Matthieu Chaffotte
@@ -163,6 +164,9 @@ public class BonitaRestletApplication extends Application {
 
         // api extension
         router.attach(ROUTER_EXTENSION_PREFIX, factory.createExtensionResource(), Template.MODE_STARTS_WITH);
+
+        // GET all translations
+        router.attach("/system/i18ntranslation", factory.create(I18nTanslationResource.class));
 
         return router;
     }
