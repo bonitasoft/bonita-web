@@ -16,13 +16,10 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.impl.internal.DesignProcessDefinitionImpl;
 import org.bonitasoft.web.rest.server.utils.ResponseAssert;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -64,21 +61,6 @@ public class ProcessDefinitionDesignResourceTest extends RestletTest {
 
         // when:
         processDefinitionDesignResource.getDesign();
-    }
-
-    @Test
-    public void should_return_a_contract_for_a_given_process_definition_id() throws Exception {
-        //given
-        final DesignProcessDefinitionImpl design = new DesignProcessDefinitionImpl("test", "1.0");
-
-        when(processAPI.getDesignProcessDefinition(PROCESS_DEFINITION_ID)).thenReturn(design);
-
-        //when
-        final Response response = request(TEST_DESIGN_API_URL).get();
-
-        //then
-        ResponseAssert.assertThat(response).hasStatus(Status.SUCCESS_OK);
-        ResponseAssert.assertThat(response).hasJsonEntityEqualTo(readFile("design.json"));
     }
 
     @Test
