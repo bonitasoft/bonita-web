@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-10-19 08:48-0400\n"
+"POT-Creation-Date: 2015-10-21 01:01+0200\n"
+"PO-Revision-Date: 2015-10-23 12:46-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1625,6 +1625,12 @@ msgstr "実行した日"
 
 msgid "Performed on:"
 msgstr "実行された日時："
+
+msgid "Permission denied: you do not have the rights to perform this action."
+msgstr "アクセスが拒否されました: このアクションを実行する権限がありません。"
+
+msgid "Permission denied: you do not have the rights to view this item."
+msgstr "アクセスが拒否されました: このアイテムを表示する権限がありません。"
 
 msgid "Personal information"
 msgstr "個人的連絡先"

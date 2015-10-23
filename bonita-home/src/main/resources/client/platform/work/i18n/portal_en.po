@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-10-12 05:10-0400\n"
+"POT-Creation-Date: 2015-10-21 01:01+0200\n"
+"PO-Revision-Date: 2015-10-23 12:38-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1624,6 +1624,12 @@ msgstr "Performed on"
 
 msgid "Performed on:"
 msgstr "Performed on:"
+
+msgid "Permission denied: you do not have the rights to perform this action."
+msgstr "Permission denied: you do not have the rights to perform this action."
+
+msgid "Permission denied: you do not have the rights to view this item."
+msgstr "Permission denied: you do not have the rights to view this item."
 
 msgid "Personal information"
 msgstr "Personal information"
