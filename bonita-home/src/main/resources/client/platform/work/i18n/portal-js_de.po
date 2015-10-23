@@ -9,12 +9,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita-bpm-new-features\n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-10-19 08:43-0400\n"
+"PO-Revision-Date: 2015-10-20 11:56-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -52,28 +57,6 @@ msgstr "30 Min."
 #: main/features/admin/monitoring/monitoring.html:13
 msgid "5 min."
 msgstr "5 Min."
-
-#: main/features/admin/license/monitoring/license-monitoring.html:75
-msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period\n"
-"        <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"          dateI18n : 'LL'}}</strong>. Remember to renew your license in time if your license expires before the count\n"
-"        end date."
-msgstr "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period\n"
-"        <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"          dateI18n : 'LL'}}</strong>. Remember to renew your license in time if your license expires before the count\n"
-"        end date."
-
-msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. Remember to renew your license in time if your license expires before the count end date."
-msgstr "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. Remember to renew your license in time if your license expires before the count end date."
-
-#: main/features/admin/license/monitoring/license-monitoring.html:80
-msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person."
-msgstr "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person."
-
-msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person."
-msgstr "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person."
 
 msgid "A page with this name already exists."
 msgstr "Eine Seite mit diesem Namen existiert bereits."
@@ -192,7 +175,7 @@ msgstr "Bevor Sie eine benutzerdefinierte Seite in einem Formular-Mapping verwen
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "Bevor Sie die Anwendung importieren, müssen die Seiten und das Profil im Portal geladen worden sein."
 
-#: main/features/admin/license/monitoring/license-monitoring.html:89
+#: main/features/admin/license/monitoring/license-monitoring.html:92
 msgid "CPU information"
 msgstr "CPU information"
 
@@ -1118,14 +1101,13 @@ msgstr "Die Anwendung"
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 
-#: main/features/admin/license/monitoring/license-monitoring.html:83
-msgid "The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>."
-msgstr "The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
-"        dateI18n : 'LL'}}</strong>."
-
-msgid "The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
-msgstr "The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
+#: main/features/admin/license/monitoring/license-monitoring.html:85
+msgid "The case counter will be reset to the value in your license on\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}."
+msgstr "The case counter will be reset to the value in your license on\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}."
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
 msgid "The current process has no connectors defined."
@@ -1360,25 +1342,19 @@ msgstr "Sind sind dabei, die Anwendung zu exportieren"
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Sie müssen eine Seite hinzufügen, bevor Sie es in einem Menü referenzieren können."
 
-#: main/features/admin/license/monitoring/license-monitoring.html:91
+#: main/features/admin/license/monitoring/license-monitoring.html:94
 msgid "Your current license permits you to use\n"
-"        <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> cores."
+"        {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
 msgstr "Your current license permits you to use\n"
-"        <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> cores."
-
-msgid "Your current license permits you to use <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> cores."
-msgstr "Your current license permits you to use <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> cores."
+"        {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:55
-msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo\n"
-"      }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>.\n"
+msgid "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo\n"
+"      }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}.\n"
 "      To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-msgstr "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo\n"
-"      }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>.\n"
+msgstr "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo\n"
+"      }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}.\n"
 "      To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-
-msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-msgstr "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
 msgid "an Application"
@@ -1521,6 +1497,26 @@ msgstr "this is a temporary form generated automatically for testing. Before you
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "will be permanently deleted."
 msgstr "wird dauerhaft gelöscht."
+
+#: main/features/admin/license/monitoring/license-monitoring.html:75
+msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period\n"
+"        {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count\n"
+"        end date."
+msgstr "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period\n"
+"        {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count\n"
+"        end date."
+
+#: main/features/admin/license/monitoring/license-monitoring.html:81
+msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. To provision more cases, contact your sales person."
+msgstr "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until\n"
+"        {{LicenseMonitoringCtrl.license.endPeriodTimestamp|\n"
+"        dateI18n : 'LL'}}. To provision more cases, contact your sales person."
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "{{currentFirstResultIndex}} bis {{currentLastResultIndex}} von {{pagination.total}}"

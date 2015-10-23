@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,7 @@ import com.google.gwt.user.client.Element;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public abstract class PageOnItem<T extends IItem> extends Page {
 
@@ -198,6 +198,8 @@ public abstract class PageOnItem<T extends IItem> extends Page {
             public void onError(final String message, final Integer errorCode) {
                 if (isNotFoundItem(message, errorCode)) {
                     onItemNotFound();
+                } else if (isForbidden(message, errorCode)) {
+                    onForbidden();
                 } else {
                     fail(message);
                 }
@@ -211,8 +213,16 @@ public abstract class PageOnItem<T extends IItem> extends Page {
         return errorCode.equals(HttpServletResponse.SC_NOT_FOUND) && message.isEmpty();
     }
 
+    private boolean isForbidden(final String message, final Integer errorCode) {
+        return errorCode.equals(HttpServletResponse.SC_FORBIDDEN) && message.isEmpty();
+    }
+
     protected void onItemNotFound() {
         fail(_("Item not found"));
+    }
+
+    protected void onForbidden() {
+        fail(_("Permission denied: you do not have the rights to view this item."));
     }
 
     protected abstract void defineTitle(T item);

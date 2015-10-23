@@ -114,9 +114,9 @@ public class ProcessDatastoreTest extends APITestWithMock {
         processDatastore.delete(Arrays.asList(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times(1)).removePage(engineSession, "page1");
+        verify(customPageService, times(1)).removePage(engineSession, page1);
         verify(compoundPermissionsMapping, times(1)).removeProperty("page1");
-        verify(customPageService, times(1)).removePage(engineSession, "page2");
+        verify(customPageService, times(1)).removePage(engineSession, page2);
         verify(compoundPermissionsMapping, times(1)).removeProperty("page2");
     }
 
@@ -137,7 +137,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
         processDatastore.delete(Arrays.asList(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times((int) nbOfPages)).removePage(engineSession, "page");
+        verify(customPageService, times((int) nbOfPages)).removePage(engineSession, page);
         verify(compoundPermissionsMapping, times((int) nbOfPages)).removeProperty("page");
     }
 }
