@@ -63,6 +63,16 @@ public class DOMUtils {
     public static final String FORM_FRAME_ID = "bonitaframe";
 
     /**
+     * action type for postMessage to notify parent frame
+     */
+    public static final String START_PROCESS_ACTION_FOR_NOTIF = "Start process";
+
+    /**
+     * action type for postMessage to notify parent frame
+     */
+    public static final String SUBMIT_TASK_ACTION_FOR_NOTIF = "Submit task";
+
+    /**
      * Instance attribute
      */
     protected static DOMUtils INSTANCE = null;
@@ -493,17 +503,39 @@ public class DOMUtils {
     }-*/;
 
     /**
-     * Indicates to the parent farme that a form was submitted (and the response was successful)
+     * Resolve the action attribute of the postMessage to send to notify the parent frame
      *
-     * @param message
-     * @return true if the page is in a frame
+     * @param urlContext
+     * @return
      */
-    native public void notifyParentFrame(String message, boolean isError)
-    /*-{
-        if(isError) {
-            message = "error:" + message;
+    public String getActionForNotif(final Map<String, Object> urlContext) {
+        String actionForNotif;
+        if (urlContext.containsKey(URLUtils.TASK_ID_PARAM)) {
+            actionForNotif = DOMUtils.SUBMIT_TASK_ACTION_FOR_NOTIF;
+        } else if (urlContext.containsKey(URLUtils.PROCESS_ID_PARAM)) {
+            actionForNotif = DOMUtils.START_PROCESS_ACTION_FOR_NOTIF;
+        } else {
+            actionForNotif = "";
         }
-        $wnd.parent.postMessage(message, '*');
+        return actionForNotif;
+    }
+
+    /**
+     * Indicates to the parent farme that a form was submitted (and if the response was success or error)
+     *
+     * @param data
+     * @param action
+     * @param isError
+     */
+    native public void notifyParentFrame(String data, String action, boolean isError)
+    /*-{
+        var dataToSend;
+        if(isError) {
+            dataToSend = '{"message":"error","action":"' + action + '","dataFromError":"' + data + '"}';
+        } else {
+            dataToSend = '{"message":"success","action":"' + action + '","dataFromSuccess":"' + data + '"}';
+        }
+        $wnd.parent.postMessage(dataToSend, '*');
     }-*/;
 
     /**
