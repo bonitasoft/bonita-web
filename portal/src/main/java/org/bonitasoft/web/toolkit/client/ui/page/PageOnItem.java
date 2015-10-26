@@ -196,9 +196,9 @@ public abstract class PageOnItem<T extends IItem> extends Page {
 
             @Override
             public void onError(final String message, final Integer errorCode) {
-                if (isNotFoundItem(message, errorCode)) {
+                if (isNotFoundItem(errorCode)) {
                     onItemNotFound();
-                } else if (isForbidden(message, errorCode)) {
+                } else if (isForbidden(errorCode)) {
                     onForbidden();
                 } else {
                     fail(message);
@@ -209,12 +209,12 @@ public abstract class PageOnItem<T extends IItem> extends Page {
 
     }
 
-    private boolean isNotFoundItem(final String message, final Integer errorCode) {
-        return errorCode.equals(HttpServletResponse.SC_NOT_FOUND) && message.isEmpty();
+    private boolean isNotFoundItem(final Integer errorCode) {
+        return errorCode != null && errorCode.equals(HttpServletResponse.SC_NOT_FOUND);
     }
 
-    private boolean isForbidden(final String message, final Integer errorCode) {
-        return errorCode.equals(HttpServletResponse.SC_FORBIDDEN) && message.isEmpty();
+    private boolean isForbidden(final Integer errorCode) {
+        return errorCode != null && errorCode.equals(HttpServletResponse.SC_FORBIDDEN);
     }
 
     protected void onItemNotFound() {
