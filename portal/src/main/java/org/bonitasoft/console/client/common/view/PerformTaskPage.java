@@ -98,7 +98,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     private Component createFormIframe(final HumanTaskItem item) {
-        return new UiComponent(new IFrameView(buildTasksFormURL(item)));
+        return new UiComponent(new IFrameView(buildTasksFormURL(item), new TaskExecutionEventListener()));
     }
 
     private String buildTasksFormURL(final HumanTaskItem item) {
