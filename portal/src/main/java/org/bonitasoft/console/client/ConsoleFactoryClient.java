@@ -206,7 +206,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             return prepareAngularPage(token);
-        } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (AngularIFrameView.TASK_LISTING_TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES,
+                getCurrentUserAccessRights())) {
+            return prepareAngularPage(token);
+        }
+        else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
                 && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -454,6 +458,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(TaskQuickDetailsAdminPage.TOKEN, TaskQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(TaskMoreDetailsAdminPage.TOKEN, TaskMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(TasksListingPage.TOKEN, TasksListingPage.PRIVILEGES);
+        pagePrivileges.put(AngularIFrameView.TASK_LISTING_TOKEN, TasksListingPage.PRIVILEGES);
         pagePrivileges.put(HumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.PRIVILEGES);
         pagePrivileges.put(HumanTaskMoreDetailsPage.TOKEN, HumanTaskMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(ArchivedHumanTaskQuickDetailsPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.PRIVILEGES);
