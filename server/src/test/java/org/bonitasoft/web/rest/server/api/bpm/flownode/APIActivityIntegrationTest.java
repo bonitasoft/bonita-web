@@ -28,11 +28,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
-import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
-import org.bonitasoft.engine.expression.ExpressionBuilder;
-import org.bonitasoft.engine.expression.InvalidExpressionException;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
-import org.bonitasoft.test.toolkit.bpm.TestProcess;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
@@ -134,7 +130,7 @@ public class APIActivityIntegrationTest extends AbstractConsoleTest {
         final ItemSearchResult<ActivityItem> searchResult = apiActivity.runSearch(0, 1, null, apiActivity.defineDefaultSearchOrder(), null, null, null);
 
         //then
-        assertThat(searchResult).as("should be able to search with default search order");
+        assertThat(searchResult.getResults()).as("should be able to search with default search order").isNotEmpty();
     }
 
 }

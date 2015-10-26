@@ -33,6 +33,7 @@ public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
 
     @Test
     public void twoPoolsWithOneWithACallActivityCaseTest() throws Exception {
+        final long before = caseDatastore.search(0, 100, null, null, new HashMap<String, String>()).getTotal();
         final TestProcess process2 = TestProcessFactory.getDefaultHumanTaskProcess();
 
         // start process1 case via call activity
@@ -44,7 +45,7 @@ public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
         // Filters for Opened Cases
         final ItemSearchResult<CaseItem> itemSearchResult = caseDatastore.search(0, 100, null, null, new HashMap<String, String>());
 
-        assertEquals("2 cases started but one via call activity so only 1 should be opened", 1, itemSearchResult.getResults().size());
+        assertEquals("2 cases started but one via call activity so only 1 should be opened", 1, itemSearchResult.getResults().size() - before);
 
         TestProcessFactory.getInstance().delete(process1);
         TestProcessFactory.getInstance().delete(process2);
