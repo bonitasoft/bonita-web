@@ -9,7 +9,7 @@ public abstract class EngineSetup {
 
 
     @Rule
-    public BonitaEngineRule bonitaEngineRule = BonitaEngineRule.create();
+    public BonitaEngineRule bonitaEngineRule = BonitaEngineRule.create().withCleanAfterTest();
 
     protected static void setSystemPropertyIfNotSet(String property, String value) {
         final String systemProperty = System.getProperty(property);
