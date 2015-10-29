@@ -18,8 +18,11 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.CommandAPI;
+import org.bonitasoft.engine.bpm.businessdata.impl.BusinessDataQueryMetadataImpl;
+import org.bonitasoft.engine.bpm.businessdata.impl.BusinessDataQueryResultImpl;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
+import org.bonitasoft.web.rest.server.utils.ResponseAssert;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +31,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.restlet.Response;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
@@ -67,15 +71,18 @@ public class BusinessDataQueryResourceTest extends RestletTest {
                 assertThat(queryParameters).containsEntry("name", "John");
                 assertThat(queryParameters).containsEntry("country", "US");
 
-                return JSON_RESPONSE;
+                return new BusinessDataQueryResultImpl( JSON_RESPONSE, new BusinessDataQueryMetadataImpl(1,2,4L));
             }
         };
         when(commandAPI.execute(anyString(), anyMapOf(String.class, Serializable.class))).then(answer);
 
         //then
         final Response response = request(VALID_BDM_REQUEST).get();
-        assertThat(response.getEntityAsText()).isEqualTo(JSON_RESPONSE);
-        assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_OK);
+        Header expectedHeader=new Header("Content-range", "1-2/4");
+        ResponseAssert.assertThat(response)
+                .hasJsonEntityEqualTo(JSON_RESPONSE)
+                .hasStatus(Status.SUCCESS_OK)
+                .hasHeader(expectedHeader);
     }
 
     @Test
