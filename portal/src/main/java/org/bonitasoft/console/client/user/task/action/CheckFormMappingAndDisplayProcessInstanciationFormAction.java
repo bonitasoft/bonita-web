@@ -16,18 +16,9 @@ package org.bonitasoft.console.client.user.task.action;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.http.client.URL;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
@@ -48,10 +39,18 @@ import org.bonitasoft.web.toolkit.client.ui.component.Button;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
-import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
-import java.util.ArrayList;
-import java.util.Map;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 
 /**
  * @author Nicolas Tith, Anthony Birembaut
@@ -203,46 +202,6 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
         }
     }
 
-    protected class InstantiateProcessCallback extends APICallback {
-
-        private final String processId;
-
-        public InstantiateProcessCallback(final String processId) {
-            this.processId = processId;
-        }
-
-        @Override
-        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            final JSONValue root = JSONParser.parseLenient(response);
-            final JSONObject processInstance = root.isObject();
-            final String caseId = processInstance.get("caseId").toString();
-            final String confirmationMessage = _("The case %caseId% has been started successfully.", new Arg(
-                    "caseId", caseId));
-            ViewController.closePopup();
-            showConfirmation(confirmationMessage);
-            final Timer redirectTimer = new Timer() {
-
-                @Override
-                public void run() {
-                    redirectToCaseMoredetails(caseId);
-                }
-            };
-            redirectTimer.schedule(1500);
-        }
-
-        @Override
-        public void onError(final String message, final Integer errorCode) {
-            if (errorCode == Response.SC_BAD_REQUEST) {
-                GWT.log("Error while instantiating process " + processId + " : " + message);
-                final String errorMessage = _("Error while trying to start the case. Some required information is missing (contract not fulfilled).");
-                ViewController.closePopup();
-                showError(errorMessage);
-            } else {
-                super.onError(message, errorCode);
-            }
-        }
-    }
-
     protected void redirectToCaseMoredetails(final String caseId) {
         String caseMoreDetailsToken;
         if (ProcessListingAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
@@ -253,11 +212,52 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
         History.newItem("?_p=" + caseMoreDetailsToken + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
-    protected void showConfirmation(final String confirmationMessage) {
-        Message.success(confirmationMessage);
-    }
+    protected class InstantiateProcessCallback extends APICallback {
 
-    protected void showError(final String errorMessage) {
-        Message.alert(errorMessage);
+        private final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior;
+
+        public InstantiateProcessCallback(final String processId) {
+            processInstantiationCallbackBehavior = new ProcessInstantiationCallbackBehavior() {
+
+                @Override
+                public void onSuccess(final String caseId, final String targetUrlOnSuccess) {
+                    if (caseId != null) {
+                        final String confirmationMessage = _("The case %caseId% has been started successfully.", new Arg(
+                                "caseId", caseId));
+                        if (ViewController.hasOpenedPopup()) {
+                            ViewController.closePopup();
+                        }
+                        showConfirmation(confirmationMessage);
+                    } else {
+                        GWT.log("caseId is not set");
+                    }
+                    final Timer redirectTimer = new Timer() {
+
+                        @Override
+                        public void run() {
+                            redirectToCaseMoredetails(caseId);
+                        }
+                    };
+                    redirectTimer.schedule(1500);
+                }
+            };
+        }
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            final JSONValue root = JSONParser.parseLenient(response);
+            final JSONObject processInstance = root.isObject();
+            String caseId = null;
+            final JSONValue caseIdValue = processInstance.get("caseId");
+            if (caseIdValue != null) {
+                caseId = Double.toString(caseIdValue.isNumber().doubleValue());
+            }
+            processInstantiationCallbackBehavior.onSuccess(caseId, null);
+        }
+
+        @Override
+        public void onError(final String message, final Integer errorCode) {
+            processInstantiationCallbackBehavior.onError(message, errorCode);
+        }
     }
 }

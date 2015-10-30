@@ -14,7 +14,13 @@
  */
 package org.bonitasoft.console.client.user.cases.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bonitasoft.console.client.user.task.action.PostMessageEventListener;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -24,7 +30,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Vincent Elcrin
+ * @author Vincent Elcrin, Anthony Birembaut
  */
 public class IFrameView extends Composite {
 
@@ -32,6 +38,10 @@ public class IFrameView extends Composite {
     }
 
     private static Binder binder = GWT.create(Binder.class);
+
+    private PostMessageEventListener[] messageEventListeners = null;
+
+    private static Map<String, JavaScriptObject> postMessageListenerFunctions = new HashMap<String, JavaScriptObject>();
 
     @UiField
     IFrameElement frame;
@@ -47,6 +57,16 @@ public class IFrameView extends Composite {
     public IFrameView(final String url) {
         this();
         setUrl(url);
+    }
+
+    public IFrameView(final PostMessageEventListener... messageEventListeners) {
+        this();
+        this.messageEventListeners = messageEventListeners;
+    }
+
+    public IFrameView(final String url, final PostMessageEventListener... messageEventListeners) {
+        this(url);
+        this.messageEventListeners = messageEventListeners;
     }
 
     public void setUrl(final String url) {
@@ -69,4 +89,59 @@ public class IFrameView extends Composite {
         toolbar.removeStyleName("empty");
         toolbar.add(widget);
     }
+
+    @Override
+    protected void onAttach() {
+        if (messageEventListeners != null) {
+            for (final PostMessageEventListener messageEventListener : messageEventListeners) {
+                if (!postMessageListenerFunctions.containsKey(messageEventListener.getActionToWatch())) {
+                    postMessageListenerFunctions.put(messageEventListener.getActionToWatch(), addFrameNotificationListener(messageEventListener));
+                }
+
+            }
+        }
+        super.onAttach();
+    }
+
+    @Override
+    protected void onDetach() {
+        if (messageEventListeners != null) {
+            for (final PostMessageEventListener messageEventListener : messageEventListeners) {
+                final JavaScriptObject postMessageListenerFunction = postMessageListenerFunctions.remove(messageEventListener.getActionToWatch());
+                removeFrameNotificationListener(postMessageListenerFunction);
+            }
+        }
+        super.onDetach();
+    }
+
+    /**
+     * Indicates to the parent frame that a form was submitted (and the response was successful)
+     *
+     * @param eventListener
+     */
+    native public JavaScriptObject addFrameNotificationListener(PostMessageEventListener postMessageEventListener)
+    /*-{
+        var postMessageListener = function(e) {
+            var eventData = e.data || null;
+            postMessageEventListener.@org.bonitasoft.console.client.user.task.action.PostMessageEventListener::onMessageEvent(Ljava/lang/String;)(eventData);
+        };
+        // Listen to message from child window
+        if ($wnd.addEventListener) {
+            $wnd.addEventListener("message", postMessageListener, false);
+        } else if ($wnd.attachEvent) {
+            //For IE
+            $wnd.attachEvent("onmessage", postMessageListener, false);
+        }
+        return postMessageListener;
+    }-*/;
+
+    native public void removeFrameNotificationListener(JavaScriptObject postMessageListenerFunction)
+    /*-{
+        if ($wnd.removeEventListener) {
+            $wnd.removeEventListener("message", postMessageListenerFunction);
+        } else if ($wnd.detachEvent) {
+            //For IE
+            $wnd.detachEvent("onmessage", postMessageListenerFunction);
+        }
+    }-*/;
 }
