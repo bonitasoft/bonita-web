@@ -1295,13 +1295,20 @@ public class FormPagesViewController {
      */
     protected class FormSubmissionHandler extends FormsAsyncCallback<Map<String, Object>> {
 
+        private final String actionForNotif;
+
+        public FormSubmissionHandler() {
+            super();
+            actionForNotif = domUtils.getActionForNotif(urlContext);
+        }
+
         /**
          * {@inheritDoc}
          */
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
             if (domUtils.isPageInFrame()) {
-                domUtils.notifyParentFrame(getSubmitButtonID(), false);
+                domUtils.notifyParentFrame(getSubmitButtonID(), actionForNotif, false);
             }
             if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                 urlContext.clear();
@@ -1317,7 +1324,7 @@ public class FormPagesViewController {
             } catch (final FormAlreadySubmittedException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", true);
+                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", actionForNotif, true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
@@ -1333,7 +1340,7 @@ public class FormPagesViewController {
                     errorMessage = FormsResourceBundle.getErrors().fileTooBigErrorWithSize(maxSize);
                 }
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("fileTooBigError", true);
+                    domUtils.notifyParentFrame("fileTooBigError", actionForNotif, true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     Window.alert(errorMessage);
@@ -1341,7 +1348,7 @@ public class FormPagesViewController {
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formSubmissionError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("formSubmissionError", true);
+                    domUtils.notifyParentFrame("formSubmissionError", actionForNotif, true);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,

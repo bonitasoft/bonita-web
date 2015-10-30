@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.process.view.ProcessInstantiationEventListener;
+import org.bonitasoft.console.client.common.view.TaskExecutionEventListener;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
@@ -53,7 +55,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String TASK_LISTING_TOKEN = "tasklistinguser_new";
 
-    private final IFrameView iframe = new IFrameView();
+    private final IFrameView iframe = new IFrameView(new ProcessInstantiationEventListener(), new TaskExecutionEventListener());
 
     protected final static Map<String, List<String>> acceptedToken = initAcceptedTokens();
 
