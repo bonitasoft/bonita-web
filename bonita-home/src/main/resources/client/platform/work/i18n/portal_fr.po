@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-10-12 05:07-0400\n"
+"POT-Creation-Date: 2015-10-27 03:03+0100\n"
+"PO-Revision-Date: 2015-10-30 06:40-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1039,8 +1039,14 @@ msgstr "Erreur lors de l'actualisation des informations de déploiement du proce
 msgid "Error when updating user"
 msgstr "Erreur lors de l'actualisation des données de l'utilisateur"
 
+msgid "Error while trying to execute the task."
+msgstr "Erreur lors de la tentative d'exécution de la tâche."
+
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Erreur lors de l'exécution la tâche. Certaines informations requises sont manquantes (contrat non respecté)."
+
+msgid "Error while trying to start the case."
+msgstr "Erreur lors de la tentative de démarrage du cas."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erreur lors de l'exécution la tâche. Certaines informations requises sont manquantes (contrat non respecté)."
