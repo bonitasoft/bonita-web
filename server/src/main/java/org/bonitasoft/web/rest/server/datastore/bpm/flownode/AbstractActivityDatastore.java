@@ -173,7 +173,7 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
                     getProcessAPI().executeFlowNode(item.getId().toLong());
                 }
             } else {
-                throw new APIException("Can't update " + item.getClass().getName() + " state to \"" + item.getState() + "\"");
+                throw new APIException("Can't update " + item.getClass().getName() + " state to \"" + state + "\"");
             }
         } catch (final Exception e) {
             throw new APIException(e);

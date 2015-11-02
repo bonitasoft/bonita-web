@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-10-12 05:11-0400\n"
+"POT-Creation-Date: 2015-10-27 03:03+0100\n"
+"PO-Revision-Date: 2015-10-30 06:45-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1039,8 +1039,14 @@ msgstr "Ha ocurrido un error al actualizar la información de despliegue del pro
 msgid "Error when updating user"
 msgstr "Ha ocurrido un error al actualizar el usuario"
 
+msgid "Error while trying to execute the task."
+msgstr "Error while trying to execute the task."
+
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar ejecutar la tarea. Falta información obligatoria (contrato incompleto)."
+
+msgid "Error while trying to start the case."
+msgstr "Error while trying to start the case."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar iniciar un caso. Falta información obligatoria (contrato incompleto)."
