@@ -4,12 +4,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita-bpm-new-features\n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-02 10:19-0500\n"
+"PO-Revision-Date: 2015-11-03 02:51-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -47,14 +57,6 @@ msgstr "30 分"
 #: main/features/admin/monitoring/monitoring.html:13
 msgid "5 min."
 msgstr "5 分"
-
-#: main/features/admin/license/monitoring/license-monitoring.html:53
-msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. Remember to renew your license in time if your license expires before the count end date."
-msgstr "<strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> ～ <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>  の期間に提供されている利用可能案件数の上限は、<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> です。この期間内に実際の案件数がこの上限を超える恐れがある場合は、ライセンス終了日前までにこの上限を更新してください。"
-
-#: main/features/admin/license/monitoring/license-monitoring.html:54
-msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person."
-msgstr "<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> までにご利用可能な案件数は、 <strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> です。ご利用可能な案件数を追加するには、お客様の営業担当者にお問い合わせください。"
 
 msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
@@ -173,7 +175,7 @@ msgstr "フォームのマッピングでカスタム ページを使用でき�
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "そのページとプロファイルは、アプリケーションをインポートする前にポータルに既に読み込まれていなければなりません。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:68
+#: main/features/admin/license/monitoring/license-monitoring.html:92
 msgid "CPU information"
 msgstr "CPU 情報"
 
@@ -212,7 +214,7 @@ msgstr "ファイルをアップロードできません"
 msgid "Case"
 msgstr "案件"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:52
+#: main/features/admin/license/monitoring/license-monitoring.html:60
 msgid "Case counter"
 msgstr "案件カウンター"
 
@@ -235,7 +237,7 @@ msgstr "案件の開始"
 msgid "Case state"
 msgstr "案件の状態"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:56
+#: main/features/admin/license/monitoring/license-monitoring.html:62
 msgid "Case usage:"
 msgstr "ご利用案件数："
 
@@ -349,7 +351,7 @@ msgstr "作成"
 msgid "Creation on"
 msgstr "作成対象："
 
-#: main/features/admin/license/monitoring/license-monitoring.html:49
+#: main/features/admin/license/monitoring/license-monitoring.html:53
 msgid "Current license"
 msgstr "現在のライセンス"
 
@@ -591,7 +593,7 @@ msgstr "起案"
 msgid "Internal"
 msgstr "内部"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:11
+#: main/features/admin/license/monitoring/license-monitoring.html:14
 msgid "Internal server error."
 msgstr "内部サーバー エラーです。"
 
@@ -628,10 +630,14 @@ msgid "Loading..."
 msgstr "ロード中..."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:7
+msgid "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
+"      this information."
+msgstr "ライセンス ステータスを確認するには、プラットフォーム管理者としてログインします。プラットフォーム管理者だけが、この情報にアクセスすることができます。"
+
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
 msgstr "ライセンス ステータスを確認するには、プラットフォーム管理者としてログインします。プラットフォーム管理者だけが、この情報にアクセスすることができます。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:39
+#: main/features/admin/license/monitoring/license-monitoring.html:42
 msgid "Login"
 msgstr "ログイン"
 
@@ -801,7 +807,7 @@ msgstr "パラメータ"
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:28
+#: main/features/admin/license/monitoring/license-monitoring.html:31
 msgid "Password"
 msgstr "パスワード"
 
@@ -1094,9 +1100,10 @@ msgstr "アプリケーション"
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:55
-msgid "The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
-msgstr "案件数カウンターは、<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> にお客様のライセンスの値にリセットされます。"
+#: main/features/admin/license/monitoring/license-monitoring.html:85
+msgid "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
+msgstr "案件カウンターは、契約期間終了日： {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}} にお客様の\n"
+"ライセンス契約の値にリセットされます。"
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
 msgid "The current process has no connectors defined."
@@ -1201,7 +1208,12 @@ msgstr "検索キーワードをここで入力..."
 msgid "URL"
 msgstr "URL"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:10
+#: main/features/admin/license/monitoring/license-monitoring.html:11
+msgid "Unable to log in.\n"
+"        Please check your username and password."
+msgstr "ログインできません。\n"
+"        ユーザー名とパスワードをチェックしてください。"
+
 msgid "Unable to log in. Please check your username and password."
 msgstr "ログインできません。ユーザー名とパスワードを確認してください。"
 
@@ -1242,7 +1254,7 @@ msgstr "URL"
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:16
+#: main/features/admin/license/monitoring/license-monitoring.html:19
 msgid "Username"
 msgstr "ユーザー名"
 
@@ -1327,13 +1339,13 @@ msgstr "あなたは、アプリケーションをエクスポートしようと
 msgid "You must add a page before you can reference it in a menu."
 msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:69
-msgid "Your current license permits you to use <strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> cores."
-msgstr "現在のライセンスでは、<strong>{{LicenseMonitoringCtrl.license.numberOfCPUCores}}</strong> コアを使用することができます。"
+#: main/features/admin/license/monitoring/license-monitoring.html:94
+msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr "現在のライセンスは、 {{LicenseMonitoringCtrl.license.numberOfCPUCores}} コアの使用を許可しています。"
 
-#: main/features/admin/license/monitoring/license-monitoring.html:50
-msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-msgstr "お客様のライセンスの有効日数は <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong> です。<strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong> に有効期限が切れます。ライセンスを更新するには、ライセンスキーを生成しカスタマー ポータルに進むか、またはお客様の営業担当者にお問い合わせください。"
+#: main/features/admin/license/monitoring/license-monitoring.html:55
+msgid "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
+msgstr "お客様のライセンスは、{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo}}、{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}} に有効期限が切れます。ライセンスを更新するには、カスタマー ポータルに移動しライセンスキーを生成するか、あるいはお客様の営業担当者にお問い合わせください。"
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
 msgid "an Application"
@@ -1476,6 +1488,14 @@ msgstr "これはテスト用に自動生成された一時的なフォームで
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "will be permanently deleted."
 msgstr "恒久的に削除されます。"
+
+#: main/features/admin/license/monitoring/license-monitoring.html:75
+msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
+msgstr "{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} ～ {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}} の契約期間内で有効な案件数の上限は、{{LicenseMonitoringCtrl.license.caseCounterLimit}} です。この契約終了日前に案件数の上限を超える可能性がある場合は、その前にご契約案件数の上限を更新するようにしてください。"
+
+#: main/features/admin/license/monitoring/license-monitoring.html:81
+msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
+msgstr "契約ライセンス終了日：{{LicenseMonitoringCtrl.license.endPeriodTimestamp|dateI18n : 'LL'}} まで {{LicenseMonitoringCtrl.license.remainingInstances}} 案件が利用可能です。この案件数を追加するには、お客様の営業担当者にお問い合わせください。"
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "{{currentFirstResultIndex}} - {{currentLastResultIndex}} / {{pagination.total}} 件"
