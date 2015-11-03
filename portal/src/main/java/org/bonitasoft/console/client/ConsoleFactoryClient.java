@@ -1,6 +1,11 @@
 package org.bonitasoft.console.client;
 
-import com.google.gwt.core.shared.GWT;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -89,11 +94,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gwt.core.shared.GWT;
 
 /**
  * console client page
@@ -114,6 +115,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
+
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -203,7 +206,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             return prepareAngularPage(token);
-        } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (AngularIFrameView.TASK_LISTING_TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES,
+                getCurrentUserAccessRights())) {
+            return prepareAngularPage(token);
+        }
+        else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
                 && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -451,6 +458,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         pagePrivileges.put(TaskQuickDetailsAdminPage.TOKEN, TaskQuickDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(TaskMoreDetailsAdminPage.TOKEN, TaskMoreDetailsAdminPage.PRIVILEGES);
         pagePrivileges.put(TasksListingPage.TOKEN, TasksListingPage.PRIVILEGES);
+        pagePrivileges.put(AngularIFrameView.TASK_LISTING_TOKEN, TasksListingPage.PRIVILEGES);
         pagePrivileges.put(HumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.PRIVILEGES);
         pagePrivileges.put(HumanTaskMoreDetailsPage.TOKEN, HumanTaskMoreDetailsPage.PRIVILEGES);
         pagePrivileges.put(ArchivedHumanTaskQuickDetailsPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.PRIVILEGES);
