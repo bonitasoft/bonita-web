@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-10-23 12:41-0400\n"
+"PO-Revision-Date: 2015-11-02 10:14-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1103,7 +1103,7 @@ msgstr "El Dato de Negocio:  [ {} ] utiliza Objetos de Negocio que no están def
 
 #: main/features/admin/license/monitoring/license-monitoring.html:85
 msgid "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
-msgstr "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
+msgstr "El contador de casos se restablecerá al valor de su licencia el {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
 msgid "The current process has no connectors defined."
@@ -1210,8 +1210,7 @@ msgstr "URL"
 #: main/features/admin/license/monitoring/license-monitoring.html:11
 msgid "Unable to log in.\n"
 "        Please check your username and password."
-msgstr "Unable to log in.\n"
-"        Please check your username and password."
+msgstr "Imposible Iniciar sesión. Por favor, comprueba tu usuario y contraseña."
 
 msgid "Unable to log in. Please check your username and password."
 msgstr "No se puede iniciar la sesión. Por favor comprueba tu nombre de usuario y tu contraseña."

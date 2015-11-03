@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-10-23 12:38-0400\n"
+"PO-Revision-Date: 2015-11-02 10:10-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -33,10 +33,10 @@ msgstr ""
 "X-Crowdin-File: /7.1.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
-msgstr "Erreur dans la structure du fichier .zip. Vérifiez qu'il contient bien un fichier page.properties au bon format, et un fichier index.html ou un fichier Index.groovy. Pour plus d'informations, consultez la documentation ou le fichier readme des pages d'exemple (menu Resources)"
+msgstr "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 
 msgid "1 case has been deleted"
-msgstr "1 cas a été supprimé"
+msgstr "1 case has been deleted"
 
 #: main/features/admin/monitoring/monitoring.html:16
 msgid "1 h."
@@ -59,7 +59,7 @@ msgid "5 min."
 msgstr "5 min."
 
 msgid "A page with this name already exists."
-msgstr "Une page portant ce nom existe déjà."
+msgstr "A page with this name already exists."
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:27
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:116
@@ -74,18 +74,18 @@ msgstr "Actions"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:10
 msgid "Activation state"
-msgstr "État d'activation"
+msgstr "Activation state"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:7
 msgid "Actor name"
-msgstr "Nom de l'acteur"
+msgstr "Actor name"
 
 msgid "Actor {} has been deleted"
-msgstr "L'acteur {} a été supprimé"
+msgstr "Actor {} has been deleted"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:2
 msgid "Actors"
-msgstr "Acteurs"
+msgstr "Actors"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-menuCreator.html:7
 #: bonita-portal-js/main/features/admin/applications/details/page-list-addPageModal.html:34
@@ -93,7 +93,7 @@ msgstr "Acteurs"
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:18
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:19
 msgid "Add"
-msgstr "Ajouter"
+msgstr "Add"
 
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:5
 msgid "Add from custom pages"
@@ -110,7 +110,7 @@ msgstr "Ajouter une option de menu"
 
 #: bonita-portal-js/main/features/admin/applications/details/page-list-addPageModal.html:3
 msgid "Add page"
-msgstr "Ajouter une page"
+msgstr "Add page"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:41
 msgid "Add pages in Navigation"
@@ -124,14 +124,14 @@ msgstr "Ajouter un menu "
 #: main/features/admin/monitoring/monitoring.html:61
 #: main/features/admin/monitoring/monitoring.html:71
 msgid "All"
-msgstr "Tous"
+msgstr "All"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:15
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
 
 msgid "An error occured during categories update"
-msgstr "Une erreur s'est produite à la mise à jour des catégories"
+msgstr "An error occured during categories update"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:15
 msgid "Application XML file"
@@ -144,32 +144,32 @@ msgstr "Liste des applications"
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:51
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:53
 msgid "Apply"
-msgstr "Appliquer"
+msgstr "Apply"
 
 msgid "Archived cases"
-msgstr "Cas archivés"
+msgstr "Archived cases"
 
 msgid "Attention"
 msgstr "Attention"
 
 msgid "Autofill"
-msgstr "Appliquer des valeurs de test"
+msgstr "Autofill"
 
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:31
 msgid "Available tasks"
-msgstr "Tâches disponibles"
+msgstr "Available tasks"
 
 #: bonita-portal-js/main/features/admin/processes/details/menu.html:4
 #: main/features/admin/processes/details/forms/form-uploader.html:45
 msgid "Back"
-msgstr "Retour"
+msgstr "Back"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:69
 msgid "Before you can update a form mapping, you need to add the new form. To add it for this process only, upload it from the Form list tab"
-msgstr "Avant de mettre à jour le mapping d'un formulaire, vous devez déclarer le formulaire à associer. Pour le déclarer localement au niveau de ce processus, utilisez l'onglet Liste des formulaires"
+msgstr "Before you can update a form mapping, you need to add the new form. To add it for this process only, upload it from the Form list tab"
 
 msgid "Before you can use a custom page in a form mapping, you must install the page"
-msgstr "Pour utiliser une page ou un formulaire dans ce processus, vous devez l'installer"
+msgstr "Before you can use a custom page in a form mapping, you must install the page"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:10
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
@@ -177,13 +177,13 @@ msgstr "Avant d'importer une application, les pages et le profils utilisés doiv
 
 #: main/features/admin/license/monitoring/license-monitoring.html:92
 msgid "CPU information"
-msgstr "Informations sur les CPU utilisés"
+msgstr "CPU information"
 
 msgid "Can't import page or form to the process"
-msgstr "Impossible d'importer la page ou le formulaire dans le processus"
+msgstr "Can't import page or form to the process"
 
 msgid "Can't update expression content"
-msgstr "Impossible de mettre à jour le contenu de l'expression"
+msgstr "Can't update expression content"
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:12
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:62
@@ -202,146 +202,146 @@ msgstr "Impossible de mettre à jour le contenu de l'expression"
 #: main/features/admin/processes/details/scripts/scripts.html:23
 #: main/features/admin/processes/details/startForModal.html:23
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Cancel"
 
 msgid "Cancelled, skipped instances"
-msgstr "Instances en état cancelled ou skipped (passées)"
+msgstr "Cancelled, skipped instances"
 
 msgid "Cannot upload the file"
-msgstr "Impossible de charger le fichier"
+msgstr "Cannot upload the file"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:2
 msgid "Case"
-msgstr "Cas"
+msgstr "Case"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:60
 msgid "Case counter"
-msgstr "Compteur des cas"
+msgstr "Case counter"
 
 msgid "Case id"
-msgstr "Numéro de cas"
+msgstr "Case id"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:10
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:10
 msgid "Case list"
-msgstr "Liste des cas"
+msgstr "Case list"
 
 msgid "Case overview"
-msgstr "Page de synthèse du cas"
+msgstr "Case overview"
 
 msgid "Case start"
-msgstr "Démarrage d'un cas"
+msgstr "Case start"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-filters.html:24
 #: main/features/admin/monitoring/monitoring.html:67
 msgid "Case state"
-msgstr "Etat du cas"
+msgstr "Case state"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:62
 msgid "Case usage:"
-msgstr "Pourcentage des cas déjà démarrés :"
+msgstr "Case usage:"
 
 msgid "Case: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
+msgstr "Case: {{caseId}} - Process: {{processName}} ({{processVersion}})"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases.html:2
 #: bonita-portal-js/main/features/user/cases/list/cases.html:2
 msgid "Cases"
-msgstr "Cas"
+msgstr "Cases"
 
 #: main/features/admin/monitoring/monitoring.html:107
 #: main/features/admin/monitoring/monitoring.html:28
 #: main/features/admin/processes/details/monitoring-status.html:8
 msgid "Cases with failures"
-msgstr "Cas avec erreurs"
+msgstr "Cases with failures"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:26
 msgid "Categories"
-msgstr "Catégories"
+msgstr "Categories"
 
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:75
 msgid "Check that each entity has the relevant Process Manager profile in the Portal."
-msgstr "Vérifiez que chaque entité possède bien le profil Gestionnaire de Processus adéquat dans le Portal."
+msgstr "Check that each entity has the relevant Process Manager profile in the Portal."
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:12
 msgid "Class name"
-msgstr "Nom de la classe"
+msgstr "Class name"
 
 #: main/features/admin/processes/details/edit-process-connector-implementation.html:14
 msgid "Click here to choose your file (.zip)"
-msgstr "Cliquez ici pour choisir votre fichier (.zip)"
+msgstr "Click here to choose your file (.zip)"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:19
 msgid "Click here to choose your file. XML file (.xml)"
-msgstr "Cliquez pour choisir votre fichier XML (.xml)"
+msgstr "Click here to choose your file. XML file (.xml)"
 
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:75
 msgid "Click here to go to Profile listing page"
-msgstr "Cliquez ici pour aller à la page de gestion des profils"
+msgstr "Click here to go to Profile listing page"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:75
 #: bonita-portal-js/main/features/admin/applications/import-application.html:82
 #: main/features/admin/processVisu/visuShowKey.html:71
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:54
 msgid "Close"
-msgstr "Fermer"
+msgstr "Close"
 
 msgid "Columns"
 msgstr "Colonnes"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr "Sélection des colonnes"
+msgstr "Columns selection"
 
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
-msgstr "Échec de compilation. Vérifiez que le fichier Index.groovy implémente l'interface PageController."
+msgstr "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 
 msgid "Completed instances"
-msgstr "Instances en état completed (faites)"
+msgstr "Completed instances"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:6
 msgid "Configuration state"
-msgstr "Etat de la configuration"
+msgstr "Configuration state"
 
 #: main/features/admin/processes/details/forms/form-uploader.html:56
 #: main/features/admin/processes/details/forms/form-uploader.html:63
 msgid "Confirm"
-msgstr "Confirmer"
+msgstr "Confirm"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-deletion-modal.html:2
 msgid "Confirm delete?"
 msgstr "Confirmer la suppression ?"
 
 msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "Les définitions de connecteur doivent être résolues pour pouvoir activer le processus."
+msgstr "Connector definitions must be resolved before enabling the Process."
 
 #: main/features/admin/processes/details/edit-process-connector-implementation.html:10
 msgid "Connector zip file"
-msgstr "Fichier .zip du connecteur"
+msgstr "Connector zip file"
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:2
 msgid "Connectors"
-msgstr "Connecteurs"
+msgstr "Connectors"
 
 #: main/features/admin/monitoring/monitoring.html:24
 msgid "Counters include cases from root processes and cases started by call activities."
-msgstr "Les compteurs rendent compte à la fois des cas provenant de processus racines et des cas démarrés par des activités appelantes."
+msgstr "Counters include cases from root processes and cases started by call activities."
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:27
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:28
 msgid "Create a new membership"
-msgstr "Créer une nouvelle adhésion"
+msgstr "Create a new membership"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:6
 msgid "Create an application"
 msgstr "Créer une application"
 
 msgid "Create membership"
-msgstr "Créer une adhésion"
+msgstr "Create membership"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:24
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Created by"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details-app.html:4
 msgid "Creation"
@@ -353,7 +353,7 @@ msgstr "Créée le"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:53
 msgid "Current license"
-msgstr "Licence active"
+msgstr "Current license"
 
 msgid "DEFAULT ZOOM LEVEL"
 msgstr "NIVEAU DE ZOOM PAR DEFAUT"
@@ -367,7 +367,7 @@ msgstr "NIVEAU DE ZOOM PAR DEFAUT"
 #: bonita-portal-js/main/features/admin/processes/details/delete-process-modal.html:9
 #: bonita-portal-js/main/features/admin/processes/details/menu.html:8
 msgid "Delete"
-msgstr "Supprimer"
+msgstr "Delete"
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:2
 msgid "Delete application"
@@ -375,11 +375,11 @@ msgstr "Supprimer l'application"
 
 #: bonita-portal-js/main/features/admin/processes/details/delete-process-modal.html:3
 msgid "Delete process"
-msgstr "Supprimer un processus"
+msgstr "Delete process"
 
 #: bonita-portal-js/main/features/admin/processes/details/delete-process-modal.html:6
 msgid "Delete the process"
-msgstr "Supprimer le processus"
+msgstr "Delete the process"
 
 #: bonita-portal-js/main/features/admin/applications/edit-application.html:58
 #: bonita-portal-js/main/features/admin/processes/details/params.html:11
@@ -389,26 +389,26 @@ msgstr "Description"
 
 #: main/features/admin/processVisu/visuShowKey.html:6
 msgid "Diagram Key"
-msgstr "Légende du diagramme"
+msgstr "Diagram Key"
 
 msgid "Disabled, no new case can be started"
 msgstr "Désactivé, aucun nouveau cas peut être démarré"
 
 #: bonita-portal-js/main/features/admin/applications/edit-application.html:13
 msgid "Display name"
-msgstr "Nom affiché"
+msgstr "Display name"
 
 msgid "Drawing process ..."
-msgstr "Tracé du processus en cours ..."
+msgstr "Drawing process ..."
 
 msgid "Drawing process..."
-msgstr "Dessin du processus ..."
+msgstr "Drawing process..."
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:43
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:4
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-actionBar.html:4
 msgid "Edit"
-msgstr "Modifier"
+msgstr "Edit"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:7
 msgid "Edit menu"
@@ -421,7 +421,7 @@ msgstr "Editer l'option de menu"
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:46
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:48
 msgid "Enable all"
-msgstr "Tout associer"
+msgstr "Enable all"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:108
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:83
@@ -430,79 +430,79 @@ msgstr "Date de fin "
 
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:9
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
-msgstr "Saisissez le nom de la nouvelle catégorie puis faites « Entrée » pour finaliser sa création et l'assigner au processus."
+msgstr "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 
 msgid "Enter a new category name to create a new category and assign it to the current process."
-msgstr "Saisissez un nom pour créer une nouvelle catégorie et l'attribuer à ce processus."
+msgstr "Enter a new category name to create a new category and assign it to the current process."
 
 msgid "Enter the user to start the case for..."
-msgstr "Saisissez le nom de l'utilisateur pour qui vous allez démarrer le cas..."
+msgstr "Enter the user to start the case for..."
 
 #: main/features/admin/processes/details/startForModal.html:3
 msgid "Enter user"
-msgstr "Saisir l'utilisateur"
+msgstr "Enter user"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "Toutes les entités doivent être configurées pour pouvoir activer le processus."
+msgstr "Entity Mapping must be resolved before enabling the Process."
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:5
 msgid "Error"
-msgstr "Erreur"
+msgstr "Error"
 
 msgid "Error on drawing process!"
-msgstr "Erreur lors du dessin de processus !"
+msgstr "Error on drawing process!"
 
 msgid "Error!"
-msgstr "Erreur!"
+msgstr "Error!"
 
 msgid "Error: value must be a boolean"
-msgstr "Erreur : la valeur doit être un booléen"
+msgstr "Error: value must be a boolean"
 
 msgid "Error: value must be a double"
-msgstr "Erreur : valeur doit être un double"
+msgstr "Error: value must be a double"
 
 msgid "Error: value must be an integer"
-msgstr "Erreur : la valeur doit être un entier"
+msgstr "Error: value must be an integer"
 
 msgid "Execute"
-msgstr "Exécuter"
+msgstr "Execute"
 
 msgid "Executing, completing, initializing instances"
-msgstr "Instances en état executing, completing, initializing"
+msgstr "Executing, completing, initializing instances"
 
 msgid "Expecting a {} value."
-msgstr "Attend une valeur {}."
+msgstr "Expecting a {} value."
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:44
 #: bonita-portal-js/main/features/admin/applications/export-application.html:15
 msgid "Export"
-msgstr "Exporter"
+msgstr "Export"
 
 #: bonita-portal-js/main/features/admin/applications/export-application.html:2
 msgid "Export application"
 msgstr "Exporter l'application"
 
 msgid "Expression content has been updated"
-msgstr "Le contenu de l'expression a été mis à jour"
+msgstr "Expression content has been updated"
 
 msgid "Failed"
-msgstr "En échec"
+msgstr "Failed"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:36
 msgid "Failed Flow Nodes"
 msgstr "Flow nodes en erreur"
 
 msgid "Failed instances"
-msgstr "Instances en état failed (en échec)"
+msgstr "Failed instances"
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
-msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caractères"
+msgstr "Filename too long. The zip filename must be no longer than 50 characters"
 
 msgid "Fill in each form inputs with fake data."
-msgstr "Remplit les champs avec des valeurs basiques, pour vous permettre de tester rapidement vos formulaires."
+msgstr "Fill in each form inputs with fake data."
 
 msgid "Filter on process"
-msgstr "Filtre de processus"
+msgstr "Filter on process"
 
 #: bonita-portal-js/main/features/admin/cases/list/archived-cases-list-filters.html:3
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-filters.html:2
@@ -510,76 +510,76 @@ msgstr "Filtre de processus"
 #: bonita-portal-js/main/features/user/cases/list/cases-list-filters.html:2
 #: main/features/admin/monitoring/monitoring.html:45
 msgid "Filters"
-msgstr "Filtres"
+msgstr "Filters"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:76
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
+msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:47
 #: main/features/admin/processes/details/forms/forms-mapping.html:7
 msgid "Form"
-msgstr "Formulaire"
+msgstr "Form"
 
 msgid "Form cannot be empty"
-msgstr "Un formulaire ne peut pas être vide"
+msgstr "Form cannot be empty"
 
 #: main/features/admin/processes/details/forms/forms.html:10
 msgid "Form list"
-msgstr "Liste des formulaires"
+msgstr "Form list"
 
 #: main/features/admin/processes/details/forms/forms.html:2
 msgid "Forms"
-msgstr "Formulaires"
+msgstr "Forms"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
-msgstr "Général"
+msgstr "General"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:10
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:12
 msgid "Groups"
-msgstr "Groupes"
+msgstr "Groups"
 
 msgid "Groups mapped to {}"
-msgstr "Groupes associés à {}"
+msgstr "Groups mapped to {}"
 
 #: main/features/admin/monitoring/monitoring.html:73
 msgid "Healthy"
-msgstr "Sans erreur"
+msgstr "Healthy"
 
 #: main/features/admin/monitoring/monitoring.html:108
 #: main/features/admin/monitoring/monitoring.html:32
 #: main/features/admin/processes/details/monitoring-status.html:12
 msgid "Healthy cases"
-msgstr "Cas sans erreur"
+msgstr "Healthy cases"
 
 msgid "Hide"
-msgstr "Masquer"
+msgstr "Hide"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:103
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:30
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:26
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:78
 msgid "ID"
-msgstr "Id"
+msgstr "ID"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:15
 msgid "If you do not specify a form or a URL, the case must be started programmatically."
-msgstr "Si vous ne spécifiez pas de formulaire ni d'URL, le cas devra être démarré par le système."
+msgstr "If you do not specify a form or a URL, the case must be started programmatically."
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:55
 msgid "If you do not specify a form or a URL, the task must be executed programmatically."
-msgstr "Si vous ne spécifiez pas de formulaire ni d'URL, la tâche devra être exécutée par le système."
+msgstr "If you do not specify a form or a URL, the task must be executed programmatically."
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:11
 msgid "Implementation version"
-msgstr "Version de l'implémentation"
+msgstr "Implementation version"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:7
 #: bonita-portal-js/main/features/admin/applications/import-application.html:62
 msgid "Import"
-msgstr "Importer"
+msgstr "Import"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:7
 #: bonita-portal-js/main/features/admin/applications/import-application.html:3
@@ -588,25 +588,25 @@ msgstr "Importer une application"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:12
 msgid "Instantiation"
-msgstr "Instanciation"
+msgstr "Instantiation"
 
 msgid "Internal"
 msgstr "Interne"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:14
 msgid "Internal server error."
-msgstr "Erreur interne du serveur."
+msgstr "Internal server error."
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Éléments par page"
+msgstr "Items per page"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"
-msgstr "Dernière mise à jour"
+msgstr "Last update"
 
 msgid "Last updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Last updated on"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:46
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:9
@@ -617,17 +617,17 @@ msgstr "Layout"
 #: main/features/admin/processes/details/forms/forms-mapping.html:27
 #: main/features/admin/processes/details/forms/forms-mapping.html:56
 msgid "Legacy"
-msgstr "6.x"
+msgstr "Legacy"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:2
 msgid "License"
-msgstr "Licence"
+msgstr "License"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:159
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:126
 #: main/features/admin/processes/details/scripts/scripts.html:17
 msgid "Loading..."
-msgstr "Chargement..."
+msgstr "Loading..."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:7
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
@@ -635,11 +635,11 @@ msgid "Log in as platform administrator to see the license status. Only the plat
 msgstr "Connectez-vous en tant qu'administrateur de la plate-forme pour connaître l'état de la licence. Seul l'administrateur de la plate-forme peut accéder à ces informations."
 
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
-msgstr "Connectez-vous en tant qu'administrateur de la plate-forme pour connaître l'état de la licence. Seul l'administrateur de la plate-forme peut accéder à ces informations."
+msgstr "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:42
 msgid "Login"
-msgstr "Se connecter"
+msgstr "Login"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:41
 msgid "Look & Feel"
@@ -655,10 +655,10 @@ msgstr "MIN"
 
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:3
 msgid "Manage Categories"
-msgstr "Gérer les catégories"
+msgstr "Manage Categories"
 
 msgid "Manage categories"
-msgstr "Gérer les catégories"
+msgstr "Manage categories"
 
 #: main/features/admin/processes/details/forms/forms.html:7
 msgid "Mapping"
@@ -667,23 +667,23 @@ msgstr "Mapping"
 #: bonita-portal-js/main/features/user/cases/list/archived-cases-list-filters.html:21
 #: bonita-portal-js/main/features/user/cases/list/cases-list-filters.html:20
 msgid "Me"
-msgstr "Moi"
+msgstr "Me"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:11
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:13
 msgid "Memberships"
-msgstr "Adhésions"
+msgstr "Memberships"
 
 msgid "Memberships mapped to {}"
-msgstr "Adhésions associées à {}"
+msgstr "Memberships mapped to {}"
 
 #: main/features/admin/monitoring/monitoring.html:4
 msgid "Monitor open cases"
-msgstr "Monitoring des cas en cours"
+msgstr "Monitor open cases"
 
 #: main/features/admin/processes/details/monitoring-status.html:2
 msgid "Monitoring status"
-msgstr "Etat du monitoring"
+msgstr "Monitoring status"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:24
 msgid "Multi-page menu"
@@ -694,7 +694,7 @@ msgstr "Menu"
 #: bonita-portal-js/main/features/admin/processes/details/params.html:10
 #: main/features/admin/processes/details/forms/forms-list.html:8
 msgid "Name"
-msgstr "Nom"
+msgstr "Name"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-menuCreator.html:2
 msgid "Navigation"
@@ -702,15 +702,15 @@ msgstr "Navigation"
 
 #: main/features/admin/monitoring/monitoring.html:11
 msgid "Never"
-msgstr "Jamais"
+msgstr "Never"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:6
 msgid "New"
-msgstr "Nouveau"
+msgstr "New"
 
 #: main/features/admin/processes/details/forms/form-uploader.html:39
 msgid "Next"
-msgstr "Suivant"
+msgstr "Next"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:11
 msgid "No application available."
@@ -723,45 +723,45 @@ msgstr "Aucun cas à afficher"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:54
 msgid "No contract has been defined. The form or URL specified here must only execute the task and not send any data."
-msgstr "Aucun contrat n'a été défini. Le formulaire ou l'URL spécifié(e) ici doit uniquement exécuter la tâche et ne pas envoyer de données."
+msgstr "No contract has been defined. The form or URL specified here must only execute the task and not send any data."
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:14
 msgid "No contract has been defined. The form or URL specified here must only start the case and not send any data."
-msgstr "Aucun contrat n'a été défini. Le formulaire ou l'URL spécifié(e) ici doit uniquement démarrer le cas et ne pas envoyer de données."
+msgstr "No contract has been defined. The form or URL specified here must only start the case and not send any data."
 
 msgid "No data"
-msgstr "Pas de donnée disponible"
+msgstr "No data"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:21
 msgid "No description."
-msgstr "Aucune description disponible."
+msgstr "No description."
 
 #: main/features/admin/processes/details/scripts/scripts.html:16
 msgid "No groovy script found"
-msgstr "Aucun script Groovy n'a été trouvé"
+msgstr "No groovy script found"
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:15
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:15
 msgid "No mapping"
-msgstr "Aucun mapping"
+msgstr "No mapping"
 
 msgid "No scripts"
-msgstr "Aucun script"
+msgstr "No scripts"
 
 #: main/features/admin/cases/list/search-index.html:6
 msgid "No value"
-msgstr "Aucune valeur"
+msgstr "No value"
 
 msgid "Not a valid number!"
-msgstr "Nombre invalide !"
+msgstr "Not a valid number!"
 
 #: main/features/admin/processes/details/startForModal.html:22
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:60
 msgid "One or more connectors on case start or case end failed"
-msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
+msgstr "One or more connectors on case start or case end failed"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:20
 msgid "One-page menu"
@@ -769,20 +769,20 @@ msgstr "Lien vers une page"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:10
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
-msgstr "Le tableau ci-dessous affiche uniquement les cas provenant de processus racines. Le détail des cas démarrés par des activités appelantes n'est pas disponible."
+msgstr "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 
 msgid "Open"
-msgstr "Ouvrir"
+msgstr "Open"
 
 #: main/features/admin/monitoring/monitoring.html:109
 #: main/features/admin/monitoring/monitoring.html:36
 #: main/features/admin/processes/details/monitoring-status.html:16
 msgid "Open cases"
-msgstr "Cas démarrés"
+msgstr "Open cases"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:25
 msgid "Overview"
-msgstr "Page de synthèse"
+msgstr "Overview"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:45
 #: bonita-portal-js/main/features/admin/applications/details/page-list-addPageModal.html:11
@@ -790,11 +790,11 @@ msgid "Page"
 msgstr "Page"
 
 msgid "Page was not sucessfully attached to the process"
-msgstr "La page ou le formulaire n'a pas été ajouté(e) au processus."
+msgstr "Page was not sucessfully attached to the process"
 
 #: main/features/admin/processes/details/forms/form-uploader.html:15
 msgid "Page zip file"
-msgstr "Le ficher .zip de la page ou du formulaire"
+msgstr "Page zip file"
 
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:2
 msgid "Pages"
@@ -802,14 +802,14 @@ msgstr "Pages"
 
 #: bonita-portal-js/main/features/admin/processes/details/params.html:2
 msgid "Parameters"
-msgstr "Paramètres"
+msgstr "Parameters"
 
 msgid "Parameters must be resolved before enabling the Process."
-msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
+msgstr "Parameters must be resolved before enabling the Process."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:31
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Password"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:37
 msgid "Pending Flow Nodes"
@@ -817,24 +817,24 @@ msgstr "Flow nodes en attente"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:5
 msgid "Platform administrator login"
-msgstr "Login - Administrateur de la plate-forme"
+msgstr "Platform administrator login"
 
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:2
 msgid "Process Manager mapping"
-msgstr "Désignation des Gestionnaires de processus"
+msgstr "Process Manager mapping"
 
 msgid "Process enabled"
-msgstr "Processus activé"
+msgstr "Process enabled"
 
 #: main/features/admin/monitoring/monitoring.html:83
 msgid "Process list"
-msgstr "Liste des processus"
+msgstr "Process list"
 
 msgid "Process manager mapping {{mappingName}} could not be deleted"
-msgstr "Le mapping {{mappingName}} du profil Gestionnaire de processus  n'a pas pu être supprimé"
+msgstr "Process manager mapping {{mappingName}} could not be deleted"
 
 msgid "Process manager mapping {{mappingName}} has been deleted"
-msgstr "La mapping {{mappingName}} du profil Gestionnaire de processus a été supprimé"
+msgstr "Process manager mapping {{mappingName}} has been deleted"
 
 #: bonita-portal-js/main/features/admin/cases/list/archived-cases-list-filters.html:5
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-filters.html:4
@@ -859,50 +859,50 @@ msgstr "Version du processus"
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:16
 #: bonita-portal-js/main/features/admin/applications/edit-application.html:51
 msgid "Profile"
-msgstr "Profils"
+msgstr "Profile"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:76
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:75
 msgid "Profiles"
-msgstr "Profils"
+msgstr "Profiles"
 
 msgid "Ready, waiting instances"
-msgstr "Instances en état ready, waiting (en attente)"
+msgstr "Ready, waiting instances"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:10
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:10
 #: main/features/admin/monitoring/monitoring.html:7
 msgid "Refresh"
-msgstr "Rafraîchir"
+msgstr "Refresh"
 
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:24
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:27
 msgid "Remove"
-msgstr "Supprimer"
+msgstr "Remove"
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:12
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:12
 msgid "Remove all"
-msgstr "Tout supprimer"
+msgstr "Remove all"
 
 #: main/features/admin/processVisu/processVisu.html:18
 msgid "Reset"
-msgstr "Réinitialiser"
+msgstr "Reset"
 
 #: main/features/admin/processes/details/scripts/edit-script.html:8
 msgid "Return Type : {}"
-msgstr "Type de retour: {}"
+msgstr "Return Type : {}"
 
 msgid "Return type"
-msgstr "Type de retour"
+msgstr "Return type"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:9
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:10
 msgid "Roles"
-msgstr "Rôles"
+msgstr "Roles"
 
 msgid "Roles mapped to {}"
-msgstr "Rôles associés à {}"
+msgstr "Roles mapped to {}"
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:30
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:12
@@ -910,70 +910,70 @@ msgstr "Rôles associés à {}"
 #: main/features/admin/processes/details/scripts/edit-script.html:16
 #: main/features/admin/processes/details/scripts/scripts.html:22
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Save"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:110
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:38
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:32
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:84
 msgid "Search Key 1"
-msgstr "Clé de recherche 1"
+msgstr "Search Key 1"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:111
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:39
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:33
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:85
 msgid "Search Key 2"
-msgstr "Clé de recherche 2"
+msgstr "Search Key 2"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:112
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:40
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:34
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:86
 msgid "Search Key 3"
-msgstr "Clé de recherche 3"
+msgstr "Search Key 3"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:113
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:41
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:35
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:87
 msgid "Search Key 4"
-msgstr "Clé de recherche 4"
+msgstr "Search Key 4"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:114
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:42
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:36
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:88
 msgid "Search Key 5"
-msgstr "Clé de recherche 5"
+msgstr "Search Key 5"
 
 #: bonita-portal-js/main/features/admin/cases/list/archived-cases-list-filters.html:31
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-filters.html:37
 #: bonita-portal-js/main/features/user/cases/list/archived-cases-list-filters.html:30
 #: bonita-portal-js/main/features/user/cases/list/cases-list-filters.html:27
 msgid "Search..."
-msgstr "Chercher..."
+msgstr "Search..."
 
 msgid "Select a file"
-msgstr "Sélectionnez un fichier"
+msgstr "Select a file"
 
 msgid "Select a group..."
-msgstr "Sélectionnez un groupe ..."
+msgstr "Select a group..."
 
 msgid "Select a role..."
-msgstr "Sélectionnez un rôle ..."
+msgstr "Select a role..."
 
 msgid "Select all"
-msgstr "Tout sélectionner "
+msgstr "Select all"
 
 msgid "Select groups..."
-msgstr "Sélectionnez les groupes..."
+msgstr "Select groups..."
 
 msgid "Select none"
-msgstr "Tout désélectionner"
+msgstr "Select none"
 
 msgid "Select roles..."
-msgstr "Sélectionnez des rôles ..."
+msgstr "Select roles..."
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:3
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
@@ -981,14 +981,14 @@ msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) �
 
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:5
 msgid "Select the entities (users, groups, roles, memberships) who will supervise this process."
-msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions), qui superviseront ce processus."
+msgstr "Select the entities (users, groups, roles, memberships) who will supervise this process."
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:53
 msgid "Select the page"
 msgstr "Sélectionnez la page"
 
 msgid "Select users..."
-msgstr "Sélectionnez des utilisateurs ..."
+msgstr "Select users..."
 
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:17
 #: bonita-portal-js/main/features/admin/applications/details/page-list.html:19
@@ -997,11 +997,11 @@ msgstr "Définir en tant que page d'accueil"
 
 #: main/features/admin/monitoring/monitoring.html:84
 msgid "Show"
-msgstr "Afficher"
+msgstr "Show"
 
 #: main/features/admin/processVisu/visuShowKey.html:2
 msgid "Show key"
-msgstr "Voir la légende"
+msgstr "Show key"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:24
 msgid "Sort by URL"
@@ -1020,31 +1020,31 @@ msgid "Sort by version"
 msgstr "Trier par version"
 
 msgid "Specify a custom page name or URL"
-msgstr "Spécifiez un nom de page, de formulaire ou une URL"
+msgstr "Specify a custom page name or URL"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:30
 msgid "Specify an imported form or a URL"
-msgstr "Spécifiez une URL ou un formulaire"
+msgstr "Specify an imported form or a URL"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-menuCreator.html:12
 msgid "Specify the menu structure."
 msgstr "Définir le menu de navigation."
 
 msgid "Start"
-msgstr "Démarrer"
+msgstr "Start"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:106
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:34
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:29
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:81
 msgid "Start date"
-msgstr "Date de début"
+msgstr "Start date"
 
 msgid "Start for"
-msgstr "Démarrer pour"
+msgstr "Start for"
 
 msgid "Started"
-msgstr "Démarré"
+msgstr "Started"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:107
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:35
@@ -1053,52 +1053,52 @@ msgstr "Démarré"
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:30
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:82
 msgid "Started by"
-msgstr "Démarré par"
+msgstr "Started by"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:109
 #: main/features/admin/monitoring/monitoring.html:104
 msgid "State"
-msgstr "Etat"
+msgstr "State"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:4
 msgid "Status of import"
-msgstr "Statut de l'import"
+msgstr "Status of import"
 
 msgid "Successfully updated categories"
-msgstr "Les catégories ont été mises à jour avec succès"
+msgstr "Successfully updated categories"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:5
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
-msgstr "Paramètres du tableau"
+msgstr "Table settings"
 
 msgid "Target is not set"
-msgstr "La cible n'est pas définie"
+msgstr "Target is not set"
 
 msgid "Task name"
-msgstr "Tâche"
+msgstr "Task name"
 
 #: main/features/admin/processVisu/visuShowKey.html:33
 msgid "Task1"
-msgstr "Tâche1"
+msgstr "Task1"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:38
 msgid "Tasks"
-msgstr "Tâches"
+msgstr "Tasks"
 
 msgid "Technical error."
-msgstr "Erreur technique."
+msgstr "Technical error."
 
 #: bonita-portal-js/main/features/admin/processes/details/menu.html:16
 msgid "The Process cannot be enabled"
-msgstr "Le processus ne peut être activé"
+msgstr "The Process cannot be enabled"
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "The application"
-msgstr "L'application"
+msgstr "The application"
 
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
-msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
+msgstr "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:85
 msgid "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
@@ -1106,19 +1106,19 @@ msgstr "Le compteur de cas sera réinitialisé à la valeur figurant sur votre l
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
 msgid "The current process has no connectors defined."
-msgstr "Aucun connecteur n'a été défini pour ce processus."
+msgstr "The current process has no connectors defined."
 
 #: main/features/admin/processes/details/forms/forms-list.html:3
 msgid "The current process has no forms deployed."
-msgstr "Aucun formulaire n'a été associé à ce processus."
+msgstr "The current process has no forms deployed."
 
 #: bonita-portal-js/main/features/admin/processes/details/params.html:4
 msgid "The current process has no parameters defined."
-msgstr "Aucun paramètre n'a été défini pour ce processus."
+msgstr "The current process has no parameters defined."
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:40
 msgid "The current process has no tasks defined."
-msgstr "Ce processus ne comporte aucune tâche humaine."
+msgstr "The current process has no tasks defined."
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-deletion-modal.html:7
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
@@ -1129,10 +1129,10 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "Les éléments suivants n'ont pas de formulaire associé : [{}]"
+msgstr "The following form mappings are not resolved: [ {} ]"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
-msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
+msgstr "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 
 #: main/features/admin/processes/details/forms/form-uploader.html:25
 msgid "The page allows users with relevant profiles to access the following permissions:"
@@ -1140,12 +1140,12 @@ msgstr "La page donne aux profils utilisateurs concernés les autorisations suiv
 
 #: main/features/admin/processes/details/forms/form-uploader.html:8
 msgid "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "L'archive de la page (.zip) doit contenir le fichier page.properties, puis soit le fichier index.html soit le fichier Index.groovy, et enfin les ressources nécessaires pour la page ou le formulaire. Pour plus d'informations, consultez la documentation ou le fichier readme de la page d'exemple (menu Ressources)."
+msgstr "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:55
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:17
 msgid "Theme"
-msgstr " Thème"
+msgstr "Theme"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-deletion-modal.html:11
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
@@ -1157,12 +1157,11 @@ msgstr "Ces cas supprimés disparaîtront définitivement des archives."
 
 #: main/features/admin/processes/details/forms/form-uploader.html:29
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\n update the page definition to specify the list of resources used."
-msgstr "Cette page n'a besoin d'aucune autorisation spécifique. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \n"
-" mettez à jour la définition de cette page pour y spécifier la liste des ressources utilisées."
+msgstr "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\n update the page definition to specify the list of resources used."
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:71
 msgid "To add it at tenant level, so it can be used in more than one process or task, add the form as a resource"
-msgstr "Pour l'ajouter au niveau global et lui permettre d'être utilisé par plusieurs processus ou tâches, ajoutez le formulaire en tant que ressource"
+msgstr "To add it at tenant level, so it can be used in more than one process or task, add the form as a resource"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:13
 msgid "To create an application, click New or Import."
@@ -1171,22 +1170,21 @@ msgstr "Pour créer une application, cliquez sur Nouveau ou Importer."
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:76
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:75
 msgid "To do so, go to"
-msgstr "Pour cela, consultez la page"
+msgstr "To do so, go to"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:110
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:38
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:32
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:84
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
-msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
+msgstr "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 
 msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du processus dans un Bonita BPM Studio version 6.4 ou ultérieure, générez le fichier .bar puis déployez-le dans le portail."
+msgstr "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
 
 #: main/features/admin/monitoring/monitoring.html:24
 msgid "Totals"
-msgstr "Totaux\n"
-""
+msgstr "Totals"
 
 #: bonita-portal-js/main/features/admin/processes/details/params.html:12
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:10
@@ -1194,10 +1192,10 @@ msgid "Type"
 msgstr "Type"
 
 msgid "Type here to search for a user..."
-msgstr "Saisissez le nom d'un utilisateur..."
+msgstr "Type here to search for a user..."
 
 msgid "Type here to search..."
-msgstr "Rechercher..."
+msgstr "Type here to search..."
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:24
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:14
@@ -1214,60 +1212,60 @@ msgid "Unable to log in.\n"
 msgstr "Impossible de se connecter. Veuillez vérifier votre nom d'utilisateur et le mot de passe."
 
 msgid "Unable to log in. Please check your username and password."
-msgstr "Impossible de se connecter. Veuillez vérifier votre nom d'utilisateur et le mot de passe."
+msgstr "Unable to log in. Please check your username and password."
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details-app.html:10
 msgid "Update"
-msgstr "Mise à jour"
+msgstr "Update"
 
 #: main/features/admin/processes/details/scripts/edit-script.html:3
 msgid "Update content of script {}"
-msgstr "Mettre à jour le contenu du script {}"
+msgstr "Update content of script {}"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:32
 msgid "Updated by"
-msgstr "Mise à jour par"
+msgstr "Updated by"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:26
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:30
 #: bonita-portal-js/main/features/admin/processes/details/information.html:14
 msgid "Updated on"
-msgstr "Mise à jour le"
+msgstr "Updated on"
 
 #: main/features/admin/processes/details/forms/form-uploader.html:3
 msgid "Upload new Page"
-msgstr "Charger (formulaire ou page)"
+msgstr "Upload new Page"
 
 #: main/features/admin/processes/details/edit-process-connector-implementation.html:3
 msgid "Upload new version of the connector"
-msgstr "Charger la nouvelle version du connecteur"
+msgstr "Upload new version of the connector"
 
 #: main/features/admin/processes/details/forms/form-uploader.html:4
 msgid "Upload new version of {}"
-msgstr "Charger la nouvelle version de {}"
+msgstr "Upload new version of {}"
 
 msgid "Url"
-msgstr "URL"
+msgstr "Url"
 
 #: bonita-portal-js/main/features/admin/processes/details/manage-category-mapping-modal.html:8
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
-msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
+msgstr "Use Arrow up and Arrow down keys to browse among existing categories."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:19
 msgid "Username"
-msgstr "Nom d'utilisateur"
+msgstr "Username"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:8
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:9
 msgid "Users"
-msgstr "Utilisateurs"
+msgstr "Users"
 
 msgid "Users mapped to {}"
-msgstr "Utilisateurs associés à {}"
+msgstr "Users mapped to {}"
 
 #: bonita-portal-js/main/features/admin/processes/details/params.html:13
 msgid "Value"
-msgstr "Valeur"
+msgstr "Value"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:23
 #: bonita-portal-js/main/features/admin/applications/edit-application.html:42
@@ -1282,41 +1280,41 @@ msgstr "Version"
 #: main/features/admin/cases/list/caseVisuDirective.html:2
 #: main/features/admin/cases/list/caseVisuDirective.html:3
 msgid "View case design"
-msgstr "Voir la modélisation du cas"
+msgstr "View case design"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:143
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:80
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:110
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:59
 msgid "View case details"
-msgstr "Voir les détails du cas"
+msgstr "View case details"
 
 #: main/features/admin/monitoring/monitoring.html:133
 msgid "View case list"
-msgstr "Voir la liste des cas"
+msgstr "View case list"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:140
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:77
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:107
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:56
 msgid "View case overview"
-msgstr "Afficher la page de synthèse du cas"
+msgstr "View case overview"
 
 #: main/features/admin/monitoring/monitoring.html:130
 #: main/features/admin/processes/details/monitoring-status.html:20
 #: main/features/admin/processes/details/monitoring-status.html:25
 #: main/features/admin/processes/details/monitoring-status.html:26
 msgid "View diagram"
-msgstr "Voir le diagramme"
+msgstr "View diagram"
 
 msgid "View process"
-msgstr "Voir le processus"
+msgstr "View process"
 
 msgid "View process design"
-msgstr "Voir la modélisation du processus"
+msgstr "View process design"
 
 msgid "Wait ..."
-msgstr "Patientez ..."
+msgstr "Wait ..."
 
 #: bonita-portal-js/main/features/admin/applications/export-application.html:5
 msgid "When you export an application, pages and profiles are not exported in the file."
@@ -1325,11 +1323,11 @@ msgstr "Lorsque vous exportez une application, les pages et profils liés ne son
 #: bonita-portal-js/main/features/admin/cases/list/cases-list-filters.html:30
 #: main/features/admin/monitoring/monitoring.html:74
 msgid "With failures"
-msgstr "Avec erreurs"
+msgstr "With failures"
 
 #: main/features/admin/processVisu/visuShowKey.html:67
 msgid "X is the number of Flow Node instances"
-msgstr "X est le nombre d'instances de Flow Nodes"
+msgstr "X is the number of Flow Node instances"
 
 #: bonita-portal-js/main/features/admin/applications/export-application.html:5
 msgid "You are about to export the application"
@@ -1352,7 +1350,7 @@ msgstr "une application"
 
 #: bonita-portal-js/main/features/admin/applications/edit-application.html:4
 msgid "an application"
-msgstr "une application"
+msgstr "an application"
 
 #: bonita-portal-js/main/features/admin/applications/import-application.html:30
 msgid "application has been partially imported. The following items are not loaded in the Portal."
@@ -1367,73 +1365,73 @@ msgid "back"
 msgstr "retour"
 
 msgid "columns selection"
-msgstr "sélection des colonnes"
+msgstr "columns selection"
 
 #: main/features/admin/processes/details/scripts/scripts.html:8
 msgid "filter scripts..."
-msgstr "Filtrer par nom de script..."
+msgstr "filter scripts..."
 
 msgid "items per page"
-msgstr "éléments par page"
+msgstr "items per page"
 
 msgid "no description defined in contract for this input"
-msgstr "Cet input n'a pas de description dans le contrat"
+msgstr "no description defined in contract for this input"
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:33
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:34
 msgid "of"
-msgstr "de"
+msgstr "of"
 
 msgid "remove"
-msgstr "Enlever"
+msgstr "remove"
 
 #: main/features/admin/monitoring/monitoring.html:107
 msgid "sort by Cases with failures ascending"
-msgstr "tri par Cas avec erreurs, croissant"
+msgstr "sort by Cases with failures ascending"
 
 #: main/features/admin/monitoring/monitoring.html:107
 msgid "sort by Cases with failures descending"
-msgstr "tri par Cas avec erreurs, décroissant"
+msgstr "sort by Cases with failures descending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:108
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:83
 msgid "sort by End date ascending"
-msgstr "tri par Date de fin, croissant"
+msgstr "sort by End date ascending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:108
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:83
 msgid "sort by End date descending"
-msgstr "tri par Date de fin, décroissant"
+msgstr "sort by End date descending"
 
 #: main/features/admin/monitoring/monitoring.html:108
 msgid "sort by Healthy cases ascending"
-msgstr "tri par Cas sans erreur, croissant"
+msgstr "sort by Healthy cases ascending"
 
 #: main/features/admin/monitoring/monitoring.html:108
 msgid "sort by Healthy cases descending"
-msgstr "tri par Cas sans erreur, décroissant"
+msgstr "sort by Healthy cases descending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:103
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:30
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:26
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:78
 msgid "sort by ID ascending"
-msgstr "tri par Id, croissant"
+msgstr "sort by ID ascending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:103
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:30
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:26
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:78
 msgid "sort by ID descending"
-msgstr "tri par Id, décroissant"
+msgstr "sort by ID descending"
 
 #: main/features/admin/monitoring/monitoring.html:109
 msgid "sort by Open cases ascending"
-msgstr "tri par Cas en cours, croissant"
+msgstr "sort by Open cases ascending"
 
 #: main/features/admin/monitoring/monitoring.html:109
 msgid "sort by Open cases descending"
-msgstr "tri par Cas en cours, décroissant"
+msgstr "sort by Open cases descending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:104
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:32
@@ -1441,7 +1439,7 @@ msgstr "tri par Cas en cours, décroissant"
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:79
 #: main/features/admin/monitoring/monitoring.html:105
 msgid "sort by Process name ascending"
-msgstr "tri par Nom du Processus, croissant"
+msgstr "sort by Process name ascending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:104
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:32
@@ -1449,44 +1447,44 @@ msgstr "tri par Nom du Processus, croissant"
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:79
 #: main/features/admin/monitoring/monitoring.html:105
 msgid "sort by Process name descending"
-msgstr "tri par Nom du Processus, décroissant"
+msgstr "sort by Process name descending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:106
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:34
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:29
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:81
 msgid "sort by Start date ascending"
-msgstr "tri par Date de début, croissant"
+msgstr "sort by Start date ascending"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:106
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:34
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:29
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:81
 msgid "sort by Start date descending"
-msgstr "tri par Date de début, décroissant"
+msgstr "sort by Start date descending"
 
 #: main/features/admin/monitoring/monitoring.html:104
 msgid "sort by State ascending"
-msgstr "tri par Etat, croissant"
+msgstr "sort by State ascending"
 
 #: main/features/admin/monitoring/monitoring.html:104
 msgid "sort by State descending"
-msgstr "tri par Etat, décroissant"
+msgstr "sort by State descending"
 
 #: main/features/admin/monitoring/monitoring.html:106
 msgid "sort by Version ascending"
-msgstr "tri par Version, croissant"
+msgstr "sort by Version ascending"
 
 #: main/features/admin/monitoring/monitoring.html:106
 msgid "sort by Version descending"
-msgstr "tri par Version, décroissant"
+msgstr "sort by Version descending"
 
 msgid "this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms."
-msgstr "il s'agit d'un formulaire temporaire généré automatiquement à des fins de test. Avant de passer votre processus en production, vous devrez créer les formulaires définitifs et les associer au processus et aux tâches humaines."
+msgstr "this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms."
 
 #: bonita-portal-js/main/features/admin/applications/delete-application.html:5
 msgid "will be permanently deleted."
-msgstr "va être supprimée définitivement"
+msgstr "will be permanently deleted."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:75
 msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
@@ -1497,63 +1495,63 @@ msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available unti
 msgstr "{{LicenseMonitoringCtrl.license.remainingInstances}} cas sont encore disponibles avant le {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Pour acquérir de nouveaux cas, contactez votre vendeur."
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
-msgstr "{{currentFirstResultIndex}} à {{currentLastResultIndex}} de {{pagination.total}}"
+msgstr "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 
 msgid "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}} à {{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
 msgid "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
-msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} de {{getTotalProcesses()}}"
+msgstr "{{getStartIndexOfPage()}}-{{getEndIndexOfPage()}} of {{getTotalProcesses()}}"
 
 msgid "{{nbErrors}} errors on mapping updates"
-msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
+msgstr "{{nbErrors}} errors on mapping updates"
 
 msgid "{{nbMapping}} Process manager mappings could not be deleted"
-msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus n'a (n'ont) pas pu être supprimés"
+msgstr "{{nbMapping}} Process manager mappings could not be deleted"
 
 msgid "{{nbMapping}} Process manager mappings could not be updated"
-msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus n'ont pas pu être mis à jour"
+msgstr "{{nbMapping}} Process manager mappings could not be updated"
 
 msgid "{{nbMapping}} Process manager mappings have been deleted"
-msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus a (ont) été supprimé(s)"
+msgstr "{{nbMapping}} Process manager mappings have been deleted"
 
 msgid "{{nbMapping}} Process manager mappings have been updated"
-msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été mis à jour"
+msgstr "{{nbMapping}} Process manager mappings have been updated"
 
 msgid "{{nbOfDeletedCases}} case deleted"
-msgstr "{{nbOfDeletedCases}} cas a été supprimé avec succès"
+msgstr "{{nbOfDeletedCases}} case deleted"
 
 msgid "{{nbOfDeletedCases}} cases deleted"
-msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
+msgstr "{{nbOfDeletedCases}} cases deleted"
 
 msgid "{{nbOfDeletedCases}} cases have been deleted"
-msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
+msgstr "{{nbOfDeletedCases}} cases have been deleted"
 
 msgid "{{nbSucess}} actor mapping updates succeeded"
-msgstr "{{nbSucess}} mappings d'acteurs ont été mis à jour avec succès"
+msgstr "{{nbSucess}} actor mapping updates succeeded"
 
 msgid "{{role}} of {{group}}"
-msgstr "{{role}} de {{group}}"
+msgstr "{{role}} of {{group}}"
 
 msgid "{{role}} of {{group}} has been created"
-msgstr "{{role}} de {{group}} a été créée"
+msgstr "{{role}} of {{group}} has been created"
 
 msgid "{} has been created"
-msgstr "{} a été créé"
+msgstr "{} has been created"
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:7
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:7
 msgid "{} mapped"
-msgstr "{} associés"
+msgstr "{} mapped"
 
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:4
 msgid "{} mapped to process manager profile"
-msgstr "{} associés au profil de Gestionnaire de processus"
+msgstr "{} mapped to process manager profile"
 
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:41
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:43
 msgid "{} mappings to delete"
-msgstr "{} associés à supprimer"
+msgstr "{} mappings to delete"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:21
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:27
@@ -1564,11 +1562,11 @@ msgstr "{} associés à supprimer"
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:34
 #: main/features/admin/processes/details/process-manager/process-managers-mapping.html:40
 msgid "{} more"
-msgstr "{} autres"
+msgstr "{} more"
 
 #: bonita-portal-js/main/features/admin/processes/details/actors-mapping.html:37
 msgid "{} of {}"
-msgstr "{} de {}"
+msgstr "{} of {}"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:153
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:24
@@ -1577,5 +1575,5 @@ msgstr "{} de {}"
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:21
 #: bonita-portal-js/main/features/user/cases/list/cases-list.html:73
 msgid "{}-{} of {}"
-msgstr "{}-{} de {}"
+msgstr "{}-{} of {}"
 
