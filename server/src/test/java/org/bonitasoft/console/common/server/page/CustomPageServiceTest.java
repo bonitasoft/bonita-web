@@ -160,7 +160,8 @@ public class CustomPageServiceTest {
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider, CustomPageService.PAGE_CONTROLLER_FILENAME);
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider,
+                new File(pageDir, "IndexRestApi.groovy"));
         final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
 
         // Then
@@ -393,14 +394,16 @@ public class CustomPageServiceTest {
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
-        when(pageResourceProvider.getPageDirectory()).thenReturn(new File("target/bonita/home/client/tenants/1/pages/page2"));
+        final File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDirectory);
         when(consoleProperties.isPageInDebugMode()).thenReturn(true);
 
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
 
         // When
         customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider, "RestResource.groovy");
+        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider,
+                new File(pageDirectory, "RestResource.groovy"));
 
         // then
         final RestApiController restApiController = restApiControllerClass.newInstance();
