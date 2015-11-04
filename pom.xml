@@ -690,12 +690,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <include>org.bonitasoft.*</include>
-                                <include>com.bonitasoft.*</include>
-                            </includes>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>prepare-ut-agent</id>
@@ -704,22 +698,76 @@
                                     <goal>prepare-agent</goal>
                                 </goals>
                                 <configuration>
-                                    <destFile>${sonar.jacoco.reportPath}</destFile>
                                     <propertyName>jacoco.agent.ut.arg</propertyName>
-                                    <append>true</append>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>prepare-it-agent</id>
                                 <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>prepare-agent</goal>
+                                    <goal>prepare-agent-integration</goal>
                                 </goals>
                                 <configuration>
-                                    <destFile>${sonar.jacoco.itReportPath}</destFile>
                                     <propertyName>jacoco.agent.it.arg</propertyName>
-                                    <append>true</append>
                                 </configuration>
+                            </execution>
+                            <execution>
+                              <id>ut-merge</id>
+                              <phase>verify</phase>
+                              <goals>
+                                <goal>merge</goal>
+                              </goals>
+                              <configuration>
+                                <fileSets>
+                                  <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                      <include>jacoco.exec</include>
+                                    </includes>
+                                  </fileSet>
+                                </fileSets>
+                                <destFile>${sonar.jacoco.reportPath}</destFile>
+                              </configuration>
+                            </execution>
+                            <execution>
+                              <id>it-merge</id>
+                              <phase>verify</phase>
+                              <goals>
+                                <goal>merge</goal>
+                              </goals>
+                              <configuration>
+                                <fileSets>
+                                  <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                      <include>jacoco.exec</include>
+                                    </includes>
+                                  </fileSet>
+                                </fileSets>
+                                <destFile>${sonar.jacoco.itReportPath}</destFile>
+                              </configuration>
+                            </execution>
+                            <execution>
+                              <id>ut-report</id>
+                              <phase>verify</phase>
+                              <goals>
+                                <goal>report</goal>
+                              </goals>
+                              <configuration>
+                                <dataFile>${sonar.jacoco.reportPath}</dataFile>
+                                <outputDirectory>${jacoco.outputDir}/report-ut</outputDirectory>
+                              </configuration>
+                            </execution>
+                            <execution>
+                              <id>it-report</id>
+                              <phase>verify</phase>
+                              <goals>
+                                <goal>report-integration</goal>
+                              </goals>
+                              <configuration>
+                                <dataFile>${sonar.jacoco.itReportPath}</dataFile>
+                                <outputDirectory>${jacoco.outputDir}/report-it</outputDirectory>
+                              </configuration>
                             </execution>
                         </executions>
                     </plugin>
