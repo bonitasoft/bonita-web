@@ -753,6 +753,9 @@
                               <goals>
                                 <goal>report</goal>
                               </goals>
+                              <configuration>
+                                <outputDirectory>${jacoco.outputDir}/report-ut/${project.artifactId}</outputDirectory>
+                              </configuration>
                             </execution>
                             <execution>
                               <id>it-report</id>
@@ -760,6 +763,9 @@
                               <goals>
                                 <goal>report-integration</goal>
                               </goals>
+                              <configuration>
+                                <outputDirectory>${jacoco.outputDir}/report-it/${project.artifactId}</outputDirectory>
+                              </configuration>
                             </execution>
                         </executions>
                     </plugin>
