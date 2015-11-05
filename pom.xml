@@ -740,7 +740,7 @@
                                   <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
                                     <directory>${project.build.directory}</directory>
                                     <includes>
-                                      <include>jacoco.exec</include>
+                                      <include>jacoco-it.exec</include>
                                     </includes>
                                   </fileSet>
                                 </fileSets>
@@ -753,10 +753,6 @@
                               <goals>
                                 <goal>report</goal>
                               </goals>
-                              <configuration>
-                                <dataFile>${sonar.jacoco.reportPath}</dataFile>
-                                <outputDirectory>${jacoco.outputDir}/report-ut</outputDirectory>
-                              </configuration>
                             </execution>
                             <execution>
                               <id>it-report</id>
@@ -764,10 +760,6 @@
                               <goals>
                                 <goal>report-integration</goal>
                               </goals>
-                              <configuration>
-                                <dataFile>${sonar.jacoco.itReportPath}</dataFile>
-                                <outputDirectory>${jacoco.outputDir}/report-it</outputDirectory>
-                              </configuration>
                             </execution>
                         </executions>
                     </plugin>
