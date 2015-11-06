@@ -51,7 +51,7 @@ public class BusinessDataQueryResource extends CommonResource {
 
         final BusinessDataQueryMetadata businessDataQueryMetadata = businessDataQueryResult.getBusinessDataQueryMetadata();
         if (businessDataQueryMetadata != null) {
-            setContentRange(businessDataQueryMetadata.getStartIndex(), businessDataQueryMetadata.getMaxResults(), businessDataQueryMetadata.getCount());
+            setContentRange(searchPageNumber, searchPageSize, businessDataQueryMetadata.getCount());
         }
 
         return businessDataQueryResult.getJsonResults();
