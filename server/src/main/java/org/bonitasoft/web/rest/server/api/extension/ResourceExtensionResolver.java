@@ -1,8 +1,13 @@
 package org.bonitasoft.web.rest.server.api.extension;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +48,8 @@ public class ResourceExtensionResolver {
     }
 
     public String generateMappingKey() {
-        StringBuilder builder = new StringBuilder();
-        String requestAsString = getHttpServletRequest().getRequestURI();
+        final StringBuilder builder = new StringBuilder();
+        final String requestAsString = getHttpServletRequest().getRequestURI();
         final String pathTemplate = StringUtils.substringAfter(requestAsString, API_EXTENSION_TEMPLATE_PREFIX);
 
         builder.append(MAPPING_KEY_PREFIX)
@@ -56,25 +61,24 @@ public class ResourceExtensionResolver {
         return builder.toString();
     }
 
-    public String resolveClassFileName(PageResourceProvider pageResourceProvider) throws NotFoundException {
+    public File resolveRestApiControllerFile(PageResourceProvider pageResourceProvider) throws NotFoundException {
         final Properties properties = new Properties();
 
-        try {
-            final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");
+        try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");) {
             properties.load(resourceAsStream);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new NotFoundException("error while getting resource:" + generateMappingKey());
         }
 
         final String apiExtensionList = (String) properties.get("apiExtensions");
         final String[] apiExtensions = apiExtensionList.split(",");
 
-        return findMatchingExtension(properties, apiExtensions);
+        return toFile(pageResourceProvider, findMatchingExtension(properties, apiExtensions));
 
     }
 
     private String findMatchingExtension(Properties properties, String[] apiExtensions) throws NotFoundException {
-        for (String apiExtension : apiExtensions) {
+        for (final String apiExtension : apiExtensions) {
             final String method = (String) properties.get(String.format("%s.method", apiExtension.trim()));
             final String pathTemplate = (String) properties.get(String.format("%s.pathTemplate", apiExtension.trim()));
             final String classFileName = (String) properties.get(String.format("%s.classFileName", apiExtension.trim()));
@@ -84,6 +88,15 @@ public class ResourceExtensionResolver {
             }
         }
         throw new NotFoundException("error while getting resource:" + generateMappingKey());
+    }
+
+    private File toFile(PageResourceProvider pageResourceProvider, String classFileName) {
+        if (classFileName.startsWith("/")) {
+            classFileName = classFileName.substring(1);
+        }
+        final String[] paths = classFileName.split("/");
+        final Path restApiControllerPath = paths.length == 1 ? Paths.get(paths[0]) : Paths.get(paths[0], Arrays.copyOfRange(paths, 1, paths.length));
+        return pageResourceProvider.getPageDirectory().toPath().resolve(restApiControllerPath).toFile();
     }
 
     private boolean extensionMatches(String method, String pathTemplate) {

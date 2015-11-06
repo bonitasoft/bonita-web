@@ -15,10 +15,14 @@
 package org.bonitasoft.web.rest.server.datastore.page;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 
@@ -40,6 +44,7 @@ import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.exception.UpdatingWithInvalidPageTokenException;
 import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentException;
 import org.bonitasoft.engine.io.IOUtil;
+import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
 import org.bonitasoft.engine.page.PageSearchDescriptor;
@@ -173,7 +178,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         final File[] pageFiles = unzipPageFolder.listFiles();
         boolean indexOK = false;
         boolean propertiesOK = false;
-
+        Properties pageProperties = null;
         if (pageFiles != null) {
             for (final File file : pageFiles) {
                 final String fileName = file.getName();
@@ -181,11 +186,19 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                     indexOK = true;
                 }
                 if (fileName.matches(PAGE_PROPERTIES)) {
+                    pageProperties = new java.util.Properties();
+                    try (InputStream is = new FileInputStream(file)) {
+                        pageProperties.load(is);
+                    }
                     propertiesOK = true;
                 }
             }
         }
         if (!indexOK) {
+            if (pageProperties != null
+                    && Objects.equals(pageProperties.getProperty(CustomPageService.PROPERTY_CONTENT_TYPE), ContentType.API_EXTENSION)) {
+                indexOK = true;
+            }
             final File indexInResources = new File(unzipPageFolder.getPath(), CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
             if (indexInResources.exists()) {
                 indexOK = true;
