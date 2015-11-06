@@ -127,10 +127,9 @@ public class CustomPageService {
     }
 
     public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider,
-            final String classFileName)
+            final File restApiControllerFile)
                     throws CompilationFailedException, IOException {
-        final File pageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(), classFileName);
-        return pageClassLoader.parseClass(pageControllerFile);
+        return pageClassLoader.parseClass(restApiControllerFile);
     }
 
     public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException, CompilationFailedException {
@@ -161,7 +160,7 @@ public class CustomPageService {
 
     public void removePage(final APISession apiSession, final Page page) throws IOException {
         final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
-        String pageName = pageResourceProvider.getFullPageName();
+        final String pageName = pageResourceProvider.getFullPageName();
         closeClassloader(pageName);
         removePageZipContent(apiSession, pageResourceProvider);
         CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
