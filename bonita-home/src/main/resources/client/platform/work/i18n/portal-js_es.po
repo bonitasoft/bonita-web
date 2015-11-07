@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-02 10:16-0500\n"
+"PO-Revision-Date: 2015-11-06 09:33-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -632,8 +632,7 @@ msgstr "Cargando…"
 #: main/features/admin/license/monitoring/license-monitoring.html:7
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
 "      this information."
-msgstr "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
-"      this information."
+msgstr ""
 
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
 msgstr "Inicie sesión como administrador de la plataforma para ver el estado de la licencia. Sólo el administrador de la plataforma puede acceder a esta información."
@@ -1205,7 +1204,7 @@ msgstr "Escriba aquí para buscar..."
 #: bonita-portal-js/main/features/admin/applications/import-application.html:33
 #: bonita-portal-js/main/features/admin/applications/import-application.html:38
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:11
 msgid "Unable to log in.\n"
@@ -1339,11 +1338,11 @@ msgstr "Debe agregar una página antes de que poder hacer referencia en un menú
 
 #: main/features/admin/license/monitoring/license-monitoring.html:94
 msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
-msgstr "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:55
 msgid "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-msgstr "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
+msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
 msgid "an Application"
@@ -1489,11 +1488,11 @@ msgstr "se eliminará permanentemente."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:75
 msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
-msgstr "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:81
 msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
-msgstr "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
+msgstr ""
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "{{currentFirstResultIndex}} a {{currentLastResultIndex}} de {{pagination.total}}"
