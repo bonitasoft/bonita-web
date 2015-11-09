@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-03 02:47-0500\n"
+"PO-Revision-Date: 2015-11-06 09:35-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -632,8 +632,7 @@ msgstr "Caricamento..."
 #: main/features/admin/license/monitoring/license-monitoring.html:7
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
 "      this information."
-msgstr "Log in as platform administrator to see the license status. Only the platform administrator can access\n"
-"      this information."
+msgstr ""
 
 msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
 msgstr "Accedere come amministratore della piattaforma per poter vedere lo stato della licenza. Solo l'amministratore della piattaforma può accedere a queste informazioni."
@@ -1103,7 +1102,7 @@ msgstr "Il business data: [ {} ] utilizza Business Objects che non sono definiti
 
 #: main/features/admin/license/monitoring/license-monitoring.html:85
 msgid "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
-msgstr "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
+msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
 msgid "The current process has no connectors defined."
@@ -1206,13 +1205,12 @@ msgstr "Digita qui per cercare..."
 #: bonita-portal-js/main/features/admin/applications/import-application.html:33
 #: bonita-portal-js/main/features/admin/applications/import-application.html:38
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:11
 msgid "Unable to log in.\n"
 "        Please check your username and password."
-msgstr "Unable to log in.\n"
-"        Please check your username and password."
+msgstr ""
 
 msgid "Unable to log in. Please check your username and password."
 msgstr "Impossibile effettuare il login. Si prega di controllare il nome utente e la password."
@@ -1341,11 +1339,11 @@ msgstr "È necessario aggiungere una pagina prima di essere in grado di farne ri
 
 #: main/features/admin/license/monitoring/license-monitoring.html:94
 msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
-msgstr "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:55
 msgid "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
-msgstr "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
+msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
 msgid "an Application"
@@ -1491,11 +1489,11 @@ msgstr "verrà eliminata definitivamente."
 
 #: main/features/admin/license/monitoring/license-monitoring.html:75
 msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
-msgstr "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
+msgstr ""
 
 #: main/features/admin/license/monitoring/license-monitoring.html:81
 msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
-msgstr "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
+msgstr ""
 
 msgid "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination.total}}"
 msgstr "da {{currentFirstResultIndex}} a {{currentLastResultIndex}} di {{pagination.total}}"

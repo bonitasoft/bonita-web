@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-11-03 02:58-0500\n"
+"PO-Revision-Date: 2015-11-06 09:40-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -455,7 +455,7 @@ msgid "Bonita Archive"
 msgstr "Arquivo Bonita"
 
 msgid "Bonita BPM Portal"
-msgstr "Bonita BPM Portal"
+msgstr ""
 
 msgid "Browse your computer and select the business archive containing the process definition to install."
 msgstr "Procure no seu computador e selecione o arquivo de negócios (.bar) que contém a definição de processo a ser instalada."
@@ -1040,13 +1040,13 @@ msgid "Error when updating user"
 msgstr "Erro ao atualizar usuário"
 
 msgid "Error while trying to execute the task."
-msgstr "Error while trying to execute the task."
+msgstr ""
 
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Erro ao tentar executar a tarefa. Algumas informações necessárias estão faltando (contrato não cumprido)."
 
 msgid "Error while trying to start the case."
-msgstr "Error while trying to start the case."
+msgstr ""
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
@@ -1160,7 +1160,7 @@ msgid "Human Task"
 msgstr "Tarefa humana"
 
 msgid "Human task"
-msgstr "Human task"
+msgstr ""
 
 msgid "ID"
 msgstr "ID"
@@ -1318,7 +1318,7 @@ msgid "Logout"
 msgstr "Desconectar"
 
 msgid "Look and Feel"
-msgstr "Look and Feel"
+msgstr ""
 
 msgid "Loop activity"
 msgstr "Atividade de iteração"
@@ -1578,7 +1578,7 @@ msgid "Parent Group"
 msgstr "Grupo Pai"
 
 msgid "Parent group"
-msgstr "Parent group"
+msgstr ""
 
 msgid "Password"
 msgstr "Senha"
@@ -1632,10 +1632,10 @@ msgid "Performed on:"
 msgstr "Realizado em:"
 
 msgid "Permission denied: you do not have the rights to perform this action."
-msgstr "Permission denied: you do not have the rights to perform this action."
+msgstr ""
 
 msgid "Permission denied: you do not have the rights to view this item."
-msgstr "Permission denied: you do not have the rights to view this item."
+msgstr ""
 
 msgid "Personal information"
 msgstr "Informações pessoais"
@@ -2547,7 +2547,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr "human task"
+msgstr ""
 
 msgid "import/export organization"
 msgstr "importação/exportação de organização"
