@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-10-12 08:47-0400\n"
+"POT-Creation-Date: 2015-11-03 03:01+0100\n"
+"PO-Revision-Date: 2015-11-06 09:33-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -161,16 +161,16 @@ msgid "%value% is not a valid value for %className%"
 msgstr "%value% is not a valid value for %className%"
 
 msgid "'%applicationName%' as page '%associationName%'"
-msgstr "'%applicationName%' as page '%associationName%'"
+msgstr ""
 
 msgid "'%layoutName%' is used as layout for:"
-msgstr "'%layoutName%' is used as layout for:"
+msgstr ""
 
 msgid "'%pageName%' is used by:"
-msgstr "'%pageName%' is used by:"
+msgstr ""
 
 msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' is used as Theme for:"
+msgstr ""
 
 msgid "?"
 msgstr "?"
@@ -182,7 +182,7 @@ msgid "A business archive has a .bar extension"
 msgstr "Ein Business-Archiv hat eine .bar-Erweiterung"
 
 msgid "A form is a page mapped to case start or a human task."
-msgstr "A form is a page mapped to case start or a human task."
+msgstr ""
 
 msgid "A page archive has a .zip extension"
 msgstr "Eine Seitenarchiv hat eine .zip-Extension"
@@ -191,7 +191,7 @@ msgid "A page with this name already exists."
 msgstr "Eine Seite mit diesem Namen existiert bereits."
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
-msgstr "A resource is imported as a zip archive containing a page.properties file and a resources folder."
+msgstr ""
 
 msgid "Aborted by:"
 msgstr "Abgebrochen durch:"
@@ -278,10 +278,10 @@ msgid "Add a new membership to this user"
 msgstr "Diesem Benutzer eine neue Zugehörigkeit hinzufügen"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr ""
 
 msgid "Add a resource"
-msgstr "Add a resource"
+msgstr ""
 
 msgid "Add a role"
 msgstr "Rolle hinzufügen"
@@ -305,7 +305,7 @@ msgid "Add new memberships for %user%"
 msgstr "Hinzufügen einer neuen Zugehörigkeit für %user%"
 
 msgid "Add resource"
-msgstr "Add resource"
+msgstr ""
 
 msgid "Add selected group(s) to this profile"
 msgstr "Ausgewählte Gruppe(n) zu diesem Profil hinzufügen"
@@ -365,7 +365,7 @@ msgid "All processes are automatically paused."
 msgstr "Alle Prozesse werden automatisch unterbrochen."
 
 msgid "An archive has a .zip extension"
-msgstr "An archive has a .zip extension"
+msgstr ""
 
 msgid "An error has occurred when deploying Business Data Model."
 msgstr "Beim Deployment des Geschäftsdatenmodells ist ein Fehler aufgetreten."
@@ -386,7 +386,7 @@ msgid "April"
 msgstr "April"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr ""
 
 msgid "Archived"
 msgstr "Archiviert"
@@ -470,7 +470,7 @@ msgid "Business card"
 msgstr "Visitenkarte"
 
 msgid "By default, forms are included in the process bar file for deployment."
-msgstr "By default, forms are included in the process bar file for deployment."
+msgstr ""
 
 msgid "Call activity"
 msgstr "Aufruf-Aktivität"
@@ -611,7 +611,7 @@ msgid "Confirm"
 msgstr "Bestätigen"
 
 msgid "Confirm Delete?"
-msgstr "Confirm Delete?"
+msgstr ""
 
 msgid "Confirm delete ?"
 msgstr "Löschen bestätigen?"
@@ -668,19 +668,19 @@ msgid "Content"
 msgstr "Inhalt"
 
 msgid "Content type is 'apiExtension'."
-msgstr "Content type is 'apiExtension'."
+msgstr ""
 
 msgid "Content type is 'form'."
-msgstr "Content type is 'form'."
+msgstr ""
 
 msgid "Content type is 'layout'."
-msgstr "Content type is 'layout'."
+msgstr ""
 
 msgid "Content type is 'page'."
-msgstr "Content type is 'page'."
+msgstr ""
 
 msgid "Content type is 'theme'."
-msgstr "Content type is 'theme'."
+msgstr ""
 
 msgid "Country"
 msgstr "Land"
@@ -689,7 +689,7 @@ msgid "Create"
 msgstr "Erstellen"
 
 msgid "Create a form from the contract in Bonita BPM Studio."
-msgstr "Create a form from the contract in Bonita BPM Studio."
+msgstr ""
 
 msgid "Create a group"
 msgstr "Gruppe erstellen"
@@ -839,7 +839,7 @@ msgid "Do not delete this membership"
 msgstr "Diese Zugehörigkeit nicht löschen"
 
 msgid "Do you still want to delete the selected pages?"
-msgstr "Do you still want to delete the selected pages?"
+msgstr ""
 
 msgid "Done"
 msgstr "Fertig"
@@ -1039,11 +1039,17 @@ msgstr "Error when updating process deployment informations"
 msgid "Error when updating user"
 msgstr "Fehler beim Aktualisieren des Benutzers"
 
+msgid "Error while trying to execute the task."
+msgstr ""
+
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
-msgstr "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr ""
+
+msgid "Error while trying to start the case."
+msgstr ""
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr ""
 
 msgid "Executed by"
 msgstr "Ausgeführt von"
@@ -1076,7 +1082,7 @@ msgid "February"
 msgstr "Februar"
 
 msgid "Filename too long. The zip filename must be no longer than %number% characters"
-msgstr "Filename too long. The zip filename must be no longer than %number% characters"
+msgstr ""
 
 msgid "Filters are not supported by this API"
 msgstr "Filter werden durch diese API nicht unterstützt"
@@ -1154,7 +1160,7 @@ msgid "Human Task"
 msgstr "Menschliche Aufgabe"
 
 msgid "Human task"
-msgstr "Human task"
+msgstr ""
 
 msgid "ID"
 msgstr "ID"
@@ -1172,12 +1178,11 @@ msgid "If this page is used in a profile, the page and related profile entries w
 msgstr "Wenn diese Seite in einem Profil verwendet wird, wird die Seite und dazugehörige Profileingaben dauerhaft gelöscht."
 
 msgid "If you create a resource with the UI designer, the exported zip automatically has the correct format."
-msgstr "If you create a resource with the UI designer, the exported zip automatically has the correct format."
+msgstr ""
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "If you delete a page that is used by a process, the process becomes unresolved.\n"
-"Before deleting a page, you should also check whether it is used in a custom profile navigation."
+msgstr ""
 
 msgid "Image files"
 msgstr "Bilddateien"
@@ -1231,7 +1236,7 @@ msgid "Invalid Business Data Model content"
 msgstr "Ungültiger Geschäftsdatenmodell-Inhalt"
 
 msgid "It is still assigned to you until you release it."
-msgstr "It is still assigned to you until you release it."
+msgstr ""
 
 msgid "Item not found"
 msgstr "Element nicht gefunden"
@@ -1288,13 +1293,13 @@ msgid "Lastname"
 msgstr "Nachname"
 
 msgid "Layout"
-msgstr "Layout"
+msgstr ""
 
 msgid "Layouts"
-msgstr "Layouts"
+msgstr ""
 
 msgid "License"
-msgstr "License"
+msgstr ""
 
 msgid "Link to the tasks"
 msgstr "Link zu den Aufgaben"
@@ -1312,7 +1317,7 @@ msgid "Logout"
 msgstr "Abmelden"
 
 msgid "Look and Feel"
-msgstr "Look and Feel"
+msgstr ""
 
 msgid "Loop activity"
 msgstr "Schleifenaktivität"
@@ -1360,7 +1365,7 @@ msgid "Manage profiles"
 msgstr "Profile verwalten"
 
 msgid "Manage resources"
-msgstr "Manage resources"
+msgstr ""
 
 msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
 msgstr "Verwalten von Aufgaben der Prozesse, die eine Entität mit diesem Profil als Prozessmanager überwachen kann."
@@ -1625,6 +1630,12 @@ msgstr "Ausgeführt am"
 msgid "Performed on:"
 msgstr "Ausgeführt am:"
 
+msgid "Permission denied: you do not have the rights to perform this action."
+msgstr ""
+
+msgid "Permission denied: you do not have the rights to view this item."
+msgstr ""
+
 msgid "Personal information"
 msgstr "Persönliche Daten"
 
@@ -1689,7 +1700,7 @@ msgid "RESOLVED"
 msgstr "GELÖST"
 
 msgid "REST API extensions"
-msgstr "REST API extensions"
+msgstr ""
 
 msgid "Ready since %task_last_update%"
 msgstr "Bereit seit %task_last_update%"
@@ -1725,7 +1736,7 @@ msgid "Resources not recognized:"
 msgstr "Ressourcen, die nicht anerkannt werden:"
 
 msgid "Rest API extension"
-msgstr "Rest API extension"
+msgstr ""
 
 msgid "Resume"
 msgstr "Wiederaufnehmen"
@@ -1896,7 +1907,7 @@ msgid "Skipped on %task_last_update% by %executed_by%"
 msgstr "Übersprungen am %task_last_update% von %executed_by%"
 
 msgid "Some of the pages you selected for deletion are used by processes:"
-msgstr "Some of the pages you selected for deletion are used by processes:"
+msgstr ""
 
 msgid "Sorry the variable %variableName% has a type which is not editable"
 msgstr "Der Typ der Variable %variableName% ist nicht editierbar"
@@ -1968,7 +1979,7 @@ msgid "Subprocess version"
 msgstr "Teilprozessversion"
 
 msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
-msgstr "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
+msgstr ""
 
 msgid "Success"
 msgstr "Erfolgreich"
@@ -2044,13 +2055,13 @@ msgstr "In der Anwendung ist ein unerwarteter Fehler aufgetreten. Bitte versuche
 "Wenn der Fehler weiterhin auftritt, kontaktieren Sie bitte den Bonitasoft Support"
 
 msgid "The case %caseId% has been started successfully."
-msgstr "The case %caseId% has been started successfully."
+msgstr ""
 
 msgid "The configuration state of the process"
 msgstr "Den Konfigurationsstatus des Prozesses"
 
 msgid "The content type is defined in page.properties."
-msgstr "The content type is defined in page.properties."
+msgstr ""
 
 msgid "The current state of the case"
 msgstr "Aktueller Status des Falls"
@@ -2122,7 +2133,7 @@ msgid "The id of the related case"
 msgstr "Der ID des Falls"
 
 msgid "The index file must be present in the zip but is ignored, so can be empty."
-msgstr "The index file must be present in the zip but is ignored, so can be empty."
+msgstr ""
 
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr "Das Element, das Sie versuchen zu editieren, kann aufgrund eines Verbindungsproblems nicht aufgerufen werden. Bitte kontaktieren Sie Ihren Administrator."
@@ -2158,7 +2169,7 @@ msgid "The process responsible for the creation of this task"
 msgstr "Der Prozessverantwortliche für die Erstellung dieser Aufgabe"
 
 msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
-msgstr "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
+msgstr ""
 
 msgid "The server is not available"
 msgstr "Der Server ist nicht verfügbar"
@@ -2176,13 +2187,13 @@ msgid "The sub process responsible for the creation of this task"
 msgstr "Der Teilprozess ist verantwortlich für die Erstellung dieser Aufgabe"
 
 msgid "The task %taskName% has been executed. The task list is being refreshed."
-msgstr "The task %taskName% has been executed. The task list is being refreshed."
+msgstr ""
 
 msgid "The task %taskName% has not been executed. "
-msgstr "The task %taskName% has not been executed. "
+msgstr ""
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
-msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr ""
 
 msgid "The type of the task"
 msgstr "Der Typ der Aufgabe"
@@ -2215,10 +2226,10 @@ msgid "The version of the process that created this case"
 msgstr "Die Version des Prozesses, der diesen Fall erstellt hat"
 
 msgid "Theme"
-msgstr "Theme"
+msgstr ""
 
 msgid "Themes"
-msgstr "Themes"
+msgstr ""
 
 msgid "These %item_name_plural% and related profile entries will be permanently deleted."
 msgstr "Diese %item_name_plural% und die zugehörigen Profileinträge werden dauerhaft gelöscht."
@@ -2227,7 +2238,7 @@ msgid "These %item_name_plural% will be definitively deleted."
 msgstr "Diese %item_name_plural% werden endgültig gelöscht."
 
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
-msgstr "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
+msgstr ""
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Dieser %item_name% und die zugehörigen Profileinträge werden dauerhaft gelöscht."
@@ -2289,10 +2300,10 @@ msgid "To do so, contact your administrator"
 msgstr "Um dies zu tun, wenden Sie sich an Ihren Administrator"
 
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
-msgstr "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
+msgstr ""
 
 msgid "To view an imported page, add it to an application page list and navigation."
-msgstr "To view an imported page, add it to an application page list and navigation."
+msgstr ""
 
 msgid "Tu"
 msgstr "Di"
@@ -2424,7 +2435,7 @@ msgid "Users who are filling in forms when the services are paused will lose any
 msgstr "Benutzer, die Formulare ausfüllen, wenn die Dienstleistungen unterbrochen sind, werden alle Informationen verlieren, die nicht eingereicht wurden."
 
 msgid "Users with the app above can see this page."
-msgstr "Users with the app above can see this page."
+msgstr ""
 
 msgid "Users: %nb_users%"
 msgstr "Benutzer: %nb_users%"
@@ -2469,7 +2480,7 @@ msgid "Yes"
 msgstr "Ja"
 
 msgid "You are going to start a new case. No form is needed."
-msgstr "You are going to start a new case. No form is needed."
+msgstr ""
 
 msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
 msgstr "Sie sind als technischer Benutzer angemeldet. Dieser Benutzer hat eingeschränkte Rechte. Dient dem Initialisieren der Organisation und dem Aktivieren des Geschäftsdatenmodells, wenn dies nötig ist."
@@ -2535,7 +2546,7 @@ msgid "hr"
 msgstr "h"
 
 msgid "human task"
-msgstr "human task"
+msgstr ""
 
 msgid "import/export organization"
 msgstr "Import/Export Organisation"
