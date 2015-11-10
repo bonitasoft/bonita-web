@@ -1,0 +1,63 @@
+/**
+ * Tasks Filter
+ */
+
+.FilterToggle {
+  position: absolute;
+  top:.15em;
+  right:.15em;
+  font-size: 1.5em;
+  padding: 0.2em .5em;
+  line-height: 1.05;
+  text-align: center;
+}
+/** increase selector specificity to override bootstrap **/
+
+
+.TaskFilters {
+  display: none;
+}
+
+.TaskListPage--small .TaskFilters,
+.TaskListPage--withMenu .TaskFilters{
+  display: block;
+}
+
+.TaskFilters {
+  padding-left: 0;
+  margin:.5em;
+}
+
+.TaskFilters .TaskFilters {
+  margin:0;
+}
+
+
+
+
+
+.nav > li > .TaskFilter {
+  padding-left:1.5em;
+}
+
+.nav-pills > li  > a {
+  color: #666;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  color:#333;
+  background-color: #ccc;
+}
+
+.nav-pills > .active > a > .badge {
+  background-color:#6CBFEE;
+  color:#fff;
+  box-shadow:0 1px 1px #999 ;
+}
+
+.badge {
+  background:#777;
+  color:#fff;
+}

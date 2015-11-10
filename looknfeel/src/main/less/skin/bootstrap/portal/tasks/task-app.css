@@ -1,0 +1,244 @@
+.u-Spacer-left {
+  margin-left: .5em;
+}
+
+
+/**
+ * TaskApp
+ */
+
+.TaskListPage {
+  height: 100%;
+  width: 100%;
+  display: table;
+  position:relative;
+  vertical-align: top;
+  table-layout: fixed
+}
+
+.TaskListPage--small {
+  overflow: auto;
+  display: block;
+}
+
+.OffcanvasMenu {
+  position:relative;
+  display: table-cell;
+  width:3em;
+  min-width:2.5em;
+  min-height:100%;
+}
+.navbar {
+  border-radius: 0;
+}
+
+.OffcanvasMenu-title {
+  display: none;
+}
+.TaskListPage--withMenu .OffcanvasMenu-title {
+  display: block;
+  margin: .3em .35em 1.5em;
+}
+.TaskListPage--withMenu .OffcanvasMenu {
+  width:200px;
+
+}
+
+.TaskListPage--small .OffcanvasMenu {
+  display: block;
+  min-height: 0;
+  width: 100%;
+  padding-top:.5em;
+  padding-bottom:0;
+  border-right:0;
+  padding-top:1em;
+}
+
+.AppWrapper {
+  display:table-cell;
+  width: auto;
+  vertical-align: top;
+  height: 100%;
+  margin-left:0;
+}
+
+
+.TaskListPage--small .AppWrapper {
+  padding-top:0;
+  display: block;
+}
+
+/**
+ * Header
+ */
+
+.AppHeader .well {
+  margin-bottom: 0;
+}
+
+.well {
+  font-size: 2em;
+  font-weight: 300;
+  line-height: 2em;
+  margin:0;
+  padding:0 .5em;
+  border-radius: 0;
+}
+
+.TitleIcon {
+  font-size: 1.2em;
+  display: inline-block;
+  vertical-align: text-bottom;
+  line-height: 1.1;
+  margin-right:.25em;
+}
+
+.LayoutSwitch {
+  margin-top:-.125em;
+  margin-right:.5em;
+}
+
+
+.TaskList.TaskList{
+  padding-left:0;
+  padding-right:1px;
+}
+.TaskDetails.TaskDetails {
+  padding-left:1px;
+  padding-right:0;
+}
+
+.panel {
+  border-radius: 0px;
+  min-height: 300px;
+}
+
+
+
+/**
+ * list Settings
+ */
+.Settings {
+  width: 100%;
+  display: table;
+  border-bottom:1px solid #ccc;
+  padding: .58em 1em;
+  font-size: .85em
+}
+
+.Settings-filter {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.ProcessList {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+.ProcessList-label {
+  display: block;
+  max-width: 14em;
+  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+/**
+ * SearchBox
+ */
+.SearchBox .form-group{
+  position: relative;
+
+}
+.SearchBox-input {
+  padding-left: 1.2em;
+  padding-right:0;
+}
+.SearchBox-icon {
+  position:absolute;
+  top:50%;
+  left:.25em;
+  margin-top:-.5em;
+  color:#999;
+}
+
+
+.Loading {
+  display: inline-block;
+  vertical-align: middle;
+  background-position: center;
+  background:no-repeat;
+  background-image: url('data:image/gif;base64,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');
+  width:20px;
+  height:20px;
+  margin-top:6px;
+  margin-right:7px;
+}
+
+/**
+ * ngToast
+ */
+.ng-toast .ng-toast__message {
+  text-align: left;
+}
+
+/**
+ * Modal close button
+ */
+.close {
+  font-size:2em;
+  opacity: .7;
+  z-index: 1;
+}
+
+.close:hover {
+  opacity: .85;
+}
+
+.modal-dialog .close {
+  position:absolute;
+  right:.5em;
+  top:.65em;
+}
+
+/** modal modifier rule **/
+.modal-dialog .btn-default{
+  margin-right:2em;
+}
+
+.FormModal .modal-dialog {
+  width: calc(100% - 20px);
+  margin-top:1em;
+}
+
+/**
+ * button in dropdown
+ */
+
+.open > .dropdown-menu li > .btn {
+  text-align: left;
+  border-radius: 0;
+  min-width: 100%;
+  padding:0.3em 1em;
+}
+
+
+.btn-default.btn-sm {
+  padding: 3px 6px;
+}
+
+
+/**
+ * angular-boostrap
+ */
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
+
