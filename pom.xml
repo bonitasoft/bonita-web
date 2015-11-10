@@ -29,6 +29,7 @@
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
         <urlrewrite.version>4.0.3</urlrewrite.version>
         <restlet-version>2.3.1</restlet-version>
+        <jackson.version>2.4.4</jackson.version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
