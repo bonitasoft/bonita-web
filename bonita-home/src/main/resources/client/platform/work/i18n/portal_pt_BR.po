@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-11-06 09:40-0500\n"
+"POT-Creation-Date: 2015-09-10 03:02+0200\n"
+"PO-Revision-Date: 2015-11-03 03:06-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
@@ -455,7 +455,7 @@ msgid "Bonita Archive"
 msgstr "Arquivo Bonita"
 
 msgid "Bonita BPM Portal"
-msgstr ""
+msgstr "Bonita BPM Portal"
 
 msgid "Browse your computer and select the business archive containing the process definition to install."
 msgstr "Procure no seu computador e selecione o arquivo de negócios (.bar) que contém a definição de processo a ser instalada."
@@ -1039,14 +1039,8 @@ msgstr "Erro ao atualizar informações de implantação do processo"
 msgid "Error when updating user"
 msgstr "Erro ao atualizar usuário"
 
-msgid "Error while trying to execute the task."
-msgstr ""
-
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Erro ao tentar executar a tarefa. Algumas informações necessárias estão faltando (contrato não cumprido)."
-
-msgid "Error while trying to start the case."
-msgstr ""
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
@@ -1160,7 +1154,7 @@ msgid "Human Task"
 msgstr "Tarefa humana"
 
 msgid "Human task"
-msgstr ""
+msgstr "Human task"
 
 msgid "ID"
 msgstr "ID"
@@ -1318,7 +1312,7 @@ msgid "Logout"
 msgstr "Desconectar"
 
 msgid "Look and Feel"
-msgstr ""
+msgstr "Look and Feel"
 
 msgid "Loop activity"
 msgstr "Atividade de iteração"
@@ -1578,7 +1572,7 @@ msgid "Parent Group"
 msgstr "Grupo Pai"
 
 msgid "Parent group"
-msgstr ""
+msgstr "Parent group"
 
 msgid "Password"
 msgstr "Senha"
@@ -1630,12 +1624,6 @@ msgstr "Realizado em"
 
 msgid "Performed on:"
 msgstr "Realizado em:"
-
-msgid "Permission denied: you do not have the rights to perform this action."
-msgstr ""
-
-msgid "Permission denied: you do not have the rights to view this item."
-msgstr ""
 
 msgid "Personal information"
 msgstr "Informações pessoais"
@@ -2547,7 +2535,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr ""
+msgstr "human task"
 
 msgid "import/export organization"
 msgstr "importação/exportação de organização"

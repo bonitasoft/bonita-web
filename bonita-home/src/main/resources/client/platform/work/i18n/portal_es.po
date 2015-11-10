@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-11-06 09:32-0500\n"
+"POT-Creation-Date: 2015-09-10 03:02+0200\n"
+"PO-Revision-Date: 2015-11-03 02:45-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1039,14 +1039,8 @@ msgstr "Ha ocurrido un error al actualizar la información de despliegue del pro
 msgid "Error when updating user"
 msgstr "Ha ocurrido un error al actualizar el usuario"
 
-msgid "Error while trying to execute the task."
-msgstr ""
-
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar ejecutar la tarea. Falta información obligatoria (contrato incompleto)."
-
-msgid "Error while trying to start the case."
-msgstr ""
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar iniciar un caso. Falta información obligatoria (contrato incompleto)."
@@ -1160,7 +1154,7 @@ msgid "Human Task"
 msgstr "Tarea Humana"
 
 msgid "Human task"
-msgstr ""
+msgstr "Human task"
 
 msgid "ID"
 msgstr "ID"
@@ -1318,7 +1312,7 @@ msgid "Logout"
 msgstr "Cerrar sesión"
 
 msgid "Look and Feel"
-msgstr ""
+msgstr "Look and Feel"
 
 msgid "Loop activity"
 msgstr "Actividad de bucle"
@@ -1630,12 +1624,6 @@ msgstr "Realizado en"
 
 msgid "Performed on:"
 msgstr "Realizado en:"
-
-msgid "Permission denied: you do not have the rights to perform this action."
-msgstr "Permiso denegado: no tienes los derechos para realizar esta acción."
-
-msgid "Permission denied: you do not have the rights to view this item."
-msgstr "Permiso denegado: no tienes los derechos para ver este elemento."
 
 msgid "Personal information"
 msgstr "Información personal"
@@ -2547,7 +2535,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr ""
+msgstr "human task"
 
 msgid "import/export organization"
 msgstr "Importación/exportación de organización"
