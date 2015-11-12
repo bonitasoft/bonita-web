@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
+import static java.util.Arrays.asList;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
@@ -36,12 +37,16 @@ import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.api.request.APISearchRequest;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.FlowNodeContextAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
+import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
+import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
+import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
@@ -97,6 +102,16 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     @Override
     public void defineTitle() {
         this.setTitle(_("Tasks"));
+    }
+
+    @Override
+    protected List<Clickable> defineFilterPanelActions() {
+        return asList(newTaskListLink());
+    }
+    private Clickable newTaskListLink() {
+        final TreeIndexed<String> tree = new TreeIndexed<String>();
+        return new Link(_("New List"), _("Check the new task list"),
+                new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.TASK_LISTING_TOKEN, tree)));
     }
 
     @Override
