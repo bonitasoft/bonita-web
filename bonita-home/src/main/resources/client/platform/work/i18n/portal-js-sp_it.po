@@ -1,0 +1,1171 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal-js-sp.pot\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"PO-Revision-Date: 2015-11-12 09:20-0500\n"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 h."
+msgstr "1 h."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 min."
+msgstr "1 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "10 min."
+msgstr "10 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "30 min."
+msgstr "30 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "5 min."
+msgstr "5 min."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<br>For a cluster, run the request key generator script manually on each node in the cluster and then request the licenses (find more information in the Licenses documentation page)."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>.<br>Remember to renew your license in time if your license expires before the count end date."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person.<br>The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
+msgstr ""
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+#: dist/features/admin/processes/details/process-connectors.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Actions"
+msgstr "azioni"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Activation state"
+msgstr "Stato di attivazione"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actor name"
+msgstr "Nome attore"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actors"
+msgstr "Attori"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/details/page-list.html:1
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Add"
+msgstr "Aggiungi"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Add from custom pages"
+msgstr "Aggiungi dalle pagine personalizzate"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu"
+msgstr "Aggiungere menu"
+
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu item"
+msgstr "Aggiungi una voce al menu"
+
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Add page"
+msgstr "Aggiungi pagina"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add pages in Navigation"
+msgstr "Aggiungere delle pagine in Navigazione"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Add top-level menu"
+msgstr "Aggiungi un menu di primo livello"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "All"
+msgstr "Tutti"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
+msgstr "Un'applicazione è un ambiente personalizzato per un profilo utente specifico, in cui gli utenti interagiscono con i dati aziendali e processi di business in modo più efficiente."
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Application XML file"
+msgstr "File XML dell'applicazione"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Application list"
+msgstr "Lista Applicazioni"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Apply"
+msgstr "Applica"
+
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Available tasks"
+msgstr "Task disponibili"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+#: dist/features/admin/processes/details/menu.html:1
+msgid "Back"
+msgstr "Indietro"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Before you can update a form mapping, you need to add the new form. To add it for this process only, upload it from the Form list tab"
+msgstr "Prima di poter aggiornare un form mapping, è necessario aggiungere il nuovo form. Se si desidera aggiungerlo solo per questo processo, si prega di usare il tab lista dei Form"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
+msgstr "Prima di importare l'applicazione, le pagine e il profilo devone già essere stati caricati nel portale."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Bonita BPM edition: <strong>{{LicenseMonitoringCtrl.license.edition}}</strong>"
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "CPU information"
+msgstr "Informazioni sulla CPU"
+
+#: dist/features/admin/applications/delete-application.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/applications/export-application.html:1
+#: dist/features/admin/applications/import-application.html:1
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "Cancel"
+msgstr "Annulla"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Case"
+msgstr "Caso"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case counter"
+msgstr "Contatore di casi"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Case list"
+msgstr "Elenco dei casi"
+
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Case state"
+msgstr "Stato del caso"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case usage:"
+msgstr "Percentuale dei casi già utilizzati:"
+
+#: dist/features/admin/cases/list/cases.html:1
+#: dist/features/user/cases/list/cases.html:1
+msgid "Cases"
+msgstr "Casi"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Cases with failures"
+msgstr "Casi con errori"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Categories"
+msgstr "Categorie"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Check that each entity has the relevant Process Manager profile in the Portal."
+msgstr "Verificare che ogni entità abbia il relativo profilo di Process Manager nel portale."
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Class name"
+msgstr "Nome della classe"
+
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Click here to choose your file (.zip)"
+msgstr "Clicca qui per scegliere il file (. zip)"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Click here to choose your file. XML file (.xml)"
+msgstr "Clicca qui per scegliere il file XML (.xml)"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Click here to go to Profile listing page"
+msgstr "Clicca qui per andare alla pagina della lista dei profili"
+
+#: dist/features/admin/applications/import-application.html:1
+#: dist/features/admin/processVisu/visuShowKey.html:68
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Close"
+msgstr "Chiudi"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Configuration state"
+msgstr "Stato della configurazione"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Confirm"
+msgstr "Conferma"
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "Confirm delete?"
+msgstr "Vuoi davvero eliminare?"
+
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Connector zip file"
+msgstr "Connettore file zip"
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Connectors"
+msgstr "Connettori"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Copy to clipboard"
+msgstr ""
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Counters include cases from root processes and cases started by call activities."
+msgstr "I contatori tengono conto i casi provenienti da procissi padre ma anche dei casi iniziati da delle call activity."
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Create a new membership"
+msgstr "Creare una nuova adesione"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Create an application"
+msgstr "Creare un'applicazione"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Created by"
+msgstr "Creato da"
+
+#: dist/features/admin/applications/details/application-details-app.html:1
+msgid "Creation"
+msgstr "Creazione"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Creation on"
+msgstr "Creazione in"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Current license"
+msgstr "Licenza attuale"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/delete-application.html:1
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+#: dist/features/admin/processes/details/menu.html:1
+msgid "Delete"
+msgstr "Cancella"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "Delete application"
+msgstr "Elimina l'applicazione"
+
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete process"
+msgstr "Elimina processo"
+
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete the process"
+msgstr "Elimina il processo"
+
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+#: dist/features/admin/processes/details/params.html:1
+msgid "Description"
+msgstr "Descrizione"
+
+#: dist/features/admin/processVisu/visuShowKey.html:3
+msgid "Diagram Key"
+msgstr "Legenda del diagramma"
+
+#: dist/features/admin/applications/edit-application.html:1
+msgid "Display name"
+msgstr "Nome visualizzato"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+msgid "Edit"
+msgstr "modifica"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu"
+msgstr "Modifica il menu"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu item"
+msgstr "Modificare la voce di menu"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Enable all"
+msgstr "Attivare tutti"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "End date"
+msgstr "Data di fine"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
+msgstr "Immettere un nuovo nome per la categoria e premere \"Invio\" per creare una nuova categoria e assegnarla al processo corrente."
+
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "Enter user"
+msgstr "Immettere l'utente"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Error"
+msgstr "Errore"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/export-application.html:1
+msgid "Export"
+msgstr "Esporta"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "Export application"
+msgstr "Esporta l'applicazione"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Failed Flow Nodes"
+msgstr "Flow Node falliti"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Filters"
+msgstr "Filtri"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Per ogni attore, controlla che ogni entità (utente, gruppo, ruolo, membership) abbia il corrispondente profilo utente nel Portale."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Form"
+msgstr "Modulo"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Form list"
+msgstr "Lista dei form"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Forms"
+msgstr "Moduli"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "General"
+msgstr "Generale"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Groups"
+msgstr "Gruppi"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Healthy"
+msgstr "Sano"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Healthy cases"
+msgstr "Casi sani"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "ID"
+msgstr "ID"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the case must be started programmatically."
+msgstr "Se non si specifica un form o un URL valido, il caso dovrà essere attivato a livello di codice."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the task must be executed programmatically."
+msgstr "Se non si specifica un form o un URL valido, il task dovrà essere attivato a livello di codice."
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Implementation version"
+msgstr "Versione dell'implementazione"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "Import"
+msgstr "Importa"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "Import an application"
+msgstr "Importare un'applicazione"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Instantiation"
+msgstr "Creazione di un'istanza"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Internal server error."
+msgstr "Errore interno del server."
+
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "Last update"
+msgstr "Ultimo aggiornamento"
+
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Layout"
+msgstr "Layout"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Legacy"
+msgstr "Legacy"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License"
+msgstr "Licenza"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License mode: <strong>{{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
+msgstr ""
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Loading..."
+msgstr "Caricamento..."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
+msgstr "Accedere come amministratore della piattaforma per poter vedere lo stato della licenza. Solo l'amministratore della piattaforma può accedere a queste informazioni."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Login"
+msgstr "Login"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Look & Feel"
+msgstr "Look & Feel"
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MAX"
+msgstr "MAX"
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MIN"
+msgstr "MIN"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Manage Categories"
+msgstr "Gestione Categorie"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Mapping"
+msgstr "Mappatura"
+
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Me"
+msgstr "Me"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Memberships"
+msgstr "Membership"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Monitor open cases"
+msgstr "Monitor i casi aperti"
+
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Monitoring status"
+msgstr "Stato del monitoraggio"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Multi-page menu"
+msgstr "Menu multipagina"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+#: dist/features/admin/processes/details/params.html:1
+msgid "Name"
+msgstr "Nome"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Navigation"
+msgstr "Navigazione"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Never"
+msgstr "Mai"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "New"
+msgstr "Nuovo"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Next"
+msgstr "Successivo"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "No application available."
+msgstr "Nessuna applicazione disponibile."
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "No cases to display"
+msgstr "Nessun caso da visualizzare"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only execute the task and not send any data."
+msgstr "Nessun contratto è stato definito. Il form o l'URL specificato dovrà quindi solo eseguire il task e non inviare alcun dato."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only start the case and not send any data."
+msgstr "Nessun contratto è stato definito. Il form o l'URL specificato dovrà quindi solo iniziare il caso e non inviare alcun dato."
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "No description."
+msgstr "Nessuna descrizione."
+
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "No groovy script found"
+msgstr "Nessun script groovy trovato"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "No mapping"
+msgstr "Nessun mapping"
+
+#: dist/features/admin/cases/list/search-index.html:1
+msgid "No value"
+msgstr "Nessun valore"
+
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "OK"
+msgstr "Ok"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "One or more connectors on case start or case end failed"
+msgstr "Uno o più connettori sono falliti all'inizio o alla fine del caso"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "One-page menu"
+msgstr "Manu a pagina singola"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "La tabella sottostante mostra solamente i casi provenienti da processi padre. I dettagli dei casi iniziati da delle call activity non sono disponibili."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Open cases"
+msgstr "Casi aperti"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Overview"
+msgstr "Recap"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Page"
+msgstr "Pagina"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Page zip file"
+msgstr "File zip della pagina"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Pages"
+msgstr "Pagine"
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "Parameters"
+msgstr "Parametri"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Password"
+msgstr "Password"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Pending Flow Nodes"
+msgstr "Flow Node in sospeso"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Platform administrator login"
+msgstr "Login amministratore piattaforma"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Process Manager mapping"
+msgstr "Process Manager mapping"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Process list"
+msgstr "Lista dei processi"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Process name"
+msgstr "Nome del processo"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Process version"
+msgstr "Versione del processo"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application.html:1
+msgid "Profile"
+msgstr "Privilegi"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Profiles"
+msgstr "Privilegi"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Remove"
+msgstr "Cancella "
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "Remove all"
+msgstr "Rimuovi tutti"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Renewal"
+msgstr ""
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "Reset"
+msgstr "Resetta"
+
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Return Type : {}"
+msgstr "Tipo restituito: {}"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Roles"
+msgstr "Ruoli"
+
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "Save"
+msgstr "Salva"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 1"
+msgstr "Chiave di ricerca 1"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 2"
+msgstr "Chiave di ricerca 2"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 3"
+msgstr "Chiave di ricerca 3"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 4"
+msgstr "Chiave di ricerca 4"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 5"
+msgstr "Chiave di ricerca 5"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Search..."
+msgstr "Ricerca..."
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Seleziona le entità (utenti, gruppi, ruoli, memberships) da mappare sugli attori. Queste entità effettueranno le attività umane nel processo."
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) who will supervise this process."
+msgstr "Seleziona le entità (utenti, gruppi, ruoli, memberships) che faranno da supervisori per questo processo."
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Select the page"
+msgstr "Selezionare la pagina"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Set as Home page"
+msgstr "Imposta come home page"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Show"
+msgstr "Visualizza"
+
+#: dist/features/admin/processVisu/visuShowKey.html:1
+msgid "Show key"
+msgstr "Visualizza la legenda"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by URL"
+msgstr "Ordina per URL"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by name"
+msgstr "Ordina per nome"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by updated on"
+msgstr "Ordina sulla data di aggiornamento"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by version"
+msgstr "Ordina per versione"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Specify an imported form or a URL"
+msgstr "Specificare un URL o un modulo importato"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Specify the menu structure."
+msgstr "Specificare la struttura del menu."
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Start date"
+msgstr "Iniziato il"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Started by"
+msgstr "Avviato da"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "State"
+msgstr "Stato"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Status of import"
+msgstr "Stato dell' importazione"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "TEST TRANSLATION KEY HTML JS"
+msgstr ""
+
+#: dist/features/admin/processVisu/visuShowKey.html:30
+msgid "Task1"
+msgstr "Task1"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Tasks"
+msgstr "Task"
+
+#: dist/features/admin/processes/details/menu.html:1
+msgid "The Process cannot be enabled"
+msgstr "Il processo non può essere abilitato"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "The application"
+msgstr "L'applicazione"
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "The current process has no connectors defined."
+msgstr "Il processo corrente non ha nessun connettore definiti."
+
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "The current process has no forms deployed."
+msgstr "Il processo corrente non ha nessun modulo distribuito."
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "The current process has no parameters defined."
+msgstr "Il processo corrente non dispone di parametri definiti."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "The current process has no tasks defined."
+msgstr "Il processo corrente non ha alcun task definito."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Il caso eliminato verrà definitivamente cancellato e non sarà conservato negli archivi."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "Il caso eliminato verrà eliminato definitivamente dagli archivi."
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page allows users with relevant profiles to access the following permissions:"
+msgstr "La pagina una volta aggiunta ad un profilo, consentirà agli utenti associati a tale profilo di avere le seguenti autorizzazioni:"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
+msgstr "L'archivio della pagina (file zip) deve contenere un page.properties, un index. html o un file Index.groovy, e le tutte le risorse necessarie per essere eseguita correttamente. Per maggiori informazioni, vedere la documentazione o il readme della pagina di esempio (disponibile nella lista delle pagine personalizzate)."
+
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Theme"
+msgstr "Tema"
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "I casi eliminato verranno definitivamente cancellati e non saranno conservati negli archivi."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "I caso verranno eliminati definitivamente dagli archivi."
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\n update the page definition to specify the list of resources used."
+msgstr "Questa pagina non dichiara alcuna autorizzazione. Se la pagina utilizza risorse di tipo REST e il controllo sulle autorizzazioni è attivo\n"
+" si prega di aggiornare la definizione della pagina per specificare l'elenco delle risorse REST utilizzate."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "To add it at tenant level, so it can be used in more than one process or task, add the form as a resource"
+msgstr "Per aggiungerlo a livello di tenant, in modo da poterli usare in più di un processo o un task, bisogna aggiungere il form come risorsa"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "To create an application, click New or Import."
+msgstr "Per creare un'applicazione, fare clic su Nuovo o Importa."
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "To do so, go to"
+msgstr "Per farlo, vai a"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
+msgstr "Per personalizzare la visualizzazione delle chiavi di ricerca (e le colonne in generale), è possibile utilizzare il pulsante delle impostazioni della tabella sulla destra. È possibile cercare su di un massimo di 5 chiavi di ricerca."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "To renew the license for this system, copy the request key below and go to the Customer Portal or contact your sales person."
+msgstr ""
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Totals"
+msgstr "Totale"
+
+#: dist/features/admin/processes/details/params.html:1
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Type"
+msgstr "Tipo"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "URL"
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Unable to log in. Please check your username and password."
+msgstr "Impossibile effettuare il login. Si prega di controllare il nome utente e la password."
+
+#: dist/features/admin/applications/details/application-details-app.html:1
+msgid "Update"
+msgstr "Aggiorna"
+
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Update content of script {}"
+msgstr "Aggiornare il contenuto dello script {}"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Updated by"
+msgstr "Aggiornato da"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/processes/details/information.html:1
+msgid "Updated on"
+msgstr "Aggiornato il"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new Page"
+msgstr "Caricare una nuova pagina"
+
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Upload new version of the connector"
+msgstr "Caricare una nuova versione del connettore"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new version of {}"
+msgstr "Caricare una nuova versione di {}"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Use Arrow up and Arrow down keys to browse among existing categories."
+msgstr "Usare freccia su e freccia giù per navigare tra le categorie esistenti."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Username"
+msgstr "Username"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Users"
+msgstr "Utenti"
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "Value"
+msgstr "Valore"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Version"
+msgstr "Versione"
+
+#: dist/features/admin/cases/list/caseVisuDirective.html:1
+msgid "View case design"
+msgstr "Visualizza il diagramma del caso"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "View case details"
+msgstr "Visualizza i dettagli del caso"
+
+#: dist/features/admin/monitoring/monitoring.html:5
+msgid "View case list"
+msgstr "Visualizza la lista dei casi"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "View case overview"
+msgstr "Visualizzare la panoramica del caso"
+
+#: dist/features/admin/monitoring/monitoring.html:5
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "View diagram"
+msgstr "Visualizza il diagramma"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "When you export an application, pages and profiles are not exported in the file."
+msgstr "Quando si esporta un'applicazione, pagine e profili non vengono esportati nel file."
+
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "With failures"
+msgstr "Con errori"
+
+#: dist/features/admin/processVisu/visuShowKey.html:64
+msgid "X is the number of Flow Node instances"
+msgstr "X è il numero di istanze di Flow Node"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "You are about to export the application"
+msgstr "Stai per esportare l'applicazione"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "You must add a page before you can reference it in a menu."
+msgstr "È necessario aggiungere una pagina prima di essere in grado di farne riferimento in un menu."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>."
+msgstr ""
+
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "an Application"
+msgstr "un'applicazione"
+
+#: dist/features/admin/applications/edit-application.html:1
+msgid "an application"
+msgstr "un'applicazione"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "application has been partially imported. The following items are not loaded in the Portal."
+msgstr "l'applicazione è stata parzialmente importata. Gli elementi seguenti non verranno caricati nel portale."
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "application has been successfully imported, with complete page mapping and menu mapping."
+msgstr "l'applicazione con una mappatura completa di pagine e menu, è stata importata con successo."
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "back"
+msgstr "indietro"
+
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "filter scripts..."
+msgstr "filtro script..."
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "of"
+msgstr "di"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures ascending"
+msgstr "ordina per casi con errore crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures descending"
+msgstr "ordina per casi con errore decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date ascending"
+msgstr "ordina per data di fine crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date descending"
+msgstr "ordina per data di fine decrescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases ascending"
+msgstr "ordina per casi senza errore crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases descending"
+msgstr "ordina per casi senza errore decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID ascending"
+msgstr "ordina per ID crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID descending"
+msgstr "ordina per ID decrescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases ascending"
+msgstr "ordina per casi in corso crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases descending"
+msgstr "ordina per casi in corso decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name ascending"
+msgstr "ordina per nome di processo crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name descending"
+msgstr "ordina per nome di processo decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date ascending"
+msgstr "ordina per data di inizio crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date descending"
+msgstr "ordina per data di inizio decrescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State ascending"
+msgstr "ordina per stato crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State descending"
+msgstr "ordina per stato decrescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version ascending"
+msgstr "ordina per versione crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version descending"
+msgstr "ordina per versione decrescente"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "will be permanently deleted."
+msgstr "verrà eliminata definitivamente."
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "{} mapped"
+msgstr "{} mappata"
+
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "{} mapped to process manager profile"
+msgstr "{} mappata al profilo Process Manager"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "{} mappings to delete"
+msgstr "{} mapping da eliminare"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "{} more"
+msgstr "{} più"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} of {}"
+msgstr "{} di {}"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "{}-{} of {}"
+msgstr "{}-{} di {}"
+
