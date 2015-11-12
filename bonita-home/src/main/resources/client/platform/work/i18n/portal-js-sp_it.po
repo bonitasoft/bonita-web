@@ -810,6 +810,10 @@ msgstr "Stato dell' importazione"
 msgid "TEST TRANSLATION KEY HTML JS"
 msgstr ""
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "TEST TRANSLATION KEY HTML JS SP"
+msgstr ""
+
 #: dist/features/admin/processVisu/visuShowKey.html:30
 msgid "Task1"
 msgstr "Task1"
