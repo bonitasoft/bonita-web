@@ -227,20 +227,8 @@
   .Context-title {
     margin-top: 0;
   }
-  .Viewer-wrapper {
-    position: relative;
-    display: block;
-  }
   .Viewer-frame {
     min-height: 300px;
-  }
-  .Viewer-overlay {
-    background-color: rgba(255, 255, 255, .5);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
   .CaseViewer {
     border: 1px solid #CCC;
@@ -495,4 +483,20 @@
   .Line td {
     white-space: nowrap;
   }
+}
+
+/**
+ * Overlay
+ */
+.Viewer-wrapper {
+  position: relative;
+  display: block;
+}
+.Viewer-overlay {
+  background-color: rgba(255, 255, 255, .5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
