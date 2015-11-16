@@ -90,7 +90,7 @@ public class CustomPageService {
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
-        return buildPageClassloader(apiSession, pageResourceProvider.getPageName(), pageResourceProvider.getPageDirectory());
+        return buildPageClassloader(apiSession, pageResourceProvider.getFullPageName(), pageResourceProvider.getPageDirectory());
     }
 
     public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProvider pageResourceProvider) throws BonitaException, IOException {
@@ -127,10 +127,9 @@ public class CustomPageService {
     }
 
     public Class<RestApiController> registerRestApiPage(final GroovyClassLoader pageClassLoader, final PageResourceProvider pageResourceProvider,
-            final String classFileName)
+            final File restApiControllerFile)
                     throws CompilationFailedException, IOException {
-        final File pageControllerFile = getPageFile(pageResourceProvider.getPageDirectory(), classFileName);
-        return pageClassLoader.parseClass(pageControllerFile);
+        return pageClassLoader.parseClass(restApiControllerFile);
     }
 
     public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException, CompilationFailedException {
@@ -155,6 +154,14 @@ public class CustomPageService {
     public void removePage(final APISession apiSession, final String pageName) throws IOException {
         closeClassloader(pageName);
         final PageResourceProvider pageResourceProvider = new PageResourceProvider(pageName, apiSession.getTenantId());
+        removePageZipContent(apiSession, pageResourceProvider);
+        CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
+    }
+
+    public void removePage(final APISession apiSession, final Page page) throws IOException {
+        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
+        final String pageName = pageResourceProvider.getFullPageName();
+        closeClassloader(pageName);
         removePageZipContent(apiSession, pageResourceProvider);
         CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
     }

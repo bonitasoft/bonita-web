@@ -66,6 +66,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
         PRIVILEGES.add(TaskListingAdminPage.TOKEN); // FIX ME: we should create a humantaskmoredetails admin page so ill never need this
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
+        PRIVILEGES.add(AngularIFrameView.TASK_LISTING_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
@@ -255,7 +256,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     protected ItemListingResourceFilter defineResourceFilters() {
         return new AppResourceFilter(
                 new APISearchRequest(Definitions.get(ProcessDefinition.TOKEN)).addFilter(ProcessItem.FILTER_USER_ID, Session.getUserId().toString())
-                        .addFilter(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "true"),
+                .addFilter(ProcessItem.FILTER_FOR_PENDING_OR_ASSIGNED_TASKS, "true"),
                 TABLE_AVAILABLE)
                 .addFilterMapping(HumanTaskItem.ATTRIBUTE_PROCESS_ID, ProcessItem.ATTRIBUTE_ID)
                 .addFilter(HumanTaskItem.FILTER_USER_ID, Session.getUserId());

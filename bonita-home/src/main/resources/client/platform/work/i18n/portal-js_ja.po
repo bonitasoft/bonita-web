@@ -3,27 +3,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita-bpm-new-features\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
-"X-Crowdin-Language: it\n"
+"X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
-"Language-Team: Italian\n"
-"Language: it_IT\n"
-"PO-Revision-Date: 2015-11-12 04:33-0500\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
+"PO-Revision-Date: 2015-11-12 13:03-0500\n"
 
 #: table-settings\tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr "Selezione delle colonne"
+msgstr "列の選択"
 
 #: table-settings\tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Elementi per pagina"
+msgstr "ページあたりの表示件数"
 
 #: table-settings\tableSettings.tpl.html:5
 #: table-settings\tableSettings.tpl.html:9
 msgid "Table settings"
-msgstr "Configurazioni della tabella"
+msgstr "テーブルの設定"
 

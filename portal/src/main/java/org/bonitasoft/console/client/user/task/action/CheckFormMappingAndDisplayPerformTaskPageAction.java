@@ -45,7 +45,6 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
@@ -215,47 +214,11 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
     protected void executeTask(final String taskId, final TreeIndexed<String> parameters) {
         RequestBuilder requestBuilder;
         requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/userTask/" + taskId + "/execution");
-        requestBuilder.setCallback(new ExecuteTaskCallback(taskId));
+        requestBuilder.setCallback(new ExecuteTaskCallback(taskId, taskDisplayName));
         try {
             requestBuilder.send();
         } catch (final RequestException e) {
             GWT.log("Error while creating the task execution request", e);
-        }
-    }
-
-    protected class ExecuteTaskCallback extends APICallback {
-
-        private final String taskId;
-
-        public ExecuteTaskCallback(final String taskId) {
-            this.taskId = taskId;
-        }
-
-        @Override
-        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            final String confirmationMessage = _("The task %taskName% has been executed. The task list is being refreshed.", new Arg("taskName",
-                    taskDisplayName));
-            ViewController.closePopup();
-            showConfirmation(confirmationMessage);
-            final Timer redirectTimer = new Timer() {
-                @Override
-                public void run() {
-                    redirectToTaskList();
-                }
-            };
-            redirectTimer.schedule(1500);
-        }
-
-        @Override
-        public void onError(final String message, final Integer errorCode) {
-            if (errorCode == Response.SC_BAD_REQUEST) {
-                GWT.log("Error while executing the task " + taskId + " : " + message);
-                final String errorMessage = _("Error while trying to execute the task. Some required information is missing (contract not fulfilled).");
-                ViewController.closePopup();
-                showError(errorMessage);
-            } else {
-                super.onError(message, errorCode);
-            }
         }
     }
 
@@ -269,11 +232,41 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
         }
     }
 
-    protected void showConfirmation(final String confirmationMessage) {
-        Message.success(confirmationMessage);
-    }
+    protected class ExecuteTaskCallback extends APICallback {
 
-    protected void showError(final String errorMessage) {
-        Message.alert(errorMessage);
+        private final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior;
+
+        public ExecuteTaskCallback(final String taskId, final String taskDisplayName) {
+            taskExecutionCallbackBehavior = new TaskExecutionCallbackBehavior() {
+
+                @Override
+                public void onSuccess(final String targetUrlOnSuccess) {
+                    final String confirmationMessage = _("The task %taskName% has been executed. The task list is being refreshed.", new Arg("taskName",
+                            taskDisplayName));
+                    if (ViewController.hasOpenedPopup()) {
+                        ViewController.closePopup();
+                    }
+                    showConfirmation(confirmationMessage);
+                    final Timer redirectTimer = new Timer() {
+
+                        @Override
+                        public void run() {
+                            redirectToTaskList();
+                        }
+                    };
+                    redirectTimer.schedule(1500);
+                }
+            };
+        }
+
+        @Override
+        public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
+            taskExecutionCallbackBehavior.onSuccess(null);
+        }
+
+        @Override
+        public void onError(final String message, final Integer errorCode) {
+            taskExecutionCallbackBehavior.onError(message, errorCode);
+        }
     }
 }

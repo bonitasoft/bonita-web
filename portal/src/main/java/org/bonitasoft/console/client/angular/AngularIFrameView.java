@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.admin.process.view.ProcessInstantiationEventListener;
+import org.bonitasoft.console.client.common.view.TaskExecutionEventListener;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
@@ -51,9 +53,12 @@ public class AngularIFrameView extends RawView {
 
     public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
 
-    private final IFrameView iframe = new IFrameView();
+    public static final String TASK_LISTING_TOKEN = "tasklistinguser_new";
+
+    private final IFrameView iframe = new IFrameView(new ProcessInstantiationEventListener(), new TaskExecutionEventListener());
 
     protected final static Map<String, List<String>> acceptedToken = initAcceptedTokens();
+
 
     private String url;
 
@@ -73,7 +78,7 @@ public class AngularIFrameView extends RawView {
 
     /**
      * get route associated to given token when it exists, null otherwise
-     * 
+     *
      * @param token the token to get the route from
      * @return the route
      */
@@ -160,8 +165,8 @@ public class AngularIFrameView extends RawView {
      */
     protected String buildAngularUrl(final String url, final String token, final String queryString) {
         final AngularUrlBuilder angularUrlBuilder = new AngularUrlBuilder(url)
-        .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
-        .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash());
+                .appendQueryStringParameter(token + "_id", queryString + "&" + getHash())
+                .appendQueryStringParameter(token + "_tab", queryString + "&" + getHash());
         if (acceptedToken.containsKey(token)) {
             for (final String param : acceptedToken.get(token)) {
                 angularUrlBuilder.appendQueryStringParameter(param, queryString + "&" + getHash());

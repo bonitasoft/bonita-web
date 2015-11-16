@@ -13,7 +13,10 @@
 	
 	<!-- German language, independent of country					-->
 	<extend-property name="locale" values="de"/>
-	
+
+    <!-- japanese language, independent of country					-->
+    <extend-property name="locale" values="ja"/>
+
 	<!-- Portuguese language in Brazil								-->
 	<extend-property name="locale" values="pt_BR"/>
 	

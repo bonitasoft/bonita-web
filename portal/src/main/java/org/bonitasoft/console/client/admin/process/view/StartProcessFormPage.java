@@ -18,7 +18,11 @@ package org.bonitasoft.console.client.admin.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import com.google.gwt.user.client.Element;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
@@ -32,10 +36,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gwt.user.client.Element;
 
 /**
  * @author Ruiheng Fan, Haojie Yuan
@@ -96,7 +97,7 @@ public class StartProcessFormPage extends Page {
             frameURL.append("&user=").append(userId);
         }
 
-        addBody(new UiComponent(new IFrameView(frameURL.toString())));
+        addBody(new UiComponent(new IFrameView(frameURL.toString(), new ProcessInstantiationEventListener())));
     }
 
     @Override

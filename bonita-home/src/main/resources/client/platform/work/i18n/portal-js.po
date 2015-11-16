@@ -5,6 +5,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"#-#-#-#-#  portal-js-tmp.po  #-#-#-#-#\n"
+"#-#-#-#-#  portaljsspAll.pot  #-#-#-#-#\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "#-#-#-#-#  portal-js.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -46,24 +56,6 @@ msgstr ""
 
 #: main/features/admin/monitoring/monitoring.html:13
 msgid "5 min."
-msgstr ""
-
-#: main/features/admin/license/monitoring/license-monitoring.html:53
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases "
-"provisioned for the period <strong>{{ LicenseMonitoringCtrl.license."
-"startPeriodTimestamp| dateI18n : 'LL'}}</strong> to "
-"<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}"
-"</strong>. Remember to renew your license in time if your license expires "
-"before the count end date."
-msgstr ""
-
-#: main/features/admin/license/monitoring/license-monitoring.html:54
-msgid ""
-"<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases "
-"available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| "
-"dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales "
-"person."
 msgstr ""
 
 msgid "A page with this name already exists."
@@ -191,7 +183,7 @@ msgid ""
 "loaded in the Portal."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:68
+#: main/features/admin/license/monitoring/license-monitoring.html:92
 msgid "CPU information"
 msgstr ""
 
@@ -230,7 +222,7 @@ msgstr ""
 msgid "Case"
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:52
+#: main/features/admin/license/monitoring/license-monitoring.html:60
 msgid "Case counter"
 msgstr ""
 
@@ -253,7 +245,7 @@ msgstr ""
 msgid "Case state"
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:56
+#: main/features/admin/license/monitoring/license-monitoring.html:62
 msgid "Case usage:"
 msgstr ""
 
@@ -373,7 +365,7 @@ msgstr ""
 msgid "Creation on"
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:49
+#: main/features/admin/license/monitoring/license-monitoring.html:53
 msgid "Current license"
 msgstr ""
 
@@ -626,7 +618,7 @@ msgstr ""
 msgid "Internal"
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:11
+#: main/features/admin/license/monitoring/license-monitoring.html:14
 msgid "Internal server error."
 msgstr ""
 
@@ -665,10 +657,15 @@ msgstr ""
 #: main/features/admin/license/monitoring/license-monitoring.html:7
 msgid ""
 "Log in as platform administrator to see the license status. Only the "
-"platform administrator can access this information."
+"platform administrator can access\n"
+"      this information."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:39
+msgid ""
+"Log in as platform administrator to see the license status. Only the platform administrator can access this information."
+msgstr ""
+
+#: main/features/admin/license/monitoring/license-monitoring.html:42
 msgid "Login"
 msgstr ""
 
@@ -844,7 +841,7 @@ msgstr ""
 msgid "Parameters must be resolved before enabling the Process."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:28
+#: main/features/admin/license/monitoring/license-monitoring.html:31
 msgid "Password"
 msgstr ""
 
@@ -1144,11 +1141,8 @@ msgid ""
 "enabling the process."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:55
-msgid ""
-"The case counter will be reset to the value in your license on "
-"<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}"
-"</strong>."
+#: main/features/admin/license/monitoring/license-monitoring.html:85
+msgid "The case counter will be reset to the value in your license on {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/processes/details/process-connectors.html:4
@@ -1275,7 +1269,12 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:10
+#: main/features/admin/license/monitoring/license-monitoring.html:11
+msgid ""
+"Unable to log in.\n"
+"        Please check your username and password."
+msgstr ""
+
 msgid "Unable to log in. Please check your username and password."
 msgstr ""
 
@@ -1316,7 +1315,7 @@ msgstr ""
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:16
+#: main/features/admin/license/monitoring/license-monitoring.html:19
 msgid "Username"
 msgstr ""
 
@@ -1403,19 +1402,15 @@ msgstr ""
 msgid "You must add a page before you can reference it in a menu."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:69
-msgid ""
-"Your current license permits you to use <strong>{{LicenseMonitoringCtrl."
-"license.numberOfCPUCores}}</strong> cores."
+
+#: main/features/admin/license/monitoring/license-monitoring.html:94
+msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
 msgstr ""
 
-#: main/features/admin/license/monitoring/license-monitoring.html:50
-msgid ""
-"Your license expires <strong>{{ LicenseMonitoringCtrl.license."
-"licenseExpirationTimestamp | dateAgo }}</strong>, on "
-"<strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | "
-"dateI18n : 'LL'}}</strong>. To renew your license, generate a license key "
-"and go to the Customer Portal, or contact your sales person."
+
+
+#: main/features/admin/license/monitoring/license-monitoring.html:55
+msgid "Your license expires {{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}, on {{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}. To renew your license, generate a license key and go to the Customer Portal, or contact your sales person."
 msgstr ""
 
 #: bonita-portal-js/main/features/admin/applications/edit-application-look-n-feel.html:4
@@ -1566,14 +1561,22 @@ msgstr ""
 msgid "will be permanently deleted."
 msgstr ""
 
+#: main/features/admin/license/monitoring/license-monitoring.html:75
+msgid "{{LicenseMonitoringCtrl.license.caseCounterLimit}} cases provisioned for the period {{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}} to {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. Remember to renew your license in time if your license expires before the count end date."
+msgstr ""
+
+#: main/features/admin/license/monitoring/license-monitoring.html:81
+msgid "{{LicenseMonitoringCtrl.license.remainingInstances}} cases available until {{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}. To provision more cases, contact your sales person."
+msgstr ""
+
 msgid ""
 "{{currentFirstResultIndex}} to {{currentLastResultIndex}} of {{pagination."
 "total}}"
 msgstr ""
 
 msgid ""
-"{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of "
-"{{getTotalProcesses()}}"
+"{{getStartIndexOfPage()}} to {{getEndIndexOfPage()}} of {{getTotalProcesses"
+"()}}"
 msgstr ""
 
 msgid ""
