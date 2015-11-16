@@ -110,7 +110,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     }
     private Clickable newTaskListLink() {
         final TreeIndexed<String> tree = new TreeIndexed<String>();
-        return new Link(_("New List"), "Check the new task list",
+        return new Link("New List", "Check the new task list",
                 new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.TASK_LISTING_TOKEN, tree)));
     }
 
