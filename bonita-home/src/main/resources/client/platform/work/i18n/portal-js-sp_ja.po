@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-11-12 09:20-0500\n"
+"PO-Revision-Date: 2015-11-17 10:57-0500\n"
 
 #: dist/features/admin/monitoring/monitoring.html:1
 msgid "1 h."
@@ -36,15 +36,15 @@ msgstr "5 分"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "<br>For a cluster, run the request key generator script manually on each node in the cluster and then request the licenses (find more information in the Licenses documentation page)."
-msgstr ""
+msgstr "<br>クラスターの場合、クラスター内の各ノードごとにリクエストキー生成スクリプトを手動で実行し、ライセンスをリクエストします（詳しい情報は、ライセンスのドキュメント ページにあります）。"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>.<br>Remember to renew your license in time if your license expires before the count end date."
-msgstr ""
+msgstr "<strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> ～ <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> の期間に提供されている案件数の上限は、<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> です。この期間内に実際の案件数がこの上限を超える恐れがある場合は、ライセンス終了日前までにこの上限を更新してください。"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person.<br>The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
-msgstr ""
+msgstr "<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> までにご利用可能な残りの案件数は、 <strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> です。ご利用可能な案件数を追加するには、お客様の営業担当者にお問い合わせください。<br>案件数カウンターは、<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> にお客様のライセンスの値にリセットされます。"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
@@ -140,7 +140,7 @@ msgstr "そのページとプロファイルは、アプリケーションをイ
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "Bonita BPM edition: <strong>{{LicenseMonitoringCtrl.license.edition}}</strong>"
-msgstr ""
+msgstr "Bonita BPM のエディション： {{LicenseMonitoringCtrl.license.edition}}"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "CPU information"
@@ -249,7 +249,7 @@ msgstr "コネクタ"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "クリップボードにコピーする"
 
 #: dist/features/admin/monitoring/monitoring.html:1
 msgid "Counters include cases from root processes and cases started by call activities."
@@ -461,7 +461,7 @@ msgstr "ライセンス"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "License mode: <strong>{{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
-msgstr ""
+msgstr "ライセンス モード： <strong> {{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/admin/processes/details/scripts/scripts.html:1
@@ -682,7 +682,7 @@ msgstr "すべて削除"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "Renewal"
-msgstr ""
+msgstr "更新"
 
 #: dist/features/admin/processVisu/processVisu.html:1
 msgid "Reset"
@@ -808,11 +808,11 @@ msgstr "インポートの状態"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "TEST TRANSLATION KEY HTML JS"
-msgstr ""
+msgstr "HTML JS の翻訳キーのテスト"
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "TEST TRANSLATION KEY HTML JS SP"
-msgstr ""
+msgstr "HTML JS SP の翻訳キーのテスト"
 
 #: dist/features/admin/processVisu/visuShowKey.html:30
 msgid "Task1"
@@ -900,7 +900,7 @@ msgstr "検索キー の表示（および一般的な表示列）をカスタ�
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "To renew the license for this system, copy the request key below and go to the Customer Portal or contact your sales person."
-msgstr ""
+msgstr "このシステムのライセンスを更新するには、以下のリクエストキーをコピーしてカスタマー ポータルに進むか、あるいはお客様の営業担当者にコンタクトしてください。"
 
 #: dist/features/admin/monitoring/monitoring.html:1
 msgid "Totals"
@@ -1028,7 +1028,7 @@ msgstr "現在のライセンスは、 {{LicenseMonitoringCtrl.license.numberOfC
 
 #: dist/features/admin/license/monitoring/license-monitoring.html:1
 msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>."
-msgstr ""
+msgstr "お客様のライセンスは、 <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo}}</strong> 後の <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong> に期限切れになります。"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "an Application"

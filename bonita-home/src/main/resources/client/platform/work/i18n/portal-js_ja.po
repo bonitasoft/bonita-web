@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-11-12 09:20-0500\n"
+"PO-Revision-Date: 2015-11-17 10:57-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -137,7 +137,7 @@ msgstr "ファイルをアップロードできません"
 
 #: main/common/services/i18n.js:93
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr ""
+msgstr "案件番号: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -456,7 +456,7 @@ msgstr "新規"
 
 #: main/common/services/i18n.js:104
 msgid "No Mapping"
-msgstr ""
+msgstr "マッピングなし"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
@@ -685,7 +685,7 @@ msgstr "正常に更新されたカテゴリ"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "TEST TRANSLATION KEY HTML JS"
-msgstr ""
+msgstr "HTML JS の翻訳キーのテスト"
 
 #: table-settings\tableSettings.tpl.html:5
 #: table-settings\tableSettings.tpl.html:9
@@ -711,7 +711,7 @@ msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ �
 
 #: main/common/services/i18n.js:122
 msgid "The case {{caseId}} has been started successfully."
-msgstr ""
+msgstr "案件番号： %caseId% が正常に開始されました。"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
@@ -739,7 +739,7 @@ msgstr "URL の名前は、英数字のみが続く custompage_ で始まらな�
 
 #: main/common/services/i18n.js:121
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr ""
+msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -870,7 +870,7 @@ msgstr "それをメニューで参照する前に、ページを追加する必
 
 #: main/common/services/i18n.js:107
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
-msgstr ""
+msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "an Application"
