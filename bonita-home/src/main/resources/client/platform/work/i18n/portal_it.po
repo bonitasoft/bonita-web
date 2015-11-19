@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 03:02+0200\n"
-"PO-Revision-Date: 2015-11-03 02:50-0500\n"
+"POT-Creation-Date: 2015-11-03 03:01+0100\n"
+"PO-Revision-Date: 2015-11-19 08:53-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: it\n"
-"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Per eseguire questa operazione, andare a %entitymappingprofilelink%."
@@ -1039,8 +1039,14 @@ msgstr "Errore durante l'aggiornamento delle informazioni di distribuzione del p
 msgid "Error when updating user"
 msgstr "Errore durante l'aggiornamento dell'utente"
 
+msgid "Error while trying to execute the task."
+msgstr ""
+
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Errore durante l'esecuzione del task. Alcune delle informazioni richieste sono mancanti (contratto non soddisfatto)."
+
+msgid "Error while trying to start the case."
+msgstr ""
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Errore durante l'inizializzazione del caso. Alcune delle informazioni richieste sono mancanti (contratto non soddisfatto)."
@@ -1154,7 +1160,7 @@ msgid "Human Task"
 msgstr "Task umano"
 
 msgid "Human task"
-msgstr "Human task"
+msgstr ""
 
 msgid "ID"
 msgstr "ID"
@@ -1312,7 +1318,7 @@ msgid "Logout"
 msgstr "Logout"
 
 msgid "Look and Feel"
-msgstr "Look and Feel"
+msgstr ""
 
 msgid "Loop activity"
 msgstr "Attività di ciclo"
@@ -1624,6 +1630,12 @@ msgstr "Eseguito il"
 
 msgid "Performed on:"
 msgstr "Eseguito il:"
+
+msgid "Permission denied: you do not have the rights to perform this action."
+msgstr ""
+
+msgid "Permission denied: you do not have the rights to view this item."
+msgstr ""
 
 msgid "Personal information"
 msgstr "Informationi personali"
@@ -2535,7 +2547,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr "human task"
+msgstr ""
 
 msgid "import/export organization"
 msgstr "Importa/Esporta l'organizzazione"
