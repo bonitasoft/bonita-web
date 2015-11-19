@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
@@ -133,9 +134,9 @@ public class PageServletTest {
         when(customPageService.getPage(apiSession, PAGE_ID)).thenReturn(page);
         when(page.getName()).thenReturn(pageName);
 
-        final PageResourceProvider pageResourceProvider = mock(PageResourceProvider.class);
+        final PageResourceProviderImpl pageResourceProvider = mock(PageResourceProviderImpl.class);
         final File resourceFile = mock(File.class);
-        when(pageResourceProvider.getResourceAsFile("resources/path/of/resource.css")).thenReturn(resourceFile);
+        when(pageResourceProvider.getResourceAsFile("resources" +File.separator + "path/of/resource.css")).thenReturn(resourceFile);
         when(pageRenderer.getPageResourceProvider(PAGE_ID, apiSession)).thenReturn(pageResourceProvider);
         when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
 

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.PageReference;
-import org.bonitasoft.console.common.server.page.PageResourceProvider;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class ResourceExtensionResolverTest {
     private Request request;
 
     @Mock
-    private PageResourceProvider pageResourceProvider;
+    private PageResourceProviderImpl pageResourceProvider;
 
     File file;
 

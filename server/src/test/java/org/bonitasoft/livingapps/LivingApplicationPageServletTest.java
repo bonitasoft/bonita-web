@@ -31,8 +31,8 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
-import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
@@ -73,7 +73,7 @@ public class LivingApplicationPageServletTest {
     ResourceRenderer resourceRenderer;
 
     @Mock
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;

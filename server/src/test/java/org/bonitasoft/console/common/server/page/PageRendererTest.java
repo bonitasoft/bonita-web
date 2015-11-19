@@ -27,6 +27,7 @@ import java.io.File;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
@@ -63,7 +64,7 @@ public class PageRendererTest {
     CustomPageService customPageService;
 
     @Mock
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
     @Mock
     Page page;
@@ -127,7 +128,7 @@ public class PageRendererTest {
         doReturn(page).when(customPageService).getPage(apiSession, 42L);
 
         //when
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(42L, apiSession);
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(42L, apiSession);
 
         //then
         assertThat(pageResourceProvider.getPageName()).isEqualTo(pageName);
@@ -140,7 +141,7 @@ public class PageRendererTest {
         doReturn(pageName).when(page).getName();
 
         //when
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageName,1L);
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName,1L);
 
         //then
         assertThat(pageResourceProvider.getPageName()).isEqualTo(pageName);
