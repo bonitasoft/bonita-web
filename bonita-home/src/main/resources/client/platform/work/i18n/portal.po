@@ -1632,12 +1632,6 @@ msgstr ""
 msgid "Performed on:"
 msgstr ""
 
-msgid "Permission denied: you do not have the rights to perform this action."
-msgstr ""
-
-msgid "Permission denied: you do not have the rights to view this item."
-msgstr ""
-
 msgid "Personal information"
 msgstr ""
 

@@ -7,23 +7,49 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal-js-sp.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "PO-Revision-Date: 2015-11-12 09:23-0500\n"
 
-#: main/common/services/i18n.js:57
-msgid "1 case has been deleted"
-msgstr "1 caso foi removido"
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 h."
+msgstr "1 h."
 
-#: main/common/services/i18n.js:108
-msgid "A page with this name already exists."
-msgstr "Já existe uma página com este nome."
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 min."
+msgstr "1 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "10 min."
+msgstr "10 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "30 min."
+msgstr "30 min."
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "5 min."
+msgstr "5 min."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<br>For a cluster, run the request key generator script manually on each node in the cluster and then request the licenses (find more information in the Licenses documentation page)."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>.<br>Remember to renew your license in time if your license expires before the count end date."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person.<br>The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
+msgstr ""
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/process-connectors.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Actions"
@@ -45,6 +71,7 @@ msgstr "Atores"
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: dist/features/admin/applications/details/page-list.html:1
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Add"
 msgstr "Adicionar"
 
@@ -73,13 +100,13 @@ msgstr "Adicione as páginas na Navegação"
 msgid "Add top-level menu"
 msgstr "Adicionar menu de primeiro nível"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "All"
+msgstr "Todos "
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados de negócio e processos de negócios de maneira mais eficaz."
-
-#: main/common/services/i18n.js:59
-msgid "An error occured during categories update"
-msgstr "Ocorreu um erro durante a atualização das categorias"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -90,6 +117,7 @@ msgid "Application list"
 msgstr "Lista de aplicações"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -97,21 +125,26 @@ msgstr "Aplicar"
 msgid "Available tasks"
 msgstr "Tarefas disponíveis"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
 #: dist/features/admin/processes/details/menu.html:1
 msgid "Back"
 msgstr "Voltar"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Before you can update a form mapping, you need to add the new form. To add it for this process only, upload it from the Form list tab"
+msgstr "Antes de atualizar um mapeamento de formulário, é necessário adicionar o novo formulário. Para adicioná-lo somente para este processo, carregue-o a partir da guia Lista de formulários"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar a aplicação, as páginas personalizadas e o perfil devem existir no Portal."
 
-#: main/common/services/i18n.js:103
-msgid "Can't import page or form to the process"
-msgstr "Não foi possível importar a página ou formulário no processo"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Bonita BPM edition: <strong>{{LicenseMonitoringCtrl.license.edition}}</strong>"
+msgstr ""
 
-#: main/common/services/i18n.js:120
-msgid "Can't update expression content"
-msgstr "Não foi possível atualizar o conteúdo da expressão"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "CPU information"
+msgstr "Informações CPU"
 
 #: dist/features/admin/applications/delete-application.html:1
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
@@ -123,89 +156,107 @@ msgstr "Não foi possível atualizar o conteúdo da expressão"
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 #: dist/features/admin/processes/details/delete-process-modal.html:1
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+#: dist/features/admin/processes/details/startForModal.html:1
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: main/common/services/i18n.js:88
-msgid "Cancelled, skipped instances"
-msgstr "Instâncias canceladas, ignoradas"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Case"
+msgstr "Instância de processo"
 
-#: main/common/services/i18n.js:100
-msgid "Cannot upload the file"
-msgstr "Não foi possível carregar o arquivo"
-
-#: main/common/services/i18n.js:93
-msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr ""
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case counter"
+msgstr "Contador de casos"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Case list"
 msgstr "Lista de casos"
 
-#: main/common/services/i18n.js:117
-msgid "Case overview"
-msgstr "Página de síntese do caso"
-
-#: main/common/services/i18n.js:118
-msgid "Case start"
-msgstr "Iníciar  caso"
-
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "Case state"
 msgstr "Estado do caso"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case usage:"
+msgstr "Porcentagem de utilização de casos:"
 
 #: dist/features/admin/cases/list/cases.html:1
 #: dist/features/user/cases/list/cases.html:1
 msgid "Cases"
 msgstr "Casos"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Cases with failures"
+msgstr "Casos com erros"
+
 #: dist/features/admin/processes/details/information.html:1
 msgid "Categories"
 msgstr "Categorias"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Check that each entity has the relevant Process Manager profile in the Portal."
+msgstr "Verifique que cada entidade tem o perfil de gerente de processo adequado no Portal."
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
 msgstr "Nome da classe"
 
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Click here to choose your file (.zip)"
+msgstr "Clique aqui para escolher o arquivo (.zip)"
+
 #: dist/features/admin/applications/import-application.html:1
 msgid "Click here to choose your file. XML file (.xml)"
 msgstr "Clique aqui para escolher o seu arquivo XML (. xml)"
 
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Click here to go to Profile listing page"
+msgstr "Clique aqui para ir para a página de perfis"
+
 #: dist/features/admin/applications/import-application.html:1
+#: dist/features/admin/processVisu/visuShowKey.html:68
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Close"
 msgstr "Fechar"
-
-#: table-settings\tableSettings.tpl.html:25
-msgid "Columns selection"
-msgstr "Seleção de colunas"
-
-#: main/common/services/i18n.js:110
-msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
-msgstr "Erro de compilação. Verifique se a classe Index.groovy implementa a interface PageController."
-
-#: main/common/services/i18n.js:89
-msgid "Completed instances"
-msgstr "Instâncias concluídas"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
 msgstr "Estado da configuração"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Confirm"
+msgstr "Confirmar"
+
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
 msgstr "Confirmar exclusão?"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "As definições de conectores devem ser resolvidas antes de ativar o processo."
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Connector zip file"
+msgstr "Arquivo zip do conector"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "Conectores"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Copy to clipboard"
+msgstr ""
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Counters include cases from root processes and cases started by call activities."
+msgstr "Os contadores incluem casos principais e casos iniciados por atividades chamadoras."
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Create a new membership"
 msgstr "Criar uma nova associação"
 
@@ -224,6 +275,10 @@ msgstr "Criação"
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Creation on"
 msgstr "Criada em"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Current license"
+msgstr "Licença atual"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/delete-application.html:1
@@ -248,17 +303,18 @@ msgid "Delete the process"
 msgstr "Excluir o processo"
 
 #: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/params.html:1
 msgid "Description"
 msgstr "Descrição"
 
+#: dist/features/admin/processVisu/visuShowKey.html:3
+msgid "Diagram Key"
+msgstr "Chave do diagrama"
+
 #: dist/features/admin/applications/edit-application.html:1
 msgid "Display name"
 msgstr "Nome de exibição"
-
-#: main/common/services/i18n.js:95
-msgid "Drawing process..."
-msgstr "Desenhando processo..."
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -275,6 +331,7 @@ msgid "Edit menu item"
 msgstr "Editar item de menu"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Enable all"
 msgstr "Ativar Tudo"
 
@@ -287,45 +344,13 @@ msgstr "Data de Fim"
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 msgstr "Insira um novo nome de categoria e pressione a tecla \"Enter\" para criar uma nova categoria e atribuí-la ao processo atual."
 
-#: main/common/services/i18n.js:102
-msgid "Enter the user to start the case for..."
-msgstr "Digite o usuário para o qual o caso será iniciado..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "O mapeamento de entidades deve ser resolvido antes de ativar o processo."
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "Enter user"
+msgstr "Digite o usuário"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
 msgstr "Erro"
-
-#: main/common/services/i18n.js:94
-msgid "Error on drawing process!"
-msgstr "Erro ao desenhar o processo!"
-
-#: main/common/services/i18n.js:123
-msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
-
-#: main/common/services/i18n.js:97
-msgid "Error!"
-msgstr "Erro!"
-
-#: main/common/services/i18n.js:84
-msgid "Error: value must be a boolean"
-msgstr "Erro: o valor deve ser um booleano"
-
-#: main/common/services/i18n.js:85
-msgid "Error: value must be a double"
-msgstr "Erro: o valor deve ser um double"
-
-#: main/common/services/i18n.js:86
-msgid "Error: value must be an integer"
-msgstr "Erro: o valor deve ser um número inteiro"
-
-#: main/common/services/i18n.js:91
-msgid "Executing, completing, initializing instances"
-msgstr "Instâncias em execução, completando, inicializando"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/export-application.html:1
@@ -336,24 +361,13 @@ msgstr "Exportar"
 msgid "Export application"
 msgstr "Exportar aplicação"
 
-#: main/common/services/i18n.js:119
-msgid "Expression content has been updated"
-msgstr "O conteúdo da expressão foi atualizado"
-
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Failed Flow Nodes"
 msgstr "Etapas em erro"
 
-#: main/common/services/i18n.js:90
-msgid "Failed instances"
-msgstr "Instâncias em erro"
-
-#: main/common/services/i18n.js:106
-msgid "Filename too long. The zip filename must be no longer than 50 characters"
-msgstr "O nome do arquivo muito grande. O nome do arquivo zip não deve exceder 50 caracteres"
-
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Filters"
@@ -363,23 +377,48 @@ msgstr "Filtros"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
 
-#: main/common/services/i18n.js:105
-msgid "Form cannot be empty"
-msgstr "O formulário não pode ser vazio"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Form"
+msgstr "Formulário"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Form list"
+msgstr "Lista de formulários"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Forms"
+msgstr "Formulários"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "General"
 msgstr "Geral"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:70 main/common/services/i18n.js:71
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Groups"
 msgstr "Grupos"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Healthy"
+msgstr "Sem erros"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Healthy cases"
+msgstr "Casos sem erros"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "ID"
 msgstr "ID"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the case must be started programmatically."
+msgstr "Se você não especificar um formulário ou uma URL, o caso deverá ser iniciado via programação."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the task must be executed programmatically."
+msgstr "Se você não especificar um formulário ou uma URL, a tarefa deverá ser executada via programação."
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Implementation version"
@@ -395,32 +434,68 @@ msgstr "Importar"
 msgid "Import an application"
 msgstr "Importar uma aplicação"
 
-#: table-settings\tableSettings.tpl.html:13
-msgid "Items per page"
-msgstr "Itens por página"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Instantiation"
+msgstr "Instanciação"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Internal server error."
+msgstr "Erro interno do servidor."
+
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "Last update"
+msgstr "Última atualização"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "Layout"
 msgstr "Layout"
 
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Legacy"
+msgstr "Legado"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License"
+msgstr "Licença"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License mode: <strong>{{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
+msgstr ""
+
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
 #: dist/features/user/cases/list/cases-list.html:1
-#: main/common/services/i18n.js:98
 msgid "Loading..."
 msgstr "Carregando..."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
+msgstr "Autentique-se como administrador da plataforma para ver o status da licença. Somente o administrador da plataforma pode acessar estas informações."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Login"
+msgstr "Login"
 
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Look & Feel"
 msgstr "Aparência"
 
-#: main/common/filters/date-parser.js:39
-msgid "MM/dd/yyyy h:mm a"
-msgstr "dd/MM/yyyy 'as' HH:mm"
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MAX"
+msgstr "MAX"
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MIN"
+msgstr "MIN"
 
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Manage Categories"
 msgstr "Gerenciar categorias"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Mapping"
+msgstr "Mapeamento"
 
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
@@ -428,13 +503,17 @@ msgid "Me"
 msgstr "Eu"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:76
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Memberships"
 msgstr "Associações"
 
-#: main/common/services/i18n.js:77
-msgid "Memberships mapped to {}"
-msgstr "Associações mapeadas para {}"
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Monitor open cases"
+msgstr "Monitorar casos abertos"
+
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Monitoring status"
+msgstr "Estado do monitoramento"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Multi-page menu"
@@ -442,6 +521,7 @@ msgstr "Grupo de menus"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/params.html:1
 msgid "Name"
 msgstr "Nome"
@@ -450,13 +530,17 @@ msgstr "Nome"
 msgid "Navigation"
 msgstr "Navegação"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Never"
+msgstr "Nunca"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "New"
 msgstr "Novo"
 
-#: main/common/services/i18n.js:104
-msgid "No Mapping"
-msgstr ""
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Next"
+msgstr "Próximo"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
@@ -467,17 +551,34 @@ msgstr "Nenhuma aplicação disponível."
 msgid "No cases to display"
 msgstr "Nenhum caso para exibir"
 
-#: main/common/services/i18n.js:96
-msgid "No data"
-msgstr "Não há dados"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only execute the task and not send any data."
+msgstr "Nenhum contrato foi definido. O formulário ou a URL especificada aqui deve executar a tarefa sem enviar nenhum dado."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only start the case and not send any data."
+msgstr "Nenhum contrato foi definido. O formulário ou a URL especificada aqui deve iniciar o processo sem enviar nenhum dado."
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "No description."
 msgstr "Nenhuma descrição."
 
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "No groovy script found"
+msgstr "Nenhum script groovy foi encontrado"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "No mapping"
 msgstr "Nenhum mapeamento"
+
+#: dist/features/admin/cases/list/search-index.html:1
+msgid "No value"
+msgstr "Nenhum valor"
+
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "OK"
+msgstr "OK"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
@@ -491,10 +592,23 @@ msgstr "Menu para acessar uma página"
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "Apenas casos de processos principais são exibidos na tabela abaixo. Nenhuma informação está disponível para casos iniciados por atividades chamadoras."
 
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Open cases"
+msgstr "Casos abertos"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Overview"
+msgstr "Síntese"
+
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
 msgid "Page"
 msgstr "Página"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Page zip file"
+msgstr "Arquivo zip da página"
 
 #: dist/features/admin/applications/details/page-list.html:1
 msgid "Pages"
@@ -504,17 +618,30 @@ msgstr "Páginas"
 msgid "Parameters"
 msgstr "Parâmetros"
 
-#: main/common/services/i18n.js:113
-msgid "Parameters must be resolved before enabling the Process."
-msgstr "Os parâmetros devem ser resolvidos antes de ativar o processo."
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Password"
+msgstr "Senha"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Pending Flow Nodes"
 msgstr "Etapas pendentes"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Platform administrator login"
+msgstr "Autenticação do administrador da plataforma"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Process Manager mapping"
+msgstr "Mapeamento de Gerente de Processo"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Process list"
+msgstr "Lista de processos"
+
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -523,6 +650,7 @@ msgstr "Nome do Processo"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "Process version"
 msgstr "Versão do processo"
 
@@ -533,14 +661,12 @@ msgid "Profile"
 msgstr "Privilégio"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Profiles"
 msgstr "Privilégio"
 
-#: main/common/services/i18n.js:92
-msgid "Ready, waiting instances"
-msgstr "Instâncias prontas, ou em espera"
-
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Refresh"
 msgstr "Atualizar"
@@ -550,20 +676,32 @@ msgid "Remove"
 msgstr "Remover"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Remove all"
 msgstr "Remover tudo"
 
-#: main/common/services/i18n.js:65
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Renewal"
+msgstr ""
+
+#: dist/features/admin/processVisu/processVisu.html:1
 msgid "Reset"
 msgstr "Restaurar"
 
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Return Type : {}"
+msgstr "Tipo de retorno: {}"
+
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:73 main/common/services/i18n.js:74
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Roles"
 msgstr "Funções"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
 msgid "Save"
 msgstr "Salvar"
 
@@ -599,45 +737,29 @@ msgstr "Chave de pesquisa 5"
 msgid "Search..."
 msgstr "Pesquisar..."
 
-#: main/common/services/i18n.js:78
-msgid "Select a group..."
-msgstr "Selecione um grupo..."
-
-#: main/common/services/i18n.js:79
-msgid "Select a role..."
-msgstr "Selecione uma função..."
-
-#: main/common/services/i18n.js:63
-msgid "Select all"
-msgstr "Selecionar todos"
-
-#: main/common/services/i18n.js:72
-msgid "Select groups..."
-msgstr "Selecione grupos..."
-
-#: main/common/services/i18n.js:64
-msgid "Select none"
-msgstr "Desmarcar todos"
-
-#: main/common/services/i18n.js:75
-msgid "Select roles..."
-msgstr "Selecione funções..."
-
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas do processo."
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) who will supervise this process."
+msgstr "Selecione as entidades (usuários, grupos, funções, associações) que vão supervisionar este processo."
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Select the page"
 msgstr "Selecione uma página"
 
-#: main/common/services/i18n.js:69
-msgid "Select users..."
-msgstr "Selecione usuários..."
-
 #: dist/features/admin/applications/details/page-list.html:1
 msgid "Set as Home page"
 msgstr "Definir como página principal"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Show"
+msgstr "Mostar"
+
+#: dist/features/admin/processVisu/visuShowKey.html:1
+msgid "Show key"
+msgstr "Mostrar a chave"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
@@ -654,6 +776,10 @@ msgstr "Ordenar pela data de atualização"
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by version"
 msgstr "Ordenar por versão"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Specify an imported form or a URL"
+msgstr "Especifique um formulário ou uma URL"
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Specify the menu structure."
@@ -672,6 +798,7 @@ msgid "Started by"
 msgstr "Iniciado por"
 
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "State"
 msgstr "Estado"
 
@@ -679,25 +806,23 @@ msgstr "Estado"
 msgid "Status of import"
 msgstr "Estado da importação"
 
-#: main/common/services/i18n.js:60
-msgid "Successfully updated categories"
-msgstr "As categorias foram atualizadas com sucesso"
-
 #: dist/features/admin/applications/applications-list.html:1
 msgid "TEST TRANSLATION KEY HTML JS"
 msgstr ""
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
-msgid "Table settings"
-msgstr "Parâmetros da tabela"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "TEST TRANSLATION KEY HTML JS SP"
+msgstr ""
 
-#: main/common/services/i18n.js:99
-msgid "Technical error."
-msgstr "Erro técnico."
+#: dist/features/admin/processVisu/visuShowKey.html:30
+msgid "Task1"
+msgstr "Tarefa1"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Tasks"
+msgstr "Tarefas"
 
 #: dist/features/admin/processes/details/menu.html:1
-#: main/common/services/i18n.js:116
 msgid "The Process cannot be enabled"
 msgstr "O processo não pode ser ativado"
 
@@ -705,21 +830,21 @@ msgstr "O processo não pode ser ativado"
 msgid "The application"
 msgstr "A aplicação"
 
-#: main/common/services/i18n.js:114
-msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
-msgstr "O dado de negócio: [ {} ] usa Objetos de Negócio que não estão definidos no modelo de Dados de Negócio atual. Instale um modelo de Dados de Negócio compatível antes de ativar o processo."
-
-#: main/common/services/i18n.js:122
-msgid "The case {{caseId}} has been started successfully."
-msgstr ""
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
 msgstr "O processo atual não possui conectores."
 
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "The current process has no forms deployed."
+msgstr "O processo atual possui formulários."
+
 #: dist/features/admin/processes/details/params.html:1
 msgid "The current process has no parameters defined."
 msgstr "O processo atual não possui parâmetros."
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "The current process has no tasks defined."
+msgstr "O processo atual não possui tarefas."
 
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
@@ -729,17 +854,13 @@ msgstr "O caso será permanentemente excluído e não será armazenado nos arqui
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "O caso será excluído dos arquivos permanentemente."
 
-#: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "Os elementos a seguir não possuem formulários associados: [{}]"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page allows users with relevant profiles to access the following permissions:"
+msgstr "A página permite que usuários com os perfis relevantes acessem as seguintes autorizações:"
 
-#: main/common/services/i18n.js:109
-msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
-msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
-
-#: main/common/services/i18n.js:121
-msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr ""
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
+msgstr "O arquivo de página (arquivo. zip) deve conter um arquivo page.properties,  um arquivo index.html ou Index.groovy, e os recursos necessários para a página. Para maiores detalhes, consulte a documentação ou o arquivo readme da página de exemplo (disponível na lista de recursos)."
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -754,23 +875,20 @@ msgstr "Estes casos serão permanentemente excluídos e não serão armazenado n
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "Estes casos serão excluídos dos arquivos permanentemente."
 
-#: main/common/factories/i18nMsg.js:43
-msgid "This URL is already in use"
-msgstr "Este campo é obrigatório"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\n update the page definition to specify the list of resources used."
+msgstr "Esta página não tem nenhuma autorização definida. Caso a página utilize recursos REST e a verificação de autorização esteja ativa,\\n atualize a definição da página para especificar a lista de recursos utilizados."
 
-#: main/common/factories/i18nMsg.js:42
-msgid "This field is mandatory"
-msgstr "Este campo é obrigatório"
-
-#: main/common/factories/i18nMsg.js:44
-msgid "This name is already in use"
-msgstr "Este nome já é utilizado"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "To add it at tenant level, so it can be used in more than one process or task, add the form as a resource"
+msgstr "Para adicioná-lo no nível do tenant, para que ele possa ser usado em mais de um processo ou tarefa, adicione o formulário como um recurso"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "To create an application, click New or Import."
 msgstr "Para criar uma aplicação clique em Nova ou Importar."
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "To do so, go to"
 msgstr "Para fazer isso, vá para"
 
@@ -779,22 +897,18 @@ msgstr "Para fazer isso, vá para"
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Para personalizar a exibição de chaves de pesquisa (e colunas em geral), utilize o botão de configuração da tabela, à direita. Você pode pesquisar em até 5 chaves de busca."
 
-#: main/common/services/i18n.js:87
-msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "Para usar esse recurso, crie uma nova versão do processo no Bonita BPM Studio com versão 6.4 ou superior e crie e instalar o novo arquivo .bar no Portal."
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "To renew the license for this system, copy the request key below and go to the Customer Portal or contact your sales person."
+msgstr ""
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Totals"
+msgstr "Totais"
 
 #: dist/features/admin/processes/details/params.html:1
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Type"
 msgstr "Tipo"
-
-#: main/common/services/i18n.js:101
-msgid "Type here to search for a user..."
-msgstr "Digite aqui para pesquisar um usuário..."
-
-#: main/common/services/i18n.js:66
-msgid "Type here to search..."
-msgstr "Digite aqui para pesquisar..."
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -804,9 +918,17 @@ msgstr "Digite aqui para pesquisar..."
 msgid "URL"
 msgstr "URL"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Unable to log in. Please check your username and password."
+msgstr "Não foi possível logar. Por favor, verifique seu nome de usuário e senha."
+
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
 msgstr "Atualização"
+
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Update content of script {}"
+msgstr "Atualizar o conteúdo do script {}"
 
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Updated by"
@@ -818,18 +940,30 @@ msgstr "Atualizado por"
 msgid "Updated on"
 msgstr "Atualizado em"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new Page"
+msgstr "Carregar nova página"
+
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Upload new version of the connector"
+msgstr "Carregar nova versão do conector"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new version of {}"
+msgstr "Carregar a nova versão de {}"
+
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Uso as teclas seta para cima e seta para baixo para navegar entre as categorias existentes."
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Username"
+msgstr "Nome de usuário"
+
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:67
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Users"
 msgstr "Usuários"
-
-#: main/common/services/i18n.js:68
-msgid "Users mapped to {}"
-msgstr "Usuários mapeados a {}"
 
 #: dist/features/admin/processes/details/params.html:1
 msgid "Value"
@@ -838,27 +972,46 @@ msgstr "Valor"
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Version"
 msgstr "Versão"
+
+#: dist/features/admin/cases/list/caseVisuDirective.html:1
+msgid "View case design"
+msgstr "Exibir a modelização do caso"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "Ver detalhes do casos"
 
+#: dist/features/admin/monitoring/monitoring.html:5
+msgid "View case list"
+msgstr "Ver lista de caso"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "View case overview"
 msgstr "Visão geral do caso"
+
+#: dist/features/admin/monitoring/monitoring.html:5
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "View diagram"
+msgstr "Exibir diagrama"
 
 #: dist/features/admin/applications/export-application.html:1
 msgid "When you export an application, pages and profiles are not exported in the file."
 msgstr "Ao exportar uma aplicação, páginas personalizadas e perfis não são exportadas no arquivo."
 
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "With failures"
 msgstr "Com erros"
+
+#: dist/features/admin/processVisu/visuShowKey.html:64
+msgid "X is the number of Flow Node instances"
+msgstr "X é o número de instâncias de nós de fluxo"
 
 #: dist/features/admin/applications/export-application.html:1
 msgid "You are about to export the application"
@@ -868,8 +1021,12 @@ msgstr "Você está prestes a exportar a aplicação"
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Você deve adicionar uma página antes de poder referenciá-la em um menu."
 
-#: main/common/services/i18n.js:107
-msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr ""
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>."
 msgstr ""
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -888,9 +1045,26 @@ msgstr "aplicações foram importadas parcialmente. Os seguintes itens não est�
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
 msgstr "aplicações foram importadas com sucesso, com o mapeamento completo de páginas e menus."
 
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "back"
+msgstr "voltar"
+
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "filter scripts..."
+msgstr "filtrar por nome de scripts..."
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "of"
 msgstr "de"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures ascending"
+msgstr "ordena por casos com erros, crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures descending"
+msgstr "ordena por casos com erros, decrescente"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -902,6 +1076,14 @@ msgstr "ordena por data fim, crescente"
 msgid "sort by End date descending"
 msgstr "ordena por data fim, decrescente"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases ascending"
+msgstr "ordena por casos sem erros, crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases descending"
+msgstr "ordena por casos sem erros, decrescente"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by ID ascending"
@@ -912,12 +1094,22 @@ msgstr "ordena por Id, crescente"
 msgid "sort by ID descending"
 msgstr "ordena por Id, decrescente"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases ascending"
+msgstr "ordena por casos abertos, crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases descending"
+msgstr "ordena por casos abertos, decrescente"
+
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name ascending"
 msgstr "ordena por nome, crescente"
 
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name descending"
 msgstr "ordena por nome, decrescente"
@@ -932,47 +1124,42 @@ msgstr "ordena por data de início, crescente"
 msgid "sort by Start date descending"
 msgstr "ordena por data de início, decrescente"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State ascending"
+msgstr "ordenar por casos abiertos, ascendente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State descending"
+msgstr "ordenar por casos abiertos, descendente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version ascending"
+msgstr "ordena por versão, crescente"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version descending"
+msgstr "ordena por versão, decrescente"
+
 #: dist/features/admin/applications/delete-application.html:1
 msgid "will be permanently deleted."
 msgstr "será excluída permanentemente."
 
-#: main/common/services/i18n.js:62
-msgid "{{nbErrors}} errors on mapping updates"
-msgstr "Ocorreram {{nbErrors}} erros na atualização das associações"
-
-#: main/common/services/i18n.js:82
-msgid "{{nbMapping}} Process manager mappings could not be updated"
-msgstr "{{nbMapping}} associações do perfil Gerenciador de processo de  não puderam ser atualizadas"
-
-#: main/common/services/i18n.js:83
-msgid "{{nbMapping}} Process manager mappings have been updated"
-msgstr "{{nbMapping}} associações do perfil Gerenciador de processo foram atualizadas"
-
-#: main/common/services/i18n.js:58
-msgid "{{nbOfDeletedCases}} cases have been deleted"
-msgstr "{{nbOfDeletedCases}} casos foram excluídos"
-
-#: main/common/services/i18n.js:61
-msgid "{{nbSucess}} actor mapping updates succeeded"
-msgstr "{{nbSucess}} mapeamento de atores atualizados com sucesso"
-
-#: main/common/services/i18n.js:80
-msgid "{{role}} of {{group}}"
-msgstr "{{role}} de {{group}}"
-
-#: main/common/services/i18n.js:81
-msgid "{{role}} of {{group}} has been created"
-msgstr "{{role}} de {{group}} foi criado"
-
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "{} mapped"
 msgstr "{} mapeado"
 
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "{} mapped to process manager profile"
+msgstr "{} mapeados ao perfil de gerente de processo"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "{} mappings to delete"
 msgstr "{} mapeamentos a serem excluídos"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "{} more"
 msgstr "{} mais"
 

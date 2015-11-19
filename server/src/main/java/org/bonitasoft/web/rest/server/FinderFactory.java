@@ -52,6 +52,8 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResour
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResourceFinder;
+import org.bonitasoft.web.rest.server.api.system.I18nTanslationResource;
+import org.bonitasoft.web.rest.server.api.system.I18nTanslationResourceFinder;
 import org.restlet.resource.Finder;
 import org.restlet.resource.ServerResource;
 
@@ -99,6 +101,8 @@ public class FinderFactory {
         finders.put(ProcessContractResource.class, new ProcessContractResourceFinder());
         finders.put(ProcessDefinitionDesignResource.class, new ProcessDefinitionDesignResourceFinder());
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
+        finders.put(I18nTanslationResource.class, new I18nTanslationResourceFinder());
+
         return finders;
     }
 
