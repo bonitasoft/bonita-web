@@ -20,10 +20,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.accessor.DefaultFormsProperties;
-import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 
 /**
@@ -52,7 +51,7 @@ public class TenantFileUploadServlet extends FileUploadServlet {
     @Override
     protected void checkUploadSize(final HttpServletRequest request, final FileItem item) throws FileTooBigException {
         final long contentSize = item.getSize();
-        final long maxSize = PropertiesFactory.getConsoleProperties(getAPISession(request).getTenantId()).getMaxSize();
+        final long maxSize = getConsoleProperties(getAPISession(request).getTenantId()).getMaxSize();
         if (contentSize > maxSize * 1048576) {
             final String errorMessage = "file " + item.getName() + " too big !";
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -62,8 +61,8 @@ public class TenantFileUploadServlet extends FileUploadServlet {
         }
     }
 
-    protected DefaultFormsProperties getDefaultFormProperties(final long tenantId) {
-        return DefaultFormsPropertiesFactory.getDefaultFormProperties(tenantId);
+    protected ConsoleProperties getConsoleProperties(final long tenantId) {
+        return PropertiesFactory.getConsoleProperties(tenantId);
     }
 
 }
