@@ -213,8 +213,8 @@ public class CustomPageService {
     }
 
     protected ClassLoader getParentClassloader(final String pageName,
-            final CustomPageDependenciesResolver customPageDependenciesResolver,
-            final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
+                                               final CustomPageDependenciesResolver customPageDependenciesResolver,
+                                               final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
         final CustomPageChildFirstClassLoader classLoader = new CustomPageChildFirstClassLoader(pageName, customPageDependenciesResolver,
                 bdmDependenciesResolver, Thread.currentThread().getContextClassLoader());
         classLoader.addCustomPageResources();
@@ -281,9 +281,9 @@ public class CustomPageService {
     }
 
     public Properties getPageProperties(final APISession apiSession, final byte[] zipContent, final boolean checkIfItAlreadyExists,
-            final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
-                    InvalidPageZipInconsistentException,
-                    InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
+                                        final Long processDefinitionId) throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
+            InvalidPageZipInconsistentException,
+            InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
         final PageAPI pageAPI = getPageAPI(apiSession);
         Properties properties;
         if (processDefinitionId == null) {
@@ -310,13 +310,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final Properties properties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(properties);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     protected Set<String> getCustomPagePermissions(final SimpleProperties pageProperties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                   final boolean alsoReturnResourcesNotFound) {
         final Set<String> pageRestResources = new HashSet<String>(pageProperties.getPropertyAsSet(RESOURCES_PROPERTY));
         // pageRestResources.addAll(Arrays.asList(GET_SYSTEM_SESSION, GET_PORTAL_PROFILE, GET_IDENTITY_USER));
         final Set<String> permissions = new HashSet<String>();
@@ -338,13 +338,13 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final File file, final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                final boolean alsoReturnResourcesNotFound) {
         final SimpleProperties pageProperties = new SimpleProperties(file);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     public void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
-            final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
+                                                    final CompoundPermissionsMapping compoundPermissionsMapping, final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_PORTAL_PROFILE));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_IDENTITY_USER));
@@ -360,7 +360,7 @@ public class CustomPageService {
     }
 
     public void removeRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final PageResourceProvider pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
+                                                  final PageResourceProvider pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
         ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (final String key : permissionsMapping.keySet()) {
@@ -370,7 +370,7 @@ public class CustomPageService {
     }
 
     public void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping, final PageResourceProvider pageResourceProvider,
-            final APISession apiSession) throws IOException, BonitaException {
+                                               final APISession apiSession) throws IOException, BonitaException {
         ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (final String key : permissionsMapping.keySet()) {
