@@ -226,10 +226,6 @@
         <to>/APIToolkit/system/i18nlocale$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/system/i18ntranslation([\?/]|$)</from>
-        <to>/APIToolkit/system/i18ntranslation$2</to>
-    </rule>
-    <rule>
         <from>^(/portal/custom-page)?/API/system/session([\?/]|$)</from>
         <to>/APIToolkit/system/session$2</to>
     </rule>

@@ -27,16 +27,22 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Application;
 import org.restlet.Response;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
+import org.restlet.util.Series;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommonResourceTest extends RestletTest {
 
     @Mock
     private FakeService fakeService;
+
+    @Spy
+    private Series<Header> headers = new Series<>(Header.class);
 
     @Override
     protected Application configureApplication() {
@@ -249,7 +255,7 @@ public class CommonResourceTest extends RestletTest {
         doReturn(null).when(spy).getRequestParameter(anyString());
 
         // when then exception
-        final String parameter = spy.getQueryParameter(true);
+        spy.getQueryParameter(true);
     }
 
     @Test
