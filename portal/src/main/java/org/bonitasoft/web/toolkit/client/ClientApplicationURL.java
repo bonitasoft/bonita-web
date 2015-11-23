@@ -26,6 +26,7 @@ import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.common.url.UrlUnserializer;
+import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -89,7 +90,9 @@ public class ClientApplicationURL {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected TreeIndexed<String> parseToken() {
-        return UrlUnserializer.unserializeTreeNodeIndexed(History.getToken());
+        //unserialize twice since Firefox does not decode anymore window.location.hash since version 41
+        final String decodedToken = UrlUtil.unescape(History.getToken());
+        return UrlUnserializer.unserializeTreeNodeIndexed(decodedToken);
     }
 
     protected void parseUrl() {
@@ -101,10 +104,10 @@ public class ClientApplicationURL {
 
         // If Token or profile disappeared, keep the previous one
         if (token != null && _getPageToken() == null) {
-            this._setPageToken(token, false);
+            _setPageToken(token, false);
         }
         if (profileId != null && _getProfileId() == null) {
-            this._setProfileId(profileId);
+            _setProfileId(profileId);
         }
     }
 
@@ -136,7 +139,7 @@ public class ClientApplicationURL {
         }
 
         if (refresh) {
-            this._refreshUrl(true);
+            _refreshUrl(true);
         }
     }
 
@@ -167,10 +170,10 @@ public class ClientApplicationURL {
         this.attributes = attributes.copy();
 
         if (token != null) {
-            this._setPageToken(token, false);
+            _setPageToken(token, false);
         }
         if (profileId != null) {
-            this._setProfileId(profileId);
+            _setProfileId(profileId);
         }
     }
 

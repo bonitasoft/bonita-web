@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.forms.server.accessor.DefaultFormsProperties;
 import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,7 +42,7 @@ public class TenantFileUploadServletTest {
 
     @Spy
     protected TenantFileUploadServlet fileUploadServlet;
-    private DefaultFormsProperties formsProperties;
+    private ConsoleProperties consoleProperties;
     private HttpServletRequest request;
     private FileItem item;
 
@@ -52,11 +52,11 @@ public class TenantFileUploadServletTest {
         final HttpSession session = mock(HttpSession.class);
         item = mock(FileItem.class);
         final APISession apiSession = mock(APISession.class);
-        formsProperties = mock(DefaultFormsProperties.class);
+        consoleProperties = mock(ConsoleProperties.class);
 
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("apiSession")).thenReturn(apiSession);
-        doReturn(formsProperties).when(fileUploadServlet).getDefaultFormProperties(123);
+        doReturn(consoleProperties).when(fileUploadServlet).getConsoleProperties(123);
         when(apiSession.getTenantId()).thenReturn(123L);
         when(item.getName()).thenReturn("Some uploaded File.Txt");
     }
@@ -64,7 +64,7 @@ public class TenantFileUploadServletTest {
     @Test
     public void should_throw_fileTooBigException_when_file_is_bigger_in_than_conf_file() throws Exception {
         when(item.getSize()).thenReturn(10000000L);
-        when(formsProperties.getAttachmentMaxSize()).thenReturn(1L); // 1Mb
+        when(consoleProperties.getMaxSize()).thenReturn(1L); // 1Mb
 
         try {
             fileUploadServlet.checkUploadSize(request, item);
@@ -78,7 +78,7 @@ public class TenantFileUploadServletTest {
     @Test
     public void checkUploadSize_should_do_nothing_when_file_is_not_bigger_than_in_conf_file() throws Exception {
         when(item.getSize()).thenReturn(1000000L);
-        when(formsProperties.getAttachmentMaxSize()).thenReturn(10L); // 10Mb
+        when(consoleProperties.getMaxSize()).thenReturn(10L); // 10Mb
         fileUploadServlet.checkUploadSize(request, item);
     }
 

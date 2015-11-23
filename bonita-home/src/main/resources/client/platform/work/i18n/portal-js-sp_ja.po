@@ -7,23 +7,49 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /Inno_sprint_7-2/bonita-web/portal/portal-js-sp.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-11-19 08:57-0500\n"
+"PO-Revision-Date: 2015-11-17 10:57-0500\n"
 
-#: main/common/services/i18n.js:57
-msgid "1 case has been deleted"
-msgstr "1 案件が削除されました"
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 h."
+msgstr "1 時間"
 
-#: main/common/services/i18n.js:108
-msgid "A page with this name already exists."
-msgstr "この名前のページは既に存在します。"
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "1 min."
+msgstr "1 分"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "10 min."
+msgstr "10 分"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "30 min."
+msgstr "30 分"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "5 min."
+msgstr "5 分"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<br>For a cluster, run the request key generator script manually on each node in the cluster and then request the licenses (find more information in the Licenses documentation page)."
+msgstr "<br>クラスターの場合、クラスター内の各ノードごとにリクエストキー生成スクリプトを手動で実行し、ライセンスをリクエストします（詳しい情報は、ライセンスのドキュメント ページにあります）。"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> cases provisioned for the period <strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> to <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>.<br>Remember to renew your license in time if your license expires before the count end date."
+msgstr "<strong>{{ LicenseMonitoringCtrl.license.startPeriodTimestamp| dateI18n : 'LL'}}</strong> ～ <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> の期間に提供されている案件数の上限は、<strong>{{LicenseMonitoringCtrl.license.caseCounterLimit}}</strong> です。この期間内に実際の案件数がこの上限を超える恐れがある場合は、ライセンス終了日前までにこの上限を更新してください。"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "<strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> cases available until <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>. To provision more cases, contact your sales person.<br>The case counter will be reset to the value in your license on <strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong>."
+msgstr "<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> までにご利用可能な残りの案件数は、 <strong>{{LicenseMonitoringCtrl.license.remainingInstances}}</strong> です。ご利用可能な案件数を追加するには、お客様の営業担当者にお問い合わせください。<br>案件数カウンターは、<strong>{{LicenseMonitoringCtrl.license.endPeriodTimestamp| dateI18n : 'LL'}}</strong> にお客様のライセンスの値にリセットされます。"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/process-connectors.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Actions"
@@ -45,6 +71,7 @@ msgstr "アクター"
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: dist/features/admin/applications/details/page-list.html:1
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Add"
 msgstr "追加"
 
@@ -73,13 +100,13 @@ msgstr "ナビゲーションにページを追加します"
 msgid "Add top-level menu"
 msgstr "最上位のメニューを追加します"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "All"
+msgstr "すべて"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "アプリケーションは、特定のユーザー プロファイル用にカスタマイズされた環境になり、利用者はビジネス データおよびビジネス プロセスを最も効率的な方法で利用できるようになります。"
-
-#: main/common/services/i18n.js:59
-msgid "An error occured during categories update"
-msgstr "カテゴリの更新中にエラーが発生しました"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -90,6 +117,7 @@ msgid "Application list"
 msgstr "アプリケーション リスト"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Apply"
 msgstr "適用"
 
@@ -97,21 +125,26 @@ msgstr "適用"
 msgid "Available tasks"
 msgstr "応受援タスク"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
 #: dist/features/admin/processes/details/menu.html:1
 msgid "Back"
 msgstr "戻る"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Before you can update a form mapping, you need to add the new form. To add it for this process only, upload it from the Form list tab"
+msgstr "フォームのマッピングを更新する前に、新しいフォームを追加する必要があります。このプロセスだけに追加するには、フォームリスト タブからアップロードします。"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "そのページとプロファイルは、アプリケーションをインポートする前にポータルに既に読み込まれていなければなりません。"
 
-#: main/common/services/i18n.js:103
-msgid "Can't import page or form to the process"
-msgstr "プロセスにページまたはフォームをインポートできません"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Bonita BPM edition: <strong>{{LicenseMonitoringCtrl.license.edition}}</strong>"
+msgstr "Bonita BPM のエディション： {{LicenseMonitoringCtrl.license.edition}}"
 
-#: main/common/services/i18n.js:120
-msgid "Can't update expression content"
-msgstr "式のコンテンツを更新できません"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "CPU information"
+msgstr "CPU 情報"
 
 #: dist/features/admin/applications/delete-application.html:1
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
@@ -123,89 +156,107 @@ msgstr "式のコンテンツを更新できません"
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 #: dist/features/admin/processes/details/delete-process-modal.html:1
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+#: dist/features/admin/processes/details/startForModal.html:1
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: main/common/services/i18n.js:88
-msgid "Cancelled, skipped instances"
-msgstr "キャンセル、スキップされたインスタンス"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Case"
+msgstr "案件"
 
-#: main/common/services/i18n.js:100
-msgid "Cannot upload the file"
-msgstr "ファイルをアップロードできません"
-
-#: main/common/services/i18n.js:93
-msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr "案件番号: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case counter"
+msgstr "案件カウンター"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Case list"
 msgstr "案件リスト"
 
-#: main/common/services/i18n.js:117
-msgid "Case overview"
-msgstr "案件概況"
-
-#: main/common/services/i18n.js:118
-msgid "Case start"
-msgstr "案件の開始"
-
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "Case state"
 msgstr "案件の状態"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Case usage:"
+msgstr "ご利用案件数："
 
 #: dist/features/admin/cases/list/cases.html:1
 #: dist/features/user/cases/list/cases.html:1
 msgid "Cases"
 msgstr "案件"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Cases with failures"
+msgstr "エラー発生案件"
+
 #: dist/features/admin/processes/details/information.html:1
 msgid "Categories"
 msgstr "カテゴリ"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Check that each entity has the relevant Process Manager profile in the Portal."
+msgstr "ポータル内に各エンティティに関連するプロセス管理者プロファイルがあるか確認してください。"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
 msgstr "クラス名"
 
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Click here to choose your file (.zip)"
+msgstr "ファイル (.zip) を選択するにはここをクリックします"
+
 #: dist/features/admin/applications/import-application.html:1
 msgid "Click here to choose your file. XML file (.xml)"
 msgstr "XML ファイル (.xml) を選択するには、ここをクリックします。"
 
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Click here to go to Profile listing page"
+msgstr "ページ上のプロファイルに移動するにはここをクリックします"
+
 #: dist/features/admin/applications/import-application.html:1
+#: dist/features/admin/processVisu/visuShowKey.html:68
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Close"
 msgstr "閉じる"
-
-#: table-settings\tableSettings.tpl.html:25
-msgid "Columns selection"
-msgstr "列の選択"
-
-#: main/common/services/i18n.js:110
-msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
-msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
-
-#: main/common/services/i18n.js:89
-msgid "Completed instances"
-msgstr "完了したインスタンス"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
 msgstr "設定状況"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Confirm"
+msgstr "確認"
+
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
 msgstr "削除していいですか？"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前に、コネクタの定義を解決する必要があります。"
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Connector zip file"
+msgstr "コネクタ zip ファイル"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "コネクタ"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Copy to clipboard"
+msgstr "クリップボードにコピーする"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Counters include cases from root processes and cases started by call activities."
+msgstr "カウンターには、ルート の親プロセスからの開始案件、およびコール アクティビティによって開始された子プロセスの案件が含まれます。"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Create a new membership"
 msgstr "新しい所属を作成します"
 
@@ -224,6 +275,10 @@ msgstr "作成"
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Creation on"
 msgstr "作成対象："
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Current license"
+msgstr "現在のライセンス"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/delete-application.html:1
@@ -248,17 +303,18 @@ msgid "Delete the process"
 msgstr "このプロセスを削除します"
 
 #: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/params.html:1
 msgid "Description"
 msgstr "説明"
 
+#: dist/features/admin/processVisu/visuShowKey.html:3
+msgid "Diagram Key"
+msgstr "ダイアグラムの凡例"
+
 #: dist/features/admin/applications/edit-application.html:1
 msgid "Display name"
 msgstr "表示名"
-
-#: main/common/services/i18n.js:95
-msgid "Drawing process..."
-msgstr "プロセス図を描画中 ..."
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -275,6 +331,7 @@ msgid "Edit menu item"
 msgstr "メニュー項目を編集"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Enable all"
 msgstr "すべて有効にする"
 
@@ -287,45 +344,13 @@ msgstr "終了日"
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 msgstr "新しいカテゴリ名を入力し、\"Enter\"キーを押して新しいカテゴリを作成したうえで、現在のプロセスにそれをアサインします。"
 
-#: main/common/services/i18n.js:102
-msgid "Enter the user to start the case for..."
-msgstr "案件を開始するユーザーを入力..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にエンティティへの マッピングを解決する必要があります。"
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "Enter user"
+msgstr "ユーザーを入力します"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
 msgstr "エラー"
-
-#: main/common/services/i18n.js:94
-msgid "Error on drawing process!"
-msgstr "プロセス図の描画中にエラーが発生しました！"
-
-#: main/common/services/i18n.js:123
-msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "案件を開始しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
-
-#: main/common/services/i18n.js:97
-msgid "Error!"
-msgstr "エラー！"
-
-#: main/common/services/i18n.js:84
-msgid "Error: value must be a boolean"
-msgstr "エラー: 値はブール値である必要があります"
-
-#: main/common/services/i18n.js:85
-msgid "Error: value must be a double"
-msgstr "エラー: 値は double 型の値である必要があります"
-
-#: main/common/services/i18n.js:86
-msgid "Error: value must be an integer"
-msgstr "エラー: 値は整数でなければなりません"
-
-#: main/common/services/i18n.js:91
-msgid "Executing, completing, initializing instances"
-msgstr "実行中、完了中、インスタンスを初期化中"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/export-application.html:1
@@ -336,24 +361,13 @@ msgstr "エクスポート"
 msgid "Export application"
 msgstr "アプリケーションをエクスポート"
 
-#: main/common/services/i18n.js:119
-msgid "Expression content has been updated"
-msgstr "式のコンテンツが更新されました"
-
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Failed Flow Nodes"
 msgstr "エラーのあったフロー ノード"
 
-#: main/common/services/i18n.js:90
-msgid "Failed instances"
-msgstr "エラーのあったインスタンス"
-
-#: main/common/services/i18n.js:106
-msgid "Filename too long. The zip filename must be no longer than 50 characters"
-msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
-
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Filters"
@@ -363,23 +377,48 @@ msgstr "フィルター"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
 
-#: main/common/services/i18n.js:105
-msgid "Form cannot be empty"
-msgstr "フォームは空にできません"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Form"
+msgstr "フォーム"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Form list"
+msgstr "フォーム一覧"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Forms"
+msgstr "フォーム"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "General"
 msgstr "全般"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:70 main/common/services/i18n.js:71
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Groups"
 msgstr "グループ"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Healthy"
+msgstr "正常"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Healthy cases"
+msgstr "正常処理案件"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "ID"
 msgstr "id"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the case must be started programmatically."
+msgstr "フォームまたは URL を指定しない場合、その案件はプログラムで開始する必要があります。"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "If you do not specify a form or a URL, the task must be executed programmatically."
+msgstr "フォームまたは URL を指定しない場合、そのタスクはプログラムで開始する必要があります。"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Implementation version"
@@ -395,32 +434,68 @@ msgstr "インポート"
 msgid "Import an application"
 msgstr "アプリケーションをインポート"
 
-#: table-settings\tableSettings.tpl.html:13
-msgid "Items per page"
-msgstr "ページあたりの表示件数"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Instantiation"
+msgstr "起案"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Internal server error."
+msgstr "内部サーバー エラーです。"
+
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "Last update"
+msgstr "最終更新日"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "Layout"
 msgstr "レイアウト"
 
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Legacy"
+msgstr "レガシー"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License"
+msgstr "ライセンス"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "License mode: <strong>{{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
+msgstr "ライセンス モード： <strong> {{LicenseMonitoringCtrl.license.licenseMode}}</strong>"
+
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
 #: dist/features/user/cases/list/cases-list.html:1
-#: main/common/services/i18n.js:98
 msgid "Loading..."
 msgstr "ロード中..."
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Log in as platform administrator to see the license status. Only the platform administrator can access this information."
+msgstr "ライセンス ステータスを確認するには、プラットフォーム管理者としてログインします。プラットフォーム管理者だけが、この情報にアクセスすることができます。"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Login"
+msgstr "ログイン"
 
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Look & Feel"
 msgstr "ルック＆フィール"
 
-#: main/common/filters/date-parser.js:39
-msgid "MM/dd/yyyy h:mm a"
-msgstr "yyyy/MM/dd HH:mm"
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MAX"
+msgstr "最大"
+
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "MIN"
+msgstr "最小"
 
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Manage Categories"
 msgstr "カテゴリを管理"
+
+#: dist/features/admin/processes/details/forms/forms.html:1
+msgid "Mapping"
+msgstr "マッピング"
 
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
@@ -428,13 +503,17 @@ msgid "Me"
 msgstr "自分"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:76
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Memberships"
 msgstr "所属"
 
-#: main/common/services/i18n.js:77
-msgid "Memberships mapped to {}"
-msgstr "{} にマップされた所属"
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Monitor open cases"
+msgstr "進行中の案件のモニタリング"
+
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Monitoring status"
+msgstr "進捗状況のモニタリング"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Multi-page menu"
@@ -442,6 +521,7 @@ msgstr "複数ページ メニュー"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/processes/details/forms/forms-list.html:1
 #: dist/features/admin/processes/details/params.html:1
 msgid "Name"
 msgstr "名前"
@@ -450,13 +530,17 @@ msgstr "名前"
 msgid "Navigation"
 msgstr "ナビゲーション"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Never"
+msgstr "なし"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "New"
 msgstr "新規"
 
-#: main/common/services/i18n.js:104
-msgid "No Mapping"
-msgstr "マッピングなし"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Next"
+msgstr "次へ"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
@@ -467,17 +551,34 @@ msgstr "利用可能なアプリケーションはありません。"
 msgid "No cases to display"
 msgstr "表示する案件はありません"
 
-#: main/common/services/i18n.js:96
-msgid "No data"
-msgstr "データがありません。"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only execute the task and not send any data."
+msgstr "コントラクトが定義されていません。ここで指定したフォームまたは URL は、タスクを実行するだけで、任意のデータを送信しません。"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "No contract has been defined. The form or URL specified here must only start the case and not send any data."
+msgstr "コントラクトが定義されていません。ここで指定したフォームまたは URL は、案件を開始するだけで、任意のデータを送信しません。"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "No description."
 msgstr "説明がありません。"
 
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "No groovy script found"
+msgstr "Groovy スクリプトが見つかりません。"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "No mapping"
 msgstr "マッピングなし"
+
+#: dist/features/admin/cases/list/search-index.html:1
+msgid "No value"
+msgstr "値なし"
+
+#: dist/features/admin/processes/details/startForModal.html:1
+msgid "OK"
+msgstr "OK"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
@@ -491,10 +592,23 @@ msgstr "1 ページ メニュー"
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "Open cases"
+msgstr "進行中の案件"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Overview"
+msgstr "案件概況"
+
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
 msgid "Page"
 msgstr "ページ"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Page zip file"
+msgstr "ページの zip ファイル"
 
 #: dist/features/admin/applications/details/page-list.html:1
 msgid "Pages"
@@ -504,17 +618,30 @@ msgstr "ページ"
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: main/common/services/i18n.js:113
-msgid "Parameters must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Password"
+msgstr "パスワード"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Pending Flow Nodes"
 msgstr "作業実行を待機中"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Platform administrator login"
+msgstr "プラットフォーム管理者ログイン"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Process Manager mapping"
+msgstr "プロセス管理者のマッピング"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Process list"
+msgstr "プロセス一覧"
+
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -523,6 +650,7 @@ msgstr "プロセス名"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "Process version"
 msgstr "プロセスのバージョン"
 
@@ -533,14 +661,12 @@ msgid "Profile"
 msgstr "プロファイル"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Profiles"
 msgstr "プロファイル"
 
-#: main/common/services/i18n.js:92
-msgid "Ready, waiting instances"
-msgstr "インスタンス開始を待機中"
-
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Refresh"
 msgstr "リフレッシュ"
@@ -550,20 +676,32 @@ msgid "Remove"
 msgstr "削除"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "Remove all"
 msgstr "すべて削除"
 
-#: main/common/services/i18n.js:65
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Renewal"
+msgstr "更新"
+
+#: dist/features/admin/processVisu/processVisu.html:1
 msgid "Reset"
 msgstr "リセット"
 
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Return Type : {}"
+msgstr "戻り値の型: {}"
+
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:73 main/common/services/i18n.js:74
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Roles"
 msgstr "役割"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+#: dist/features/admin/processes/details/scripts/scripts.html:1
 msgid "Save"
 msgstr "保存"
 
@@ -599,45 +737,29 @@ msgstr "検索キー 5"
 msgid "Search..."
 msgstr "検索..."
 
-#: main/common/services/i18n.js:78
-msgid "Select a group..."
-msgstr "グループを選択..."
-
-#: main/common/services/i18n.js:79
-msgid "Select a role..."
-msgstr "役割を選択..."
-
-#: main/common/services/i18n.js:63
-msgid "Select all"
-msgstr "すべて選択"
-
-#: main/common/services/i18n.js:72
-msgid "Select groups..."
-msgstr "グループを選択..."
-
-#: main/common/services/i18n.js:64
-msgid "Select none"
-msgstr "選択を解除"
-
-#: main/common/services/i18n.js:75
-msgid "Select roles..."
-msgstr "役割を選択..."
-
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "アクターにアサインするエンティティ（ユーザー、グループ、役割、所属など）を選択します。これらのエンティティは、プロセスにヒューマン タスクを実行します。"
+
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) who will supervise this process."
+msgstr "このプロセスを監督するエンティティ（ユーザー、グループ、役割、所属） を選択します。"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Select the page"
 msgstr "ページを選択します"
 
-#: main/common/services/i18n.js:69
-msgid "Select users..."
-msgstr "ユーザーを選択..."
-
 #: dist/features/admin/applications/details/page-list.html:1
 msgid "Set as Home page"
 msgstr "ホーム ページとして設定します"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Show"
+msgstr "表示件数"
+
+#: dist/features/admin/processVisu/visuShowKey.html:1
+msgid "Show key"
+msgstr "凡例を表示"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
@@ -654,6 +776,10 @@ msgstr "更新日で並べ替え"
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by version"
 msgstr "バージョンで並び替え"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Specify an imported form or a URL"
+msgstr "インポートしたフォームまたは URL を指定します。"
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Specify the menu structure."
@@ -672,6 +798,7 @@ msgid "Started by"
 msgstr "起案者"
 
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "State"
 msgstr "状態"
 
@@ -679,21 +806,23 @@ msgstr "状態"
 msgid "Status of import"
 msgstr "インポートの状態"
 
-#: main/common/services/i18n.js:60
-msgid "Successfully updated categories"
-msgstr "正常に更新されたカテゴリ"
+#: dist/features/admin/applications/applications-list.html:1
+msgid "TEST TRANSLATION KEY HTML JS"
+msgstr "HTML JS の翻訳キーのテスト"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
-msgid "Table settings"
-msgstr "テーブルの設定"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "TEST TRANSLATION KEY HTML JS SP"
+msgstr "HTML JS SP の翻訳キーのテスト"
 
-#: main/common/services/i18n.js:99
-msgid "Technical error."
-msgstr "技術的なエラーが発生。"
+#: dist/features/admin/processVisu/visuShowKey.html:30
+msgid "Task1"
+msgstr "タスク1"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "Tasks"
+msgstr "タスク"
 
 #: dist/features/admin/processes/details/menu.html:1
-#: main/common/services/i18n.js:116
 msgid "The Process cannot be enabled"
 msgstr "プロセスを有効にすることができません"
 
@@ -701,21 +830,21 @@ msgstr "プロセスを有効にすることができません"
 msgid "The application"
 msgstr "アプリケーション"
 
-#: main/common/services/i18n.js:114
-msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
-msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
-
-#: main/common/services/i18n.js:122
-msgid "The case {{caseId}} has been started successfully."
-msgstr "案件番号： %caseId% が正常に開始されました。"
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
 msgstr "現在のプロセスには、コネクタが定義されていません。"
 
+#: dist/features/admin/processes/details/forms/forms-list.html:1
+msgid "The current process has no forms deployed."
+msgstr "現在のプロセスには、デプロイされたフォームがありません。"
+
 #: dist/features/admin/processes/details/params.html:1
 msgid "The current process has no parameters defined."
 msgstr "現在のプロセスには、パラメータが定義されていません。"
+
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "The current process has no tasks defined."
+msgstr "現在のプロセスには、タスクが定義されていません。"
 
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
@@ -725,17 +854,13 @@ msgstr "削除された案件は完全に削除され、アーカイブには格
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "削除された案件は、アーカイブから完全に削除されます。"
 
-#: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "次のフォームのマッピングは未解決です: [ {} ]"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page allows users with relevant profiles to access the following permissions:"
+msgstr "ページは次の権限でアクセスできる関連プロファイルをユーザーに付与します。"
 
-#: main/common/services/i18n.js:109
-msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
-msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
-
-#: main/common/services/i18n.js:121
-msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "The page archive (.zip file) must contain page.properties, either the index.html or the Index.groovy file, and the resources needed for the page. For details, see the documentation or the example page readme (available in the custom page list)."
+msgstr "ページのアーカイブ (.zip ファイル) は、 page.properties、index.html または Index.groovy ファイルのいずれか、およびページに必要なリソースを含める必要があります。詳細については、ドキュメントまたはサンプルページの readme (カスタム ページ リストで利用可能) を参照してください。"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -750,23 +875,21 @@ msgstr "これらの削除された案件は完全に削除され、アーカイ
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "これらの削除された案件は、アーカイブから完全に削除されます。"
 
-#: main/common/factories/i18nMsg.js:43
-msgid "This URL is already in use"
-msgstr "この URL は、既に使用中"
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\\n update the page definition to specify the list of resources used."
+msgstr "このページにはアクセス権限が定義されていません。このページが REST リソースを使用して、認証チェックが有効になっている場合は、\n"
+"使用しているリソースのリストを指定するためにページ定義を更新します。"
 
-#: main/common/factories/i18nMsg.js:42
-msgid "This field is mandatory"
-msgstr "このフィールドは必須です"
-
-#: main/common/factories/i18nMsg.js:44
-msgid "This name is already in use"
-msgstr "この名前は既に使用中"
+#: dist/features/admin/processes/details/forms/forms-mapping.html:1
+msgid "To add it at tenant level, so it can be used in more than one process or task, add the form as a resource"
+msgstr "テナントレベルでそれを追加すると、1 つ以上のプロセスまたはタスクでそれが使用され、リソースとしてフォームを追加します。"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "To create an application, click New or Import."
 msgstr "アプリケーションを作成するには、新規またはインポート をクリックします。"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "To do so, go to"
 msgstr "これを行うには、次へ進む: "
 
@@ -775,22 +898,18 @@ msgstr "これを行うには、次へ進む: "
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
 
-#: main/common/services/i18n.js:87
-msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "この機能を使用するには、Bonita BPM Studio バージョン 6.4 以上でプロセスの新しいバージョンを作成し、その新しい .bar ファイルをポータルにインストールします。"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "To renew the license for this system, copy the request key below and go to the Customer Portal or contact your sales person."
+msgstr "このシステムのライセンスを更新するには、以下のリクエストキーをコピーしてカスタマー ポータルに進むか、あるいはお客様の営業担当者にコンタクトしてください。"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "Totals"
+msgstr "合計"
 
 #: dist/features/admin/processes/details/params.html:1
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Type"
 msgstr "タイプ"
-
-#: main/common/services/i18n.js:101
-msgid "Type here to search for a user..."
-msgstr "ユーザーを検索するには、ここを入力..."
-
-#: main/common/services/i18n.js:66
-msgid "Type here to search..."
-msgstr "検索キーワードをここで入力..."
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -800,9 +919,17 @@ msgstr "検索キーワードをここで入力..."
 msgid "URL"
 msgstr "URL"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Unable to log in. Please check your username and password."
+msgstr "ログインできません。ユーザー名とパスワードを確認してください。"
+
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
 msgstr "更新"
+
+#: dist/features/admin/processes/details/scripts/edit-script.html:1
+msgid "Update content of script {}"
+msgstr "スクリプト {} のコンテンツを更新します"
 
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Updated by"
@@ -814,18 +941,30 @@ msgstr "更新者"
 msgid "Updated on"
 msgstr "更新日時"
 
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new Page"
+msgstr "新しいページをアップロード"
+
+#: dist/features/admin/processes/details/edit-process-connector-implementation.html:1
+msgid "Upload new version of the connector"
+msgstr "コネクタの新しいバージョンをアップロードします"
+
+#: dist/features/admin/processes/details/forms/form-uploader.html:1
+msgid "Upload new version of {}"
+msgstr "{} の新しいバージョンをアップロードします"
+
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
 
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Username"
+msgstr "ユーザー名"
+
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:67
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "Users"
 msgstr "ユーザー"
-
-#: main/common/services/i18n.js:68
-msgid "Users mapped to {}"
-msgstr "{} にマップされているユーザー"
 
 #: dist/features/admin/processes/details/params.html:1
 msgid "Value"
@@ -834,27 +973,46 @@ msgstr "値"
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Version"
 msgstr "バージョン"
+
+#: dist/features/admin/cases/list/caseVisuDirective.html:1
+msgid "View case design"
+msgstr "案件のフロー図を表示"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "案件詳細を表示"
 
+#: dist/features/admin/monitoring/monitoring.html:5
+msgid "View case list"
+msgstr "案件リストを表示"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "View case overview"
 msgstr "案件概況を表示"
+
+#: dist/features/admin/monitoring/monitoring.html:5
+#: dist/features/admin/processes/details/monitoring-status.html:1
+msgid "View diagram"
+msgstr "プロセス図を表示"
 
 #: dist/features/admin/applications/export-application.html:1
 msgid "When you export an application, pages and profiles are not exported in the file."
 msgstr "アプリケーションをエクスポートするとき、ページとプロファイルはそのファイルにエクスポートされません。"
 
 #: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 msgid "With failures"
 msgstr "エラー発生"
+
+#: dist/features/admin/processVisu/visuShowKey.html:64
+msgid "X is the number of Flow Node instances"
+msgstr "X はフロー ノード インスタンスの数です"
 
 #: dist/features/admin/applications/export-application.html:1
 msgid "You are about to export the application"
@@ -864,9 +1022,13 @@ msgstr "あなたは、アプリケーションをエクスポートしようと
 msgid "You must add a page before you can reference it in a menu."
 msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
 
-#: main/common/services/i18n.js:107
-msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
-msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your current license permits you to use {{LicenseMonitoringCtrl.license.numberOfCPUCores}} cores."
+msgstr "現在のライセンスは、 {{LicenseMonitoringCtrl.license.numberOfCPUCores}} コアの使用を許可しています。"
+
+#: dist/features/admin/license/monitoring/license-monitoring.html:1
+msgid "Your license expires <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo }}</strong>, on <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong>."
+msgstr "お客様のライセンスは、 <strong>{{ LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateAgo}}</strong> 後の <strong>{{LicenseMonitoringCtrl.license.licenseExpirationTimestamp | dateI18n : 'LL'}}</strong> に期限切れになります。"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "an Application"
@@ -884,9 +1046,26 @@ msgstr "アプリケーションは部分的にインポートされています
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
 msgstr "アプリケーションは、ページのマッピングや メニューのマッピングを伴って正常にインポートされています。"
 
+#: dist/features/admin/processVisu/processVisu.html:1
+msgid "back"
+msgstr "戻る"
+
+#: dist/features/admin/processes/details/scripts/scripts.html:1
+msgid "filter scripts..."
+msgstr "スクリプトのフィルター..."
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "of"
 msgstr "日目/"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures ascending"
+msgstr "異常終了案件を昇順に並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Cases with failures descending"
+msgstr "異常終了案件を降順に並べ替える"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -898,6 +1077,14 @@ msgstr "終了日を昇順で並べ替える"
 msgid "sort by End date descending"
 msgstr "終了日を降順で並べ替える"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases ascending"
+msgstr "正常終了案件を昇順で並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Healthy cases descending"
+msgstr "正常終了案件を降順で並べ替える"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by ID ascending"
@@ -908,12 +1095,22 @@ msgstr "ID を昇順で並べ替える"
 msgid "sort by ID descending"
 msgstr "ID を降順で並べ替える"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases ascending"
+msgstr "開始案件を昇順で並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Open cases descending"
+msgstr "開始案件を降順で並べ替える"
+
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name ascending"
 msgstr "プロセス名を昇順で並べ替える"
 
 #: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/monitoring/monitoring.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name descending"
 msgstr "プロセス名を降順で並べ替える"
@@ -928,47 +1125,42 @@ msgstr "開始日を昇順で並べ替える"
 msgid "sort by Start date descending"
 msgstr "開始日を降順で並べ替える"
 
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State ascending"
+msgstr "状態を昇順で並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by State descending"
+msgstr "状態を降順で並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version ascending"
+msgstr "バージョンを昇順で並べ替える"
+
+#: dist/features/admin/monitoring/monitoring.html:1
+msgid "sort by Version descending"
+msgstr "バージョンを降順で並べ替える"
+
 #: dist/features/admin/applications/delete-application.html:1
 msgid "will be permanently deleted."
 msgstr "恒久的に削除されます。"
 
-#: main/common/services/i18n.js:62
-msgid "{{nbErrors}} errors on mapping updates"
-msgstr "マッピングの更新で {{nbErrors}} のエラーが発生しました"
-
-#: main/common/services/i18n.js:82
-msgid "{{nbMapping}} Process manager mappings could not be updated"
-msgstr "{{nbMapping}} のプロセス管理者マッピングを更新できませんでした。"
-
-#: main/common/services/i18n.js:83
-msgid "{{nbMapping}} Process manager mappings have been updated"
-msgstr "{{nbMapping}} のプロセス管理者マッピングが更新されました"
-
-#: main/common/services/i18n.js:58
-msgid "{{nbOfDeletedCases}} cases have been deleted"
-msgstr "{{nbOfDeletedCases}} の案件が削除されました"
-
-#: main/common/services/i18n.js:61
-msgid "{{nbSucess}} actor mapping updates succeeded"
-msgstr "{{nbSucess}} のアクターマッピングの更新に成功しました"
-
-#: main/common/services/i18n.js:80
-msgid "{{role}} of {{group}}"
-msgstr "{{group}} の {{role}}"
-
-#: main/common/services/i18n.js:81
-msgid "{{role}} of {{group}} has been created"
-msgstr "{{group}} の {{role}} が作成されました"
-
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "{} mapped"
 msgstr "{} がマップされました"
 
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
+msgid "{} mapped to process manager profile"
+msgstr "プロセス管理者プロファイルに {} がマップされました"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:1
 msgid "{} mappings to delete"
 msgstr "{} のマッピングが削除されます"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: dist/features/admin/processes/details/process-manager/process-managers-mapping.html:1
 msgid "{} more"
 msgstr "{} 以上"
 

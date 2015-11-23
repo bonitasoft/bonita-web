@@ -12,6 +12,7 @@ package org.bonitasoft.web.rest.server.utils;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.internal.Objects;
 import org.restlet.Response;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,6 +50,11 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
 
     public ResponseAssert hasStatus(Status status) {
         Objects.instance().assertEqual(info, actual.getStatus(), status);
+        return this;
+    }
+
+    public ResponseAssert hasHeader(Header header) {
+        Objects.instance().assertIsIn(info, header, actual.getHeaders());
         return this;
     }
 }

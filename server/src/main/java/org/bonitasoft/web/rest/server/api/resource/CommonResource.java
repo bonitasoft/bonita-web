@@ -13,6 +13,19 @@
  **/
 package org.bonitasoft.web.rest.server.api.resource;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
@@ -33,19 +46,6 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Emmanuel Duchastenier
@@ -284,8 +284,12 @@ public class CommonResource extends ServerResource {
     }
 
     protected void setContentRange(final SearchResult<?> searchResult) {
+        setContentRange(getSearchPageNumber(), getSearchPageSize(), searchResult.getCount());
+    }
+
+    protected void setContentRange(int pageNumber, int pageSize, long count) {
         final Series<Header> headers = getResponse().getHeaders();
-        headers.add(new Header("Content-range", getSearchPageNumber() + "-" + getSearchPageSize() + "/" + searchResult.getCount()));
+        headers.add(new Header("Content-range", pageNumber + "-" + pageSize + "/" + count));
     }
 
     protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {
