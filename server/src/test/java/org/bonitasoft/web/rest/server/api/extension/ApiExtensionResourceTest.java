@@ -81,7 +81,8 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(new RestApiResponseBuilder().build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
+        doReturn(new RestApiResponseBuilder().build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
+                any(ResourceExtensionResolver.class));
 
         //when
         final Representation representation = apiExtensionResource.doHandle();
@@ -110,7 +111,7 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        BonitaException bonitaException = new BonitaException("error message");
+        final BonitaException bonitaException = new BonitaException("error message");
         doThrow(bonitaException).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class), any(ResourceExtensionResolver.class));
 
         //when

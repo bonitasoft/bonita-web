@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -170,7 +171,7 @@ public class PageServlet extends HttpServlet {
 
     protected File getResourceFile(final HttpServletResponse response, final APISession apiSession, final Long pageId, final String resourcePath)
             throws IOException, BonitaException {
-        final PageResourceProvider pageResourceProvider = pageRenderer.getPageResourceProvider(pageId, apiSession);
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageId, apiSession);
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
         if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             final String message = "For security reasons, access to this file path is forbidden : " + resourcePath;

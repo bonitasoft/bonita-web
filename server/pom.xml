@@ -50,6 +50,13 @@
             <artifactId>bonita-common</artifactId>
         </dependency>
 
+        <!--Web extensions-->
+		<dependency>
+            <groupId>org.bonitasoft.web</groupId>
+            <artifactId>bonita-web-extensions</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!--Vendors-->
         <dependency>
             <groupId>javax.servlet</groupId>

@@ -1,15 +1,17 @@
-package org.bonitasoft.console.common.server.page;
+package org.bonitasoft.console.common.server.page.extension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.page.RestApiUtil;
+import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
 import org.junit.Test;
 
 /**
  * @author Laurent Leseigneur
  */
-public class RestApiUtilTest {
+public class RestApiUtilImplTest {
 
     @Test
     public void testGetLogger() throws Exception {
