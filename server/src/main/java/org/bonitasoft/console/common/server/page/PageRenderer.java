@@ -17,6 +17,7 @@ package org.bonitasoft.console.common.server.page;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -116,7 +117,7 @@ public class PageRenderer {
             Thread.currentThread().setContextClassLoader(pageClassloader);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             final Class<?> pageClass = customPageService.registerPage(pageClassloader, pageResourceProvider);
-            if (pageClass.equals(PageController.class)) {//LEGACY MODE
+            if (Objects.equals(pageClass.getName(), PageController.class.getName())) {//LEGACY MODE
                 final PageController pageController = customPageService.loadPage((Class<PageController>) pageClass);
                 pageController.doGet(request, response, pageResourceProvider,
                         new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
