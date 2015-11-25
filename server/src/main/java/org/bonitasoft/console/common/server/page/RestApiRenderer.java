@@ -16,7 +16,6 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,7 +73,7 @@ public class RestApiRenderer {
             final Class<?> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, restApiControllerFile);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             try {
-                if (Objects.equals(restApiControllerClass.getName(), RestApiController.class.getName())) {//LEGACY MODE
+                if (RestApiController.class.isAssignableFrom(restApiControllerClass)) {//LEGACY MODE
                     final RestApiController restApiController = customPageService.loadRestApiPage((Class<RestApiController>) restApiControllerClass);
                     return restApiController.doHandle(request, pageResourceProvider,
                             new PageContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()),
