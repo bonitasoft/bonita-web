@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.page.extension;
 
 import java.util.Locale;
 
+import org.bonitasoft.engine.api.APIClient;
 import org.bonitasoft.engine.bdm.BusinessObjectDAOFactory;
 import org.bonitasoft.engine.bdm.BusinessObjectDaoCreationException;
 import org.bonitasoft.engine.bdm.dao.BusinessObjectDAO;
@@ -30,12 +31,14 @@ public class RestAPIContextImpl implements RestAPIContext {
     private final Locale locale;
     private final BusinessObjectDAOFactory daoFactory;
     private final PageResourceProvider resourceProvider;
+    private APIClient apiClient;
 
-    public RestAPIContextImpl(final APISession apiSession, final Locale locale, PageResourceProvider resourceProvider, BusinessObjectDAOFactory daoFactory) {
+    public RestAPIContextImpl(final APISession apiSession, final APIClient apiClient, final Locale locale, PageResourceProvider resourceProvider, BusinessObjectDAOFactory daoFactory) {
         this.apiSession = apiSession;
         this.locale = locale;
         this.daoFactory = daoFactory;
         this.resourceProvider = resourceProvider;
+        this.apiClient = apiClient;
     }
 
     /* (non-Javadoc)
@@ -69,6 +72,11 @@ public class RestAPIContextImpl implements RestAPIContext {
     @Override
     public PageResourceProvider getResourceProvider() {
         return resourceProvider;
+    }
+
+    @Override
+    public APIClient getAPIClient() {
+        return apiClient;
     }
 
 }
