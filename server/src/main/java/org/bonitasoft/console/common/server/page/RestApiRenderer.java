@@ -21,6 +21,11 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
+import org.bonitasoft.console.common.server.page.extension.RestAPIContextImpl;
+import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
+import org.bonitasoft.engine.bdm.BusinessObjectDAOFactory;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
@@ -47,7 +52,7 @@ public class RestApiRenderer {
         final APISession apiSession = pageContextHelper.getApiSession();
         final Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
         final Page page = customPageService.getPage(apiSession, pageId);
-        final PageResourceProvider pageResourceProvider = new PageResourceProvider(page, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = new PageResourceProviderImpl(page, apiSession.getTenantId());
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         final File restApiControllerFile = resourceExtensionResolver.resolveRestApiControllerFile(pageResourceProvider);
         final String mappingKey = resourceExtensionResolver.generateMappingKey();
@@ -59,19 +64,27 @@ public class RestApiRenderer {
     }
 
     private RestApiResponse renderResponse(final HttpServletRequest request, final APISession apiSession, final PageContextHelper pageContextHelper,
-            final PageResourceProvider pageResourceProvider, File restApiControllerFile, String mappingKey)
-            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+            final PageResourceProviderImpl pageResourceProvider, File restApiControllerFile, String mappingKey)
+                    throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         try {
             Thread.currentThread().setContextClassLoader(pageClassloader);
-            final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider,
-                    restApiControllerFile);
-            final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
+            final Class<?> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, restApiControllerFile);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             try {
-                return restApiController.doHandle(request, pageResourceProvider,
-                        new PageContext(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()), new RestApiResponseBuilder(), new RestApiUtilImpl());
+                if (RestApiController.class.isAssignableFrom(restApiControllerClass)) {//LEGACY MODE
+                    final RestApiController restApiController = customPageService.loadRestApiPage((Class<RestApiController>) restApiControllerClass);
+                    return restApiController.doHandle(request, pageResourceProvider,
+                            new PageContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()),
+                            new RestApiResponseBuilder(), new RestApiUtilImpl());
+                } else {
+                    final org.bonitasoft.web.extension.rest.RestApiController restApiController = (org.bonitasoft.web.extension.rest.RestApiController) restApiControllerClass
+                            .newInstance();
+                    return restApiController.doHandle(request,
+                            new org.bonitasoft.web.extension.rest.RestApiResponseBuilder(),
+                            new RestAPIContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageResourceProvider, new BusinessObjectDAOFactory()));
+                }
             } catch (final Exception e) {
                 LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
                 throw e;

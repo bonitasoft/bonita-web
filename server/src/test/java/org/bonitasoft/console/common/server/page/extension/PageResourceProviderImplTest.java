@@ -1,4 +1,4 @@
-package org.bonitasoft.console.common.server.page;
+package org.bonitasoft.console.common.server.page.extension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -18,7 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Laurent Leseigneur
  */
 @RunWith(MockitoJUnitRunner.class)
-public class PageResourceProviderTest {
+public class PageResourceProviderImplTest {
 
     public static final String PAGE_NAME = "pageName";
     public static final long PROCESS_DEFINITION_ID = 123L;
@@ -30,9 +30,9 @@ public class PageResourceProviderTest {
     @Mock
     private PageAPI pageApi;
 
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
-    PageResourceProvider pageResourceProviderWithProcessDefinition;
+    PageResourceProviderImpl pageResourceProviderWithProcessDefinition;
 
     @Before
     public void before() throws Exception {
@@ -40,14 +40,10 @@ public class PageResourceProviderTest {
         doReturn(PAGE_NAME).when(page).getName();
         doReturn(PAGE_ID).when(page).getId();
 
-        pageResourceProvider = new PageResourceProvider(PAGE_NAME, 1);
-        pageResourceProviderWithProcessDefinition = new PageResourceProvider(page, 1);
+        pageResourceProvider = new PageResourceProviderImpl(PAGE_NAME, 1);
+        pageResourceProviderWithProcessDefinition = new PageResourceProviderImpl(page, 1);
     }
 
-    @Test
-    public void should_temp_file_be_distinct() throws Exception {
-        assertThat(pageResourceProvider.getTempPageDirectory()).as("should be distinct").isNotEqualTo(pageResourceProviderWithProcessDefinition.getTempPageDirectory());
-    }
 
     @Test
     public void should_pagedirectory_be_distinct() throws Exception {

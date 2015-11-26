@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
-import org.bonitasoft.console.common.server.page.PageResourceProvider;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -49,7 +49,7 @@ public class ApplicationRouterTest {
     PageRenderer pageRenderer;
 
     @Mock
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
     @Mock
     CustomPageService customPageService;

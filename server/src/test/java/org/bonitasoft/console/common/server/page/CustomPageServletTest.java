@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class CustomPageServletTest {
     ResourceRenderer resourceRenderer;
 
     @Mock
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
