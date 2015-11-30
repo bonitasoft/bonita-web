@@ -14,17 +14,15 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
-import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.accessor.DefaultFormsProperties;
 import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
-import org.bonitasoft.forms.server.exception.FileTooBigException;
 
 /**
  * Servlet allowing to upload a file in the tenant common temp folder
@@ -32,7 +30,6 @@ import org.bonitasoft.forms.server.exception.FileTooBigException;
  * @author Anthony Birembaut
  */
 public class TenantFileUploadServlet extends FileUploadServlet {
-
     /**
      * UID
      */
@@ -50,16 +47,8 @@ public class TenantFileUploadServlet extends FileUploadServlet {
     }
 
     @Override
-    protected void checkUploadSize(final HttpServletRequest request, final FileItem item) throws FileTooBigException {
-        final long contentSize = item.getSize();
-        final long maxSize = getDefaultFormProperties(getAPISession(request).getTenantId()).getAttachmentMaxSize();
-        if (contentSize > maxSize * 1048576) {
-            final String errorMessage = "file " + item.getName() + " too big !";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
-            }
-            throw new FileTooBigException(errorMessage, item.getName(), String.valueOf(maxSize));
-        }
+    protected void setUploadSizeMax(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
+        serviceFileUpload.setFileSizeMax(getDefaultFormProperties(getAPISession(request).getTenantId()).getAttachmentMaxSize() * MEGABYTE);
     }
 
     protected DefaultFormsProperties getDefaultFormProperties(final long tenantId) {
