@@ -25,6 +25,7 @@ import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.page.extension.RestAPIContextImpl;
 import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
+import org.bonitasoft.engine.api.APIClient;
 import org.bonitasoft.engine.bdm.BusinessObjectDAOFactory;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
@@ -83,7 +84,7 @@ public class RestApiRenderer {
                             .newInstance();
                     return restApiController.doHandle(request,
                             new org.bonitasoft.web.extension.rest.RestApiResponseBuilder(),
-                            new RestAPIContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageResourceProvider, new BusinessObjectDAOFactory()));
+                            new RestAPIContextImpl(apiSession, new APIClient(apiSession),pageContextHelper.getCurrentLocale(), pageResourceProvider, new BusinessObjectDAOFactory()));
                 }
             } catch (final Exception e) {
                 LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
