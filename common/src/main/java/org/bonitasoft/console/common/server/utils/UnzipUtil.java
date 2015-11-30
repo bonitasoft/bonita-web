@@ -32,7 +32,8 @@ public class UnzipUtil {
     static final int BUFFER = 2048;
 
     /**
-     * Unzip a zip file from InputStream
+     * Unzip a zip file from InputStream.
+     * Client is responsible to close the input stream.
      *
      * @param sourceFile
      * @param targetPath
@@ -41,7 +42,6 @@ public class UnzipUtil {
      */
     public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws FileNotFoundException, IOException {
         IOUtil.unzipToFolder(sourceFile, new File(targetPath));
-        sourceFile.close();
     }
 
     /**
@@ -54,8 +54,10 @@ public class UnzipUtil {
      * @throws FileNotFoundException
      */
     public static synchronized void unzip(final File zipFile, final String targetPath) throws FileNotFoundException, IOException {
-        final FileInputStream zipFileInputStream = new FileInputStream(zipFile);
-        unzip(zipFileInputStream, targetPath);
+        try (final FileInputStream zipFileInputStream = new FileInputStream(zipFile);) {
+            unzip(zipFileInputStream, targetPath);
+        }
+
     }
 
     public static synchronized void unzip(final File zipFile, final String targetPath, final boolean deleteFileAfterZip) throws FileNotFoundException,

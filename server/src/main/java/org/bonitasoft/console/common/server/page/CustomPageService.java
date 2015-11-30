@@ -237,8 +237,12 @@ public class CustomPageService {
         // retrieve page zip content from engine and cache it
         final Page page = pageResourceProvider.getPage(pageAPI);
         final byte[] pageContent = pageAPI.getPageContent(page.getId());
-        FileUtils.writeByteArrayToFile(((PageResourceProviderImpl) pageResourceProvider).getTempPageFile(), pageContent);
-        UnzipUtil.unzip(((PageResourceProviderImpl) pageResourceProvider).getTempPageFile(), pageResourceProvider.getPageDirectory().getPath(), true);
+        if (pageContent.length == 0) {
+            throw new BonitaException("No content available for page: " + page.getName());
+        }
+        final File tempPageFile = ((PageResourceProviderImpl) pageResourceProvider).getTempPageFile();
+        FileUtils.writeByteArrayToFile(tempPageFile, pageContent);
+        UnzipUtil.unzip(tempPageFile, pageResourceProvider.getPageDirectory().getPath(), true);
         final File timestampFile = getPageFile(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
         long lastUpdateTimestamp = 0L;
         if (page.getLastModificationDate() != null) {
