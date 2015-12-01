@@ -12,10 +12,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.page;
+package org.bonitasoft.console.common.server.page.extension;
 
 import java.util.Locale;
 
+import org.bonitasoft.console.common.server.page.PageContext;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -24,7 +25,7 @@ import org.bonitasoft.engine.session.APISession;
  * @author Anthony Birembaut
  *
  */
-public class PageContext {
+public class PageContextImpl implements org.bonitasoft.web.extension.page.PageContext,org.bonitasoft.console.common.server.page.PageContext{
 
     protected APISession apiSession;
 
@@ -32,7 +33,7 @@ public class PageContext {
 
     protected String profileID;
 
-    protected PageContext(final APISession apiSession, final Locale locale, final String profileID) {
+    public PageContextImpl(final APISession apiSession, final Locale locale, final String profileID) {
         super();
         this.apiSession = apiSession;
         this.locale = locale;
