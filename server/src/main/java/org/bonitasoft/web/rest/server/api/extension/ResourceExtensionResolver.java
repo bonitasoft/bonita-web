@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.PageReference;
-import org.bonitasoft.console.common.server.page.PageResourceProvider;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -61,7 +61,7 @@ public class ResourceExtensionResolver {
         return builder.toString();
     }
 
-    public File resolveRestApiControllerFile(PageResourceProvider pageResourceProvider) throws NotFoundException {
+    public File resolveRestApiControllerFile(PageResourceProviderImpl pageResourceProvider) throws NotFoundException {
         final Properties properties = new Properties();
 
         try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");) {
@@ -90,7 +90,7 @@ public class ResourceExtensionResolver {
         throw new NotFoundException("error while getting resource:" + generateMappingKey());
     }
 
-    private File toFile(PageResourceProvider pageResourceProvider, String classFileName) {
+    private File toFile(PageResourceProviderImpl pageResourceProvider, String classFileName) {
         if (classFileName.startsWith("/")) {
             classFileName = classFileName.substring(1);
         }

@@ -45,6 +45,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
+import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
@@ -85,7 +88,7 @@ public class CustomPageServiceTest {
     APISession apiSession;
 
     @Mock
-    PageResourceProvider pageResourceProvider;
+    PageResourceProviderImpl pageResourceProvider;
 
     @Mock
     PageAPI pageAPI;
@@ -94,7 +97,7 @@ public class CustomPageServiceTest {
     private HttpServletRequest request;
 
     @Mock
-    private PageContext pageContext;
+    private PageContextImpl pageContext;
 
     @Mock
     private Page mockedPage;
@@ -131,8 +134,8 @@ public class CustomPageServiceTest {
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
-        final Class<PageController> pageClass = customPageService.registerPage(classloader, pageResourceProvider);
-        final PageController pageController = customPageService.loadPage(pageClass);
+        final Class<?> pageClass = customPageService.registerPage(classloader, pageResourceProvider);
+        final PageController pageController = customPageService.loadPage((Class<PageController>) pageClass);
 
         // Then
         assertNotNull(pageController);
@@ -160,9 +163,8 @@ public class CustomPageServiceTest {
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider,
-                new File(pageDir, "IndexRestApi.groovy"));
-        final RestApiController restApiController = customPageService.loadRestApiPage(restApiControllerClass);
+        final Class<?> restApiControllerClass = customPageService.registerRestApiPage(classloader, new File(pageDir, "IndexRestApi.groovy"));
+        final RestApiController restApiController = customPageService.loadRestApiPage((Class<RestApiController>) restApiControllerClass);
 
         // Then
         assertNotNull(restApiController);
@@ -402,12 +404,13 @@ public class CustomPageServiceTest {
 
         // When
         customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
-        final Class<RestApiController> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider,
+        final Class<?> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader,
                 new File(pageDirectory, "RestResource.groovy"));
 
         // then
-        final RestApiController restApiController = restApiControllerClass.newInstance();
-        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder(), new RestApiUtilImpl());
+        final RestApiController restApiController = (RestApiController) restApiControllerClass.newInstance();
+        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder(),
+                new RestApiUtilImpl());
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
         .hasNoAdditionalCookies().hasHttpStatus(200);
     }

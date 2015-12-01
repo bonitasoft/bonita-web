@@ -48,7 +48,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.assertj.core.groups.Tuple;
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.page.PageResourceProvider;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
@@ -144,7 +144,7 @@ public class PageDatastoreTest extends APITestWithMock {
     private String savedBonitaHomeProperty;
 
     @Mock
-    private PageResourceProvider pageResourceProvider;
+    private PageResourceProviderImpl pageResourceProvider;
 
     @Before
     public void setUp() throws Exception {

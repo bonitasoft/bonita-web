@@ -12,13 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.page;
+package org.bonitasoft.console.common.server.page.extension;
 
 import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.page.RestApiUtil;
 
 /**
  * @author Laurent Leseigneur
  */
+@Deprecated
 public class RestApiUtilImpl implements  RestApiUtil{
 
     @Override
