@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2015-11-19 08:42-0500\n"
+"PO-Revision-Date: 2015-11-27 04:03-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -137,7 +137,7 @@ msgstr "Impossible de charger le fichier"
 
 #: main/common/services/i18n.js:93
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr ""
+msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -456,7 +456,7 @@ msgstr "Nouveau"
 
 #: main/common/services/i18n.js:104
 msgid "No Mapping"
-msgstr ""
+msgstr "Aucun mapping"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
@@ -707,7 +707,7 @@ msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne s
 
 #: main/common/services/i18n.js:122
 msgid "The case {{caseId}} has been started successfully."
-msgstr ""
+msgstr "Le cas {{caseId}} a été démarré avec succès."
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
@@ -735,7 +735,7 @@ msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement 
 
 #: main/common/services/i18n.js:121
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr ""
+msgstr "Les mots 'content', 'API' et 'theme' sont réservés pour un usage interne. Ils ne doivent pas être utilisés dans l'URL d'une page ou d'une application."
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -866,7 +866,7 @@ msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un men
 
 #: main/common/services/i18n.js:107
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
-msgstr ""
+msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "an Application"

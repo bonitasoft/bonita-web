@@ -190,7 +190,6 @@ public class PageResourceProviderImpl implements PageResourceProvider,org.bonita
         return pageTempFile;
     }
 
-
     public void setResourceClassLoader(final ClassLoader resourceClassLoader) {
         this.resourceClassLoader = resourceClassLoader;
     }
