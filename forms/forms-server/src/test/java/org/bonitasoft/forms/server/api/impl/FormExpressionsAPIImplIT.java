@@ -358,7 +358,7 @@ public class FormExpressionsAPIImplIT extends FormsTestCase {
                 dependencies);
         final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstances(processInstance.getId(), 0, 1).get(0);
 
-        final Serializable result = formExpressionsAPI.evaluateInstanceInitialExpression(getSession(), archivedProcessInstance.getId(), expression,
+        final Serializable result = formExpressionsAPI.evaluateInstanceInitialExpression(getSession(), archivedProcessInstance.getSourceObjectId(), expression,
                 Locale.ENGLISH, false);
         Assert.assertEquals("Word", result.toString());
     }

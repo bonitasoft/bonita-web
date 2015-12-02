@@ -51,6 +51,8 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
      */
     @Test
     public void testAddProcessItem() throws Exception {
+        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
+        final List<ProcessDeploymentInfo> before = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
         //final upload process archive
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator
                 + TestUserFactory.getJohnCarpenter().getSession().getTenantId();
@@ -67,7 +69,6 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         apiProcess.add(item);
 
         // check the process has been correctly uploaded
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
         String assertMessage = "Can't add a ProcessItem to APIProcess. ";
         int actualSize = -1;
         final List<ProcessDeploymentInfo> processDeploymentInfos = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
@@ -79,7 +80,7 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         } else {
             assertMessage += "processDeploymentInfos is null.";
         }
-        assertEquals(assertMessage, 1, actualSize);
+        assertEquals(assertMessage, 1, actualSize - before.size());
     }
 
     /**
