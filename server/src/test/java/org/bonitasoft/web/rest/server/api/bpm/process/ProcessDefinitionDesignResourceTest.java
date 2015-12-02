@@ -19,7 +19,10 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
+import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
 import org.bonitasoft.web.rest.server.utils.ResponseAssert;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -80,6 +83,23 @@ public class ProcessDefinitionDesignResourceTest extends RestletTest {
                 "{ \"name\": \"\\\"id\\\": 123\"}");
         assertThat(processDefinitionDesignResource.replaceLongIdToString("{ \"name\": \"\\\"id\\\": 123\"}")).isEqualToIgnoringCase(
                 "{ \"name\": \"\\\"id\\\": 123\"}");
+    }
+
+    @Test
+    public void should_return_utf8_string_when_get_process_design_is_called() throws ProcessDefinitionNotFoundException, InvalidProcessDefinitionException {
+        // given
+        final ProcessDefinitionBuilder processDefinitionBuilder = new ProcessDefinitionBuilder().createNewInstance("processWithAccents", "1.0");
+        processDefinitionBuilder.addUserTask("étape1", "employee");
+        final DesignProcessDefinition designProcessDefinition = processDefinitionBuilder.done();
+        when(processAPI.getDesignProcessDefinition(PROCESS_DEFINITION_ID)).thenReturn(designProcessDefinition);
+
+        // when
+        final Response response = request(TEST_DESIGN_API_URL).get();
+
+        // then
+        final String entityAsText = response.getEntityAsText();
+        assertThat(entityAsText).contains("étape1");
+        assertThat(entityAsText).doesNotContain("Ã©tape1");
     }
 
 }

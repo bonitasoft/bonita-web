@@ -20,6 +20,7 @@ import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.data.CharacterSet;
 import org.restlet.ext.jackson.JacksonRepresentation;
 import org.restlet.resource.Get;
 
@@ -43,6 +44,7 @@ public class ProcessDefinitionDesignResource extends CommonResource {
         final DesignProcessDefinition design = processAPI.getDesignProcessDefinition(getProcessDefinitionIdParameter());
         final JacksonRepresentation<DesignProcessDefinition> jacksonRepresentation = new JacksonRepresentation<DesignProcessDefinition>(design);
         jacksonRepresentation.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        jacksonRepresentation.setCharacterSet(CharacterSet.UTF_8);
         return replaceLongIdToString(jacksonRepresentation.getText());
     }
 
