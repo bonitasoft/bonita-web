@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-27 04:19-0500\n"
+"PO-Revision-Date: 2015-11-30 04:31-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -30,7 +30,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /release-7.1.4/bonita-web/portal/portal-js.po\n"
+"X-Crowdin-File: /7.1.x/bonita-web/portal/portal-js.po\n"
 
 msgid "'Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (availabe in the custom page list)"
 msgstr "Zip ファイル構造にエラーがあります。.zipに適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメントまたはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
@@ -1383,7 +1383,7 @@ msgstr "この入力項目のコントラクトには、説明が定義されて
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:33
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:34
 msgid "of"
-msgstr "日目/"
+msgstr "of"
 
 msgid "remove"
 msgstr "削除"
