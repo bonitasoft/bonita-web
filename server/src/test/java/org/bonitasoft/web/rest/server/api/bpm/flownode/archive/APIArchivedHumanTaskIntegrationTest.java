@@ -12,6 +12,7 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
+import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
@@ -138,8 +139,14 @@ public class APIArchivedHumanTaskIntegrationTest extends AbstractConsoleTest {
         final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
         final ArrayList<String> deploys = getProcessIdDeploy();
 
+
+
+        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
+        searchOptionsBuilder.filter(ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID, humanTaskInstance.getRootContainerId());
+        final ArchivedActivityInstance archivedActivityInstance = getProcessAPI().searchArchivedActivities(searchOptionsBuilder.done()).getResult().get(0);
+
         final ArchivedHumanTaskItem archivedHumanTaskItem =
-                apiArchivedHumanTask.runGet(makeAPIID(humanTaskInstance.getId()), deploys, new ArrayList<String>());
+                apiArchivedHumanTask.runGet(makeAPIID(archivedActivityInstance.getId()), deploys, new ArrayList<String>());
 
         assertEquals("Can't get the good archivedTaskItem", archivedHumanTaskItem.getName(), humanTaskInstance.getName());
     }

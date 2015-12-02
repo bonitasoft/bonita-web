@@ -3,6 +3,7 @@ package org.bonitasoft.web.rest.server.api.resource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
 import static org.bonitasoft.web.rest.server.utils.RestletAppBuilder.aTestApp;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyObject;
@@ -32,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Application;
 import org.restlet.Response;
 import org.restlet.data.Header;
+import org.restlet.data.Form;
 import org.restlet.data.Status;
 import org.restlet.util.Series;
 
@@ -161,7 +163,7 @@ public class CommonResourceTest extends RestletTest {
     @Test
     public void parseFilterShouldBuildMapEvenIfNoValueForParam() throws Exception {
         // given:
-        final List<String> filters = new ArrayList<String>(2);
+        final List<String> filters = new ArrayList<>(2);
         filters.add("nomatchingvalue=");
 
         // when:
@@ -266,6 +268,34 @@ public class CommonResourceTest extends RestletTest {
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         assertThat(response).hasJsonEntityEqualTo("{\"exception\":\"class java.lang.IllegalArgumentException\",\"message\":\"an error message\"}'");
+    }
+
+    @Test
+    public void getParametersAsList_should_support_value_with_comma() throws Exception {
+        //given
+        CommonResource resource = spy(new CommonResource());
+        Form form = new Form("f=a=b&f=c=d,e");
+        given(resource.getQuery()).willReturn(form);
+
+        //when
+        List<String> parametersValues = resource.getParameterAsList("f");
+
+        //then
+        assertThat(parametersValues).containsExactly("a=b", "c=d,e");
+    }
+
+    @Test
+    public void getParametersAsList_should_return_emptyList_when_parameter_does_not_exist() throws Exception {
+        //given
+        CommonResource resource = spy(new CommonResource());
+        Form form = new Form("f=a=b&f=c=d,e");
+        given(resource.getQuery()).willReturn(form);
+
+        //when
+        List<String> parametersValues = resource.getParameterAsList("anyAbsent");
+
+        //then
+        assertThat(parametersValues).isEmpty();
     }
 
 }

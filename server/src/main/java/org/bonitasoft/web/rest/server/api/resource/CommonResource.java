@@ -26,7 +26,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.fasterxml.jackson.core.JsonParseException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -46,6 +49,8 @@ import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
+
+import com.fasterxml.jackson.core.JsonParseException;
 
 /**
  * @author Emmanuel Duchastenier
@@ -96,7 +101,7 @@ public class CommonResource extends ServerResource {
         if (parameters == null) {
             return null;
         }
-        final Map<String, String> results = new HashMap<String, String>();
+        final Map<String, String> results = new HashMap<>();
         for (final String parameter : parameters) {
             final String[] split = parameter.split("=");
             if (split.length < 2) {
@@ -151,21 +156,14 @@ public class CommonResource extends ServerResource {
     }
 
     /**
-     * Get a list of parameter values by name.
+     * Get a list of parameter values by name. If the parameter doesn't exist the result will be an empty list.
      *
      * @param name
      *        The name of the parameter (case sensitive).
-     * @return The values of a parameter as a list of String, or <code>null</code> if the parameter doesn't exist.
+     * @return The values of a parameter as a list of String.
      */
     public List<String> getParameterAsList(final String name) {
-        final String values = getQuery().getValues(name);
-        if (values != null) {
-            final String[] parameterValues = values.split(",");
-            if (parameterValues != null && parameterValues.length > 0) {
-                return Arrays.asList(parameterValues);
-            }
-        }
-        return null;
+        return Arrays.asList(getQuery().getValuesArray(name));
     }
 
     public SearchOptions buildSearchOptions() {
@@ -193,15 +191,13 @@ public class CommonResource extends ServerResource {
                 LOGGER.log(Level.FINE, "***" + message);
             }
             getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        }
-        else if (t instanceof FileNotFoundException) {
+        } else if (t instanceof FileNotFoundException) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "***" + message);
             }
             getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
             errorMessage.setMessage("File Not Found");
-        }
-        else if (t instanceof NotFoundException) {
+        } else if (t instanceof NotFoundException) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "***" + message);
             }

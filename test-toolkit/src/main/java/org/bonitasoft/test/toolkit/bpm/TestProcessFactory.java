@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.engine.bpm.bar.BarResource;
@@ -198,7 +199,7 @@ public class TestProcessFactory {
      */
     public static TestHumanTask createActivityWithVariables(TestUser initiator) throws InvalidExpressionException {
         final String processName = "processName";
-        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, "1.0");
+        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName+(String.valueOf(UUID.randomUUID().getLeastSignificantBits()).substring(0,5)), "1.0");
         processDefinitionBuidler.addActor("Employees", true)
                 .addDescription("This a default process")
                 .addStartEvent("Start")
