@@ -31,7 +31,7 @@ public class RestAPIContextImpl implements RestAPIContext {
     private final Locale locale;
     private final BusinessObjectDAOFactory daoFactory;
     private final PageResourceProvider resourceProvider;
-    private APIClient apiClient;
+    private final APIClient apiClient;
 
     public RestAPIContextImpl(final APISession apiSession, final APIClient apiClient, final Locale locale, PageResourceProvider resourceProvider, BusinessObjectDAOFactory daoFactory) {
         this.apiSession = apiSession;
@@ -75,7 +75,7 @@ public class RestAPIContextImpl implements RestAPIContext {
     }
 
     @Override
-    public APIClient getAPIClient() {
+    public APIClient getApiClient() {
         return apiClient;
     }
 
