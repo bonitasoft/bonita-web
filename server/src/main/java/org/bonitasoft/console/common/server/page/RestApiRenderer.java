@@ -26,7 +26,6 @@ import org.bonitasoft.console.common.server.page.extension.PageResourceProviderI
 import org.bonitasoft.console.common.server.page.extension.RestAPIContextImpl;
 import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
 import org.bonitasoft.engine.api.APIClient;
-import org.bonitasoft.engine.bdm.BusinessObjectDAOFactory;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
@@ -74,25 +73,37 @@ public class RestApiRenderer {
             final Class<?> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, restApiControllerFile);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             try {
-                if (RestApiController.class.isAssignableFrom(restApiControllerClass)) {//LEGACY MODE
-                    final RestApiController restApiController = customPageService.loadRestApiPage((Class<RestApiController>) restApiControllerClass);
-                    return restApiController.doHandle(request, pageResourceProvider,
-                            new PageContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()),
-                            new RestApiResponseBuilder(), new RestApiUtilImpl());
-                } else {
-                    final org.bonitasoft.web.extension.rest.RestApiController restApiController = (org.bonitasoft.web.extension.rest.RestApiController) restApiControllerClass
-                            .newInstance();
-                    return restApiController.doHandle(request,
-                            new org.bonitasoft.web.extension.rest.RestApiResponseBuilder(),
-                            new RestAPIContextImpl(apiSession, new APIClient(apiSession),pageContextHelper.getCurrentLocale(), pageResourceProvider, new BusinessObjectDAOFactory()));
-                }
-            } catch (final Exception e) {
+                return doHandle(request, apiSession, pageContextHelper, pageResourceProvider, restApiControllerClass);
+            } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
                 throw e;
             }
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassloader);
         }
+    }
+
+    protected RestApiResponse doHandle(final HttpServletRequest request,
+            final APISession apiSession,
+            final PageContextHelper pageContextHelper,
+            final PageResourceProviderImpl pageResourceProvider,
+            final Class<?> restApiControllerClass) throws InstantiationException, IllegalAccessException {
+        if (RestApiController.class.isAssignableFrom(restApiControllerClass)) {//LEGACY MODE
+            final RestApiController restApiController = instantiate(restApiControllerClass, RestApiController.class);
+            return restApiController.doHandle(request, pageResourceProvider,
+                    new PageContextImpl(apiSession, pageContextHelper.getCurrentLocale(), pageContextHelper.getCurrentProfile()),
+                    new RestApiResponseBuilder(), new RestApiUtilImpl());
+        } else {
+            final org.bonitasoft.web.extension.rest.RestApiController restApiController = instantiate(restApiControllerClass,
+                    org.bonitasoft.web.extension.rest.RestApiController.class);
+            return restApiController.doHandle(request,
+                    new org.bonitasoft.web.extension.rest.RestApiResponseBuilder(),
+                    new RestAPIContextImpl(apiSession, new APIClient(apiSession), pageContextHelper.getCurrentLocale(), pageResourceProvider));
+        }
+    }
+
+    protected <T extends Object> T instantiate(Class<?> baseClass, Class<T> toClass) throws InstantiationException, IllegalAccessException {
+        return (T) baseClass.newInstance();
     }
 
 }
