@@ -45,11 +45,12 @@ public class CaseEngineClientIT extends AbstractConsoleTest {
 
     @Test
     public void testCountNumberOfOpenCases() throws Exception {
+        final long before = caseEngineClient.countOpenedCases();
         start2cases();
         
         long numberOfOpenCases = caseEngineClient.countOpenedCases();
         
-        assertEquals(2L, numberOfOpenCases);
+        assertEquals(2L, numberOfOpenCases - before);
     }
 
     private void start2cases() {

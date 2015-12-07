@@ -47,11 +47,12 @@ public class HumanTaskEngineClientIT extends AbstractConsoleTest {
 
     @Test
     public void testCountOpenedTasks() throws Exception {
+        final long before = humanTaskEngineClient.countOpenedHumanTasks();
         create2openedTasks();
-        
+
         long openedTasks = humanTaskEngineClient.countOpenedHumanTasks();
         
-        assertEquals(2L, openedTasks);
+        assertEquals(2L, openedTasks - before);
     }
 
     private void create2openedTasks() throws InterruptedException {

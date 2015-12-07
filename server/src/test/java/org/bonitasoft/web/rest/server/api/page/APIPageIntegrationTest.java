@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -39,15 +38,15 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     public static final String PAGE_API_EXTENSION_UPDATE_ZIP = "/pageApiExtensionUpdate.zip";
     public static final String NEW_PAGE_ZIP = "/newPage.zip";
     private APIPage apiPage;
-    private CustomPageService customPageService;
     private ResourcesPermissionsMapping resourcesPermissionsMapping;
 
     @After
     public void cleanPages() throws Exception {
         final SearchOptions searchOptions = new SearchOptionsBuilder(0, 100000).done();
         for (Page page : getPageAPI().searchPages(searchOptions).getResult()) {
-            getPageAPI().deletePage(page.getId());
-            customPageService.removePage(getInitiator().getSession(), page.getName());
+            final List<APIID> ids = new ArrayList<>();
+            ids.add(APIID.makeAPIID(page.getId()));
+            apiPage.delete(ids);
         }
     }
 
@@ -56,8 +55,6 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
         apiPage = new APIPage();
         final APISession session = getInitiator().getSession();
         apiPage.setCaller(getAPICaller(session, "API/portal/page"));
-
-        customPageService = new CustomPageService();
 
         resourcesPermissionsMapping = PropertiesFactory.getResourcesPermissionsMapping(session
                 .getTenantId());

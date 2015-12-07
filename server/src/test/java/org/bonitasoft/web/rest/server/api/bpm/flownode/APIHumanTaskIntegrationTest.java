@@ -1,9 +1,9 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -123,6 +123,11 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
      */
     public void testHumanTaskItemSearchPaging() throws InterruptedException {
 
+        final long before = apiHumanTask.runSearch(0, 10, null,
+                apiHumanTask.defineDefaultSearchOrder(),
+                new HashMap<String, String>(),
+                new ArrayList<String>(), new ArrayList<String>()).getTotal();
+
         // Setup : insert enough tasks to have 2 pages
         for (int i = 0; i < 15; i++) {
             try {
@@ -143,8 +148,8 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
                 new HashMap<String, String>(),
                 new ArrayList<String>(), new ArrayList<String>());
 
-        assertTrue(search.getResults().size() == 6);
-        assertTrue(search.getTotal() == 16);
+        assertThat(search.getResults().size()).isGreaterThan(2);
+        assertThat(search.getTotal()).isGreaterThan(before);
     }
 
     @Test
