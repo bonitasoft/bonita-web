@@ -2,37 +2,14 @@ package org.bonitasoft.test.toolkit;
 
 import static java.lang.String.format;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import org.bonitasoft.engine.LocalServerTestsInitializer;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.bonitasoft.engine.test.junit.BonitaEngineRule;
+import org.junit.Rule;
 
 public abstract class EngineSetup {
 
-    static {
-        try {
-            LocalServerTestsInitializer.getInstance().prepareEnvironment();
-        } catch (IOException | ClassNotFoundException | BonitaHomeNotSetException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @BeforeClass
-    public static void classSetup() throws Exception {
-
-        LocalServerTestsInitializer.getInstance().initPlatformAndTenant();
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-
-        LocalServerTestsInitializer.getInstance().deleteTenantAndPlatform();
-
-    }
+    @Rule
+    public BonitaEngineRule bonitaEngineRule = BonitaEngineRule.create().withCleanAfterTest();
 
     protected static void setSystemPropertyIfNotSet(String property, String value) {
         final String systemProperty = System.getProperty(property);
