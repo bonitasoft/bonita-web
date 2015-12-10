@@ -74,8 +74,8 @@ public class RestApiRenderer {
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             try {
                 return doHandle(request, apiSession, pageContextHelper, pageResourceProvider, restApiControllerClass);
-            } catch (InstantiationException | IllegalAccessException e) {
-                LOGGER.log(Level.SEVERE, "error when executing rest api call to " + mappingKey, e);
+            } catch (Throwable e) {
+                LOGGER.log(Level.SEVERE, "Error when executing rest api extension call to " + mappingKey, e);
                 throw e;
             }
         } finally {
