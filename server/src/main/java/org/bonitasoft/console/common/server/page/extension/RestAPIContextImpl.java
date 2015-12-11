@@ -17,9 +17,6 @@ package org.bonitasoft.console.common.server.page.extension;
 import java.util.Locale;
 
 import org.bonitasoft.engine.api.APIClient;
-import org.bonitasoft.engine.bdm.BusinessObjectDAOFactory;
-import org.bonitasoft.engine.bdm.BusinessObjectDaoCreationException;
-import org.bonitasoft.engine.bdm.dao.BusinessObjectDAO;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.extension.page.PageResourceProvider;
 import org.bonitasoft.web.extension.rest.RestAPIContext;
@@ -29,14 +26,12 @@ public class RestAPIContextImpl implements RestAPIContext {
 
     private final APISession apiSession;
     private final Locale locale;
-    private final BusinessObjectDAOFactory daoFactory;
     private final PageResourceProvider resourceProvider;
     private final APIClient apiClient;
 
-    public RestAPIContextImpl(final APISession apiSession, final APIClient apiClient, final Locale locale, PageResourceProvider resourceProvider, BusinessObjectDAOFactory daoFactory) {
+    public RestAPIContextImpl(final APISession apiSession, final APIClient apiClient, final Locale locale, PageResourceProvider resourceProvider) {
         this.apiSession = apiSession;
         this.locale = locale;
-        this.daoFactory = daoFactory;
         this.resourceProvider = resourceProvider;
         this.apiClient = apiClient;
     }
@@ -56,15 +51,6 @@ public class RestAPIContextImpl implements RestAPIContext {
     public Locale getLocale() {
         return locale;
     }
-
-    /* (non-Javadoc)
-     * @see org.bonitasoft.console.common.server.page.RestAPIContext#createBusinessObjectDAO(java.lang.Class)
-     */
-    @Override
-    public <T extends BusinessObjectDAO> T createBusinessObjectDAO(Class<T> daoInterface) throws BusinessObjectDaoCreationException {
-        return daoFactory.createDAO(apiSession, daoInterface);
-    }
-
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.console.common.server.page.RestAPIContext#getResourceProvider()
