@@ -25,7 +25,7 @@ public class FileUploadServletTest {
     HttpServletRequest request;
 
     @Spy
-    TenantFileUploadServlet fileUploadServlet = new TenantFileUploadServlet();
+    FileUploadServlet fileUploadServlet = new TenantFileUploadServlet();
 
     @Test
     public void generateResponseJson_should_return_valid_json() throws Exception {
