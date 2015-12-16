@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-11-19 08:57-0500\n"
+"PO-Revision-Date: 2015-12-11 03:10-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
