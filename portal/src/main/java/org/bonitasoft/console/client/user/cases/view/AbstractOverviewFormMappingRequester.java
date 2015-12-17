@@ -1,3 +1,17 @@
+/**
+ * Copyright (C) 2015 BonitaSoft S.A.
+ * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2.0 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.bonitasoft.console.client.user.cases.view;
 
 import java.util.Map;
@@ -15,21 +29,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 
-/**
- * Copyright (C) 2015 BonitaSoft S.A.
- * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2.0 of the License, or
- * (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-public abstract class OverviewFormMappingRequester {
+public abstract class AbstractOverviewFormMappingRequester {
 
     static final String ATTRIBUTE_FORM_MAPPING_TYPE = "type";
 
@@ -70,24 +70,24 @@ public abstract class OverviewFormMappingRequester {
                 ViewController.closePopup();
                 if (formMapping.containsKey(ATTRIBUTE_FORM_MAPPING_TARGET)
                         && NONE_FORM_MAPPING_TARGET.equals(formMapping.get(ATTRIBUTE_FORM_MAPPING_TARGET).isString().stringValue())) {
-                    onNoMappingFound();
+                    onMappingNotFound();
                 } else {
                     onMappingFound();
                 }
             } else {
                 GWT.log("There is no overview mapping for process " + processId);
-                onNoMappingFound();
+                onMappingNotFound();
             }
         }
 
         @Override
         public void onError(final String message, final Integer errorCode) {
-            GWT.log("Error while getting the overview mapping for process  " + processId);
+            GWT.log("Error while getting the overview mapping for process " + processId);
             super.onError(message, errorCode);
         }
     }
 
     public abstract void onMappingFound();
 
-    public abstract void onNoMappingFound();
+    public abstract void onMappingNotFound();
 }

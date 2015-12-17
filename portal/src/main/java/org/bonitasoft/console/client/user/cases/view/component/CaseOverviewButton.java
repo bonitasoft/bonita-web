@@ -17,7 +17,7 @@ package org.bonitasoft.console.client.user.cases.view.component;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
-import org.bonitasoft.console.client.user.cases.view.OverviewFormMappingRequester;
+import org.bonitasoft.console.client.user.cases.view.AbstractOverviewFormMappingRequester;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
@@ -28,10 +28,10 @@ public class CaseOverviewButton extends Button {
     public CaseOverviewButton(final CaseItem caseItem) {
         super("btn-overview", new JsId("btn-action"), _("Overview"), _("Display the case overview"), new ActionShowView(new DisplayCaseFormPage(caseItem)));
         //Check form mapping to ensure there is an overview form to display
-        final OverviewFormMappingRequester overviewFormMappingRequester = new OverviewFormMappingRequester() {
+        final AbstractOverviewFormMappingRequester overviewFormMappingRequester = new AbstractOverviewFormMappingRequester() {
 
             @Override
-            public void onNoMappingFound() {
+            public void onMappingNotFound() {
                 disableButton();
             }
 

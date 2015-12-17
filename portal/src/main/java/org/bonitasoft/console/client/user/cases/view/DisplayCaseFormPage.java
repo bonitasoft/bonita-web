@@ -89,10 +89,10 @@ public class DisplayCaseFormPage extends Page {
 
     private void checkMapping() {
         final String processId = this.getParameter(CaseItem.ATTRIBUTE_PROCESS_ID);
-        final OverviewFormMappingRequester overviewFormMappingRequester = new OverviewFormMappingRequester() {
+        final AbstractOverviewFormMappingRequester overviewFormMappingRequester = new AbstractOverviewFormMappingRequester() {
 
             @Override
-            public void onNoMappingFound() {
+            public void onMappingNotFound() {
                 addHeader(new Text(_("No overview form has been defined for this process")));
             }
 
