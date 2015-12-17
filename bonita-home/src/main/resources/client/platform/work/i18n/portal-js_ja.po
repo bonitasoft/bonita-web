@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-30 04:31-0500\n"
+"PO-Revision-Date: 2015-12-16 08:56-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -330,14 +330,14 @@ msgstr "カウンターには、ルート の親プロセスからの開始案�
 #: bonita-portal-js/main/features/admin/processes/details/edit-actor-members.html:27
 #: main/features/admin/processes/details/process-manager/edit-process-managers-mapping.html:28
 msgid "Create a new membership"
-msgstr "新しい所属を作成します"
+msgstr "新しいメンバーシップを作成します"
 
 #: bonita-portal-js/main/features/admin/applications/applications-list.html:6
 msgid "Create an application"
 msgstr "アプリケーションを作成します"
 
 msgid "Create membership"
-msgstr "所属を作成"
+msgstr "メンバーシップを作成"
 
 #: bonita-portal-js/main/features/admin/applications/details/application-details.html:24
 msgid "Created by"
@@ -588,7 +588,7 @@ msgstr "アプリケーションをインポート"
 
 #: main/features/admin/processes/details/forms/forms-mapping.html:12
 msgid "Instantiation"
-msgstr "起案"
+msgstr "インスタンスの生成"
 
 msgid "Internal"
 msgstr "内部"
@@ -675,7 +675,7 @@ msgid "Memberships"
 msgstr "所属"
 
 msgid "Memberships mapped to {}"
-msgstr "{} にマップされた所属"
+msgstr "{} にマップされたメンバーシップ"
 
 #: main/features/admin/monitoring/monitoring.html:4
 msgid "Monitor open cases"
