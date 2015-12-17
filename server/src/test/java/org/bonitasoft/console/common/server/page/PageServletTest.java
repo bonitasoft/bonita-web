@@ -1,5 +1,6 @@
 package org.bonitasoft.console.common.server.page;
 
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -162,14 +163,14 @@ public class PageServletTest {
     }
 
     @Test
-    public void should_get_not_found_when_empty_mapping() throws Exception {
+    public void should_not_get_not_found_when_empty_mapping() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         final PageReference pageReference = new PageReference(null, null);
         doReturn(pageReference).when(pageMappingService).getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true);
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse, times(1)).sendError(404, "Form mapping not found");
+        verify(hsResponse, never()).sendError(anyInt(), anyString());
     }
 
     @Test
