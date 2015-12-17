@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-12-11 03:10-0500\n"
+"PO-Revision-Date: 2015-12-16 08:53-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -191,7 +191,7 @@ msgstr "完了したインスタンス"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
-msgstr "設定状況"
+msgstr "構成設定の状態"
 
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
@@ -207,7 +207,7 @@ msgstr "コネクタ"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
-msgstr "新しい所属を作成します"
+msgstr "新しいメンバーシップを作成します"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Create an application"
@@ -434,7 +434,7 @@ msgstr "所属"
 
 #: main/common/services/i18n.js:77
 msgid "Memberships mapped to {}"
-msgstr "{} にマップされた所属"
+msgstr "{} にマップされたメンバーシップ"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Multi-page menu"
