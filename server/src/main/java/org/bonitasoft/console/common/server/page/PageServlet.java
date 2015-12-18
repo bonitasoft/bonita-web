@@ -126,11 +126,11 @@ public class PageServlet extends HttpServlet {
             } else if (pageReference.getPageId() != null) {
                 displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath);
             } else {
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(Level.FINE)) {
                     final String message = "Both URL and pageId are not set in the page mapping for " + mappingKey;
-                    LOGGER.log(Level.WARNING, message);
+                    LOGGER.log(Level.FINE, message);
                 }
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
+                return;
             }
         } catch (final UnauthorizedAccessException e) {
             final String message = "User not Authorized";
