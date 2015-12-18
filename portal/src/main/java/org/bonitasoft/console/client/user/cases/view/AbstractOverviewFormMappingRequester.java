@@ -17,7 +17,6 @@ package org.bonitasoft.console.client.user.cases.view;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
-import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 
 import com.google.gwt.core.client.GWT;
@@ -43,7 +42,7 @@ public abstract class AbstractOverviewFormMappingRequester {
         RequestBuilder requestBuilder;
         final String processIdFilter = URL.encodeQueryString(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId);
         final String mappingTypeFilter = URL.encodeQueryString(ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_OVERVIEW_FORM_MAPPING_TYPE);
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + mappingTypeFilter);
+        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=1&p=0&f=" + processIdFilter + "&f=" + mappingTypeFilter);
         requestBuilder.setCallback(new FormMappingCallback(processId));
         try {
             requestBuilder.send();
@@ -67,7 +66,6 @@ public abstract class AbstractOverviewFormMappingRequester {
             if (formMappings.size() == 1) {
                 final JSONValue formMappingValue = formMappings.get(0);
                 final JSONObject formMapping = formMappingValue.isObject();
-                ViewController.closePopup();
                 if (formMapping.containsKey(ATTRIBUTE_FORM_MAPPING_TARGET)
                         && NONE_FORM_MAPPING_TARGET.equals(formMapping.get(ATTRIBUTE_FORM_MAPPING_TARGET).isString().stringValue())) {
                     onMappingNotFound();
