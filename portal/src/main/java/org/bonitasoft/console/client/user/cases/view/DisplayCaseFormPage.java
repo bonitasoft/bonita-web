@@ -141,6 +141,7 @@ public class DisplayCaseFormPage extends Page {
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
+        processParams.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getProcess().getId().toString());
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
         if (item instanceof ArchivedCaseItem) {
             processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());
