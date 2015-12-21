@@ -544,7 +544,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
 
         try {
             if (!workflowAPI.isUserAdminOrProcessOwner(session, processInstanceID)
-                    && !workflowAPI.canUserSeeProcessInstance(session, isInvolvedInProcessInstance(session, userId, processInstanceID), processInstanceID)) {
+                    && !workflowAPI.canUserSeeProcessInstance(session, processInstanceID)) {
                 final String message = "An attempt was made by user " + user.getUsername() + " to access the " + getFormType(formId, context)
                         + " form of process instance " + processInstanceID;
                 if (getLogger().isLoggable(Level.INFO)) {
