@@ -50,6 +50,8 @@ public class DisplayCaseFormPage extends Page {
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
+    private IFrameView view;
+
     static {
         PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
@@ -80,7 +82,7 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
-        final IFrameView view = new IFrameView(getCaseOverviewUrl());
+        view = new IFrameView(getCaseOverviewUrl());
         addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
         //Check form mapping to ensure there is an overview form to display
@@ -93,7 +95,7 @@ public class DisplayCaseFormPage extends Page {
 
             @Override
             public void onMappingNotFound() {
-                addHeader(new Text(_("No overview form has been defined for this process")));
+                view.addTool(new Text(_("No overview form has been defined for this process")));
             }
 
             @Override
