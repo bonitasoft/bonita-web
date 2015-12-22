@@ -16,22 +16,26 @@ package org.bonitasoft.console.client.user.cases.view.component;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.console.client.user.cases.view.AbstractOverviewFormMappingRequester;
+import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
 
+import com.google.gwt.core.client.GWT;
+
 public class CaseOverviewButton extends Button {
 
     public CaseOverviewButton(final CaseItem caseItem) {
         super("btn-overview", new JsId("btn-action"), _("Overview"), _("Display the case overview"), new ActionShowView(new DisplayCaseFormPage(caseItem)));
+        final String processId = caseItem.getProcessId().toString();
         //Check form mapping to ensure there is an overview form to display
         final AbstractOverviewFormMappingRequester overviewFormMappingRequester = new AbstractOverviewFormMappingRequester() {
 
             @Override
             public void onMappingNotFound() {
+                GWT.log("There is no overview mapping for process " + processId);
                 disableButton();
             }
 
@@ -40,7 +44,7 @@ public class CaseOverviewButton extends Button {
                 //do nothing
             }
         };
-        overviewFormMappingRequester.searchFormMappingForInstance(caseItem.getProcessId().toString());
+        overviewFormMappingRequester.searchFormMappingForInstance(processId);
     }
 
 

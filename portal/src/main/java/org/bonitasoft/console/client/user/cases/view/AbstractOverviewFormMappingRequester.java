@@ -73,7 +73,6 @@ public abstract class AbstractOverviewFormMappingRequester {
                     onMappingFound();
                 }
             } else {
-                GWT.log("There is no overview mapping for process " + processId);
                 onMappingNotFound();
             }
         }
