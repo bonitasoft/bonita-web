@@ -548,6 +548,7 @@
     <servlet-mapping>
         <servlet-name>formsDocumentImage</servlet-name>
         <url-pattern>/portal/formsDocumentImage</url-pattern>
+        <url-pattern>/API/formsDocumentImage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginService</servlet-name>
