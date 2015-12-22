@@ -37,7 +37,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Label;
 
@@ -96,13 +95,18 @@ public class DisplayCaseFormPage extends Page {
 
             @Override
             public void onMappingNotFound() {
-                GWT.log("There is no overview mapping for process " + processId);
+                consoleLog("There is no overview mapping for process " + processId);
                 try {
                     view.addTool(new Label(_("No overview form has been defined for this process.")));
                 } catch (final Throwable t) {
-                    GWT.log("error while trying to display the mapping not found message.", t);
+                    //TODO console.log
+                    consoleLog(t.getMessage());
                 }
             }
+
+            native void consoleLog(String message) /*-{
+                                                   console.log(message);
+                                                   }-*/;
 
             @Override
             public void onMappingFound() {
