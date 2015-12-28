@@ -51,7 +51,7 @@ public class CaseOverviewButton extends Button {
     protected void disableButton() {
         //disable the button
         setEnabled(false);
-        setTooltip(_("No overview form has been defined for this process"));
+        setTooltip(_("No overview page has been defined for this process"));
     }
 
 }
