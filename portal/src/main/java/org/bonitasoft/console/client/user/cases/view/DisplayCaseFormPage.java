@@ -32,13 +32,13 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.Label;
 
 /**
  * @author Fabio Lombardi
@@ -97,7 +97,9 @@ public class DisplayCaseFormPage extends Page {
             public void onMappingNotFound() {
                 consoleLog("There is no overview mapping for process " + processId);
                 try {
-                    view.addTool(new Label(_("No overview form has been defined for this process.")));
+                    final Text message = new Text(_("No overview form has been defined for this process."));
+                    message.addClass("callout callout-info");
+                    view.addTool(message);
                 } catch (final Throwable t) {
                     //TODO console.log
                     consoleLog(t.getMessage());

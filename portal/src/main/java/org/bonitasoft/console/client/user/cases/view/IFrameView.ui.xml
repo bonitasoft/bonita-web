@@ -17,7 +17,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:HTMLPanel tag="table" styleName="forms-view">
-        <tr><td><g:SimplePanel ui:field="toolbar" styleName="toolbar empty"/></td></tr>
+        <tr><td><g:FlowPanel ui:field="toolbar" styleName="toolbar empty"/></td></tr>
         <tr><td class="frame"><iframe ui:field="frame" /></td></tr>
     </g:HTMLPanel>
 </ui:UiBinder>
