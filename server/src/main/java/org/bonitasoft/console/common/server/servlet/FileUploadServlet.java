@@ -32,9 +32,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.bonitasoft.forms.server.exception.FileTooBigException;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
@@ -75,6 +76,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final String FILE_NAME_RESPONSE_ATTRIBUTE = "filename";
 
+    public static final int MEGABYTE = 1048576;
+
     protected String[] supportedExtensionsList = new String[0];
 
     protected boolean returnFullPathInResponse = false;
@@ -103,7 +106,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected abstract void defineUploadDirectoryPath(final HttpServletRequest request);
 
-    protected abstract void checkUploadSize(final HttpServletRequest request, FileItem item) throws FileTooBigException;
+    protected abstract void setUploadSizeMax(ServletFileUpload serviceFileUpload, final HttpServletRequest request);
 
     protected void setUploadDirectoryPath(final String uploadDirectoryPath) {
         this.uploadDirectoryPath = uploadDirectoryPath;
@@ -134,7 +137,17 @@ public abstract class FileUploadServlet extends HttpServlet {
 
             final FileItemFactory fileItemFactory = new DiskFileItemFactory();
             final ServletFileUpload serviceFileUpload = createServletFileUpload(fileItemFactory);
-            final List<FileItem> items = serviceFileUpload.parseRequest(request);
+            if (checkUploadedFileSize) {
+                setUploadSizeMax(serviceFileUpload, request);
+            }
+            List<FileItem> items;
+            try {
+                items = serviceFileUpload.parseRequest(request);
+            } catch (final OutOfMemoryError e) {
+                throw new SizeLimitExceededException("The file exceeds its maximum permitted size.",
+                        Long.valueOf(0),
+                        0);
+            }
 
             for (final FileItem item : items) {
                 if (item.isFormField()) {
@@ -143,9 +156,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
                 final String fileName = item.getName();
 
-                if (checkUploadedFileSize) {
-                    checkUploadSize(request, item);
-                }
+
 
                 // Check if extension is allowed
                 if (!isSupportedExtention(fileName)) {
@@ -175,23 +186,31 @@ public abstract class FileUploadServlet extends HttpServlet {
                 responsePW.print(responseString);
                 responsePW.flush();
             }
-        } catch (final FileTooBigException e) {
+        } catch (final SizeLimitExceededException e) {
             LOGGER.log(Level.SEVERE, "File is Too Big", e);
-            response.setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
-            if (JSON_CONTENT_TYPE.equals(responseContentType)) {
-                final Map<String, Serializable> errorResponse = new HashMap<>();
-                errorResponse.put("type", "EntityTooLarge");
-                errorResponse.put("message", e.getFileName() + " is too large, limit is set to " + e.getMaxSize() + "Mb");
-                errorResponse.put("statusCode", HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
-                responsePW.print(new JSONObject(errorResponse).toString());
-                responsePW.flush();
-            }
+            generateFileTooBigError(response, responsePW, "Uploaded file is too large, server is unable to process it");
+        } catch (final FileSizeLimitExceededException e) {
+            LOGGER.log(Level.SEVERE, "File is Too Big", e);
+            generateFileTooBigError(response, responsePW, e.getFileName() + " is " + e.getActualSize() + " large, limit is set to " + e.getPermittedSize()
+                    / FileUploadServlet.MEGABYTE + "Mb");
         } catch (final Exception e) {
             final String theErrorMessage = "Exception while uploading file.";
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, theErrorMessage, e);
             }
             throw new ServletException(theErrorMessage, e);
+        }
+    }
+
+    private void generateFileTooBigError(final HttpServletResponse response, final PrintWriter responsePW, final String message) {
+        response.setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
+        if (JSON_CONTENT_TYPE.equals(responseContentType)) {
+            final Map<String, Serializable> errorResponse = new HashMap<>();
+            errorResponse.put("type", "EntityTooLarge");
+            errorResponse.put("message", message);
+            errorResponse.put("statusCode", HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
+            responsePW.print(new JSONObject(errorResponse).toString());
+            responsePW.flush();
         }
     }
 
