@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 
 import org.bonitasoft.engine.api.APIAccessor
 import org.bonitasoft.engine.api.Logger
+import org.bonitasoft.engine.api.ProcessAPI
 import org.bonitasoft.engine.api.permission.APICallContext
 import org.bonitasoft.engine.api.permission.PermissionRule
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor
@@ -41,6 +42,7 @@ import org.bonitasoft.engine.session.APISession
  *
  *
  * @author Baptiste Mesta
+ * @author Anthony Birembaut
  */
 class CasePermissionRule implements PermissionRule {
 
@@ -80,25 +82,33 @@ class CasePermissionRule implements PermissionRule {
         logger.debug("RuleCase : User allowed to start? " + canStart)
         return canStart
     }
+    
+    private boolean isInvolved(ProcessAPI processAPI, long currentUserId, long processInstanceId) {
+        return processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isManagerOfUserInvolvedInProcessInstance(currentUserId, processInstanceId)
+    }
 
     private boolean checkGetMethod(APICallContext apiCallContext, APIAccessor apiAccessor, long currentUserId, Logger logger) {
         def processAPI = apiAccessor.getProcessAPI()
         def filters = apiCallContext.getFilters()
         try {
             if (apiCallContext.getResourceId() != null) {
-                def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
-                // isInvolvedInProcessInstance() already checks the archived and non-archived involvement:
-                def isInvolved = processAPI.isInvolvedInProcessInstance(currentUserId, processInstanceId) || processAPI.isManagerOfUserInvolvedInProcessInstance(currentUserId, processInstanceId)
-                if (isInvolved) {
-                    return true;
-                }
                 def processDefinitionId;
                 if (apiCallContext.getResourceName().startsWith("archived")) {
-                    processDefinitionId = processAPI.getArchivedProcessInstance(processInstanceId).getProcessDefinitionId()
+                    def archivedProcessInstanceId = Long.valueOf(apiCallContext.getResourceId())
+                    def archivedProcessInstance = processAPI.getArchivedProcessInstance(archivedProcessInstanceId)
+                    def processInstanceId = archivedProcessInstance.getSourceObjectId()
+                    if (isInvolved(processAPI, currentUserId, processInstanceId)) {
+                        return true;
+                    }
+                    processDefinitionId = archivedProcessInstance.getProcessDefinitionId()
                 } else {
-                    logger.debug("RuleCase : allowed because get on process that user is involved in")
+                    def processInstanceId = Long.valueOf(apiCallContext.getResourceId())
+                    if (isInvolved(processAPI, currentUserId, processInstanceId)) {
+                        return true;
+                    }
                     processDefinitionId = processAPI.getProcessInstance(processInstanceId).getProcessDefinitionId()
                 }
+                logger.debug("RuleCase : allowed because get on process that user is involved in")
                 return processAPI.isUserProcessSupervisor(processDefinitionId, currentUserId)
             } else {
                 def stringUserId = String.valueOf(currentUserId)
