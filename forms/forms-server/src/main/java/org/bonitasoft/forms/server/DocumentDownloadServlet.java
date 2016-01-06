@@ -160,7 +160,7 @@ public class DocumentDownloadServlet extends HttpServlet {
                     fileName = document.getContentFileName();
                     contentStorageId = document.getContentStorageId();
                 } catch (final DocumentNotFoundException dnfe) {
-                    final ArchivedDocument archivedDocument = processAPI.getArchivedProcessDocument(Long.valueOf(documentId));
+                    final ArchivedDocument archivedDocument = processAPI.getArchivedVersionOfProcessDocument(Long.valueOf(documentId));
                     fileName = archivedDocument.getDocumentContentFileName();
                     contentStorageId = archivedDocument.getContentStorageId();
                 }
