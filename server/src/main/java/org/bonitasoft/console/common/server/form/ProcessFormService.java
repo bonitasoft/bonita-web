@@ -99,7 +99,7 @@ public class ProcessFormService {
             ensuredUserId = apiSession.getUserId();
         }
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
-        searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID, processInstanceId);
+        searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.PARENT_CONTAINER_ID, processInstanceId);
         searchOptionsBuilder.filter(HumanTaskInstanceSearchDescriptor.NAME, taskName);
         final SearchResult<HumanTaskInstance> searchMyAvailableHumanTasks = processAPI.searchMyAvailableHumanTasks(ensuredUserId,
                 searchOptionsBuilder.done());
