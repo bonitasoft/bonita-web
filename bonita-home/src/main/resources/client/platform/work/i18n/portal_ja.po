@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-21 01:01+0200\n"
-"PO-Revision-Date: 2015-11-30 04:31-0500\n"
+"PO-Revision-Date: 2016-01-08 04:01-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -191,7 +191,7 @@ msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
-msgstr "リソースは、リソース フォルダと page.properties ファイルを含む zip アーカイブとしてインポートされます。"
+msgstr "リソースは、resources フォルダと page.properties ファイルを含む zip アーカイブ形式でインポートされます。"
 
 msgid "Aborted by:"
 msgstr "次によって中止されました："
@@ -278,7 +278,7 @@ msgid "Add a new membership to this user"
 msgstr "この利用者に新しい所属を追加します。"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "新しいリソース（ページ、フォーム、レイアウト、テーマ、または REST API 拡張） を追加します。 <br/>このリソースは、（プロセスまたはアプリケーション レベル）ではなくグローバル スコープでインストールされます。 <br/>このアーカイブ （.zip ファイル）は、「リソース」という名前のフォルダのルート レベルでpage.properties ファイルを含める必要があります。<br/> このプロパティ ファイルは少なくとも 、名前、表示名およびコンテンツ タイプ（デフォルトのコンテンツ タイプは 「ページ」）を定義する必要があります。 <br/>「リソース」フォルダには、index.html または Index.groovy ファイルのいずれかと、必要なリソースを含める必要があります。"
+msgstr "新しいリソース（ページ、フォーム、レイアウト、テーマ、または REST API 拡張） を追加します。 <br/>このリソースは、（プロセスまたはアプリケーション レベル）ではなくグローバル スコープでインストールされます。 <br/>このアーカイブ （.zip ファイル）は、ルート レベルに resources という名前のフォルダと page.properties ファイルを含める必要があります。<br/> この page.properties 内には少なくとも 、name、displayName および contentType（デフォルトの contentType は page）を定義する必要があります。 <br/>resources フォルダには、index.html または index.groovy ファイルのいずれかと、必要なリソースを含める必要があります。"
 
 msgid "Add a resource"
 msgstr "リソースを追加します"
@@ -668,19 +668,19 @@ msgid "Content"
 msgstr "コンテンツ"
 
 msgid "Content type is 'apiExtension'."
-msgstr "コンテンツ タイプは 'apiExtension' です。"
+msgstr " contentType は 'apiExtension' です。"
 
 msgid "Content type is 'form'."
-msgstr "コンテンツ タイプは 'form' です。"
+msgstr " contentType は 'form' です。"
 
 msgid "Content type is 'layout'."
-msgstr "コンテンツ タイプは 'layout'です。"
+msgstr " contentType は 'layout'です。"
 
 msgid "Content type is 'page'."
-msgstr "コンテンツ タイプは 'page' です。"
+msgstr " contentType は 'page' です。"
 
 msgid "Content type is 'theme'."
-msgstr "コンテンツ タイプは 'theme' です。"
+msgstr " contentType は 'theme' です。"
 
 msgid "Country"
 msgstr "国"
@@ -2058,7 +2058,7 @@ msgid "The configuration state of the process"
 msgstr "プロセスの構成設定状態"
 
 msgid "The content type is defined in page.properties."
-msgstr "コンテンツ タイプは、page.properties で定義されています。"
+msgstr "contentType は、page.properties 内に定義されます。"
 
 msgid "The current state of the case"
 msgstr "案件の現在の状態"
@@ -2166,7 +2166,7 @@ msgid "The process responsible for the creation of this task"
 msgstr "このタスクの作成に関与したプロセス"
 
 msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
-msgstr "リソース フォルダには、Index.groovy クラスまたは index.html ファイルに含める必要があります。必要に応じていくつかの追加のリソースを含めることができます。"
+msgstr "resources フォルダには、Index.groovy クラスまたは index.html ファイルに含める必要があります。必要に応じていくつかの追加のリソースを含めることができます。"
 
 msgid "The server is not available"
 msgstr "サーバーは利用できません。"
