@@ -641,21 +641,16 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
     protected HtmlTemplate getPageLayout(final String layoutPath, final Date applicationDeploymentDate, final Map<String, Object> context)
             throws FileNotFoundException, InvalidFormDefinitionException, ApplicationFormDefinitionNotFoundException, FormServiceProviderNotFoundException,
             SessionTimeoutException {
-        try {
-            if (layoutPath == null) {
-                throw new IOException();
+
+        if (layoutPath == null) {
+            String message = "No page template defined.";
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
             }
-            InputStream htmlFileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(layoutPath);
-            if (htmlFileStream == null) {
-                final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
-                final File dir = formServiceProvider.getApplicationResourceDir(applicationDeploymentDate, context);
-                final File htmlFile = new File(dir, layoutPath);
-                if (htmlFile.exists()) {
-                    htmlFileStream = new FileInputStream(htmlFile);
-                } else {
-                    throw new IOException();
-                }
-            }
+            throw new FileNotFoundException(message);
+        }
+
+        try(InputStream htmlFileStream = getHtmlFileStream(layoutPath, applicationDeploymentDate, context)) {
 
             final Source source = new Source(htmlFileStream);
 
@@ -701,20 +696,28 @@ public class FormDefinitionAPIImpl implements IFormDefinitionAPI {
             return new HtmlTemplate(body, bodyAttributes, headNodes);
 
         } catch (final IOException e) {
-            String message = null;
-            if (layoutPath == null) {
-                message = "No page template defined.";
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, message);
-                }
-            } else {
-                message = "Page template file " + layoutPath + " could not be found.";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, message);
-                }
+            String message = "Page template file " + layoutPath + " could not be found.";
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, message);
             }
             throw new FileNotFoundException(message);
         }
+    }
+
+    private InputStream getHtmlFileStream(String layoutPath, Date applicationDeploymentDate, Map<String, Object> context)
+            throws FormServiceProviderNotFoundException, IOException, SessionTimeoutException, ApplicationFormDefinitionNotFoundException {
+        InputStream htmlFileStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(layoutPath);
+        if (htmlFileStream == null) {
+            final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider(tenantID);
+            final File dir = formServiceProvider.getApplicationResourceDir(applicationDeploymentDate, context);
+            final File htmlFile = new File(dir, layoutPath);
+            if (htmlFile.exists()) {
+                htmlFileStream = new FileInputStream(htmlFile);
+            } else {
+                throw new IOException();
+            }
+        }
+        return htmlFileStream;
     }
 
     /**
