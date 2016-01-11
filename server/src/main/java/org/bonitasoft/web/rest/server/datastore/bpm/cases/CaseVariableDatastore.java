@@ -38,7 +38,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Colin PUY
- * 
+ *
  */
 public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, DataInstance>
         implements DatastoreHasSearch<CaseVariableItem>, DatastoreHasUpdate<CaseVariableItem> {
@@ -84,7 +84,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
 
     public void updateVariableValue(final long caseId, final String variableName, final String className, final String newValue) {
         try {
-            final Serializable converteValue = this.converter.convert(className, newValue);
+            final Serializable converteValue = converter.convert(className, newValue);
             getEngineProcessAPI().updateProcessDataInstance(variableName, caseId, converteValue);
         } catch (final Exception e) {
             throw new APIException("Error when updating case variable", e);
@@ -98,7 +98,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
             return new ItemSearchResult<CaseVariableItem>(page, resultsByPage,
                     countByCaseId(caseId), convert(processDataInstances));
         } catch (final Exception e) {
-            throw new APIException("Error when getting case variables");
+            throw new APIException("Error when getting case variables", e);
         }
     }
 
@@ -106,7 +106,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
         try {
             return getEngineProcessAPI().getNumberOfProcessDataInstances(caseId);
         } catch (final Exception e) {
-            throw new APIException("Error while getting the number of case variables");
+            throw new APIException("Error while getting the number of case variables", e);
         }
     }
 
@@ -114,7 +114,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
         try {
             return convertEngineToConsoleItem(getEngineProcessAPI().getProcessDataInstance(variableName, caseId));
         } catch (final Exception e) {
-            throw new APIException("Error while getting case variable");
+            throw new APIException("Error while getting case variable", e);
         }
     }
 }

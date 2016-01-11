@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.admin.bpm.cases.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -127,6 +127,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
     protected ItemTable getTaskTable(final CaseItem item) {
         return new ItemTable(new JsId("tasks"), getHumanTasksDefinition())
         .addHiddenFilter(HumanTaskItem.ATTRIBUTE_CASE_ID, item.getId())
+                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
         .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE), _("Due date"))
         .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))

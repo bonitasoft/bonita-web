@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.page.itemListingPage;
 
-import static com.google.gwt.query.client.GQuery.*;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
+import static com.google.gwt.query.client.GQuery.$;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -193,7 +193,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
         initFilterPanelActions();
         initPrimaryFilters();
         initSecondaryFilters();
-        initResourceFilters();
 
         if (hasParameter(UrlOption.FILTER) && ItemListingPage.this.filtersLinks.containsKey(getParameter(UrlOption.FILTER))) {
             selectFilter(getParameter(UrlOption.FILTER));
@@ -201,6 +200,7 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
             selectFirstFilter();
         }
 
+        initResourceFilters();
     }
 
     void selectFirstFilter() {
@@ -803,8 +803,6 @@ public abstract class ItemListingPage<T extends IItem> extends Page {
     void selectRightResourceFilter() {
         if (hasResourceFilterParameter()) {
             selectFilter(getParameter(UrlOption.RESOURCE_FILTER));
-        } else if (!hasParameter(UrlOption.FILTER)) {
-            selectFirstFilter();
         }
     }
 
