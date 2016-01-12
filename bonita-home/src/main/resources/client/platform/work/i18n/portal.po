@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-20 01:02+0100\n"
+"POT-Creation-Date: 2016-01-12 01:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -830,7 +830,7 @@ msgstr ""
 msgid "Display tasks I have done"
 msgstr ""
 
-msgid "Display the case form"
+msgid "Display the case overview"
 msgstr ""
 
 msgid "Do it"
@@ -1478,6 +1478,12 @@ msgid "No description."
 msgstr ""
 
 msgid "No opened task"
+msgstr ""
+
+msgid "No overview page has been defined for this process"
+msgstr ""
+
+msgid "No overview page has been defined for this process."
 msgstr ""
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
