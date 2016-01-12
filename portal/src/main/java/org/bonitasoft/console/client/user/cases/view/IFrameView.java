@@ -25,8 +25,8 @@ import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -47,7 +47,7 @@ public class IFrameView extends Composite {
     IFrameElement frame;
 
     @UiField
-    SimplePanel toolbar;
+    FlowPanel toolbar;
 
     public IFrameView() {
         initWidget(binder.createAndBindUi(this));

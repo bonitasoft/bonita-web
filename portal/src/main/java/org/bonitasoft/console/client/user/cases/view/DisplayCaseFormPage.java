@@ -32,11 +32,13 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.url.UrlUtil;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonBack;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.core.AbstractComponent;
 import org.bonitasoft.web.toolkit.client.ui.component.core.UiComponent;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -48,6 +50,8 @@ public class DisplayCaseFormPage extends Page {
     public final static String TOKEN = "DisplayCaseForm";
 
     public static final List<String> PRIVILEGES = new ArrayList<String>();
+
+    private IFrameView view;
 
     static {
         PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
@@ -79,9 +83,31 @@ public class DisplayCaseFormPage extends Page {
 
     @Override
     public void buildView() {
-        final IFrameView view = new IFrameView(getCaseOverviewUrl());
+        view = new IFrameView(getCaseOverviewUrl());
         addBody(new UiComponent(view));
         view.addTool(new ButtonBack());
+        //Check form mapping to ensure there is an overview form to display
+        checkMapping();
+    }
+
+    private void checkMapping() {
+        final String processId = this.getParameter(CaseItem.ATTRIBUTE_PROCESS_ID);
+        final AbstractOverviewFormMappingRequester overviewFormMappingRequester = new AbstractOverviewFormMappingRequester() {
+
+            @Override
+            public void onMappingNotFound() {
+                GWT.log("There is no overview mapping for process " + processId);
+                final Paragraph message = new Paragraph(_("No overview page has been defined for this process."));
+                message.addClass("callout callout-info");
+                view.addTool(message);
+            }
+
+            @Override
+            public void onMappingFound() {
+                //do nothing
+            }
+        };
+        overviewFormMappingRequester.searchFormMappingForInstance(processId);
     }
 
     private String getCaseOverviewUrl() {
@@ -121,6 +147,7 @@ public class DisplayCaseFormPage extends Page {
         final Map<String, String> processParams = new HashMap<String, String>();
         processParams.put(ProcessItem.ATTRIBUTE_NAME, item.getProcess().getName());
         processParams.put(ProcessItem.ATTRIBUTE_VERSION, item.getProcess().getVersion());
+        processParams.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getProcess().getId().toString());
         processParams.put(CaseItem.ATTRIBUTE_ID, item.getId().toString());
         if (item instanceof ArchivedCaseItem) {
             processParams.put(ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ((ArchivedCaseItem) item).getSourceObjectId().toString());

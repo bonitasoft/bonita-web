@@ -268,7 +268,10 @@ public class CasePermissionRuleTest {
         doReturn(true).when(apiCallContext).isGET()
         doReturn("archivedCase").when(apiCallContext).getResourceName()
         doReturn("45").when(apiCallContext).getResourceId()
-        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 45l);
+        def instance = mock(ArchivedProcessInstance.class)
+        doReturn(instance).when(processAPI).getArchivedProcessInstance(45l);
+        doReturn(42l).when(instance).getSourceObjectId();
+        doReturn(isInvolvedIn).when(processAPI).isInvolvedInProcessInstance(currentUserId, 42l);
     }
 
     @Test
