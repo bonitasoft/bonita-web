@@ -39,7 +39,6 @@ public class ProcessActorImportService extends ConsoleService {
 
     @Override
     public Object run() {
-        InputStream xmlStream = null;
         try {
             final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
             final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
@@ -50,10 +49,11 @@ public class ProcessActorImportService extends ConsoleService {
             }
 
             final APISession apiSession = getSession();
-            xmlStream = new FileInputStream(xmlFile);
-            final byte[] actorsXmlContent = IOUtils.toByteArray(xmlStream);
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
-            processAPI.importActorMapping(Long.valueOf(getParameter("process_id")), actorsXmlContent);
+            try(InputStream xmlStream = new FileInputStream(xmlFile)) {
+                final byte[] actorsXmlContent = IOUtils.toByteArray(xmlStream);
+                processAPI.importActorMapping(Long.valueOf(getParameter("process_id")), actorsXmlContent);
+            }
 
         } catch (final InvalidSessionException e) {
             throw new APISessionInvalidException(e);
