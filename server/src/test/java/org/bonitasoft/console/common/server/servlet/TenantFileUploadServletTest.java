@@ -77,7 +77,7 @@ public class TenantFileUploadServletTest {
         when(consoleProperties.getMaxSize()).thenReturn(1L); // 1Mb
         fileUploadServlet.setUploadSizeMax(serviceFileUpload, request);
         verify(serviceFileUpload).setFileSizeMax(FileUploadServlet.MEGABYTE);
-    }
+        }
 
     @Test
     public void should_set_413_status_code_with_empty_body_when_file_creates_OOMError() throws Exception {
