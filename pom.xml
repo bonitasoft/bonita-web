@@ -27,7 +27,6 @@
         <gwtmockito.version>1.1.3</gwtmockito.version>
         <spring.version>3.1.2.RELEASE</spring.version>
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
-        <urlrewrite.version>4.0.3</urlrewrite.version>
         <restlet-version>2.3.1</restlet-version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
@@ -125,6 +124,11 @@
                 <version>3.1</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>3.2</version>
+            </dependency>
+            <dependency>
                 <groupId>net.htmlparser.jericho</groupId>
                 <artifactId>jericho-html</artifactId>
                 <version>3.1</version>
@@ -138,6 +142,16 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>2.5</version>
+            </dependency>
+            <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
             </dependency>
             <dependency>
                 <groupId>tomcat</groupId>
@@ -170,6 +184,11 @@
                 <artifactId>lesscss</artifactId>
                 <version>1.7.0.1.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.tuckey</groupId>
+                <artifactId>urlrewritefilter</artifactId>
+                <version>4.0.3</version>
+            </dependency>
             <!-- xbean-classloader version should be sync with version used by bonita-server -->
             <dependency>
                 <groupId>org.apache.xbean</groupId>
@@ -192,7 +211,17 @@
                 <artifactId>org.restlet.ext.jackson</artifactId>
                 <version>${restlet-version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.4.4</version>
+            </dependency>
             <!-- JSON -->
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>1.1</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
@@ -278,7 +307,7 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-          
+
             <dependency>
                 <groupId>com.google.gwt.gwtmockito</groupId>
                 <artifactId>gwtmockito</artifactId>
@@ -619,7 +648,7 @@
     </build>
 
     <profiles>
-       <profile>
+        <profile>
             <activation>
                 <property>
                     <name>generateSource</name>
