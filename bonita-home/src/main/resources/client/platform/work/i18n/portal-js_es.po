@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2015-12-11 03:07-0500\n"
+"PO-Revision-Date: 2016-01-12 05:07-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -40,6 +40,10 @@ msgstr "Nombre del actor"
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "Actores"
+
+#: main/common/services/i18n.js:111
+msgid "Actors must be resolved before enabling the Process."
+msgstr "Los actores deben resolverse antes de activar el proceso."
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -137,7 +141,7 @@ msgstr "No se puede cargar el archivo"
 
 #: main/common/services/i18n.js:93
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr ""
+msgstr "Caso: {{caseId}} - Proceso: {{processName}} ({{processVersion}})"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -177,7 +181,7 @@ msgstr "Haga clic aquí para elegir tu archivo. Archivo XML (.xml)"
 msgid "Close"
 msgstr "Cerrar"
 
-#: table-settings\tableSettings.tpl.html:25
+#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "Selección de columnas"
 
@@ -197,13 +201,13 @@ msgstr "Estado de la configuración"
 msgid "Confirm delete?"
 msgstr "¿Confirmar borrado?"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "Las definiciones de conector deben resolverse antes de activar el proceso."
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "Conectores"
+
+#: main/common/services/i18n.js:112
+msgid "Connectors must be resolved before enabling the Process."
+msgstr "Los conectores deben resolverse antes de activar el proceso."
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -290,10 +294,6 @@ msgstr "Añada un nuevo nombre de categoría y presione la tecla \"Enter\" para 
 #: main/common/services/i18n.js:102
 msgid "Enter the user to start the case for..."
 msgstr "Introduzca el usuario para el cual iniciar el caso..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "La asignación de actores debe resolverse antes de activar el proceso."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
@@ -395,7 +395,7 @@ msgstr "Importar"
 msgid "Import an application"
 msgstr "Importar una aplicación"
 
-#: table-settings\tableSettings.tpl.html:13
+#: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr "Elementos por página"
 
@@ -683,8 +683,8 @@ msgstr "Estado de la importación"
 msgid "Successfully updated categories"
 msgstr "Categorías actualizadas correctamente"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr "Configuración de la tabla"
 
@@ -707,7 +707,7 @@ msgstr "El Dato de Negocio:  [ {} ] utiliza Objetos de Negocio que no están def
 
 #: main/common/services/i18n.js:122
 msgid "The case {{caseId}} has been started successfully."
-msgstr ""
+msgstr "El caso {{caseId}} se ha iniciado con éxito."
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
@@ -726,8 +726,8 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "El caso eliminado se eliminará permanentemente del histórico."
 
 #: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "Los siguientes mapeos de formulario no estan determinados: [{}]"
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr "No se han resuelto las siguientes asignaciones de formulario: [{}]. Deben ser resuelta antes de activar el proceso."
 
 #: main/common/services/i18n.js:109
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
@@ -735,7 +735,7 @@ msgstr "El nombre de la URL debe comenzar con custompage_ seguido de sólo carac
 
 #: main/common/services/i18n.js:121
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr ""
+msgstr "Las palabras 'content', 'API' y 'theme' están reservadas para uso interno. No debe utilizarse en la URL de una página o en una aplicación."
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -866,7 +866,7 @@ msgstr "Debe agregar una página antes de que poder hacer referencia en un menú
 
 #: main/common/services/i18n.js:107
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
-msgstr ""
+msgstr "Error de estructura del archivo Zip. Verifica que el archivo .zip contiene un page.properties bien formado así como el index.html o el archivo Index.groovy. Para obtener más información, consulta la documentación o el ejemplo en la página readme (disponible en la lista de páginas personalizadas)"
 
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "an Application"

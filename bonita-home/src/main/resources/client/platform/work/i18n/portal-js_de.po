@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
-"PO-Revision-Date: 2015-12-11 03:08-0500\n"
+"PO-Revision-Date: 2016-01-12 05:14-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -40,6 +40,10 @@ msgstr "Name des Akteurs"
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "Akteure"
+
+#: main/common/services/i18n.js:111
+msgid "Actors must be resolved before enabling the Process."
+msgstr ""
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -177,7 +181,7 @@ msgstr "Klicken Sie hier, um Ihre Datei auszuwählen. XML-Datei (.xml)"
 msgid "Close"
 msgstr "Schließen"
 
-#: table-settings\tableSettings.tpl.html:25
+#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr ""
 
@@ -197,13 +201,13 @@ msgstr "Konfigurationsstatus"
 msgid "Confirm delete?"
 msgstr "Löschen bestätigen?"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "Konnektor-Definitionen müssen vor dem Aktivieren des Prozesses gelöst werden."
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "Konnektoren"
+
+#: main/common/services/i18n.js:112
+msgid "Connectors must be resolved before enabling the Process."
+msgstr ""
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -290,10 +294,6 @@ msgstr ""
 #: main/common/services/i18n.js:102
 msgid "Enter the user to start the case for..."
 msgstr "Geben Sie den Benutzer ein, um den Fall zu starten für..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "Entitätsmapping muss vor dem Aktivieren des Prozesses gelöst werden."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
@@ -395,7 +395,7 @@ msgstr "Importieren"
 msgid "Import an application"
 msgstr "Importieren einer Anwendung"
 
-#: table-settings\tableSettings.tpl.html:13
+#: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr ""
 
@@ -683,8 +683,8 @@ msgstr "Status des Imports"
 msgid "Successfully updated categories"
 msgstr "Erfolgreich aktualisierte Kategorien"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr ""
 
@@ -726,7 +726,7 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Der gelöschte Fall wird dauerhaft aus den Archiven gelöscht."
 
 #: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
 msgstr ""
 
 #: main/common/services/i18n.js:109

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-12-11 03:07-0500\n"
+"POT-Creation-Date: 2016-01-12 01:03+0100\n"
+"PO-Revision-Date: 2016-01-12 05:07-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -829,8 +829,8 @@ msgstr "Título dinámico"
 msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
-msgid "Display the case form"
-msgstr "Mostrar el formulario del caso"
+msgid "Display the case overview"
+msgstr ""
 
 msgid "Do it"
 msgstr "hacer"
@@ -1040,13 +1040,13 @@ msgid "Error when updating user"
 msgstr "Ha ocurrido un error al actualizar el usuario"
 
 msgid "Error while trying to execute the task."
-msgstr ""
+msgstr "Error al intentar ejecutar la tarea."
 
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar ejecutar la tarea. Falta información obligatoria (contrato incompleto)."
 
 msgid "Error while trying to start the case."
-msgstr ""
+msgstr "Error al intentar iniciar el caso."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar iniciar un caso. Falta información obligatoria (contrato incompleto)."
@@ -1478,6 +1478,12 @@ msgstr "No hay descripción."
 
 msgid "No opened task"
 msgstr "No es una tarea abierta"
+
+msgid "No overview page has been defined for this process"
+msgstr ""
+
+msgid "No overview page has been defined for this process."
+msgstr ""
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No se ha recibido respuesta todavía, pero la operación en segundo plano aun esté en curso. Espere unos segundos y luego vuelva a refrescar la página."
