@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
-"PO-Revision-Date: 2015-12-11 03:09-0500\n"
+"PO-Revision-Date: 2016-01-12 05:15-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -40,6 +40,10 @@ msgstr "Nome attore"
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "Attori"
+
+#: main/common/services/i18n.js:111
+msgid "Actors must be resolved before enabling the Process."
+msgstr ""
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -177,7 +181,7 @@ msgstr "Clicca qui per scegliere il file XML (.xml)"
 msgid "Close"
 msgstr "Chiudi"
 
-#: table-settings\tableSettings.tpl.html:25
+#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "Selezione delle colonne"
 
@@ -197,13 +201,13 @@ msgstr "Stato della configurazione"
 msgid "Confirm delete?"
 msgstr "Vuoi davvero eliminare?"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "Le Definizioni di connettore devono essere risolti prima di attivare il processo."
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "Connettori"
+
+#: main/common/services/i18n.js:112
+msgid "Connectors must be resolved before enabling the Process."
+msgstr ""
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -290,10 +294,6 @@ msgstr "Immettere un nuovo nome per la categoria e premere \"Invio\" per creare 
 #: main/common/services/i18n.js:102
 msgid "Enter the user to start the case for..."
 msgstr "Selezionare l'utente per il quale si vuole iniziare un caso..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "I mapping delle entità devono essere risolti prima di attivare il processo."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
@@ -395,7 +395,7 @@ msgstr "Importa"
 msgid "Import an application"
 msgstr "Importare un'applicazione"
 
-#: table-settings\tableSettings.tpl.html:13
+#: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr "Elementi per pagina"
 
@@ -683,8 +683,8 @@ msgstr "Stato dell' importazione"
 msgid "Successfully updated categories"
 msgstr "Categorie aggiornato con successo"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr "Configurazioni della tabella"
 
@@ -726,8 +726,8 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Il caso eliminato verrà eliminato definitivamente dagli archivi."
 
 #: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "I seguenti form mapping non sono stati risolti: [{}]"
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr ""
 
 #: main/common/services/i18n.js:109
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."

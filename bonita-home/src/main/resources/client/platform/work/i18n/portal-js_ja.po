@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-12-16 08:53-0500\n"
+"PO-Revision-Date: 2016-01-12 05:17-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -40,6 +40,10 @@ msgstr "アクター名"
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "アクター"
+
+#: main/common/services/i18n.js:111
+msgid "Actors must be resolved before enabling the Process."
+msgstr "アクターは、プロセスを有効にする前に設定する必要があります。"
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -177,7 +181,7 @@ msgstr "XML ファイル (.xml) を選択するには、ここをクリックし
 msgid "Close"
 msgstr "閉じる"
 
-#: table-settings\tableSettings.tpl.html:25
+#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "列の選択"
 
@@ -197,13 +201,13 @@ msgstr "構成設定の状態"
 msgid "Confirm delete?"
 msgstr "削除していいですか？"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前に、コネクタの定義を解決する必要があります。"
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "コネクタ"
+
+#: main/common/services/i18n.js:112
+msgid "Connectors must be resolved before enabling the Process."
+msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -290,10 +294,6 @@ msgstr "新しいカテゴリ名を入力し、\"Enter\"キーを押して新し
 #: main/common/services/i18n.js:102
 msgid "Enter the user to start the case for..."
 msgstr "案件を開始するユーザーを入力..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にエンティティへの マッピングを解決する必要があります。"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
@@ -395,7 +395,7 @@ msgstr "インポート"
 msgid "Import an application"
 msgstr "アプリケーションをインポート"
 
-#: table-settings\tableSettings.tpl.html:13
+#: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
 
@@ -683,8 +683,8 @@ msgstr "インポートの状態"
 msgid "Successfully updated categories"
 msgstr "正常に更新されたカテゴリ"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr "テーブルの設定"
 
@@ -726,8 +726,8 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "削除された案件は、アーカイブから完全に削除されます。"
 
 #: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "次のフォームのマッピングは未解決です: [ {} ]"
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr "次のフォームのマッピングが設定されていません： [ {} ]。これらは、プロセスを有効にする前に設定する必要があります。"
 
 #: main/common/services/i18n.js:109
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
