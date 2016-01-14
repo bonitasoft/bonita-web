@@ -7,18 +7,18 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2015-12-16 08:53-0500\n"
+"PO-Revision-Date: 2016-01-14 12:02-0500\n"
 
-#: main/common/services/i18n.js:57
+#: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
 
-#: main/common/services/i18n.js:108
+#: main/common/services/i18n.js:109
 msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
 
@@ -40,6 +40,10 @@ msgstr "アクター名"
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "アクター"
+
+#: main/common/services/i18n.js:112
+msgid "Actors must be resolved before enabling the Process."
+msgstr "アクターは、プロセスを有効にする前に設定する必要があります。"
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -77,7 +81,7 @@ msgstr "最上位のメニューを追加します"
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "アプリケーションは、特定のユーザー プロファイル用にカスタマイズされた環境になり、利用者はビジネス データおよびビジネス プロセスを最も効率的な方法で利用できるようになります。"
 
-#: main/common/services/i18n.js:59
+#: main/common/services/i18n.js:60
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
@@ -93,6 +97,10 @@ msgstr "アプリケーション リスト"
 msgid "Apply"
 msgstr "適用"
 
+#: main/common/services/i18n.js:57
+msgid "Archived cases"
+msgstr "アーカイブされた案件"
+
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Available tasks"
 msgstr "応受援タスク"
@@ -105,11 +113,11 @@ msgstr "戻る"
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "そのページとプロファイルは、アプリケーションをインポートする前にポータルに既に読み込まれていなければなりません。"
 
-#: main/common/services/i18n.js:103
+#: main/common/services/i18n.js:104
 msgid "Can't import page or form to the process"
 msgstr "プロセスにページまたはフォームをインポートできません"
 
-#: main/common/services/i18n.js:120
+#: main/common/services/i18n.js:121
 msgid "Can't update expression content"
 msgstr "式のコンテンツを更新できません"
 
@@ -127,15 +135,15 @@ msgstr "式のコンテンツを更新できません"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: main/common/services/i18n.js:88
+#: main/common/services/i18n.js:89
 msgid "Cancelled, skipped instances"
 msgstr "キャンセル、スキップされたインスタンス"
 
-#: main/common/services/i18n.js:100
+#: main/common/services/i18n.js:101
 msgid "Cannot upload the file"
 msgstr "ファイルをアップロードできません"
 
-#: main/common/services/i18n.js:93
+#: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
 msgstr "案件番号: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
 
@@ -144,11 +152,11 @@ msgstr "案件番号: {{caseId}} - プロセス: {{processName}} ({{processVersi
 msgid "Case list"
 msgstr "案件リスト"
 
-#: main/common/services/i18n.js:117
+#: main/common/services/i18n.js:118
 msgid "Case overview"
 msgstr "案件概況"
 
-#: main/common/services/i18n.js:118
+#: main/common/services/i18n.js:119
 msgid "Case start"
 msgstr "案件の開始"
 
@@ -177,33 +185,33 @@ msgstr "XML ファイル (.xml) を選択するには、ここをクリックし
 msgid "Close"
 msgstr "閉じる"
 
-#: table-settings\tableSettings.tpl.html:25
+#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "列の選択"
 
-#: main/common/services/i18n.js:110
+#: main/common/services/i18n.js:111
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
 
-#: main/common/services/i18n.js:89
+#: main/common/services/i18n.js:90
 msgid "Completed instances"
 msgstr "完了したインスタンス"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
-msgstr "構成設定の状態"
+msgstr "設定状況"
 
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
 msgstr "削除していいですか？"
 
-#: main/common/services/i18n.js:112
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前に、コネクタの定義を解決する必要があります。"
-
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Connectors"
 msgstr "コネクタ"
+
+#: main/common/services/i18n.js:113
+msgid "Connectors must be resolved before enabling the Process."
+msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -256,7 +264,7 @@ msgstr "説明"
 msgid "Display name"
 msgstr "表示名"
 
-#: main/common/services/i18n.js:95
+#: main/common/services/i18n.js:96
 msgid "Drawing process..."
 msgstr "プロセス図を描画中 ..."
 
@@ -287,43 +295,39 @@ msgstr "終了日"
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 msgstr "新しいカテゴリ名を入力し、\"Enter\"キーを押して新しいカテゴリを作成したうえで、現在のプロセスにそれをアサインします。"
 
-#: main/common/services/i18n.js:102
+#: main/common/services/i18n.js:103
 msgid "Enter the user to start the case for..."
 msgstr "案件を開始するユーザーを入力..."
-
-#: main/common/services/i18n.js:111
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にエンティティへの マッピングを解決する必要があります。"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Error"
 msgstr "エラー"
 
-#: main/common/services/i18n.js:94
+#: main/common/services/i18n.js:95
 msgid "Error on drawing process!"
 msgstr "プロセス図の描画中にエラーが発生しました！"
 
-#: main/common/services/i18n.js:123
+#: main/common/services/i18n.js:124
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "案件を開始しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
 
-#: main/common/services/i18n.js:97
+#: main/common/services/i18n.js:98
 msgid "Error!"
 msgstr "エラー！"
 
-#: main/common/services/i18n.js:84
+#: main/common/services/i18n.js:85
 msgid "Error: value must be a boolean"
 msgstr "エラー: 値はブール値である必要があります"
 
-#: main/common/services/i18n.js:85
+#: main/common/services/i18n.js:86
 msgid "Error: value must be a double"
 msgstr "エラー: 値は double 型の値である必要があります"
 
-#: main/common/services/i18n.js:86
+#: main/common/services/i18n.js:87
 msgid "Error: value must be an integer"
 msgstr "エラー: 値は整数でなければなりません"
 
-#: main/common/services/i18n.js:91
+#: main/common/services/i18n.js:92
 msgid "Executing, completing, initializing instances"
 msgstr "実行中、完了中、インスタンスを初期化中"
 
@@ -336,7 +340,7 @@ msgstr "エクスポート"
 msgid "Export application"
 msgstr "アプリケーションをエクスポート"
 
-#: main/common/services/i18n.js:119
+#: main/common/services/i18n.js:120
 msgid "Expression content has been updated"
 msgstr "式のコンテンツが更新されました"
 
@@ -344,11 +348,11 @@ msgstr "式のコンテンツが更新されました"
 msgid "Failed Flow Nodes"
 msgstr "エラーのあったフロー ノード"
 
-#: main/common/services/i18n.js:90
+#: main/common/services/i18n.js:91
 msgid "Failed instances"
 msgstr "エラーのあったインスタンス"
 
-#: main/common/services/i18n.js:106
+#: main/common/services/i18n.js:107
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
 
@@ -363,7 +367,7 @@ msgstr "フィルター"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
 
-#: main/common/services/i18n.js:105
+#: main/common/services/i18n.js:106
 msgid "Form cannot be empty"
 msgstr "フォームは空にできません"
 
@@ -372,7 +376,7 @@ msgid "General"
 msgstr "全般"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:70 main/common/services/i18n.js:71
+#: main/common/services/i18n.js:71 main/common/services/i18n.js:72
 msgid "Groups"
 msgstr "グループ"
 
@@ -395,7 +399,7 @@ msgstr "インポート"
 msgid "Import an application"
 msgstr "アプリケーションをインポート"
 
-#: table-settings\tableSettings.tpl.html:13
+#: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
 
@@ -406,7 +410,7 @@ msgstr "レイアウト"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
-#: main/common/services/i18n.js:98
+#: main/common/services/i18n.js:99
 msgid "Loading..."
 msgstr "ロード中..."
 
@@ -428,11 +432,11 @@ msgid "Me"
 msgstr "自分"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:76
+#: main/common/services/i18n.js:77
 msgid "Memberships"
 msgstr "所属"
 
-#: main/common/services/i18n.js:77
+#: main/common/services/i18n.js:78
 msgid "Memberships mapped to {}"
 msgstr "{} にマップされたメンバーシップ"
 
@@ -454,7 +458,7 @@ msgstr "ナビゲーション"
 msgid "New"
 msgstr "新規"
 
-#: main/common/services/i18n.js:104
+#: main/common/services/i18n.js:105
 msgid "No Mapping"
 msgstr "マッピングなし"
 
@@ -467,7 +471,7 @@ msgstr "利用可能なアプリケーションはありません。"
 msgid "No cases to display"
 msgstr "表示する案件はありません"
 
-#: main/common/services/i18n.js:96
+#: main/common/services/i18n.js:97
 msgid "No data"
 msgstr "データがありません。"
 
@@ -491,6 +495,10 @@ msgstr "1 ページ メニュー"
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
 
+#: main/common/services/i18n.js:56
+msgid "Open cases"
+msgstr "進行中の案件"
+
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
 msgid "Page"
@@ -504,7 +512,7 @@ msgstr "ページ"
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: main/common/services/i18n.js:113
+#: main/common/services/i18n.js:114
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
 
@@ -536,7 +544,7 @@ msgstr "プロファイル"
 msgid "Profiles"
 msgstr "プロファイル"
 
-#: main/common/services/i18n.js:92
+#: main/common/services/i18n.js:93
 msgid "Ready, waiting instances"
 msgstr "インスタンス開始を待機中"
 
@@ -553,12 +561,12 @@ msgstr "削除"
 msgid "Remove all"
 msgstr "すべて削除"
 
-#: main/common/services/i18n.js:65
+#: main/common/services/i18n.js:66
 msgid "Reset"
 msgstr "リセット"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:73 main/common/services/i18n.js:74
+#: main/common/services/i18n.js:74 main/common/services/i18n.js:75
 msgid "Roles"
 msgstr "役割"
 
@@ -599,27 +607,27 @@ msgstr "検索キー 5"
 msgid "Search..."
 msgstr "検索..."
 
-#: main/common/services/i18n.js:78
+#: main/common/services/i18n.js:79
 msgid "Select a group..."
 msgstr "グループを選択..."
 
-#: main/common/services/i18n.js:79
+#: main/common/services/i18n.js:80
 msgid "Select a role..."
 msgstr "役割を選択..."
 
-#: main/common/services/i18n.js:63
+#: main/common/services/i18n.js:64
 msgid "Select all"
 msgstr "すべて選択"
 
-#: main/common/services/i18n.js:72
+#: main/common/services/i18n.js:73
 msgid "Select groups..."
 msgstr "グループを選択..."
 
-#: main/common/services/i18n.js:64
+#: main/common/services/i18n.js:65
 msgid "Select none"
 msgstr "選択を解除"
 
-#: main/common/services/i18n.js:75
+#: main/common/services/i18n.js:76
 msgid "Select roles..."
 msgstr "役割を選択..."
 
@@ -631,7 +639,7 @@ msgstr "アクターにアサインするエンティティ（ユーザー、グ
 msgid "Select the page"
 msgstr "ページを選択します"
 
-#: main/common/services/i18n.js:69
+#: main/common/services/i18n.js:70
 msgid "Select users..."
 msgstr "ユーザーを選択..."
 
@@ -679,21 +687,21 @@ msgstr "状態"
 msgid "Status of import"
 msgstr "インポートの状態"
 
-#: main/common/services/i18n.js:60
+#: main/common/services/i18n.js:61
 msgid "Successfully updated categories"
 msgstr "正常に更新されたカテゴリ"
 
-#: table-settings\tableSettings.tpl.html:5
-#: table-settings\tableSettings.tpl.html:9
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr "テーブルの設定"
 
-#: main/common/services/i18n.js:99
+#: main/common/services/i18n.js:100
 msgid "Technical error."
 msgstr "技術的なエラーが発生。"
 
 #: dist/features/admin/processes/details/menu.html:1
-#: main/common/services/i18n.js:116
+#: main/common/services/i18n.js:117
 msgid "The Process cannot be enabled"
 msgstr "プロセスを有効にすることができません"
 
@@ -701,11 +709,11 @@ msgstr "プロセスを有効にすることができません"
 msgid "The application"
 msgstr "アプリケーション"
 
-#: main/common/services/i18n.js:114
+#: main/common/services/i18n.js:115
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
 
-#: main/common/services/i18n.js:122
+#: main/common/services/i18n.js:123
 msgid "The case {{caseId}} has been started successfully."
 msgstr "案件番号： %caseId% が正常に開始されました。"
 
@@ -725,15 +733,15 @@ msgstr "削除された案件は完全に削除され、アーカイブには格
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "削除された案件は、アーカイブから完全に削除されます。"
 
-#: main/common/services/i18n.js:115
-msgid "The following form mappings are not resolved: [ {} ]"
-msgstr "次のフォームのマッピングは未解決です: [ {} ]"
+#: main/common/services/i18n.js:116
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr "次のフォームのマッピングが設定されていません： [ {} ]。これらは、プロセスを有効にする前に設定する必要があります。"
 
-#: main/common/services/i18n.js:109
+#: main/common/services/i18n.js:110
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
 
-#: main/common/services/i18n.js:121
+#: main/common/services/i18n.js:122
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
 
@@ -775,7 +783,7 @@ msgstr "これを行うには、次へ進む: "
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
 
-#: main/common/services/i18n.js:87
+#: main/common/services/i18n.js:88
 msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
 msgstr "この機能を使用するには、Bonita BPM Studio バージョン 6.4 以上でプロセスの新しいバージョンを作成し、その新しい .bar ファイルをポータルにインストールします。"
 
@@ -784,11 +792,11 @@ msgstr "この機能を使用するには、Bonita BPM Studio バージョン 6.
 msgid "Type"
 msgstr "タイプ"
 
-#: main/common/services/i18n.js:101
+#: main/common/services/i18n.js:102
 msgid "Type here to search for a user..."
 msgstr "ユーザーを検索するには、ここを入力..."
 
-#: main/common/services/i18n.js:66
+#: main/common/services/i18n.js:67
 msgid "Type here to search..."
 msgstr "検索キーワードをここで入力..."
 
@@ -819,11 +827,11 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:67
+#: main/common/services/i18n.js:68
 msgid "Users"
 msgstr "ユーザー"
 
-#: main/common/services/i18n.js:68
+#: main/common/services/i18n.js:69
 msgid "Users mapped to {}"
 msgstr "{} にマップされているユーザー"
 
@@ -864,7 +872,7 @@ msgstr "あなたは、アプリケーションをエクスポートしようと
 msgid "You must add a page before you can reference it in a menu."
 msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
 
-#: main/common/services/i18n.js:107
+#: main/common/services/i18n.js:108
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
 
@@ -932,31 +940,31 @@ msgstr "開始日を降順で並べ替える"
 msgid "will be permanently deleted."
 msgstr "恒久的に削除されます。"
 
-#: main/common/services/i18n.js:62
+#: main/common/services/i18n.js:63
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "マッピングの更新で {{nbErrors}} のエラーが発生しました"
 
-#: main/common/services/i18n.js:82
+#: main/common/services/i18n.js:83
 msgid "{{nbMapping}} Process manager mappings could not be updated"
 msgstr "{{nbMapping}} のプロセス管理者マッピングを更新できませんでした。"
 
-#: main/common/services/i18n.js:83
+#: main/common/services/i18n.js:84
 msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr "{{nbMapping}} のプロセス管理者マッピングが更新されました"
 
-#: main/common/services/i18n.js:58
+#: main/common/services/i18n.js:59
 msgid "{{nbOfDeletedCases}} cases have been deleted"
 msgstr "{{nbOfDeletedCases}} の案件が削除されました"
 
-#: main/common/services/i18n.js:61
+#: main/common/services/i18n.js:62
 msgid "{{nbSucess}} actor mapping updates succeeded"
 msgstr "{{nbSucess}} のアクターマッピングの更新に成功しました"
 
-#: main/common/services/i18n.js:80
+#: main/common/services/i18n.js:81
 msgid "{{role}} of {{group}}"
 msgstr "{{group}} の {{role}}"
 
-#: main/common/services/i18n.js:81
+#: main/common/services/i18n.js:82
 msgid "{{role}} of {{group}} has been created"
 msgstr "{{group}} の {{role}} が作成されました"
 
