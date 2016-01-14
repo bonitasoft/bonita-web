@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-12-11 03:07-0500\n"
+"POT-Creation-Date: 2016-01-12 01:03+0100\n"
+"PO-Revision-Date: 2016-01-14 05:09-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -137,7 +137,7 @@ msgid "%pageName% is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -224,7 +224,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "mapa de actores"
+msgstr "Mapeo de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -829,8 +829,8 @@ msgstr "Título dinámico"
 msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
-msgid "Display the case form"
-msgstr "Mostrar el formulario del caso"
+msgid "Display the case overview"
+msgstr ""
 
 msgid "Do it"
 msgstr "hacer"
@@ -908,7 +908,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activado"
+msgstr "Activar"
 
 msgid "Enable selected processes"
 msgstr "Activar procesos seleccionados"
@@ -989,7 +989,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Ingrese el código postal de este usuario"
+msgstr "Indique el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."
@@ -1040,13 +1040,13 @@ msgid "Error when updating user"
 msgstr "Ha ocurrido un error al actualizar el usuario"
 
 msgid "Error while trying to execute the task."
-msgstr ""
+msgstr "Error al intentar ejecutar la tarea."
 
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar ejecutar la tarea. Falta información obligatoria (contrato incompleto)."
 
 msgid "Error while trying to start the case."
-msgstr ""
+msgstr "Error al intentar iniciar el caso."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Error al intentar iniciar un caso. Falta información obligatoria (contrato incompleto)."
@@ -1479,6 +1479,12 @@ msgstr "No hay descripción."
 msgid "No opened task"
 msgstr "No es una tarea abierta"
 
+msgid "No overview page has been defined for this process"
+msgstr ""
+
+msgid "No overview page has been defined for this process."
+msgstr ""
+
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "No se ha recibido respuesta todavía, pero la operación en segundo plano aun esté en curso. Espere unos segundos y luego vuelva a refrescar la página."
 
@@ -1695,7 +1701,7 @@ msgid "Profile"
 msgstr "Perfil"
 
 msgid "Profiles"
-msgstr "Privilegios"
+msgstr "Perfiles"
 
 msgid "RESOLVED"
 msgstr "RESUELTO"
@@ -1839,7 +1845,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -2445,7 +2451,7 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 msgid "Version of the process"
 msgstr "Versión del proceso"

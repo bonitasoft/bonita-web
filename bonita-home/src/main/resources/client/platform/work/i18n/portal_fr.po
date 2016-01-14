@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 03:01+0100\n"
-"PO-Revision-Date: 2015-12-11 03:06-0500\n"
+"POT-Creation-Date: 2016-01-12 01:03+0100\n"
+"PO-Revision-Date: 2016-01-14 05:00-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -371,10 +371,10 @@ msgid "An error has occurred when deploying Business Data Model."
 msgstr "Une erreur est survenue au déploiement du Modèle de Données Métier."
 
 msgid "An error occurred while creating a definition"
-msgstr "Une erreur s'est produite lors de la création d'une définition"
+msgstr "Une erreur s'est produite à la création d'une définition"
 
 msgid "An error occurred while deleting an item with the id %id%"
-msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'id est %id%"
+msgstr "Une erreur s'est produite à la suppression d'un élément dont l'id est %id%"
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -446,7 +446,7 @@ msgid "BPM services"
 msgstr "Services BPM"
 
 msgid "Back"
-msgstr "Précédent"
+msgstr "Retour"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -829,8 +829,8 @@ msgstr "Nom affiché"
 msgid "Display tasks I have done"
 msgstr "Tâche que j'ai effectuée"
 
-msgid "Display the case form"
-msgstr "Afficher le formulaire du cas"
+msgid "Display the case overview"
+msgstr ""
 
 msgid "Do it"
 msgstr "Faire"
@@ -1160,7 +1160,7 @@ msgid "Human Task"
 msgstr "Tâche humaine"
 
 msgid "Human task"
-msgstr "Tâche humaine"
+msgstr ""
 
 msgid "ID"
 msgstr "Id"
@@ -1318,7 +1318,7 @@ msgid "Logout"
 msgstr "Déconnexion"
 
 msgid "Look and Feel"
-msgstr "Look and Feel"
+msgstr ""
 
 msgid "Loop activity"
 msgstr "Activité de boucle"
@@ -1479,6 +1479,12 @@ msgstr "Aucune description disponible."
 msgid "No opened task"
 msgstr "Aucune tâche ouverte"
 
+msgid "No overview page has been defined for this process"
+msgstr ""
+
+msgid "No overview page has been defined for this process."
+msgstr ""
+
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "Aucune réponse reçue pour l'instant, mais l'opération est peut-être toujours en cours. Veuillez patienter quelques secondes avant de recharger la page."
 
@@ -1557,7 +1563,7 @@ msgstr "Oups... Cet item n'est plus disponible. \n"
 " Vous allez être redirigé."
 
 msgid "Overview"
-msgstr "Aperçu"
+msgstr "Page de synthèse"
 
 msgid "Page"
 msgstr "Page"
@@ -1875,7 +1881,7 @@ msgid "Settings"
 msgstr "Paramètres"
 
 msgid "Show all profiles of portal"
-msgstr "Voir tous les profils du Bonita BPM Portal"
+msgstr "Voir tous les profils du portail"
 
 msgid "Show more details about this process"
 msgstr "Afficher plus d'informations sur ce processus"
@@ -1929,7 +1935,7 @@ msgid "Start an instance of process %app_name%"
 msgstr "Démarrer une instance de processus %app_name%"
 
 msgid "Start date"
-msgstr "Débuté le"
+msgstr "Date de début"
 
 msgid "Start this process"
 msgstr "Démarrer ce processus"
@@ -2547,7 +2553,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr "tâche humaine"
+msgstr ""
 
 msgid "import/export organization"
 msgstr "importer/exporter l'organisation"
