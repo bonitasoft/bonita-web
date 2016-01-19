@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-01-12 04:58-0500\n"
+"PO-Revision-Date: 2016-01-18 10:47-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -43,7 +43,7 @@ msgstr "Acteurs"
 
 #: main/common/services/i18n.js:111
 msgid "Actors must be resolved before enabling the Process."
-msgstr ""
+msgstr "Les acteurs doivent être résolus avant d'activer le processus."
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -207,7 +207,7 @@ msgstr "Connecteurs"
 
 #: main/common/services/i18n.js:112
 msgid "Connectors must be resolved before enabling the Process."
-msgstr ""
+msgstr "Les connecteurs doivent être résolus avant d'activer le processus."
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -727,7 +727,7 @@ msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 #: main/common/services/i18n.js:115
 msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
-msgstr ""
+msgstr "Les mapping de formulaire suivant ne sont pas résolus: [ {} ]. Ils doivent être résolus avec d'activer le processus."
 
 #: main/common/services/i18n.js:109
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
@@ -798,7 +798,7 @@ msgstr "Rechercher..."
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/applications/import-application.html:1
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
