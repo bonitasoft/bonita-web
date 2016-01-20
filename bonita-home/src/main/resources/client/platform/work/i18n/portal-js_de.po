@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
-"PO-Revision-Date: 2016-01-12 05:14-0500\n"
+"PO-Revision-Date: 2016-01-19 06:18-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -183,7 +183,7 @@ msgstr "Schließen"
 
 #: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr ""
+msgstr "Spalten-Auswahl"
 
 #: main/common/services/i18n.js:110
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
@@ -397,7 +397,7 @@ msgstr "Importieren einer Anwendung"
 
 #: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr ""
+msgstr "Elemente pro Seite"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1

@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-01-18 10:47-0500\n"
+"PO-Revision-Date: 2016-01-19 06:00-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -43,7 +43,7 @@ msgstr "Acteurs"
 
 #: main/common/services/i18n.js:111
 msgid "Actors must be resolved before enabling the Process."
-msgstr "Les acteurs doivent être résolus avant d'activer le processus."
+msgstr "Tous les acteurs doivent être associés à des entités de l'organisation pour que le processus puisse être activé."
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -71,7 +71,7 @@ msgstr "Ajouter une page"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Add pages in Navigation"
-msgstr "Ajouter des pages à la navigation"
+msgstr "Ajoutez des options de menu en cliquant sur \"+\" dans la navigation."
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Add top-level menu"
@@ -133,7 +133,7 @@ msgstr "Annuler"
 
 #: main/common/services/i18n.js:88
 msgid "Cancelled, skipped instances"
-msgstr "Instances en état cancelled ou skipped (passées)"
+msgstr ""
 
 #: main/common/services/i18n.js:100
 msgid "Cannot upload the file"
@@ -154,7 +154,7 @@ msgstr "Page de synthèse du cas"
 
 #: main/common/services/i18n.js:118
 msgid "Case start"
-msgstr "Démarrage d'un cas"
+msgstr ""
 
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 msgid "Case state"
@@ -191,7 +191,7 @@ msgstr "Échec de compilation. Vérifiez que le fichier Index.groovy implémente
 
 #: main/common/services/i18n.js:89
 msgid "Completed instances"
-msgstr "Instances en état completed (faites)"
+msgstr ""
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
@@ -207,7 +207,7 @@ msgstr "Connecteurs"
 
 #: main/common/services/i18n.js:112
 msgid "Connectors must be resolved before enabling the Process."
-msgstr "Les connecteurs doivent être résolus avant d'activer le processus."
+msgstr "Tous les connecteurs doivent avoir une implémentation pour que le processus puisse être activé."
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Create a new membership"
@@ -325,7 +325,7 @@ msgstr "Erreur : la valeur doit être un entier"
 
 #: main/common/services/i18n.js:91
 msgid "Executing, completing, initializing instances"
-msgstr "Instances en état executing, completing, initializing"
+msgstr ""
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/export-application.html:1
@@ -346,7 +346,7 @@ msgstr "Flow nodes en erreur"
 
 #: main/common/services/i18n.js:90
 msgid "Failed instances"
-msgstr "Instances en état failed (en échec)"
+msgstr ""
 
 #: main/common/services/i18n.js:106
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
@@ -357,7 +357,7 @@ msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caract
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Filters"
-msgstr "Filtres"
+msgstr ""
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
@@ -397,7 +397,7 @@ msgstr "Importer une application"
 
 #: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Éléments par page"
+msgstr "Eléments par page"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -416,7 +416,7 @@ msgstr "Look & Feel"
 
 #: main/common/filters/date-parser.js:39
 msgid "MM/dd/yyyy h:mm a"
-msgstr "dd/MM/yyyy HH:mm"
+msgstr ""
 
 #: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Manage Categories"
@@ -538,7 +538,7 @@ msgstr "Profils"
 
 #: main/common/services/i18n.js:92
 msgid "Ready, waiting instances"
-msgstr "Instances en état ready, waiting (en attente)"
+msgstr ""
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -686,7 +686,7 @@ msgstr "Les catégories ont été mises à jour avec succès"
 #: table-settings/tableSettings.tpl.html:5
 #: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
-msgstr "Paramètres du tableau"
+msgstr ""
 
 #: main/common/services/i18n.js:99
 msgid "Technical error."
@@ -727,7 +727,7 @@ msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 #: main/common/services/i18n.js:115
 msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
-msgstr "Les mapping de formulaire suivant ne sont pas résolus: [ {} ]. Ils doivent être résolus avec d'activer le processus."
+msgstr "Les éléments suivants ne sont associés à aucun formulaire : [ {} ]. Ils doivent être associés pour que le processus puisse être activé."
 
 #: main/common/services/i18n.js:109
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
@@ -979,5 +979,5 @@ msgstr "{} de {}"
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "{}-{} of {}"
-msgstr "{}-{} de {}"
+msgstr ""
 
