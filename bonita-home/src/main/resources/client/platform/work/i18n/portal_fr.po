@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-01-19 06:00-0500\n"
+"PO-Revision-Date: 2016-01-20 03:19-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -533,7 +533,7 @@ msgid "Case id: "
 msgstr "Numéro de cas: "
 
 msgid "Case variables"
-msgstr ""
+msgstr "Variable de cas"
 
 msgid "Cases"
 msgstr "Cas"
@@ -845,7 +845,7 @@ msgid "Done"
 msgstr "Fait"
 
 msgid "Done %task_last_update% by %executed_by%"
-msgstr ""
+msgstr "Fait le %task_last_update% par %executed_by%"
 
 msgid "Done by"
 msgstr "Faite par"
@@ -872,7 +872,7 @@ msgid "Edit a role"
 msgstr "Modifier ce rôle"
 
 msgid "Edit a user"
-msgstr ""
+msgstr "Mise à jour de l'utilisateur"
 
 msgid "Edit case variable"
 msgstr "Modifier la variable du cas"
@@ -896,7 +896,7 @@ msgid "Edit this value"
 msgstr "Modifier cette valeur"
 
 msgid "Edit user"
-msgstr ""
+msgstr "Mise à jour de l'utilisateur"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "Modifier les utilisateurs de l'acteur %actor_name%"
@@ -986,7 +986,7 @@ msgid "Enter the title of this user"
 msgstr "Entrez le titre de cet utilisateur"
 
 msgid "Enter the username for this user"
-msgstr ""
+msgstr "Entrez le nom d'utilisateur pour cet utilisateur"
 
 msgid "Enter the zip code of this user"
 msgstr "Entrez le code postal de cet utilisateur"
@@ -1207,7 +1207,7 @@ msgid "Import/Export"
 msgstr "Importer/Exporter"
 
 msgid "In case of conflict, priority is given to the imported file"
-msgstr ""
+msgstr "En cas de conflit, la priorité est donnée au fichier importé"
 
 msgid "Inactive"
 msgstr "Désactivés"
@@ -1336,10 +1336,10 @@ msgid "MM/dd/yyyy"
 msgstr "dd/MM/yyyy"
 
 msgid "MM/dd/yyyy h:mm a"
-msgstr ""
+msgstr "dd/MM/yyyy HH:mm"
 
 msgid "MM/dd/yyyy h:mm:ss a"
-msgstr ""
+msgstr "dd/mm/yyyy hh:MM:ss"
 
 msgid "MMMM dd, yyyy"
 msgstr "dd/MM/yyyy"
@@ -1450,7 +1450,7 @@ msgid "Name of the role"
 msgstr "Nom du rôle"
 
 msgid "Name of the user who executed this task"
-msgstr ""
+msgstr "Nom de l'utilisateur qui a exécuté cette tâche"
 
 msgid "Name of the user who started this case"
 msgstr "Nom de l'utilisateur qui a démarré le cas"
@@ -1489,7 +1489,7 @@ msgid "No response has been received yet, but the background operation might sti
 msgstr "Aucune réponse reçue pour l'instant, mais l'opération est peut-être toujours en cours. Veuillez patienter quelques secondes avant de recharger la page."
 
 msgid "No task done"
-msgstr ""
+msgstr "Aucune tâche exécutée"
 
 msgid "Normal"
 msgstr "Normale"
@@ -1728,7 +1728,7 @@ msgid "Reports"
 msgstr "Rapports"
 
 msgid "Request parameter \"id\" must be set."
-msgstr ""
+msgstr "Le paramètre de requête \"id\" doit être défini."
 
 msgid "Resolved"
 msgstr "Résolue"
@@ -1875,7 +1875,7 @@ msgid "Services will resume. Users will be able to log in.\n"
 msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\n"
 
 msgid "Session expired. Please log in again."
-msgstr ""
+msgstr "La session a expiré. Connectez-vous à nouveau."
 
 msgid "Settings"
 msgstr "Paramètres"
@@ -2167,7 +2167,7 @@ msgid "The page you try to display is out of range."
 msgstr "La page que vous voulez accéder n'est pas disponible."
 
 msgid "The platform already exist !"
-msgstr ""
+msgstr "La plate-forme existe déjà !"
 
 msgid "The priority of the task"
 msgstr "La priorité de la tâche"
@@ -2400,7 +2400,7 @@ msgid "Update the user"
 msgstr "Mise à jour de l'utilisateur"
 
 msgid "Update this page using the defined search query"
-msgstr ""
+msgstr "Mettre à jour cette page en utilisant le terme cherché"
 
 msgid "Update this role"
 msgstr "Mettre à jour ce rôle"
