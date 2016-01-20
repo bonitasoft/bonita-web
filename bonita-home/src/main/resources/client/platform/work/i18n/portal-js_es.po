@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-01-12 05:07-0500\n"
+"PO-Revision-Date: 2016-01-19 06:12-0500\n"
 
 #: main/common/services/i18n.js:57
 msgid "1 case has been deleted"
@@ -534,7 +534,7 @@ msgstr "Perfil"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Profiles"
-msgstr "Perfiles"
+msgstr "Privilegios"
 
 #: main/common/services/i18n.js:92
 msgid "Ready, waiting instances"
