@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2016-01-08 03:37-0500\n"
+"PO-Revision-Date: 2016-01-19 06:12-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -114,7 +114,7 @@ msgstr "Ajouter une page"
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-addCustomMenuModal.html:41
 msgid "Add pages in Navigation"
-msgstr "Ajouter des pages à la navigation"
+msgstr "Ajoutez des options de menu en cliquant sur \"+\" dans la navigation."
 
 #: bonita-portal-js/main/features/admin/applications/details/menubuilder-menuCreator.html:7
 msgid "Add top-level menu"
@@ -599,7 +599,7 @@ msgstr "Erreur interne du serveur."
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr "Éléments par page"
+msgstr "Eléments par page"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"
@@ -1206,7 +1206,7 @@ msgstr "Rechercher..."
 #: bonita-portal-js/main/features/admin/applications/import-application.html:33
 #: bonita-portal-js/main/features/admin/applications/import-application.html:38
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: main/features/admin/license/monitoring/license-monitoring.html:11
 msgid "Unable to log in.\n"

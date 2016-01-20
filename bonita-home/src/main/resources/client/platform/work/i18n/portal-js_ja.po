@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2016-01-08 04:04-0500\n"
+"PO-Revision-Date: 2016-01-19 06:37-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -468,7 +468,7 @@ msgid "Execute"
 msgstr "実行"
 
 msgid "Executing, completing, initializing instances"
-msgstr "実行中、完了中、インスタンスを初期化中"
+msgstr "実行中, 完了中, インスタンスを初期化中"
 
 msgid "Expecting a {} value."
 msgstr "{} の値を期待しています。"
@@ -490,10 +490,10 @@ msgstr "エラー"
 
 #: bonita-portal-js/main/features/admin/cases/list/cases-list.html:36
 msgid "Failed Flow Nodes"
-msgstr "エラーのあったフロー ノード"
+msgstr "作業中にエラー発生"
 
 msgid "Failed instances"
-msgstr "エラーのあったインスタンス"
+msgstr "失敗したインスタンス"
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
@@ -530,7 +530,7 @@ msgstr "フォーム一覧"
 
 #: main/features/admin/processes/details/forms/forms.html:2
 msgid "Forms"
-msgstr "フォーム"
+msgstr "6.x フォーム"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"
@@ -828,7 +828,7 @@ msgstr "有効なプロセス"
 
 #: main/features/admin/monitoring/monitoring.html:83
 msgid "Process list"
-msgstr "プロセス一覧"
+msgstr "プロセス リスト"
 
 msgid "Process manager mapping {{mappingName}} could not be deleted"
 msgstr "プロセス管理者のマッピング {{mappingName}} を削除できませんでした"
@@ -1317,7 +1317,7 @@ msgid "View process design"
 msgstr "プロセス図を表示"
 
 msgid "Wait ..."
-msgstr "待機 ..."
+msgstr "滞留 ..."
 
 #: bonita-portal-js/main/features/admin/applications/export-application.html:5
 msgid "When you export an application, pages and profiles are not exported in the file."
