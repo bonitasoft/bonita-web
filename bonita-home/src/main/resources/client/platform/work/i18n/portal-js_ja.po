@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-12-16 08:56-0500\n"
+"PO-Revision-Date: 2016-01-19 06:34-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -530,7 +530,7 @@ msgstr "フォーム一覧"
 
 #: main/features/admin/processes/details/forms/forms.html:2
 msgid "Forms"
-msgstr "フォーム"
+msgstr "6.x フォーム"
 
 #: bonita-portal-js/main/features/admin/processes/details/information.html:2
 msgid "General"

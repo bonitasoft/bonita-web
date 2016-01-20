@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-10 02:03+0200\n"
-"PO-Revision-Date: 2015-11-30 04:28-0500\n"
+"PO-Revision-Date: 2016-01-19 06:22-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -291,7 +291,7 @@ msgstr "Spalten"
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
-msgstr ""
+msgstr "Spalten-Auswahl"
 
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Fehler bei der Kompilierung. Stellen Sie sicher, dass die Index.groovy-Klasse die PageController-Schnittstelle implementiert."
@@ -599,7 +599,7 @@ msgstr ""
 
 #: bonita-js-components/src/table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
-msgstr ""
+msgstr "Elemente pro Seite"
 
 #: main/features/admin/processes/details/forms/forms-list.html:10
 msgid "Last update"
