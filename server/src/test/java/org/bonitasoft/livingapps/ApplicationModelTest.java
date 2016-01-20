@@ -194,4 +194,12 @@ public class ApplicationModelTest {
         assertThat(model.getCustomPage("pageToken").getId()).isEqualTo(1);
     }
 
+    @Test
+    public void should_check_that_application_has_a_profile_mapped_to_it() throws Exception {
+        application.setProfileId(1L);
+        assertThat(model.hasProfileMapped()).isEqualTo(true);
+        
+        application.setProfileId(null);
+        assertThat(model.hasProfileMapped()).isEqualTo(false);
+    }
 }
