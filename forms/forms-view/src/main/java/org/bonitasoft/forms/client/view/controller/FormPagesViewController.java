@@ -1390,7 +1390,7 @@ public class FormPagesViewController {
         } else {
             defaultConfirmationMessage = FormsResourceBundle.getMessages().submissionConfirmationMessage();
         }
-        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, createConfirmationPageHandler(defaultConfirmationMessage));
+        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, widgetValues, createConfirmationPageHandler(defaultConfirmationMessage));
     }
 
     private ConfirmationPageHandler createConfirmationPageHandler(final String defaultConfirmationMessage) {
