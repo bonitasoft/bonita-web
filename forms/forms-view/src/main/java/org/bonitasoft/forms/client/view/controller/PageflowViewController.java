@@ -404,7 +404,7 @@ public class PageflowViewController {
     }
 
     protected void redirectToConfirmationPage(final ConfirmationPageHandler confirmationPageHandler) {
-        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, confirmationPageHandler);
+        formsServiceAsync.getFormConfirmationTemplate(formID, urlContext, null, confirmationPageHandler);
     }
 
     protected ConfirmationPageHandler createConfirmationPageHandler() {

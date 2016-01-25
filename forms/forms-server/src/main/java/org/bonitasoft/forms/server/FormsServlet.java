@@ -537,7 +537,9 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
      * {@inheritDoc}
      */
     @Override
-    public ReducedHtmlTemplate getFormConfirmationTemplate(final String formID, final Map<String, Object> urlContext) throws RPCException,
+    public ReducedHtmlTemplate getFormConfirmationTemplate(final String formID, final Map<String, Object> urlContext,
+            final Map<String, FormFieldValue> fieldValues)
+            throws RPCException,
             SessionTimeoutException {
         final HttpServletRequest request = getThreadLocalRequest();
         final String localeStr = localeUtil.getLocale(request);
@@ -558,6 +560,7 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
             setClassloader(formServiceProvider, context);
             final Map<String, Serializable> transientDataContext = getFormTransientDataContext(formServiceProvider, formID, context);
             context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
+            context.put(FormServiceProviderUtil.FIELD_VALUES, fieldValues);
             htmlTemplate.setDynamicMessage((String) formServiceProvider.resolveExpression(htmlTemplate.getDynamicMessageExpression(), context));
             return htmlTemplate.getReducedHtmlTemplate();
         } catch (final NoCredentialsInSessionException e) {

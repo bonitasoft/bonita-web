@@ -159,14 +159,16 @@ public interface FormsService extends RemoteService {
      * Retrieve the confirmation page for a form
      *
      * @param formID
-     *            the form id
+     *        the form id
      * @param urlContext
-     *            Map containing the URL parameters
+     *        Map containing the URL parameters
+     * @param fields a map of the fields ids and values
      * @return an {@link ReducedHtmlTemplate} object representing the page flow confirmation page
      * @throws RPCException
      * @throws SessionTimeoutException
      */
-    ReducedHtmlTemplate getFormConfirmationTemplate(String formID, Map<String, Object> urlContext) throws RPCException, SessionTimeoutException;
+    ReducedHtmlTemplate getFormConfirmationTemplate(String formID, Map<String, Object> urlContext, Map<String, FormFieldValue> fields) throws RPCException,
+            SessionTimeoutException;
 
     /**
      * Retrieve the error page for a formID
