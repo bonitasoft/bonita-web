@@ -36,10 +36,11 @@ public class FileUploadServletTest {
         when(fileUploadServlet.getInitParameter(FileUploadServlet.RETURN_FULL_SERVER_PATH_PARAM)).thenReturn("false");
         fileUploadServlet.init();
 
-        final JSONObject jsonResponse = new JSONObject(fileUploadServlet.generateResponseJson(request, "originalFileName", uploadedFile));
+        final JSONObject jsonResponse = new JSONObject(fileUploadServlet.generateResponseJson(request, "originalFileName", "application/json", uploadedFile));
 
         assertThat(jsonResponse.getString(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE)).isEqualTo("originalFileName");
         assertThat(jsonResponse.getString(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE)).isEqualTo("uploadedFile.txt");
+        assertThat(jsonResponse.getString(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE)).isEqualTo("application/json");
     }
 
     @Test
