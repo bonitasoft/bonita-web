@@ -74,6 +74,10 @@ public class ApplicationModel {
         return false;
     }
 
+    public boolean hasProfileMapped() {
+        return application.getProfileId() != null;
+    }
+
     private List<Profile> getUserProfiles(final APISession session) {
         return profileApi.getProfilesForUser(
                 session.getUserId(),
