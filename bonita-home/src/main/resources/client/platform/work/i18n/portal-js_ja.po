@@ -97,6 +97,10 @@ msgstr "アプリケーション リスト"
 msgid "Apply"
 msgstr "適用"
 
+#: main/common/services/i18n.js:57
+msgid "Archived cases"
+msgstr "アーカイブされた案件"
+
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Available tasks"
 msgstr "応受援タスク"
@@ -490,6 +494,10 @@ msgstr "1 ページ メニュー"
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
+
+#: main/common/services/i18n.js:56
+msgid "Open cases"
+msgstr "進行中の案件"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1

@@ -97,6 +97,10 @@ msgstr "Lista de aplicaciones"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: main/common/services/i18n.js:57
+msgid "Archived cases"
+msgstr "Casos archivados"
+
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Available tasks"
 msgstr "tareas disponibles"
@@ -490,6 +494,10 @@ msgstr "Menú de una página"
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "Solo se muestran los casos de los procesos raiz en la siguiente tabla. No hay detalles de los casos iniciados por actividades de llamada."
+
+#: main/common/services/i18n.js:56
+msgid "Open cases"
+msgstr "Casos abiertos"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
