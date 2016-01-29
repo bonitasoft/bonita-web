@@ -61,6 +61,12 @@ public class ApplicationRouter {
             final ParsedRequest parsedRequest, final List<String> pathSegments) throws IOException,
             ApplicationPageNotFoundException, InstantiationException, IllegalAccessException, BonitaException, PageNotFoundException, CreationException {
         final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
+
+        if (!application.hasProfileMapped()) {
+            hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "No profile mapped to living application");
+            return;
+        }
+
         //If no page name, redirect to Home page
         if (parsedRequest.getPageToken() == null) {
             hsResponse.sendRedirect(application.getApplicationHomePage());

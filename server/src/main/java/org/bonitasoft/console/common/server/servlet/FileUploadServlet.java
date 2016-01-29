@@ -76,6 +76,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final String FILE_NAME_RESPONSE_ATTRIBUTE = "filename";
 
+    protected static final String CONTENT_TYPE_ATTRIBUTE = "contentType";
+
     public static final int MEGABYTE = 1048576;
 
     protected String[] supportedExtensionsList = new String[0];
@@ -127,7 +129,6 @@ public abstract class FileUploadServlet extends HttpServlet {
                 return;
             }
 
-
             final File targetDirectory = new File(uploadDirectoryPath);
             if (!targetDirectory.exists()) {
                 targetDirectory.mkdirs();
@@ -156,8 +157,6 @@ public abstract class FileUploadServlet extends HttpServlet {
 
                 final String fileName = item.getName();
 
-
-
                 // Check if extension is allowed
                 if (!isSupportedExtention(fileName)) {
                     outputMediaTypeError(response, responsePW);
@@ -177,7 +176,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 // Response
                 final String responseString;
                 if (JSON_CONTENT_TYPE.equals(responseContentType)) {
-                    responseString = generateResponseJson(request, fileName, uploadedFile);
+                    responseString = generateResponseJson(request, fileName, item.getContentType(), uploadedFile);
                 } else if (TEXT_CONTENT_TYPE.equals(responseContentType)) {
                     responseString = generateResponseString(request, fileName, uploadedFile);
                 } else {
@@ -234,7 +233,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         return responseString;
     }
 
-    protected String generateResponseJson(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
+    protected String generateResponseJson(final HttpServletRequest request, final String fileName, String contentType, final File uploadedFile) throws Exception {
         final Map<String, String> responseMap = new HashMap<String, String>();
         if (alsoReturnOriginalFilename) {
             responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
@@ -244,6 +243,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         } else {
             responseMap.put(TEMP_PATH_RESPONSE_ATTRIBUTE, uploadedFile.getName());
         }
+        responseMap.put(CONTENT_TYPE_ATTRIBUTE, contentType);
         return new JSONObject(responseMap).toString();
     }
 

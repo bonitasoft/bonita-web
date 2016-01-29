@@ -268,9 +268,11 @@ public abstract class ServletCall {
      *            The file to output
      */
     protected void output(final File file) {
-        try {
-            output(new FileInputStream(file));
+        try(InputStream stream = new FileInputStream(file)) {
+            output(stream);
         } catch (final FileNotFoundException e) {
+            throw new ServerException(e);
+        } catch (IOException e) {
             throw new ServerException(e);
         }
     }

@@ -76,6 +76,7 @@ public class ApplicationRouterTest {
 
         given(applicationModel.getApplicationHomePage()).willReturn("home/");
         given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
+        given(applicationModel.hasProfileMapped()).willReturn(true);
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
         given(hsRequest.getPathInfo()).willReturn("HumanResources");
@@ -107,6 +108,7 @@ public class ApplicationRouterTest {
         final File layoutFolder = new File("layout");
         final String customPageLayoutName = "custompage_layout";
         given(applicationModel.getApplicationLayoutName()).willReturn(customPageLayoutName);
+
         given(pageRenderer.getPageResourceProvider(customPageLayoutName, 1L)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(layoutFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
@@ -156,6 +158,17 @@ public class ApplicationRouterTest {
         verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
+    @Test
+    public void should_send_not_found_response_when_no_profile_is_mapped_to_application() throws Exception {
+        accessAuthorizedPage("HumanResources", "leavingRequests");
+        given(applicationModel.hasProfileMapped()).willReturn(false);
+
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_NOT_FOUND, "No profile mapped to living application");
+        verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
+    }
+
     private void accessAuthorizedPage(final String applicationToken, final String pageToken) throws Exception {
         accessPage(applicationToken, pageToken, true, true);
     }
@@ -171,8 +184,10 @@ public class ApplicationRouterTest {
     private void accessPage(final String applicationToken, final String pageToken, final boolean hasPage, final boolean isAuthorized) throws Exception {
         given(applicationModel.hasPage(pageToken)).willReturn(hasPage);
         given(applicationModel.authorize(apiSession)).willReturn(isAuthorized);
+        given(applicationModel.hasProfileMapped()).willReturn(true);
         given(applicationModelFactory.createApplicationModel(applicationToken)).willReturn(applicationModel);
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/" + applicationToken + "/" + pageToken + "/");
         given(hsRequest.getPathInfo()).willReturn("/" + applicationToken + "/" + pageToken + "/");
     }
+
 }

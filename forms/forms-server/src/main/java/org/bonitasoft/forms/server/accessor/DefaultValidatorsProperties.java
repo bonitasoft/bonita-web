@@ -17,6 +17,7 @@
 package org.bonitasoft.forms.server.accessor;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,8 +72,8 @@ public class DefaultValidatorsProperties {
     void loadProperties() {
         defaultProperties = new Properties();
         // Read properties file.
-        try {
-            defaultProperties.load(getClass().getClassLoader().getResourceAsStream(FORM_VALIDATORS_CONFIG_FILE_NAME));
+        try(InputStream stream = getClass().getClassLoader().getResourceAsStream(FORM_VALIDATORS_CONFIG_FILE_NAME)) {
+            defaultProperties.load(stream);
         } catch (final IOException e) {
             LOGGER.log(Level.WARNING, "default forms config file " + FORM_VALIDATORS_CONFIG_FILE_NAME + " is missing form the classpath");
         }
