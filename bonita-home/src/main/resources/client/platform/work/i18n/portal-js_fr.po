@@ -7,18 +7,18 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /7.2.x/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-01-20 03:19-0500\n"
+"PO-Revision-Date: 2016-01-26 10:20-0500\n"
 
-#: main/common/services/i18n.js:57
+#: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
 
-#: main/common/services/i18n.js:108
+#: main/common/services/i18n.js:109
 msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
 
@@ -41,7 +41,7 @@ msgstr "Nom de l'acteur"
 msgid "Actors"
 msgstr "Acteurs"
 
-#: main/common/services/i18n.js:111
+#: main/common/services/i18n.js:112
 msgid "Actors must be resolved before enabling the Process."
 msgstr "Tous les acteurs doivent être associés à des entités de l'organisation pour que le processus puisse être activé."
 
@@ -81,7 +81,7 @@ msgstr "Ajouter un menu "
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
 
-#: main/common/services/i18n.js:59
+#: main/common/services/i18n.js:60
 msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
@@ -97,6 +97,10 @@ msgstr "Liste des applications"
 msgid "Apply"
 msgstr "Appliquer"
 
+#: main/common/services/i18n.js:57
+msgid "Archived cases"
+msgstr "Cas archivés"
+
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Available tasks"
 msgstr "Tâches disponibles"
@@ -109,11 +113,11 @@ msgstr "Retour"
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
 msgstr "Avant d'importer une application, les pages et le profils utilisés doivent avoir été déployés dans le Portail."
 
-#: main/common/services/i18n.js:103
+#: main/common/services/i18n.js:104
 msgid "Can't import page or form to the process"
 msgstr "Impossible d'importer la page ou le formulaire dans le processus"
 
-#: main/common/services/i18n.js:120
+#: main/common/services/i18n.js:121
 msgid "Can't update expression content"
 msgstr "Impossible de mettre à jour le contenu de l'expression"
 
@@ -131,15 +135,15 @@ msgstr "Impossible de mettre à jour le contenu de l'expression"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: main/common/services/i18n.js:88
+#: main/common/services/i18n.js:89
 msgid "Cancelled, skipped instances"
 msgstr "Instances en état cancelled ou skipped (passées)"
 
-#: main/common/services/i18n.js:100
+#: main/common/services/i18n.js:101
 msgid "Cannot upload the file"
 msgstr "Impossible de charger le fichier"
 
-#: main/common/services/i18n.js:93
+#: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
 msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
 
@@ -148,11 +152,11 @@ msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
 msgid "Case list"
 msgstr "Liste des cas"
 
-#: main/common/services/i18n.js:117
+#: main/common/services/i18n.js:118
 msgid "Case overview"
 msgstr "Page de synthèse du cas"
 
-#: main/common/services/i18n.js:118
+#: main/common/services/i18n.js:119
 msgid "Case start"
 msgstr "Démarrage d'un cas"
 
@@ -185,11 +189,11 @@ msgstr "Fermer"
 msgid "Columns selection"
 msgstr "Sélection des colonnes"
 
-#: main/common/services/i18n.js:110
+#: main/common/services/i18n.js:111
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Échec de compilation. Vérifiez que le fichier Index.groovy implémente l'interface PageController."
 
-#: main/common/services/i18n.js:89
+#: main/common/services/i18n.js:90
 msgid "Completed instances"
 msgstr "Instances en état completed (faites)"
 
@@ -205,7 +209,7 @@ msgstr "Confirmer la suppression ?"
 msgid "Connectors"
 msgstr "Connecteurs"
 
-#: main/common/services/i18n.js:112
+#: main/common/services/i18n.js:113
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "Tous les connecteurs doivent avoir une implémentation pour que le processus puisse être activé."
 
@@ -260,7 +264,7 @@ msgstr "Description"
 msgid "Display name"
 msgstr "Nom affiché"
 
-#: main/common/services/i18n.js:95
+#: main/common/services/i18n.js:96
 msgid "Drawing process..."
 msgstr "Dessin du processus ..."
 
@@ -291,7 +295,7 @@ msgstr "Date de fin "
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 msgstr "Saisissez le nom de la nouvelle catégorie puis faites « Entrée » pour finaliser sa création et l'assigner au processus."
 
-#: main/common/services/i18n.js:102
+#: main/common/services/i18n.js:103
 msgid "Enter the user to start the case for..."
 msgstr "Saisissez le nom de l'utilisateur pour qui vous allez démarrer le cas..."
 
@@ -299,31 +303,31 @@ msgstr "Saisissez le nom de l'utilisateur pour qui vous allez démarrer le cas..
 msgid "Error"
 msgstr "Erreur"
 
-#: main/common/services/i18n.js:94
+#: main/common/services/i18n.js:95
 msgid "Error on drawing process!"
 msgstr "Erreur lors du dessin de processus !"
 
-#: main/common/services/i18n.js:123
+#: main/common/services/i18n.js:124
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erreur lors de l'exécution la tâche. Certaines informations requises sont manquantes (contrat non respecté)."
 
-#: main/common/services/i18n.js:97
+#: main/common/services/i18n.js:98
 msgid "Error!"
 msgstr "Erreur!"
 
-#: main/common/services/i18n.js:84
+#: main/common/services/i18n.js:85
 msgid "Error: value must be a boolean"
 msgstr "Erreur : la valeur doit être un booléen"
 
-#: main/common/services/i18n.js:85
+#: main/common/services/i18n.js:86
 msgid "Error: value must be a double"
 msgstr "Erreur : valeur doit être un double"
 
-#: main/common/services/i18n.js:86
+#: main/common/services/i18n.js:87
 msgid "Error: value must be an integer"
 msgstr "Erreur : la valeur doit être un entier"
 
-#: main/common/services/i18n.js:91
+#: main/common/services/i18n.js:92
 msgid "Executing, completing, initializing instances"
 msgstr "Instances en état executing, completing, initializing"
 
@@ -336,7 +340,7 @@ msgstr "Exporter"
 msgid "Export application"
 msgstr "Exporter l'application"
 
-#: main/common/services/i18n.js:119
+#: main/common/services/i18n.js:120
 msgid "Expression content has been updated"
 msgstr "Le contenu de l'expression a été mis à jour"
 
@@ -344,11 +348,11 @@ msgstr "Le contenu de l'expression a été mis à jour"
 msgid "Failed Flow Nodes"
 msgstr "Flow nodes en erreur"
 
-#: main/common/services/i18n.js:90
+#: main/common/services/i18n.js:91
 msgid "Failed instances"
 msgstr "Instances en état failed (en échec)"
 
-#: main/common/services/i18n.js:106
+#: main/common/services/i18n.js:107
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caractères"
 
@@ -363,7 +367,7 @@ msgstr "Filtres"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
 
-#: main/common/services/i18n.js:105
+#: main/common/services/i18n.js:106
 msgid "Form cannot be empty"
 msgstr "Un formulaire ne peut pas être vide"
 
@@ -372,7 +376,7 @@ msgid "General"
 msgstr "Général"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:70 main/common/services/i18n.js:71
+#: main/common/services/i18n.js:71 main/common/services/i18n.js:72
 msgid "Groups"
 msgstr "Groupes"
 
@@ -406,7 +410,7 @@ msgstr "Layout"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
-#: main/common/services/i18n.js:98
+#: main/common/services/i18n.js:99
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -428,11 +432,11 @@ msgid "Me"
 msgstr "Moi"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:76
+#: main/common/services/i18n.js:77
 msgid "Memberships"
 msgstr "Adhésions"
 
-#: main/common/services/i18n.js:77
+#: main/common/services/i18n.js:78
 msgid "Memberships mapped to {}"
 msgstr "Adhésions associées à {}"
 
@@ -454,7 +458,7 @@ msgstr "Navigation"
 msgid "New"
 msgstr "Nouveau"
 
-#: main/common/services/i18n.js:104
+#: main/common/services/i18n.js:105
 msgid "No Mapping"
 msgstr "Aucun mapping"
 
@@ -467,7 +471,7 @@ msgstr "Aucune application définie."
 msgid "No cases to display"
 msgstr "Aucun cas à afficher"
 
-#: main/common/services/i18n.js:96
+#: main/common/services/i18n.js:97
 msgid "No data"
 msgstr "Pas de donnée disponible"
 
@@ -478,6 +482,10 @@ msgstr "Aucune description disponible."
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "No mapping"
 msgstr "Aucun mapping"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "No profile mapped to this application"
+msgstr ""
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
@@ -490,6 +498,10 @@ msgstr "Lien vers une page"
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "Le tableau ci-dessous affiche uniquement les cas provenant de processus racines. Le détail des cas démarrés par des activités appelantes n'est pas disponible."
+
+#: main/common/services/i18n.js:56
+msgid "Open cases"
+msgstr "Cas démarrés"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -504,7 +516,7 @@ msgstr "Pages"
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: main/common/services/i18n.js:113
+#: main/common/services/i18n.js:114
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
 
@@ -536,7 +548,7 @@ msgstr "Profils"
 msgid "Profiles"
 msgstr "Profils"
 
-#: main/common/services/i18n.js:92
+#: main/common/services/i18n.js:93
 msgid "Ready, waiting instances"
 msgstr "Instances en état ready, waiting (en attente)"
 
@@ -553,12 +565,12 @@ msgstr "Supprimer"
 msgid "Remove all"
 msgstr "Tout supprimer"
 
-#: main/common/services/i18n.js:65
+#: main/common/services/i18n.js:66
 msgid "Reset"
 msgstr "Réinitialiser"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:73 main/common/services/i18n.js:74
+#: main/common/services/i18n.js:74 main/common/services/i18n.js:75
 msgid "Roles"
 msgstr "Rôles"
 
@@ -599,27 +611,27 @@ msgstr "Clé de recherche 5"
 msgid "Search..."
 msgstr "Chercher..."
 
-#: main/common/services/i18n.js:78
+#: main/common/services/i18n.js:79
 msgid "Select a group..."
 msgstr "Sélectionnez un groupe ..."
 
-#: main/common/services/i18n.js:79
+#: main/common/services/i18n.js:80
 msgid "Select a role..."
 msgstr "Sélectionnez un rôle ..."
 
-#: main/common/services/i18n.js:63
+#: main/common/services/i18n.js:64
 msgid "Select all"
 msgstr "Tout sélectionner "
 
-#: main/common/services/i18n.js:72
+#: main/common/services/i18n.js:73
 msgid "Select groups..."
 msgstr "Sélectionnez les groupes..."
 
-#: main/common/services/i18n.js:64
+#: main/common/services/i18n.js:65
 msgid "Select none"
 msgstr "Tout désélectionner"
 
-#: main/common/services/i18n.js:75
+#: main/common/services/i18n.js:76
 msgid "Select roles..."
 msgstr "Sélectionnez des rôles ..."
 
@@ -631,7 +643,7 @@ msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) �
 msgid "Select the page"
 msgstr "Sélectionnez la page"
 
-#: main/common/services/i18n.js:69
+#: main/common/services/i18n.js:70
 msgid "Select users..."
 msgstr "Sélectionnez des utilisateurs ..."
 
@@ -679,7 +691,7 @@ msgstr "Etat"
 msgid "Status of import"
 msgstr "Statut de l'import"
 
-#: main/common/services/i18n.js:60
+#: main/common/services/i18n.js:61
 msgid "Successfully updated categories"
 msgstr "Les catégories ont été mises à jour avec succès"
 
@@ -688,12 +700,12 @@ msgstr "Les catégories ont été mises à jour avec succès"
 msgid "Table settings"
 msgstr "Paramètres du tableau"
 
-#: main/common/services/i18n.js:99
+#: main/common/services/i18n.js:100
 msgid "Technical error."
 msgstr "Erreur technique."
 
 #: dist/features/admin/processes/details/menu.html:1
-#: main/common/services/i18n.js:116
+#: main/common/services/i18n.js:117
 msgid "The Process cannot be enabled"
 msgstr "Le processus ne peut être activé"
 
@@ -701,11 +713,11 @@ msgstr "Le processus ne peut être activé"
 msgid "The application"
 msgstr "L'application"
 
-#: main/common/services/i18n.js:114
+#: main/common/services/i18n.js:115
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
 
-#: main/common/services/i18n.js:122
+#: main/common/services/i18n.js:123
 msgid "The case {{caseId}} has been started successfully."
 msgstr "Le cas {{caseId}} a été démarré avec succès."
 
@@ -725,15 +737,15 @@ msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés da
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
-#: main/common/services/i18n.js:115
+#: main/common/services/i18n.js:116
 msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
 msgstr "Les éléments suivants ne sont associés à aucun formulaire : [ {} ]. Ils doivent être associés pour que le processus puisse être activé."
 
-#: main/common/services/i18n.js:109
+#: main/common/services/i18n.js:110
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
 
-#: main/common/services/i18n.js:121
+#: main/common/services/i18n.js:122
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "Les mots 'content', 'API' et 'theme' sont réservés pour un usage interne. Ils ne doivent pas être utilisés dans l'URL d'une page ou d'une application."
 
@@ -775,7 +787,7 @@ msgstr "Pour cela, consultez la page"
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
 
-#: main/common/services/i18n.js:87
+#: main/common/services/i18n.js:88
 msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
 msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du processus dans un Bonita BPM Studio version 6.4 ou ultérieure, générez le fichier .bar puis déployez-le dans le portail."
 
@@ -784,11 +796,11 @@ msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du proc
 msgid "Type"
 msgstr "Type"
 
-#: main/common/services/i18n.js:101
+#: main/common/services/i18n.js:102
 msgid "Type here to search for a user..."
 msgstr "Saisissez le nom d'un utilisateur..."
 
-#: main/common/services/i18n.js:66
+#: main/common/services/i18n.js:67
 msgid "Type here to search..."
 msgstr "Rechercher..."
 
@@ -819,11 +831,11 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:67
+#: main/common/services/i18n.js:68
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: main/common/services/i18n.js:68
+#: main/common/services/i18n.js:69
 msgid "Users mapped to {}"
 msgstr "Utilisateurs associés à {}"
 
@@ -864,7 +876,7 @@ msgstr "Vous allez exporter l'application."
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un menu."
 
-#: main/common/services/i18n.js:107
+#: main/common/services/i18n.js:108
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)"
 
@@ -878,7 +890,7 @@ msgstr "une application"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "application has been partially imported. The following items are not loaded in the Portal."
-msgstr "application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
+msgstr "L'application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
@@ -932,31 +944,31 @@ msgstr "tri par Date de début, décroissant"
 msgid "will be permanently deleted."
 msgstr "va être supprimée définitivement"
 
-#: main/common/services/i18n.js:62
+#: main/common/services/i18n.js:63
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
 
-#: main/common/services/i18n.js:82
+#: main/common/services/i18n.js:83
 msgid "{{nbMapping}} Process manager mappings could not be updated"
 msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus n'ont pas pu être mis à jour"
 
-#: main/common/services/i18n.js:83
+#: main/common/services/i18n.js:84
 msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été mis à jour"
 
-#: main/common/services/i18n.js:58
+#: main/common/services/i18n.js:59
 msgid "{{nbOfDeletedCases}} cases have been deleted"
 msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
 
-#: main/common/services/i18n.js:61
+#: main/common/services/i18n.js:62
 msgid "{{nbSucess}} actor mapping updates succeeded"
 msgstr "{{nbSucess}} mappings d'acteurs ont été mis à jour avec succès"
 
-#: main/common/services/i18n.js:80
+#: main/common/services/i18n.js:81
 msgid "{{role}} of {{group}}"
 msgstr "{{role}} de {{group}}"
 
-#: main/common/services/i18n.js:81
+#: main/common/services/i18n.js:82
 msgid "{{role}} of {{group}} has been created"
 msgstr "{{role}} de {{group}} a été créée"
 

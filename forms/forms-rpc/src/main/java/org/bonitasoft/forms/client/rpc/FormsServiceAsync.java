@@ -117,7 +117,7 @@ public interface FormsServiceAsync {
      *            Map containing the URL parameters
      * @param aCallBackHandler
      */
-    void getFormConfirmationTemplate(String formID, Map<String, Object> urlContext, AsyncCallback<ReducedHtmlTemplate> aCallBackHandler);
+    void getFormConfirmationTemplate(String formID, Map<String, Object> urlContext, Map<String, FormFieldValue> fields, AsyncCallback<ReducedHtmlTemplate> aCallBackHandler);
 
     /**
      * Retrieve the error page for a application

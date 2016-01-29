@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-01-19 06:12-0500\n"
+"PO-Revision-Date: 2016-01-26 10:26-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /7.2.x/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -137,7 +137,7 @@ msgid "%pageName% is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
 msgstr "%rolename% of %groupname%"
@@ -224,7 +224,7 @@ msgid "Active Users"
 msgstr "Usuarios activos"
 
 msgid "Actor mapping"
-msgstr "mapa de actores"
+msgstr "Mapeo de actores"
 
 msgid "Actor name"
 msgstr "Nombre del actor"
@@ -908,7 +908,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr "Activado"
+msgstr "Activar"
 
 msgid "Enable selected processes"
 msgstr "Activar procesos seleccionados"
@@ -989,7 +989,7 @@ msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
 
 msgid "Enter the zip code of this user"
-msgstr "Ingrese el código postal de este usuario"
+msgstr "Indique el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."
@@ -1845,7 +1845,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
 msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
+msgstr "Seleccione el responsable de este usuario"
 
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
@@ -2110,7 +2110,7 @@ msgid "The date when the task was assigned"
 msgstr "La fecha cuando se ha asignado la tarea"
 
 msgid "The date when this page has been added"
-msgstr "La fecha en que esta pagina fue añadida"
+msgstr "La fecha cuando se ha agregado esta página"
 
 msgid "The date when this process has been installed"
 msgstr "La fecha cuando este proceso ha sido instalado"
@@ -2451,7 +2451,7 @@ msgid "Value"
 msgstr "Valor"
 
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 msgid "Version of the process"
 msgstr "Versión del proceso"
