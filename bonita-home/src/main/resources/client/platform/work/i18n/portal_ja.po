@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-01-26 10:43-0500\n"
+"PO-Revision-Date: 2016-01-26 10:38-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /7.2.x/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " そのためには、%entitymappingprofilelink% へ進みます。"
@@ -197,7 +197,7 @@ msgid "Aborted by:"
 msgstr "次によって中止されました："
 
 msgid "Aborted on:"
-msgstr "中止されたステップ："
+msgstr "中止されたタスク："
 
 msgid "About"
 msgstr "バージョン情報"
@@ -236,16 +236,16 @@ msgid "Add"
 msgstr "追加"
 
 msgid "Add Comment"
-msgstr "コメントを追加します。"
+msgstr "コメントを追加します"
 
 msgid "Add a category"
-msgstr "カテゴリを追加します。"
+msgstr "カテゴリを追加します"
 
 msgid "Add a comment"
-msgstr "コメントを追加します。"
+msgstr "コメントを追加します"
 
 msgid "Add a group"
-msgstr "グループを追加します。"
+msgstr "グループを追加"
 
 msgid "Add a group to %actor_name%"
 msgstr "グループを %actor_name% に追加します。"
@@ -257,16 +257,16 @@ msgid "Add a membership"
 msgstr "所属を追加"
 
 msgid "Add a membership to %actor_name%"
-msgstr "%actor_name% に所属を追加します。"
+msgstr "%actor_name% に所属を追加します"
 
 msgid "Add a membership to %user%"
 msgstr "%user% さんに所属を追加します"
 
 msgid "Add a membership to profile %%"
-msgstr "メンバーシップをプロファイル %%に追加します。"
+msgstr "所属をプロファイル %%に追加します"
 
 msgid "Add a new category"
-msgstr "新しいカテゴリを追加します。"
+msgstr "新しいカテゴリを追加します"
 
 msgid "Add a new category to %%"
 msgstr "新しいカテゴリを %%に追加します。"
@@ -275,7 +275,7 @@ msgid "Add a new custom page"
 msgstr "新しいカスタム ページを追加"
 
 msgid "Add a new membership to this user"
-msgstr "この利用者に新しい所属を追加します。"
+msgstr "この利用者に新しい所属を追加します"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr "新しいリソース（ページ、フォーム、レイアウト、テーマ、または REST API 拡張） を追加します。 <br/>このリソースは、（プロセスまたはアプリケーション レベル）ではなくグローバル スコープでインストールされます。 <br/>このアーカイブ （.zip ファイル）は、ルート レベルに resources という名前のフォルダと page.properties ファイルを含める必要があります。<br/> この page.properties 内には少なくとも 、name、displayName および contentType（デフォルトの contentType は page）を定義する必要があります。 <br/>resources フォルダには、index.html または index.groovy ファイルのいずれかと、必要なリソースを含める必要があります。"
@@ -284,25 +284,25 @@ msgid "Add a resource"
 msgstr "リソースを追加します"
 
 msgid "Add a role"
-msgstr "役割を追加します。"
+msgstr "役割を追加"
 
 msgid "Add a role to %actor_name%"
 msgstr "役割を %actor_name% に追加します。"
 
 msgid "Add a role to profile %%"
-msgstr "役割をプロファイル%%に追加します。"
+msgstr "役割をプロファイル %%に追加します"
 
 msgid "Add a user"
-msgstr "ユーザーを追加します。"
+msgstr "ユーザーを追加"
 
 msgid "Add a user to %actor_name%"
 msgstr "ユーザーを  %actor_name% に追加します。"
 
 msgid "Add a user to profile %%"
-msgstr "ユーザーをプロファイル%%に追加します。"
+msgstr "ユーザーをプロファイル %%に追加します"
 
 msgid "Add new memberships for %user%"
-msgstr "%user% さんの新しい所属を追加します。"
+msgstr "%user% さんの新しい所属を追加します"
 
 msgid "Add resource"
 msgstr "リソースを追加"
@@ -320,7 +320,7 @@ msgid "Add this group to %actor_name%"
 msgstr "このグループを %actor_name% に追加します。"
 
 msgid "Add this membership"
-msgstr "この所属を追加します。"
+msgstr "この所属を追加します"
 
 msgid "Add this membership to %actor_name%"
 msgstr "この所属を %actor_name% に追加します。"
@@ -383,13 +383,13 @@ msgid "Applications"
 msgstr "アプリケーション"
 
 msgid "April"
-msgstr "4 月"
+msgstr "4月"
 
 msgid "Archive"
 msgstr "アーカイブ"
 
 msgid "Archived"
-msgstr "アーカイブ済み"
+msgstr "完了済み"
 
 msgid "Archived date"
 msgstr "アーカイブされた日時"
@@ -428,7 +428,7 @@ msgid "Assigned to me"
 msgstr "自分にアサインされました。"
 
 msgid "August"
-msgstr "8 月"
+msgstr "8月"
 
 msgid "Available"
 msgstr "利用可能"
@@ -602,7 +602,7 @@ msgid "Configuration"
 msgstr "構成設定"
 
 msgid "Configuration state "
-msgstr "設定状態"
+msgstr "構成設定の状態"
 
 msgid "Configure BPM services for maintenance"
 msgstr "メンテナンスのための BPM サービスを構成設定します。"
@@ -746,7 +746,7 @@ msgid "Deactivated user"
 msgstr "無効化された利用者"
 
 msgid "December"
-msgstr "12 月"
+msgstr "12月"
 
 msgid "Deletable"
 msgstr "削除可能"
@@ -815,7 +815,7 @@ msgid "Disabled processes"
 msgstr "無効になっているプロセス"
 
 msgid "Discuss :"
-msgstr "説明："
+msgstr "意見交換："
 
 msgid "Display a case form of process %app_name%"
 msgstr "プロセス： %app_name% の案件フォームを表示します"
@@ -1079,7 +1079,7 @@ msgid "Failed tasks"
 msgstr "失敗したタスク"
 
 msgid "February"
-msgstr "2 月"
+msgstr "2月"
 
 msgid "Filename too long. The zip filename must be no longer than %number% characters"
 msgstr "ファイル名が長すぎます。Zip ファイル名は %number% 文字以内である必要があります。"
@@ -1133,7 +1133,7 @@ msgid "Go to page %pagenumber%"
 msgstr "ページ %pagenumber% に進む"
 
 msgid "Go to previous step"
-msgstr "前のステップに戻る"
+msgstr "前のタスクに戻る"
 
 msgid "Group"
 msgstr "グループ"
@@ -1211,7 +1211,7 @@ msgid "In case of conflict, priority is given to the imported file"
 msgstr "マージ結合の場合、ファイルを優先します。"
 
 msgid "Inactive"
-msgstr "利用していない人"
+msgstr "利用停止"
 
 msgid "Inactive Users"
 msgstr "使用していない利用者"
@@ -1244,7 +1244,7 @@ msgid "Item not found"
 msgstr "項目が見つかりません"
 
 msgid "January"
-msgstr "1 月"
+msgstr "1月"
 
 msgid "Jasper Archive"
 msgstr "Jasper アーカイブ"
@@ -1259,10 +1259,10 @@ msgid "Json can't be mapped to "
 msgstr "Json を次にマップできません"
 
 msgid "July"
-msgstr "7 月"
+msgstr "7月"
 
 msgid "June"
-msgstr "6 月"
+msgstr "6月"
 
 msgid "Language"
 msgstr "言語"
@@ -1271,7 +1271,7 @@ msgid "Last executed task : "
 msgstr "最後に実行されたタスク:"
 
 msgid "Last login"
-msgstr "最終ログイン"
+msgstr "最終ログイン日時"
 
 msgid "Last name"
 msgstr "名（英語の場合：Last name）"
@@ -1382,10 +1382,10 @@ msgid "Mapping"
 msgstr "マッピング"
 
 msgid "March"
-msgstr "3 月"
+msgstr "3月"
 
 msgid "May"
-msgstr "5 月"
+msgstr "5月"
 
 msgid "Member"
 msgstr "メンバー"
@@ -1502,7 +1502,7 @@ msgid "Notice"
 msgstr "お知らせ"
 
 msgid "November"
-msgstr "11 月"
+msgstr "11月"
 
 msgid "Number of attachments : %nb_attachments%"
 msgstr "添付ファイルの数:  %nb_attachments%"
@@ -1517,7 +1517,7 @@ msgid "OK"
 msgstr "OK"
 
 msgid "October"
-msgstr "10 月"
+msgstr "10月"
 
 msgid "Ok"
 msgstr "OK"
@@ -1669,7 +1669,7 @@ msgid "Post time"
 msgstr "掲示時間"
 
 msgid "Previous"
-msgstr "Previous"
+msgstr "戻る"
 
 msgid "Priority"
 msgstr "優先度"
@@ -1861,7 +1861,7 @@ msgid "Select user to assign task"
 msgstr "タスクにアサインする担当者を選択します"
 
 msgid "September"
-msgstr "9 月"
+msgstr "9月"
 
 msgid "Service task"
 msgstr "サービス タスク"
@@ -1958,7 +1958,7 @@ msgid "State"
 msgstr "状態"
 
 msgid "State:"
-msgstr "都道府県"
+msgstr "状態："
 
 msgid "Statistics"
 msgstr "統計情報"
@@ -2591,7 +2591,7 @@ msgid "min"
 msgstr "分"
 
 msgid "mm/dd/yy"
-msgstr "yyyy/MM/dd"
+msgstr "yy/mm/dd"
 
 msgid "mm/dd/yyyy"
 msgstr "yyyy/MM/dd"

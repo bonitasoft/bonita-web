@@ -133,14 +133,21 @@ public class CustomPageService {
         return pageClassLoader.parseClass(restApiControllerFile);
     }
 
-    public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException, CompilationFailedException {
+    public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException {
         final File pageControllerFile = getPageFile(tempPageDirectory, PAGE_CONTROLLER_FILENAME);
         if (pageControllerFile.exists()) {
             final String classloaderName = String.valueOf(System.currentTimeMillis());
             final GroovyClassLoader pageClassLoader = buildPageClassloader(session, classloaderName, tempPageDirectory);
-            pageClassLoader.parseClass(pageControllerFile);
-            final GroovyClassLoader classLoader = PAGES_CLASSLOADERS.remove(classloaderName);
-            classLoader.close();
+            try {
+                pageClassLoader.parseClass(pageControllerFile);
+            } catch (final CompilationFailedException ex) {
+                LOGGER.log(Level.SEVERE, "Failed to compile Index.groovy ", ex);
+            } finally {
+                final GroovyClassLoader classLoader = PAGES_CLASSLOADERS.remove(classloaderName);
+                if (classLoader != null) {
+                    classLoader.close();
+                }
+            }
         }
     }
 

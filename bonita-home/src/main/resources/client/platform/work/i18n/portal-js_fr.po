@@ -7,12 +7,12 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /7.2.x/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-01-26 10:20-0500\n"
+"PO-Revision-Date: 2016-01-26 10:14-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -483,10 +483,6 @@ msgstr "Aucune description disponible."
 msgid "No mapping"
 msgstr "Aucun mapping"
 
-#: dist/features/admin/applications/applications-list.html:1
-msgid "No profile mapped to this application"
-msgstr ""
-
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
 msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
@@ -890,7 +886,7 @@ msgstr "une application"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "application has been partially imported. The following items are not loaded in the Portal."
-msgstr "L'application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
+msgstr "application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "application has been successfully imported, with complete page mapping and menu mapping."

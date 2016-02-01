@@ -7,12 +7,12 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /7.2.x/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-01-26 10:43-0500\n"
+"PO-Revision-Date: 2016-01-26 10:38-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -199,7 +199,7 @@ msgstr "完了したインスタンス"
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
-msgstr "設定状況"
+msgstr "構成設定の状態"
 
 #: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
@@ -482,10 +482,6 @@ msgstr "説明がありません。"
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "No mapping"
 msgstr "マッピングなし"
-
-#: dist/features/admin/applications/applications-list.html:1
-msgid "No profile mapped to this application"
-msgstr "このアプリケーションにマップされているプロファイルはありません。"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
