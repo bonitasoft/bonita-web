@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -60,6 +62,8 @@ public abstract class API<ITEM extends IItem> {
     protected ItemDefinition<ITEM> itemDefinition = null;
 
     private final Map<String, Deployer> deployers = new HashMap<String, Deployer>();
+
+    private static Logger LOGGER = Logger.getLogger(API.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -528,8 +532,20 @@ public abstract class API<ITEM extends IItem> {
 
     private void deployAttribute(final String attribute, final ITEM item) {
         if (deployers.containsKey(attribute)) {
-            deployers.get(attribute).deployIn(item);
+            try {
+                deployers.get(attribute).deployIn(item);
+            } catch (final Exception e) {
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, getFailedDeployMessage(attribute, item), e);
+                } else if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, getFailedDeployMessage(attribute, item));
+                }
+            }
         }
+    }
+
+    protected String getFailedDeployMessage(final String attribute, final ITEM item) {
+        return "Could not deploy attribute '" + attribute + "' on item " + item.toString();
     }
 
     protected void fillCounters(final ITEM item, final List<String> counters) {
