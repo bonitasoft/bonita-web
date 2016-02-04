@@ -167,6 +167,7 @@ public class TasksListingPage extends ItemListingPage<HumanTaskItem> implements 
     private ItemTable performedTasksItemTable() {
         return new ItemTable(Definitions.get(ArchivedHumanTaskDefinition.TOKEN))
                 .addHiddenFilter(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, Session.getUserId())
+                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_COMPLETED)
                 .addColumn(ArchivedHumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                 .addColumn(new DateAttributeReader(ArchivedHumanTaskItem.ATTRIBUTE_REACHED_STATE_DATE), _("Performed date"), true)
                 .addColumn(
