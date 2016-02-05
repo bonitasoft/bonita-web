@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-01-26 10:14-0500\n"
+"PO-Revision-Date: 2016-02-02 10:03-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -407,10 +407,10 @@ msgid "Are you sure you want to remove category '%categoryName%' from process '%
 msgstr "Êtes-vous sûr(e) de vouloir retirer la catégorie %categoryName% du processus '%appName%' ?"
 
 msgid "Assign"
-msgstr "Attribuer"
+msgstr "Assigner"
 
 msgid "Assign selected tasks to user"
-msgstr "Attribuer les tâches sélectionnées à l'utilisateur"
+msgstr "Assigner les tâches sélectionnées à l'utilisateur"
 
 msgid "Assign task to someone"
 msgstr "Affecter la tâche à quelqu'un"
