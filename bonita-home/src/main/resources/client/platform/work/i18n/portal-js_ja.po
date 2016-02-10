@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-02-02 10:23-0500\n"
+"PO-Revision-Date: 2016-02-09 13:38-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -85,6 +85,10 @@ msgstr "アプリケーションは、特定のユーザー プロファイル�
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
+#: main/features/user/tasks/list/tasks-app.js:381
+msgid "An error occurred while submitting the form."
+msgstr "フォームの送信中にエラーが発生しました。"
+
 #: dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
 msgstr "アプリケーションのXMLファイル"
@@ -101,7 +105,24 @@ msgstr "適用"
 msgid "Archived cases"
 msgstr "アーカイブされた案件"
 
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Assign the task to myself and move it to My tasks"
+msgstr "このタスクを自分にアサインし、マイタスクに移す"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Assign the task to myself and move it to My tasks."
+msgstr "このタスクを自分にアサインし、マイタスクに移す"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Assigned on"
+msgstr "アサインされた人"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Available or My tasks"
+msgstr "応受援タスク、またはマイタスク"
+
 #: dist/features/user/cases/list/cases-list.html:1
+#: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Available tasks"
 msgstr "応受援タスク"
 
@@ -143,9 +164,25 @@ msgstr "キャンセル、スキップされたインスタンス"
 msgid "Cannot upload the file"
 msgstr "ファイルをアップロードできません"
 
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Case History"
+msgstr "案件の履歴"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Case Id"
+msgstr "案件 ID"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Case Info"
+msgstr "案件情報"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Case Overview"
+msgstr "案件概況"
+
 #: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr "案件番号: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
+msgstr "案件 ID: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -182,12 +219,25 @@ msgid "Click here to choose your file. XML file (.xml)"
 msgstr "XML ファイル (.xml) を選択するには、ここをクリックします。"
 
 #: dist/features/admin/applications/import-application.html:1
+#: dist/features/user/tasks/list/tasks-modal-form.html:1
 msgid "Close"
 msgstr "閉じる"
+
+#: dist/features/user/tasks/list/tasks-modal-details.html:1
+msgid "Close Preview"
+msgstr "プレビューを閉じる"
+
+#: dist/features/user/tasks/list/tasks-modal-form.html:1
+msgid "Close form"
+msgstr "フォームを閉じる"
 
 #: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "列の選択"
+
+#: dist/features/user/tasks/list/tasks-no-form.html:1
+msgid "Comment:"
+msgstr "コメント："
 
 #: main/common/services/i18n.js:111
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
@@ -257,6 +307,7 @@ msgstr "このプロセスを削除します"
 
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/processes/details/params.html:1
+#: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Description"
 msgstr "説明"
 
@@ -264,9 +315,21 @@ msgstr "説明"
 msgid "Display name"
 msgstr "表示名"
 
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Do this task"
+msgstr "このタスクを行う"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "Done tasks"
+msgstr "アーカイブされたタスク"
+
 #: main/common/services/i18n.js:96
 msgid "Drawing process..."
 msgstr "プロセス図を描画中 ..."
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Due date"
+msgstr "期日"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -331,6 +394,10 @@ msgstr "エラー: 値は整数でなければなりません"
 msgid "Executing, completing, initializing instances"
 msgstr "実行中, 完了中, インスタンスを初期化中"
 
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Expand"
+msgstr "開く"
+
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/export-application.html:1
 msgid "Export"
@@ -360,6 +427,7 @@ msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以�
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
+#: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Filters"
 msgstr "フィルター"
 
@@ -371,6 +439,10 @@ msgstr "各アクターに対し、各エンティティ （ユーザー、グ�
 msgid "Form cannot be empty"
 msgstr "フォームは空にできません"
 
+#: main/features/user/tasks/list/tasks-app.js:387
+msgid "Form submitted.<br/>The next task in the list is now selected."
+msgstr "フォームを送信しました。 <br/>リスト中の次のタスクが選択されました。"
+
 #: dist/features/admin/processes/details/information.html:1
 msgid "General"
 msgstr "全般"
@@ -379,6 +451,14 @@ msgstr "全般"
 #: main/common/services/i18n.js:71 main/common/services/i18n.js:72
 msgid "Groups"
 msgstr "グループ"
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Hide Menu"
+msgstr "メニューを非表示"
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Hide menu"
+msgstr "メニューを非表示"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -402,6 +482,10 @@ msgstr "アプリケーションをインポート"
 #: table-settings/tableSettings.tpl.html:13
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Last update"
+msgstr "最終更新日"
 
 #: dist/features/admin/applications/details/application-details.html:1
 #: dist/features/admin/applications/edit-application-look-n-feel.html:1
@@ -444,6 +528,14 @@ msgstr "{} にマップされたメンバーシップ"
 msgid "Multi-page menu"
 msgstr "複数ページ メニュー"
 
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "My task"
+msgstr "マイタスク"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "My tasks"
+msgstr "マイタスク"
+
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: dist/features/admin/processes/details/params.html:1
@@ -479,9 +571,17 @@ msgstr "データがありません。"
 msgid "No description."
 msgstr "説明がありません。"
 
+#: dist/features/user/tasks/list/tasks-no-form.html:1
+msgid "No form is needed. You can enter a comment and confirm."
+msgstr "フォームは不要です。コメントを入力し、確認することができます。"
+
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "No mapping"
 msgstr "マッピングなし"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "No matching results"
+msgstr "一致する検索結果がありません"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
@@ -524,12 +624,21 @@ msgstr "プロセスを有効にする前にパラメータを解決する必要
 msgid "Pending Flow Nodes"
 msgstr "作業実行を待機中"
 
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Process"
+msgstr "プロセス"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Process Supervisor&nbsp;:"
+msgstr "プロセス管理者&nbsp;："
+
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list.html:1
+#: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Process name"
 msgstr "プロセス名"
 
@@ -537,6 +646,14 @@ msgstr "プロセス名"
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 msgid "Process version"
 msgstr "プロセスのバージョン"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Process&nbsp;:"
+msgstr "プロセス&nbsp;："
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
+msgstr "プロセス： ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'データを再読み込み"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -552,10 +669,23 @@ msgstr "プロファイル"
 msgid "Ready, waiting instances"
 msgstr "インスタンス開始を待機中"
 
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Reduce"
+msgstr "閉じる"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Refresh"
 msgstr "リフレッシュ"
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Refresh data"
+msgstr "データを再読み込み"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Release"
+msgstr "手放す"
 
 #: dist/features/admin/applications/details/page-list.html:1
 msgid "Remove"
@@ -604,6 +734,10 @@ msgstr "検索キー 4"
 msgid "Search Key 5"
 msgstr "検索キー 5"
 
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Search on task name"
+msgstr "タスク名で検索"
+
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
@@ -651,6 +785,34 @@ msgstr "ユーザーを選択..."
 msgid "Set as Home page"
 msgstr "ホーム ページとして設定します"
 
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Show Menu"
+msgstr "メニューを表示"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "Show done tasks"
+msgstr "完了済みタスクを表示"
+
+#: dist/features/user/tasks/list/tasks-layoutswitch.html:1
+msgid "Show extended task list"
+msgstr "拡張タスク リストを表示"
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Show menu"
+msgstr "メニューを表示"
+
+#: dist/features/user/tasks/list/tasks-layoutswitch.html:1
+msgid "Show task list with details pane"
+msgstr "詳細ペインでタスク リストを表示"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "Show tasks assigned to me, automatically, by me or by another user"
+msgstr "自分か、または別のユーザーによって自動的に自分にアサインされているタスクを表示"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "Show tasks that I can do that are not assigned"
+msgstr "自分が実行可能で、まだアサインされていないタスクを表示"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
 msgstr "URL で並べ替え"
@@ -683,6 +845,10 @@ msgstr "起案日"
 msgid "Started by"
 msgstr "起案者"
 
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Started by&nbsp;:"
+msgstr "開始した人&nbsp;："
+
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
 msgstr "状態"
@@ -690,6 +856,10 @@ msgstr "状態"
 #: dist/features/admin/applications/import-application.html:1
 msgid "Status of import"
 msgstr "インポートの状態"
+
+#: dist/features/user/tasks/list/tasks-no-form.html:1
+msgid "Submit"
+msgstr "送信"
 
 #: main/common/services/i18n.js:61
 msgid "Successfully updated categories"
@@ -699,6 +869,23 @@ msgstr "正常に更新されたカテゴリ"
 #: table-settings/tableSettings.tpl.html:9
 msgid "Table settings"
 msgstr "テーブルの設定"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Take"
+msgstr "引き受ける"
+
+#: dist/features/user/tasks/list/tasks-list.html:3
+msgid "Task Details"
+msgstr "タスクの詳細"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Task Id"
+msgstr "タスク ID"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Task name"
+msgstr "タスク名"
 
 #: main/common/services/i18n.js:100
 msgid "Technical error."
@@ -713,13 +900,17 @@ msgstr "プロセスを有効にすることができません"
 msgid "The application"
 msgstr "アプリケーション"
 
+#: main/features/user/tasks/list/tasks-app.js:376
+msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
+msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
+
 #: main/common/services/i18n.js:115
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
 
 #: main/common/services/i18n.js:123
 msgid "The case {{caseId}} has been started successfully."
-msgstr "案件番号： %caseId% が正常に開始されました。"
+msgstr "案件 ID： %caseId% が正常に開始されました。"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
@@ -774,9 +965,21 @@ msgstr "このフィールドは必須です"
 msgid "This name is already in use"
 msgstr "この名前は既に使用中"
 
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "This task is completed."
+msgstr "このタスクは完了しました。"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "This task is not assigned to you. You need to take it before filling in this form."
+msgstr "このタスクは、あなたにアサインされていません。このフォームを記入するには、このタスクがあなたにアサインされている必要があります。"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "To create an application, click New or Import."
 msgstr "アプリケーションを作成するには、新規またはインポート をクリックします。"
+
+#: dist/features/user/tasks/list/tasks-filters.html:2
+msgid "To do"
+msgstr "To do"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "To do so, go to"
@@ -811,6 +1014,11 @@ msgstr "検索キーワードをここで入力..."
 #: dist/features/admin/applications/import-application.html:1
 msgid "URL"
 msgstr "URL"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Unassign the task and put it back in Available tasks"
+msgstr "このタスクのアサインを解除して、応受援タスクに戻す"
 
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
@@ -860,6 +1068,14 @@ msgstr "案件詳細を表示"
 msgid "View case overview"
 msgstr "案件概況を表示"
 
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "View task"
+msgstr "タスクを見る"
+
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "View this task"
+msgstr "このタスクを見る"
+
 #: dist/features/admin/applications/export-application.html:1
 msgid "When you export an application, pages and profiles are not exported in the file."
 msgstr "アプリケーションをエクスポートするとき、ページとプロファイルはそのファイルにエクスポートされません。"
@@ -895,6 +1111,14 @@ msgstr "アプリケーションは部分的にインポートされています
 #: dist/features/admin/applications/import-application.html:1
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
 msgstr "アプリケーションは、ページのマッピングや メニューのマッピングを伴って正常にインポートされています。"
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "case ID&nbsp;:"
+msgstr "案件 ID&nbsp;："
+
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "mail to"
+msgstr "メール送付先"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
