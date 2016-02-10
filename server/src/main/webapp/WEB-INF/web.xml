@@ -82,7 +82,7 @@
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(portal/themeResource$)|(portal/scripts)|(portal/formsService)</param-value>
+            <param-value>^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)</param-value>
         </init-param -->
     </filter>
     <!-- Cache Filter -->
@@ -243,6 +243,7 @@
         <filter-name>ApplicationResourceCacheFilter</filter-name>
         <url-pattern>/portal/applicationResource</url-pattern>
         <url-pattern>/portal/themeResource</url-pattern>
+        <url-pattern>/theme/*</url-pattern>
     </filter-mapping>
     <!-- Cache Filter Mapping End -->
     <!--  Filter for restlet URLs -->
@@ -491,6 +492,7 @@
     <servlet-mapping>
         <servlet-name>themeResource</servlet-name>
         <url-pattern>/portal/themeResource</url-pattern>
+        <url-pattern>/theme/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSOService</servlet-name>

@@ -59,16 +59,13 @@ public abstract class ResourceServlet extends HttpServlet {
     private final static String TENANT_PARAM = "tenant";
 
     /**
-     * file name
-     */
-    private final static String LOCATION_PARAM = "location";
-
-    /**
      * The engine API session param key name
      */
     public static final String API_SESSION_PARAM_KEY = "apiSession";
 
     protected abstract String getResourceParameterName();
+
+    protected abstract String getDefaultResourceName();
 
     protected abstract File getResourcesParentFolder(long tenantId);
 
@@ -77,14 +74,18 @@ public abstract class ResourceServlet extends HttpServlet {
      */
     protected abstract String getSubFolderName();
 
+    protected ResourceLocationReader resourceLocationReader = new ResourceLocationReader();
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-        final String resourceName = request.getParameter(getResourceParameterName());
-
-        final String fileName = request.getParameter(LOCATION_PARAM);
+        final String fileName = resourceLocationReader.getResourceLocationFromRequest(request);
+        String resourceName = request.getParameter(getResourceParameterName());
+        if (resourceName == null) {
+            resourceName = getDefaultResourceName();
+        }
         try {
             getResourceFile(request, response, resourceName, fileName);
         } catch (final UnsupportedEncodingException e) {
@@ -118,7 +119,7 @@ public abstract class ResourceServlet extends HttpServlet {
             throw new ServletException(errorMessage);
         }
         if (fileName == null) {
-            final String errorMessage = "Error while using the servlet to get a resource: the parameter " + LOCATION_PARAM + " is null.";
+            final String errorMessage = "Error while using the servlet to get a resource: the parameter " + ResourceLocationReader.LOCATION_PARAM + " is null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, errorMessage);
             }
@@ -136,7 +137,6 @@ public abstract class ResourceServlet extends HttpServlet {
         } else {
             subFolderSuffix = "";
         }
-
         try {
             final File resourceFolder = new File(resourcesParentFolder, resourceName + subFolderSuffix);
             final File file = new File(resourceFolder, fileName);

@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -34,15 +37,24 @@ public class ThemeResourceServletTest {
     @Mock
     HttpSession httpSession;
 
+    @Spy
+    ThemeResourceServlet themeResourceServlet = new ThemeResourceServlet();
+
     private String savedBonitaHomeProperty;
+
+    @Before
+    public void setUp() throws Exception {
+        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
+        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
+        TenantsManagementUtils.addDirectoryForTenant(1L);
+    }
 
     @Test
     public void should_verify_authorisation_for_the_given_location_param() throws
     Exception {
 
         final ThemeResourceServlet themeResourceServlet = spy(new ThemeResourceServlet());
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
+
         when(req.getParameter(themeResourceServlet.getResourceParameterName())).thenReturn("theme");
         when(req.getMethod()).thenReturn("GET");
 
