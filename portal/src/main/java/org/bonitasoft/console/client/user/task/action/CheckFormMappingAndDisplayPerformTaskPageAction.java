@@ -28,6 +28,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.RequestBuilder;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -43,7 +44,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
@@ -88,10 +88,10 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
     }
 
     protected void searchFormMappingForTask(final TreeIndexed<String> parameters) {
-        RequestBuilder requestBuilder;
         final String processIdFilter = URL.encodeQueryString(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processDefinitionId);
         final String taskNameFilter = URL.encodeQueryString(ATTRIBUTE_FORM_MAPPING_TASK + "=" + taskName);
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + taskNameFilter);
+        final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f="
+                + taskNameFilter);
         requestBuilder.setCallback(new FormMappingCallback(parameters));
         try {
             requestBuilder.send();
@@ -212,8 +212,7 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
     }
 
     protected void executeTask(final String taskId, final TreeIndexed<String> parameters) {
-        RequestBuilder requestBuilder;
-        requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/userTask/" + taskId + "/execution");
+        final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/userTask/" + taskId + "/execution");
         requestBuilder.setCallback(new ExecuteTaskCallback(taskId, taskDisplayName));
         try {
             requestBuilder.send();
