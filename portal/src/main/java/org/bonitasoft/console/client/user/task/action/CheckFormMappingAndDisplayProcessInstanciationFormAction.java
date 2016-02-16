@@ -25,6 +25,7 @@ import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.RequestBuilder;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
@@ -41,7 +42,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONArray;
@@ -98,10 +98,10 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
 
     protected void searchFormMappingForProcess(final TreeIndexed<String> parameters) {
         final String processId = parameters.getValue(ProcessItem.ATTRIBUTE_ID);
-        RequestBuilder requestBuilder;
         final String processIdFilter = URL.encodeQueryString(PageItem.ATTRIBUTE_PROCESS_ID + "=" + processId);
         final String mappingTypeFilter = URL.encodeQueryString(ATTRIBUTE_FORM_MAPPING_TYPE + "=" + PROCESS_START_FORM_MAPPING);
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f=" + mappingTypeFilter);
+        final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=" + processIdFilter + "&f="
+                + mappingTypeFilter);
         requestBuilder.setCallback(new FormMappingCallback(processId, parameters));
         try {
             requestBuilder.send();
@@ -188,8 +188,7 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
 
                         @Override
                         public void execute() {
-                            RequestBuilder requestBuilder;
-                            requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
+                            final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
                             requestBuilder.setCallback(new InstantiateProcessCallback(processId));
                             try {
                                 requestBuilder.send();
