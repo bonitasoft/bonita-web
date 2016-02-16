@@ -2,8 +2,6 @@
 // CSS 2-3 mixins 
 //-----------------------------------------------------------------------------
 
-.CSSPIE(){ behavior: url(css/PIE.htc); -pie-watch-ancestors: 1;}//call this to use CSSPIE
-
 .clearFix() {
 	zoom: 1;
 	&:after {
@@ -37,8 +35,6 @@
 	background: -webkit-linear-gradient(top,  @c1 @p1,@c2 @p2); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  @c1 @p1, @c2 @p2); /* Opera 11.10+ */
 	background: linear-gradient(to bottom,  @c1 @p1, @c2 @p2); /* W3C */
-	-pie-background: linear-gradient(@c1 @p1, @c2 @p2);
-	.CSSPIE();
 }
 .horizontalGradient(@c1, @p1, @c2, @p2) {
 	background-color: @c1; /* Old browsers */
@@ -48,8 +44,6 @@
 	background: -o-linear-gradient(left, @c1 @p1, @c2 @p2); /* Opera 11.10+ */
 	background: -ms-linear-gradient(left, @c1 @p1, @c2 @p2); /* IE10+ */
 	background: linear-gradient(to right, @c1 @p1, @c2 @p2); /* W3C */
-	-pie-background: linear-gradient(0deg, @c1 @p1,@c2 @p2);
-	.CSSPIE();
 }
 .verticalGradient(@c1, @p1, @c2, @p2, @c3, @p3) {
 	background: @c1; /* Old browsers */
@@ -59,8 +53,6 @@
 	background: -o-linear-gradient(top,  @c1 @p1, @c2 @p2, @c3 @p3); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  @c1 @p1,@c2 @p2, @c3 @p3); /* IE10+ */
 	background: linear-gradient(to bottom,  @c1 @p1, @c2 @p2, @c3 @p3); /* W3C */
-	-pie-background: linear-gradient(@c1 @p1, @c2 @p2, @c3 @p3) @c1;
-	.CSSPIE();
 }
 .transition(@type:all,@duration: .5s, @ease: ease-in-out, @delay: 0) {
 	-webkit-transition: @type @duration @ease;
@@ -74,7 +66,6 @@
 	-moz-border-radius:@radius;
 	-o-border-radius:@radius;
 	border-radius:@radius;
-	.CSSPIE();
 }
 
 .borderRadius(@radius_top, @radius_bottom){
@@ -82,7 +73,6 @@
 	-moz-border-radius:@radius_top @radius_bottom;
 	-o-border-radius:@radius_top @radius_bottom;
 	border-radius:@radius_top @radius_bottom;
-	.CSSPIE();
 }
 
 .borderRadius(@radius_top_left, @radius_top_right, @radius_bottom_right, @radius_bottom_left){
@@ -90,7 +80,6 @@
 	-moz-border-radius:@radius_top_left @radius_top_right @radius_bottom_right @radius_bottom_left;
 	-o-border-radius:@radius_top_left @radius_top_right @radius_bottom_right @radius_bottom_left;
 	border-radius:@radius_top_left @radius_top_right @radius_bottom_right @radius_bottom_left;
-	.CSSPIE();
 }
 
 .borderRadiusLeft(@radius){
@@ -129,7 +118,6 @@
 	-moz-box-shadow: @x @y @blur @color;
 	-o-box-shadow: @x @y @blur @color;
 	box-shadow: @x @y @blur @color;
-	.CSSPIE();
 }
 
 .noBoxShadow() {
@@ -137,7 +125,6 @@
 	-moz-box-shadow: none;
 	-o-box-shadow: none;
 	box-shadow: none;
-	.CSSPIE();
 }
 
 .boxShadowInner (@x: 3px, @y: 3px, @blur: 3px, @color: #000) {
@@ -153,9 +140,6 @@
 	-moz-opacity:@opacity;
 	-khtml-opacity:@opacity;
 	opacity:@opacity;
-	// IE8 filter
-	@opacity-ie: (@opacity * 100);
-	filter: ~"alpha(opacity=@{opacity-ie})";
 }
 
 .disableSelection() {
@@ -210,20 +194,11 @@
 .bg(@img, @options){
 	background: url("@{skinpath}@{img}") @options !important;
 }
-.bgPie(@img, @options){
-	.bgPie(@img, @options,"");
-}
 .bg(@img, @options,@important:"!important"){
 	background: url("@{skinpath}@{img}") @options ~"@{important}";
 }
-.bgPie(@img, @options,@important:"!important"){
-	-pie-background: url("@{skinpath}@{img}") @options ;
-	.CSSPIE();
-}
 .bgAlphaColor(@c){
 	background-color: @c;
-	-pie-background:@c;
-	.CSSPIE();
 }
 
 .bgLeft(@img){
@@ -253,7 +228,6 @@
 	font-size: 0.0000001% ;
 }
 .boxSizing(@value: border-box){
-	*behavior: url(css/boxsizing.htc);
 	-moz-box-sizing: @value;
 	-webkit-box-sizing: @value;
 	box-sizing: @value;
