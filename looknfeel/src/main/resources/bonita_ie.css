@@ -1,0 +1,11 @@
+.form-view .toolbar {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    height: 80px;
+}
+
+.forms-view .frame {
+    /* 100% - toolbar height */
+    height: calc(100% - 80px);
+}
