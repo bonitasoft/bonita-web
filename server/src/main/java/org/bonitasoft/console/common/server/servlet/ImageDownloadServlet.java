@@ -107,13 +107,13 @@ public abstract class ImageDownloadServlet extends DownloadServlet {
         response.setCharacterEncoding("UTF-8");
         if (fileName != null) {
             try {
-                final String encodedfileName = URLEncoder.encode(fileName, "UTF-8");
+                final String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
                 final String userAgent = request.getHeader("User-Agent");
                 if (userAgent != null && userAgent.contains("Firefox")) {
-                    response.setHeader("Content-Disposition", "inline; filename*=UTF-8''" + encodedfileName);
+                    response.setHeader("Content-Disposition", "inline; filename*=UTF-8''" + encodedFileName);
                 } else {
-                    response.setHeader("Content-Disposition", "inline; filename=\"" + encodedfileName.replaceAll("\\+", " ") + "\"; filename*=UTF-8''"
-                            + encodedfileName);
+                    response.setHeader("Content-Disposition", "inline; filename=\"" + encodedFileName.replaceAll("\\+", " ") + "\"; filename*=UTF-8''"
+                            + encodedFileName);
                 }
                 if (attachment != null) {
                     response.setContentLength(attachment.length);

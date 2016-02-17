@@ -14,7 +14,10 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
+import static org.bonitasoft.engine.io.IOUtil.createTempDirectory;
+
 import java.io.File;
+import java.lang.management.ManagementFactory;
 
 /**
  * @author Ruiheng.Fan
@@ -38,8 +41,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     /**
      * work
      */
-    private String workFolderPath = null;
-
     private String formsWorkFolderPath = null;
 
     public static final String gadgetsWorkFolderName = "gadgets";
@@ -93,17 +94,24 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     /**
      * Default constructor.
      *
-     * @param tenantId
-     *            Tenant Id
+     * @param tenantId Tenant Id
      */
     public WebBonitaConstantsTenancyImpl(final long tenantId) {
         tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
+        tempFolderPath = getTempFolder() + File.separator
+                + tenantsFolderName + File.separator + tenantId + File.separator;
+    }
+
+    private String getTempFolder() {
+        final String tempDir = System.getProperty("java.io.tmpdir") + File.separator + tmpFolderName + ManagementFactory.getRuntimeMXBean().getName();
+        createTempDirectory(new File(tempDir).toURI());
+        return tempDir;
     }
 
     @Override
     public String getTenantsFolderPath() {
         if (tenantsFolderPath == null) {
-            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;;
+            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;
         }
         return tenantsFolderPath;
     }
@@ -125,10 +133,11 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     @Override
     public String getTempFolderPath() {
-        if (tempFolderPath == null) {
-            tempFolderPath = tenantFolderPath + tmpFolderName + File.separator;
-        }
         return tempFolderPath;
+    }
+
+    private String getWorkFolderPath() {
+        return getTenantFolderPath() + "work" + File.separator;
     }
 
     /**
@@ -146,20 +155,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getWorkFolderPath() {
-        if (workFolderPath == null) {
-            workFolderPath = tenantFolderPath + workFolderName + File.separator;
-        }
-        return workFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getProfilesWorkFolderPath() {
+    public String getProfilesTempFolderPath() {
         if (profilesWorkFolderPath == null) {
-            profilesWorkFolderPath = getWorkFolderPath() + profilesWorkFolderName + File.separator;
+            profilesWorkFolderPath = getTempFolderPath() + profilesWorkFolderName + File.separator;
         }
         return profilesWorkFolderPath;
     }
@@ -168,9 +166,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getReportsWorkFolderPath() {
+    public String getReportsTempFolderPath() {
         if (reportsWorkFolderPath == null) {
-            reportsWorkFolderPath = getWorkFolderPath() + reportsWorkFolderName + File.separator;
+            reportsWorkFolderPath = getTempFolderPath() + reportsWorkFolderName + File.separator;
         }
         return reportsWorkFolderPath;
     }
@@ -179,9 +177,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getPagesWorkFolderPath() {
+    public String getPagesTempFolderPath() {
         if (pagesWorkFolderPath == null) {
-            pagesWorkFolderPath = getWorkFolderPath() + pagesWorkFolderName + File.separator;
+            pagesWorkFolderPath = getTempFolderPath() + pagesWorkFolderName + File.separator;
         }
         return pagesWorkFolderPath;
     }
@@ -190,9 +188,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getFormsWorkFolderPath() {
+    public String getFormsTempFolderPath() {
         if (formsWorkFolderPath == null) {
-            formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
+            formsWorkFolderPath = getTempFolderPath() + formsFolderName + File.separator;
         }
         return formsWorkFolderPath;
     }
@@ -248,7 +246,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getThemePortalFolderPath() {
         if (themeWorkFolderPath == null) {
-            themeWorkFolderPath = getWorkFolderPath() + themeWorkFolderName + File.separator;
+            themeWorkFolderPath = getTempFolderPath() + File.separator + themeWorkFolderName;
         }
         return themeWorkFolderPath;
     }
@@ -256,7 +254,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getPDFTemplateFolderPath() {
         if (pdfWorkFolderPath == null) {
-            pdfWorkFolderPath = getWorkFolderPath() + pdfWorkFolderName + File.separator;
+            pdfWorkFolderPath = getTempFolderPath() + pdfWorkFolderName + File.separator;
         }
         return pdfWorkFolderPath;
     }
@@ -270,9 +268,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getBDMWorkFolderPath() {
+    public String getBDMTempFolderPath() {
         if (bdmWorkFolderPath == null) {
-            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
+            bdmWorkFolderPath = getTempFolderPath() + File.separator + bdmFolderName + File.separator;
         }
         return bdmWorkFolderPath;
     }

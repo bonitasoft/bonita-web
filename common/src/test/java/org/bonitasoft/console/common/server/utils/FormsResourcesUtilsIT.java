@@ -178,7 +178,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
         final SimpleField name = new SimpleField();
         name.setName("name");
         name.setType(FieldType.STRING);
-        name.setLength(Integer.valueOf(10));
+        name.setLength(10);
         person.addField(name);
         businessObjectModel.addBusinessObject(person);
         return businessObjectModel;

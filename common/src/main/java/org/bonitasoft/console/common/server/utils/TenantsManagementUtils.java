@@ -144,7 +144,7 @@ public class TenantsManagementUtils {
     }
 
     /**
-     * Check for user's pofile
+     * Check for user's profile
      */
     public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException, BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
@@ -161,7 +161,7 @@ public class TenantsManagementUtils {
      * copy the tenant template directory
      *
      * @return true if the tenant directory was created
-     * @param tenantId
+     * @param tenantId the ID of the tenant to create.
      * @throws IOException
      * @throws BonitaException
      */
@@ -170,9 +170,8 @@ public class TenantsManagementUtils {
         final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
         final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
         // copy configuration files
-        final File workDir = new File(targetDirPath + File.separator + WebBonitaConstants.workFolderName);
         final File confDir = new File(targetDirPath + File.separator + WebBonitaConstants.confFolderName);
-        if (!workDir.exists() || !confDir.exists() || confDir.list().length == 0) {
+        if (!confDir.exists() || confDir.list().length == 0) {
             try {
                 deleteDirectory(targetDirPath);
                 copyDirectory(sourceDirPath, targetDirPath);

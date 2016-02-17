@@ -4,14 +4,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,9 +70,9 @@ public class APIProcessTest {
     public TemporaryFolder folderRule = new TemporaryFolder();
 
     private String savedBonitaHomeProperty;
-    
+
     @Before
-    public void consoleTestSetUp() {
+    public void consoleTestSetUp() throws IOException {
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
         org.bonitasoft.console.common.server.i18n.I18n.getInstance();
         given(caller.getHttpSession()).willReturn(session);
@@ -87,6 +80,7 @@ public class APIProcessTest {
         given(engineSession.getTenantId()).willReturn(1L);
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, folderRule.getRoot().getPath());
+        folderRule.newFolder("client", "tenants", String.valueOf(engineSession.getTenantId()));
 
         apiProcess = spy(new APIProcess());
         apiProcess.setCaller(caller);
@@ -106,7 +100,7 @@ public class APIProcessTest {
             System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
         }
     }
-    
+
     @Test
     public void add_should_add_change_icon_path_when_specified() {
         // Given
@@ -141,7 +135,7 @@ public class APIProcessTest {
         when(processItem.getIcon()).thenReturn("");
         when(processDatastore.get(apiid)).thenReturn(processItem);
 
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ProcessItem.ATTRIBUTE_ICON, "Non empty");
 
         // When
@@ -156,7 +150,7 @@ public class APIProcessTest {
     @Test
     public void update_should_not_upload_icon_when_blank_icon_attribute() {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ProcessItem.ATTRIBUTE_ICON, "");
 
         // When
@@ -180,7 +174,7 @@ public class APIProcessTest {
         final List<String> counters = Arrays.asList(ProcessItem.COUNTER_FAILED_CASES);
 
         final long numberOfFailedCases = 2L;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_CALLER, "any");
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
         filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
@@ -200,7 +194,7 @@ public class APIProcessTest {
     public final void fillCounters_should_do_nothing_when_counter_of_failed_cases_is_not_active() {
         // Given
         final ProcessItem item = mock(ProcessItem.class);
-        final List<String> counters = new ArrayList<String>();
+        final List<String> counters = new ArrayList<>();
 
         // When
         apiProcess.fillCounters(item, counters);
@@ -220,7 +214,7 @@ public class APIProcessTest {
         doReturn(id).when(item).getId();
 
         final List<String> counters = Arrays.asList(ProcessItem.COUNTER_OPEN_CASES);
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_CALLER, "any");
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, id.toString());
 
@@ -241,7 +235,7 @@ public class APIProcessTest {
     public final void fillCounters_should_do_nothing_when_counter_of_open_cases_is_not_active() {
         // Given
         final ProcessItem item = mock(ProcessItem.class);
-        final List<String> counters = new ArrayList<String>();
+        final List<String> counters = new ArrayList<>();
 
         // When
         apiProcess.fillCounters(item, counters);
@@ -253,7 +247,7 @@ public class APIProcessTest {
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_updating_icon_with_unauthorized_path() throws IOException {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ProcessItem.ATTRIBUTE_ICON, "." + File.separator + "doc.jpg");
 
         // When
@@ -270,8 +264,7 @@ public class APIProcessTest {
         apiProcess.add(processItem);
     }
 
-
-    // TODO finish this test by modifiying the process api to return a folder which can be mocked
+    // TODO finish this test by modifying the process api to return a folder which can be mocked
     // @Test
     // public void should_update_do_something_when_blabla() throws IOException {
     // // Given

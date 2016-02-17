@@ -1,8 +1,7 @@
 package org.bonitasoft.console.common.server.themes;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 
@@ -50,23 +49,22 @@ public class ThemeResourceServletTest {
     }
 
     @Test
-    public void should_verify_authorisation_for_the_given_location_param() throws
-    Exception {
-
+    public void should_verify_authorisation_for_the_given_location_param() throws Exception {
         final ThemeResourceServlet themeResourceServlet = spy(new ThemeResourceServlet());
 
         when(req.getParameter(themeResourceServlet.getResourceParameterName())).thenReturn("theme");
-        when(req.getMethod()).thenReturn("GET");
+        doReturn("GET").when(req).getMethod();
 
-        when(req.getSession()).thenReturn(httpSession);
-        when(req.getParameter("tenant")).thenReturn("1");
-        when(themeResourceServlet.getResourcesParentFolder(1L)).thenReturn(new File("."));
+        doReturn(httpSession).when(req).getSession();
+        doReturn("1").when(req).getParameter("tenant");
+        doReturn(new File(".")).when(themeResourceServlet).getResourcesParentFolder(1L);
 
-        when(req.getParameter("location")).thenReturn("../../../file.txt");
+        doReturn("../../../file.txt").when(req).getParameter("location");
+
         try {
             themeResourceServlet.service(req, res);
         } catch (final ServletException e) {
-            assertTrue(e.getMessage().startsWith("For security reasons, access to this file paths"));
+            assertThat(e.getMessage()).startsWith("For security reasons, access to this file paths");
         }
     }
 

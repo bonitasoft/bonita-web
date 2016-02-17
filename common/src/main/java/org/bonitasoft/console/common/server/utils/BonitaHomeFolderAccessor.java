@@ -30,7 +30,7 @@ public class BonitaHomeFolderAccessor {
         final File tempFolder = getBonitaConstantUtil(tenantId).getTempFolder();
 
         if (!tempFilePath.contains(File.separator)) {
-            return tempFilePath = tempFolder.getAbsolutePath() + File.separator + tempFilePath;
+            tempFilePath = tempFolder.getAbsolutePath() + File.separator + tempFilePath;
         } else {
             verifyFolderAuthorization(new File(filePath), tempFolder);
         }
