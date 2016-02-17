@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-09 13:28-0500\n"
+"PO-Revision-Date: 2016-02-16 10:29-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -21,6 +21,10 @@ msgstr "1 cas a été supprimé"
 #: main/common/services/i18n.js:109
 msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
+
+#: main/features/user/tasks/list/common/priorities.service.js:15
+msgid "Above normal"
+msgstr "Haute priorité"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/cases/list/cases-list.html:1
@@ -77,6 +81,10 @@ msgstr "Ajoutez des options de menu en cliquant sur \"+\" dans la navigation."
 msgid "Add top-level menu"
 msgstr "Ajouter un menu "
 
+#: main/features/user/tasks/list/common/store.js:59
+msgid "All"
+msgstr "Tous"
+
 #: dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
@@ -85,7 +93,7 @@ msgstr "Une application est un environnement adapté à un profil particulier, d
 msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
-#: main/features/user/tasks/list/tasks-app.js:381
+#: main/features/user/tasks/list/tasks-app.js:374
 msgid "An error occurred while submitting the form."
 msgstr "Une erreur s'est produite lors de la soumission du formulaire."
 
@@ -165,20 +173,12 @@ msgid "Cannot upload the file"
 msgstr "Impossible de charger le fichier"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Case History"
-msgstr "Historique des cas"
+msgid "Case"
+msgstr "Cas"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Case Id"
 msgstr "Numéro de cas"
-
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Case Info"
-msgstr "Informations du cas"
-
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Case Overview"
-msgstr "Page de synthèse du cas"
 
 #: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
@@ -394,7 +394,7 @@ msgstr "Erreur : la valeur doit être un entier"
 msgid "Executing, completing, initializing instances"
 msgstr "Instances en état executing, completing, initializing"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Expand"
 msgstr "Agrandir"
 
@@ -427,7 +427,6 @@ msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caract
 #: dist/features/admin/cases/list/cases-list-filters.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: dist/features/user/cases/list/cases-list-filters.html:1
-#: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Filters"
 msgstr "Filtres"
 
@@ -435,11 +434,15 @@ msgstr "Filtres"
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
 
+#: dist/features/user/tasks/list/tasks-details.html:1
+msgid "Form"
+msgstr "Formulaire"
+
 #: main/common/services/i18n.js:106
 msgid "Form cannot be empty"
 msgstr "Un formulaire ne peut pas être vide"
 
-#: main/features/user/tasks/list/tasks-app.js:387
+#: main/features/user/tasks/list/tasks-app.js:380
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant sélectionnée."
 
@@ -452,13 +455,17 @@ msgstr "Général"
 msgid "Groups"
 msgstr "Groupes"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Hide Menu"
 msgstr "Masquer le Menu"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Hide menu"
 msgstr "Masquer le menu"
+
+#: main/features/user/tasks/list/common/priorities.service.js:14
+msgid "Highest"
+msgstr "Plus haute"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -501,6 +508,10 @@ msgstr "Chargement..."
 #: dist/features/admin/applications/details/application-details.html:1
 msgid "Look & Feel"
 msgstr "Look & Feel"
+
+#: main/features/user/tasks/list/common/priorities.service.js:18
+msgid "Lowest"
+msgstr "Plus basse"
 
 #: main/common/filters/date-parser.js:39
 msgid "MM/dd/yyyy h:mm a"
@@ -587,6 +598,10 @@ msgstr "Aucun résultat"
 msgid "No profile mapped to this application"
 msgstr "Aucun profil n'est associé à cette application"
 
+#: main/features/user/tasks/list/common/priorities.service.js:16
+msgid "Normal"
+msgstr "Normale"
+
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
 msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
@@ -624,13 +639,13 @@ msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le pr
 msgid "Pending Flow Nodes"
 msgstr "Flow nodes en attente"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-table.html:1
+msgid "Priority"
+msgstr "Priorité"
+
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Process"
 msgstr "Processus"
-
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Process Supervisor&nbsp;:"
-msgstr "Superviseur du processus&nbsp;:"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -647,13 +662,9 @@ msgstr "Nom du processus"
 msgid "Process version"
 msgstr "Version du processus"
 
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Process&nbsp;:"
-msgstr "Processus&nbsp;:"
-
-#: dist/features/user/tasks/list/tasks-list.html:3
-msgid "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
-msgstr ""
+#: dist/features/user/tasks/list/tasks-list.html:6
+msgid "Process:"
+msgstr "Processus :"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -669,7 +680,7 @@ msgstr "Profils"
 msgid "Ready, waiting instances"
 msgstr "Instances en état ready, waiting (en attente)"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Reduce"
 msgstr "Réduire"
 
@@ -678,7 +689,7 @@ msgstr "Réduire"
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Refresh data"
 msgstr "Actualiser les données"
 
@@ -734,7 +745,7 @@ msgstr "Clé de recherche 4"
 msgid "Search Key 5"
 msgstr "Clé de recherche 5"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Search on task name"
 msgstr "Effectuer une recherche sur le nom de la tâche"
 
@@ -785,7 +796,7 @@ msgstr "Sélectionnez des utilisateurs ..."
 msgid "Set as Home page"
 msgstr "Définir en tant que page d'accueil"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show Menu"
 msgstr "Afficher le Menu"
 
@@ -797,7 +808,7 @@ msgstr "Afficher les tâches terminées"
 msgid "Show extended task list"
 msgstr "Afficher la liste de tâches étendue"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
 msgstr "Afficher le menu"
 
@@ -845,10 +856,6 @@ msgstr "Date de début"
 msgid "Started by"
 msgstr "Démarré par"
 
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "Started by&nbsp;:"
-msgstr "Démarré par&nbsp;:"
-
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
 msgstr "Etat"
@@ -875,7 +882,7 @@ msgstr "Paramètres du tableau"
 msgid "Take"
 msgstr "Prendre"
 
-#: dist/features/user/tasks/list/tasks-list.html:3
+#: dist/features/user/tasks/list/tasks-list.html:6
 msgid "Task Details"
 msgstr "Détails de la tâche"
 
@@ -900,7 +907,7 @@ msgstr "Le processus ne peut être activé"
 msgid "The application"
 msgstr "L'application"
 
-#: main/features/user/tasks/list/tasks-app.js:376
+#: main/features/user/tasks/list/tasks-app.js:369
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
 
@@ -1020,6 +1027,10 @@ msgstr "URL"
 msgid "Unassign the task and put it back in Available tasks"
 msgstr "De-assigner la tâche et la remettre dans les tâches disponibles"
 
+#: main/features/user/tasks/list/common/priorities.service.js:17
+msgid "Under normal"
+msgstr "Basse priorité"
+
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
 msgstr "Mise à jour"
@@ -1112,14 +1123,6 @@ msgstr "application a été partiellement importée. Les composants suivants ne 
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
 msgstr "L'application a été importée avec le menu et les liens de pages."
 
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "case ID&nbsp;:"
-msgstr "Numéro de cas&nbsp;:"
-
-#: dist/features/user/tasks/list/tasks-details.html:1
-msgid "mail to"
-msgstr "envoyer un email à"
-
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
 msgstr "de"
@@ -1163,6 +1166,11 @@ msgstr "tri par Date de début, croissant"
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Start date descending"
 msgstr "tri par Date de début, décroissant"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "username:"
+msgstr ""
 
 #: dist/features/admin/applications/delete-application.html:1
 msgid "will be permanently deleted."
