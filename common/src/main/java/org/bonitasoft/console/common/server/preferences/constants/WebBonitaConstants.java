@@ -40,9 +40,7 @@ public interface WebBonitaConstants {
 
     public static final String scriptsFolderName = "scripts";
 
-    public static final String tmpFolderName = "tmp";
-
-    public static final String workFolderName = "work";
+    public static final String tmpFolderName = "bonita_portal_";
 
     public static final String formsFolderName = "forms";
 
@@ -102,18 +100,11 @@ public interface WebBonitaConstants {
     public String getPDFTemplateFolderPath();
 
     /**
-     * Get Tenant WorkFolder Path
+     * Get Tenant FormsTempFolder Path
      * 
      * @return path
      */
-    public String getWorkFolderPath();
-
-    /**
-     * Get Tenant FormsWorkFolder Path
-     * 
-     * @return path
-     */
-    public String getFormsWorkFolderPath();
+    public String getFormsTempFolderPath();
 
     /**
      * Get Tenant Default icons Path
@@ -151,38 +142,38 @@ public interface WebBonitaConstants {
     public String getPortalProfilesIconsFolderPath();
 
     /**
-     * Get profilesConsoleWorkFolder Path
+     * Get profilesConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getProfilesWorkFolderPath();
+    public String getProfilesTempFolderPath();
 
     /**
-     * Get reportsConsoleWorkFolder Path
+     * Get reportsConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getReportsWorkFolderPath();
+    public String getReportsTempFolderPath();
 
     /**
-     * Get pagesConsoleWorkFolder Path
+     * Get pagesConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getPagesWorkFolderPath();
+    public String getPagesTempFolderPath();
 
     /**
-     * Get groupsConsoleWorkFolder Path
+     * Get groupsConsoleTempFolder Path
      * 
      * @return path
      */
     public String getPortalGroupIconsFolderPath();
 
     /**
-     * Get BDMWorkFolderPath Path
+     * Get BDMTempFolderPath Path
      * 
      * @return path
      */
-    public String getBDMWorkFolderPath();
+    public String getBDMTempFolderPath();
 
 }

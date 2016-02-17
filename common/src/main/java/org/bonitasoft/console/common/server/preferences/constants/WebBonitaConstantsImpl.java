@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
 
 /**
  * @author Ruiheng.Fan
@@ -102,7 +103,9 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getTempFolderPath() {
         if (tempFolderPath == null) {
-            tempFolderPath = getPlatformFolderPath() + tmpFolderName + File.separator;
+            // We use a tempFolder specific to the running JVM, so that 2 JVMs running on the same machine are isolated:
+            tempFolderPath = System.getProperty("java.io.tmpdir") + File.separator + tmpFolderName + ManagementFactory.getRuntimeMXBean().getName()
+                    + File.separator + platformFolderName + File.separator;
         }
         return tempFolderPath;
     }
@@ -152,7 +155,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getProfilesWorkFolderPath() {
+    public String getProfilesTempFolderPath() {
         return null;
     }
 
@@ -160,7 +163,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getReportsWorkFolderPath() {
+    public String getReportsTempFolderPath() {
         return null;
     }
 
@@ -168,7 +171,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getPagesWorkFolderPath() {
+    public String getPagesTempFolderPath() {
         return null;
     }
 
@@ -176,20 +179,9 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getWorkFolderPath() {
-        if (workFolderPath == null) {
-            workFolderPath = getPlatformFolderPath() + workFolderName + File.separator;
-        }
-        return workFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFormsWorkFolderPath() {
+    public String getFormsTempFolderPath() {
         if (formsWorkFolderPath == null) {
-            formsWorkFolderPath = getWorkFolderPath() + formsFolderName + File.separator;
+            formsWorkFolderPath = getTempFolderPath() + formsFolderName + File.separator;
         }
         return formsWorkFolderPath;
     }
@@ -205,11 +197,8 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getBDMWorkFolderPath() {
-        if (bdmWorkFolderPath == null) {
-            bdmWorkFolderPath = getWorkFolderPath() + File.separator + bdmFolderName + File.separator;
-        }
-        return bdmWorkFolderPath;
+    public String getBDMTempFolderPath() {
+        return null; // does not means anything at platform level
     }
 
 }

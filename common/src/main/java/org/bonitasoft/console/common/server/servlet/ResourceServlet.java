@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,7 +37,6 @@ import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut
- *
  */
 public abstract class ResourceServlet extends HttpServlet {
 
@@ -98,19 +95,13 @@ public abstract class ResourceServlet extends HttpServlet {
     }
 
     /**
-     * Get resource file
+     * Get resource file.
      *
-     * @param request
-     * @param response
-     * @param resourceName
-     * @param fileName
      * @throws ServletException
      * @throws UnsupportedEncodingException
      */
     protected void getResourceFile(final HttpServletRequest request, final HttpServletResponse response, String resourceName, String fileName)
             throws ServletException, UnsupportedEncodingException {
-        byte[] content = null;
-        String contentType = null;
         if (resourceName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + getResourceParameterName() + " is null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -147,6 +138,10 @@ public abstract class ResourceServlet extends HttpServlet {
             if (!tenantFolder.isInFolder(file, resourceFolder)) {
                 throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
             }
+
+            byte[] content;
+            String contentType;
+
             final String lowerCaseFileName = fileName.toLowerCase();
             if (lowerCaseFileName.endsWith(".jpg")) {
                 contentType = "image/jpeg";
@@ -198,7 +193,6 @@ public abstract class ResourceServlet extends HttpServlet {
     }
 
     protected File getResourcesParentFolder(final HttpServletRequest request) throws ServletException {
-        File resourcesParentFolder = null;
         final HttpSession session = request.getSession();
         long tenantId = 1;
         final String tenantFromRequest = request.getParameter(TENANT_PARAM);
@@ -211,7 +205,7 @@ public abstract class ResourceServlet extends HttpServlet {
             tenantId = Long.parseLong(tenantFromRequest);
         }
         try {
-            resourcesParentFolder = getResourcesParentFolder(tenantId);
+            return getResourcesParentFolder(tenantId);
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet to get themes parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -219,7 +213,6 @@ public abstract class ResourceServlet extends HttpServlet {
             }
             throw new ServletException(errorMessage);
         }
-        return resourcesParentFolder;
     }
 
 }

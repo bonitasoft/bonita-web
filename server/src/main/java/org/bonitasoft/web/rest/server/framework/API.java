@@ -16,6 +16,7 @@ package org.bonitasoft.web.rest.server.framework;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -422,7 +423,7 @@ public abstract class API<ITEM extends IItem> {
         final File destinationFile = new File(destinationDirectory.getAbsolutePath() + File.separator + destinationName);
         try {
             destinationFile.delete();
-            file.renameTo(destinationFile);
+            Files.move(file.toPath(), destinationFile.toPath());
         } catch (final Exception e) {
             e.getMessage();
         }
