@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-01-26 10:20-0500\n"
+"PO-Revision-Date: 2016-02-17 11:39-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -107,7 +107,7 @@ msgstr "Tâches disponibles"
 
 #: dist/features/admin/processes/details/menu.html:1
 msgid "Back"
-msgstr "Retour"
+msgstr "Précédent"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
@@ -674,7 +674,7 @@ msgstr "Définir le menu de navigation."
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Start date"
-msgstr "Date de début"
+msgstr "Débuté le"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-02-02 10:10-0500\n"
+"PO-Revision-Date: 2016-02-17 11:39-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -446,7 +446,7 @@ msgid "BPM services"
 msgstr "Services BPM"
 
 msgid "Back"
-msgstr "Retour"
+msgstr "Précédent"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -1160,7 +1160,7 @@ msgid "Human Task"
 msgstr "Tâche humaine"
 
 msgid "Human task"
-msgstr ""
+msgstr "Tâche humaine"
 
 msgid "ID"
 msgstr "Id"
@@ -1318,7 +1318,7 @@ msgid "Logout"
 msgstr "Déconnexion"
 
 msgid "Look and Feel"
-msgstr ""
+msgstr "Look and Feel"
 
 msgid "Loop activity"
 msgstr "Activité de boucle"
@@ -1563,7 +1563,7 @@ msgstr "Oups... Cet item n'est plus disponible. \n"
 " Vous allez être redirigé."
 
 msgid "Overview"
-msgstr "Page de synthèse"
+msgstr "Aperçu"
 
 msgid "Page"
 msgstr "Page"
@@ -1836,7 +1836,7 @@ msgid "Select an avatar for this user"
 msgstr "Sélectionnez un avatar pour cet utilisateur"
 
 msgid "Select profile"
-msgstr "Sélectionnez un profil"
+msgstr "Sélectionner le profile"
 
 msgid "Select the category which the process will be linked to"
 msgstr "Sélectionner la catégorie à associer au processus"
@@ -1881,7 +1881,7 @@ msgid "Settings"
 msgstr "Paramètres"
 
 msgid "Show all profiles of portal"
-msgstr "Voir tous les profils du portail"
+msgstr "Voir tous les profils du Bonita BPM Portal"
 
 msgid "Show more details about this process"
 msgstr "Afficher plus d'informations sur ce processus"
@@ -1935,7 +1935,7 @@ msgid "Start an instance of process %app_name%"
 msgstr "Démarrer une instance de processus %app_name%"
 
 msgid "Start date"
-msgstr "Date de début"
+msgstr "Débuté le"
 
 msgid "Start this process"
 msgstr "Démarrer ce processus"
@@ -2553,7 +2553,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr ""
+msgstr "tâche humaine"
 
 msgid "import/export organization"
 msgstr "importer/exporter l'organisation"
