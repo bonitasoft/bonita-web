@@ -54,7 +54,7 @@ public class AuthenticationFilter implements Filter {
      */
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());
 
-    private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(portal/scripts)|(portal/formsService)";
+    private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)";
 
     protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
 

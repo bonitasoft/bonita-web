@@ -84,4 +84,9 @@ public class PageResourceServlet extends ResourceServlet {
         return RESOURCES_SUBFOLDER_NAME;
     }
 
+    @Override
+    protected String getDefaultResourceName() {
+        return null;
+    }
+
 }
