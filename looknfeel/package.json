@@ -12,6 +12,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "mkdir target && cd target && mkdir css && cd .. && node node_modules/less/bin/lessc src/main/less/main.less > target/css/bonita.css && node node_modules/less/bin/lessc src/main/less/skin/bootstrap/portal/main.less > target/css/bonita-skin.css && node node_modules/less/bin/lessc src/main/less/bootstrap/bootstrap.less > src/main/resources/css/bootstrap.min.css"
+    "postinstall": "mkdir -p target/css && node node_modules/less/bin/lessc src/main/less/main.less > target/css/bonita.css && node node_modules/less/bin/lessc src/main/less/bootstrap/bootstrap.less > src/main/resources/css/bootstrap.min.css"
   }
 }
