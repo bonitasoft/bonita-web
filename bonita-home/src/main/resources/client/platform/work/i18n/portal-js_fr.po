@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-09 13:28-0500\n"
+"PO-Revision-Date: 2016-02-17 11:37-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -128,7 +128,7 @@ msgstr "Tâches disponibles"
 
 #: dist/features/admin/processes/details/menu.html:1
 msgid "Back"
-msgstr "Retour"
+msgstr "Précédent"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
@@ -174,11 +174,11 @@ msgstr "Numéro de cas"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Info"
-msgstr "Informations du cas"
+msgstr ""
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Overview"
-msgstr "Page de synthèse du cas"
+msgstr ""
 
 #: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
@@ -630,7 +630,7 @@ msgstr "Processus"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process Supervisor&nbsp;:"
-msgstr "Superviseur du processus&nbsp;:"
+msgstr ""
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -649,7 +649,7 @@ msgstr "Version du processus"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process&nbsp;:"
-msgstr "Processus&nbsp;:"
+msgstr ""
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
@@ -836,7 +836,7 @@ msgstr "Définir le menu de navigation."
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
 msgid "Start date"
-msgstr "Date de début"
+msgstr "Débuté le"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/archived-cases-list-filters.html:1
@@ -847,7 +847,7 @@ msgstr "Démarré par"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Started by&nbsp;:"
-msgstr "Démarré par&nbsp;:"
+msgstr ""
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
@@ -1114,11 +1114,11 @@ msgstr "L'application a été importée avec le menu et les liens de pages."
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "case ID&nbsp;:"
-msgstr "Numéro de cas&nbsp;:"
+msgstr ""
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "mail to"
-msgstr "envoyer un email à"
+msgstr ""
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
