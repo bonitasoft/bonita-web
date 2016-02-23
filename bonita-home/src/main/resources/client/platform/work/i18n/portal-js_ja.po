@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-02-17 11:47-0500\n"
+"PO-Revision-Date: 2016-02-22 11:46-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -392,7 +392,7 @@ msgstr "エラー: 値は整数でなければなりません"
 
 #: main/common/services/i18n.js:92
 msgid "Executing, completing, initializing instances"
-msgstr "実行中, 完了中, インスタンスを初期化中"
+msgstr "実行中、完了中、インスタンスを初期化中"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Expand"
@@ -417,7 +417,7 @@ msgstr "作業中にエラー発生"
 
 #: main/common/services/i18n.js:91
 msgid "Failed instances"
-msgstr "失敗したインスタンス"
+msgstr "エラーのあったインスタンス"
 
 #: main/common/services/i18n.js:107
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
