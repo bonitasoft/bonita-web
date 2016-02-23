@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-17 11:37-0500\n"
+"PO-Revision-Date: 2016-02-22 11:42-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -71,7 +71,7 @@ msgstr "Ajouter une page"
 
 #: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Add pages in Navigation"
-msgstr "Ajoutez des options de menu en cliquant sur \"+\" dans la navigation."
+msgstr "Ajouter des pages à la navigation"
 
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Add top-level menu"
