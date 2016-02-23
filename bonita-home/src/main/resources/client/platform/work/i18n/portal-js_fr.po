@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-22 11:42-0500\n"
+"PO-Revision-Date: 2016-02-23 10:41-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -485,7 +485,7 @@ msgstr "Aucun mapping"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr ""
+msgstr "Aucun profil associé à cette application"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
