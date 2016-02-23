@@ -23,18 +23,6 @@
 		position: relative;
 		background-color: @filtersPanel-filtersCurrent-background !important;
 		color: @filtersPanel-filtersCurrent-link-textColor;
-		&:after{
-			position: absolute;
-			content: "";
-			display: block;
-			width: @filtersPanel-filtersCurrent-width;
-			.bg(@filtersPanel-filtersCurrent-bgArrow, no-repeat, @filtersPanel-filtersCurrent-background, center, right);
-			top: 0;
-			right: @filtersPanel-filtersCurrent-positionRight;
-			margin-right: 0px;
-			height: 100%;
-			z-index: @zIndex-currentArrow;
-		}
 	}
 }
 .filters_panel{
@@ -275,19 +263,6 @@
 				position: relative;
 				background-color: @filtersPanel-filtersCurrent-background !important;
 				color: @filtersPanel-filtersCurrent-link-textColor;
-				&:after{
-					position: absolute;
-					content: "";
-					display: block;
-					width: @filtersPanel-filtersCurrent-width;
-					.bg(@filtersPanel-filtersCurrent-bgArrow, no-repeat, @filtersPanel-filtersCurrent-background, center, right);
-					top: 0;
-					right: @filtersPanel-filtersCurrent-positionRight;
-					margin-right: 0px;
-					height: 100%;
-					z-index: @zIndex-currentArrow;
-				}
-			
 				}
 			}
 		}
