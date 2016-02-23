@@ -475,7 +475,6 @@ a.bonita_download_link:hover {
 	-webkit-box-shadow: 2px 2px 2px #d8d8d8;
 	-moz-box-shadow: 2px 2px 2px #d8d8d8;
 	-o-box-shadow: 2px 2px 2px #d8d8d8;
-	behavior: url(PIE.htc);
 }
 
 .bonita_form_button * {
