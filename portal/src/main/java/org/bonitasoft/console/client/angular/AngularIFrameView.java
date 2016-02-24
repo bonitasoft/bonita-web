@@ -53,7 +53,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String CASE_LISTING_PROCESS_ID_TOKEN = "processId";
 
-    public static final String TASK_LISTING_TOKEN = "tasklistinguser_new";
+    public static final String TASK_LISTING_TOKEN = "tasklistinguser";
 
     private final IFrameView iframe = new IFrameView(new ProcessInstantiationEventListener(), new TaskExecutionEventListener());
 
