@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-22 11:42-0500\n"
+"PO-Revision-Date: 2016-02-29 05:56-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -107,11 +107,11 @@ msgstr "Cas archivés"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Assign the task to myself and move it to My tasks"
-msgstr "M'assigner la tâche et la mettre dans mes tâches"
+msgstr "Prendre la tâche et la mettre dans mes tâches"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Assign the task to myself and move it to My tasks."
-msgstr "M'assigner la tâche et la mettre dans mes tâches."
+msgstr "Prendre la tâche et la mettre dans Mes tâches."
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Assigned on"
@@ -119,7 +119,7 @@ msgstr "Assignée le"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Available or My tasks"
-msgstr "Disponible ou dans mes tâches"
+msgstr "Disponible ou dans Mes tâches"
 
 #: dist/features/user/cases/list/cases-list.html:1
 #: dist/features/user/tasks/list/tasks-filters.html:2
@@ -170,15 +170,15 @@ msgstr "Historique des cas"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Case Id"
-msgstr "Numéro de cas"
+msgstr "ID de cas"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Info"
-msgstr ""
+msgstr "Informations du cas"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Overview"
-msgstr ""
+msgstr "Page de synthèse du cas"
 
 #: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
@@ -237,7 +237,7 @@ msgstr "Sélection des colonnes"
 
 #: dist/features/user/tasks/list/tasks-no-form.html:1
 msgid "Comment:"
-msgstr "Commentaire:"
+msgstr "Commentaire :"
 
 #: main/common/services/i18n.js:111
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
@@ -630,7 +630,7 @@ msgstr "Processus"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process Supervisor&nbsp;:"
-msgstr ""
+msgstr "Gestionnaire&nbsp; du processus :"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -649,7 +649,7 @@ msgstr "Version du processus"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process&nbsp;:"
-msgstr ""
+msgstr "Processus&nbsp; :"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
@@ -736,7 +736,7 @@ msgstr "Clé de recherche 5"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Search on task name"
-msgstr "Effectuer une recherche sur le nom de la tâche"
+msgstr "Rechercher sur le nom de tâche"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -795,7 +795,7 @@ msgstr "Afficher les tâches terminées"
 
 #: dist/features/user/tasks/list/tasks-layoutswitch.html:1
 msgid "Show extended task list"
-msgstr "Afficher la liste de tâches étendue"
+msgstr "Afficher la liste de tâches en pleine page"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Show menu"
@@ -803,15 +803,15 @@ msgstr "Afficher le menu"
 
 #: dist/features/user/tasks/list/tasks-layoutswitch.html:1
 msgid "Show task list with details pane"
-msgstr "Voir la liste des tâches avec le volet d'informations"
+msgstr "Voir la liste des tâches et le panneau de détails"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Show tasks assigned to me, automatically, by me or by another user"
-msgstr "Afficher les tâches qui me sont assignées, automatiquement, par moi ou par un autre utilisateur"
+msgstr "Afficher les tâches qui m'ont été assignées soit automatiquement, soit par moi ou un administrateur"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Show tasks that I can do that are not assigned"
-msgstr "Afficher les tâches que je peux faire qui ne sont pas assignées"
+msgstr "Afficher les tâches que je peux faire et qui ne sont pas encore assignées"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
@@ -847,7 +847,7 @@ msgstr "Démarré par"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Started by&nbsp;:"
-msgstr ""
+msgstr "Démarré par&nbsp; :"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
@@ -881,7 +881,7 @@ msgstr "Détails de la tâche"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Task Id"
-msgstr "Identifiant de tâche"
+msgstr "ID de tâche"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Task name"
@@ -971,7 +971,7 @@ msgstr "Cette tâche est terminée."
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "This task is not assigned to you. You need to take it before filling in this form."
-msgstr "Vous devez vous assigner la tâche avant de remplir ce formulaire."
+msgstr "Vous devez prendre la tâche pour pouvoir remplir le formulaire."
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "To create an application, click New or Import."
@@ -1018,7 +1018,7 @@ msgstr "URL"
 #: dist/features/user/tasks/list/tasks-details.html:1
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Unassign the task and put it back in Available tasks"
-msgstr "De-assigner la tâche et la remettre dans les tâches disponibles"
+msgstr "Relâcher la tâche et la remettre dans les tâches disponibles"
 
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
@@ -1114,11 +1114,11 @@ msgstr "L'application a été importée avec le menu et les liens de pages."
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "case ID&nbsp;:"
-msgstr ""
+msgstr "ID du cas&nbsp; :"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "mail to"
-msgstr ""
+msgstr "email"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
