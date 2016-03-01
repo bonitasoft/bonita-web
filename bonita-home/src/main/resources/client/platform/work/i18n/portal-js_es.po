@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-02-17 11:42-0500\n"
+"PO-Revision-Date: 2016-02-29 05:57-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -38,6 +38,7 @@ msgid "Actor name"
 msgstr "Nombre del actor"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/features/admin/processes/details/details.js:55
 msgid "Actors"
 msgstr "Actores"
 
@@ -206,6 +207,7 @@ msgid "Confirm delete?"
 msgstr "¿Confirmar borrado?"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
+#: main/features/admin/processes/details/details.js:65
 msgid "Connectors"
 msgstr "Conectores"
 
@@ -372,6 +374,7 @@ msgid "Form cannot be empty"
 msgstr "El formulario no puede estar vacío"
 
 #: dist/features/admin/processes/details/information.html:1
+#: main/features/admin/processes/details/details.js:50
 msgid "General"
 msgstr "General"
 
@@ -485,7 +488,7 @@ msgstr "Ningún mapeo"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr ""
+msgstr "Sin perfil asignado a esta aplicación"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
@@ -513,6 +516,7 @@ msgid "Pages"
 msgstr "Páginas"
 
 #: dist/features/admin/processes/details/params.html:1
+#: main/features/admin/processes/details/details.js:60
 msgid "Parameters"
 msgstr "Parámetros"
 
@@ -810,7 +814,7 @@ msgstr "Escriba aquí para buscar..."
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/applications/import-application.html:1
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"

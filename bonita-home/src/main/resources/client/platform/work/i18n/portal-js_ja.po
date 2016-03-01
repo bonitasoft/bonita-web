@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-02-22 11:47-0500\n"
+"PO-Revision-Date: 2016-02-29 05:59-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -38,6 +38,7 @@ msgid "Actor name"
 msgstr "アクター名"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/features/admin/processes/details/details.js:55
 msgid "Actors"
 msgstr "アクター"
 
@@ -206,6 +207,7 @@ msgid "Confirm delete?"
 msgstr "削除していいですか？"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
+#: main/features/admin/processes/details/details.js:65
 msgid "Connectors"
 msgstr "コネクタ"
 
@@ -372,6 +374,7 @@ msgid "Form cannot be empty"
 msgstr "フォームは空にできません"
 
 #: dist/features/admin/processes/details/information.html:1
+#: main/features/admin/processes/details/details.js:50
 msgid "General"
 msgstr "全般"
 
@@ -513,6 +516,7 @@ msgid "Pages"
 msgstr "ページ"
 
 #: dist/features/admin/processes/details/params.html:1
+#: main/features/admin/processes/details/details.js:60
 msgid "Parameters"
 msgstr "パラメータ"
 

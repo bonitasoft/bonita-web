@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-23 10:41-0500\n"
+"PO-Revision-Date: 2016-02-29 05:56-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -38,6 +38,7 @@ msgid "Actor name"
 msgstr "Nom de l'acteur"
 
 #: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/features/admin/processes/details/details.js:55
 msgid "Actors"
 msgstr "Acteurs"
 
@@ -206,6 +207,7 @@ msgid "Confirm delete?"
 msgstr "Confirmer la suppression ?"
 
 #: dist/features/admin/processes/details/process-connectors.html:1
+#: main/features/admin/processes/details/details.js:65
 msgid "Connectors"
 msgstr "Connecteurs"
 
@@ -372,6 +374,7 @@ msgid "Form cannot be empty"
 msgstr "Un formulaire ne peut pas être vide"
 
 #: dist/features/admin/processes/details/information.html:1
+#: main/features/admin/processes/details/details.js:50
 msgid "General"
 msgstr "Général"
 
@@ -513,6 +516,7 @@ msgid "Pages"
 msgstr "Pages"
 
 #: dist/features/admin/processes/details/params.html:1
+#: main/features/admin/processes/details/details.js:60
 msgid "Parameters"
 msgstr "Paramètres"
 

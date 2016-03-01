@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-02-22 11:43-0500\n"
+"POT-Creation-Date: 2016-02-25 01:02+0100\n"
+"PO-Revision-Date: 2016-02-29 05:57-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -830,7 +830,7 @@ msgid "Display tasks I have done"
 msgstr "Mostrar las tareas que he realizado"
 
 msgid "Display the case overview"
-msgstr ""
+msgstr "Mostrar el Resumen de caso"
 
 msgid "Do it"
 msgstr "hacer"
@@ -1160,7 +1160,7 @@ msgid "Human Task"
 msgstr "Tarea Humana"
 
 msgid "Human task"
-msgstr ""
+msgstr "Tarea Humana"
 
 msgid "ID"
 msgstr "ID"
@@ -1318,7 +1318,7 @@ msgid "Logout"
 msgstr "Cerrar sesión"
 
 msgid "Look and Feel"
-msgstr ""
+msgstr "Apariencia"
 
 msgid "Loop activity"
 msgstr "Actividad de bucle"
@@ -1663,6 +1663,9 @@ msgstr "Por favor, espere que los archivos sean cargados."
 
 msgid "Please, contact your administrator."
 msgstr "Por favor, ponte en contacto con tu administrador."
+
+msgid "Portal"
+msgstr "Portal"
 
 msgid "Post time"
 msgstr "Tiempo publicado"
@@ -2553,7 +2556,7 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr ""
+msgstr "tarea humana"
 
 msgid "import/export organization"
 msgstr "Importación/exportación de organización"
