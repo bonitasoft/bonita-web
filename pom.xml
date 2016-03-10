@@ -28,7 +28,6 @@
         <spring.version>3.1.2.RELEASE</spring.version>
         <bonita.home.test>${project.build.directory}/bonita-home</bonita.home.test>
         <restlet-version>2.3.1</restlet-version>
-        <bonita-web-extensions.version>7.2.1</bonita-web-extensions.version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>

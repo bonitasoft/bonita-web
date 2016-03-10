@@ -51,10 +51,10 @@
         </dependency>
 
         <!--Web extensions-->
-        <dependency>
+		<dependency>
             <groupId>org.bonitasoft.web</groupId>
             <artifactId>bonita-web-extensions</artifactId>
-            <version>${bonita-web-extensions.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--Vendors-->
@@ -143,7 +143,7 @@
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-classloader</artifactId>
         </dependency>
-
+        
         <!--Test-->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
