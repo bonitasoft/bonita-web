@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-02-17 11:40-0500\n"
+"PO-Revision-Date: 2016-02-29 05:57-0500\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -87,7 +87,7 @@ msgstr "Se produjo un error durante la actualización de las categorías"
 
 #: main/features/user/tasks/list/tasks-app.js:381
 msgid "An error occurred while submitting the form."
-msgstr ""
+msgstr "Ocurrió un error al enviar el formulario."
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -107,19 +107,19 @@ msgstr "Casos archivados"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Assign the task to myself and move it to My tasks"
-msgstr ""
+msgstr "Asignarme la tarea e ir a Mis tareas"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Assign the task to myself and move it to My tasks."
-msgstr ""
+msgstr "Asignarme la tarea e ir a Mis tareas."
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Assigned on"
-msgstr ""
+msgstr "Asignado el"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Available or My tasks"
-msgstr ""
+msgstr "Disponible o Mis tareas"
 
 #: dist/features/user/cases/list/cases-list.html:1
 #: dist/features/user/tasks/list/tasks-filters.html:2
@@ -170,15 +170,15 @@ msgstr "Histórico de Casos"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Case Id"
-msgstr ""
+msgstr "Id del Caso"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Info"
-msgstr ""
+msgstr "Información del caso"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Case Overview"
-msgstr ""
+msgstr "Resumen del caso"
 
 #: main/common/services/i18n.js:94
 msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
@@ -225,11 +225,11 @@ msgstr "Cerrar"
 
 #: dist/features/user/tasks/list/tasks-modal-details.html:1
 msgid "Close Preview"
-msgstr ""
+msgstr "Cerrar previsualización"
 
 #: dist/features/user/tasks/list/tasks-modal-form.html:1
 msgid "Close form"
-msgstr ""
+msgstr "Cerrar formulario"
 
 #: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
@@ -237,7 +237,7 @@ msgstr "Selección de columnas"
 
 #: dist/features/user/tasks/list/tasks-no-form.html:1
 msgid "Comment:"
-msgstr ""
+msgstr "Comentario:"
 
 #: main/common/services/i18n.js:111
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
@@ -317,7 +317,7 @@ msgstr "Título dinámico"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Do this task"
-msgstr ""
+msgstr "Hacer esta tarea"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Done tasks"
@@ -396,7 +396,7 @@ msgstr "Instancias in curso, completadas, inicializadas"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Expand"
-msgstr ""
+msgstr "Desplegar"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/export-application.html:1
@@ -441,7 +441,7 @@ msgstr "El formulario no puede estar vacío"
 
 #: main/features/user/tasks/list/tasks-app.js:387
 msgid "Form submitted.<br/>The next task in the list is now selected."
-msgstr ""
+msgstr "Formulario enviado. <br/> La siguiente tarea en la lista está ahora seleccionada."
 
 #: dist/features/admin/processes/details/information.html:1
 msgid "General"
@@ -454,11 +454,11 @@ msgstr "Grupos"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ocultar menú"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Hide menu"
-msgstr ""
+msgstr "Ocultar menú"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -530,7 +530,7 @@ msgstr "Menú multi-página"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "My task"
-msgstr ""
+msgstr "Mi tarea"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "My tasks"
@@ -573,7 +573,7 @@ msgstr "No hay descripción."
 
 #: dist/features/user/tasks/list/tasks-no-form.html:1
 msgid "No form is needed. You can enter a comment and confirm."
-msgstr ""
+msgstr "No se necesita ningún formulario. Puede introducir un comentario y confirmar."
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "No mapping"
@@ -581,11 +581,11 @@ msgstr "Ningún mapeo"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "No matching results"
-msgstr ""
+msgstr "No se encontraron resultados"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr ""
+msgstr "Sin perfil asignado a esta aplicación"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "One or more connectors on case start or case end failed"
@@ -630,7 +630,7 @@ msgstr "Proceso"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process Supervisor&nbsp;:"
-msgstr ""
+msgstr "Supervisor de proceso&nbsp;:"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -649,11 +649,11 @@ msgstr "Versión de proceso"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Process&nbsp;:"
-msgstr ""
+msgstr "Processo&nbsp;:"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
-msgstr ""
+msgstr "Process: ' + app.request.process.name + (app.request.process.version ? ' ' + app.request.process.version : '') }}\" ng-disabled=\"app.request.taskFilter === app.TASK_FILTERS.DONE || !app.processes || app.processes.length === 0\"><div class=\"ProcessList-label\">{{app.request.process.name + (app.request.process.version?\" \"+app.request.process.version:\"\")}} <span class=\"caret\"></span></div></button><ul class=\"dropdown-menu\"><li ng-repeat=\"p in app.processes\"><a ng-click=\"app.setProcess(p)\" ng-class=\"{'active':p.id === app.request.process.id}\" class=\"processOptionLink\">{{p.name+\"&nbsp;\"+p.version}}</a></li></ul></div><span class=\"Loading pull-right\" ng-show=\"app.loadingTasks\"></span> <button class=\"btn btn-default pull-right\" type=\"button\" title=\"{{ 'Refresh data"
 
 #: dist/features/admin/applications/applications-list.html:1
 #: dist/features/admin/applications/details/application-details.html:1
@@ -671,7 +671,7 @@ msgstr "Instancias listas, en espera"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Reduce"
-msgstr ""
+msgstr "Reducir"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 #: dist/features/user/cases/list/cases-list.html:1
@@ -680,7 +680,7 @@ msgstr "Refrescar"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Refresh data"
-msgstr ""
+msgstr "Actualizar datos"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 #: dist/features/user/tasks/list/tasks-table.html:1
@@ -736,7 +736,7 @@ msgstr "Clave de búsqueda 5"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Search on task name"
-msgstr ""
+msgstr "Buscar por nombre de la tarea"
 
 #: dist/features/admin/cases/list/archived-cases-list-filters.html:1
 #: dist/features/admin/cases/list/cases-list-filters.html:1
@@ -787,31 +787,31 @@ msgstr "Establecer como página de inicio"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Show Menu"
-msgstr ""
+msgstr "Mostrar el menú"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Show done tasks"
-msgstr ""
+msgstr "Mostrar tareas terminadas"
 
 #: dist/features/user/tasks/list/tasks-layoutswitch.html:1
 msgid "Show extended task list"
-msgstr ""
+msgstr "Ver la lista de tareas ampliada"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Show menu"
-msgstr ""
+msgstr "Mostrar menú"
 
 #: dist/features/user/tasks/list/tasks-layoutswitch.html:1
 msgid "Show task list with details pane"
-msgstr ""
+msgstr "Mostrar lista de tareas con el panel de detalles"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Show tasks assigned to me, automatically, by me or by another user"
-msgstr ""
+msgstr "Mostrar las tareas asignadas a mí, automáticamente, por mí o por otro usuario"
 
 #: dist/features/user/tasks/list/tasks-filters.html:2
 msgid "Show tasks that I can do that are not assigned"
-msgstr ""
+msgstr "Mostrar tareas que puedo hacer y que no están asignadas"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
@@ -847,7 +847,7 @@ msgstr "Iniciado por"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "Started by&nbsp;:"
-msgstr ""
+msgstr "Iniciado por&nbsp;:"
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
@@ -877,11 +877,11 @@ msgstr "Tomar"
 
 #: dist/features/user/tasks/list/tasks-list.html:3
 msgid "Task Details"
-msgstr ""
+msgstr "Detalles de la Tarea"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Task Id"
-msgstr ""
+msgstr "Id de tarea"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Task name"
@@ -902,7 +902,7 @@ msgstr "La aplicación"
 
 #: main/features/user/tasks/list/tasks-app.js:376
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
-msgstr ""
+msgstr "El archivo adjunto es demasiado grande. <br/> Seleccione un archivo más pequeño y envíe el formulario de nuevo."
 
 #: main/common/services/i18n.js:115
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
@@ -967,11 +967,11 @@ msgstr "Este nombre ya está en uso"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "This task is completed."
-msgstr ""
+msgstr "Esta tarea se ha completado."
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "This task is not assigned to you. You need to take it before filling in this form."
-msgstr ""
+msgstr "Esta tarea no está asignada a ti. Necesitas tomarla antes de rellenar este formulario."
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "To create an application, click New or Import."
@@ -1013,12 +1013,12 @@ msgstr "Escriba aquí para buscar..."
 #: dist/features/admin/applications/edit-application.html:1
 #: dist/features/admin/applications/import-application.html:1
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "Unassign the task and put it back in Available tasks"
-msgstr ""
+msgstr "Quitar la asignación de la tarea y volver a las tareas disponibles"
 
 #: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Update"
@@ -1070,11 +1070,11 @@ msgstr "Ver resumen del Caso"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "View task"
-msgstr ""
+msgstr "Ver tarea"
 
 #: dist/features/user/tasks/list/tasks-table.html:1
 msgid "View this task"
-msgstr ""
+msgstr "Ver esta tarea"
 
 #: dist/features/admin/applications/export-application.html:1
 msgid "When you export an application, pages and profiles are not exported in the file."
@@ -1114,11 +1114,11 @@ msgstr "la aplicación ha sido importado con éxito, con la asignación de pági
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "case ID&nbsp;:"
-msgstr ""
+msgstr "iD del caso&nbsp;:"
 
 #: dist/features/user/tasks/list/tasks-details.html:1
 msgid "mail to"
-msgstr ""
+msgstr "email a"
 
 #: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
