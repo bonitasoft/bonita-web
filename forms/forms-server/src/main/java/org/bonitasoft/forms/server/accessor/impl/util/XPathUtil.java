@@ -58,7 +58,9 @@ public abstract class XPathUtil {
         Node node = null;
         try {
             final XPathExpression compiledXpath = xpathEvaluator.compile(xPath);
-            node = (Node) compiledXpath.evaluate(parentNode, XPathConstants.NODE);
+            synchronized (parentNode) {
+                node = (Node) compiledXpath.evaluate(parentNode, XPathConstants.NODE);
+            }
         } catch (final XPathExpressionException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error in Xpath expression", e);
@@ -98,7 +100,9 @@ public abstract class XPathUtil {
         NodeList nodeList = null;
         try {
             final XPathExpression compiledXpath = xpathEvaluator.compile(xPath);
-            nodeList = (NodeList) compiledXpath.evaluate(parentNode, XPathConstants.NODESET);
+            synchronized (parentNode) {
+                nodeList = (NodeList) compiledXpath.evaluate(parentNode, XPathConstants.NODESET);
+            }
         } catch (final XPathExpressionException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error in Xpath expression", e);
