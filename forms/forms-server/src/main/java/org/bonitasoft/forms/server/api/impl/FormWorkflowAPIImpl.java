@@ -60,7 +60,6 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
 import org.bonitasoft.engine.command.CommandParameterizationException;
-import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -822,7 +821,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         return processAPI.isUserProcessSupervisor(processDefinitionId, session.getUserId());
     }
 
-    protected boolean hasUserAdminProfile(APISession session, ProfileAPI profileAPI) {
+    protected boolean hasUserAdminProfile(final APISession session, final ProfileAPI profileAPI) {
         List<Profile> profiles;
         int startIndex = 0;
         final int maxResults = 10;
@@ -901,21 +900,22 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
-        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
-        if (!involvedInProcessInstance) {
-            try {
-                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
-            } catch (final BonitaException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE,
-                            "The engine was not able to find out if the user is a manager of a user involved in the process instance " + processInstanceID);
-                }
-                throw new BPMEngineException(e);
-            }
-        }
-        return involvedInProcessInstance;
-
+        return true;
+        //TODO: restore once BS-15125 has been fixed
+        //        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        //        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        //        if (!involvedInProcessInstance) {
+        //            try {
+        //                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        //            } catch (final BonitaException e) {
+        //                if (LOGGER.isLoggable(Level.SEVERE)) {
+        //                    LOGGER.log(Level.SEVERE,
+        //                            "The engine was not able to find out if the user is a manager of a user involved in the process instance " + processInstanceID);
+        //                }
+        //                throw new BPMEngineException(e);
+        //            }
+        //        }
+        //        return involvedInProcessInstance;
     }
 
     /**
