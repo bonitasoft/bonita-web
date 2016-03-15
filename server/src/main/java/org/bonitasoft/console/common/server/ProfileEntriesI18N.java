@@ -59,4 +59,6 @@ public class ProfileEntriesI18N {
 
     protected static final String REPORTS = _("Reports");
 
+    protected static final String PORTAL = _("Portal");
+
 }

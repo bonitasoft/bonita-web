@@ -88,6 +88,7 @@ public class MenuListCreator {
     private MenuLink createLink(final ProfileEntryItem entry) {
         saveFirstPageMet(entry);
         final String token = getEntryUrlToken(entry);
+        //For default portal link label, translation see the class "ProfileEntriesI18N.java"
         return new MenuLink(
                 createJsId(entry),
                 _(getLinkName(entry)),
@@ -111,6 +112,7 @@ public class MenuListCreator {
     }
 
     private MenuItem createFolder(final ProfileEntryItem entry) {
+        //For default portal menu label, see the class "ProfileEntriesI18N.java"
         final MenuFolder folder = new MenuFolder(new JsId(entry.getName()), _(entry.getName()));
         adoptOrphanEntries(folder, entry);
         return folder;

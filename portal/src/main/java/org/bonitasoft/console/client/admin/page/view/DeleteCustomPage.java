@@ -22,17 +22,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
+import org.bonitasoft.web.toolkit.client.RequestBuilder;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
@@ -45,6 +41,11 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.callout.CalloutWarning;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.button.FormSubmitButton;
+
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 
 /**
  * @author Julien Mege
@@ -216,31 +217,30 @@ public class DeleteCustomPage extends Page {
         }
     }
 
-    private void searchFormMappingDependenciesForPage(String pageId) {
+    private void searchFormMappingDependenciesForPage(final String pageId) {
         final Map<String, String> filter = new HashMap<String, String>();
         filter.put(ApplicationPageItem.ATTRIBUTE_PAGE_ID, pageId);
-        RequestBuilder requestBuilder;
-        requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=pageId=" + pageId);
+        final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, "../API/form/mapping?c=10&p=0&f=pageId=" + pageId);
         requestBuilder.setCallback(new DeletePageProblemFormCallback(pageId));
         try {
             requestBuilder.send();
-        } catch (RequestException e) {
+        } catch (final RequestException e) {
             e.printStackTrace();
         }
     }
 
     private class DeletePageProblemFormCallback extends APICallback {
-        private String pageId;
-        private Boolean isLastPage = false;
+        private final String pageId;
+        private final Boolean isLastPage = false;
 
-        public DeletePageProblemFormCallback(String pageId) {
+        public DeletePageProblemFormCallback(final String pageId) {
             this.pageId = pageId;
         }
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            JSONValue root= JSONParser.parseLenient(response);
-            JSONArray formMappings=root.isArray();
+            final JSONValue root= JSONParser.parseLenient(response);
+            final JSONArray formMappings=root.isArray();
             if (firstPageLinkNotFound) {
                 if (formMappings.size()>0) {
                     if (firstFormNotFound) {
@@ -259,7 +259,7 @@ public class DeleteCustomPage extends Page {
         private class GetPageNameCallback extends APICallback {
             private final JSONArray formMappings;
 
-            public GetPageNameCallback(JSONArray formMappings) {
+            public GetPageNameCallback(final JSONArray formMappings) {
                 this.formMappings = formMappings;
             }
 
