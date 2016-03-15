@@ -1,7 +1,11 @@
 package org.bonitasoft.forms.server.api.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -72,12 +77,16 @@ public class FormWorkflowAPIImplTest {
         doReturn(processApi).when(bpmEngineAPIUtil).getProcessAPI(session);
     }
 
+    //TODO restore once BS-15125 has been fixed
+    @Ignore
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api() throws Exception {
         final boolean expected = true;
         checkCanUserSeeProcessInstanceWhenApiReturn(expected);
     }
 
+    //TODO restore once BS-15125 has been fixed
+    @Ignore
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api_false() throws Exception {
         final boolean expected = false;
@@ -210,7 +219,7 @@ public class FormWorkflowAPIImplTest {
     @Test
     public void hasUserAdminProfileShouldReturnFalseForNOTAdminProfile() throws Exception {
         final ProfileAPI profileAPI = mock(ProfileAPI.class);
-        long userId = 488L;
+        final long userId = 488L;
         final Profile profile = mock(Profile.class);
         doReturn(Collections.singletonList(profile)).when(profileAPI).getProfilesForUser(userId, 0, 10, ProfileCriterion.NAME_ASC);
         doReturn(userId).when(session).getUserId();
@@ -224,7 +233,7 @@ public class FormWorkflowAPIImplTest {
     @Test
     public void hasUserAdminProfileShouldReturnTrueForAdminProfileOnFirstPage() throws Exception {
         final ProfileAPI profileAPI = mock(ProfileAPI.class);
-        long userId = 488L;
+        final long userId = 488L;
         final Profile profile = mock(Profile.class);
         doReturn(Collections.singletonList(profile)).when(profileAPI).getProfilesForUser(userId, 0, 10, ProfileCriterion.NAME_ASC);
         doReturn(userId).when(session).getUserId();
@@ -238,7 +247,7 @@ public class FormWorkflowAPIImplTest {
     @Test
     public void hasUserAdminProfileShouldReturnTrueForAdminProfileOnSecondPage() throws Exception {
         final ProfileAPI profileAPI = mock(ProfileAPI.class);
-        long userId = 488L;
+        final long userId = 488L;
         final Profile badProfile = mock(Profile.class);
         doReturn(Collections.singletonList(badProfile)).when(profileAPI).getProfilesForUser(userId, 0, 10, ProfileCriterion.NAME_ASC);
         doReturn("badProfileName").when(badProfile).getName();

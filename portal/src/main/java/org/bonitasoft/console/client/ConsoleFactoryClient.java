@@ -206,11 +206,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN.equals(token) && isUserAuthorized(ProcessMoreDetailsAdminPage.PRIVILEGES,
                 getCurrentUserAccessRights())) {
             return prepareAngularPage(token);
-        } else if (AngularIFrameView.TASK_LISTING_TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES,
-                getCurrentUserAccessRights())) {
-            return prepareAngularPage(token);
-        }
-        else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
+        } else if (UploadProcessPage.TOKEN.equals(token) && isUserAuthorized(UploadProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UploadProcessPage();
         } else if (CreateCategoryAndAddToProcessPage.TOKEN.equals(token)
                 && isUserAuthorized(CreateCategoryAndAddToProcessPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -298,8 +294,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
              */
 
             // Visualize & do tasks
-        } else if (TasksListingPage.TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new TasksListingPage();
+        } else if (AngularIFrameView.TASK_LISTING_TOKEN.equals(token) && isUserAuthorized(TasksListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
+            return prepareAngularPage(token);
         } else if (HumanTaskQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskQuickDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new HumanTaskQuickDetailsPage();
         } else if (HumanTaskMoreDetailsPage.TOKEN.equals(token) && isUserAuthorized(HumanTaskMoreDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
