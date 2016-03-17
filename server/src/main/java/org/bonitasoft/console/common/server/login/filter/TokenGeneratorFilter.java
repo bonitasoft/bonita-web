@@ -38,6 +38,7 @@ public class TokenGeneratorFilter implements Filter {
     public static final String API_TOKEN = "api_token";
 
     public static final String X_BONITA_API_TOKEN = "X-Bonita-API-Token";
+    public static final String BONITA_API_TOKEN = "Bonita-API-Token";
 
     protected static final Logger LOGGER = Logger.getLogger(TokenGeneratorFilter.class.getName());
 
@@ -60,7 +61,7 @@ public class TokenGeneratorFilter implements Filter {
         } else {
             res.addHeader(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
         }
-        final Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
+        final Cookie csrfCookie = new Cookie(BONITA_API_TOKEN, apiTokenFromClient.toString());
         csrfCookie.setPath(req.getContextPath());
         res.addCookie(csrfCookie);
         chain.doFilter(req, res);

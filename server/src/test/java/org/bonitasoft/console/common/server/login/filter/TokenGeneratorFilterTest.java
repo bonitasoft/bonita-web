@@ -27,6 +27,7 @@ public class TokenGeneratorFilterTest {
 
     final String contextPath = "bonitaTest";
     final String bonitaTokenName = "X-Bonita-API-Token";
+    final String bonitaCookieName = "Bonita-API-Token";
     final String bonitaTokenValue = "sdfsdfjhvèzv";
 
     private final TokenGeneratorFilter tokenGeneratorFilter = new TokenGeneratorFilter();
@@ -44,9 +45,9 @@ public class TokenGeneratorFilterTest {
 
         tokenGeneratorFilter.doFilter(request, response, filterChain);
 
-        final Cookie csrfCookie = response.getCookie(bonitaTokenName);
+        final Cookie csrfCookie = response.getCookie(bonitaCookieName);
 
-        assertThat(csrfCookie.getName()).isEqualTo(bonitaTokenName);
+        assertThat(csrfCookie.getName()).isEqualTo(bonitaCookieName);
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isEqualTo(bonitaTokenValue);
 
@@ -60,9 +61,9 @@ public class TokenGeneratorFilterTest {
     public void should_add_security_token_in_headers_and_in_cookies_when_no_previous_call() throws Exception {
         tokenGeneratorFilter.doFilter(request, response, filterChain);
 
-        final Cookie csrfCookie = response.getCookie(bonitaTokenName);
+        final Cookie csrfCookie = response.getCookie(bonitaCookieName);
 
-        assertThat(csrfCookie.getName()).isEqualTo(bonitaTokenName);
+        assertThat(csrfCookie.getName()).isEqualTo(bonitaCookieName);
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isNotEqualTo(bonitaTokenValue);
 
