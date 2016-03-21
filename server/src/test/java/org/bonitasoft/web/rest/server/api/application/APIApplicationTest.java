@@ -2,17 +2,22 @@ package org.bonitasoft.web.rest.server.api.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.application.ApplicationDefinition;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
+import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
+import org.bonitasoft.web.rest.server.api.deployer.GenericDeployer;
 import org.bonitasoft.web.rest.server.api.deployer.PageDeployer;
 import org.bonitasoft.web.rest.server.api.deployer.UserDeployer;
 import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStore;
@@ -29,8 +34,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class APIApplicationTest {
@@ -48,7 +53,6 @@ public class APIApplicationTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     private APIServletCall caller;
 
-
     @Mock
     private APIApplicationDataStoreFactory applicationDataStoreFactory;
 
@@ -59,6 +63,7 @@ public class APIApplicationTest {
     private PageDatastore pageDatastore;
 
     @InjectMocks
+    @Spy
     private APIApplication apiApplication;
 
     @Mock
@@ -66,6 +71,9 @@ public class APIApplicationTest {
 
     @Mock
     private APISession apiSession;
+
+    @Mock
+    private DeployerFactory deployerFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -75,6 +83,7 @@ public class APIApplicationTest {
         given(dataStoreCreator.create(apiSession)).willReturn(dataStore);
         given(applicationDataStoreFactory.createPageDataStore(apiSession)).willReturn(pageDatastore);
         given(creator.create(apiSession)).willReturn(dataStore);
+        doReturn(deployerFactory).when(apiApplication).getDeployerFactory();
     }
 
     @Test
@@ -84,7 +93,7 @@ public class APIApplicationTest {
         final ApplicationItem createdItem = mock(ApplicationItem.class);
         given(dataStore.add(itemToCreate)).willReturn(createdItem);
         given(dataStore.add(itemToCreate)).willReturn(createdItem);
-                //when
+        //when
         final ApplicationItem retrievedItem = apiApplication.add(itemToCreate);
 
         //then
@@ -124,10 +133,11 @@ public class APIApplicationTest {
     }
 
     @Test
-    public void fill_delploys_should_add_deployers_for_createdBy_updatedBy_ProfileId_and_LayoutId() throws Exception {
+    public void fillDeploys_should_add_deployers_for_createdBy_updatedBy_ProfileId_and_LayoutId() throws Exception {
         //given
         final ApplicationItem item = mock(ApplicationItem.class);
-
+        doReturn(new GenericDeployer<ProfileItem>(null, ApplicationItem.ATTRIBUTE_PROFILE_ID)).when(deployerFactory)
+                .createProfileDeployer(ApplicationItem.ATTRIBUTE_PROFILE_ID);
         //when
         apiApplication.fillDeploys(item, Collections.<String> emptyList());
 
