@@ -143,7 +143,7 @@ public class AuthenticationFilter implements Filter {
 
         for (final AuthenticationRule rule : getRules()) {
             try {
-                if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
+                if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
                     chain.doFilter(requestAccessor.asHttpServletRequest(), response);
                     return true;
                 }

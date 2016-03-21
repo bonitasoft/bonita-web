@@ -253,7 +253,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
                 return true;
             }
         };
@@ -263,7 +263,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
                 return false;
             }
         };
