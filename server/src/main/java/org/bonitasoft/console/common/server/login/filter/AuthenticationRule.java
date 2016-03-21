@@ -18,6 +18,7 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
@@ -36,7 +37,7 @@ public abstract class AuthenticationRule {
     /*
      * @return rather the process need to be aborted or not
      */
-    public abstract boolean doAuthorize(HttpServletRequestAccessor request, TenantIdAccessor tenantIdAccessor) throws ServletException;
+    public abstract boolean doAuthorize(HttpServletRequestAccessor request, HttpServletResponse response, TenantIdAccessor tenantIdAccessor) throws ServletException;
 
     // protected for purpose of testing but engine could really provide a singleton
     protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {

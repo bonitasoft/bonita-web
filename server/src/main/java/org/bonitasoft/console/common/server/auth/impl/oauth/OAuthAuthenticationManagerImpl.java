@@ -47,10 +47,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
 
     @Override
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
-        long resolvedTenantId = new TenantIdAccessor(request).getRequestedTenantId();
-        if (resolvedTenantId == -1L) {
-            resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
-        }
+        long resolvedTenantId = new TenantIdAccessor(request).ensureTenantId();
         final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(resolvedTenantId, redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);

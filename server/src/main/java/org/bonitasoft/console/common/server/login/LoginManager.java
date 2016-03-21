@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.login;
 
+import static org.bonitasoft.console.common.server.login.PortalCookies.addTenantCookieToResponse;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +23,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.MapUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
@@ -41,34 +45,16 @@ import org.bonitasoft.web.rest.model.user.User;
  */
 public class LoginManager {
 
-    /**
-     * Logger
-     */
     private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
-
-    /**
-     * default locale
-     */
     private static final String DEFAULT_LOCALE = "en";
+    public static final String TENANT_COOKIE_NAME = "bonita.tenant";
 
-    public void login(final HttpServletRequestAccessor request, final UserLogger userLoger, final Credentials credentials)
+    public void login(HttpServletRequestAccessor request, HttpServletResponse response, UserLogger userLoger, Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "User authentication using the configured AuthenticationManager");
-        }
-        final Map<String, Serializable> credentialsMap = getAuthenticationManager(credentials.getTenantId()).authenticate(request, credentials);
-        APISession apiSession;
-        if (credentialsMap == null || credentialsMap.isEmpty()) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Engine login using the username and password");
-            }
-            apiSession = userLoger.doLogin(credentials);
-        } else {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Engine login using the map of credentials retrieved from the request");
-            }
-            apiSession = userLoger.doLogin(credentialsMap);
-        }
+        AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
+        Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
+        APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
+        addTenantCookieToResponse(response, apiSession.getTenantId());
         storeCredentials(request, apiSession);
     }
 
@@ -84,6 +70,16 @@ public class LoginManager {
         }
     }
 
+    private APISession loginWithAppropriateCredentials(UserLogger userLoger, Credentials credentials, Map<String, Serializable> credentialsMap)
+            throws LoginFailedException {
+        if (MapUtils.isEmpty(credentialsMap)) {
+            LOGGER.log(Level.FINE, "Engine login using the username and password");
+            return userLoger.doLogin(credentials);
+        } else {
+            LOGGER.log(Level.FINE, "Engine login using the map of credentials retrieved from the request");
+            return userLoger.doLogin(credentialsMap);
+        }
+    }
     protected void storeCredentials(final HttpServletRequestAccessor request, final APISession session) throws LoginFailedException {
         String local = DEFAULT_LOCALE;
         if (request.getParameterMap().get("_l") != null
