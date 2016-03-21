@@ -17,16 +17,10 @@ package org.bonitasoft.console.common.server.login.filter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.regex.Pattern;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -39,7 +33,6 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.Locator;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
@@ -73,7 +66,7 @@ public class AuthenticationFilterTest {
     private HttpServletResponse httpResponse;
 
     @Mock
-    private HttpServletResponseAccessor response;
+    private HttpServletResponse response;
 
     @Mock
     private TenantIdAccessor tenantIdAccessor;
@@ -110,7 +103,7 @@ public class AuthenticationFilterTest {
 
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
-        verify(response, never()).redirect(any(Locator.class));
+        verify(response, never()).sendRedirect(anyString());
     }
 
     @Test
@@ -121,7 +114,7 @@ public class AuthenticationFilterTest {
         when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
-        verify(response).redirect(any(Locator.class));
+        verify(response).sendRedirect(anyString());
     }
 
     @Test
@@ -144,7 +137,7 @@ public class AuthenticationFilterTest {
         when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
-        verify(response).redirect(argThat(new LocatorMatcher("/bonita/login.jsp?redirectUrl=")));
+        verify(response).sendRedirect("/bonita/login.jsp?redirectUrl=");
     }
 
     @Test
@@ -156,7 +149,7 @@ public class AuthenticationFilterTest {
         when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
-        verify(response).redirect(argThat(new LocatorMatcher("/bonita/login.jsp?tenant=12&redirectUrl=")));
+        verify(response).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=");
     }
 
     @Test
@@ -168,10 +161,10 @@ public class AuthenticationFilterTest {
             public Object answer(final InvocationOnMock invocation) throws Throwable {
                 return null;
             }
-        }).when(authenticationFilter).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponseAccessor.class),
+        }).when(authenticationFilter).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
                 any(TenantIdAccessor.class), any(FilterChain.class));
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
-        verify(authenticationFilter, times(1)).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponseAccessor.class),
+        verify(authenticationFilter, times(1)).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
                 any(TenantIdAccessor.class), any(FilterChain.class));
     }
 
@@ -253,20 +246,6 @@ public class AuthenticationFilterTest {
         authenticationFilter.excludePattern = Pattern.compile(excludeAuthenticationPattern);
         if (authenticationFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
             Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);
-        }
-    }
-
-    class LocatorMatcher extends ArgumentMatcher<Locator> {
-
-        private final String expectedUrl;
-
-        LocatorMatcher(final String expectedUrl) {
-            this.expectedUrl = expectedUrl;
-        }
-
-        @Override
-        public boolean matches(final Object argument) {
-            return expectedUrl.equals(((Locator) argument).getLocation());
         }
     }
 
