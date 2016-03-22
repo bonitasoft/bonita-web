@@ -18,12 +18,17 @@ package org.bonitasoft.console.common.server.auth;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 
 /**
  * @author Ruiheng Fan
  *
  */
 public class AuthenticationManagerFactory {
+
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationManagerFactory.class.getName());
 
     static Map<Long, AuthenticationManager> map = new HashMap<Long, AuthenticationManager>();
     private static AuthenticationManagerPropertiesFactory authenticationManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
@@ -32,7 +37,7 @@ public class AuthenticationManagerFactory {
         String authenticationManagerName = null;
         if (!map.containsKey(tenantId)) {
             try {
-                authenticationManagerName = authenticationManagerPropertiesFactory.getProperties(tenantId).getAuthenticationManagerImpl();
+                authenticationManagerName = getManagerImplementationClassName(tenantId);
                 final AuthenticationManager authenticationManager = (AuthenticationManager) Class.forName(authenticationManagerName).newInstance();
                 map.put(tenantId, authenticationManager);
             } catch (final Exception e) {
@@ -43,4 +48,12 @@ public class AuthenticationManagerFactory {
         return map.get(tenantId);
     }
 
+    private static String getManagerImplementationClassName(long tenantId) {
+        String authenticationManagerName = authenticationManagerPropertiesFactory.getProperties(tenantId).getAuthenticationManagerImpl();
+        if (authenticationManagerName == null || authenticationManagerName.isEmpty()) {
+            authenticationManagerName = StandardAuthenticationManagerImpl.class.getName();
+            LOGGER.finest("The login manager implementation is undefined. Using default implementation : " + authenticationManagerName);
+        }
+        return authenticationManagerName;
+    }
 }
