@@ -73,6 +73,11 @@ public class DOMUtils {
     public static final String SUBMIT_TASK_ACTION_FOR_NOTIF = "Submit task";
 
     /**
+     * data form success value for parent frame notification
+     */
+    public static final String FORM_SUBMITTED_MESSAGE = "{\"version\":\"6.x\"}";
+
+    /**
      * Instance attribute
      */
     protected static DOMUtils INSTANCE = null;
@@ -521,7 +526,26 @@ public class DOMUtils {
     }
 
     /**
-     * Indicates to the parent farme that a form was submitted (and if the response was success or error)
+     * Indicates to the parent frame that a form was submitted
+     *
+     * @param action
+     */
+    public void notifyParentFrameSuccess(final String action) {
+        notifyParentFrame(FORM_SUBMITTED_MESSAGE, action, false);
+    }
+
+    /**
+     * Indicates to the parent frame that a form was submitted (and if the response was success or error)
+     *
+     * @param error error message
+     * @param action
+     */
+    public void notifyParentFrameError(final String error, final String action) {
+        notifyParentFrame("\"" + error + "\"", action, true);
+    }
+
+    /**
+     * Indicates to the parent frame that a form was submitted (and if the response was success or error)
      *
      * @param data
      * @param action
@@ -531,9 +555,9 @@ public class DOMUtils {
     /*-{
         var dataToSend;
         if(isError) {
-            dataToSend = '{"message":"error","action":"' + action + '","dataFromError":"' + data + '"}';
+            dataToSend = '{"message":"error","action":"' + action + '","dataFromError":' + data + '}';
         } else {
-            dataToSend = '{"message":"success","action":"' + action + '","dataFromSuccess":"' + data + '"}';
+            dataToSend = '{"message":"success","action":"' + action + '","dataFromSuccess":' + data + '}';
         }
         $wnd.parent.postMessage(dataToSend, '*');
     }-*/;

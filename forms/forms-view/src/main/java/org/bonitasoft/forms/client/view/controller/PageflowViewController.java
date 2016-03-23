@@ -333,7 +333,7 @@ public class PageflowViewController {
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
             if (domUtils.isPageInFrame()) {
-                domUtils.notifyParentFrame(null, actionForNotif, false);
+                domUtils.notifyParentFrameSuccess(actionForNotif);
             }
             if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                 urlContext.putAll(newContext);
@@ -363,7 +363,7 @@ public class PageflowViewController {
             } catch (final IllegalActivityTypeException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskFormSkippedError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("taskFormSkippedError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("taskFormSkippedError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
@@ -372,7 +372,7 @@ public class PageflowViewController {
             } catch (final FormAlreadySubmittedException t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("formAlreadySubmittedOrCancelledError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, errorMessage,
@@ -381,7 +381,7 @@ public class PageflowViewController {
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().taskExecutionError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("taskExecutionError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("taskExecutionError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext,

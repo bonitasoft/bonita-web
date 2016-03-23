@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.process.view;
+package org.bonitasoft.console.client.user.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
@@ -51,7 +51,6 @@ public class StartProcessFormPage extends Page {
     public static final List<String> PRIVILEGES = new ArrayList<String>();
 
     static {
-        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
     }
 
@@ -97,7 +96,11 @@ public class StartProcessFormPage extends Page {
             frameURL.append("&user=").append(userId);
         }
 
-        addBody(new UiComponent(new IFrameView(frameURL.toString(), new ProcessInstantiationEventListener())));
+        addBody(new UiComponent(createIFrame(frameURL)));
+    }
+
+    protected IFrameView createIFrame(final StringBuilder frameURL) {
+        return new IFrameView(frameURL.toString(), new ProcessInstantiationEventListener(new ProcessInstantiationCallbackBehavior()));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.bonitasoft.console.client.user.task.view;
 
-import org.bonitasoft.console.client.common.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.task.action.CheckFormMappingAndDisplayPerformTaskPageAction;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;

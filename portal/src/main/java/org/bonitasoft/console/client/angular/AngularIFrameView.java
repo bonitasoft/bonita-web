@@ -20,9 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.process.view.ProcessInstantiationEventListener;
-import org.bonitasoft.console.client.common.view.TaskExecutionEventListener;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
+import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
+import org.bonitasoft.console.client.user.process.view.ProcessInstantiationEventListener;
+import org.bonitasoft.console.client.user.task.action.TaskExecutionCallbackBehavior;
+import org.bonitasoft.console.client.user.task.view.TaskExecutionEventListener;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 import org.bonitasoft.web.toolkit.client.eventbus.MainEventBus;
@@ -55,10 +57,9 @@ public class AngularIFrameView extends RawView {
 
     public static final String TASK_LISTING_TOKEN = "tasklistinguser";
 
-    private final IFrameView iframe = new IFrameView(new ProcessInstantiationEventListener(), new TaskExecutionEventListener());
+    protected final IFrameView iframe;
 
     protected final static Map<String, List<String>> acceptedToken = initAcceptedTokens();
-
 
     private String url;
 
@@ -96,6 +97,8 @@ public class AngularIFrameView extends RawView {
 
     public AngularIFrameView() {
 
+        iframe = createIFrame();
+
         MainEventBus.getInstance().addHandler(MenuClickEvent.TYPE, new MenuClickHandler() {
 
             @Override
@@ -105,6 +108,11 @@ public class AngularIFrameView extends RawView {
                 updateHash(angularParameterCleaner.getHashWithoutAngularParameters());
             }
         });
+    }
+
+    protected IFrameView createIFrame() {
+        return new IFrameView(new ProcessInstantiationEventListener(new ProcessInstantiationCallbackBehavior()),
+                new TaskExecutionEventListener(new TaskExecutionCallbackBehavior()));
     }
 
     /**

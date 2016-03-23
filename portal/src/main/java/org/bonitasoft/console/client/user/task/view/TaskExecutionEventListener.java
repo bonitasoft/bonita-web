@@ -12,13 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.common.view;
+package org.bonitasoft.console.client.user.task.view;
 
 import org.bonitasoft.console.client.user.task.action.PostMessageEventListener;
 import org.bonitasoft.console.client.user.task.action.TaskExecutionCallbackBehavior;
-
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Window;
 
 public class TaskExecutionEventListener extends PostMessageEventListener {
 
@@ -29,20 +26,9 @@ public class TaskExecutionEventListener extends PostMessageEventListener {
 
     private final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior;
 
-    public TaskExecutionEventListener() {
+    public TaskExecutionEventListener(final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior) {
         super();
-        taskExecutionCallbackBehavior = new TaskExecutionCallbackBehavior() {
-
-            @Override
-            public void onSuccess(final String targetUrlOnSuccess) {
-                if (targetUrlOnSuccess != null && !targetUrlOnSuccess.isEmpty()) {
-                    Window.Location.assign(targetUrlOnSuccess);
-                } else {
-                    GWT.log("targetUrlOnSuccess attribute is not set in the message.");
-                }
-            }
-
-        };
+        this.taskExecutionCallbackBehavior = taskExecutionCallbackBehavior;
     }
 
     @Override
@@ -51,8 +37,8 @@ public class TaskExecutionEventListener extends PostMessageEventListener {
     }
 
     @Override
-    protected void onSuccess(final String targetUrlOnSuccess) {
-        taskExecutionCallbackBehavior.onSuccess(targetUrlOnSuccess);
+    protected void onSuccess(final String dataFromSuccess) {
+        taskExecutionCallbackBehavior.onSuccess(dataFromSuccess);
     }
 
     @Override

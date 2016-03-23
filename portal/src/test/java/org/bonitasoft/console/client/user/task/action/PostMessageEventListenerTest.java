@@ -22,11 +22,11 @@ public class PostMessageEventListenerTest {
         private String actionToWatch = null;
 
         @Override
-        protected void onSuccess(final String targetUrlOnSuccess) {
-            success(targetUrlOnSuccess);
+        protected void onSuccess(final String caseId) {
+            success(caseId);
         }
 
-        public void success(final String targetUrlOnSuccess) {
+        public void success(final String caseId) {
         }
 
         @Override
