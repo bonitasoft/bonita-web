@@ -50,6 +50,16 @@ public class SimplePropertiesTest {
     }
 
     @Test
+    public void should_getProperty_return_the_right_custom_permissions_with_special_characters() throws Exception {
+
+        final SimpleProperties tenantProperties = new SimpleProperties(CUSTOM_PERMISSIONS_MAPPING_FILE);
+
+        final String customValue = tenantProperties.getProperty("profile|HR manager");
+
+        Assert.assertEquals("[ManageProfiles]", customValue);
+    }
+
+    @Test
     public void should_setProperty_add_the_right_compound_permissions_and_remove_remove_it() throws Exception {
 
         final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
