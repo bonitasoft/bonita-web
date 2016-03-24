@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-02-29 05:56-0500\n"
+"PO-Revision-Date: 2016-03-23 09:34-0400\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -88,7 +88,7 @@ msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
 #: dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
-msgstr "Fichier XML d'application"
+msgstr "Fichier XML de l'application"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "Application list"
