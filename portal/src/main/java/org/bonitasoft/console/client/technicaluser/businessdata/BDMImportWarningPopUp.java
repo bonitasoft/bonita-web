@@ -12,18 +12,23 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.Response;
 import org.bonitasoft.web.rest.model.tenant.BusinessDataModelDefinition;
 import org.bonitasoft.web.rest.model.tenant.BusinessDataModelItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
+import org.bonitasoft.web.toolkit.client.data.api.request.HttpRequest;
 import org.bonitasoft.web.toolkit.client.ui.Page;
+import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.SendFormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
 import org.bonitasoft.web.toolkit.client.ui.component.core.Component;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.page.MessagePage;
-
+import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 
 public class BDMImportWarningPopUp extends Page {
 
@@ -65,15 +70,29 @@ public class BDMImportWarningPopUp extends Page {
     private class InstallBDMAction extends SendFormAction {
 
         public InstallBDMAction() {
-            super(BusinessDataModelDefinition.get().getAPIUrl(), new HttpCallback() {
-               
-                @Override
-                public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                    ViewController.showPopup(new MessagePage(MessagePage.TYPE.SUCCESS, _("The Business Data Model was successfully installed.")));
-                }
-            });
+            super(BusinessDataModelDefinition.get().getAPIUrl(), new InstallBDMCallback());
         }
-        
-       
+
+        @Override
+        public void execute() {
+            Loader.showLoader();
+            super.execute();
+            ViewController.closePopup();
+        }
     }
+
+    private class InstallBDMCallback extends HttpCallback {
+
+        @Override
+        public void onResponseReceived(Request request, Response response) {
+            Loader.hideLoader();
+            super.onResponseReceived(request, response);
+        }
+
+        @Override
+        public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
+            ViewController.showPopup(new MessagePage(MessagePage.TYPE.SUCCESS, _("The Business Data Model was successfully installed.")));
+        }
+    }
+
 }
