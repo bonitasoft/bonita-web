@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,16 +40,6 @@ public class BonitaHomeFilter implements Filter {
     protected static final String NO_BONITA_HOME_MESSAGE = "noBonitaHomeMessage";
 
     /**
-     * bonita-client conf file not found
-     */
-    protected static final String NO_BONITA_CLIENT_MESSAGE = "noBonitaClientFileMessage";
-
-    /**
-     * bonita-client conf file
-     */
-    protected static final String BONITA_CLIENT_CONF_FILENAME = "bonita-client-custom.properties";
-
-    /**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(BonitaHomeFilter.class.getName());
@@ -72,18 +61,11 @@ public class BonitaHomeFilter implements Filter {
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
         final String theBonitaHome = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        final File bonitaClientFile = new File(theBonitaHome + File.separator + "engine-client" + File.separator + "conf" + File.separator
-                + BONITA_CLIENT_CONF_FILENAME);
 
         if (theBonitaHome == null || theBonitaHome.isEmpty()) {
             request.setAttribute(NO_BONITA_HOME_MESSAGE, NO_BONITA_HOME_MESSAGE);
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "The Bonita Home property is not set or the target directory is empty");
-            }
-        } else if (!bonitaClientFile.isFile()) {
-            request.setAttribute(NO_BONITA_CLIENT_MESSAGE, NO_BONITA_CLIENT_MESSAGE);
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Bonita client file is missing (" + bonitaClientFile.getPath() + ")");
             }
         }
         chain.doFilter(request, response);
