@@ -28,28 +28,24 @@ import javax.servlet.ServletException;
  */
 public class TenantIdAccessor {
 
-    private HttpServletRequestAccessor request;
+    private final long tenantId;
 
-    public TenantIdAccessor(HttpServletRequestAccessor request) {
-        this.request = request;
+    public TenantIdAccessor(HttpServletRequestAccessor request) throws ServletException {
+        tenantId = parseTenantId(request.getTenantId());
     }
 
-    public long getRequestedTenantId() throws ServletException {
-        return parseTenantId(request.getTenantId());
+    public long getRequestedTenantId() {
+        return tenantId;
     }
 
     /*
      * Ensure tenant id by fetching default one if request is empty
      */
     public long ensureTenantId() throws ServletException {
-        String tenantId = request.getTenantId();
-        if (tenantId == null) {
-            tenantId = PortalCookies.getTenantCookieFromRequest(request.asHttpServletRequest());
+        if(tenantId < 0) {
+            return getDefaultTenantId();
         }
-        if (tenantId == null) {
-           return getDefaultTenantId();
-        }
-        return parseTenantId(tenantId);
+        return getRequestedTenantId();
     }
 
     public long getDefaultTenantId() throws ServletException {

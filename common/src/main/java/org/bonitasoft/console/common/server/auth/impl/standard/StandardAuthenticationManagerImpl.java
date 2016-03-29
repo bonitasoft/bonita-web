@@ -19,15 +19,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.PortalCookies;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Chong Zhao
@@ -40,7 +40,7 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     private static final Logger LOGGER = Logger.getLogger(StandardAuthenticationManagerImpl.class.getName());
 
     @Override
-    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ServletException {
+    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
         final StringBuilder url = new StringBuilder();
         String context = request.asHttpServletRequest().getContextPath();
         final String servletPath = request.asHttpServletRequest().getServletPath();
@@ -48,13 +48,11 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
             context += "/mobile";
         }
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
-        url.append(AuthenticationManager.TENANT).append("=").append(getTenantId(request)).append("&");
+        if (request.getTenantId() != null) {
+            url.append(AuthenticationManager.TENANT).append("=").append(request.getTenantId()).append("&");
+        }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
-    }
-
-    private long getTenantId(HttpServletRequestAccessor request) throws ServletException {
-        return new TenantIdAccessor(request).ensureTenantId();
     }
 
     @Override
@@ -65,6 +63,10 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
                     + " does nothing. The subsequent engine login is enough to authenticate the user.)");
         }
         return Collections.emptyMap();
+    }
+
+    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
+        return PermissionsBuilderAccessor.createPermissionBuilder(session);
     }
 
     @Override

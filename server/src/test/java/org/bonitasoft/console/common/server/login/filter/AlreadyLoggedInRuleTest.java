@@ -29,7 +29,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
@@ -65,9 +64,6 @@ public class AlreadyLoggedInRuleTest {
     @Mock
     HttpServletRequest httpServletRequest;
 
-    @Mock
-    private HttpServletResponse response;
-
     @Spy
     AlreadyLoggedInRule rule;
 
@@ -84,7 +80,7 @@ public class AlreadyLoggedInRuleTest {
         // ensure we won't recreate user session
         doReturn("").when(httpSession).getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
 
-        final boolean authorization = rule.doAuthorize(request, response, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
         assertThat(authorization, is(true));
     }
@@ -93,7 +89,7 @@ public class AlreadyLoggedInRuleTest {
     public void testIfRuleDoesntAuthorizeNullSession() throws Exception {
         doReturn(null).when(request).getApiSession();
 
-        final boolean authorization = rule.doAuthorize(request, response, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, tenantAccessor);
 
         assertFalse(authorization);
     }
@@ -106,7 +102,7 @@ public class AlreadyLoggedInRuleTest {
         doReturn(new Locale("en")).when(httpServletRequest).getLocale();
         doReturn("myUser").when(apiSession).getUserName();
 
-        rule.doAuthorize(request, response, tenantAccessor);
+        rule.doAuthorize(request, tenantAccessor);
 
         verify(httpSession).setAttribute(
                 eq(SessionUtil.USER_SESSION_PARAM_KEY),

@@ -44,6 +44,11 @@ public class AuthenticationManagerPropertiesTest {
     }
 
     @Test
+    public void testGetLoginManagerImpl() {
+        assertNotNull("Cannot get login manager implementation", loginManagerProperties.getAuthenticationManagerImpl());
+    }
+
+    @Test
     public void testGetOAuthServiceProviderName() {
         assertNotNull("Cannot get OAuth service provider name", loginManagerProperties.getOAuthServiceProviderName());
     }

@@ -97,7 +97,7 @@ public class LoginServlet extends HttpServlet {
         final boolean redirectAfterLogin = hasRedirection(request);
         final String redirectURL = getRedirectUrl(request, redirectAfterLogin);
         try {
-            doLogin(request, response);
+            doLogin(request);
             final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
@@ -178,13 +178,13 @@ public class LoginServlet extends HttpServlet {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
-    protected void doLogin(final HttpServletRequest request, HttpServletResponse response) throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException {
+    protected void doLogin(final HttpServletRequest request) throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException {
         try {
             final long tenantId = getTenantId(request);
             final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
             final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(requestAccessor, response, createUserLogger(), userCredentials);
+            loginManager.login(requestAccessor, createUserLogger(), userCredentials);
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
@@ -202,6 +202,10 @@ public class LoginServlet extends HttpServlet {
 
     protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
         return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    }
+
+    protected AuthenticationManager getLoginManager(final long tenantId) throws AuthenticationManagerNotFoundException {
+        return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
     }
 
     protected UserLogger createUserLogger() {

@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -35,6 +36,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.HttpServletResponseAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
 import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
@@ -114,7 +116,9 @@ public class AuthenticationFilter implements Filter {
         if (matchExcludePatterns(url)) {
             chain.doFilter(request, response);
         } else {
-            doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, createTenantAccessor(requestAccessor), chain);
+            doAuthenticationFiltering(requestAccessor,
+                new HttpServletResponseAccessor((HttpServletResponse) response),
+                createTenantAccessor(requestAccessor), chain);
         }
     }
 
@@ -123,13 +127,14 @@ public class AuthenticationFilter implements Filter {
     }
 
     protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,
-            final HttpServletResponse response,
+            final HttpServletResponseAccessor responseAccessor,
             final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
 
-        if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
+        if (!isAuthorized(requestAccessor, responseAccessor, tenantIdAccessor, chain)) {
+
             cleanHttpSession(requestAccessor.getHttpSession());
-            response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
+            responseAccessor.redirect(createLoginUrl(requestAccessor, tenantIdAccessor));
         }
     }
 
@@ -137,19 +142,19 @@ public class AuthenticationFilter implements Filter {
      * @return true if one of the rules pass false otherwise
      */
     protected boolean isAuthorized(final HttpServletRequestAccessor requestAccessor,
-            final HttpServletResponse response,
+            final HttpServletResponseAccessor responseAccessor,
             final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
 
         for (final AuthenticationRule rule : getRules()) {
             try {
-                if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
-                    chain.doFilter(requestAccessor.asHttpServletRequest(), response);
+                if (rule.doAuthorize(requestAccessor, tenantIdAccessor)) {
+                    chain.doFilter(requestAccessor.asHttpServletRequest(), responseAccessor.asServletResponse());
                     return true;
                 }
             } catch (final ServletException e) {
                 if (e.getCause() instanceof TenantIsPausedRedirectionToMaintenancePageException) {
-                    return handleTenantPausedException(requestAccessor, response, e);
+                    return handleTenantPausedException(requestAccessor, responseAccessor, e);
                 } else {
                     throw e;
                 }
@@ -158,25 +163,26 @@ public class AuthenticationFilter implements Filter {
         return false;
     }
 
-    protected boolean handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
+    protected boolean handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponseAccessor responseAccessor,
             final ServletException e) throws ServletException {
         final TenantIsPausedRedirectionToMaintenancePageException tenantIsPausedException = (TenantIsPausedRedirectionToMaintenancePageException) e.getCause();
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
         }
-        redirectToMaintenance(requestAccessor, response, tenantIsPausedException.getTenantId());
+        redirectToMaintenance(requestAccessor, responseAccessor, tenantIsPausedException.getTenantId());
         return false;
     }
 
     /**
      * manage redirection to maintenance page
-     *  @param request
+     *
+     * @param request
      * @param response
      */
-    protected void redirectToMaintenance(final HttpServletRequestAccessor request, final HttpServletResponse response, final long tenantId)
+    protected void redirectToMaintenance(final HttpServletRequestAccessor request, final HttpServletResponseAccessor response, final long tenantId)
             throws ServletException {
         try {
-            response.sendRedirect(request.asHttpServletRequest().getContextPath() + MAINTENANCE_JSP);
+            ((HttpServletResponse) response.asServletResponse()).sendRedirect(request.asHttpServletRequest().getContextPath() + MAINTENANCE_JSP);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, e.getMessage());
