@@ -21,15 +21,19 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
-import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
+import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  *
@@ -38,7 +42,7 @@ import org.bonitasoft.console.common.server.login.datastore.Credentials;
  * @author Vincent Elcrin
  *
  */
-public class JAASAuthenticationManagerImpl extends StandardAuthenticationManagerImpl {
+public class JAASAuthenticationManagerImpl implements AuthenticationManager {
 
     /**
      * Logger
@@ -49,6 +53,21 @@ public class JAASAuthenticationManagerImpl extends StandardAuthenticationManager
      * JAAS Auth login context
      */
     public static final String JAAS_AUTH_LOGIN_CONTEXT = "BonitaAuth";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
+        final StringBuffer url = new StringBuffer();
+        final String context = request.asHttpServletRequest().getContextPath();
+        url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
+        if (request.getTenantId() != null) {
+            url.append(AuthenticationManager.TENANT).append("=").append(request.getTenantId()).append("&");
+        }
+        url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
+        return url.toString();
+    }
 
     @Override
     public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials) throws AuthenticationFailedException {
@@ -76,6 +95,10 @@ public class JAASAuthenticationManagerImpl extends StandardAuthenticationManager
         return new ConsoleCallbackHandler(request.getUsername(), request.getPassword(), tenantId);
     }
 
+    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
+        return PermissionsBuilderAccessor.createPermissionBuilder(session);
+    }
+
     private String getLoginContextName(final long tenantId) {
         String loginContextName;
         if (tenantId >= 0) {
@@ -85,4 +108,10 @@ public class JAASAuthenticationManagerImpl extends StandardAuthenticationManager
         }
         return loginContextName;
     }
+
+    @Override
+    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
+        return null;
+    }
+
 }

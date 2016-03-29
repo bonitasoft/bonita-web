@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
@@ -42,17 +41,18 @@ public class AutoLoginRule extends AuthenticationRule {
     private static final Logger LOGGER = Logger.getLogger(AutoLoginRule.class.getName());
 
     @Override
-    public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    public boolean doAuthorize(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         final long tenantId = tenantIdAccessor.ensureTenantId();
-        return isAutoLogin(request, tenantId) && doAutoLogin(request, response, tenantId);
+        return isAutoLogin(request, tenantId)
+                && doAutoLogin(request, tenantId);
     }
 
-    private boolean doAutoLogin(final HttpServletRequestAccessor request, HttpServletResponse response,
+    private boolean doAutoLogin(final HttpServletRequestAccessor request,
                                 final long tenantId) throws ServletException {
         try {
             final AutoLoginCredentials userCredentials = new AutoLoginCredentials(getSecurityProperties(request, tenantId), tenantId);
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(request, response, createUserLogger(), userCredentials);
+            loginManager.login(request, createUserLogger(), userCredentials);
             return true;
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {

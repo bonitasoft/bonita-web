@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 
 /**
  * Utility class for Session Manager access (read in a properties file)
@@ -123,7 +124,13 @@ public class AuthenticationManagerProperties {
      * @return get login manager implementation
      */
     public String getAuthenticationManagerImpl() {
-        return defaultProperties.getProperty(AUTHENTICATION_MANAGER);
+        final String authenticationManagerImpl = defaultProperties.getProperty(AUTHENTICATION_MANAGER);
+        if (authenticationManagerImpl == null || authenticationManagerImpl.isEmpty()) {
+            final String defaultImpl = StandardAuthenticationManagerImpl.class.getName();
+            LOGGER.log(Level.FINEST, "The login manager implementation is undefined. Using default implementation : " + defaultImpl);
+            return defaultImpl;
+        }
+        return authenticationManagerImpl;
     }
 
     /**
