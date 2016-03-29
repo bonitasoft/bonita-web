@@ -20,7 +20,7 @@ public class SimplePropertiesTest {
     private static final File CUSTOM_PERMISSIONS_MAPPING_FILE = new File("src/test/resources/custom-permissions-mapping.properties");
 
     @Test
-    public void should_getProperty_return_the_right_compound_permissions() throws Exception {
+    public void getProperty_should_return_the_right_compound_permissions() throws Exception {
 
         final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
@@ -30,7 +30,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_getProperty_return_the_right_resource_permissions() throws Exception {
+    public void getProperty_should_return_the_right_resource_permissions() throws Exception {
 
         final SimpleProperties tenantProperties = new SimpleProperties(RESOURCES_PERMISSIONS_MAPPING_FILE);
 
@@ -40,7 +40,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_getProperty_return_the_right_custom_permissions() throws Exception {
+    public void getProperty_should_return_the_right_custom_permissions() throws Exception {
 
         final SimpleProperties tenantProperties = new SimpleProperties(CUSTOM_PERMISSIONS_MAPPING_FILE);
 
@@ -50,7 +50,17 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_setProperty_add_the_right_compound_permissions_and_remove_remove_it() throws Exception {
+    public void getProperty_should_return_the_right_custom_permissions_with_special_characters() throws Exception {
+
+        final SimpleProperties tenantProperties = new SimpleProperties(CUSTOM_PERMISSIONS_MAPPING_FILE);
+
+        final String customValue = tenantProperties.getProperty("profile|HR manager");
+
+        Assert.assertEquals("[ManageProfiles]", customValue);
+    }
+
+    @Test
+    public void setProperty_should_add_the_right_compound_permissions_and_remove_remove_it() throws Exception {
 
         final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
         compoundPermissionMappingWorkFile.deleteOnExit();
@@ -70,7 +80,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_getProperty_return_the_right_permissions_list() throws Exception {
+    public void getPropertyAsSet_should_return_the_right_permissions_list() throws Exception {
 
         final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
@@ -80,7 +90,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_getProperty_return_the_right_permissions_list_with_single_value() throws Exception {
+    public void getPropertyAsSet_should_return_the_right_permissions_list_with_single_value() throws Exception {
 
         final SimpleProperties tenantProperties = new SimpleProperties(COMPOUND_PERMISSIONS_MAPPING_FILE);
 
@@ -90,7 +100,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_setPropertyAsSet_add_the_right_compound_permissions() throws Exception {
+    public void setPropertyAsSet_should_add_the_right_compound_permissions() throws Exception {
 
         final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
         compoundPermissionMappingWorkFile.deleteOnExit();
@@ -115,7 +125,7 @@ public class SimplePropertiesTest {
     }
 
     @Test
-    public void should_setPropertyAsSet_add_the_right_compound_permissions_with_an_empty_list() throws Exception {
+    public void setPropertyAsSet_should_add_the_right_compound_permissions_with_an_empty_list() throws Exception {
 
         final File compoundPermissionMappingWorkFile = File.createTempFile("compound-permissions-mapping", ".properties");
         compoundPermissionMappingWorkFile.deleteOnExit();
