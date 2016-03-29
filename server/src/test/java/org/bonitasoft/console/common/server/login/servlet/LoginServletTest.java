@@ -159,7 +159,7 @@ public class LoginServletTest {
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(true).when(apiSession).isTechnicalUser();
         doReturn(null).when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-        doNothing().when(servlet).doLogin(req);
+        doNothing().when(servlet).doLogin(req, resp);
 
         //when
         servlet.doPost(req, resp);
