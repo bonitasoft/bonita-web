@@ -45,7 +45,7 @@ import com.google.gwt.user.client.Window;
 public abstract class HttpCallback implements RequestCallback {
 
     @Override
-    public final void onResponseReceived(final Request request, final Response response) {
+    public void onResponseReceived(final Request request, final Response response) {
         
         // Same origne policy violation
         // hack to avoid error on timeout exception generating same origne policy violation
