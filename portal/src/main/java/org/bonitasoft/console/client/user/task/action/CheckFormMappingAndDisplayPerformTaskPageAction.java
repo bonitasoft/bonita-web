@@ -18,16 +18,11 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
-import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.common.view.CommentSubmitionForm;
-import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CommentItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
-import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.RequestBuilder;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
@@ -50,8 +45,6 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
 
 
 public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
@@ -213,7 +206,8 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
 
     protected void executeTask(final String taskId, final TreeIndexed<String> parameters) {
         final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/userTask/" + taskId + "/execution");
-        requestBuilder.setCallback(new ExecuteTaskCallback(taskId, taskDisplayName));
+        final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior = new TaskExecutionCallbackBehavior(taskDisplayName);
+        requestBuilder.setCallback(new ExecuteTaskCallback(taskExecutionCallbackBehavior));
         try {
             requestBuilder.send();
         } catch (final RequestException e) {
@@ -221,46 +215,18 @@ public class CheckFormMappingAndDisplayPerformTaskPageAction extends Action {
         }
     }
 
-    protected void redirectToTaskList() {
-        if (TaskMoreDetailsAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
-            History.newItem("?_p=" + TaskListingAdminPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
-        } else if (HumanTaskMoreDetailsPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
-            History.newItem("?_p=" + TasksListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
-        } else {
-            ViewController.refreshCurrentPage();
-        }
-    }
 
     protected class ExecuteTaskCallback extends APICallback {
 
         private final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior;
 
-        public ExecuteTaskCallback(final String taskId, final String taskDisplayName) {
-            taskExecutionCallbackBehavior = new TaskExecutionCallbackBehavior() {
-
-                @Override
-                public void onSuccess(final String targetUrlOnSuccess) {
-                    final String confirmationMessage = _("The task %taskName% has been executed. The task list is being refreshed.", new Arg("taskName",
-                            taskDisplayName));
-                    if (ViewController.hasOpenedPopup()) {
-                        ViewController.closePopup();
-                    }
-                    showConfirmation(confirmationMessage);
-                    final Timer redirectTimer = new Timer() {
-
-                        @Override
-                        public void run() {
-                            redirectToTaskList();
-                        }
-                    };
-                    redirectTimer.schedule(1500);
-                }
-            };
+        public ExecuteTaskCallback(final TaskExecutionCallbackBehavior taskExecutionCallbackBehavior) {
+            this.taskExecutionCallbackBehavior = taskExecutionCallbackBehavior;
         }
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            taskExecutionCallbackBehavior.onSuccess(null);
+            taskExecutionCallbackBehavior.onSuccess(response);
         }
 
         @Override

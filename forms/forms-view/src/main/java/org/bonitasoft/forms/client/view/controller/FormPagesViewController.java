@@ -1308,7 +1308,7 @@ public class FormPagesViewController {
         @Override
         public void onSuccess(final Map<String, Object> newContext) {
             if (domUtils.isPageInFrame()) {
-                domUtils.notifyParentFrame(getSubmitButtonID(), actionForNotif, false);
+                domUtils.notifyParentFrameSuccess(actionForNotif);
             }
             if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                 urlContext.clear();
@@ -1324,7 +1324,7 @@ public class FormPagesViewController {
             } catch (final FormAlreadySubmittedException e) {
                 final String errorMessage = FormsResourceBundle.getErrors().formAlreadySubmittedOrCancelledError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("formAlreadySubmittedOrCancelledError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("formAlreadySubmittedOrCancelledError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,
@@ -1340,7 +1340,7 @@ public class FormPagesViewController {
                     errorMessage = FormsResourceBundle.getErrors().fileTooBigErrorWithSize(maxSize);
                 }
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("fileTooBigError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("fileTooBigError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     Window.alert(errorMessage);
@@ -1348,7 +1348,7 @@ public class FormPagesViewController {
             } catch (final Throwable t) {
                 final String errorMessage = FormsResourceBundle.getErrors().formSubmissionError();
                 if (domUtils.isPageInFrame()) {
-                    domUtils.notifyParentFrame("formSubmissionError", actionForNotif, true);
+                    domUtils.notifyParentFrameError("formSubmissionError", actionForNotif);
                 }
                 if (!"false".equals(urlUtils.getHashParameter(URLUtils.DISPLAY_CONFIRMATION))) {
                     formsServiceAsync.getApplicationErrorTemplate(formID, urlContext, new ErrorPageHandler(applicationHTMLPanel, formID, pageHTMLPanel,

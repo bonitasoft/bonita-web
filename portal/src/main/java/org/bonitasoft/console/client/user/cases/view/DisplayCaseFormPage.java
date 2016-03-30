@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;

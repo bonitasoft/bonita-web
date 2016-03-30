@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.console.client.user.task.view;
 
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.web.toolkit.client.ui.page.Plugin;
 
 /**

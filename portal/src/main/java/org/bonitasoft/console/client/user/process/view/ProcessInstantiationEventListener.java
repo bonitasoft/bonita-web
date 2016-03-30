@@ -12,13 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.admin.process.view;
+package org.bonitasoft.console.client.user.process.view;
 
+import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
 import org.bonitasoft.console.client.user.task.action.PostMessageEventListener;
-import org.bonitasoft.console.client.user.task.action.ProcessInstantiationCallbackBehavior;
-
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Window;
 
 public class ProcessInstantiationEventListener extends PostMessageEventListener {
 
@@ -29,19 +26,9 @@ public class ProcessInstantiationEventListener extends PostMessageEventListener 
 
     private final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior;
 
-    public ProcessInstantiationEventListener() {
+    public ProcessInstantiationEventListener(final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior) {
         super();
-        processInstantiationCallbackBehavior = new ProcessInstantiationCallbackBehavior() {
-
-            @Override
-            public void onSuccess(final String caseId, final String targetUrlOnSuccess) {
-                if (targetUrlOnSuccess != null && !targetUrlOnSuccess.isEmpty()) {
-                    Window.Location.assign(targetUrlOnSuccess);
-                } else {
-                    GWT.log("targetUrlOnSuccess attribute is not set in the message.");
-                }
-            }
-        };
+        this.processInstantiationCallbackBehavior = processInstantiationCallbackBehavior;
     }
 
     @Override
@@ -50,8 +37,8 @@ public class ProcessInstantiationEventListener extends PostMessageEventListener 
     }
 
     @Override
-    protected void onSuccess(final String targetUrlOnSuccess) {
-        processInstantiationCallbackBehavior.onSuccess(null, targetUrlOnSuccess);
+    protected void onSuccess(final String dataFromSuccess) {
+        processInstantiationCallbackBehavior.onSuccess(dataFromSuccess);
     }
 
     @Override

@@ -12,24 +12,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.user.task.action;
+package org.bonitasoft.console.client.user.process.action;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
-import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
-import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.RequestBuilder;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.Page;
@@ -49,8 +44,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
 
 /**
  * @author Nicolas Tith, Anthony Birembaut
@@ -188,70 +181,35 @@ public class CheckFormMappingAndDisplayProcessInstanciationFormAction extends Ac
 
                         @Override
                         public void execute() {
-                            final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
-                            requestBuilder.setCallback(new InstantiateProcessCallback(processId));
-                            try {
-                                requestBuilder.send();
-                            } catch (final RequestException e) {
-                                GWT.log("Error while creating the process instantiation request", e);
-                            }
+                            performInstantiationRequest(processId);
                         }
                     }),
                     new Button(_("cancel"), _("Cancel this action"), new PopupCloseAction()));
         }
     }
 
-    protected void redirectToCaseMoredetails(final String caseId) {
-        String caseMoreDetailsToken;
-        if (ProcessListingAdminPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
-            caseMoreDetailsToken = CaseMoreDetailsAdminPage.TOKEN;
-        } else {
-            caseMoreDetailsToken = CaseMoreDetailsPage.TOKEN;
+    protected void performInstantiationRequest(final String processId) {
+        final RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, "../API/bpm/process/" + processId + "/instantiation");
+        final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior = new ProcessInstantiationCallbackBehavior();
+        requestBuilder.setCallback(new InstantiateProcessCallback(processInstantiationCallbackBehavior));
+        try {
+            requestBuilder.send();
+        } catch (final RequestException e) {
+            GWT.log("Error while creating the process instantiation request", e);
         }
-        History.newItem("?_p=" + caseMoreDetailsToken + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     protected class InstantiateProcessCallback extends APICallback {
 
         private final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior;
 
-        public InstantiateProcessCallback(final String processId) {
-            processInstantiationCallbackBehavior = new ProcessInstantiationCallbackBehavior() {
-
-                @Override
-                public void onSuccess(final String caseId, final String targetUrlOnSuccess) {
-                    if (caseId != null) {
-                        final String confirmationMessage = _("The case %caseId% has been started successfully.", new Arg(
-                                "caseId", caseId));
-                        if (ViewController.hasOpenedPopup()) {
-                            ViewController.closePopup();
-                        }
-                        showConfirmation(confirmationMessage);
-                    } else {
-                        GWT.log("caseId is not set");
-                    }
-                    final Timer redirectTimer = new Timer() {
-
-                        @Override
-                        public void run() {
-                            redirectToCaseMoredetails(caseId);
-                        }
-                    };
-                    redirectTimer.schedule(1500);
-                }
-            };
+        public InstantiateProcessCallback(final ProcessInstantiationCallbackBehavior processInstantiationCallbackBehavior) {
+            this.processInstantiationCallbackBehavior = processInstantiationCallbackBehavior;
         }
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-            final JSONValue root = JSONParser.parseLenient(response);
-            final JSONObject processInstance = root.isObject();
-            String caseId = null;
-            final JSONValue caseIdValue = processInstance.get("caseId");
-            if (caseIdValue != null) {
-                caseId = Double.toString(caseIdValue.isNumber().doubleValue());
-            }
-            processInstantiationCallbackBehavior.onSuccess(caseId, null);
+            processInstantiationCallbackBehavior.onSuccess(response);
         }
 
         @Override

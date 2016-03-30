@@ -24,9 +24,9 @@ import java.util.List;
 
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedTasksSection;
+import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;

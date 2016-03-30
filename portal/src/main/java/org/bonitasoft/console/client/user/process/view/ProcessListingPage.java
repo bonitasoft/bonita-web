@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.user.application.view;
+package org.bonitasoft.console.client.user.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bonitasoft.console.client.user.task.view.PluginProcess;
-import org.bonitasoft.console.client.user.task.view.ProcessQuickDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;

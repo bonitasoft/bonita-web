@@ -50,15 +50,20 @@ public abstract class PostMessageEventListener {
     public abstract String getActionToWatch();
 
     protected void onSuccess(final JSONObject fullJSONMessage) {
-        final JSONValue targetUrlOnSuccessValue = fullJSONMessage.get("targetUrlOnSuccess");
-        String targetUrlOnSuccess = null;
-        if (targetUrlOnSuccessValue != null) {
-            targetUrlOnSuccess = targetUrlOnSuccessValue.isString().stringValue();
+        final JSONValue dataFromSuccessValue = fullJSONMessage.get("dataFromSuccess");
+        String dataFromSuccess = null;
+        if (dataFromSuccessValue != null) {
+            final JSONObject dataFromSuccesObject = dataFromSuccessValue.isObject();
+            if (dataFromSuccesObject != null) {
+                dataFromSuccess = dataFromSuccesObject.toString();
+            } else {
+                dataFromSuccess = dataFromSuccessValue.isString().stringValue();
+            }
         }
-        onSuccess(targetUrlOnSuccess);
+        onSuccess(dataFromSuccess);
     };
 
-    protected abstract void onSuccess(String targetUrlOnSuccess);
+    protected abstract void onSuccess(String dataFromSuccess);
 
     protected void onError(final JSONObject fullJSONMessage) {
         final JSONValue dataFromErrorValue = fullJSONMessage.get("dataFromError");

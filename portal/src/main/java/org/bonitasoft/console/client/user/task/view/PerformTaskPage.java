@@ -14,20 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.common.view;
+package org.bonitasoft.console.client.user.task.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
-import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
-import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
-import org.bonitasoft.console.client.angular.AngularIFrameView;
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
-import org.bonitasoft.console.client.user.task.view.TasksListingPage;
+import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
+import org.bonitasoft.console.client.user.process.view.StartProcessFormPage;
+import org.bonitasoft.console.client.user.task.action.TaskExecutionCallbackBehavior;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -57,12 +54,8 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
 
     static {
         PRIVILEGES.add(TasksListingPage.TOKEN);
-        PRIVILEGES.add(TaskListingAdminPage.TOKEN); // FIX ME: we should create a humantaskmoredetails admin page so ill never need this
         PRIVILEGES.add(CaseListingPage.TOKEN);
-        PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
-        PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
-        PRIVILEGES.add("reportlistingadminext");
     }
 
     public static final String PARAMETER_USER_ID = "userId";
@@ -97,11 +90,11 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         addBody(createFormIframe(task));
     }
 
-    private Component createFormIframe(final HumanTaskItem item) {
-        return new UiComponent(new IFrameView(buildTasksFormURL(item), new TaskExecutionEventListener()));
+    protected Component createFormIframe(final HumanTaskItem item) {
+        return new UiComponent(new IFrameView(buildTasksFormURL(item), new TaskExecutionEventListener(new TaskExecutionCallbackBehavior())));
     }
 
-    private String buildTasksFormURL(final HumanTaskItem item) {
+    protected String buildTasksFormURL(final HumanTaskItem item) {
 
         final String locale = AbstractI18n.getDefaultLocale().toString();
         final String userId = this.getParameter(StartProcessFormPage.ATTRIBUTE_USER_ID);

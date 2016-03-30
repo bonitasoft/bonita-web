@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.client.user.task.view;
+package org.bonitasoft.console.client.user.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.admin.process.view.StartProcessFormPage;
-import org.bonitasoft.console.client.user.application.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
-import org.bonitasoft.console.client.user.task.action.CheckFormMappingAndDisplayProcessInstanciationFormAction;
+import org.bonitasoft.console.client.user.process.action.CheckFormMappingAndDisplayProcessInstanciationFormAction;
+import org.bonitasoft.console.client.user.task.view.PluginProcess;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
