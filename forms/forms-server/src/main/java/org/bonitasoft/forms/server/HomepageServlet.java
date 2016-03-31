@@ -31,20 +31,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.themes.CompilableFile;
-import org.bonitasoft.console.common.server.themes.ThemeArchive;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.api.ThemeAPI;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.theme.Theme;
-import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -81,7 +72,7 @@ public class HomepageServlet extends ThemeResourceServlet {
 
     protected static final String HOMEPAGE_SERVLET_ID_IN_PATH = "homepage";
 
-    protected static final String PORTAL_THEME_NAME = "portal";
+    public static final String PORTAL_THEME_NAME = "portal";
 
     public static final String CONTENT_TYPE = "text/html";
 
@@ -141,42 +132,15 @@ public class HomepageServlet extends ThemeResourceServlet {
             // if it doesn't, retrieve it from the engine and create a timestamp file with the theme last update date,
             // if it does retrieve the last update date from the engine and compare it to the timestamp file,
             // if the last update date is more recent, retrieve the theme again from the engine
-            final File themesParentFolder = getResourcesParentFolder(request);
-            final File themeFolder = new File(themesParentFolder, PORTAL_THEME_NAME);
             final APISession apiSession = getEngineSession(request);
-            final File timestampFile = new File(themeFolder, LASTUPDATE_FILENAME);
-            final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession);
-            if (themeFolder.exists() && timestampFile.exists()) {
-                final String timestampString = FileUtils.readFileToString(timestampFile);
-                final long timestamp = Long.parseLong(timestampString);
-                if (lastUpdateTimestamp != timestamp) {
-                    updateThemeFromEngine(apiSession, themeFolder, timestampFile, lastUpdateTimestamp);
-                }
-            } else {
-                updateThemeFromEngine(apiSession, themeFolder, timestampFile, lastUpdateTimestamp);
-            }
+            final File themeFolder = getResourcesParentFolder(request);
+            new ThemeExtractor().retrieveAndExtractCurrentPortalTheme(themeFolder, apiSession);
             getResourceFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while loading the file " + getFileName(isForm) + " in theme " + PORTAL_THEME_NAME, e);
             }
         }
-    }
-
-    protected long getThemeLastUpdateDateFromEngine(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        final ThemeAPI themeAPI = TenantAPIAccessor.getThemeAPI(apiSession);
-        return themeAPI.getLastUpdateDate(ThemeType.PORTAL).getTime();
-    }
-
-    protected void updateThemeFromEngine(final APISession apiSession, final File portalThemeDirectory, final File timestampFile, final long lastUpdateTimestamp)
-            throws BonitaHomeNotSetException,
-            ServerAPIException, UnknownAPITypeException, IOException {
-        final Theme theme = TenantAPIAccessor.getThemeAPI(apiSession).getCurrentTheme(ThemeType.PORTAL);
-        new ThemeArchive(theme.getContent())
-                .extract(portalThemeDirectory)
-                .compile(CompilableFile.ALWAYS_COMPILED_FILES)
-                .add("bonita.css", theme.getCssContent());
-        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
     }
 
     protected String getFileName(final boolean isForm) {

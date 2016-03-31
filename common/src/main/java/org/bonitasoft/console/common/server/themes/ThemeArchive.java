@@ -23,7 +23,11 @@ import org.bonitasoft.console.common.server.utils.UnzipUtil;
 
 public class ThemeArchive {
 
-    private final byte[] zippedTheme;
+    private byte[] zippedTheme;
+
+    public void setZippedTheme(byte[] zippedTheme) {
+        this.zippedTheme = zippedTheme;
+    }
 
     public class ThemeModifier {
 
@@ -57,11 +61,15 @@ public class ThemeArchive {
         }
     }
 
+    public ThemeArchive() {
+    }
+
     public ThemeArchive(byte[] zippedTheme) {
         this.zippedTheme = zippedTheme;
     }
 
     public ThemeModifier extract(File themeDirectory) throws IOException {
+        checkZippedThemeIsSet();
         FileUtils.deleteDirectory(themeDirectory);
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(zippedTheme);) {
             UnzipUtil.unzip(byteArrayInputStream, themeDirectory.getPath());
@@ -69,7 +77,14 @@ public class ThemeArchive {
         return new ThemeModifier(themeDirectory);
     }
 
+    private void checkZippedThemeIsSet() {
+        if (zippedTheme == null) {
+            throw new IllegalArgumentException("You must set zipped theme by calling setZippedTheme() before trying to access it");
+        }
+    }
+
     public byte[] asByteArray() {
+        checkZippedThemeIsSet();
         return zippedTheme;
     }
 }
