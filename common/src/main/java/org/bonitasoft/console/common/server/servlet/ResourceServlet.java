@@ -196,13 +196,13 @@ public abstract class ResourceServlet extends HttpServlet {
         final HttpSession session = request.getSession();
         long tenantId = 1;
         final String tenantFromRequest = request.getParameter(TENANT_PARAM);
-        if (tenantFromRequest == null) {
+        if (tenantFromRequest != null) {
+            tenantId = Long.parseLong(tenantFromRequest);
+        } else {
             final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
             if (apiSession != null) {
                 tenantId = apiSession.getTenantId();
             }
-        } else {
-            tenantId = Long.parseLong(tenantFromRequest);
         }
         try {
             return getResourcesParentFolder(tenantId);

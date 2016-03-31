@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,10 +21,17 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.SessionNotFoundException;
+import org.bonitasoft.forms.server.ThemeExtractor;
 
 /**
  * @author Zhiheng Yang, Anthony Birembaut
@@ -41,7 +46,7 @@ public class PlatformTenantListener implements ServletContextListener {
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
         try {
-            initializeDefaultTenant();
+            initializeDefaultTenant(new ThemeExtractor());
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while initializing the default tenant", e);
@@ -55,14 +60,23 @@ public class PlatformTenantListener implements ServletContextListener {
      * 
      * @throws IOException
      * @throws BonitaException
+     * @param themeExtractor
      */
-    protected void initializeDefaultTenant() throws Exception {
+    protected void initializeDefaultTenant(ThemeExtractor themeExtractor) throws Exception {
         try {
-            final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
-                    TenantsManagementUtils.getTechnicalUserPassword());
+            final APISession session = login();
             final long tenantId = session.getTenantId();
+
+            // create directory structure for default tenant:
             TenantsManagementUtils.addDirectoryForTenant(tenantId);
-            TenantAPIAccessor.getLoginAPI().logout(session);
+
+            // retrieve active theme for default tenant:
+            themeExtractor.retrieveAndExtractCurrentPortalTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session);
+
+            // TODO: should we do something for the mobile as well?
+            // final Theme mobileTheme = TenantAPIAccessor.getThemeAPI(session).getCurrentTheme(ThemeType.MOBILE);
+
+            logout(session);
         } catch (final NumberFormatException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while casting default tenant id", e);
@@ -79,6 +93,15 @@ public class PlatformTenantListener implements ServletContextListener {
             }
             throw e;
         }
+    }
+
+    protected void logout(APISession session)
+            throws SessionNotFoundException, LogoutException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        TenantAPIAccessor.getLoginAPI().logout(session);
+    }
+
+    protected APISession login() throws Exception {
+        return TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(), TenantsManagementUtils.getTechnicalUserPassword());
     }
 
     @Override
