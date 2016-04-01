@@ -197,7 +197,8 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String getIconsWorkFolderPath() {
         if (iconsWorkFolderPath == null) {
-            iconsWorkFolderPath = getWorkFolderPath() + iconsWorkFolderName + File.separator;
+            // icons are now stored inside default theme:
+            iconsWorkFolderPath = getThemePortalFolderPath() + iconsWorkFolderName + File.separator;
         }
         return iconsWorkFolderPath;
     }

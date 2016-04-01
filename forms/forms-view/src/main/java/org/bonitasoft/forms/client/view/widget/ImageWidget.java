@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -72,19 +70,8 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      */
     private final String valueType;
 
-    /**
-     * Constructor
-     *
-     * @param formID
-     * @param contextMap
-     * @param isArchived
-     * @param value
-     * @param ImageStyle
-     * @param displayAttachmentImage
-     */
     public ImageWidget(final String formID, final Map<String, Object> contextMap, final String valueType, final long documentId, final String value,
-            final String imageStyle,
-            final boolean displayAttachmentImage) {
+            final String imageStyle, final boolean displayAttachmentImage) {
 
         this.formID = formID;
         this.contextMap = contextMap;
@@ -125,7 +112,7 @@ public class ImageWidget extends Composite implements HasClickHandlers, ClickHan
      *
      * @param documentId
      * @param value
-     *            the URL of the image or the attachment name
+     *        the URL of the image or the attachment name
      * @param fireEvents
      */
     public void setValue(final long documentId, final String value, final boolean fireEvents) {

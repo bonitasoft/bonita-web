@@ -25,21 +25,21 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     /**
      * platform folder
      */
-    public static final String platformFolderName = "platform";
+    private static final String platformFolderName = "platform";
 
-    public String platformFolderPath = null;
+    private String platformFolderPath = null;
 
     /**
      * tenant template folder
      */
-    public static final String tenantTemplateFolderName = "tenant-template";
+    private static final String tenantTemplateFolderName = "tenant-template";
 
-    public String tenantTemplateFolderPath = null;
+    private String tenantTemplateFolderPath = null;
 
     /**
      * tenants folder
      */
-    public String tenantsFolderPath = null;
+    private String tenantsFolderPath = null;
 
     /**
      * tmp
@@ -51,16 +51,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      */
     private String confFolderPath = null;
 
-    /**
-     * work
-     */
-    private String workFolderPath = null;
-
     private String formsWorkFolderPath = null;
-
-    private final String workLibFolderPath = null;
-
-    private String bdmWorkFolderPath;
 
     /**
      * Default constructor.

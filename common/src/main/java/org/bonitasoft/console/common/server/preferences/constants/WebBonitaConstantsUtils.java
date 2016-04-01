@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
+import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsTenancyImpl.iconsWorkFolderName;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +81,7 @@ public class WebBonitaConstantsUtils {
      * Get the folder of the user Console default icons
      */
     public File getConsoleDefaultIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getPortalDefaultIconsFolderPath());
+        return new File(getPortalThemeFolder(), iconsWorkFolderName);
     }
 
     /**
