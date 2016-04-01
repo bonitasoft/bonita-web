@@ -54,13 +54,13 @@ public class Image extends Component {
      * Constructor with URL as String.
      * 
      * @param url
-     *            The Image URL to display. If the URL doesn't start with "http://" or "http://", this String will be considered as a Path.
+     *        The Image URL to display. If the URL doesn't start with "http://" or "http://", this String will be considered as a Path.
      * @param width
-     *            The Image width.
+     *        The Image width.
      * @param height
-     *            The Image height.
+     *        The Image height.
      * @param tooltip
-     *            The tooltip text to display over the Image.
+     *        The tooltip text to display over the Image.
      */
     public Image(final String url, final int width, final int height, final String tooltip) {
         this(null, url, width, height, tooltip);
@@ -70,15 +70,15 @@ public class Image extends Component {
      * Constructor with URL as String and a JsId.
      * 
      * @param jsid
-     *            The JsId to set on the image.
+     *        The JsId to set on the image.
      * @param url
-     *            The Image URL to display. If the URL doesn't start with "http://" or "http://", this String will be considered as a Path.
+     *        The Image URL to display. If the URL doesn't start with "http://" or "http://", this String will be considered as a Path.
      * @param width
-     *            The Image width.
+     *        The Image width.
      * @param height
-     *            The Image height.
+     *        The Image height.
      * @param tooltip
-     *            The tooltip text to display over the Image.
+     *        The tooltip text to display over the Image.
      */
     public Image(final JsId jsid, final String url, final int width, final int height, final String tooltip) {
         this(
@@ -95,14 +95,14 @@ public class Image extends Component {
      * Constructor with URL as a TypedString.
      * 
      * @param url
-     *            The Image {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to
-     *            display.
+     *        The Image {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to
+     *        display.
      * @param width
-     *            The Image width.
+     *        The Image width.
      * @param height
-     *            The Image height.
+     *        The Image height.
      * @param tooltip
-     *            The tooltip text to display over the Image.
+     *        The tooltip text to display over the Image.
      */
     public Image(final TypedString url, final int width, final int height, final String tooltip) {
         this(null, url, width, height, tooltip);
@@ -112,16 +112,16 @@ public class Image extends Component {
      * Constructor with URL as a TypedString and a JsId.
      * 
      * @param jsid
-     *            The JsId to set on the image.
+     *        The JsId to set on the image.
      * @param url
-     *            The Image {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to
-     *            display.
+     *        The Image {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to
+     *        display.
      * @param width
-     *            The Image width.
+     *        The Image width.
      * @param height
-     *            The Image height.
+     *        The Image height.
      * @param tooltip
-     *            The tooltip text to display over the Image.
+     *        The tooltip text to display over the Image.
      */
     public Image(final JsId jsid, final TypedString url, final int width, final int height, final String tooltip) {
         super(jsid);
@@ -150,19 +150,18 @@ public class Image extends Component {
                 HTML.img(
                         this.urlOrPath.toString(),
                         this.tooltip,
-                        xmlAttr)
-                );
+                        xmlAttr));
     }
 
     /**
      * Set the URL or path to he image to display.
      * 
      * @param url
-     *            The {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to set
+     *        The {@link org.bonitasoft.web.toolkit.client.ui.utils.Url Url} or {@link org.bonitasoft.web.toolkit.client.ui.utils.Path Path} to set
      * @return This method returns "this" to allow cascading calls.
      */
     public final Image setUrl(final TypedString url) {
-        this.urlOrPath = url instanceof Url ? url : new Url(GWT.getModuleBaseURL() + "attachmentImage?src=" + url.toString());
+        this.urlOrPath = url instanceof Url ? url : new Url(GWT.getModuleBaseURL() + "../theme/" + url.toString());
         if (isGenerated()) {
             getElement().setAttribute("src", this.urlOrPath.toString());
         }

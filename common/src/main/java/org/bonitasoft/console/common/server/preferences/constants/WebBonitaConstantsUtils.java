@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
-import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsTenancyImpl.iconsWorkFolderName;
+import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsTenancyImpl.ICONS_WORK_FOLDER_NAME;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,9 +25,9 @@ import java.util.Map;
  */
 public class WebBonitaConstantsUtils {
 
-    protected static Map<Long, WebBonitaConstantsUtils> tenantConstantsUtils = new HashMap<>();
+    private static Map<Long, WebBonitaConstantsUtils> tenantConstantsUtils = new HashMap<>();
 
-    protected WebBonitaConstants webBonitaConstants;
+    private WebBonitaConstants webBonitaConstants;
 
     public synchronized static WebBonitaConstantsUtils getInstance(final long tenantId) {
         WebBonitaConstantsUtils instance = tenantConstantsUtils.get(tenantId);
@@ -67,21 +67,21 @@ public class WebBonitaConstantsUtils {
      * Get the folder where to get the Tenant conf files.
      */
     public File getConfFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getConfFolderPath());
+        return getFolder(webBonitaConstants.getConfFolderPath());
     }
 
     /**
      * Get the folder of Tenant themes files (ie CSS files)
      */
     public File getPortalThemeFolder() {
-        return getFolder(webBonitaConstants.getThemePortalFolderPath());
+        return getFolder(webBonitaConstants.getThemeFolderPath());
     }
 
     /**
      * Get the folder of the user Console default icons
      */
     public File getConsoleDefaultIconsFolder() {
-        return new File(getPortalThemeFolder(), iconsWorkFolderName);
+        return new File(getPortalThemeFolder(), ICONS_WORK_FOLDER_NAME);
     }
 
     /**
@@ -130,14 +130,7 @@ public class WebBonitaConstantsUtils {
      * Get the folder of the tenants directories
      */
     public File getTenantsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getTenantsFolderPath());
-    }
-
-    /**
-     * Get the folder of the tenant-template file structure
-     */
-    public File getTenantTemplateFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getTenantTemplateFolderPath());
+        return getFolder(webBonitaConstants.getTenantsFolderPath());
     }
 
     /**
@@ -148,7 +141,7 @@ public class WebBonitaConstantsUtils {
     }
 
     // protected for test stubbing
-    protected String getBonitaHomePath() {
+    String getBonitaHomePath() {
         final String bonitaHomePath = System.getProperty(WebBonitaConstants.BONITA_HOME);
         if (bonitaHomePath == null) {
             throw new RuntimeException(WebBonitaConstants.BONITA_HOME + " system property not set!");
@@ -162,27 +155,11 @@ public class WebBonitaConstantsUtils {
     }
 
     private File getFolder(final String folderPath) {
-        return getFolder(new File(folderPath));
-    }
-
-    protected File getFolder(final File folder) {
+        final File folder = new File(folderPath);
         if (!folder.exists()) {
-            createFolderIfNecessary(folder);
-        }
-        return folder;
-    }
-
-    protected void createFolderIfNecessary(final File folder) {
-        if (webBonitaConstants instanceof WebBonitaConstantsImpl || tenantFolderExists()) {
             folder.mkdirs();
         }
-    }
-
-    protected boolean tenantFolderExists() {
-        // Let's check in Bonita-home if the tenant folder exists, before creating one in temp dir (to avoid attacks of type DDos):
-        final WebBonitaConstantsTenancyImpl webBonitaConstantsTenancyImpl = (WebBonitaConstantsTenancyImpl) webBonitaConstants;
-        final File tenantFolder = getFolderFromBonitaHome(webBonitaConstantsTenancyImpl.getTenantFolderPath());
-        return tenantFolder.exists();
+        return folder;
     }
 
 }

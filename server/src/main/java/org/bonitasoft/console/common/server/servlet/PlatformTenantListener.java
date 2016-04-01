@@ -51,7 +51,7 @@ public class PlatformTenantListener implements ServletContextListener {
             platformManagementUtils.initializePlatformConfiguration();
         } catch (BonitaException | IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while retrieving configuraiton", e);
+                LOGGER.log(Level.SEVERE, "Error while retrieving configuration", e);
             }
         }
         initializeDefaultTenant(new ThemeExtractor());
@@ -66,9 +66,6 @@ public class PlatformTenantListener implements ServletContextListener {
         try {
             final APISession session = login();
             final long tenantId = session.getTenantId();
-
-            // create directory structure for default tenant:
-            TenantsManagementUtils.addDirectoryForTenant(tenantId);
 
             // retrieve active theme for default tenant:
             themeExtractor.retrieveAndExtractCurrentPortalTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session);

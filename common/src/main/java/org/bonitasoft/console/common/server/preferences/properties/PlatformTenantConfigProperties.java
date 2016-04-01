@@ -31,7 +31,7 @@ public class PlatformTenantConfigProperties {
 
     private Properties getProperties() {
         return ConfigurationFilesManager.getInstance().getPlatformProperties(PROPERTIES_FILE);
-    }
+                    }
 
     public String getDefaultTenantId() {
         return getProperties().getProperty(PLATFORM_DEFAULT_TENANT_ID);

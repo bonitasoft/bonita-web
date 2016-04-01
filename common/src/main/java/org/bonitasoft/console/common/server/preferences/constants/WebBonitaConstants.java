@@ -21,159 +21,112 @@ import java.io.File;
  */
 public interface WebBonitaConstants {
 
-    public static final String BONITA_HOME = "bonita.home";
-
-    public static final String JAVA_IO_TMPDIR = "java.io.tmpdir";
+    String BONITA_HOME = "bonita.home";
 
     /**
      * tenants folder
      */
-    public static final String tenantsFolderName = "tenants";
+    String tenantsFolderName = "tenants";
 
     /**
      * Generics folders
      */
 
-    public static final String clientFolderName = "client";
+    String clientFolderName = "client";
 
-    public static final String confFolderName = "conf";
+    String confFolderName = "conf";
 
-    public static final String scriptsFolderName = "scripts";
+    String tmpFolderName = "bonita_portal_";
 
-    public static final String tmpFolderName = "bonita_portal_";
+    String formsFolderName = "forms";
 
-    public static final String formsFolderName = "forms";
+    String bdmFolderName = "bdm";
 
-    public static final String bdmFolderName = "bdm";
+    String ROLES_ICONS_FOLDER_NAME = "roles";
 
-    public static final String ROLES_ICONS_FOLDER_NAME = "roles";
-
-    public static final String GROUPS_ICONS_FOLDER_NAME = "groups";
-
-    public static final String PROFILES_ICONS_FOLDER_NAME = "profiles";
+    String GROUPS_ICONS_FOLDER_NAME = "groups";
 
     /**
      * Client
      */
-    public static final String clientFolderPath = clientFolderName + File.separator;
+    String clientFolderPath = clientFolderName + File.separator;
 
     /**
      * Get Tenants Folder Path
      * 
      * @return path
      */
-    public String getTenantsFolderPath();
-
-    /**
-     * Get Tenants Folder Path
-     * 
-     * @return path
-     */
-    public String getTenantTemplateFolderPath();
+    String getTenantsFolderPath();
 
     /**
      * Get Tenant TempFolder Path
      * 
      * @return path
      */
-    public String getTempFolderPath();
+    String getTempFolderPath();
 
     /**
      * Get Tenant ThemeConsoleFolder Path
      * 
      * @return path
      */
-    public String getThemePortalFolderPath();
+    String getThemeFolderPath();
 
     /**
      * Get Tenant ConfFolder Path
      * 
      * @return path
      */
-    public String getConfFolderPath();
-
-    /**
-     * Get Tenant pdf template Path
-     * 
-     * @return path
-     */
-    public String getPDFTemplateFolderPath();
+    String getConfFolderPath();
 
     /**
      * Get Tenant FormsTempFolder Path
      * 
      * @return path
      */
-    public String getFormsTempFolderPath();
+    String getFormsTempFolderPath();
 
-    /**
-     * Get Tenant Default icons Path
-     * 
-     * @return
-     */
-    public String getPortalDefaultIconsFolderPath();
-
-    /**
-     * Get Tenant process icons Path
-     * 
-     * @return
-     */
-    public String getPortalProcessIconsFolderPath();
 
     /**
      * Get Tenant user icons Path
      * 
      * @return
      */
-    public String getPortalUserIconsFolderPath();
+    String getPortalUserIconsFolderPath();
 
     /**
      * Get Tenant user icons Path
      * 
      * @return
      */
-    public String getPortalRoleIconsFolderPath();
-
-    /**
-     * Get Tenant profile icons Path
-     * 
-     * @return
-     */
-    public String getPortalProfilesIconsFolderPath();
-
-    /**
-     * Get profilesConsoleTempFolder Path
-     * 
-     * @return path
-     */
-    public String getProfilesTempFolderPath();
+    String getPortalRoleIconsFolderPath();
 
     /**
      * Get reportsConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getReportsTempFolderPath();
+    String getReportsTempFolderPath();
 
     /**
      * Get pagesConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getPagesTempFolderPath();
+    String getPagesTempFolderPath();
 
     /**
      * Get groupsConsoleTempFolder Path
      * 
      * @return path
      */
-    public String getPortalGroupIconsFolderPath();
+    String getPortalGroupIconsFolderPath();
 
     /**
      * Get BDMTempFolderPath Path
      * 
      * @return path
      */
-    public String getBDMTempFolderPath();
+    String getBDMTempFolderPath();
 
 }

@@ -40,9 +40,9 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     // ATTRIBUTES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String DEFAULT_ICON_BLACK = "/default/customPageIconSmall.png";
+    public static final String DEFAULT_ICON_BLACK = "icons/default/customPageIconSmall.png";
 
-    public static final String DEFAULT_ICON_WHITE = "/default/customPageIconSmallWhite.png";
+    public static final String DEFAULT_ICON_WHITE = "icons/default/customPageIconSmallWhite.png";
 
     public static final String ATTRIBUTE_PARENT_ID = "parent_id";
 
