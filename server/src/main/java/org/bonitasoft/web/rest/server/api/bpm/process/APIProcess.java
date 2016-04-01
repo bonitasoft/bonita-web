@@ -117,7 +117,7 @@ APIHasDelete
         if (item != null) {
             final String iconPath = item.getIcon();
             if (iconPath == null || iconPath.isEmpty()) {
-                item.setIcon("/default/process.png");
+                item.setIcon("icons/default/process.png");
             }
         }
         return item;
