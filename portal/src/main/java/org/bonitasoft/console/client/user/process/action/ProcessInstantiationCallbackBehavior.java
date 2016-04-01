@@ -14,9 +14,12 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 
 public class ProcessInstantiationCallbackBehavior {
+
+    private static final int DELAY_BEFORE_REDIRECTION = 300;
 
     protected void redirectToCaseMoredetails(final String caseId) {
         History.newItem("?_p=" + CaseMoreDetailsPage.TOKEN + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
@@ -35,7 +38,15 @@ public class ProcessInstantiationCallbackBehavior {
                     ViewController.closePopup();
                 }
                 showConfirmation(confirmationMessage);
-                redirectToCaseMoredetails(caseId);
+                //Wait a short delay before redirecting. This is useful in case the process completes right away (archiving may take a while)
+                final Timer timer = new Timer() {
+
+                    @Override
+                    public void run() {
+                        redirectToCaseMoredetails(caseId);
+                    }
+                };
+                timer.schedule(DELAY_BEFORE_REDIRECTION);
             } else {
                 GWT.log("caseId is not set");
             }
