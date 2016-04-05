@@ -4,20 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.assertj.core.api.Assertions;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
@@ -97,7 +92,7 @@ public class LoginManagerTest {
     public void login_should_perform_engine_login_with_credentials_map() throws Exception {
         final Credentials credentials = new StandardCredentials("name", "password", 1L);
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
-        final Map<String, Serializable> credentialsMap = new HashMap<String, Serializable>();
+        final Map<String, Serializable> credentialsMap = new HashMap<>();
         credentialsMap.put("principal", "userId");
         doReturn(credentialsMap).when(authenticationManager).authenticate(requestAccessor, credentials);
         doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
@@ -132,6 +127,7 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         when(apiSession.getTenantId()).thenReturn(123L);
+        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.login(requestAccessor, response, userLogger, credentials);
 
