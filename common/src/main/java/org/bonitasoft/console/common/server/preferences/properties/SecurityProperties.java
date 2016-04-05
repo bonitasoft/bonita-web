@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,10 +18,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +30,6 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
  * Utility class for security properties access
  *
  * @author Anthony Birembaut
- *
  */
 public class SecurityProperties {
 
@@ -77,68 +73,28 @@ public class SecurityProperties {
      */
     public static final String AUTO_LOGIN_PASSWORD_PROPERTY = "forms.application.login.auto.password";
 
+    private static Map<String, Properties> processProperties = new HashMap<>();
+
     /**
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(SecurityProperties.class.getName());
+    private final long tenantId;
+    private final ProcessIdentifier processIdentifier;
 
-    /**
-     * Instances attribute
-     */
-    private static Map<String, SecurityProperties> INSTANCES = new ConcurrentHashMap<String, SecurityProperties>();
-
-    /**
-     * default properties
-     */
-    protected Properties defaultProperties = new Properties();
-
-    /**
-     * Separator for the key of the instances map
-     */
-    protected final static String INSTANCES_MAP_SEPERATOR = "@";
-
-    protected final static String TENANT_SCOPE_CONFIG_ID = "tenant";
-
-    protected final static String PLATFORM_SCOPE_CONFIG_ID = "platform";
-
-    /**
-     * @return the {@link SecurityProperties} instance
-     */
-    public static SecurityProperties getInstance() {
-        SecurityProperties securityProperties = INSTANCES.get(PLATFORM_SCOPE_CONFIG_ID);
-        if (securityProperties == null) {
-            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(), PLATFORM_SCOPE_CONFIG_ID);
-            INSTANCES.put(PLATFORM_SCOPE_CONFIG_ID, securityProperties);
-        }
-        return securityProperties;
+    public SecurityProperties() {
+        tenantId = -1;
+        processIdentifier = null;
     }
 
-    /**
-     * @return the {@link SecurityProperties} instance
-     */
-    public static SecurityProperties getInstance(final long tenantId) {
-        final String instanceKey = generateInstanceKey(tenantId, TENANT_SCOPE_CONFIG_ID);
-        SecurityProperties securityProperties = INSTANCES.get(instanceKey);
-        if (securityProperties == null) {
-            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(tenantId), TENANT_SCOPE_CONFIG_ID);
-            INSTANCES.put(instanceKey, securityProperties);
-        }
-        return securityProperties;
+    public SecurityProperties(long tenantId) {
+        this.tenantId = tenantId;
+        processIdentifier = null;
     }
 
-    /**
-     * @param tenantID
-     * @param id
-     * @return the {@link SecurityProperties} instance
-     */
-    public static SecurityProperties getInstance(final long tenantID, final ProcessIdentifier id) {
-        final String instanceKey = generateInstanceKey(tenantID, id.getIdentifier());
-        SecurityProperties securityProperties = INSTANCES.get(instanceKey);
-        if (securityProperties == null) {
-            securityProperties = new SecurityProperties(WebBonitaConstantsUtils.getInstance(tenantID), id.getIdentifier());
-            INSTANCES.put(instanceKey, securityProperties);
-        }
-        return securityProperties;
+    public SecurityProperties(long tenantId, ProcessIdentifier processIdentifier) {
+        this.tenantId = tenantId;
+        this.processIdentifier = processIdentifier;
     }
 
     /**
@@ -146,78 +102,21 @@ public class SecurityProperties {
      * @param processDefinitionId
      */
     public static void cleanProcessConfig(final long tenantID, final ProcessIdentifier processDefinitionId) {
-        final String instanceKey = generateInstanceKey(tenantID, processDefinitionId.getIdentifier());
-        INSTANCES.remove(instanceKey);
-    }
-
-    /**
-     * Generate SecurityProperties INSTANCES key from ProcessDefinitionUUID
-     *
-     * @param tenantId
-     * @param processDefinitionId
-     * @return
-     */
-    private static String generateInstanceKey(final long tenantId, final String processDefinitionId) {
-        return processDefinitionId + INSTANCES_MAP_SEPERATOR + tenantId;
-    }
-
-    SecurityProperties(final WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
-        InputStream inputStream = null;
-        try {
-            if (isValidProcessDefinition(processDefinitionId)) {
-                inputStream = getClass().getClassLoader().getResourceAsStream(SECURITY_DEFAULT_CONFIG_FILE_NAME);
-                if (inputStream == null) {
-                    inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils, processDefinitionId));
-                }
-            } else {
-                inputStream = new FileInputStream(getSecurityPropertyFile(webBonitaConstantsUtils));
-            }
-            defaultProperties.load(inputStream);
-        } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "default security config file " + SECURITY_DEFAULT_CONFIG_FILE_NAME + " is missing from the forms conf directory");
-            }
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "default security config file " + SECURITY_DEFAULT_CONFIG_FILE_NAME + " stream could not be closed.", e);
-                    }
-                }
-            }
-        }
-    }
-
-    private File getSecurityPropertyFile(final WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
-        File securityPropertiesFile = getProcessSecurityPropertiesFile(webBonitaConstantsUtils, processDefinitionId);
-        if (securityPropertiesFile == null) {
-            securityPropertiesFile = getSecurityPropertyFile(webBonitaConstantsUtils);
-        }
-        return securityPropertiesFile;
-    }
-
-    private File getSecurityPropertyFile(final WebBonitaConstantsUtils webBonitaConstantsUtils) {
-        return new File(webBonitaConstantsUtils.getConfFolder(), SECURITY_DEFAULT_CONFIG_FILE_NAME);
-    }
-
-    private boolean isValidProcessDefinition(final String processDefinitionId) {
-        return processDefinitionId != null && !TENANT_SCOPE_CONFIG_ID.equals(processDefinitionId) && !PLATFORM_SCOPE_CONFIG_ID.equals(processDefinitionId);
+        processProperties.remove(getProcessCacheKey(tenantID, processDefinitionId));
     }
 
     /**
      * Retrieve the config file in the extracted business archive
      *
      * @param webBonitaConstantsUtils
-     * @param processDefinitionId
-     *            the process definition ID
+     * @param processIdentifier
+     *        the process definition ID
      * @return the config file or null if it doesn't exists
      * @throws IOException
      */
-    protected File getProcessSecurityPropertiesFile(final WebBonitaConstantsUtils webBonitaConstantsUtils, final String processDefinitionId) {
+    protected File getProcessSecurityPropertiesFile(final WebBonitaConstantsUtils webBonitaConstantsUtils, final ProcessIdentifier processIdentifier) {
         File securityPropertiesFile = null;
-        final File processWorkFolder = getProcessWorkFolder(webBonitaConstantsUtils, processDefinitionId);
+        final File processWorkFolder = getProcessWorkFolder(webBonitaConstantsUtils, processIdentifier.getIdentifier());
         if (processWorkFolder.exists()) {
             final long lastDeployementDate = getLastDeployementDate(
                     listProcessDeployementFolders(processWorkFolder));
@@ -248,7 +147,8 @@ public class SecurityProperties {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING,
                             "Process resources deployment folder contains a directory that does not match a process deployment timestamp: "
-                                    + directory.getName(), e);
+                                    + directory.getName(),
+                            e);
                 }
             }
         }
@@ -273,7 +173,7 @@ public class SecurityProperties {
      * @return the application form auto-login property
      */
     public boolean allowAutoLogin() {
-        final String useAutoLogin = defaultProperties.getProperty(AUTO_LOGIN_PROPERTY);
+        final String useAutoLogin = getProperties().getProperty(AUTO_LOGIN_PROPERTY);
         try {
             return Boolean.parseBoolean(useAutoLogin);
         } catch (final Exception e) {
@@ -285,21 +185,21 @@ public class SecurityProperties {
      * @return the auto-login username property
      */
     public String getAutoLoginUserName() {
-        return defaultProperties.getProperty(AUTO_LOGIN_USERNAME_PROPERTY);
+        return getProperties().getProperty(AUTO_LOGIN_USERNAME_PROPERTY);
     }
 
     /**
      * @return the password validator property
      */
     public String getPasswordValidator() {
-        return defaultProperties.getProperty(PASSWORD_VALIDATOR_CLASSNAME);
+        return getProperties().getProperty(PASSWORD_VALIDATOR_CLASSNAME);
     }
 
     /**
      * @return the value to allow or not API authorization checks
      */
     public boolean isAPIAuthorizationsCheckEnabled() {
-        final String res = defaultProperties.getProperty(API_AUTHORIZATIONS_CHECK);
+        final String res = getProperties().getProperty(API_AUTHORIZATIONS_CHECK);
         return res != null && res.equals("true");
     }
 
@@ -307,7 +207,7 @@ public class SecurityProperties {
      * @return the value allow permission properties file debug
      */
     public boolean isAPIAuthorizationsCheckInDebugMode() {
-        final String debugMode = defaultProperties.getProperty(API_AUTHORIZATIONS_CHECK_DEBUG);
+        final String debugMode = getProperties().getProperty(API_AUTHORIZATIONS_CHECK_DEBUG);
         return Boolean.parseBoolean(debugMode);
     }
 
@@ -315,7 +215,7 @@ public class SecurityProperties {
      * @return the value to allow or not CSRF protection
      */
     public boolean isCSRFProtectionEnabled() {
-        final String res = defaultProperties.getProperty(CSRF_PROTECTION);
+        final String res = getProperties().getProperty(CSRF_PROTECTION);
         return res != null && res.equals("true");
     }
 
@@ -323,6 +223,49 @@ public class SecurityProperties {
      * @return the auto-login password property
      */
     public String getAutoLoginPassword() {
-        return defaultProperties.getProperty(AUTO_LOGIN_PASSWORD_PROPERTY);
+        return getProperties().getProperty(AUTO_LOGIN_PASSWORD_PROPERTY);
+    }
+
+    Properties getProperties() {
+        if (processIdentifier != null) {
+            //special case, properties can be retrieve from the BAR
+            Properties properties = processProperties.get(getProcessCacheKey(tenantId, processIdentifier));
+            if (properties != null) {
+                return properties;
+            }
+            File processSecurityPropertiesFile = getProcessSecurityPropertiesFile(getWebBonitaConstantUtils(), processIdentifier);
+            if (processSecurityPropertiesFile != null) {
+                properties = loadProcessProperties(processSecurityPropertiesFile);
+                processProperties.put(getProcessCacheKey(tenantId, processIdentifier), properties);
+                return properties;
+            }
+        }
+        if (tenantId > 0) {
+            return getConfigurationFilesManager().getTenantProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME, tenantId);
+        }
+        return getConfigurationFilesManager().getPlatformProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME);
+    }
+
+    protected WebBonitaConstantsUtils getWebBonitaConstantUtils() {
+        return WebBonitaConstantsUtils.getInstance(tenantId);
+    }
+
+    protected ConfigurationFilesManager getConfigurationFilesManager() {
+        return ConfigurationFilesManager.getInstance();
+    }
+
+    private Properties loadProcessProperties(File processSecurityPropertiesFile) {
+        Properties properties;
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(processSecurityPropertiesFile));
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to read security properties of process", e);
+        }
+        return properties;
+    }
+
+    private static String getProcessCacheKey(long tenantId, ProcessIdentifier processIdentifier) {
+        return String.valueOf(tenantId) + "@" + processIdentifier.getIdentifier();
     }
 }

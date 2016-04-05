@@ -46,6 +46,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
 
     @Override
     protected void testSetUp() throws Exception {
+        new PlatformManagementUtils().initializePlatformConfiguration();
         TenantsManagementUtils.addDirectoryForTenant(TenantsManagementUtils.getDefaultTenantId());
     }
 

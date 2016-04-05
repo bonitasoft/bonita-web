@@ -6,12 +6,14 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.ArchivedDocumentNotFoundException;
@@ -64,6 +66,8 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
 
     @Before
     public void setUp() throws Exception {
+        ConfigurationFilesManager.getInstance()
+                .setTenantConfigurations(Collections.singletonMap("console-config.properties", "form.attachment.max.size=30".getBytes()), 1L);
         initMocks(this);
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");

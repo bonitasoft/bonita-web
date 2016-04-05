@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
+import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
@@ -214,7 +214,7 @@ DatastoreHasDelete
         }
     }
 
-    protected SimpleProperties getCompoundPermissionsMapping() {
+    protected ConfigurationFile getCompoundPermissionsMapping() {
         return PropertiesFactory.getCompoundPermissionsMapping(getEngineSession().getTenantId());
     }
 

@@ -23,13 +23,12 @@ import java.util.Map;
 public class AuthenticationManagerFactory {
 
     static Map<Long, AuthenticationManager> map = new HashMap<>();
-    private static AuthenticationManagerPropertiesFactory authenticationManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     public static AuthenticationManager getAuthenticationManager(final long tenantId) throws AuthenticationManagerNotFoundException {
         String authenticationManagerName = null;
         if (!map.containsKey(tenantId)) {
             try {
-                authenticationManagerName = authenticationManagerPropertiesFactory.getProperties(tenantId).getAuthenticationManagerImpl();
+                authenticationManagerName = AuthenticationManagerProperties.getProperties(tenantId).getAuthenticationManagerImpl();
                 final AuthenticationManager authenticationManager = (AuthenticationManager) Class.forName(authenticationManagerName).newInstance();
                 map.put(tenantId, authenticationManager);
             } catch (final Exception e) {
