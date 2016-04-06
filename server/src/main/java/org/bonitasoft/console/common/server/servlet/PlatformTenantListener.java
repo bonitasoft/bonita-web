@@ -22,6 +22,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -45,24 +46,23 @@ public class PlatformTenantListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
+        PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
         try {
-            initializeDefaultTenant(new ThemeExtractor());
-        } catch (final Throwable e) {
+            platformManagementUtils.initializePlatformConfiguration();
+        } catch (BonitaException | IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while initializing the default tenant", e);
+                LOGGER.log(Level.SEVERE, "Error while retrieving configuraiton", e);
             }
         }
-
+        initializeDefaultTenant(new ThemeExtractor());
     }
 
     /**
      * Initialize default tenant configuration folder
-     * 
-     * @throws IOException
-     * @throws BonitaException
-     * @param themeExtractor
+     *
+     * @param themeExtractor the theme extractor
      */
-    protected void initializeDefaultTenant(ThemeExtractor themeExtractor) throws Exception {
+    void initializeDefaultTenant(ThemeExtractor themeExtractor) {
         try {
             final APISession session = login();
             final long tenantId = session.getTenantId();
@@ -77,21 +77,10 @@ public class PlatformTenantListener implements ServletContextListener {
             // final Theme mobileTheme = TenantAPIAccessor.getThemeAPI(session).getCurrentTheme(ThemeType.MOBILE);
 
             logout(session);
-        } catch (final NumberFormatException e) {
+        } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while casting default tenant id", e);
+                LOGGER.log(Level.SEVERE, "Error while initializing the default tenant", e);
             }
-            throw e;
-        } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while creating tenant directory", e);
-            }
-            throw e;
-        } catch (final BonitaException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Bonita exception while creating tenant directory", e);
-            }
-            throw e;
         }
     }
 

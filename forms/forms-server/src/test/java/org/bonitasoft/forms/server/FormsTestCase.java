@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.forms.server;
 
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.AbstractJUnitTest;
@@ -42,6 +43,7 @@ public abstract class FormsTestCase extends AbstractJUnitTest {
 
     @Override
     protected void testSetUp() throws Exception {
+        new PlatformManagementUtils().initializePlatformConfiguration();
         TenantsManagementUtils.addDirectoryForTenant(TenantsManagementUtils.getDefaultTenantId());
     }
 

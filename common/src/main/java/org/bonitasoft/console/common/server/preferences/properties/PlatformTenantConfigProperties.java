@@ -14,97 +14,35 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
 /**
  * @author Zhiheng Yang
  */
 public class PlatformTenantConfigProperties {
 
-    /**
-     * Logger
-     */
-    private static final Logger LOGGER = Logger.getLogger(PlatformTenantConfigProperties.class.getName());
+    private static final String PLATFORM_DEFAULT_TENANT_ID = "platform.tenant.default.id";
 
-    protected static final String PROPERTIES_FILENAME = "platform-tenant-config.properties";
+    private static final String PLATFORM_TENANT_DEFAULT_USERNAME = "platform.tenant.default.username";
 
-    /**
-     * Configurations of tenant
-     */
-    public static final String PLATFORM_DEFAULT_TENANT_ID = "platform.tenant.default.id";
+    private static final String PLATFORM_TENANT_DEFAULT_PASSWORD = "platform.tenant.default.password";
 
-    protected static final String PLATFORM_TENANT_DEFAULT_USERNAME = "platform.tenant.default.username";
+    private static final String PROPERTIES_FILE = "platform-tenant-config.properties";
 
-    protected static final String PLATFORM_TENANT_DEFAULT_PASSWORD = "platform.tenant.default.password";
-
-    /**
-     * Indicates that the preferences have been loaded
-     */
-    public static boolean preferencesLoaded = false;
-
-    /**
-     * The loaded properties
-     */
-    private final Properties properties = new Properties();
-
-    /**
-     * The properties file
-     */
-    private final File propertiesFile;
-
-    /**
-     * Platform properties instance
-     */
-    private static volatile PlatformTenantConfigProperties instance = new PlatformTenantConfigProperties();
-
-    /**
-     * @return the PlatformProperties instance
-     */
-    protected static PlatformTenantConfigProperties getInstance() {
-        return instance;
-    }
-
-    PlatformTenantConfigProperties() {
-        propertiesFile = new File(WebBonitaConstantsUtils.getInstance().getConfFolder(), PROPERTIES_FILENAME);
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(propertiesFile);
-            properties.load(inputStream);
-        } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Platform Tenant Config file " + propertiesFile.getPath() + " could not be loaded.", e);
-            }
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, "Platform Tenant Config file stream " + propertiesFile.getPath() + " could not be closed.", e);
-                    }
-                }
-            }
-        }
+    private Properties getProperties() {
+        return ConfigurationFilesManager.getInstance().getPlatformProperties(PROPERTIES_FILE);
     }
 
     public String getDefaultTenantId() {
-        return properties.getProperty(PLATFORM_DEFAULT_TENANT_ID);
+        return getProperties().getProperty(PLATFORM_DEFAULT_TENANT_ID);
     }
 
     public String defaultTenantUserName() {
-        return properties.getProperty(PLATFORM_TENANT_DEFAULT_USERNAME);
+        return getProperties().getProperty(PLATFORM_TENANT_DEFAULT_USERNAME);
     }
 
     public String defaultTenantPassword() {
-        return properties.getProperty(PLATFORM_TENANT_DEFAULT_PASSWORD);
+        return getProperties().getProperty(PLATFORM_TENANT_DEFAULT_PASSWORD);
     }
 
 }

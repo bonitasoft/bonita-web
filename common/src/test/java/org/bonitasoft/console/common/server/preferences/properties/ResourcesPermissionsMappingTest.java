@@ -1,5 +1,4 @@
 /*
- *
  * Copyright (C) 2014 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
@@ -12,7 +11,6 @@
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 package org.bonitasoft.console.common.server.preferences.properties;
@@ -21,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -32,7 +31,8 @@ public class ResourcesPermissionsMappingTest {
     @Test
     public void testGetResourcePermission() throws Exception {
         //given
-        final String fileContent =  "GET|bpm/process [Process visualization, Process categories, Process actor mapping visualization, Connector visualization]\n" +
+        final String fileContent = "GET|bpm/process [Process visualization, Process categories, Process actor mapping visualization, Connector visualization]\n"
+                +
                 "POST|bpm/process [Process Deploy]\n" +
                 "POST|bpm/process/6 [Custom permission]\n" +
                 "PUT|bpm/process []";
@@ -70,9 +70,10 @@ public class ResourcesPermissionsMappingTest {
     }
 
     public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) throws IOException {
+        ConfigurationFilesManager.getInstance().setTenantConfigurations(Collections.singletonMap("TEST_FILE.properties", fileContent.getBytes()), 423L);
         final File resourceMappingFile = File.createTempFile("resourceMapping", ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(resourceMappingFile));
-        final ResourcesPermissionsMapping resourcesPermissionsMapping = new ResourcesPermissionsMapping(resourceMappingFile);
+        final ResourcesPermissionsMapping resourcesPermissionsMapping = new ResourcesPermissionsMapping("TEST_FILE.properties", 423L);
         resourceMappingFile.delete();
         return resourcesPermissionsMapping;
     }

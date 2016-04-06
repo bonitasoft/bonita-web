@@ -18,7 +18,6 @@ import java.io.Serializable;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
-import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.Api;
 import org.scribe.model.Token;
@@ -27,7 +26,6 @@ import org.scribe.oauth.OAuthService;
 
 /**
  * @author Ruiheng.Fan
- *
  */
 public abstract class OAuthConsumer implements Serializable {
 
@@ -41,8 +39,6 @@ public abstract class OAuthConsumer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static AuthenticationManagerPropertiesFactory loginManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
-
     protected OAuthConsumer(final Class<? extends Api> viewType, final long tenantId, final String redirctURL) {
         this.viewType = viewType;
         redirectUrl = redirctURL;
@@ -51,7 +47,7 @@ public abstract class OAuthConsumer implements Serializable {
     }
 
     protected void generateOAuthService() {
-        final AuthenticationManagerProperties properties = loginManagerPropertiesFactory.getProperties(tenantId);
+        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties(tenantId);
         final String consumerKey = properties.getOAuthConsumerKey();
         final String consumerSecret = properties.getOAuthConsumerSecret();
         final String callbackURL = properties.getOAuthCallbackURL();

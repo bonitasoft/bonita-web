@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
+import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
 import org.bonitasoft.web.rest.server.api.system.BonitaVersion;
 import org.bonitasoft.web.rest.server.api.system.VersionFile;
 
@@ -131,7 +131,7 @@ public class BonitaRegistration {
     }
 
     public void sendUserInfoIfNotSent() {
-        final SimpleProperties platformPreferencesProperties = getPlatformPreferences();
+        final ConfigurationFile platformPreferencesProperties = getPlatformPreferences();
         final String infoSent = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT);
         if (infoSent == null || !infoSent.equals("1")) {
             int nbTry = getNbTry(platformPreferencesProperties);
@@ -144,17 +144,17 @@ public class BonitaRegistration {
         }
     }
 
-    protected SimpleProperties getPlatformPreferences() {
+    protected ConfigurationFile getPlatformPreferences() {
         return PropertiesFactory.getPlatformPreferencesProperties();
     }
 
-    protected void sendUserInfoAndRecordInPreferences(final SimpleProperties platformPreferencesProperties) {
+    protected void sendUserInfoAndRecordInPreferences(final ConfigurationFile platformPreferencesProperties) {
         if (sendUserInfo()) {
             platformPreferencesProperties.setProperty(BonitaRegistration.BONITA_INFO_SENT, "1");
         }
     }
 
-    protected int getNbTry(final SimpleProperties platformPreferencesProperties) {
+    protected int getNbTry(final ConfigurationFile platformPreferencesProperties) {
         int nbTry = 0;
         final String nbTryString = platformPreferencesProperties.getProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY);
         if (nbTryString != null) {

@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,24 +16,33 @@ package org.bonitasoft.console.common.server.auth;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 
-import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
+import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Rohart Bastien
- *
  */
 public class AuthenticationManagerPropertiesTest {
 
+    public static final long TENANT_ID = 65432L;
     public AuthenticationManagerProperties loginManagerProperties;
 
     @Before
-    public void setUp() {
-        loginManagerProperties = new AuthenticationManagerProperties(new File("src/test/resources/loginManager-config.properties"));
+    public void setUp() throws IOException {
+        ConfigurationFilesManager.getInstance().setTenantConfigurations(
+                Collections.singletonMap("authenticationManager-config.properties",
+                        ("login.LoginManager = org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl\n" +
+                                "OAuth.serviceProvider = LinkedIn\n" +
+                                "OAuth.consumerKey = ove2vcdjptar\n" +
+                                "OAuth.consumerSecret = vdaBrCmHvkgJoYz1\n" +
+                                "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes()),
+                TENANT_ID);
+        loginManagerProperties = new AuthenticationManagerProperties(TENANT_ID);
     }
 
     @After

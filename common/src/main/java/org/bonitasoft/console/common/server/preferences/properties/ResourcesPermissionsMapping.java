@@ -14,20 +14,17 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Anthony Birembaut
  * @author Baptiste Mesta
  * @author Fabio Lombardi
  */
-public class ResourcesPermissionsMapping extends SimpleProperties {
+public class ResourcesPermissionsMapping extends ConfigurationFile {
 
     public static final String API_METHOD_SEPARATOR = "|";
 
@@ -38,26 +35,12 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
      */
     public static final String PROPERTIES_FILENAME = "resources-permissions-mapping.properties";
 
-    /**
-     * Instances attribute
-     */
-    private static Map<Long, ResourcesPermissionsMapping> INSTANCES = new ConcurrentHashMap<Long, ResourcesPermissionsMapping>();
-
-    /**
-     * @return the {@link ResourcesPermissionsMapping} instance
-     */
-    protected static ResourcesPermissionsMapping getInstance(final long tenantId) {
-        ResourcesPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
-            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
-            tenancyProperties = new ResourcesPermissionsMapping(fileName);
-            INSTANCES.put(tenantId, tenancyProperties);
-        }
-        return tenancyProperties;
+    ResourcesPermissionsMapping(long tenantId) {
+        super(PROPERTIES_FILENAME, tenantId);
     }
 
-    ResourcesPermissionsMapping(final File fileName) {
-        super(fileName);
+    public ResourcesPermissionsMapping(String propertiesFilename, long tenantId) {
+        super(propertiesFilename, tenantId);
     }
 
     public Set<String> getResourcePermissions(final String method, final String apiName, final String resourceName, final List<String> resourceQualifiers) {
@@ -81,7 +64,7 @@ public class ResourcesPermissionsMapping extends SimpleProperties {
     }
 
     protected List<String> getResourceQualifiersWithWildCard(final List<String> resourceQualifiers, final int wildCardPosition) {
-        final List<String> resourceQualifiersWithWildCard = new ArrayList<String>(resourceQualifiers);
+        final List<String> resourceQualifiersWithWildCard = new ArrayList<>(resourceQualifiers);
         resourceQualifiersWithWildCard.set(wildCardPosition, WILDCARD);
         return resourceQualifiersWithWildCard;
     }

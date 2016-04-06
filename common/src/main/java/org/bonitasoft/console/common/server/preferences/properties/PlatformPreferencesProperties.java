@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-public class PlatformPreferencesProperties extends SimpleProperties {
+public class PlatformPreferencesProperties extends ConfigurationFile {
 
     /**
      * Default name of the preferences file
@@ -33,7 +33,7 @@ public class PlatformPreferencesProperties extends SimpleProperties {
         return instance;
     }
 
-    private PlatformPreferencesProperties() {
-        super(getPlatformPropertiesFile(PROPERTIES_FILENAME));
+    PlatformPreferencesProperties() {
+        super(PROPERTIES_FILENAME);
     }
 }

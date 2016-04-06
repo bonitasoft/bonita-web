@@ -79,7 +79,6 @@ public class AutoLoginRule extends AuthenticationRule {
     }
 
     protected SecurityProperties getSecurityProperties(final HttpServletRequestAccessor httpRequest, final long tenantId) {
-        return SecurityProperties.getInstance(tenantId,
-                new ProcessIdentifier(httpRequest.getAutoLoginScope()));
+        return new SecurityProperties(tenantId, new ProcessIdentifier(httpRequest.getAutoLoginScope()));
     }
 }

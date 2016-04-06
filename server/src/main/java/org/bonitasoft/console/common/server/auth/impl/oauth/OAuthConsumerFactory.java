@@ -18,17 +18,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 
 /**
  * @author Chong Zhao
- *
  */
 public class OAuthConsumerFactory {
 
-    static Map<Long, OAuthConsumer> map = new HashMap<Long, OAuthConsumer>();
-    private static AuthenticationManagerPropertiesFactory loginManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
+    static Map<Long, OAuthConsumer> map = new HashMap<>();
+
 
     private enum OAUTH_CLASS_TYPE {
         LinkedIn
@@ -43,7 +42,7 @@ public class OAuthConsumerFactory {
         if (!map.containsKey(tenantId)) {
             String providerName = null;
             try {
-                providerName = loginManagerPropertiesFactory.getProperties(tenantId).getOAuthServiceProviderName();
+                providerName = AuthenticationManagerProperties.getProperties(tenantId).getOAuthServiceProviderName();
                 if (providerName == null) {
                     providerName = OAUTH_CLASS_TYPE.LinkedIn.toString();
                     LOGGER.log(Level.INFO, "The OAuth service provider undefined. Using the default implementation : " + providerName);
