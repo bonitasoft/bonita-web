@@ -28,7 +28,6 @@ public class AuthenticationManagerFactory {
     private static final Logger LOGGER = Logger.getLogger(AuthenticationManagerFactory.class.getName());
 
     static Map<Long, AuthenticationManager> map = new HashMap<>();
-    private static AuthenticationManagerPropertiesFactory authenticationManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     public static AuthenticationManager getAuthenticationManager(final long tenantId) throws AuthenticationManagerNotFoundException {
         String authenticationManagerName = null;
@@ -46,7 +45,7 @@ public class AuthenticationManagerFactory {
     }
 
     private static String getManagerImplementationClassName(long tenantId) {
-        String authenticationManagerName = authenticationManagerPropertiesFactory.getProperties(tenantId).getAuthenticationManagerImpl();
+        String authenticationManagerName = AuthenticationManagerProperties.getProperties(tenantId).getAuthenticationManagerImpl();
         if (authenticationManagerName == null || authenticationManagerName.isEmpty()) {
             authenticationManagerName = StandardAuthenticationManagerImpl.class.getName();
             LOGGER.finest("The login manager implementation is undefined. Using default implementation : " + authenticationManagerName);

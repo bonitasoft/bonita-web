@@ -73,7 +73,7 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 
 public class PageDatastore extends CommonDatastore<PageItem, Page> implements DatastoreHasAdd<PageItem>, DatastoreHasUpdate<PageItem>,
-DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
+        DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     private static final String INDEX_GROOVY = "Index.groovy";
 
@@ -222,7 +222,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected Page createEnginePage(final PageItem pageItem, final File zipFile) throws AlreadyExistsException, CreationException, IOException,
-    UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
+            UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
 
         try {
             final byte[] zipContent = readZipFile(zipFile);
@@ -291,7 +291,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected List<Long> APIIdsToLong(final List<APIID> ids) {
-        final List<Long> result = new ArrayList<Long>(ids.size());
+        final List<Long> result = new ArrayList<>(ids.size());
         for (final APIID id : ids) {
             result.add(id.toLong());
         }
@@ -309,7 +309,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
         try {
             searchResult = runSearch(filters, creator);
             // Convert to ConsoleItems
-            return new ItemSearchResult<PageItem>(page, resultsByPage, searchResult.getCount(), convertEngineToConsoleItemsList(searchResult.getResult()));
+            return new ItemSearchResult<>(page, resultsByPage, searchResult.getCount(), convertEngineToConsoleItemsList(searchResult.getResult()));
         } catch (final SearchException e) {
             throw new APIException(e);
         }
@@ -325,14 +325,14 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
         final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
                 getSearchDescriptorConverter()), new Filters(filters,
-                new PageFilterCreator(getSearchDescriptorConverter())));
+                        new PageFilterCreator(getSearchDescriptorConverter())));
         final SearchOptionsBuilder builder = searchOptionsCreator.getBuilder();
 
         if (filters.containsKey(PageItem.FILTER_CONTENT_TYPE)
                 && "processPage".equalsIgnoreCase(filters.get(PageSearchDescriptor.CONTENT_TYPE))) {
             builder.leftParenthesis().filter(PageSearchDescriptor.CONTENT_TYPE, "form")
-            .or().filter(PageSearchDescriptor.CONTENT_TYPE, "page")
-            .rightParenthesis();
+                    .or().filter(PageSearchDescriptor.CONTENT_TYPE, "page")
+                    .rightParenthesis();
         } else {
             addStringFilterToSearchBuilder(filters, builder, PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE);
         }
@@ -383,7 +383,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
                     final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
                     updatedPage = convertEngineToConsoleItem(page);
                     savePageInBonitahome(updatedPage.getUrlToken(), unzipPageTempFolder, engineSession);
-                    if (oldURLToken != updatedPage.getUrlToken()) {
+                    if (!Objects.equals(oldURLToken, updatedPage.getUrlToken())) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
                     }
                     customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping,
@@ -401,7 +401,7 @@ DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
     }
 
     protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
-    CompilationFailedException, BonitaException {
+            CompilationFailedException, BonitaException {
         if (zipFile != null) {
             final Long pageId = id.toLong();
             customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,

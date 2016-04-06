@@ -14,10 +14,6 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @author Anthony Birembaut
  */
@@ -28,26 +24,8 @@ public class DynamicPermissionsChecks extends ResourcesPermissionsMapping {
      */
     public static final String PROPERTIES_FILENAME = "dynamic-permissions-checks.properties";
 
-    /**
-     * Instances attribute
-     */
-    private static Map<Long, DynamicPermissionsChecks> INSTANCES = new ConcurrentHashMap<Long, DynamicPermissionsChecks>();
-
-    /**
-     * @return the {@link DynamicPermissionsChecks} instance
-     */
-    protected static DynamicPermissionsChecks getInstance(final long tenantId) {
-        DynamicPermissionsChecks tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
-            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
-            tenancyProperties = new DynamicPermissionsChecks(fileName);
-            INSTANCES.put(tenantId, tenancyProperties);
-        }
-        return tenancyProperties;
-    }
-
-    DynamicPermissionsChecks(final File fileName) {
-        super(fileName);
+    DynamicPermissionsChecks(long tenantId) {
+        super(PROPERTIES_FILENAME, tenantId);
     }
 
 }

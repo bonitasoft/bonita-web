@@ -14,40 +14,19 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @author Anthony Birembaut
  */
-public class CustomPermissionsMapping extends SimpleProperties {
+public class CustomPermissionsMapping extends ConfigurationFile {
 
     /**
      * Default name of the preferences file
      */
     public static final String PROPERTIES_FILENAME = "custom-permissions-mapping.properties";
 
-    /**
-     * Instances attribute
-     */
-    private static Map<Long, CustomPermissionsMapping> INSTANCES = new ConcurrentHashMap<Long, CustomPermissionsMapping>();
 
-    /**
-     * @return the {@link CustomPermissionsMapping} instance
-     */
-    protected static CustomPermissionsMapping getInstance(final long tenantId) {
-        CustomPermissionsMapping tenancyProperties = INSTANCES.get(tenantId);
-        if (tenancyProperties == null || SecurityProperties.getInstance(tenantId).isAPIAuthorizationsCheckInDebugMode()) {
-            final File fileName = getTenantPropertiesFile(tenantId, PROPERTIES_FILENAME);
-            tenancyProperties = new CustomPermissionsMapping(fileName);
-            INSTANCES.put(tenantId, tenancyProperties);
-        }
-        return tenancyProperties;
-    }
-
-    CustomPermissionsMapping(final File fileName) {
-        super(fileName);
+    CustomPermissionsMapping(long tenantId) {
+        super(PROPERTIES_FILENAME, tenantId);
     }
 
 }

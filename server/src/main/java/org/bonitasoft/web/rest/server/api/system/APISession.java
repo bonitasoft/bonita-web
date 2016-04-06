@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
-import org.bonitasoft.console.common.server.auth.AuthenticationManagerPropertiesFactory;
 import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
@@ -35,8 +34,6 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
  * @author Julien Mege
  */
 public class APISession extends ConsoleAPI<SessionItem> {
-
-    public static final AuthenticationManagerPropertiesFactory loginManagerPropertiesFactory = new AuthenticationManagerPropertiesFactory();
 
     @Override
     protected SessionDefinition defineItemDefinition() {
@@ -102,10 +99,10 @@ public class APISession extends ConsoleAPI<SessionItem> {
      * enable to know if the logout button is visible or not
      *
      * @param tenantId
-     *            the current user tenant id
+     *        the current user tenant id
      */
     protected boolean isLogoutDisabled(final long tenantId) {
-        return loginManagerPropertiesFactory.getProperties(tenantId).isLogoutDisabled();
+        return AuthenticationManagerProperties.getProperties(tenantId).isLogoutDisabled();
     }
 
     public String getVersion() {

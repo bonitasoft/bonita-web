@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 import java.net.URLEncoder;
 
-import org.bonitasoft.console.common.server.preferences.properties.SimpleProperties;
+import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +41,7 @@ public class BonitaRegistrationTest {
     SystemInfoSender systemInfoSender;
 
     @Mock
-    SimpleProperties simpleProperties;
+    ConfigurationFile configurationFile;
 
     @Spy
     @InjectMocks
@@ -49,7 +49,7 @@ public class BonitaRegistrationTest {
 
     @Before
     public void beforeEach() throws Exception {
-        doReturn(simpleProperties).when(bonitaRegistration).getPlatformPreferences();
+        doReturn(configurationFile).when(bonitaRegistration).getPlatformPreferences();
     }
 
     @Test
@@ -94,7 +94,7 @@ public class BonitaRegistrationTest {
 
     @Test
     public void sendUserInfoIfNotSent_should_not_call_service_when_info_already_sent() throws Exception {
-            when(simpleProperties.getProperty(BonitaRegistration.BONITA_INFO_SENT)).thenReturn("1");
+            when(configurationFile.getProperty(BonitaRegistration.BONITA_INFO_SENT)).thenReturn("1");
 
             bonitaRegistration.sendUserInfoIfNotSent();
 
@@ -103,7 +103,7 @@ public class BonitaRegistrationTest {
 
     @Test
     public void sendUserInfoIfNotSent_should_not_call_service_when_max_try_reached() throws Exception {
-            when(simpleProperties.getProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY)).thenReturn(
+            when(configurationFile.getProperty(BonitaRegistration.BONITA_USER_REGISTER_TRY)).thenReturn(
                     Integer.toString(BonitaRegistration.BONITA_USER_REGISTER_MAXTRY + 1));
 
             bonitaRegistration.sendUserInfoIfNotSent();
