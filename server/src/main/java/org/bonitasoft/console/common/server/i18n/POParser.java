@@ -18,7 +18,7 @@ package org.bonitasoft.console.common.server.i18n;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,15 +28,13 @@ import org.fedorahosted.tennera.jgettext.PoParser;
 import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
 
 /**
- * 
  * @author Séverin Moussel
- * 
  */
 public class POParser {
 
-    private final Map<String, String> translations = new TreeMap<String, String>();
+    private final Map<String, String> translations = new TreeMap<>();
 
-    public POParser() {
+    private POParser() {
     }
 
     public static Map<String, String> parse(final String path) {
@@ -47,17 +45,17 @@ public class POParser {
         return new POParser().parseFile(file);
     }
 
-    public Map<String, String> parseFile(final String path) {
+    private Map<String, String> parseFile(final String path) {
         return this.parseFile(new File(path));
     }
 
-    public Map<String, String> parseFile(final File file) {
+    private Map<String, String> parseFile(final File file) {
         try {
             parseCatalog(new PoParser().parseCatalog(file));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("I18N: File not found " + file.getPath());
         } catch (ParseException e) {
-            throw new RuntimeException("I18N: Couldnt parse po file " + file.getPath());
+            throw new RuntimeException("I18N: Could not parse po file " + file.getPath());
         } catch (IOException e) {
             throw new RuntimeException("I18N: IO issues while parsing " + file.getPath());
         }
@@ -65,10 +63,22 @@ public class POParser {
         return this.translations;
     }
 
+    public static Map<String, String> parsePOFromStream(final InputStream stream) {
+        return new POParser().parseFromStream(stream);
+    }
+
+    private Map<String, String> parseFromStream(final InputStream stream) {
+        try {
+            parseCatalog(new PoParser().parseCatalog(stream, false));
+        } catch (IOException e) {
+            throw new RuntimeException("I18N: IO issues while parsing translation resource " + stream.toString());
+        }
+
+        return this.translations;
+    }
+
     private void parseCatalog(Catalog catalog) {
-        Iterator<Message> it = catalog.iterator();
-        while (it.hasNext()) {
-            Message msg = it.next();
+        for (Message msg : catalog) {
             translations.put(msg.getMsgid(), msg.getMsgstr());
         }
     }
