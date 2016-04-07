@@ -22,12 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
@@ -106,7 +103,7 @@ public class TenantsManagementUtils {
         // new target folder
         new File(targetDir).mkdirs();
 
-        // get the file or folder of sorcefolder
+        // get the file or folder of sourceDir
         final File[] file = new File(sourceDir).listFiles();
         for (int i = 0; i < file.length; i++) {
             if (file[i].isFile()) {
@@ -155,33 +152,6 @@ public class TenantsManagementUtils {
     private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
             UnknownAPITypeException {
         return TenantAPIAccessor.getProfileAPI(session);
-    }
-
-    /**
-     * copy the tenant template directory
-     *
-     * @return true if the tenant directory was created
-     * @param tenantId the ID of the tenant to create.
-     * @throws IOException
-     * @throws BonitaException
-     */
-    public static synchronized boolean addDirectoryForTenant(final long tenantId) throws IOException, BonitaException {
-        // add tenant folder
-        final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator + tenantId;
-        final String sourceDirPath = WebBonitaConstantsUtils.getInstance().getTenantTemplateFolder().getPath();
-        // copy configuration files
-        final File confDir = new File(targetDirPath + File.separator + WebBonitaConstants.confFolderName);
-        if (!confDir.exists() || confDir.list().length == 0) {
-            try {
-                deleteDirectory(targetDirPath);
-                copyDirectory(sourceDirPath, targetDirPath);
-                return true;
-            } catch (final IOException e) {
-                deleteDirectory(targetDirPath);
-                throw e;
-            }
-        }
-        return false;
     }
 
     /**

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +44,6 @@ public class ThemeResourceServletTest {
     public void setUp() throws Exception {
         savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
         System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
-        TenantsManagementUtils.addDirectoryForTenant(1L);
     }
 
     @Test

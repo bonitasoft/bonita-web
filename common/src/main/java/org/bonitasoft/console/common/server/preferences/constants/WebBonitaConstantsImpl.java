@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.preferences.constants;
 
 import java.io.File;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Paths;
 
 /**
  * @author Ruiheng.Fan
@@ -28,13 +29,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     private static final String platformFolderName = "platform";
 
     private String platformFolderPath = null;
-
-    /**
-     * tenant template folder
-     */
-    private static final String tenantTemplateFolderName = "tenant-template";
-
-    private String tenantTemplateFolderPath = null;
 
     /**
      * tenants folder
@@ -72,22 +66,10 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getTenantsFolderPath() {
         if (tenantsFolderPath == null) {
-            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;
+            tenantsFolderPath = Paths.get(getTempFolderPath()).resolveSibling(tenantsFolderName).toString() + File.separator;
         }
         return tenantsFolderPath;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getTenantTemplateFolderPath() {
-        if (tenantTemplateFolderPath == null) {
-            tenantTemplateFolderPath = getPlatformFolderPath() + tenantTemplateFolderName + File.separator;
-        }
-        return tenantTemplateFolderPath;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -102,7 +84,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getThemePortalFolderPath() {
+    public String getThemeFolderPath() {
         return null;
     }
 
@@ -118,35 +100,12 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getPortalDefaultIconsFolderPath() {
-        return null;
-    }
-
-    @Override
-    public String getPortalProcessIconsFolderPath() {
-        return null;
-    }
-
-    @Override
     public String getPortalUserIconsFolderPath() {
         return null;
     }
 
     @Override
     public String getPortalRoleIconsFolderPath() {
-        return null;
-    }
-
-    @Override
-    public String getPortalProfilesIconsFolderPath() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getProfilesTempFolderPath() {
         return null;
     }
 
@@ -175,11 +134,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
             formsWorkFolderPath = getTempFolderPath() + formsFolderName + File.separator;
         }
         return formsWorkFolderPath;
-    }
-
-    @Override
-    public String getPDFTemplateFolderPath() {
-        return null;
     }
 
     @Override
