@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.preferences.properties;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,6 +24,8 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
+import org.bonitasoft.engine.exception.BonitaException;
 
 /**
  * @author Baptiste Mesta
@@ -87,10 +90,23 @@ public class ConfigurationFilesManager {
     }
 
     public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
-        //FIXME make it persisted in database
         Map<String, Properties> resources = getResources(tenantId);
         Properties properties = resources.get(propertiesFilename);
         properties.remove(propertyName);
+        update(tenantId, propertiesFilename, properties);
+    }
+
+    private void update(long tenantId, String propertiesFilename, Properties properties) throws IOException {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            properties.store(byteArrayOutputStream, "");
+            getPlatformManagementUtils().updateConfigurationFile(tenantId, propertiesFilename, byteArrayOutputStream.toByteArray());
+        } catch (BonitaException e) {
+            throw new IOException(e);
+        }
+    }
+
+    PlatformManagementUtils getPlatformManagementUtils() {
+        return new PlatformManagementUtils();
     }
 
     private Map<String, Properties> getResources(long tenantId) {
@@ -104,10 +120,10 @@ public class ConfigurationFilesManager {
     }
 
     public void setProperty(String propertiesFilename, long tenantId, String propertyName, String propertyValue) throws IOException {
-        //FIXME make it persisted in database
         Map<String, Properties> resources = getResources(tenantId);
         Properties properties = resources.get(propertiesFilename);
         properties.setProperty(propertyName, propertyValue);
+        update(tenantId, propertiesFilename, properties);
     }
 
     public File getPlatformConfigurationFile(String fileName) {
