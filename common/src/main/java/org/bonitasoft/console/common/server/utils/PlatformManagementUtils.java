@@ -23,6 +23,7 @@ import org.bonitasoft.engine.api.PlatformAPI;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.PlatformSession;
@@ -37,7 +38,7 @@ public class PlatformManagementUtils {
         return ApiAccessType.LOCAL.equals(APITypeManager.getAPIType());
     }
 
-    private PlatformSession platformLogin() throws BonitaException, IOException {
+    PlatformSession platformLogin() throws BonitaException, IOException {
         if (isLocal()) {
             try {
                 Class<?> api = Class.forName("org.bonitasoft.engine.api.impl.PlatformLoginAPIImpl");
@@ -51,7 +52,7 @@ public class PlatformManagementUtils {
         }
     }
 
-    private void platformLogout(PlatformSession platformSession) throws BonitaException {
+    void platformLogout(PlatformSession platformSession) throws BonitaException {
         PlatformLoginAPI platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
         platformLoginAPI.logout(platformSession);
     }
@@ -61,7 +62,6 @@ public class PlatformManagementUtils {
         for (Map.Entry<Long, Map<String, byte[]>> tenantConfiguration : clientPlatformConfigurations.entrySet()) {
             ConfigurationFilesManager.getInstance().setTenantConfigurations(tenantConfiguration.getValue(), tenantConfiguration.getKey());
         }
-
     }
 
     private void retrievePlatformConfiguration(PlatformAPI platformAPI) throws IOException {
@@ -71,9 +71,20 @@ public class PlatformManagementUtils {
 
     public void initializePlatformConfiguration() throws BonitaException, IOException {
         PlatformSession platformSession = platformLogin();
-        PlatformAPI platformAPI = PlatformAPIAccessor.getPlatformAPI(platformSession);
+        PlatformAPI platformAPI = getPlatformAPI(platformSession);
         retrievePlatformConfiguration(platformAPI);
         retrieveTenantsConfiguration(platformAPI);
         platformLogout(platformSession);
+    }
+
+    public void updateConfigurationFile(long tenantId, String file, byte[] content) throws IOException, BonitaException {
+        PlatformSession platformSession = platformLogin();
+        PlatformAPI platformAPI = getPlatformAPI(platformSession);
+        platformAPI.updateClientTenantConfigurationFile(tenantId, file, content);
+        platformLogout(platformSession);
+    }
+
+    PlatformAPI getPlatformAPI(PlatformSession platformSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return PlatformAPIAccessor.getPlatformAPI(platformSession);
     }
 }
