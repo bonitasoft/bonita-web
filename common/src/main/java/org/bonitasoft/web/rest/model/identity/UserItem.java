@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdateDate, ItemHasCreator, ItemHasIcon {
 
-    public static final String DEFAULT_USER_ICON = "/default/icon_user.png";
+    public static final String DEFAULT_USER_ICON = "icons/default/icon_user.png";
 
     public static final String ATTRIBUTE_FIRSTNAME = "firstname";
 

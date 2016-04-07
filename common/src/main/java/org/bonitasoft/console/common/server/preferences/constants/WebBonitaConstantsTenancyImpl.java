@@ -24,71 +24,23 @@ import java.lang.management.ManagementFactory;
  */
 public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
-    public String tenantsFolderPath = null;
-
-    public String tenantFolderPath = null;
-
-    /**
-     * tmp
-     */
+    static final String ICONS_WORK_FOLDER_NAME = "icons";
+    private static final String USERS_ICONS_WORK_FOLDER_NAME = "users";
+    private static final String THEME_WORK_FOLDER_NAME = "theme";
+    private static final String REPORTS_WORK_FOLDER_NAME = "reports";
+    private static final String PAGES_WORK_FOLDER_NAME = "pages";
+    private String tenantsFolderPath = null;
+    private String tenantFolderPath = null;
     private String tempFolderPath = null;
-
-    /**
-     * conf
-     */
     private String confFolderPath = null;
-
-    /**
-     * work
-     */
     private String formsWorkFolderPath = null;
-
-    public static final String gadgetsWorkFolderName = "gadgets";
-
-    public static final String iconsWorkFolderName = "icons";
-
     private String iconsWorkFolderPath = null;
-
-    public static final String defaultIconsWorkFolderName = "default";
-
-    private String defaultIconsWorkFolderPath = null;
-
-    public static final String processesIconsWorkFolderName = "processes";
-
-    private String processesIconsWorkFolderPath = null;
-
-    public static final String usersIconsWorkFolderName = "users";
-
     private String usersIconsWorkFolderPath = null;
-
     private String groupsIconsWorkFolderPath;
-
     private String rolesIconsWorkFolderPath = null;
-
-    public static final String profilesIconsWorkFolderName = "profiles";
-
-    private String profilesIconsWorkFolderPath = null;
-
-    public static final String themeWorkFolderName = "theme";
-
     private String themeWorkFolderPath = null;
-
-    public static final String profilesWorkFolderName = "profiles";
-
-    private String profilesWorkFolderPath = null;
-
-    public static final String reportsWorkFolderName = "reports";
-
     private String reportsWorkFolderPath = null;
-
-    public static final String pagesWorkFolderName = "pages";
-
     private String pagesWorkFolderPath = null;
-
-    public static final String pdfWorkFolderName = "pdf";
-
-    private String pdfWorkFolderPath = null;
-
     private String bdmWorkFolderPath;
 
     /**
@@ -98,8 +50,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      */
     public WebBonitaConstantsTenancyImpl(final long tenantId) {
         tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
-        tempFolderPath = getTempFolder() + File.separator
-                + tenantsFolderName + File.separator + tenantId + File.separator;
+        tempFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
     }
 
     private String getTempFolder() {
@@ -111,21 +62,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getTenantsFolderPath() {
         if (tenantsFolderPath == null) {
-            tenantsFolderPath = clientFolderPath + tenantsFolderName + File.separator;
+            tenantsFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator;
         }
         return tenantsFolderPath;
-    }
-
-    public String getTenantFolderPath() {
-        return tenantFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getTenantTemplateFolderPath() {
-        return null;
     }
 
     /**
@@ -134,10 +73,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getTempFolderPath() {
         return tempFolderPath;
-    }
-
-    private String getWorkFolderPath() {
-        return getTenantFolderPath() + "work" + File.separator;
     }
 
     /**
@@ -155,20 +90,9 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getProfilesTempFolderPath() {
-        if (profilesWorkFolderPath == null) {
-            profilesWorkFolderPath = getTempFolderPath() + profilesWorkFolderName + File.separator;
-        }
-        return profilesWorkFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getReportsTempFolderPath() {
         if (reportsWorkFolderPath == null) {
-            reportsWorkFolderPath = getTempFolderPath() + reportsWorkFolderName + File.separator;
+            reportsWorkFolderPath = getTempFolderPath() + REPORTS_WORK_FOLDER_NAME + File.separator;
         }
         return reportsWorkFolderPath;
     }
@@ -179,7 +103,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getPagesTempFolderPath() {
         if (pagesWorkFolderPath == null) {
-            pagesWorkFolderPath = getTempFolderPath() + pagesWorkFolderName + File.separator;
+            pagesWorkFolderPath = getTempFolderPath() + PAGES_WORK_FOLDER_NAME + File.separator;
         }
         return pagesWorkFolderPath;
     }
@@ -197,25 +121,16 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String getIconsWorkFolderPath() {
         if (iconsWorkFolderPath == null) {
-            // icons are now stored inside default theme:
-            iconsWorkFolderPath = getThemePortalFolderPath() + iconsWorkFolderName + File.separator;
+            // icons are stored inside default theme:
+            iconsWorkFolderPath = getThemeFolderPath() + ICONS_WORK_FOLDER_NAME + File.separator;
         }
-        return iconsWorkFolderPath;
-    }
-
-    @Override
-    public String getPortalDefaultIconsFolderPath() {
-        if (defaultIconsWorkFolderPath == null) {
-            defaultIconsWorkFolderPath = getIconsWorkFolderPath() + defaultIconsWorkFolderName + File.separator;
-        }
-        // FIXME: must return defaultIconsWorkFolderPath not iconsWorkFolderPath
         return iconsWorkFolderPath;
     }
 
     @Override
     public String getPortalUserIconsFolderPath() {
         if (usersIconsWorkFolderPath == null) {
-            usersIconsWorkFolderPath = getIconsWorkFolderPath() + usersIconsWorkFolderName + File.separator;
+            usersIconsWorkFolderPath = getIconsWorkFolderPath() + USERS_ICONS_WORK_FOLDER_NAME + File.separator;
         }
         return usersIconsWorkFolderPath;
     }
@@ -229,35 +144,11 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getPortalProcessIconsFolderPath() {
-        if (processesIconsWorkFolderPath == null) {
-            processesIconsWorkFolderPath = getIconsWorkFolderPath() + processesIconsWorkFolderName + File.separator;
-        }
-        return processesIconsWorkFolderPath;
-    }
-
-    @Override
-    public String getPortalProfilesIconsFolderPath() {
-        if (profilesIconsWorkFolderPath == null) {
-            profilesIconsWorkFolderPath = getIconsWorkFolderPath() + profilesIconsWorkFolderName + File.separator;
-        }
-        return profilesIconsWorkFolderPath;
-    }
-
-    @Override
-    public String getThemePortalFolderPath() {
+    public String getThemeFolderPath() {
         if (themeWorkFolderPath == null) {
-            themeWorkFolderPath = getTempFolderPath() + File.separator + themeWorkFolderName;
+            themeWorkFolderPath = getTempFolderPath() + File.separator + THEME_WORK_FOLDER_NAME;
         }
         return themeWorkFolderPath;
-    }
-
-    @Override
-    public String getPDFTemplateFolderPath() {
-        if (pdfWorkFolderPath == null) {
-            pdfWorkFolderPath = getTempFolderPath() + pdfWorkFolderName + File.separator;
-        }
-        return pdfWorkFolderPath;
     }
 
     @Override

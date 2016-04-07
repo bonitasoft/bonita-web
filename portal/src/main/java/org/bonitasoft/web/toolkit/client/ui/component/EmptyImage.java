@@ -25,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
  */
 public class EmptyImage extends Image {
 
-    public static final String PATH = "/default/transparent.gif";
+    public static final String PATH = "icons/default/transparent.gif";
     
     public EmptyImage(final int width, final int height) {
         this(width, height, "");

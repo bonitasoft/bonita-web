@@ -15,14 +15,14 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -33,15 +33,7 @@ public class WebBonitaConstantsUtilsTest {
 
     private static final String TEST_BONITA_HOME = "src/test/resources/bonita/";
 
-    @Mock
-    private WebBonitaConstantsTenancyImpl constantsTenants;
-
-    @Mock
-    private File folder;
-
     private WebBonitaConstantsUtils webBonitaConstantsUtilsWithTenantId;
-
-    private WebBonitaConstantsUtils webBonitaConstantsUtils;
 
     @Before
     public void setUp() throws Exception {
@@ -50,79 +42,19 @@ public class WebBonitaConstantsUtilsTest {
         doReturn(TEST_BONITA_HOME).when(webBonitaConstantsUtilsWithTenantId).getBonitaHomePath();
 
         // Without tenantId
-        webBonitaConstantsUtils = spy(new WebBonitaConstantsUtils());
+        WebBonitaConstantsUtils webBonitaConstantsUtils = spy(new WebBonitaConstantsUtils());
         doReturn(TEST_BONITA_HOME).when(webBonitaConstantsUtils).getBonitaHomePath();
     }
 
     @Test
     public void testWeCanGetFormsWorkFolder() throws Exception {
-        constantsTenants = new WebBonitaConstantsTenancyImpl(1L);
+        WebBonitaConstantsTenancyImpl constantsTenants = new WebBonitaConstantsTenancyImpl(1L);
         final File expected = new File(constantsTenants.getFormsTempFolderPath());
 
         final File folder = webBonitaConstantsUtilsWithTenantId.getFormsWorkFolder();
 
         assertThat(folder.getPath()).isEqualTo(expected.getPath());
         assertThat(folder).exists();
-    }
-
-    @Test
-    public void getFolder_should_call_createFolderIfNecessary() throws Exception {
-        // Given
-        when(folder.exists()).thenReturn(false);
-
-        // When
-        webBonitaConstantsUtils.getFolder(folder);
-
-        // Then
-        verify(webBonitaConstantsUtils).createFolderIfNecessary(folder);
-    }
-
-    @Test
-    public void getFolder_should_not_call_createFolderIfNecessary() throws Exception {
-        // Given
-        when(folder.exists()).thenReturn(true);
-
-        // When
-        webBonitaConstantsUtils.getFolder(folder);
-
-        // Then
-        verify(webBonitaConstantsUtils, never()).createFolderIfNecessary(folder);
-    }
-
-    @Test
-    public void createFolderIfNecessary_should_create_a_folder_for_the_platform() throws Exception {
-        // When
-        webBonitaConstantsUtils.createFolderIfNecessary(folder);
-
-        // Then
-        verify(folder).mkdirs();
-        verify(webBonitaConstantsUtils, never()).tenantFolderExists();
-    }
-
-    @Test
-    public void createFolderIfNecessary_should_create_a_folder_for_the_tenant() throws Exception {
-        //Given
-        doReturn(true).when(webBonitaConstantsUtilsWithTenantId).tenantFolderExists();
-
-        // When
-        webBonitaConstantsUtilsWithTenantId.createFolderIfNecessary(folder);
-
-        // Then
-        verify(folder).mkdirs();
-        verify(webBonitaConstantsUtilsWithTenantId).tenantFolderExists();
-    }
-
-    @Test
-    public void createFolderIfNecessary_should_not_create_a_folder() throws Exception {
-        // Given
-        doReturn(false).when(webBonitaConstantsUtilsWithTenantId).tenantFolderExists();
-
-        // When
-        webBonitaConstantsUtilsWithTenantId.createFolderIfNecessary(folder);
-
-        // Then
-        verify(folder, never()).mkdirs();
-        verify(webBonitaConstantsUtilsWithTenantId).tenantFolderExists();
     }
 
 }
