@@ -11,7 +11,7 @@
 				<Set name="minPoolSize">0</Set>
 				<Set name="maxPoolSize">5</Set>
 				<Get name="driverProperties">
-					<Put name="URL">jdbc:h2:<SystemProperty name="bonita.home"/>/engine-server/work/platform/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Put>
+					<Put name="URL">jdbc:h2:<SystemProperty name="database.dir"/>/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Put>
 					<Put name="user">sa</Put>
 				</Get>
 				<Call name="init" />
@@ -28,7 +28,7 @@
                 <Set name="minPoolSize">0</Set>
                 <Set name="maxPoolSize">5</Set>
                 <Get name="driverProperties">
-                    <Put name="URL">jdbc:h2:<SystemProperty name="bonita.home"/>/engine-server/work/platform/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Put>
+                    <Put name="URL">jdbc:h2:<SystemProperty name="database.dir"/>/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Put>
                     <Put name="user">sa</Put>
                 </Get>
                 <Call name="init" />
@@ -41,7 +41,7 @@
         <Arg>
             <New class="org.apache.commons.dbcp.BasicDataSource">
                 <Set name="driverClassName">org.h2.Driver</Set>
-                <Set name="url">jdbc:h2:<SystemProperty name="bonita.home" />/engine-server/work/platform/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9091;AUTO_SERVER=TRUE;</Set>
+                <Set name="url">jdbc:h2:<SystemProperty name="database.dir" />/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9091;AUTO_SERVER=TRUE;</Set>
                 <Set name="username">sa</Set>
                 <Set name="password"></Set>
                 <Set name="validationQuery">SELECT 1</Set>
@@ -54,7 +54,7 @@
 		<Arg>
 			<New class="org.apache.commons.dbcp.BasicDataSource">
 				<Set name="driverClassName">org.h2.Driver</Set>
-				<Set name="url">jdbc:h2:<SystemProperty name="bonita.home"/>/engine-server/work/platform/databases/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Set>
+				<Set name="url">jdbc:h2:<SystemProperty name="database.dir"/>/bonita_journal.db;IGNORECASE=TRUE;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE;AUTO_SERVER_PORT=9090;AUTO_SERVER=TRUE;</Set>
 				<Set name="username">sa</Set>
 				<Set name="password"></Set>
 				<Set name="validationQuery">SELECT 1</Set>
