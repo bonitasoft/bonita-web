@@ -405,6 +405,14 @@
                                     <name>bonita.home</name>
                                     <value>${bonita.home}</value>
                                 </systemProperty>
+                                <systemProperty>
+                                    <name>database.dir</name>
+                                    <value>${project.build.directory}/database</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>sysprop.bonita.db.vendor</name>
+                                    <value>h2</value>
+                                </systemProperty>
                             </systemProperties>
                             <webAppConfig>
                                 <contextPath>/bonita</contextPath>
