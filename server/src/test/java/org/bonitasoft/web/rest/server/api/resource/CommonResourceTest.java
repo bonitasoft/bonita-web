@@ -32,8 +32,8 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Application;
 import org.restlet.Response;
-import org.restlet.data.Header;
 import org.restlet.data.Form;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
 import org.restlet.util.Series;
 
@@ -44,7 +44,7 @@ public class CommonResourceTest extends RestletTest {
     private FakeService fakeService;
 
     @Spy
-    private Series<Header> headers = new Series<>(Header.class);
+    private final Series<Header> headers = new Series<>(Header.class);
 
     @Override
     protected Application configureApplication() {
@@ -149,15 +149,16 @@ public class CommonResourceTest extends RestletTest {
     @Test
     public void parseFilterShouldBuildExpectedMap() throws Exception {
         // given:
-        final List<String> filters = Arrays.asList("toto=17", "titi='EN_ECHEC'");
+        final List<String> filters = Arrays.asList("toto=17", "titi='EN_ECHEC'", "task=task=with=equal=in=name");
 
         // when:
         final Map<String, String> parseFilters = new CommonResource().parseFilters(filters);
 
         // then:
-        assertThat(parseFilters.size()).isEqualTo(2);
+        assertThat(parseFilters.size()).isEqualTo(3);
         assertThat(parseFilters.get("toto")).isEqualTo("17");
         assertThat(parseFilters.get("titi")).isEqualTo("'EN_ECHEC'");
+        assertThat(parseFilters.get("task")).isEqualTo("task=with=equal=in=name");
     }
 
     @Test
@@ -273,12 +274,12 @@ public class CommonResourceTest extends RestletTest {
     @Test
     public void getParametersAsList_should_support_value_with_comma() throws Exception {
         //given
-        CommonResource resource = spy(new CommonResource());
-        Form form = new Form("f=a=b&f=c=d,e");
+        final CommonResource resource = spy(new CommonResource());
+        final Form form = new Form("f=a=b&f=c=d,e");
         given(resource.getQuery()).willReturn(form);
 
         //when
-        List<String> parametersValues = resource.getParameterAsList("f");
+        final List<String> parametersValues = resource.getParameterAsList("f");
 
         //then
         assertThat(parametersValues).containsExactly("a=b", "c=d,e");
@@ -287,12 +288,12 @@ public class CommonResourceTest extends RestletTest {
     @Test
     public void getParametersAsList_should_return_emptyList_when_parameter_does_not_exist() throws Exception {
         //given
-        CommonResource resource = spy(new CommonResource());
-        Form form = new Form("f=a=b&f=c=d,e");
+        final CommonResource resource = spy(new CommonResource());
+        final Form form = new Form("f=a=b&f=c=d,e");
         given(resource.getQuery()).willReturn(form);
 
         //when
-        List<String> parametersValues = resource.getParameterAsList("anyAbsent");
+        final List<String> parametersValues = resource.getParameterAsList("anyAbsent");
 
         //then
         assertThat(parametersValues).isEmpty();
