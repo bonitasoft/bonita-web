@@ -1,5 +1,6 @@
 package org.bonitasoft.console.common.server.login;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.eq;
@@ -13,8 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.assertj.core.api.Assertions;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
@@ -29,7 +32,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-
+import org.springframework.mock.web.MockHttpServletResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginManagerTest {
@@ -42,6 +45,8 @@ public class LoginManagerTest {
 
     @Mock
     HttpServletRequest request;
+
+    MockHttpServletResponse response = new MockHttpServletResponse();
 
     @Mock
     HttpSession session;
@@ -71,7 +76,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, userLogger, credentials);
+        loginManager.login(requestAccessor, response, userLogger, credentials);
 
         verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anySetOf(String.class));
     }
@@ -83,7 +88,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, userLogger, credentials);
+        loginManager.login(requestAccessor, response, userLogger, credentials);
 
         verify(userLogger).doLogin(credentials);
     }
@@ -98,7 +103,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, userLogger, credentials);
+        loginManager.login(requestAccessor, response, userLogger, credentials);
 
         verify(userLogger).doLogin(credentialsMap);
     }
@@ -109,7 +114,7 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doThrow(LoginFailedException.class).when(userLogger).doLogin(credentials);
 
-        loginManager.login(requestAccessor, userLogger, credentials);
+        loginManager.login(requestAccessor, response, userLogger, credentials);
     }
 
     @Test(expected = AuthenticationFailedException.class)
@@ -118,6 +123,18 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doThrow(AuthenticationFailedException.class).when(authenticationManager).authenticate(requestAccessor, credentials);
 
-        loginManager.login(requestAccessor, userLogger, credentials);
+        loginManager.login(requestAccessor, response, userLogger, credentials);
+    }
+
+    @Test
+    public void should_store_tenant_id_in_cookies() throws Exception {
+        Credentials credentials = new StandardCredentials("name", "password", 123L);
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
+        doReturn(apiSession).when(userLogger).doLogin(credentials);
+        when(apiSession.getTenantId()).thenReturn(123L);
+
+        loginManager.login(requestAccessor, response, userLogger, credentials);
+
+        assertThat(response.getCookie("bonita.tenant").getValue()).isEqualTo("123");
     }
 }
