@@ -23,9 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,7 +104,7 @@ public class CommonResource extends ServerResource {
             if (split.length < 2) {
                 results.put(split[0], null);
             } else {
-                results.put(split[0], split[1]);
+                results.put(split[0], parameter.substring(split[0].length() + 1));
             }
         }
         return results;
@@ -182,7 +179,7 @@ public class CommonResource extends ServerResource {
         super.doCatch(t);
 
         final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
-        ErrorMessage errorMessage = new ErrorMessage(t);
+        final ErrorMessage errorMessage = new ErrorMessage(t);
 
         getResponse().setStatus(getStatus(), message);
 
@@ -246,7 +243,7 @@ public class CommonResource extends ServerResource {
             final String[] parameterValues = values.split(",");
             if (parameterValues != null && parameterValues.length > 0) {
             	final List<Long> longValues = new ArrayList<>();
-            	for (String parameterValue : parameterValues) {
+            	for (final String parameterValue : parameterValues) {
 					longValues.add(convertToLong(parameterValue));
 				}
             	return longValues;
@@ -283,7 +280,7 @@ public class CommonResource extends ServerResource {
         setContentRange(getSearchPageNumber(), getSearchPageSize(), searchResult.getCount());
     }
 
-    protected void setContentRange(int pageNumber, int pageSize, long count) {
+    protected void setContentRange(final int pageNumber, final int pageSize, final long count) {
         final Series<Header> headers = getResponse().getHeaders();
         headers.add(new Header("Content-range", pageNumber + "-" + pageSize + "/" + count));
     }
