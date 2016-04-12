@@ -25,6 +25,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.Session;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName;
@@ -57,7 +58,7 @@ public abstract class AbstractTaskDetailsPage<T extends IHumanTaskItem> extends 
     }
 
     @Override
-    protected void onItemNotFound() {
+    protected void onItemNotFound(final APIID itemId) {
         showPopup(new ItemNotFoundPopup(TasksListingPage.TOKEN));
     }
 

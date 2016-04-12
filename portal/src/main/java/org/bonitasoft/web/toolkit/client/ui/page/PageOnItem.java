@@ -197,7 +197,7 @@ public abstract class PageOnItem<T extends IItem> extends Page {
             @Override
             public void onError(final String message, final Integer errorCode) {
                 if (isNotFoundItem(errorCode)) {
-                    onItemNotFound();
+                    onItemNotFound(PageOnItem.this.itemId);
                 } else if (isForbidden(errorCode)) {
                     onForbidden();
                 } else {
@@ -217,7 +217,7 @@ public abstract class PageOnItem<T extends IItem> extends Page {
         return errorCode != null && errorCode.equals(HttpServletResponse.SC_FORBIDDEN);
     }
 
-    protected void onItemNotFound() {
+    protected void onItemNotFound(final APIID itemId) {
         fail(_("Item not found"));
     }
 

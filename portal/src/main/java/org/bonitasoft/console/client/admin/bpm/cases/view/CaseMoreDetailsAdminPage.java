@@ -29,6 +29,7 @@ import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormat
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
+import org.bonitasoft.console.client.user.cases.action.OnCaseDetailsNotFound;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
@@ -194,4 +195,9 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
         return TOKEN;
     }
 
+    @Override
+    protected void onItemNotFound(final APIID caseId) {
+        final OnCaseDetailsNotFound onCaseDetailsNotFound = new OnCaseDetailsNotFound(ArchivedCaseMoreDetailsAdminPage.TOKEN);
+        onCaseDetailsNotFound.checkIfCaseIsArchived(caseId.toString());
+    }
 }

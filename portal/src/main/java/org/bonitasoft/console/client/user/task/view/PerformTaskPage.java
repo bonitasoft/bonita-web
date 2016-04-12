@@ -139,7 +139,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
     }
 
     @Override
-    protected void onItemNotFound() {
+    protected void onItemNotFound(final APIID itemId) {
         ViewController.showPopup(new ItemNotFoundPopup(TasksListingPage.TOKEN));
     }
 
