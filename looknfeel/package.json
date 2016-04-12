@@ -1,17 +1,15 @@
 {
   "name": "portal-lookNfeel",
   "version": "0.0.0",
-  "config":{
-    "outputDirectory":"target/"
-  },
-  "dependencies": {"less":"2.5.1"},
   "devDependencies": {
-    
+    "less": "2.5.1"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "mkdir -p target/css && node node_modules/less/bin/lessc src/main/less/main.less > target/css/bonita.css && node node_modules/less/bin/lessc src/main/less/bootstrap/bootstrap.less > src/main/resources/css/bootstrap.min.css"
+    "less:bonita": "lessc src/main/less/main.less > target/css/bonita.css",
+    "less:bootstrap": "lessc src/main/less/bootstrap/bootstrap.less > target/css/css/bootstrap.min.css",
+    "build": "mkdir -p target/css/css && npm run less:bonita && npm run less:bootstrap"
   }
 }
