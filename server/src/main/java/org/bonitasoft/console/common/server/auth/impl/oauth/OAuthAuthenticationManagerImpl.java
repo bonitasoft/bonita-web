@@ -30,7 +30,6 @@ import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.scribe.model.Token;
 
@@ -47,10 +46,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
 
     @Override
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
-        long resolvedTenantId = new TenantIdAccessor(request).getRequestedTenantId();
-        if (resolvedTenantId == -1L) {
-            resolvedTenantId = TenantsManagementUtils.getDefaultTenantId();
-        }
+        long resolvedTenantId = new TenantIdAccessor(request).getTenantIdFromRequestOrCookie();
         final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(resolvedTenantId, redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);

@@ -26,6 +26,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
@@ -51,6 +53,9 @@ public class AutoLoginRuleTest {
     private HttpServletRequestAccessor request;
 
     @Mock
+    private HttpServletResponse response;
+
+    @Mock
     private TenantIdAccessor tenantAccessor;
 
     @Before
@@ -62,7 +67,7 @@ public class AutoLoginRuleTest {
     public void testWeAreNotAutoLoggedWhenNotRequested() throws Exception {
         doReturn(false).when(request).isAutoLoginRequested();
 
-        final boolean authorized = rule.doAuthorize(request, tenantAccessor);
+        final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
 
         assertFalse(authorized);
     }
@@ -73,7 +78,7 @@ public class AutoLoginRuleTest {
         doReturn("process3--2.9").when(request).getAutoLoginScope();
         doReturn(1L).when(tenantAccessor).getRequestedTenantId();
 
-        final boolean authorized = rule.doAuthorize(request, tenantAccessor);
+        final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
 
         assertFalse(authorized);
     }
@@ -90,7 +95,7 @@ public class AutoLoginRuleTest {
         final SecurityProperties secu = autoLoginAllowedSecurityConfig();
         doReturn(secu).when(rule).getSecurityProperties(any(HttpServletRequestAccessor.class), anyLong());
 
-        final boolean authorized = rule.doAuthorize(request, tenantAccessor);
+        final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
 
         assertTrue(authorized);
     }
