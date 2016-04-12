@@ -35,6 +35,7 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -178,7 +179,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
              */
             return (CONSOLE_ITEM) updateHelper.update(id, attributes);
         }
-        return null;
+        throw new APIMethodNotAllowedException("PUT method not allowed");
     }
 
 }
