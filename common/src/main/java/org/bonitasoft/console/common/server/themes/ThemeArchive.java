@@ -71,7 +71,7 @@ public class ThemeArchive {
     public ThemeModifier extract(File themeDirectory) throws IOException {
         checkZippedThemeIsSet();
         FileUtils.deleteDirectory(themeDirectory);
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(zippedTheme);) {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(zippedTheme)) {
             UnzipUtil.unzip(byteArrayInputStream, themeDirectory.getPath());
         }
         return new ThemeModifier(themeDirectory);

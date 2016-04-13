@@ -32,6 +32,7 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
+import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.ThemeExtractor;
 
 /**
@@ -62,13 +63,13 @@ public class PlatformTenantListener implements ServletContextListener {
      *
      * @param themeExtractor the theme extractor
      */
-    void initializeDefaultTenant(ThemeExtractor themeExtractor) {
+    protected void initializeDefaultTenant(ThemeExtractor themeExtractor) {
         try {
             final APISession session = login();
             final long tenantId = session.getTenantId();
 
             // retrieve active theme for default tenant:
-            themeExtractor.retrieveAndExtractCurrentPortalTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session);
+            themeExtractor.retrieveAndExtractCurrentTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session, ThemeType.PORTAL);
 
             // TODO: should we do something for the mobile as well?
             // final Theme mobileTheme = TenantAPIAccessor.getThemeAPI(session).getCurrentTheme(ThemeType.MOBILE);
