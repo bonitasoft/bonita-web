@@ -2,7 +2,7 @@
 	font-style: normal;
 	font-family: 'Signika-Semibold';
 	font-weight: normal;
-	src: local('?'), url("css/fonts/Signika-Semibold.woff") format('woff'), url("css/fonts/Signika-Semibold.ttf") format('truetype'), url("css/fonts/Signika-Semibold.svg") format('svg');
+	src: local('?'), url("../skin/fonts/Signika-Semibold.woff") format('woff'), url("../skin/fonts/Signika-Semibold.ttf") format('truetype'), url("../skin/fonts/Signika-Semibold.svg") format('svg');
 }
 
 .bonita_transparent_body {
