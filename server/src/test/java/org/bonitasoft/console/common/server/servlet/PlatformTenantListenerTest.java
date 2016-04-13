@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.ThemeExtractor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +32,10 @@ public class PlatformTenantListenerTest {
         doReturn(session).when(platformTenantListener).login();
         doNothing().when(platformTenantListener).logout(session);
 
-        doNothing().when(themeExtractor).retrieveAndExtractCurrentPortalTheme(any(File.class), eq(session));
+        doNothing().when(themeExtractor).retrieveAndExtractCurrentTheme(any(File.class), eq(session), eq(ThemeType.PORTAL));
 
         platformTenantListener.initializeDefaultTenant(themeExtractor);
 
-        verify(themeExtractor).retrieveAndExtractCurrentPortalTheme(any(File.class), eq(session));
+        verify(themeExtractor).retrieveAndExtractCurrentTheme(any(File.class), eq(session), eq(ThemeType.PORTAL));
     }
 }

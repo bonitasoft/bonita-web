@@ -36,6 +36,7 @@ import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
 import org.bonitasoft.forms.server.provider.FormServiceProvider;
@@ -134,7 +135,7 @@ public class HomepageServlet extends ThemeResourceServlet {
             // if the last update date is more recent, retrieve the theme again from the engine
             final APISession apiSession = getEngineSession(request);
             final File themeFolder = getResourcesParentFolder(request);
-            new ThemeExtractor().retrieveAndExtractCurrentPortalTheme(themeFolder, apiSession);
+            new ThemeExtractor().retrieveAndExtractCurrentTheme(themeFolder, apiSession, ThemeType.PORTAL);
             getResourceFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -163,9 +164,9 @@ public class HomepageServlet extends ThemeResourceServlet {
             }
             throw new ServletException(errorMessage);
         }
-        final Map<String, Object> urlContext = new HashMap<String, Object>();
+        final Map<String, Object> urlContext = new HashMap<>();
         urlContext.put(FormServiceProviderUtil.PROCESS_UUID, applicationID);
-        final Map<String, Object> context = new HashMap<String, Object>();
+        final Map<String, Object> context = new HashMap<>();
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.API_SESSION, apiSession);
         try {

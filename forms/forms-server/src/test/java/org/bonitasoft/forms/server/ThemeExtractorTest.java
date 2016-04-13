@@ -70,7 +70,7 @@ public class ThemeExtractorTest {
 
     @Test
     public void getThemeLastUpdateDateFromEngine_should_call_getLastUpdateDate_on_Engine() throws Exception {
-        themeExtractor.getThemeLastUpdateDateFromEngine(session);
+        themeExtractor.getThemeLastUpdateDateFromEngine(session, ThemeType.PORTAL);
         verify(themeAPI).getLastUpdateDate(ThemeType.PORTAL);
     }
 
@@ -84,20 +84,36 @@ public class ThemeExtractorTest {
         final File folder = tempFolderRule.newFolder();
         final File lastUpdateFile = tempFolderRule.newFile();
 
-        themeExtractor.updateThemeFromEngine(themeArchive, session, folder, lastUpdateFile, new Date().getTime());
+        themeExtractor.updateThemeFromEngine(themeArchive, session, folder, lastUpdateFile, new Date().getTime(), ThemeType.PORTAL);
 
         verify(themeAPI).getCurrentTheme(ThemeType.PORTAL);
     }
 
     @Test
-    public void retrieveAndExtractCurrentPortalTheme_should_call_updateThemeFromEngine() throws Exception {
+    public void retrieveAndExtractCurrentTheme_should_call_updateThemeFromEngine() throws Exception {
         final long lastUpdateTimestamp = 1654L;
-        doReturn(lastUpdateTimestamp).when(themeExtractor).getThemeLastUpdateDateFromEngine(session);
-        doNothing().when(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp));
+        doReturn(lastUpdateTimestamp).when(themeExtractor).getThemeLastUpdateDateFromEngine(session, ThemeType.PORTAL);
+        doNothing().when(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp),
+                eq(ThemeType.PORTAL));
 
-        themeExtractor.retrieveAndExtractCurrentPortalTheme(new File("dummy"), session);
+        themeExtractor.retrieveAndExtractCurrentTheme(new File("dummy"), session, ThemeType.PORTAL);
 
-        verify(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp));
+        verify(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp),
+                eq(ThemeType.PORTAL));
+    }
+
+    @Test
+    public void retrieveAndExtractCurrentTheme_for_mobile_should_not_call_extractPortalSpecificTheme() throws Exception {
+        final long lastUpdateTimestamp = 1654L;
+        doReturn(lastUpdateTimestamp).when(themeExtractor).getThemeLastUpdateDateFromEngine(session, ThemeType.MOBILE);
+        doNothing().when(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp),
+                eq(ThemeType.MOBILE));
+
+        themeExtractor.retrieveAndExtractCurrentTheme(new File("dummy"), session, ThemeType.MOBILE);
+
+        verify(themeExtractor).updateThemeFromEngine(any(ThemeArchive.class), eq(session), any(File.class), any(File.class), eq(lastUpdateTimestamp),
+                eq(ThemeType.MOBILE));
+        verify(themeExtractor, times(0)).extractPortalSpecificTheme(any(ThemeArchive.ThemeModifier.class), any(Theme.class));
     }
 
 }
