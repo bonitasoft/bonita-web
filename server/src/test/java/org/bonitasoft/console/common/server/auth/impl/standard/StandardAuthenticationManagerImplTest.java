@@ -22,6 +22,7 @@ public class StandardAuthenticationManagerImplTest {
     public void setUp() throws Exception {
         request = new MockHttpServletRequest();
         request.setContextPath("bonita");
+        request.setParameter("tenant", "1");
 
         requestAccessor = new HttpServletRequestAccessor(request);
     }
@@ -32,7 +33,7 @@ public class StandardAuthenticationManagerImplTest {
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
     }
 
     @Test
@@ -42,7 +43,7 @@ public class StandardAuthenticationManagerImplTest {
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
     }
 
     @Test
@@ -52,22 +53,23 @@ public class StandardAuthenticationManagerImplTest {
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/mobile/login.jsp?redirectUrl=%2Fmobile%2F");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/mobile/login.jsp?tenant=1&redirectUrl=%2Fmobile%2F");
     }
 
     @Test
     public void should_add_tenant_parameter_contained_in_request_params() throws Exception {
-        request.setParameter("tenant", "1");
+        request.setParameter("tenant", "4");
         request.setCookies(new Cookie("bonita.tenant", "123"));
         String redirectUrl = "%2Fportal%2Fhomepage";
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=4&redirectUrl=%2Fportal%2Fhomepage");
     }
 
     @Test
     public void should_add_tenant_parameter_from_cookie_if_not_in_request() throws Exception {
+        request.removeAllParameters();
         request.setCookies(new Cookie("bonita.tenant", "123"));
         String redirectUrl = "%2Fportal%2Fhomepage";
 

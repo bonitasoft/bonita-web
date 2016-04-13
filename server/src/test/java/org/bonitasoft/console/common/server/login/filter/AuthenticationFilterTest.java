@@ -84,6 +84,7 @@ public class AuthenticationFilterTest {
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
         doReturn(new StandardAuthenticationManagerImpl()).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
+        when(request.getTenantId()).thenReturn("1");
     }
 
     @Test
@@ -126,18 +127,6 @@ public class AuthenticationFilterTest {
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
-    }
-
-    @Test
-    public void testIfTenantIdIsNotAddedToRedirectUrlIfNotInRequest() throws Exception {
-        authenticationFilter.addRule(createFailingRule());
-        doReturn(null).when(request).getTenantId();
-
-        when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
-
-        verify(response).sendRedirect("/bonita/login.jsp?redirectUrl=");
     }
 
     @Test
