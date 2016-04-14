@@ -22,10 +22,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.user.cases.action.OnCaseDetailsNotFound;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.HistoryBackAction;
@@ -118,5 +120,11 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     @Override
     public String getPluginToken() {
         return PLUGIN_TOKEN;
+    }
+
+    @Override
+    protected void onItemNotFound(final APIID caseId) {
+        final OnCaseDetailsNotFound onCaseDetailsNotFound = new OnCaseDetailsNotFound(ArchivedCaseMoreDetailsPage.TOKEN);
+        onCaseDetailsNotFound.checkIfCaseIsArchived(caseId.toString());
     }
 }

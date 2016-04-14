@@ -106,8 +106,8 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 _("Started by"), _("The user that has started this case"));
     }
 
-    private ItemDetailsMetadata addStartedBySubstitute(UserItem executedByUser, UserItem startedBySubstituteUser) {
-        StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
+    private ItemDetailsMetadata addStartedBySubstitute(final UserItem executedByUser, final UserItem startedBySubstituteUser) {
+        final StartedByDelegateAttributeReder attributeReader = new StartedByDelegateAttributeReder(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID);
         attributeReader.setStartedBySubstitute(startedBySubstituteUser);
         attributeReader.setStartedBy(executedByUser);
         return new ItemDetailsMetadata(attributeReader,
@@ -133,7 +133,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
     }
 
     private Section technicalDetailsSection(final CaseItem item) {
-        Section technicalDetailsSection = new Section(_("Technical details"))
+        final Section technicalDetailsSection = new Section(_("Technical details"))
                 .addBody(lastExecutedTaskDefinition(item))
                 .addBody(numberOfOpenedTasksDefinition(item))
                 .addBody(numberOfAttachmentDefinition(item));
