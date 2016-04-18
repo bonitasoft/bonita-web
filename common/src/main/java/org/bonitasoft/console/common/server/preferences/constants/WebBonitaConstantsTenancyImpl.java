@@ -42,6 +42,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     private String reportsWorkFolderPath = null;
     private String pagesWorkFolderPath = null;
     private String bdmWorkFolderPath;
+    private String partialTenantFolderPath;
 
     /**
      * Default constructor.
@@ -49,6 +50,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * @param tenantId Tenant Id
      */
     public WebBonitaConstantsTenancyImpl(final long tenantId) {
+        partialTenantFolderPath = clientFolderPath + tenantsFolderName + File.separator + tenantId + File.separator;
         tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
         tempFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
     }
@@ -121,8 +123,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     private String getIconsWorkFolderPath() {
         if (iconsWorkFolderPath == null) {
-            // icons are stored inside default theme:
-            iconsWorkFolderPath = getThemeFolderPath() + ICONS_WORK_FOLDER_NAME + File.separator;
+            iconsWorkFolderPath = partialTenantFolderPath + ICONS_WORK_FOLDER_NAME + File.separator;
         }
         return iconsWorkFolderPath;
     }
@@ -146,7 +147,7 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getThemeFolderPath() {
         if (themeWorkFolderPath == null) {
-            themeWorkFolderPath = getTempFolderPath() + File.separator + THEME_WORK_FOLDER_NAME;
+            themeWorkFolderPath = getTempFolderPath() + File.separator + THEME_WORK_FOLDER_NAME + File.separator;
         }
         return themeWorkFolderPath;
     }

@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,8 +53,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractS
  */
 // TODO : implements APIhasFile
 public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>, APIHasDelete, APIHasUpdate<UserItem>,
-APIHasGet<UserItem>, APIHasSearch<UserItem> {
-
+        APIHasGet<UserItem>, APIHasSearch<UserItem> {
 
     /**
      * Logger
@@ -170,8 +167,7 @@ APIHasGet<UserItem>, APIHasSearch<UserItem> {
     }
 
     private File getIconFile(final UserItem oldUser) {
-        return new File(WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId())
-                .getConsoleDefaultIconsFolder().getPath() + oldUser.getIcon());
+        return new File(getDefaultIconsFolder() + oldUser.getIcon());
     }
 
     private boolean hasIcon(final UserItem oldUser) {
@@ -250,23 +246,34 @@ APIHasGet<UserItem>, APIHasSearch<UserItem> {
 
         if (counters.contains(UserItem.COUNTER_OPEN_TASKS)) {
             item.setAttribute(UserItem.COUNTER_OPEN_TASKS,
-                    new HumanTaskDatastore(getEngineSession()).getNumberOfOpenTasks(item.getId())
-                    );
+                    new HumanTaskDatastore(getEngineSession()).getNumberOfOpenTasks(item.getId()));
         }
 
         if (counters.contains(UserItem.COUNTER_OVERDUE_TASKS)) {
             item.setAttribute(UserItem.COUNTER_OVERDUE_TASKS,
-                    new HumanTaskDatastore(getEngineSession()).getNumberOfOverdueOpenTasks(item.getId())
-                    );
+                    new HumanTaskDatastore(getEngineSession()).getNumberOfOverdueOpenTasks(item.getId()));
         }
     }
 
-    private String uploadIcon(final String iconTempPath) {
-        final String path = uploadAutoRename(
+    protected String uploadIcon(final String iconTempPath) {
+        final String path = uploadAndGetNewUploadedFilePath(iconTempPath);
+        return path.substring(getUserIconsFolderPath().length());
+    }
+
+    protected String uploadAndGetNewUploadedFilePath(String iconTempPath) {
+        return uploadAutoRename(
                 UserItem.ATTRIBUTE_ICON,
                 iconTempPath,
-                WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleUserIconsFolder().getPath())
-                .getPath();
-        return path.substring(WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleDefaultIconsFolder().getPath().length());
+                getUserIconsFolderPath()).getPath();
+    }
+
+    String getDefaultIconsFolder() {
+        // /tmp
+        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleDefaultIconsFolder().getPath();
+    }
+
+    String getUserIconsFolderPath() {
+        // from Bonita-home:
+        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleUserIconsFolder().getPath();
     }
 }

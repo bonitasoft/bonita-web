@@ -375,11 +375,12 @@ public abstract class API<ITEM extends IItem> {
             final File destinationDirectory = new File(newDirectory);
             String destinationFilename = getUploadedFile(attributeName, attributeValue).getName();
 
-            if (destinationDirectory.exists()) {
-                final String extension = this.getFileExtension(destinationFilename);
-                final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
-                destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
+            if (!destinationDirectory.exists()) {
+                destinationDirectory.mkdirs();
             }
+            final String extension = this.getFileExtension(destinationFilename);
+            final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
+            destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
 
             return upload(attributeName, attributeValue, newDirectory, destinationFilename);
 
