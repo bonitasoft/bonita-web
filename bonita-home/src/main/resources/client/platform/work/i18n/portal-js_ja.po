@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-02-29 05:59-0500\n"
+"PO-Revision-Date: 2016-04-12 09:55-0400\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -77,6 +77,10 @@ msgstr "ナビゲーションにページを追加します"
 #: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Add top-level menu"
 msgstr "最上位のメニューを追加します"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
+msgstr "レディ、待機、実行、完了および初期化状態のタスクを集約"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
