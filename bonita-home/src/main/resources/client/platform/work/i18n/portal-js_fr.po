@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-03-23 09:33-0400\n"
+"PO-Revision-Date: 2016-04-12 09:52-0400\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -116,7 +116,7 @@ msgstr "Cas archivés"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "Assign to me. Only I will be able to do it"
-msgstr ""
+msgstr "Me l'assigner. Je serai le seul en mesure de la faire"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "Assigned on"
@@ -612,7 +612,7 @@ msgstr "Lien vers une page"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "Only I can do this task"
-msgstr ""
+msgstr "Je suis le seul en mesure de faire cette tâche"
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
@@ -935,7 +935,7 @@ msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement 
 
 #: main/features/user/tasks/list/details/task-no-form.directive.js:54
 msgid "The task has been submitted but an error occurred while adding the comment"
-msgstr ""
+msgstr "La tâche a été soumise, mais une erreur s'est produite lors de l'ajout du commentaire"
 
 #: main/common/services/i18n.js:122
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
@@ -984,7 +984,7 @@ msgstr "Pour cela, consultez la page"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "To fill out the form, you need to take this task. This means you will be the only one to do it. To make it available to the team again, release it."
-msgstr ""
+msgstr "Pour remplir le formulaire, vous devez vous assigner cette tâche. Cela signifie que vous serez le seul à la faire. Pour la rendre disponible à l'équipe à nouveau, relâchez-la."
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
 #: target/dist/features/user/cases/list/cases-list.html:1
@@ -1019,7 +1019,7 @@ msgstr "URL"
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "Unassign. This will make it available to team again"
-msgstr ""
+msgstr "Annulation de l'assignation. Cela la rendra à nouveau disponible pour l'équipe"
 
 #: main/features/user/tasks/list/common/priorities.service.js:17
 msgid "Under normal"
