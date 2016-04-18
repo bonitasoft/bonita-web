@@ -25,5 +25,13 @@
 				<exclude>**/*.html</exclude>
 			</excludes>
 		</fileSet>
+		<!-- compiled bootstrap.min.css need to be added to less package since for now it is not compiled at runtime by portal -->
+		<fileSet>
+			<directory>${project.build.directory}/css</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>css/bootstrap.min.css</include>
+			</includes>
+		</fileSet>
 	</fileSets>
 </assembly>
