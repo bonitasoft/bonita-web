@@ -61,13 +61,12 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
     private final Boolean reload;
 
-
     public RestAPIAuthorizationFilter(final boolean reload) {
         this.reload = reload;
     }
 
     public RestAPIAuthorizationFilter() {
-        reload = null;//will be check every time
+        reload = null;//will check property from security-config
     }
 
     @Override
@@ -139,7 +138,8 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         if (!resourceAuthorizations.isEmpty()) {
             //if there is a dynamic rule, use it to check the permissions
             final String requestBody = getRequestBody(request);
-            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(), requestBody);
+            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(),
+                    requestBody);
             return dynamicCheck(apiCallContext, userPermissions, resourceAuthorizations, apiSession);
         } else {
             //if there is no dynamic rule, use the static permissions
@@ -306,6 +306,6 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     private boolean shouldReload(final APISession apiSession) {
-        return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode():reload;
+        return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode() : reload;
     }
 }

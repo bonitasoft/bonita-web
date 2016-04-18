@@ -34,6 +34,8 @@ import org.bonitasoft.engine.util.APITypeManager;
  */
 public class PlatformManagementUtils {
 
+    private ConfigurationFilesManager configurationFilesManager = ConfigurationFilesManager.getInstance();
+
     private boolean isLocal() throws UnknownAPITypeException, ServerAPIException, IOException {
         return ApiAccessType.LOCAL.equals(APITypeManager.getAPIType());
     }
@@ -60,13 +62,13 @@ public class PlatformManagementUtils {
     private void retrieveTenantsConfiguration(PlatformAPI platformAPI) throws IOException {
         Map<Long, Map<String, byte[]>> clientPlatformConfigurations = platformAPI.getClientTenantConfigurations();
         for (Map.Entry<Long, Map<String, byte[]>> tenantConfiguration : clientPlatformConfigurations.entrySet()) {
-            ConfigurationFilesManager.getInstance().setTenantConfigurations(tenantConfiguration.getValue(), tenantConfiguration.getKey());
+            configurationFilesManager.setTenantConfigurations(tenantConfiguration.getValue(), tenantConfiguration.getKey());
         }
     }
 
     private void retrievePlatformConfiguration(PlatformAPI platformAPI) throws IOException {
         Map<String, byte[]> clientPlatformConfigurations = platformAPI.getClientPlatformConfigurations();
-        ConfigurationFilesManager.getInstance().setPlatformConfigurations(clientPlatformConfigurations);
+        configurationFilesManager.setPlatformConfigurations(clientPlatformConfigurations);
     }
 
     public void initializePlatformConfiguration() throws BonitaException, IOException {

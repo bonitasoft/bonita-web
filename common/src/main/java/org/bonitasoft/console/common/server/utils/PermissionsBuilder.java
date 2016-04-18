@@ -51,7 +51,7 @@ public class PermissionsBuilder {
         if (session.isTechnicalUser()) {
             permissions = Collections.emptySet();
         } else {
-            permissions = new HashSet<String>();
+            permissions = new HashSet<>();
             if (apiAuthorizationsCheckEnabled) {
                 addProfilesPermissions(permissions);
                 addCustomUserPermissions(permissions);
@@ -82,7 +82,7 @@ public class PermissionsBuilder {
      * @throws SearchException
      */
     Set<String> getAllPagesForUser(final Set<String> permissions) throws SearchException {
-        final Set<String> pageTokens = new HashSet<String>();
+        final Set<String> pageTokens = new HashSet<>();
         int profilesIndex = 0;
         int nbOfProfilesRetrieved = MAX_ELEMENTS_RETRIEVED;
         while (nbOfProfilesRetrieved == MAX_ELEMENTS_RETRIEVED) {
@@ -136,7 +136,7 @@ public class PermissionsBuilder {
     }
 
     Set<String> getCustomPermissions(final String type, final String identifier) {
-        final Set<String> profileSinglePermissions = new HashSet<String>();
+        final Set<String> profileSinglePermissions = new HashSet<>();
         final Set<String> customPermissionsForEntity = getCustomPermissionsRaw(type, identifier);
         for (final String customPermissionForEntity : customPermissionsForEntity) {
             final Set<String> simplePermissions = getCompoundPermissions(customPermissionForEntity);
