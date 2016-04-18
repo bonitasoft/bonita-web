@@ -23,11 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Chong Zhao
@@ -63,10 +59,6 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
                     + " does nothing. The subsequent engine login is enough to authenticate the user.)");
         }
         return Collections.emptyMap();
-    }
-
-    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
-        return PermissionsBuilderAccessor.createPermissionBuilder(session);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package org.bonitasoft.console.common.server.utils;
 
+import java.io.IOException;
+
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
@@ -10,7 +12,6 @@ import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
-
 
 public class PermissionsBuilderAccessor {
 
@@ -24,8 +25,19 @@ public class PermissionsBuilderAccessor {
             throw new LoginFailedException(e);
         }
         final SecurityProperties securityProperties = PropertiesFactory.getSecurityProperties(session.getTenantId());
+        reloadPropertiesIfInDebug(securityProperties, new PlatformManagementUtils());
         final CustomPermissionsMapping customPermissionsMapping = PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
         final CompoundPermissionsMapping compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
         return new PermissionsBuilder(session, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping, securityProperties);
+    }
+
+    static void reloadPropertiesIfInDebug(SecurityProperties securityProperties, PlatformManagementUtils platformManagementUtils) throws LoginFailedException {
+        if (securityProperties.isAPIAuthorizationsCheckInDebugMode()) {
+            try {
+                platformManagementUtils.initializePlatformConfiguration();
+            } catch (BonitaException | IOException e) {
+                throw new LoginFailedException("Properties are in debug mode, unable to reload configuration", e);
+            }
+        }
     }
 }
