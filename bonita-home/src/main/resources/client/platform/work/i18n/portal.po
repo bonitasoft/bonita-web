@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 01:02+0100\n"
+"POT-Creation-Date: 2016-04-19 01:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2201,6 +2201,9 @@ msgid "The task %taskName% has been executed. The task list is being refreshed."
 msgstr ""
 
 msgid "The task %taskName% has not been executed. "
+msgstr ""
+
+msgid "The task has been executed. The task list is being refreshed."
 msgstr ""
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
