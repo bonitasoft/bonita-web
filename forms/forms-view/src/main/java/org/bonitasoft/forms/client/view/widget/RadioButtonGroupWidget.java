@@ -175,8 +175,7 @@ public class RadioButtonGroupWidget extends Composite implements HasClickHandler
     }
 
     private void setInitialValue(final RadioButton radioButton, final String initialValue, final ReducedFormFieldAvailableValue availableValue) {
-        if (initialValue != null && initialValue.equals(availableValue.getValue()))
-        {
+        if (initialValue != null && initialValue.equals(availableValue.getValue())) {
             radioButton.setValue(true);
         }
     }
@@ -227,22 +226,17 @@ public class RadioButtonGroupWidget extends Composite implements HasClickHandler
      * Set the value of the widget
      *
      * @param value
+     * @param fireEvents
      */
-    public void setValue(final String value, boolean fireEvents) {
-        if (getValue() != null && getValue().equals(value) || value != null && value.equals(getValue())) {
-            fireEvents = false;
-        }
-        for (final RadioButton radioButton : radioButtons) {
-            final DOMUtils domUtils = DOMUtils.getInstance();
-            if (value != null && value.equals(radioButton.getFormValue())) {
-                radioButton.setValue(true);
-                domUtils.overrideNativeInputAfterUpdate(radioButton, true);
-            } else {
-                radioButton.setValue(false);
-                domUtils.overrideNativeInputAfterUpdate(radioButton, false);
-            }
-            if (fireEvents) {
-                ValueChangeEvent.fire(radioButton, true);
+    public void setValue(final String value, final boolean fireEvents) {
+        final String currentValue = getValue();
+        if (!(currentValue == null && value == null || currentValue != null && currentValue.equals(value))) {
+            //don't do anything if the value of the widget doesn't change
+            for (final RadioButton radioButton : radioButtons) {
+                final DOMUtils domUtils = DOMUtils.getInstance();
+                final boolean newIsCheckedValue = value != null && value.equals(radioButton.getFormValue());
+                radioButton.setValue(newIsCheckedValue, fireEvents);
+                domUtils.overrideNativeInputAfterUpdate(radioButton, newIsCheckedValue);
             }
         }
     }
