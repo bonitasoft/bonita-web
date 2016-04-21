@@ -36,6 +36,7 @@ public class I18nTest {
     @Test
     public void loadLocale_should_read_translation_from_classpath() {
         final I18n i18n = I18n.getInstance();
+        i18n.refresh();
         i18n.loadLocale(AbstractI18n.LOCALE.fr);
         final Map<String, String> translations = i18n.getLocale(AbstractI18n.LOCALE.fr);
 
