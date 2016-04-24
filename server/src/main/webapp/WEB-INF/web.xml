@@ -334,6 +334,10 @@
     </servlet>
 
     <servlet>
+        <servlet-name>iconServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.IconServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>loginService</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.login.servlet.LoginServlet</servlet-class>
     </servlet>
@@ -525,6 +529,10 @@
     <servlet-mapping>
         <servlet-name>exportProcessActorsServlet</servlet-name>
         <url-pattern>/portal/exportActors</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>iconServlet</servlet-name>
+        <url-pattern>/avatars</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>
