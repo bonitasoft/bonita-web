@@ -70,6 +70,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
         }
         return tenantsFolderPath;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -144,6 +145,11 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getBDMTempFolderPath() {
         return null; // does not means anything at platform level
+    }
+
+    @Override
+    public String getPortalIconsFolderPath() {
+        return null;
     }
 
 }

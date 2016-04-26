@@ -92,6 +92,13 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
+     * /** Get the folder of the user Console icons
+     */
+    public File getConsoleIconsFolder() {
+        return getFolderFromBonitaHome(webBonitaConstants.getPortalIconsFolderPath());
+    }
+
+    /**
      * Get the folder of the user Console user icons
      */
     public File getConsoleRoleIconsFolder() {
