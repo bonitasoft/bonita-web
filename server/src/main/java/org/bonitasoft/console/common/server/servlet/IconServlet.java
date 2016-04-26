@@ -33,6 +33,6 @@ public class IconServlet extends ImageDownloadServlet {
     @Override
     protected void defineDirectoryPath(final HttpServletRequest request) {
         final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        setDirectoryPath(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getConsoleUserIconsFolder().getPath());
+        setDirectoryPath(WebBonitaConstantsUtils.getInstance(apiSession.getTenantId()).getConsoleIconsFolder().getPath());
     }
 }

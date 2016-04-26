@@ -39,9 +39,7 @@ public class UserItemConverter extends ItemConverter<UserItem, User> {
         // Add default icon if icon if empty
         final String iconPath = user.getIconPath();
 
-        final String iconPath1 = iconPath == null || iconPath.isEmpty() ? UserItem.DEFAULT_USER_ICON : "../avatars?src=" + iconPath;
-        System.out.println(iconPath1);
-        result.setIcon(iconPath1);
+        result.setIcon(iconPath == null || iconPath.isEmpty() ? UserItem.DEFAULT_USER_ICON : "../avatars?src=users" + iconPath);
 
         result.setCreationDate(user.getCreationDate());
         result.setCreatedByUserId(user.getCreatedBy());
