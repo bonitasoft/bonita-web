@@ -129,6 +129,11 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     }
 
     @Override
+    public String getPortalIconsFolderPath() {
+        return getIconsWorkFolderPath();
+    }
+
+    @Override
     public String getPortalUserIconsFolderPath() {
         if (usersIconsWorkFolderPath == null) {
             usersIconsWorkFolderPath = getIconsWorkFolderPath() + USERS_ICONS_WORK_FOLDER_NAME + File.separator;

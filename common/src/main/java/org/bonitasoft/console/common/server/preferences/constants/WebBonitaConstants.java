@@ -53,35 +53,35 @@ public interface WebBonitaConstants {
 
     /**
      * Get Tenants Folder Path
-     * 
+     *
      * @return path
      */
     String getTenantsFolderPath();
 
     /**
      * Get Tenant TempFolder Path
-     * 
+     *
      * @return path
      */
     String getTempFolderPath();
 
     /**
      * Get Tenant ThemeConsoleFolder Path
-     * 
+     *
      * @return path
      */
     String getThemeFolderPath();
 
     /**
      * Get Tenant ConfFolder Path
-     * 
+     *
      * @return path
      */
     String getConfFolderPath();
 
     /**
      * Get Tenant FormsTempFolder Path
-     * 
+     *
      * @return path
      */
     String getFormsTempFolderPath();
@@ -89,44 +89,46 @@ public interface WebBonitaConstants {
 
     /**
      * Get Tenant user icons Path
-     * 
+     *
      * @return
      */
     String getPortalUserIconsFolderPath();
 
     /**
      * Get Tenant user icons Path
-     * 
+     *
      * @return
      */
     String getPortalRoleIconsFolderPath();
 
     /**
      * Get reportsConsoleTempFolder Path
-     * 
+     *
      * @return path
      */
     String getReportsTempFolderPath();
 
     /**
      * Get pagesConsoleTempFolder Path
-     * 
+     *
      * @return path
      */
     String getPagesTempFolderPath();
 
     /**
      * Get groupsConsoleTempFolder Path
-     * 
+     *
      * @return path
      */
     String getPortalGroupIconsFolderPath();
 
     /**
      * Get BDMTempFolderPath Path
-     * 
+     *
      * @return path
      */
     String getBDMTempFolderPath();
+
+    String getPortalIconsFolderPath();
 
 }
