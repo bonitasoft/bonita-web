@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-04-12 09:53-0400\n"
+"PO-Revision-Date: 2016-04-29 04:32-0400\n"
 
 #: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
@@ -80,7 +80,7 @@ msgstr "Ajouter un menu "
 
 #: dist/features/admin/cases/list/cases-list.html:1
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
-msgstr ""
+msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
 
 #: dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
