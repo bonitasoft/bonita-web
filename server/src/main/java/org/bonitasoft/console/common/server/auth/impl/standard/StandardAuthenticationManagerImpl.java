@@ -28,7 +28,6 @@ import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.PortalCookies;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**
  * @author Chong Zhao
@@ -49,23 +48,13 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
             context += "/mobile";
         }
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
-        long tenantId = getTenantId(request);
-        if (tenantId != getDefaultTenantId()) {
-            url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
-        }
+        url.append(AuthenticationManager.TENANT).append("=").append(getTenantId(request)).append("&");
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
     }
 
     private long getTenantId(HttpServletRequestAccessor request) throws ServletException {
         return new TenantIdAccessor(request).getTenantIdFromRequestOrCookie();
-    }
-
-    /**
-     * protected for test purpose
-     */
-    protected long getDefaultTenantId() {
-        return TenantsManagementUtils.getDefaultTenantId();
     }
 
     @Override
