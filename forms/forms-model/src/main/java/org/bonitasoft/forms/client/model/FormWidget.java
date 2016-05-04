@@ -27,7 +27,7 @@ import org.bonitasoft.forms.client.model.ReducedFormWidget.SelectMode;
 
 /**
  * Object representing a widget to place in a page of a task form flow
- * 
+ *
  * @author Anthony Birembaut
  */
 public class FormWidget implements Serializable, Comparable<FormWidget> {
@@ -234,7 +234,7 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
 
     /**
      * Constructor
-     * 
+     *
      * @param id
      * @param maxLength
      * @param maxHeight
@@ -1149,6 +1149,14 @@ public class FormWidget implements Serializable, Comparable<FormWidget> {
 
     public void setHasDynamicValue(final boolean hasDynamicValue) {
         reducedFormWidget.setHasDynamicValue(hasDynamicValue);
+    }
+
+    public boolean hasValueAfterEvent() {
+        return reducedFormWidget.hasValueAfterEvent();
+    }
+
+    public void setHasValueAfterEvent(final boolean hasValueAfterEvent) {
+        reducedFormWidget.setHasValueAfterEvent(hasValueAfterEvent);
     }
 
     public boolean hasAvailableValuesAfterEvent() {
