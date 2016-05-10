@@ -24,6 +24,11 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.bonitasoft.engine</groupId>
+            <artifactId>bonita-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 		<!-- Compile dependency -->
 		<dependency>
