@@ -25,32 +25,45 @@ public class ProcessInstantiationCallbackBehavior {
         History.newItem("?_p=" + CaseMoreDetailsPage.TOKEN + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
+    protected void redirectToCurrentProfileHome() {
+        History.newItem("?_pf=" + ClientApplicationURL.getProfileId());
+    }
+
     public void onSuccess(final String responseContent) {
+        if (ViewController.hasOpenedPopup()) {
+            ViewController.closePopup();
+        }
+        final String caseId = getCaseId(responseContent);
+        if (caseId != null) {
+            showConfirmation(_("The case %caseId% has been started successfully.", new Arg(
+                    "caseId", caseId)));
+            //Wait a short delay before redirecting. This is useful in case the process completes right away (archiving may take a while)
+            final Timer timer = new Timer() {
+
+                @Override
+                public void run() {
+                    redirectToCaseMoredetails(caseId);
+                }
+            };
+            timer.schedule(DELAY_BEFORE_REDIRECTION);
+        } else {
+            GWT.log("caseId is not set");
+            showConfirmation(_("A case has been started successfully."));
+            redirectToCurrentProfileHome();
+        }
+    }
+
+    protected String getCaseId(final String responseContent) {
+        String caseId = null;
         if (responseContent != null && !responseContent.isEmpty()) {
             final JSONValue root = JSONParser.parseLenient(responseContent);
             final JSONObject processInstance = root.isObject();
             final JSONValue caseIdValue = processInstance.get("caseId");
             if (caseIdValue != null) {
-                final String caseId = Double.toString(caseIdValue.isNumber().doubleValue());
-                final String confirmationMessage = _("The case %caseId% has been started successfully.", new Arg(
-                        "caseId", caseId));
-                if (ViewController.hasOpenedPopup()) {
-                    ViewController.closePopup();
-                }
-                showConfirmation(confirmationMessage);
-                //Wait a short delay before redirecting. This is useful in case the process completes right away (archiving may take a while)
-                final Timer timer = new Timer() {
-
-                    @Override
-                    public void run() {
-                        redirectToCaseMoredetails(caseId);
-                    }
-                };
-                timer.schedule(DELAY_BEFORE_REDIRECTION);
-            } else {
-                GWT.log("caseId is not set");
+                caseId = Double.toString(caseIdValue.isNumber().doubleValue());
             }
         }
+        return caseId;
     }
 
     public void onError(final String responseContent, final int errorCode) {
