@@ -14,17 +14,13 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
@@ -38,9 +34,6 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -74,27 +67,18 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
     public UserItem add(final UserItem item) {
 
         // Finish the upload of the icon
-        if (!StringUtil.isBlank(item.getIcon())) {
-
-            String tmpIconPath;
-            try {
-                tmpIconPath = getCompleteTempFilePath(item.getIcon());
-            } catch (final UnauthorizedFolderException e) {
-                throw new APIForbiddenException(e.getMessage());
-            } catch (final IOException e) {
-                throw new APIException(e);
-            }
-
-            item.setIcon(uploadIcon(tmpIconPath));
-        }
         if (StringUtil.isBlank(item.getPassword())) {
-            throw new ValidationException(Arrays.asList(new ValidationError("Password", "%attribute% is mandatory")));
+            throw new ValidationException(Collections.singletonList(new ValidationError("Password", "%attribute% is mandatory")));
         }
         checkPasswordRobustness(item.getPassword());
 
         // Add
-        return new UserDatastore(getEngineSession()).add(item);
+        return getUserDatastore().add(item);
 
+    }
+
+    UserDatastore getUserDatastore() {
+        return new UserDatastore(getEngineSession());
     }
 
     private void checkPasswordRobustness(final String password) {
@@ -130,53 +114,12 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
 
     @Override
     public UserItem update(final APIID id, final Map<String, String> item) {
-        if (item != null) {
-            // Finish the upload of the icon
-            final String icon = item.get(UserItem.ATTRIBUTE_ICON);
-            if (!MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_ICON)) {
-
-                deleteOldIconFileIfExists(id);
-                String tmpIconPath;
-                try {
-                    tmpIconPath = getCompleteTempFilePath(icon);
-                } catch (final UnauthorizedFolderException e) {
-                    throw new APIForbiddenException(e.getMessage());
-                } catch (final IOException e) {
-                    throw new APIException(e);
-                }
-
-                final String newIcon = uploadIcon(tmpIconPath);
-                item.put(UserItem.ATTRIBUTE_ICON, newIcon);
-            }
-
-            // Do not update password if not set
-            MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_PASSWORD);
-            if (item.get(UserItem.ATTRIBUTE_PASSWORD) != null) {
-                checkPasswordRobustness(item.get(UserItem.ATTRIBUTE_PASSWORD));
-            }
-        }
-        // Update
-        return new UserDatastore(getEngineSession()).update(id, item);
-    }
-
-    private void deleteOldIconFileIfExists(final APIID id) {
-        final UserItem oldUser = new UserDatastore(getEngineSession()).get(id);
-        if (hasIcon(oldUser)) {
-            getIconFile(oldUser).delete();
-        }
-    }
-
-    private File getIconFile(final UserItem oldUser) {
-        return new File(getDefaultIconsFolder() + oldUser.getIcon());
-    }
-
-    private boolean hasIcon(final UserItem oldUser) {
-        return oldUser.getIcon() != null && !oldUser.getIcon().isEmpty() && !oldUser.getIcon().equals(UserItem.DEFAULT_USER_ICON);
+        return getUserDatastore().update(id, item);
     }
 
     @Override
     public UserItem get(final APIID id) {
-        final UserItem item = new UserDatastore(getEngineSession()).get(id);
+        final UserItem item = getUserDatastore().get(id);
         if (item != null) {
 
             // Do not let the password output from the API
@@ -194,7 +137,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
     public ItemSearchResult<UserItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final ItemSearchResult<UserItem> results = new UserDatastore(getEngineSession()).search(page, resultsByPage, search, filters, orders);
+        final ItemSearchResult<UserItem> results = getUserDatastore().search(page, resultsByPage, search, filters, orders);
 
         for (final UserItem item : results.getResults()) {
             if (item != null) {
@@ -208,19 +151,19 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
 
     @Override
     public void delete(final List<APIID> ids) {
-        new UserDatastore(getEngineSession()).delete(ids);
+        getUserDatastore().delete(ids);
     }
 
     @Override
     protected void fillDeploys(final UserItem item, final List<String> deploys) {
         if (isDeployable(UserItem.ATTRIBUTE_MANAGER_ID, deploys, item)) {
             item.setDeploy(UserItem.ATTRIBUTE_MANAGER_ID,
-                    new UserDatastore(getEngineSession()).get(item.getManagerId()));
+                    getUserDatastore().get(item.getManagerId()));
         }
 
         if (isDeployable(UserItem.ATTRIBUTE_CREATED_BY_USER_ID, deploys, item)) {
             item.setDeploy(UserItem.ATTRIBUTE_CREATED_BY_USER_ID,
-                    new UserDatastore(getEngineSession()).get(item.getCreatedByUserId()));
+                    getUserDatastore().get(item.getCreatedByUserId()));
         }
 
         if (deploys.contains(UserItem.DEPLOY_PERSONNAL_DATA)) {
@@ -255,25 +198,4 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
         }
     }
 
-    protected String uploadIcon(final String iconTempPath) {
-        final String path = uploadAndGetNewUploadedFilePath(iconTempPath);
-        return path.substring(getUserIconsFolderPath().length());
-    }
-
-    protected String uploadAndGetNewUploadedFilePath(String iconTempPath) {
-        return uploadAutoRename(
-                UserItem.ATTRIBUTE_ICON,
-                iconTempPath,
-                getUserIconsFolderPath()).getPath();
-    }
-
-    String getDefaultIconsFolder() {
-        // /tmp
-        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleDefaultIconsFolder().getPath();
-    }
-
-    String getUserIconsFolderPath() {
-        // from Bonita-home:
-        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleUserIconsFolder().getPath();
-    }
 }

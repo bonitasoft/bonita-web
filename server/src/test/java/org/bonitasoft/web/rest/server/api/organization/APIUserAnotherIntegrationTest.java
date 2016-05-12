@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -47,8 +45,6 @@ import org.junit.Test;
 
 /**
  * @author Vincent Elcrin
- * 
- * 
  *         FIXME to be refactored using test-toolkit
  */
 public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
@@ -78,15 +74,13 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
             UserItem.ATTRIBUTE_PASSWORD,
             UserItem.ATTRIBUTE_USERNAME,
             UserItem.ATTRIBUTE_TITLE,
-            UserItem.ATTRIBUTE_JOB_TITLE
-            );
+            UserItem.ATTRIBUTE_JOB_TITLE);
 
     private static final List<String> searchableAttributesList = Arrays.asList(
             UserItem.ATTRIBUTE_FIRSTNAME,
             UserItem.ATTRIBUTE_LASTNAME,
             UserItem.ATTRIBUTE_USERNAME,
-            UserItem.ATTRIBUTE_JOB_TITLE
-            );
+            UserItem.ATTRIBUTE_JOB_TITLE);
 
     @Override
     public void consoleTestSetUp() throws Exception {
@@ -144,7 +138,7 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
      * @return
      */
     private UserItem createCompleteUser(final List<String> userAttributesList, final int userNumber) {
-        final HashMap<String, String> attributes = new HashMap<String, String>();
+        final HashMap<String, String> attributes = new HashMap<>();
         for (final String attribute : userAttributesList) {
             if (UserItem.ATTRIBUTE_LAST_CONNECTION_DATE.equals(attribute)
                     || ItemHasCreator.ATTRIBUTE_CREATION_DATE.equals(attribute)
@@ -168,7 +162,7 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
      */
     private void createUsersViaEngineAPI(final APISession apiSession, final int numberExpectedUser) throws Exception {
         final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(apiSession);
-        this.expectedUsers = new HashMap<Integer, UserItem>();
+        this.expectedUsers = new HashMap<>();
         for (int i = 0; i < numberExpectedUser; i++) {
             final UserItem newUser = createCompleteUser(userAttributesList, i);
             final APIID newUserId = APIID.makeAPIID(identityAPI.createUser(buildEngineUser(newUser))
@@ -182,14 +176,14 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
      * Assert that listed attributes of expected user are equals to the actual ones.
      * 
      * @param userAttributesList
-     *            : list of attribute to test
+     *        : list of attribute to test
      * @param expected
-     *            : Expected user
+     *        : Expected user
      * @param actual
-     *            : User tested against
+     *        : User tested against
      */
     private void assertUserEquals(final List<String> userAttributesList, final UserItem expected, final UserItem actual) {
-        final ArrayList<String> localAttributeList = new ArrayList<String>();
+        final ArrayList<String> localAttributeList = new ArrayList<>();
         localAttributeList.addAll(userAttributesList);
         // password do not come back from the api.
         localAttributeList.remove(UserItem.ATTRIBUTE_PASSWORD);
@@ -293,7 +287,7 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
         for (final String attribute : userAttributesList) {
 
             // update an attribute
-            final HashMap<String, String> changes = new HashMap<String, String>();
+            final HashMap<String, String> changes = new HashMap<>();
             changes.put(attribute, expectedUser.getAttributeValue(attribute) + "_");
             expectedUser.setAttribute(attribute, changes.get(attribute));
             final UserItem updatedUser = this.apiUser.update(expectedUser.getId(), changes);
@@ -311,12 +305,13 @@ public class APIUserAnotherIntegrationTest extends AbstractConsoleTest {
             throw new IllegalArgumentException("The user must be not null!");
         }
 
-        final UserCreator userCreator = new UserCreator(user.getAttributeValue(UserItem.ATTRIBUTE_USERNAME), user.getAttributeValue(UserItem.ATTRIBUTE_PASSWORD))
-                .setFirstName(user.getAttributeValue(UserItem.ATTRIBUTE_FIRSTNAME))
-                .setLastName(user.getAttributeValue(UserItem.ATTRIBUTE_LASTNAME))
-                .setTitle(user.getAttributeValue(UserItem.ATTRIBUTE_TITLE))
-                .setIconPath(user.getAttributeValue(UserItem.ATTRIBUTE_ICON))
-                .setJobTitle(user.getAttributeValue(UserItem.ATTRIBUTE_JOB_TITLE));
+        final UserCreator userCreator = new UserCreator(user.getAttributeValue(UserItem.ATTRIBUTE_USERNAME),
+                user.getAttributeValue(UserItem.ATTRIBUTE_PASSWORD))
+                        .setFirstName(user.getAttributeValue(UserItem.ATTRIBUTE_FIRSTNAME))
+                        .setLastName(user.getAttributeValue(UserItem.ATTRIBUTE_LASTNAME))
+                        .setTitle(user.getAttributeValue(UserItem.ATTRIBUTE_TITLE))
+                        .setIconPath(user.getAttributeValue(UserItem.ATTRIBUTE_ICON))
+                        .setJobTitle(user.getAttributeValue(UserItem.ATTRIBUTE_JOB_TITLE));
         // .setPersonalData(personalInfo.done())
         // .setProfessionalData(professionalInfo.done());
 

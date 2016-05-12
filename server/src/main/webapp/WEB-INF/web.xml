@@ -532,7 +532,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>iconServlet</servlet-name>
-        <url-pattern>/avatars</url-pattern>
+        <url-pattern>/avatars/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>
