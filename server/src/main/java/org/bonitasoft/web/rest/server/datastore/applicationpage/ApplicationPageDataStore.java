@@ -19,13 +19,10 @@ package org.bonitasoft.web.rest.server.datastore.applicationpage;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.registration.BonitaRegistration;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.page.Page;
-import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
@@ -64,7 +61,6 @@ DatastoreHasGet<ApplicationPageItem>, DatastoreHasSearch<ApplicationPageItem>, D
         try {
             final ApplicationPage applicationPage = applicationAPI.createApplicationPage(item.getApplicationId().toLong(), item.getPageId().toLong(),
                     item.getToken());
-            registerApplicationUsageIfNeeded(applicationPage);
             return converter.toApplicationPageItem(applicationPage);
         } catch (final Exception e) {
             throw new APIException(e);
@@ -124,20 +120,5 @@ DatastoreHasGet<ApplicationPageItem>, DatastoreHasSearch<ApplicationPageItem>, D
 
     protected SearchResult<ApplicationPage> runSearch(final SearchOptionsCreator creator) throws SearchException {
         return applicationAPI.searchApplicationPages(creator.create());
-    }
-
-    protected void registerApplicationUsageIfNeeded(final ApplicationPage applicationPage) throws PageNotFoundException {
-        final String register = System.getProperty(BonitaRegistration.BONITA_REGISTER_SYSTEM_PROPERTY);
-        if ("1".equals(register)) {
-            final Page page = pageAPI.getPage(applicationPage.getPageId());
-            if (!page.isProvided()) {
-                registerApplicationUsage();
-            }
-        }
-    }
-
-    protected void registerApplicationUsage() {
-        final BonitaRegistration bonitaRegistration = new BonitaRegistration();
-        bonitaRegistration.sendUserInfoIfNotSent();
     }
 }
