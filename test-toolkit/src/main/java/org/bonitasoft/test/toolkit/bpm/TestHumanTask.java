@@ -20,6 +20,7 @@ import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityExecutionException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
+import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -183,19 +184,12 @@ public class TestHumanTask extends AbstractManualTask {
     // Convenient method
     // /////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Wait for human task's state to move to state passed in parameter. Do not execute human task.
-     *
-     * @param apiSession
-     * @param state
-     * @return
-     */
-    private TestHumanTask waitState(final APISession apiSession, final String state) {
+    public TestHumanTask waitState(final String state) {
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
             try {
                 Thread.sleep(SLEEP_TIME_MS);
             } catch (final InterruptedException e) {
-                throw new TestToolkitException("Problem while wiating for state <" + state + "> for human task <" + getId() + ">. Interrupted", e);
+                throw new TestToolkitException("Problem while waiting for state <" + state + "> for human task <" + getId() + ">. Interrupted", e);
             }
             refreshHumanTaskInstanceInstance();
             if (getHumanTaskInstance() != null && state.equals(getHumanTaskInstance().getState())) {
@@ -208,11 +202,19 @@ public class TestHumanTask extends AbstractManualTask {
         return this;
     }
 
-    public TestHumanTask waitState(final TestUser initiator, final String state) {
-        return waitState(initiator.getSession(), state);
-    }
-
-    public TestHumanTask waitState(final String state) {
-        return waitState(TestToolkitCtx.getInstance().getInitiator(), state);
+    public TestHumanTask waitFinished() {
+        for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
+            try {
+                TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession()).getHumanTaskInstance(getId());
+            } catch (final ActivityInstanceNotFoundException e) {
+                return this;
+            }
+            try {
+                Thread.sleep(SLEEP_TIME_MS);
+            } catch (final InterruptedException e) {
+                throw new TestToolkitException("Problem while waiting for human task<" + getId() + "> to be finished. Interrupted", e);
+            }
+        }
+        throw new TestToolkitException("Timeout while waiting for human task<" + getId() + "> to be finished.");
     }
 }
