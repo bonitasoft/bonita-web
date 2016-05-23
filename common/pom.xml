@@ -24,10 +24,12 @@
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-client</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-common</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
