@@ -3,6 +3,7 @@ package org.bonitasoft.console.client.user.process.action;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
+import org.bonitasoft.console.client.user.task.view.TasksListingPage;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -25,8 +26,8 @@ public class ProcessInstantiationCallbackBehavior {
         History.newItem("?_p=" + CaseMoreDetailsPage.TOKEN + "&id=" + caseId + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
-    protected void redirectToCurrentProfileHome() {
-        History.newItem("?_pf=" + ClientApplicationURL.getProfileId());
+    protected void redirectToDefaultPage() {
+        History.newItem("?_p=" + TasksListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     public void onSuccess(final String responseContent) {
@@ -49,7 +50,7 @@ public class ProcessInstantiationCallbackBehavior {
         } else {
             GWT.log("caseId is not set");
             showConfirmation(_("A case has been started successfully."));
-            redirectToCurrentProfileHome();
+            redirectToDefaultPage();
         }
     }
 
@@ -58,9 +59,11 @@ public class ProcessInstantiationCallbackBehavior {
         if (responseContent != null && !responseContent.isEmpty()) {
             final JSONValue root = JSONParser.parseLenient(responseContent);
             final JSONObject processInstance = root.isObject();
-            final JSONValue caseIdValue = processInstance.get("caseId");
-            if (caseIdValue != null) {
-                caseId = Double.toString(caseIdValue.isNumber().doubleValue());
+            if (processInstance != null) {
+                final JSONValue caseIdValue = processInstance.get("caseId");
+                if (caseIdValue != null) {
+                    caseId = Double.toString(caseIdValue.isNumber().doubleValue());
+                }
             }
         }
         return caseId;
