@@ -1,13 +1,18 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
+import java.util.HashMap;
+
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -15,37 +20,34 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class APIUserTest {
 
+    public static final APIID USER_ID = APIID.makeAPIID(123L);
     @Mock
     private UserItem userItem;
+    private APIUser apiUser;
+    @Mock
+    private UserDatastore userDatastore;
+    @Mock
+    private APISession apiSession;
 
-    @Test(expected = APIForbiddenException.class)
-    public void should_verify_authorisation_for_the_given_icon_path() throws Exception {
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-        final APIUser apiUser = spy(new APIUser());
-        doReturn("../../../userIcon.jpg").when(userItem).getIcon();
-        doThrow(new UnauthorizedFolderException("error")).when(apiUser).getCompleteTempFilePath("../../../userIcon.jpg");
-
-        apiUser.add(userItem);
-
+    @Before
+    public void before() throws Exception {
+        ItemDefinitionFactory.setDefaultFactory(mock(ItemDefinitionFactory.class));
+        apiUser = spy(new APIUser());
+        doReturn(userDatastore).when(apiUser).getUserDatastore();
     }
 
     @Test
-    public void uploadIcon_should_return_partial_path() throws Exception {
-        // So that constructor does not throw NPE:
-        ItemDefinitionFactory.setDefaultFactory(mock(ItemDefinitionFactory.class));
-
-        // given
-        final APIUser apiUser = spy(new APIUser());
-        final String iconTempPath = "/tmp/bonita_portal_433@castor/tenants/1/theme/icons/users/tmp_8974208936607077974.png";
-
-        doReturn("/opt/tomcat/bonita/tenants/1/icons/users/avatar_7564657.png").when(apiUser)
-                .uploadAndGetNewUploadedFilePath(iconTempPath);
-        doReturn("/opt/tomcat/bonita/tenants/1/icons/").when(apiUser).getUserIconsFolderPath();
-
-        //when:
-        final String uploadedIconPath = apiUser.uploadIcon(iconTempPath);
-
-        // then:
-        assertThat(uploadedIconPath).isEqualTo("users/avatar_7564657.png");
+    public void should_user_be_updated_with_icon_as_submit_by_the_API() throws Exception {
+        //given
+        doReturn(userItem).when(userDatastore).get(USER_ID);
+        //when
+        HashMap<String, String> item = new HashMap<>();
+        item.put(UserItem.ATTRIBUTE_ICON, "theAvatar.jpg");
+        apiUser.update(USER_ID, item);
+        //then
+        verify(userDatastore).update(eq(APIID.makeAPIID(123L)), eq(item));
     }
 }
