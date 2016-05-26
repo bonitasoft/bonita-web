@@ -14,15 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.IconDescriptor;
 import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 
 public class UserUpdaterConverter {
 
@@ -46,7 +43,8 @@ public class UserUpdaterConverter {
             userUpdater.setManagerId(managerId);
         }
         if (attributes.containsKey(UserItem.ATTRIBUTE_ICON)) {
-            setIcon(attributes, userUpdater, tenantId);
+            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(UserItem.ATTRIBUTE_ICON), tenantId);
+            userUpdater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
         if (attributes.containsKey(UserItem.ATTRIBUTE_TITLE)) {
             userUpdater.setTitle(attributes.get(UserItem.ATTRIBUTE_TITLE));
@@ -60,18 +58,6 @@ public class UserUpdaterConverter {
         return userUpdater;
     }
 
-    void setIcon(Map<String, String> attributes, UserUpdater userUpdater, long tenantId) {
-        try {
-            final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
-            String completeTempFilePath = tenantFolder.getCompleteTempFilePath(attributes.get(UserItem.ATTRIBUTE_ICON), tenantId);
-            File tempFile = new File(completeTempFilePath);
-            byte[] content = FileUtils.readFileToByteArray(tempFile);
-            userUpdater.setIcon(tempFile.getName(), content);
-        } catch (IOException e) {
-            throw new APIForbiddenException("Forbidden access to " + attributes.get(UserItem.ATTRIBUTE_ICON), e);
-        }
-    }
-
     private Long getManagerId(final Map<String, String> attributes) {
         try {
             return Long.valueOf(attributes.get(UserItem.ATTRIBUTE_MANAGER_ID));
@@ -79,38 +65,4 @@ public class UserUpdaterConverter {
             return 0L;
         }
     }
-    //
-    //    @Test(expected = APIForbiddenException.class)
-    //    public void should_verify_authorisation_for_the_given_icon_path() throws Exception {
-    //        doReturn("../../../userIcon.jpg").when(userItem).getIcon();
-    //        doThrow(new UnauthorizedFolderException("error")).when(apiUser).getCompleteTempFilePath("../../../userIcon.jpg");
-    //
-    //        apiUser.add(userItem);
-    //
-    //    }
-    //    if (item != null) {
-    //        // Finish the upload of the icon
-    //        final String icon = item.get(UserItem.ATTRIBUTE_ICON);
-    //        if (!MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_ICON)) {
-    //
-    //            deleteOldIconFileIfExists(id);
-    //            String tmpIconPath;
-    //            try {
-    //                tmpIconPath = getCompleteTempFilePath(icon);
-    //            } catch (final UnauthorizedFolderException e) {
-    //                throw new APIForbiddenException(e.getMessage());
-    //            } catch (final IOException e) {
-    //                throw new APIException(e);
-    //            }
-    //
-    //            final String newIcon = uploadIcon(tmpIconPath);
-    //            item.put(UserItem.ATTRIBUTE_ICON, newIcon);
-    //        }
-    //
-    //        // Do not update password if not set
-    //        MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_PASSWORD);
-    //        if (item.get(UserItem.ATTRIBUTE_PASSWORD) != null) {
-    //            checkPasswordRobustness(item.get(UserItem.ATTRIBUTE_PASSWORD));
-    //        }
-    //    }
 }

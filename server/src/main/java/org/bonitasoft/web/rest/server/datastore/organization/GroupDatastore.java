@@ -5,16 +5,19 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
+
+import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
+
+import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.identity.Group;
@@ -29,23 +32,21 @@ import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
 import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
-import org.bonitasoft.web.rest.server.framework.api.*;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
+import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
-import java.util.List;
-import java.util.Map;
-
-import static org.bonitasoft.web.toolkit.client.data.APIID.toLongList;
-
 /**
  * @author Nicolas Tith
- * 
  */
-public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements 
-        DatastoreHasAdd<GroupItem>, 
+public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
+        DatastoreHasAdd<GroupItem>,
         DatastoreHasUpdate<GroupItem>,
         DatastoreHasGet<GroupItem>,
         DatastoreHasSearch<GroupItem>, DatastoreHasDelete {
@@ -58,7 +59,7 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
         return new EngineClientFactory(new EngineAPIAccessor(getEngineSession()))
                 .createGroupEngineClient();
     }
-    
+
     @Override
     public void delete(final List<APIID> ids) {
         getGroupEngineClient().delete(toLongList(ids));
@@ -73,11 +74,11 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
             addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_NAME, GroupSearchDescriptor.NAME);
             addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_DISPLAY_NAME, GroupSearchDescriptor.DISPLAY_NAME);
             addStringFilterToSearchBuilder(filters, builder, GroupItem.ATTRIBUTE_PARENT_PATH, GroupSearchDescriptor.PARENT_PATH);
-            
+
             SearchResult<Group> engineSearchResults;
             engineSearchResults = TenantAPIAccessor.getIdentityAPI(getEngineSession()).searchGroups(builder.done());
 
-            return new ItemSearchResult<GroupItem>(page, resultsByPage, engineSearchResults.getCount(), 
+            return new ItemSearchResult<>(page, resultsByPage, engineSearchResults.getCount(),
                     new GroupItemConverter().convert(engineSearchResults.getResult()));
 
         } catch (final Exception e) {
@@ -93,14 +94,14 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem update(final APIID id, final Map<String, String> attributes) {
-        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes);
+        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes, getEngineSession().getTenantId());
         Group group = getGroupEngineClient().update(id.toLong(), updater);
         return new GroupItemConverter().convert(group);
     }
 
     @Override
     public GroupItem add(final GroupItem group) {
-        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group);
+        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group, getEngineSession().getTenantId());
         Group result = getGroupEngineClient().create(creator);
         return new GroupItemConverter().convert(result);
     }
@@ -115,6 +116,6 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     protected GroupItem convertEngineToConsoleItem(final Group group) {
-       throw new RuntimeException("Unimplemented method");
+        throw new RuntimeException("Unimplemented method");
     }
 }

@@ -92,20 +92,6 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
-     * /** Get the folder of the user Console icons
-     */
-    public File getConsoleIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getPortalIconsFolderPath());
-    }
-
-    /**
-     * Get the folder of the user Console user icons
-     */
-    public File getConsoleRoleIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getPortalRoleIconsFolderPath());
-    }
-
-    /**
      * Get the folder of Tenant report files
      */
     public File getReportFolder() {
@@ -138,13 +124,6 @@ public class WebBonitaConstantsUtils {
      */
     public File getTenantsFolder() {
         return getFolder(webBonitaConstants.getTenantsFolderPath());
-    }
-
-    /**
-     * Get the folder of the Console group icons
-     */
-    public File getConsoleGroupIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getPortalGroupIconsFolderPath());
     }
 
     // protected for test stubbing

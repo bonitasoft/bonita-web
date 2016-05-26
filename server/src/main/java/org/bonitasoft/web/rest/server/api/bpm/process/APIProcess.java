@@ -49,12 +49,11 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Celine Souchet
  */
 public class APIProcess extends ConsoleAPI<ProcessItem> implements
-APIHasAdd<ProcessItem>,
-APIHasUpdate<ProcessItem>,
-APIHasGet<ProcessItem>,
-APIHasSearch<ProcessItem>,
-APIHasDelete
-{
+        APIHasAdd<ProcessItem>,
+        APIHasUpdate<ProcessItem>,
+        APIHasGet<ProcessItem>,
+        APIHasSearch<ProcessItem>,
+        APIHasDelete {
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURE
@@ -155,7 +154,7 @@ APIHasDelete
 
     private void fillNumberOfFailedCasesIfFailedCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
-            final Map<String, String> filters = new HashMap<String, String>();
+            final Map<String, String> filters = new HashMap<>();
             filters.put(CaseItem.FILTER_CALLER, "any");
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
@@ -166,7 +165,7 @@ APIHasDelete
     private void fillNumberOfOpenCasesIfOpenCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_OPEN_CASES)) {
             // Open is all states without the terminal states
-            final Map<String, String> filters = new HashMap<String, String>();
+            final Map<String, String> filters = new HashMap<>();
             filters.put(CaseItem.FILTER_CALLER, "any");
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             item.setAttribute(ProcessItem.COUNTER_OPEN_CASES, getCaseDatastore().count(null, null, filters));
@@ -187,7 +186,7 @@ APIHasDelete
                 ProcessItem.ATTRIBUTE_ICON,
                 completeIconTempPath,
                 getWebBonitaConstantsUtils().getConsoleUserIconsFolder().getPath())
-                .getPath();
+                        .getPath();
 
         return path.substring(getWebBonitaConstantsUtils().getConsoleDefaultIconsFolder().getPath().length());
     }

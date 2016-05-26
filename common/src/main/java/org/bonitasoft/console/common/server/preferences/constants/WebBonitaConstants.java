@@ -42,10 +42,6 @@ public interface WebBonitaConstants {
 
     String bdmFolderName = "bdm";
 
-    String ROLES_ICONS_FOLDER_NAME = "roles";
-
-    String GROUPS_ICONS_FOLDER_NAME = "groups";
-
     /**
      * Client
      */
@@ -86,20 +82,12 @@ public interface WebBonitaConstants {
      */
     String getFormsTempFolderPath();
 
-
     /**
      * Get Tenant user icons Path
      *
      * @return
      */
     String getPortalUserIconsFolderPath();
-
-    /**
-     * Get Tenant user icons Path
-     *
-     * @return
-     */
-    String getPortalRoleIconsFolderPath();
 
     /**
      * Get reportsConsoleTempFolder Path
@@ -116,19 +104,10 @@ public interface WebBonitaConstants {
     String getPagesTempFolderPath();
 
     /**
-     * Get groupsConsoleTempFolder Path
-     *
-     * @return path
-     */
-    String getPortalGroupIconsFolderPath();
-
-    /**
      * Get BDMTempFolderPath Path
      *
      * @return path
      */
     String getBDMTempFolderPath();
-
-    String getPortalIconsFolderPath();
 
 }

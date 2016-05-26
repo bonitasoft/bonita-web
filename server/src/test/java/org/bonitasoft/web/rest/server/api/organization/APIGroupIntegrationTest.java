@@ -1,7 +1,6 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
 import static org.bonitasoft.web.rest.model.builder.organisation.GroupItemBuilder.aGroup;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 import java.io.File;
@@ -40,8 +39,6 @@ public class APIGroupIntegrationTest extends AbstractConsoleTest {
 
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_adding_icon_with_unauthorized_path() {
-        // Add
-        doReturn(".").when(apiGroup).getUploadPath(GroupItem.ATTRIBUTE_ICON);
 
         GroupItem input = new GroupItem();
         input.setName("Developper");
@@ -61,7 +58,6 @@ public class APIGroupIntegrationTest extends AbstractConsoleTest {
         input = apiGroup.runAdd(input);
         final APIID id = input.getId();
         Assert.assertNotNull("Failed to add a new role", input);
-        doReturn(".").when(apiGroup).getUploadPath(GroupItem.ATTRIBUTE_ICON);
         input = new GroupItem();
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 

@@ -13,10 +13,7 @@ public class GroupItemConverter extends ItemConverter<GroupItem, Group> {
         groupItem.setCreationDate(group.getCreationDate());
         groupItem.setDescription(group.getDescription());
         groupItem.setDisplayName(group.getDisplayName());
-
-        final String iconPath = group.getIconPath();
-        groupItem.setIcon(iconPath == null || iconPath.isEmpty() ? iconPath : "../avatars?src=" + iconPath);
-
+        groupItem.setIcon(group.getIconId() == null ? "" : "../avatars/" + group.getIconId());
         groupItem.setId(group.getId());
         groupItem.setLastUpdateDate(group.getLastUpdate());
         groupItem.setName(group.getName());
