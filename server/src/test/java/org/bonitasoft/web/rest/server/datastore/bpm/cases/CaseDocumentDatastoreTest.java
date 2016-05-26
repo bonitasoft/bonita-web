@@ -4,10 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.File;
@@ -18,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -36,9 +32,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,26 +69,13 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
 
     private final CaseDocumentItem mockedDocumentItem = new CaseDocumentItem();
 
-    private String savedBonitaHomeProperty;
-
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
         documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI, tenantFolder));
-    }
-
-    @After
-    public void teardown() throws Exception {
-        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
-            System.clearProperty(WebBonitaConstants.BONITA_HOME);
-        } else {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
-        }
     }
 
     // ---------- GET METHOD TESTS ------------------------------//
@@ -103,7 +84,6 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_call_engine_processAPI_getDocument() throws Exception {
         // Given
         final APIID id = APIID.makeAPIID(1l);
-
 
         // When
         documentDatastore.get(id);
@@ -159,7 +139,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         when(tenantFolder.getTempFile(docUrl.getPath(), 1L)).thenReturn(new File(docUrl.getPath()));
 
         // When
-        final DocumentValue documentValue = documentDatastore.buildDocumentValueFromUploadPath(docUrl.getPath(),1,"fileName");
+        final DocumentValue documentValue = documentDatastore.buildDocumentValueFromUploadPath(docUrl.getPath(), 1, "fileName");
         // Then
         assertTrue(documentValue.getFileName().equals("fileName"));
     }
@@ -329,7 +309,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_update_a_document_calling_updateDocument_with_upload_Path() throws Exception {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         final String uploadPath = getClass().getResource("/doc.jpg").getPath();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
 
@@ -346,7 +326,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_update_a_document_calling_updateDocument_with_upload_Path_and_fileName() throws Exception {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         final String uploadPath = getClass().getResource("/doc.jpg").getPath();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, uploadPath);
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, "doc_file_name.jpg");
@@ -364,7 +344,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_update_a_document_calling_updateDocument_with_external_Url() throws Exception {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_URL, "http://images/doc.jpg");
 
         // When
@@ -378,7 +358,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_should_not_update_document_and_throws_exception_for_missing_uploadPath() {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, "Doc 1");
         final APIID id = APIID.makeAPIID(1l);
         try {
@@ -393,7 +373,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_should_not_update_document_and_throws_exception_for_invalid_uploadPath() throws Exception {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, "Doc 1");
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "unexisting.document");
         final APIID id = APIID.makeAPIID(1l);
@@ -416,7 +396,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_updating_a_document_with_unauthorized_path() throws IOException {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
 
         when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenThrow(new UnauthorizedFolderException("error"));
@@ -429,7 +409,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_throws_an_exception_when_cannot_write_file_on_update() throws IOException {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "C:\\doc.jpg");
 
         when(tenantFolder.getTempFile("C:\\doc.jpg", 1L)).thenThrow(new IOException("error"));
@@ -448,7 +428,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_call_buildSearchOptionCreator_method() throws SearchException {
         // Given
         when(processAPI.searchDocuments(any(SearchOptions.class))).thenReturn(mockedEngineSearchResults);
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put("submittedBy", "1");
 
         // When
@@ -462,7 +442,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_call_processAPI_searchDocuments_method() throws SearchException {
         // Given
         when(processAPI.searchDocuments(any(SearchOptions.class))).thenReturn(mockedEngineSearchResults);
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put("submittedBy", "1");
 
         // When
@@ -475,7 +455,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     // -------------DELETE METHOD TESTS ------------------------------------------//
     @Test
     public void it_should_delete_one_document() throws DocumentNotFoundException, DeletionException {
-        final List<APIID> docs = new ArrayList<APIID>();
+        final List<APIID> docs = new ArrayList<>();
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
 
         // When
@@ -488,7 +468,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
 
     @Test
     public void it_should_delete_two_documents() throws DocumentNotFoundException, DeletionException {
-        final List<APIID> docs = new ArrayList<APIID>();
+        final List<APIID> docs = new ArrayList<>();
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
 
@@ -504,7 +484,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         expectedEx.expect(APIException.class);
         expectedEx.expectMessage("Error while deleting a document. Document id not specified in the request");
 
-        final List<APIID> docs = new ArrayList<APIID>();
+        final List<APIID> docs = new ArrayList<>();
         docs.add(APIID.makeAPIID(mockedDocument.getId()));
 
         // When
@@ -518,7 +498,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         // When
         when(processAPI.removeDocument(3L)).thenThrow(DocumentNotFoundException.class);
 
-        final List<APIID> docs = new ArrayList<APIID>();
+        final List<APIID> docs = new ArrayList<>();
         docs.add(APIID.makeAPIID(3L));
 
         // When

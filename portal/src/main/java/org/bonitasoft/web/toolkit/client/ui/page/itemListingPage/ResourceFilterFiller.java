@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.ui.component.filler.ComponentFiller;
@@ -56,10 +55,6 @@ public final class ResourceFilterFiller<T extends IItem> extends ComponentFiller
             final ItemListingFilter resourceFilter = createResourceListingFilters(item);
 
             resourceFilter.setIsResourceFilter(true);
-            if (!StringUtil.isBlank(this.filter.getIconAttributeName())) {
-                String iconUrl = item.getAttributeValue(this.filter.getIconAttributeName());
-                resourceFilter.setImage(iconUrl != null ? iconUrl : "");
-            }
             resourceFilter.setFilters(additionalFilters);
 
             filters.add(resourceFilter);

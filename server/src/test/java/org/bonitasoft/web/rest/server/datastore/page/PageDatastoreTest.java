@@ -18,19 +18,12 @@ package org.bonitasoft.web.rest.server.datastore.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +42,6 @@ import org.apache.commons.io.FileUtils;
 import org.assertj.core.groups.Tuple;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -75,9 +67,7 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -141,8 +131,6 @@ public class PageDatastoreTest extends APITestWithMock {
 
     File pagesDir = new File("target/bonita-home/client/tenants/1/work/pages");
 
-    private String savedBonitaHomeProperty;
-
     @Mock
     private PageResourceProviderImpl pageResourceProvider;
 
@@ -153,8 +141,6 @@ public class PageDatastoreTest extends APITestWithMock {
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
         final File pageZipFile = deployZipFileToTarget(PAGE_ZIP);
 
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home/bonita");
         deleteDir(pagesDir);
         // Given
         when(mockedPage.getId()).thenReturn(PAGE_ID);
@@ -206,15 +192,6 @@ public class PageDatastoreTest extends APITestWithMock {
         assertThat(file).as("file should exists " + file.getAbsolutePath()).exists();
         FileUtils.copyFileToDirectory(file, new File("target"));
         return new File("target/" + zipFileName);
-    }
-
-    @After
-    public void teardown() throws Exception {
-        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
-            System.clearProperty(WebBonitaConstants.BONITA_HOME);
-        } else {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
-        }
     }
 
     @Test
@@ -276,7 +253,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
         when(pageAPI.getPage(mockedPage.getId())).thenReturn(mockedPage);
         final PageItem pageToRemove = pageDatastore.add(pageToBeAdded);
-        final List<APIID> ids = new ArrayList<APIID>();
+        final List<APIID> ids = new ArrayList<>();
         ids.add(pageToRemove.getId());
 
         // When
@@ -291,7 +268,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.getPage(1l)).thenThrow(new PageNotFoundException("newPage"));
-        final List<APIID> ids = new ArrayList<APIID>();
+        final List<APIID> ids = new ArrayList<>();
         ids.add(APIID.makeAPIID(1l));
 
         // When
@@ -314,9 +291,9 @@ public class PageDatastoreTest extends APITestWithMock {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
-        final HashSet<String> resourcePermissions = new HashSet<String>(Arrays.asList("Case Visualization", "Organization Visualization"));
+        final HashSet<String> resourcePermissions = new HashSet<>(Arrays.asList("Case Visualization", "Organization Visualization"));
         doReturn(resourcePermissions).when(customPageService)
-        .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
+                .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
 
         // When
         pageDatastore.add(pageToBeAdded);
@@ -415,7 +392,7 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_updatting_page_with_unauthorized_path() throws IOException, PageNotFoundException {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
@@ -430,7 +407,7 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void it_throws_an_exception_when_cannot_write_file_on_update() throws IOException, PageNotFoundException {
         // Given
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
@@ -678,8 +655,7 @@ public class PageDatastoreTest extends APITestWithMock {
                 new Tuple("contentType", SearchFilterOperation.EQUALS, "form"),
                 new Tuple(null, SearchFilterOperation.OR, null),
                 new Tuple("contentType", SearchFilterOperation.EQUALS, "page"),
-                new Tuple(null, SearchFilterOperation.R_PARENTHESIS, null)
-                );
+                new Tuple(null, SearchFilterOperation.R_PARENTHESIS, null));
     }
 
 }

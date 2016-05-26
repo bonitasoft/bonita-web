@@ -100,11 +100,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
         return confFolderPath;
     }
 
-    @Override
-    public String getPortalUserIconsFolderPath() {
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */

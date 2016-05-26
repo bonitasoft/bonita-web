@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -39,15 +36,10 @@ public class ApplicationResourceServletTest {
     @Mock
     APISession session;
 
-    private String savedBonitaHomeProperty;
-
     @Test
-    public void should_verify_authorisation_for_the_given_location_param() throws
-    Exception {
+    public void should_verify_authorisation_for_the_given_location_param() throws Exception {
 
         final ApplicationResourceServlet applicationResourceServlet = spy(new ApplicationResourceServlet());
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(req.getParameter("process")).thenReturn("processUUIDStr");
         when(req.getParameter("location")).thenReturn("../../../file.txt");
         when(req.getMethod()).thenReturn("GET");
@@ -70,12 +62,4 @@ public class ApplicationResourceServletTest {
         }
     }
 
-    @After
-    public void teardown() throws Exception {
-        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
-            System.clearProperty(WebBonitaConstants.BONITA_HOME);
-        } else {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
-        }
-    }
 }

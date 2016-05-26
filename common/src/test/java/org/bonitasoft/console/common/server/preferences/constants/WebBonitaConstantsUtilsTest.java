@@ -15,36 +15,17 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
 
 import java.io.File;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Vincent Elcrin
  */
-@RunWith(MockitoJUnitRunner.class)
 public class WebBonitaConstantsUtilsTest {
 
-    private static final String TEST_BONITA_HOME = "src/test/resources/bonita/";
-
-    private WebBonitaConstantsUtils webBonitaConstantsUtilsWithTenantId;
-
-    @Before
-    public void setUp() throws Exception {
-        // With tenantId
-        webBonitaConstantsUtilsWithTenantId = spy(new WebBonitaConstantsUtils(1L));
-        doReturn(TEST_BONITA_HOME).when(webBonitaConstantsUtilsWithTenantId).getBonitaHomePath();
-
-        // Without tenantId
-        WebBonitaConstantsUtils webBonitaConstantsUtils = spy(new WebBonitaConstantsUtils());
-        doReturn(TEST_BONITA_HOME).when(webBonitaConstantsUtils).getBonitaHomePath();
-    }
+    private WebBonitaConstantsUtils webBonitaConstantsUtilsWithTenantId = new WebBonitaConstantsUtils(1L);
 
     @Test
     public void testWeCanGetFormsWorkFolder() throws Exception {

@@ -85,13 +85,6 @@ public class WebBonitaConstantsUtils {
     }
 
     /**
-     * /** Get the folder of the user Console user icons
-     */
-    public File getConsoleUserIconsFolder() {
-        return getFolderFromBonitaHome(webBonitaConstants.getPortalUserIconsFolderPath());
-    }
-
-    /**
      * Get the folder of Tenant report files
      */
     public File getReportFolder() {
@@ -124,20 +117,6 @@ public class WebBonitaConstantsUtils {
      */
     public File getTenantsFolder() {
         return getFolder(webBonitaConstants.getTenantsFolderPath());
-    }
-
-    // protected for test stubbing
-    String getBonitaHomePath() {
-        final String bonitaHomePath = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        if (bonitaHomePath == null) {
-            throw new RuntimeException(WebBonitaConstants.BONITA_HOME + " system property not set!");
-        }
-        return bonitaHomePath;
-    }
-
-    private File getFolderFromBonitaHome(final String folderPath) {
-        // do not try to create folders in Bonita-home:
-        return new File(getBonitaHomePath(), folderPath);
     }
 
     private File getFolder(final String folderPath) {

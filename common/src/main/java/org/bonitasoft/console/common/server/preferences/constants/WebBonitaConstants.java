@@ -21,8 +21,6 @@ import java.io.File;
  */
 public interface WebBonitaConstants {
 
-    String BONITA_HOME = "bonita.home";
-
     /**
      * tenants folder
      */
@@ -81,13 +79,6 @@ public interface WebBonitaConstants {
      * @return path
      */
     String getFormsTempFolderPath();
-
-    /**
-     * Get Tenant user icons Path
-     *
-     * @return
-     */
-    String getPortalUserIconsFolderPath();
 
     /**
      * Get reportsConsoleTempFolder Path

@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,7 +21,6 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.EnumValid
 
 /**
  * @author Vincent Elcrin
- *
  */
 public class ProcessDefinition extends ItemDefinition<ProcessItem> {
 
@@ -69,7 +66,6 @@ public class ProcessDefinition extends ItemDefinition<ProcessItem> {
         createAttribute(ProcessItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ItemAttribute.TYPE.TEXT);
         createAttribute(ProcessItem.ATTRIBUTE_VERSION, ItemAttribute.TYPE.STRING)
                 .isMandatory();
-        createAttribute(ProcessItem.ATTRIBUTE_ICON, ItemAttribute.TYPE.IMAGE);
         createAttribute(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, ItemAttribute.TYPE.ENUM)
                 .addValidator(new EnumValidator(ProcessItem.VALUE_ACTIVATION_STATE_DISABLED, ProcessItem.VALUE_ACTIVATION_STATE_ENABLED));
         createAttribute(ProcessItem.ATTRIBUTE_CONFIGURATION_STATE, ItemAttribute.TYPE.ENUM)

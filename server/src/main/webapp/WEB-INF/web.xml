@@ -29,11 +29,6 @@
         <filter-name>SecurityFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.SecurityFilter</filter-class>
     </filter>
-    <!-- Bonita home Filter -->
-    <filter>
-        <filter-name>BonitaHomeFilter</filter-name>
-        <filter-class>org.bonitasoft.console.common.server.login.filter.BonitaHomeFilter</filter-class>
-    </filter>
     <!--Rest filter -->
     <filter>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
