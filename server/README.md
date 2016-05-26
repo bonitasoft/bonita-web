@@ -10,10 +10,8 @@ The module need to first be built using
     
 Then we can launch jetty to host the app using
 
-    mvn jetty:run -Pdev [-Dbonita.home=/path/to/bonita/home]
+    mvn jetty:run -Pdev
     
-By default, bonita.home point to *target/bonita-home-${project.version}/bonita*. If you want to specify an other bonita.home add argument -Dbonita.home to command line.
-
 To launch jetty in debug mode
 
 	mvnDebug jetty:run -Pdev -pl server

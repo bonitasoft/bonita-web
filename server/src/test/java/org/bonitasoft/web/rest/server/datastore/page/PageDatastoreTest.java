@@ -247,7 +247,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_delete_a_page_removing_it_from_bonita_home() throws Exception {
+    public void should_delete_a_page_removing_it_from_FS() throws Exception {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);

@@ -20,11 +20,7 @@ import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,7 +69,7 @@ public class FormDefinitionAPIImplTest {
 
     private Date deployementDate;
 
-    private final Map<String, Object> urlContext = new HashMap<String, Object>();
+    private final Map<String, Object> urlContext = new HashMap<>();
 
     private Document document;
 
@@ -124,7 +120,6 @@ public class FormDefinitionAPIImplTest {
 
     @Before
     public void before() throws Exception {
-        System.setProperty("bonita.home", "target/bonita-home");
         doReturn(urlContext).when(context).get(FormServiceProviderUtil.URL_CONTEXT);
         doReturn(apiSession).when(context).get(FormServiceProviderUtil.API_SESSION);
         doReturn(TENANT_ID).when(apiSession).getTenantId();
@@ -159,7 +154,7 @@ public class FormDefinitionAPIImplTest {
         doReturn(evaluatedExpressions).when(formServiceProvider).resolveExpressions(anyListOf(Expression.class), anyMapOf(String.class, Object.class));
         doReturn(childPojo).when(evaluatedExpressions).get(EXPRESSION_NAME);
 
-        final List<TransientData> transientDataList = new ArrayList<TransientData>();
+        final List<TransientData> transientDataList = new ArrayList<>();
         final TransientData transientData = new TransientData(TRANSIENT_DATA_NAME, ParentPojo.class.getName(), transientDataExpression);
         transientDataList.add(transientData);
 
@@ -178,7 +173,7 @@ public class FormDefinitionAPIImplTest {
         doReturn(evaluatedExpressions).when(formServiceProvider).resolveExpressions(anyListOf(Expression.class), anyMapOf(String.class, Object.class));
         doReturn(new Date()).when(evaluatedExpressions).get(EXPRESSION_NAME);
 
-        final List<TransientData> transientDataList = new ArrayList<TransientData>();
+        final List<TransientData> transientDataList = new ArrayList<>();
         final TransientData transientData = new TransientData(TRANSIENT_DATA_NAME, String.class.getName(), transientDataExpression);
         transientDataList.add(transientData);
 
@@ -196,7 +191,7 @@ public class FormDefinitionAPIImplTest {
         doReturn(evaluatedExpressions).when(formServiceProvider).resolveExpressions(anyListOf(Expression.class), anyMapOf(String.class, Object.class));
         doReturn(TRANSIENT_VALUE).when(evaluatedExpressions).get(EXPRESSION_NAME);
 
-        final List<TransientData> transientDataList = new ArrayList<TransientData>();
+        final List<TransientData> transientDataList = new ArrayList<>();
         final TransientData transientData = new TransientData(TRANSIENT_DATA_NAME, String.class.getName(), transientDataExpression);
         transientDataList.add(transientData);
 
@@ -216,7 +211,7 @@ public class FormDefinitionAPIImplTest {
         doReturn(evaluatedExpressions).when(formServiceProvider).resolveExpressions(anyListOf(Expression.class), anyMapOf(String.class, Object.class));
         doReturn(null).when(evaluatedExpressions).get(EXPRESSION_NAME);
 
-        final List<TransientData> transientDataList = new ArrayList<TransientData>();
+        final List<TransientData> transientDataList = new ArrayList<>();
         final TransientData transientData = new TransientData(TRANSIENT_DATA_NAME, String.class.getName(), transientDataExpression);
         transientDataList.add(transientData);
 
@@ -231,7 +226,7 @@ public class FormDefinitionAPIImplTest {
     @Test
     public void getTransientDataContextWithoutExpression() throws Exception {
         // Given
-        final List<TransientData> transientDataList = new ArrayList<TransientData>();
+        final List<TransientData> transientDataList = new ArrayList<>();
         final TransientData transientData = new TransientData();
         transientData.setName(TRANSIENT_DATA_NAME);
         transientDataList.add(transientData);
