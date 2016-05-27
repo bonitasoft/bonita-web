@@ -31,42 +31,44 @@ public class ProcessInstantiationCallbackBehavior {
     }
 
     public void onSuccess(final String responseContent) {
-        if (ViewController.hasOpenedPopup()) {
-            ViewController.closePopup();
-        }
-        final String caseId = getCaseId(responseContent);
-        if (caseId != null) {
-            showConfirmation(_("The case %caseId% has been started successfully.", new Arg(
-                    "caseId", caseId)));
-            //Wait a short delay before redirecting. This is useful in case the process completes right away (archiving may take a while)
-            final Timer timer = new Timer() {
+        final String version = getAttributeValue(responseContent, "version");
+        if (!"6.x".equals(version)) {
+            if (ViewController.hasOpenedPopup()) {
+                ViewController.closePopup();
+            }
+            final String caseId = getAttributeValue(responseContent, "caseId");
+            if (caseId != null) {
+                showConfirmation(_("The case %caseId% has been started successfully.", new Arg("caseId", caseId)));
+                //Wait a short delay before redirecting. This is useful in case the process completes right away (archiving may take a while)
+                final Timer timer = new Timer() {
 
-                @Override
-                public void run() {
-                    redirectToCaseMoredetails(caseId);
-                }
-            };
-            timer.schedule(DELAY_BEFORE_REDIRECTION);
-        } else {
-            GWT.log("caseId is not set");
-            showConfirmation(_("A case has been started successfully."));
-            redirectToDefaultPage();
+                    @Override
+                    public void run() {
+                        redirectToCaseMoredetails(caseId);
+                    }
+                };
+                timer.schedule(DELAY_BEFORE_REDIRECTION);
+            } else {
+                GWT.log("caseId is not set");
+                showConfirmation(_("A case has been started successfully."));
+                redirectToDefaultPage();
+            }
         }
     }
 
-    protected String getCaseId(final String responseContent) {
-        String caseId = null;
+    protected String getAttributeValue(final String responseContent, final String attributeName) {
+        String attributeValueAsString = null;
         if (responseContent != null && !responseContent.isEmpty()) {
             final JSONValue root = JSONParser.parseLenient(responseContent);
-            final JSONObject processInstance = root.isObject();
-            if (processInstance != null) {
-                final JSONValue caseIdValue = processInstance.get("caseId");
-                if (caseIdValue != null) {
-                    caseId = Double.toString(caseIdValue.isNumber().doubleValue());
+            final JSONObject dataObject = root.isObject();
+            if (dataObject != null) {
+                final JSONValue attributeValue = dataObject.get(attributeName);
+                if (attributeValue != null) {
+                    attributeValueAsString = Double.toString(attributeValue.isNumber().doubleValue());
                 }
             }
         }
-        return caseId;
+        return attributeValueAsString;
     }
 
     public void onError(final String responseContent, final int errorCode) {
