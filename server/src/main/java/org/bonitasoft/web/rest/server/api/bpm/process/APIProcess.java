@@ -14,14 +14,10 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.process;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
@@ -39,8 +35,6 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
@@ -49,12 +43,11 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  * @author Celine Souchet
  */
 public class APIProcess extends ConsoleAPI<ProcessItem> implements
-APIHasAdd<ProcessItem>,
-APIHasUpdate<ProcessItem>,
-APIHasGet<ProcessItem>,
-APIHasSearch<ProcessItem>,
-APIHasDelete
-{
+        APIHasAdd<ProcessItem>,
+        APIHasUpdate<ProcessItem>,
+        APIHasGet<ProcessItem>,
+        APIHasSearch<ProcessItem>,
+        APIHasDelete {
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONFIGURE
@@ -77,50 +70,17 @@ APIHasDelete
 
     @Override
     public ProcessItem add(final ProcessItem item) {
-        // Finish the upload of the icon
-        if (item.getIcon() != null && !item.getIcon().isEmpty()) {
-            item.setIcon(uploadIcon(item.getIcon()));
-        }
-
         return getProcessDatastore().add(item);
     }
 
     @Override
     public ProcessItem update(final APIID id, final Map<String, String> attributes) {
-        if (attributes != null) {
-            // Finish the upload of the icon
-            final String icon = attributes.get(ProcessItem.ATTRIBUTE_ICON);
-            if (!MapUtil.removeIfBlank(attributes, ProcessItem.ATTRIBUTE_ICON)) {
-                deleteOldIconFile(id);
-                // Upload new icon file
-                attributes.put(ProcessItem.ATTRIBUTE_ICON, uploadIcon(icon));
-            }
-        }
-        // Update
         return getProcessDatastore().update(id, attributes);
-    }
-
-    void deleteOldIconFile(final APIID id) {
-        final ProcessItem item = getProcessDatastore().get(id);
-        if (item.getIcon() != null || !item.getIcon().isEmpty()) {
-            new File(getWebBonitaConstantsUtils().getConsoleDefaultIconsFolder().getPath() + item.getIcon()).delete();
-        }
-    }
-
-    WebBonitaConstantsUtils getWebBonitaConstantsUtils() {
-        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
     }
 
     @Override
     public ProcessItem get(final APIID id) {
-        final ProcessItem item = getProcessDatastore().get(id);
-        if (item != null) {
-            final String iconPath = item.getIcon();
-            if (iconPath == null || iconPath.isEmpty()) {
-                item.setIcon("icons/default/process.png");
-            }
-        }
-        return item;
+        return getProcessDatastore().get(id);
     }
 
     @Override
@@ -155,7 +115,7 @@ APIHasDelete
 
     private void fillNumberOfFailedCasesIfFailedCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_FAILED_CASES)) {
-            final Map<String, String> filters = new HashMap<String, String>();
+            final Map<String, String> filters = new HashMap<>();
             filters.put(CaseItem.FILTER_CALLER, "any");
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             filters.put(CaseItem.FILTER_STATE, ProcessInstanceState.ERROR.name());
@@ -166,30 +126,11 @@ APIHasDelete
     private void fillNumberOfOpenCasesIfOpenCounterExists(final ProcessItem item, final List<String> counters) {
         if (counters.contains(ProcessItem.COUNTER_OPEN_CASES)) {
             // Open is all states without the terminal states
-            final Map<String, String> filters = new HashMap<String, String>();
+            final Map<String, String> filters = new HashMap<>();
             filters.put(CaseItem.FILTER_CALLER, "any");
             filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, item.getId().toString());
             item.setAttribute(ProcessItem.COUNTER_OPEN_CASES, getCaseDatastore().count(null, null, filters));
         }
-    }
-
-    String uploadIcon(final String iconTempPath) {
-        String completeIconTempPath;
-        try {
-            completeIconTempPath = getCompleteTempFilePath(iconTempPath);
-        } catch (final UnauthorizedFolderException e) {
-            throw new APIForbiddenException(e.getMessage());
-        } catch (final IOException e) {
-            throw new APIException(e);
-        }
-
-        final String path = uploadAutoRename(
-                ProcessItem.ATTRIBUTE_ICON,
-                completeIconTempPath,
-                getWebBonitaConstantsUtils().getConsoleUserIconsFolder().getPath())
-                .getPath();
-
-        return path.substring(getWebBonitaConstantsUtils().getConsoleDefaultIconsFolder().getPath().length());
     }
 
     protected ProcessDatastore getProcessDatastore() {

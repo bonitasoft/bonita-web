@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,19 +17,15 @@ package org.bonitasoft.web.rest.server.api.organization;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.identity.Group;
 import org.bonitasoft.engine.identity.GroupCriterion;
-import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.organization.GroupDatastore;
 import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
-import org.bonitasoft.web.rest.server.framework.api.APIHasFiles;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
@@ -41,17 +35,13 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * @author Nicolas Tith
- * 
  */
 public class APIGroup extends ConsoleAPI<GroupItem> implements
         APIHasAdd<GroupItem>,
         APIHasGet<GroupItem>,
         APIHasDelete,
         APIHasSearch<GroupItem>,
-        APIHasUpdate<GroupItem>,
-        APIHasFiles {
-
-    private static final String GROUPS_ICON_FOLDER_PATH = "/" + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME;
+        APIHasUpdate<GroupItem> {
 
     @Override
     protected ItemDefinition<GroupItem> defineItemDefinition() {
@@ -95,9 +85,6 @@ public class APIGroup extends ConsoleAPI<GroupItem> implements
             try {
                 Group parentGroup = TenantAPIAccessor.getIdentityAPI(getEngineSession()).getGroupByPath(item.getParentPath());
                 item.setParentGroupId(String.valueOf(parentGroup.getId()));
-            } catch (GroupNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -109,29 +96,8 @@ public class APIGroup extends ConsoleAPI<GroupItem> implements
     protected void fillCounters(final GroupItem item, final List<String> counters) {
         if (counters.contains(GroupItem.COUNTER_NUMBER_OF_USERS)) {
             item.setAttribute(GroupItem.COUNTER_NUMBER_OF_USERS,
-                    new GroupDatastore(getEngineSession()).getNumberOfUsers(item.getId())
-                    );
+                    new GroupDatastore(getEngineSession()).getNumberOfUsers(item.getId()));
         }
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // APIHasFiles
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public String getUploadPath(final String attributeName) {
-        if (GroupItem.ATTRIBUTE_ICON.equals(attributeName)) {
-            return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId()).getConsoleGroupIconsFolder().getPath();
-        }
-        return null;
-    }
-
-    @Override
-    public String getSavedPathPrefix(final String attributeName) {
-        if (GroupItem.ATTRIBUTE_ICON.equals(attributeName)) {
-            return GROUPS_ICON_FOLDER_PATH;
-        }
-        return null;
     }
 
 }

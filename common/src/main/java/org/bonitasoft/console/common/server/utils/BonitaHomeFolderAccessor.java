@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 
 public class BonitaHomeFolderAccessor {
 
@@ -76,4 +78,13 @@ public class BonitaHomeFolderAccessor {
         }
     }
 
+    public IconDescriptor getIconFromFileSystem(String iconPath, long tenantId) {
+        try {
+            String completeTempFilePath = getCompleteTempFilePath(iconPath, tenantId);
+            File tempFile = new File(completeTempFilePath);
+            return new IconDescriptor(tempFile.getName(), FileUtils.readFileToByteArray(tempFile));
+        } catch (IOException e) {
+            throw new APIForbiddenException("Forbidden access to " + iconPath, e);
+        }
+    }
 }

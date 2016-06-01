@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.IconDescriptor;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -64,7 +66,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
     @Override
     public void delete(final List<APIID> ids) {
         try {
-            final List<Long> longIds = new ArrayList<Long>();
+            final List<Long> longIds = new ArrayList<>();
             for (final APIID id : ids) {
                 longIds.add(id.toLong());
             }
@@ -91,10 +93,14 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
                 updater.setDescription(attributes.get(RoleItem.ATTRIBUTE_DESCRIPTION));
             }
             if (attributes.containsKey(RoleItem.ATTRIBUTE_ICON)) {
-                updater.setIconPath(attributes.get(RoleItem.ATTRIBUTE_ICON));
+                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(RoleItem.ATTRIBUTE_ICON),
+                        getEngineSession().getTenantId());
+                updater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
             }
 
             return convertEngineToConsoleItem(getIdentityAPI().updateRole(id.toLong(), updater));
+        } catch (APIException e) {
+            throw e;
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -113,16 +119,24 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
                 creator.setDescription(role.getDescription());
             }
             if (role.getIcon() != null) {
-                creator.setIconPath(role.getIcon());
+                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(role.getIcon(),
+                        getEngineSession().getTenantId());
+                creator.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
             }
 
             return convertEngineToConsoleItem(getIdentityAPI().createRole(creator));
+        } catch (APIException e) {
+            throw e;
         } catch (AlreadyExistsException e) {
             throw new APIForbiddenException(new _("Can't create role. Role '%roleName%' already exists", new Arg("roleName", role.getName())), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }
 
+    }
+
+    BonitaHomeFolderAccessor getBonitaHomeFolderAccessor() {
+        return new BonitaHomeFolderAccessor();
     }
 
     @Override
@@ -135,12 +149,12 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
             addStringFilterToSearchBuilder(filters, builder, RoleItem.ATTRIBUTE_DISPLAY_NAME, RoleSearchDescriptor.DISPLAY_NAME);
 
             final SearchResult<Role> engineSearchResults = getIdentityAPI().searchRoles(builder.done());
-            final List<RoleItem> consoleSearchResults = new ArrayList<RoleItem>();
+            final List<RoleItem> consoleSearchResults = new ArrayList<>();
             for (final Role engineItem : engineSearchResults.getResult()) {
                 consoleSearchResults.add(convertEngineToConsoleItem(engineItem));
             }
 
-            return new ItemSearchResult<RoleItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
+            return new ItemSearchResult<>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
 
         } catch (final Exception e) {
             throw new APIException(e);
@@ -164,26 +178,21 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
         }
     }
 
-    private IdentityAPI getIdentityAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+    IdentityAPI getIdentityAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getIdentityAPI(getEngineSession());
     }
 
     @Override
     protected RoleItem convertEngineToConsoleItem(final Role item) {
         final RoleItem roleItem = new RoleItem();
-
         roleItem.setId(item.getId());
         roleItem.setName(item.getName());
         roleItem.setDisplayName(item.getDisplayName());
         roleItem.setDescription(item.getDescription());
-
-        final String iconPath = item.getIconPath();
-        roleItem.setIcon(iconPath == null || iconPath.isEmpty() ? iconPath : "../avatars?src=" + iconPath);
-
+        roleItem.setIcon(item.getIconId() == null ? "" : "../avatars/" + item.getIconId());
         roleItem.setCreatedByUserId(item.getCreatedBy());
         roleItem.setCreationDate(item.getCreationDate());
         roleItem.setLastUpdateDate(item.getLastUpdate());
-
         return roleItem;
     }
 

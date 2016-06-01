@@ -25,7 +25,6 @@ import java.lang.management.ManagementFactory;
 public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
     static final String ICONS_WORK_FOLDER_NAME = "icons";
-    private static final String USERS_ICONS_WORK_FOLDER_NAME = "users";
     private static final String THEME_WORK_FOLDER_NAME = "theme";
     private static final String REPORTS_WORK_FOLDER_NAME = "reports";
     private static final String PAGES_WORK_FOLDER_NAME = "pages";
@@ -34,15 +33,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     private String tempFolderPath = null;
     private String confFolderPath = null;
     private String formsWorkFolderPath = null;
-    private String iconsWorkFolderPath = null;
-    private String usersIconsWorkFolderPath = null;
-    private String groupsIconsWorkFolderPath;
-    private String rolesIconsWorkFolderPath = null;
     private String themeWorkFolderPath = null;
     private String reportsWorkFolderPath = null;
     private String pagesWorkFolderPath = null;
     private String bdmWorkFolderPath;
-    private String partialTenantFolderPath;
 
     /**
      * Default constructor.
@@ -50,7 +44,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      * @param tenantId Tenant Id
      */
     public WebBonitaConstantsTenancyImpl(final long tenantId) {
-        partialTenantFolderPath = clientFolderPath + tenantsFolderName + File.separator + tenantId + File.separator;
         tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
         tempFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
     }
@@ -121,48 +114,12 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
         return formsWorkFolderPath;
     }
 
-    private String getIconsWorkFolderPath() {
-        if (iconsWorkFolderPath == null) {
-            iconsWorkFolderPath = partialTenantFolderPath + ICONS_WORK_FOLDER_NAME + File.separator;
-        }
-        return iconsWorkFolderPath;
-    }
-
-    @Override
-    public String getPortalIconsFolderPath() {
-        return getIconsWorkFolderPath();
-    }
-
-    @Override
-    public String getPortalUserIconsFolderPath() {
-        if (usersIconsWorkFolderPath == null) {
-            usersIconsWorkFolderPath = getIconsWorkFolderPath() + USERS_ICONS_WORK_FOLDER_NAME + File.separator;
-        }
-        return usersIconsWorkFolderPath;
-    }
-
-    @Override
-    public String getPortalRoleIconsFolderPath() {
-        if (rolesIconsWorkFolderPath == null) {
-            rolesIconsWorkFolderPath = getIconsWorkFolderPath() + ROLES_ICONS_FOLDER_NAME + File.separator;
-        }
-        return rolesIconsWorkFolderPath;
-    }
-
     @Override
     public String getThemeFolderPath() {
         if (themeWorkFolderPath == null) {
             themeWorkFolderPath = getTempFolderPath() + File.separator + THEME_WORK_FOLDER_NAME + File.separator;
         }
         return themeWorkFolderPath;
-    }
-
-    @Override
-    public String getPortalGroupIconsFolderPath() {
-        if (groupsIconsWorkFolderPath == null) {
-            groupsIconsWorkFolderPath = getIconsWorkFolderPath() + WebBonitaConstants.GROUPS_ICONS_FOLDER_NAME + File.separator;
-        }
-        return groupsIconsWorkFolderPath;
     }
 
     @Override

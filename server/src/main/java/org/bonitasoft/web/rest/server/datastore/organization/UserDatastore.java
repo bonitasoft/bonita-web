@@ -30,7 +30,6 @@ import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
 import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.FlowNodeEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
@@ -60,7 +59,7 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UserItem add(final UserItem user) {
-        UserCreator userCreator = new UserCreatorConverter().convert(user);
+        UserCreator userCreator = new UserCreatorConverter().convert(user, getEngineSession().getTenantId());
         User createdUser = getUserEngineClient().create(userCreator);
         return userItemConverter.convert(createdUser);
     }
@@ -185,16 +184,12 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // protected for tests
-    protected UserEngineClient getUserEngineClient() {
+    UserEngineClient getUserEngineClient() {
         return engineClientFactory.createUserEngineClient();
     }
 
-    protected ProcessEngineClient getProcessEngineClient() {
+    ProcessEngineClient getProcessEngineClient() {
         return engineClientFactory.createProcessEngineClient();
-    }
-
-    protected FlowNodeEngineClient getFlowNodeEngineClient() {
-        return engineClientFactory.createFlowNodeEngineClient();
     }
 
     @Override

@@ -34,20 +34,17 @@ public class ItemListingResourceFilter {
 
     private final String labelAttributeName;
 
-    private final String iconAttributeName;
-
     private Map<String, String> filtersMapping;
 
     private final Map<String, String> filters = new HashMap<String, String>();
 
     protected final LinkedList<String> tablesToDisplay;
 
-    public ItemListingResourceFilter(final APISearchRequest searchRequest, final String labelAttributeName, final String iconAttributeName,
+    public ItemListingResourceFilter(final APISearchRequest searchRequest, final String labelAttributeName,
             final String... tablesToDisplay) {
         super();
         this.searchRequest = searchRequest;
         this.labelAttributeName = labelAttributeName;
-        this.iconAttributeName = iconAttributeName;
         this.tablesToDisplay = new LinkedList<String>(Arrays.asList(tablesToDisplay));
     }
 
@@ -88,13 +85,6 @@ public class ItemListingResourceFilter {
      */
     public String getLabelAttributeName() {
         return this.labelAttributeName;
-    }
-
-    /**
-     * @return the iconAttributeName
-     */
-    public String getIconAttributeName() {
-        return this.iconAttributeName;
     }
 
     /**

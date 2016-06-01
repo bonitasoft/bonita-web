@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -28,9 +27,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,28 +59,15 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    private String savedBonitaHomeProperty;
-
     @Before
     public void setUp() throws Exception {
         ConfigurationFilesManager.getInstance()
                 .setTenantConfigurations(Collections.singletonMap("console-config.properties", "form.attachment.max.size=30".getBytes()), 1L);
         initMocks(this);
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
         documentDatastore = spy(new ArchivedCaseDocumentDatastore(engineSession, constantsValue, processAPI));
-    }
-
-    @After
-    public void teardown() throws Exception {
-        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
-            System.clearProperty(WebBonitaConstants.BONITA_HOME);
-        } else {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
-        }
     }
 
     // ---------- GET METHOD TESTS ------------------------------//

@@ -100,16 +100,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
         return confFolderPath;
     }
 
-    @Override
-    public String getPortalUserIconsFolderPath() {
-        return null;
-    }
-
-    @Override
-    public String getPortalRoleIconsFolderPath() {
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -138,18 +128,8 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     }
 
     @Override
-    public String getPortalGroupIconsFolderPath() {
-        return null;
-    }
-
-    @Override
     public String getBDMTempFolderPath() {
         return null; // does not means anything at platform level
-    }
-
-    @Override
-    public String getPortalIconsFolderPath() {
-        return null;
     }
 
 }

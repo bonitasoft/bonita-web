@@ -3,8 +3,6 @@ package org.bonitasoft.web.rest.server.api.organization;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.identity.RoleCriterion;
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
@@ -13,7 +11,6 @@ import org.bonitasoft.web.rest.server.datastore.organization.RoleDatastore;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
-import org.bonitasoft.web.rest.server.framework.api.APIHasFiles;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
@@ -26,10 +23,7 @@ public class APIRole extends ConsoleAPI<RoleItem> implements
         APIHasSearch<RoleItem>,
         APIHasUpdate<RoleItem>,
         APIHasAdd<RoleItem>,
-        APIHasDelete,
-        APIHasFiles {
-
-    private static final String ROLES_ICON_FOLDER_PATH = "/" + WebBonitaConstants.ROLES_ICONS_FOLDER_NAME;
+        APIHasDelete {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
@@ -60,8 +54,7 @@ public class APIRole extends ConsoleAPI<RoleItem> implements
         return Arrays.asList(
                 RoleItem.ATTRIBUTE_CREATED_BY_USER_ID,
                 RoleItem.ATTRIBUTE_CREATION_DATE,
-                RoleItem.ATTRIBUTE_LAST_UPDATE_DATE
-                );
+                RoleItem.ATTRIBUTE_LAST_UPDATE_DATE);
     }
 
     @Override
@@ -74,27 +67,4 @@ public class APIRole extends ConsoleAPI<RoleItem> implements
         return RoleCriterion.DISPLAY_NAME_ASC.name();
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // APIHasFiles
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public String getUploadPath(final String attributeName) {
-        if (RoleItem.ATTRIBUTE_ICON.equals(attributeName)) {
-            return getWebBonitaConstantsUtilsInstance().getConsoleRoleIconsFolder().getPath();
-        }
-        return null;
-    }
-
-    @Override
-    public String getSavedPathPrefix(final String attributeName) {
-        if (RoleItem.ATTRIBUTE_ICON.equals(attributeName)) {
-            return ROLES_ICON_FOLDER_PATH;
-        }
-        return null;
-    }
-
-    private WebBonitaConstantsUtils getWebBonitaConstantsUtilsInstance() {
-        return WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
-    }
 }

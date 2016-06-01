@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,8 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
@@ -64,15 +62,13 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * Process data store
  *
  * @author Vincent Elcrin
- *
  */
 public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploymentInfo> implements
-DatastoreHasAdd<ProcessItem>,
-DatastoreHasUpdate<ProcessItem>,
-DatastoreHasGet<ProcessItem>,
-DatastoreHasSearch<ProcessItem>,
-DatastoreHasDelete
-{
+        DatastoreHasAdd<ProcessItem>,
+        DatastoreHasUpdate<ProcessItem>,
+        DatastoreHasGet<ProcessItem>,
+        DatastoreHasSearch<ProcessItem>,
+        DatastoreHasDelete {
 
     private static final Logger logger = Logger.getLogger(ProcessDatastore.class.getName());
 
@@ -147,10 +143,6 @@ DatastoreHasDelete
 
         if (attributes.containsKey(ProcessItem.ATTRIBUTE_DISPLAY_NAME)) {
             updater.setDisplayName(attributes.get(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
-        }
-
-        if (attributes.containsKey(ProcessItem.ATTRIBUTE_ICON)) {
-            updater.setIconPath(attributes.get(ProcessItem.ATTRIBUTE_ICON));
         }
 
         // specific engine methods

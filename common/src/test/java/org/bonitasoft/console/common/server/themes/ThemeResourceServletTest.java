@@ -10,10 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -38,14 +34,6 @@ public class ThemeResourceServletTest {
     @Spy
     ThemeResourceServlet themeResourceServlet = new ThemeResourceServlet();
 
-    private String savedBonitaHomeProperty;
-
-    @Before
-    public void setUp() throws Exception {
-        savedBonitaHomeProperty = System.getProperty(WebBonitaConstants.BONITA_HOME);
-        System.setProperty(WebBonitaConstants.BONITA_HOME, "target/bonita-home");
-    }
-
     @Test
     public void should_verify_authorisation_for_the_given_location_param() throws Exception {
         final ThemeResourceServlet themeResourceServlet = spy(new ThemeResourceServlet());
@@ -63,15 +51,6 @@ public class ThemeResourceServletTest {
             themeResourceServlet.service(req, res);
         } catch (final ServletException e) {
             assertThat(e.getMessage()).startsWith("For security reasons, access to this file paths");
-        }
-    }
-
-    @After
-    public void teardown() throws Exception {
-        if (StringUtil.isBlank(savedBonitaHomeProperty)) {
-            System.clearProperty(WebBonitaConstants.BONITA_HOME);
-        } else {
-            System.setProperty(WebBonitaConstants.BONITA_HOME, savedBonitaHomeProperty);
         }
     }
 }

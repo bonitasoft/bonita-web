@@ -36,7 +36,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class SecurityPropertiesTest {
 
-    private static final File FORMS_WOR_FOLDER = new File("src/test/resources/bonita/client/tenants/1/work/forms");
+    private static final File FORMS_WOR_FOLDER = new File("src/test/resources/formsWorkFolder/forms");
     public static final long TENANT_ID = 43882L;
 
     @Mock

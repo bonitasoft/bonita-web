@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.bonitasoft.test.toolkit.organization.TestUserFactory.getJohnCarpenter;
 import static org.bonitasoft.test.toolkit.organization.TestUserFactory.getMrSpechar;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 import java.io.File;
@@ -27,7 +26,6 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -84,7 +82,6 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         // Add
 
         final APIRole spyApiRole = spy(getAPIRole());
-        doReturn(".").when(spyApiRole).getUploadPath(RoleItem.ATTRIBUTE_ICON);
 
         RoleItem input = new RoleItem();
         input.setName("Developper");
@@ -165,8 +162,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
 
         getAPIRole().runDelete(Arrays.asList(
                 roleItems.getResults().get(1).getId(),
-                roleItems.getResults().get(0).getId()
-                ));
+                roleItems.getResults().get(0).getId()));
 
         final ItemSearchResult<RoleItem> roleItemsAfter = getAPIRole().runSearch(0, 10, null, null, null, null, null);
         Assert.assertEquals("Failed to delete multiple roles", 11, roleItemsAfter.getTotal());
@@ -189,7 +185,7 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         Assert.assertNotNull("Failed to add a new role", input);
 
         // Update
-        final Map<String, String> updates = new HashMap<String, String>();
+        final Map<String, String> updates = new HashMap<>();
         updates.put(RoleItem.ATTRIBUTE_DESCRIPTION, newDescription);
         getAPIRole().runUpdate(input.getId(), updates);
 
@@ -212,7 +208,6 @@ public class APIRoleIntegrationTest extends AbstractConsoleTest {
         input = spyApiRole.runAdd(input);
         final APIID id = input.getId();
         Assert.assertNotNull("Failed to add a new role", input);
-        doReturn(".").when(spyApiRole).getUploadPath(RoleItem.ATTRIBUTE_ICON);
         input = new RoleItem();
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
 

@@ -23,7 +23,6 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualName;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasIcon;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
@@ -31,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * @author Vincent Elcrin
  * @author Celine Souchet
  */
-public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpdateDate, ItemHasIcon, ItemHasDualName {
+public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpdateDate, ItemHasDualName {
 
     public ProcessItem() {
         super();
@@ -149,11 +148,6 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
     }
 
     @Override
-    public String getIcon() {
-        return this.getAttributeValue(ATTRIBUTE_ICON);
-    }
-
-    @Override
     public Date getLastUpdateDate() {
         return this.getAttributeValueAsDate(ATTRIBUTE_LAST_UPDATE_DATE);
     }
@@ -222,11 +216,6 @@ public class ProcessItem extends Item implements ItemHasUniqueId, ItemHasLastUpd
 
     public void setDisplayDescription(final String displayDescription) {
         this.setAttribute(ATTRIBUTE_DISPLAY_DESCRIPTION, displayDescription);
-    }
-
-    @Override
-    public void setIcon(final String iconPath) {
-        this.setAttribute(ATTRIBUTE_ICON, iconPath);
     }
 
     @Override
