@@ -166,10 +166,6 @@
         <url-pattern>/login.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>BonitaHomeFilter</filter-name>
-        <url-pattern>/login.jsp</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
         <filter-name>TokenValidatorFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>

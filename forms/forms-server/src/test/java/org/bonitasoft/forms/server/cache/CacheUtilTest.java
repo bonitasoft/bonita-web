@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,30 +16,19 @@ package org.bonitasoft.forms.server.cache;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import net.sf.ehcache.CacheManager;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.sf.ehcache.CacheManager;
 
 /**
  * @author Rohart Bastien
- *
  */
 public class CacheUtilTest {
 
     protected CacheManager cacheManager = null;
-
-    static {
-        final String bonitaHome = System.getProperty("bonita.home");
-        if (bonitaHome == null) {
-            System.err.println("\n\n*** Forcing bonita.home to target/bonita-home \n\n\n");
-            System.setProperty("bonita.home", "target/bonita-home");
-        } else {
-            System.err.println("\n\n*** bonita.home already set to: " + bonitaHome + " \n\n\n");
-        }
-    }
 
     @Before
     public void setUp() {
@@ -56,12 +43,11 @@ public class CacheUtilTest {
         }
     }
 
-
     @Test
     public void testCreateCaches() {
-        try{
+        try {
             assertNotNull("Cannot create caches", CacheUtil.createCache(cacheManager, cacheManager.getName()));
-        }finally{
+        } finally {
             CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
         }
     }

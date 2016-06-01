@@ -18,7 +18,6 @@
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
         <build.year>${maven.build.timestamp}</build.year>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <bonita.home>${bonita.home.test}</bonita.home>
     </properties>
 
     <dependencies>
@@ -287,19 +286,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <systemPropertyVariables>
-                        <bonita.home>${bonita.home}</bonita.home>
+                        <bonita.client.home>${bonita.client.home}</bonita.client.home>
                     </systemPropertyVariables>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-bonita-home</id>
-                        <phase>generate-test-resources</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -402,8 +391,8 @@
                         <configuration>
                             <systemProperties>
                                 <systemProperty>
-                                    <name>bonita.home</name>
-                                    <value>${bonita.home}</value>
+                                    <name>bonita.client.home</name>
+                                    <value>${bonita.client.home}</value>
                                 </systemProperty>
                                 <systemProperty>
                                     <name>database.dir</name>

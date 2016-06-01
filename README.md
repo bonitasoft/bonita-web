@@ -12,7 +12,7 @@ For develoment purpose use the *dev* profile (don't compile every gwt permutatio
 ## Execution in hosted mode for dev/debug ##
 In server module :
 
-    mvn jetty:run -Pdev [-Dbonita.home=/path/to/bonita/home]
+    mvn jetty:run -Pdev
     
 In portal module :
      
@@ -25,9 +25,6 @@ In portal module :
 Contains the common maven configuration such as:
 - the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, gwt.version, ...
 - the maven repositories
-
-### bonita-home module ###
-Aggregate engine bonita home and web config modules to build a usable bonita home folder (available in target/bonita-home-${project.version}/bonita)
 
 ### common module ###
 Contains the back-end business logic, i.e., the code executed on the server side. But also contains shared code between back end and front (e.g. model) and the implement of the REST API. 

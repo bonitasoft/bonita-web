@@ -118,7 +118,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     }
 
     @Test
-    public void runUpdate_with_new_page_content_change_it_in_bonita_home() throws Exception {
+    public void runUpdate_with_new_page_content_change_it() throws Exception {
         // Given
         final PageItem pageToBeUpdated = addNewPage(NEW_PAGE_ZIP);
 
@@ -173,7 +173,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     @Test
     public void should_update_rest_api_extension_change_resource_permission() throws Exception {
         // Given
-        final PageItem pageItem =apiPage.add(aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId()));
+        final PageItem pageItem = apiPage.add(aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId()));
         assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should not have permission before add").isEqualTo(
                 "[permission1,permission2]");
         assertThat(resourcesPermissionsMapping.getProperty("POST|extension/restUpdated")).as("should not have permission before add").isNull();
