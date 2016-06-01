@@ -43,8 +43,8 @@ public class PlatformManagementUtils {
     PlatformSession platformLogin() throws BonitaException, IOException {
         if (isLocal()) {
             try {
-                Class<?> api = Class.forName("org.bonitasoft.engine.api.impl.PlatformLoginAPIImpl");
-                return (PlatformSession) api.getDeclaredMethod("localLogin").invoke(api.newInstance());
+                Class<?> api = Class.forName("org.bonitasoft.engine.LocalLoginMechanism");
+                return (PlatformSession) api.getDeclaredMethod("login").invoke(api.newInstance());
             } catch (Exception e) {
                 throw new ServerAPIException("unable to do the local login", e);
             }
