@@ -25,6 +25,8 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
+import org.bonitasoft.console.client.user.task.action.TaskExecutionCallbackBehavior;
+import org.bonitasoft.console.client.user.task.view.TaskExecutionEventListener;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
@@ -100,7 +102,9 @@ public class StartProcessFormPage extends Page {
     }
 
     protected IFrameView createIFrame(final StringBuilder frameURL) {
-        return new IFrameView(frameURL.toString(), new ProcessInstantiationEventListener(new ProcessInstantiationCallbackBehavior()));
+        //also adding TaskExecutionEventListener as with 6.x forms you may display a task form in the same iframe by following the confirmation message link
+        return new IFrameView(frameURL.toString(), new ProcessInstantiationEventListener(new ProcessInstantiationCallbackBehavior()),
+                new TaskExecutionEventListener(new TaskExecutionCallbackBehavior()));
     }
 
     @Override
