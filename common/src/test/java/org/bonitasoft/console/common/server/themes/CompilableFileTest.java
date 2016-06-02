@@ -62,8 +62,8 @@ public class CompilableFileTest {
         verify(modifier).add("style.css", emptyExpectedFile);
     }
 
-    @Test(expected = LessCompilationException.class)
-    public void should_throw_LessCompilationException_when_fail_to_resolve_input_file() throws Exception {
+    @Test
+    public void should_not_fail_when_file_is_missing() throws Exception {
         given(modifier.resolve("style.less")).willReturn(new File("style.less"));
 
         new CompilableFile("style.less", "style.css").compile(modifier);

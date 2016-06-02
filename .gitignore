@@ -19,3 +19,5 @@ btm2.tlog
 *.tmp
 node
 node_modules
+
+.java-version
