@@ -900,10 +900,9 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        return true;
-        //TODO: restore once BS-15125 has been fixed
-        //        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
-        //        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        return processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        //restore this if the manager of a user should see his instances
         //        if (!involvedInProcessInstance) {
         //            try {
         //                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
@@ -915,7 +914,7 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
         //                throw new BPMEngineException(e);
         //            }
         //        }
-        //        return involvedInProcessInstance;
+        //return involvedInProcessInstance;
     }
 
     /**
