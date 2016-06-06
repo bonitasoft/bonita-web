@@ -209,11 +209,6 @@ public class ClientApplicationURL {
         self._setPageToken(pageToken, refresh);
     }
 
-    public static void initPageToken(final String token) {
-        self.attributes.addValue(ATTRIBUTE_TOKEN, token);
-        Window.Location.replace("#?" + UrlSerializer.serialize(self.attributes));
-    }
-
     public static void setPageAttributes(final TreeIndexed<String> params) {
         self._setPageAttributes(params);
     }
