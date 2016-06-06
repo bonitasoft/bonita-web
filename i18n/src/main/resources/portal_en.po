@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 01:02+0100\n"
-"PO-Revision-Date: 2016-03-23 09:33-0400\n"
+"POT-Creation-Date: 2016-06-06 16:51+0200\n"
+"PO-Revision-Date: 2016-06-06 11:05-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -180,6 +180,9 @@ msgstr "A Business Data Model has a .%fileExtension% extension"
 
 msgid "A business archive has a .bar extension"
 msgstr "A business archive has a .bar extension"
+
+msgid "A case has been started successfully."
+msgstr "A case has been started successfully."
 
 msgid "A form is a page mapped to case start or a human task."
 msgstr "A form is a page mapped to case start or a human task."
@@ -2201,6 +2204,9 @@ msgstr "The task %taskName% has been executed. The task list is being refreshed.
 
 msgid "The task %taskName% has not been executed. "
 msgstr "The task %taskName% has not been executed. "
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr "The task has been executed. The task list is being refreshed."
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."

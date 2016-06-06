@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 01:02+0100\n"
-"PO-Revision-Date: 2016-03-23 09:37-0400\n"
+"POT-Creation-Date: 2016-06-06 16:51+0200\n"
+"PO-Revision-Date: 2016-06-06 11:06-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -181,6 +181,9 @@ msgstr "ビジネス データ モデルは、.%fileExtension% 拡張子を持�
 msgid "A business archive has a .bar extension"
 msgstr "ビジネス アーカイブは、.bar の拡張子持っています。"
 
+msgid "A case has been started successfully."
+msgstr ""
+
 msgid "A form is a page mapped to case start or a human task."
 msgstr "フォームは、案件開始またはヒューマン タスクにアサインされるページです。"
 
@@ -335,7 +338,7 @@ msgid "Add your comment"
 msgstr "あなたのコメントを追加します。"
 
 msgid "Address"
-msgstr "住所"
+msgstr "アドレス"
 
 msgid "Administrator"
 msgstr "システム管理者"
@@ -2203,6 +2206,9 @@ msgstr "タスク %taskName% が実行されています。タスク リスト�
 
 msgid "The task %taskName% has not been executed. "
 msgstr "タスク %taskName% は実行されていません。 "
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr "タスクが実行されました。タスク一覧が更新されています。"
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr "タスクは、実行しようとしています。フォームは不要です。コメントの入力、確認、またはキャンセルができます。"

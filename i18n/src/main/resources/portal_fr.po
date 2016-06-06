@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 01:02+0100\n"
-"PO-Revision-Date: 2016-04-12 09:52-0400\n"
+"POT-Creation-Date: 2016-06-06 16:51+0200\n"
+"PO-Revision-Date: 2016-06-06 11:05-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -180,6 +180,9 @@ msgstr "Un Modèle de Données Métier a une extension .%fileExtension%"
 
 msgid "A business archive has a .bar extension"
 msgstr "Une archive a .bar comme extension"
+
+msgid "A case has been started successfully."
+msgstr ""
 
 msgid "A form is a page mapped to case start or a human task."
 msgstr "Un formulaire est une page associée au démarrage d'un cas ou à une tâche humaine."
@@ -809,7 +812,7 @@ msgid "Disable this process"
 msgstr "Désactiver ce processus"
 
 msgid "Disabled"
-msgstr "Désactivés"
+msgstr "Désactivé"
 
 msgid "Disabled processes"
 msgstr "Processus désactivés"
@@ -2201,6 +2204,9 @@ msgstr "La tâche %taskName% a été exécutée. La liste des tâches est actual
 
 msgid "The task %taskName% has not been executed. "
 msgstr "La tâche %taskName% n'a pas été exécutée. "
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr "La tâche a été exécutée. Rafraîchissement de la liste en cours..."
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr "La tâche va être exécuté. Aucun formulaire n'est nécessaire. Vous pouvez saisir un commentaire et confirmer ou annuler."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 01:02+0100\n"
-"PO-Revision-Date: 2016-03-23 09:34-0400\n"
+"POT-Creation-Date: 2016-06-06 16:51+0200\n"
+"PO-Revision-Date: 2016-06-06 11:08-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -180,6 +180,9 @@ msgstr "Un Modelo de Datos de Negocio tiene una extensión .%fileExtension%"
 
 msgid "A business archive has a .bar extension"
 msgstr "Un archivo de negocios tiene una extensión de .bar"
+
+msgid "A case has been started successfully."
+msgstr ""
 
 msgid "A form is a page mapped to case start or a human task."
 msgstr "Un formulario es una página asignada al caso inicial o una tarea humana."
@@ -1704,7 +1707,7 @@ msgid "Profile"
 msgstr "Perfil"
 
 msgid "Profiles"
-msgstr "Privilegios"
+msgstr "Perfiles"
 
 msgid "RESOLVED"
 msgstr "RESUELTO"
@@ -1719,7 +1722,7 @@ msgid "Refresh this table"
 msgstr "Actualizar esta tabla"
 
 msgid "Release"
-msgstr "liberar"
+msgstr "Liberar"
 
 msgid "Remove"
 msgstr "Eliminar"
@@ -2201,6 +2204,9 @@ msgstr "Se ha ejecutado la tarea %taskName%. La lista de tareas está siendo act
 
 msgid "The task %taskName% has not been executed. "
 msgstr "La tarea %taskName% no ha sido ejecutada. "
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr "Se ha realizado la tarea. El listado de tareas está siendo refrescado."
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr "La tarea va a ser ejecutada. No es necesario rellenar un formulario. Puede escribir un comentario y confirmar, o cancelar."
