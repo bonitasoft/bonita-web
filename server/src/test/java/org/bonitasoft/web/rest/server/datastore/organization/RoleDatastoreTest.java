@@ -15,9 +15,11 @@
 package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 
@@ -79,14 +81,26 @@ public class RoleDatastoreTest {
     }
 
     @Test
-    public void should_convertItem_give_right_icon_url() throws Exception {
+    public void should_get_retrieve_role_with_icon() throws Exception {
         //given
         RoleImpl myRole = new RoleImpl(12L, "myRole");
         myRole.setIconId(2134L);
+        doReturn(myRole).when(identityAPI).getRole(12L);
         //when
-        RoleItem roleItem = roleDatastore.convertEngineToConsoleItem(myRole);
+        RoleItem roleItem = roleDatastore.get(APIID.makeAPIID(12L));
         //then
         assertThat(roleItem.getIcon()).isEqualTo("../avatars/2134");
+    }
+
+    @Test
+    public void should_get_retrieve_role_without_icon() throws Exception {
+        //given
+        RoleImpl myRole = new RoleImpl(12L, "myRole");
+        doReturn(myRole).when(identityAPI).getRole(12L);
+        //when
+        RoleItem roleItem = roleDatastore.get(APIID.makeAPIID(12L));
+        //then
+        assertThat(roleItem.getIcon()).isEmpty();
     }
 
     @Test
@@ -139,6 +153,19 @@ public class RoleDatastoreTest {
         assertThat(roleUpdater.getFields().get(RoleCreator.RoleField.ICON_FILENAME)).isEqualTo("iconName");
         assertThat(roleUpdater.getFields().get(RoleCreator.RoleField.ICON_CONTENT)).isEqualTo("content".getBytes());
         assertThat(roleUpdater.getFields().get(RoleCreator.RoleField.NAME)).isEqualTo("name");
+    }
+
+    @Test
+    public void add_role_without_icon_should_create_role_without_retrieving_icon_from_filesystem() throws Exception {
+        doReturn(new RoleImpl(123, "name")).when(identityAPI).createRole(any(RoleCreator.class));
+        RoleItem roleItem = new RoleItem();
+        roleItem.setIcon("");
+        roleItem.setName("name");
+        //when
+        roleDatastore.add(roleItem);
+        //then
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+        verify(identityAPI).createRole(any(RoleCreator.class));
     }
 
 }

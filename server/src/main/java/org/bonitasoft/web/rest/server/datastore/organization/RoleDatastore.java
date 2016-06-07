@@ -47,6 +47,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -112,13 +113,13 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
         try {
             final RoleCreator creator = new RoleCreator(role.getName());
 
-            if (role.getDisplayName() != null) {
+            if (!StringUtil.isBlank(role.getDisplayName())) {
                 creator.setDisplayName(role.getDisplayName());
             }
-            if (role.getDescription() != null) {
+            if (!StringUtil.isBlank(role.getDescription())) {
                 creator.setDescription(role.getDescription());
             }
-            if (role.getIcon() != null) {
+            if (!StringUtil.isBlank(role.getIcon())) {
                 IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(role.getIcon(),
                         getEngineSession().getTenantId());
                 creator.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
