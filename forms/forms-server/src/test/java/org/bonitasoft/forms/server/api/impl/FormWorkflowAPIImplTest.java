@@ -78,14 +78,12 @@ public class FormWorkflowAPIImplTest {
 
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api() throws Exception {
-        final boolean expected = true;
-        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
+        checkCanUserSeeProcessInstanceWhenApiReturn(true);
     }
 
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api_false() throws Exception {
-        final boolean expected = false;
-        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
+        checkCanUserSeeProcessInstanceWhenApiReturn(false);
     }
 
     private void checkCanUserSeeProcessInstanceWhenApiReturn(final boolean expected) throws Exception {
