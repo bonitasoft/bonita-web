@@ -874,24 +874,6 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
             ActivityInstanceNotFoundException, UserNotFoundException {
         final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
         return processAPI.isInvolvedInHumanTaskInstance(session.getUserId(), humanTaskInstanceId);
-        //restore this if the manager of a user should see his tasks
-        //        if (!isInvolvedInHumanTaskInstance && userId != -1L) {
-        //            try {
-        //                final IdentityAPI identityAPI = getBpmEngineAPIUtil().getIdentityAPI(session);
-        //                if (session.getUserId() != identityAPI.getUser(userId).getManagerUserId()) {
-        //                    return false;
-        //                } else {
-        //                    isInvolvedInHumanTaskInstance = processAPI.isInvolvedInHumanTaskInstance(userId, humanTaskInstanceId);
-        //                }
-        //            } catch (final BonitaException e) {
-        //                if (LOGGER.isLoggable(Level.SEVERE)) {
-        //                    LOGGER.log(Level.SEVERE,
-        //                            "The engine was not able to find out if the user is a manager of a user involved in the task " + humanTaskInstanceId);
-        //                }
-        //                throw new BPMEngineException(e);
-        //            }
-        //        }
-        //        return isInvolvedInHumanTaskInstance;
     }
 
     /**
@@ -900,22 +882,8 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
-        return true;
-        //TODO: restore once BS-15125 has been fixed
-        //        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
-        //        boolean involvedInProcessInstance = processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
-        //        if (!involvedInProcessInstance) {
-        //            try {
-        //                involvedInProcessInstance = processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID);
-        //            } catch (final BonitaException e) {
-        //                if (LOGGER.isLoggable(Level.SEVERE)) {
-        //                    LOGGER.log(Level.SEVERE,
-        //                            "The engine was not able to find out if the user is a manager of a user involved in the process instance " + processInstanceID);
-        //                }
-        //                throw new BPMEngineException(e);
-        //            }
-        //        }
-        //        return involvedInProcessInstance;
+        final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
+        return processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
     }
 
     /**

@@ -27,7 +27,6 @@ import org.bonitasoft.forms.client.model.FormAction;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
 import org.bonitasoft.forms.server.api.IFormExpressionsAPI;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -77,20 +76,14 @@ public class FormWorkflowAPIImplTest {
         doReturn(processApi).when(bpmEngineAPIUtil).getProcessAPI(session);
     }
 
-    //TODO restore once BS-15125 has been fixed
-    @Ignore
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api() throws Exception {
-        final boolean expected = true;
-        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
+        checkCanUserSeeProcessInstanceWhenApiReturn(true);
     }
 
-    //TODO restore once BS-15125 has been fixed
-    @Ignore
     @Test
     public void should_canUserSeeProcessInstance_call_engine_api_false() throws Exception {
-        final boolean expected = false;
-        checkCanUserSeeProcessInstanceWhenApiReturn(expected);
+        checkCanUserSeeProcessInstanceWhenApiReturn(false);
     }
 
     private void checkCanUserSeeProcessInstanceWhenApiReturn(final boolean expected) throws Exception {
