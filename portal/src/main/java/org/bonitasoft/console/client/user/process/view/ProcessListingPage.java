@@ -88,17 +88,15 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
     @Override
     protected ItemListingResourceFilter defineResourceFilters() {
 
-        final ItemListingResourceFilter categories =
-                new ItemListingResourceFilter(
-                        new APISearchRequest(CategoryDefinition.get()),
-                        CategoryItem.ATTRIBUTE_NAME,
-                        "default-image", // fake attribute to display default image
-                        TABLE_ALL)
+        final ItemListingResourceFilter categories = new ItemListingResourceFilter(
+                new APISearchRequest(CategoryDefinition.get()),
+                CategoryItem.ATTRIBUTE_NAME,
+                TABLE_ALL)
                         .addFilterMapping(ProcessItem.FILTER_CATEGORY_ID, CategoryItem.ATTRIBUTE_ID);
 
         return categories;
     }
-    
+
     @Override
     protected Title defineResourceFiltersTitle() {
         return new Title(_("Categories"));
@@ -119,10 +117,8 @@ public class ProcessListingPage extends ItemListingPage<ProcessItem> implements 
                         .addColumn(ProcessItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true)
                         .addColumn(ProcessItem.ATTRIBUTE_VERSION, _("Version"))
                         .addColumn(new DescriptionAttributeReader(ProcessItem.ATTRIBUTE_DISPLAY_DESCRIPTION, ProcessItem.ATTRIBUTE_DESCRIPTION),
-                                _("Description"), false)
-                ,
-                new ProcessQuickDetailsPage()
-                ));
+                                _("Description"), false),
+                new ProcessQuickDetailsPage()));
         return tables;
 
     }
