@@ -28,6 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ItemAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
+import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 /**
  * @author Yongtao Guo
@@ -88,6 +89,11 @@ public class AddProfileMemberAction extends ItemAction {
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
                 ViewController.refreshCurrentPage();
+            }
+
+            @Override
+            protected void on403Forbidden(String message) {
+                Message.warning("A mapping already exists");
             }
         });
     }
