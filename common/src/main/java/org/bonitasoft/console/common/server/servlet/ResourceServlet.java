@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.servlet;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -77,7 +78,7 @@ public abstract class ResourceServlet extends HttpServlet {
      * {@inheritDoc}
      */
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         final String fileName = resourceLocationReader.getResourceLocationFromRequest(request);
         String resourceName = request.getParameter(getResourceParameterName());
         if (resourceName == null) {
@@ -101,7 +102,7 @@ public abstract class ResourceServlet extends HttpServlet {
      * @throws UnsupportedEncodingException
      */
     protected void getResourceFile(final HttpServletRequest request, final HttpServletResponse response, String resourceName, String fileName)
-            throws ServletException, UnsupportedEncodingException {
+            throws ServletException, IOException {
         if (resourceName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + getResourceParameterName() + " is null.";
             if (LOGGER.isLoggable(Level.WARNING)) {
@@ -184,6 +185,11 @@ public abstract class ResourceServlet extends HttpServlet {
             out.write(content, 0, content.length);
             response.flushBuffer();
             out.close();
+        } catch (FileNotFoundException e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, e.getMessage());
+            }
+            response.sendError(404);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while generating the response.", e);

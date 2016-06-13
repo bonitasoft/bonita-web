@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,7 +61,7 @@ public class PageResourceServlet extends ResourceServlet {
      * {@inheritDoc}
      */
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, "This servlet is deprecated. " +
                     "You can now access your resources through their relative URL." +
