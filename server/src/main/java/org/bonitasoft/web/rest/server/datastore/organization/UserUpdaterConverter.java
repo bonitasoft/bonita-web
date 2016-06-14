@@ -20,10 +20,11 @@ import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.IconDescriptor;
 import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class UserUpdaterConverter {
 
-    public UserUpdater convert(Map<String, String> attributes, long tenantId) {
+    public UserUpdater convert(Map<String, String> attributes, long tenantId, BonitaHomeFolderAccessor bonitaHomeFolderAccessor) {
         UserUpdater userUpdater = new UserUpdater();
 
         if (attributes.containsKey(UserItem.ATTRIBUTE_FIRSTNAME)) {
@@ -42,8 +43,8 @@ public class UserUpdaterConverter {
             Long managerId = getManagerId(attributes);
             userUpdater.setManagerId(managerId);
         }
-        if (attributes.containsKey(UserItem.ATTRIBUTE_ICON)) {
-            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(UserItem.ATTRIBUTE_ICON), tenantId);
+        if (!StringUtil.isBlank(attributes.get(UserItem.ATTRIBUTE_ICON))) {
+            IconDescriptor iconDescriptor = bonitaHomeFolderAccessor.getIconFromFileSystem(attributes.get(UserItem.ATTRIBUTE_ICON), tenantId);
             userUpdater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
         if (attributes.containsKey(UserItem.ATTRIBUTE_TITLE)) {

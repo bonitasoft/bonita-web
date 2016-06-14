@@ -5,39 +5,50 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.IconDescriptor;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.identity.User;
+import org.bonitasoft.engine.identity.UserUpdater;
+import org.bonitasoft.engine.identity.impl.UserImpl;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
+import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -48,40 +59,43 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Vincent Elcrin
- *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class UserDatastoreTest {
 
+    private static final long TENANT_ID = 123532L;
     @Mock
     private ProcessAPI processAPI;
-
     @Mock
     private ProcessEngineClient processEngineClient;
-
     @Mock
-    private IdentityAPI mockedIdentityAPI;
-
+    private IdentityAPI identityAPI;
     @Mock
     UserItemConverter userItemConverter;
-
+    @Mock
+    private BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
     @Spy
     @InjectMocks
     private UserDatastore datastore = new UserDatastore(null);
-
+    @Mock
+    private APISession apiSession;
+    @Captor
+    private ArgumentCaptor<UserUpdater> userUpdaterArgumentCaptor;
 
     @Before
     public void init() {
-        UserEngineClient userEngineClient = new UserEngineClient(mockedIdentityAPI);
+        UserEngineClient userEngineClient = new UserEngineClient(identityAPI);
         doReturn(userEngineClient).when(datastore).getUserEngineClient();
         doReturn(processEngineClient).when(datastore).getProcessEngineClient();
         when(processEngineClient.getProcessApi()).thenReturn(processAPI);
+        doReturn(bonitaHomeFolderAccessor).when(datastore).getBonitaHomeFolderAccessor();
+        doReturn(TENANT_ID).when(apiSession).getTenantId();
     }
 
     @Test
     public void testSearchWithMultipleSortOrderDontThrowException() throws Exception {
         final String sort = UserItem.ATTRIBUTE_FIRSTNAME + "," + UserItem.ATTRIBUTE_LASTNAME;
-        Mockito.doReturn(new SearchResultImpl<User>(0, Collections.<User> emptyList())).when(mockedIdentityAPI).searchUsers(Mockito.any(SearchOptions.class));
+        Mockito.doReturn(new SearchResultImpl<>(0, Collections.<User> emptyList())).when(identityAPI).searchUsers(Mockito.any(SearchOptions.class));
 
         try {
             datastore.search(0, 1, "search", Collections.<String, String> emptyMap(), sort);
@@ -89,6 +103,36 @@ public class UserDatastoreTest {
         } catch (AttributeConverterException e) {
             Assert.fail("Search should be able to handle multple sort");
         }
+    }
+
+    @Test
+    public void should_updateUser_call_engine_api() throws Exception {
+        //given
+        doReturn(new UserImpl(12L, "john", "bpm")).when(identityAPI).updateUser(eq(12L), any(UserUpdater.class));
+        //when
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("userName", "jack");
+        attributes.put("icon", "");
+        datastore.update(APIID.makeAPIID(12L), attributes);
+        //then
+        verify(identityAPI).updateUser(eq(12L), userUpdaterArgumentCaptor.capture());
+        UserUpdater userUpdater = userUpdaterArgumentCaptor.getValue();
+        assertThat(userUpdater.getFields()).containsOnly(entry(UserUpdater.UserField.USER_NAME, "jack"));
+    }
+
+    @Test
+    public void should_updateUser_with_icon_call_engine_api_with_content_from_FS() throws Exception {
+        //given
+        doReturn(new UserImpl(12L, "john", "bpm")).when(identityAPI).updateUser(eq(12L), any(UserUpdater.class));
+        IconDescriptor iconDescriptor = new IconDescriptor("iconName", "content".getBytes());
+        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"), eq(TENANT_ID));
+        //when
+        datastore.update(APIID.makeAPIID(12L), Collections.singletonMap("icon", "temp_icon_on_fs"));
+        //then
+        verify(identityAPI).updateUser(eq(12L), userUpdaterArgumentCaptor.capture());
+        UserUpdater userUpdater = userUpdaterArgumentCaptor.getValue();
+        assertThat(userUpdater.getFields().get(UserUpdater.UserField.ICON_FILENAME)).isEqualTo("iconName");
+        assertThat(userUpdater.getFields().get(UserUpdater.UserField.ICON_CONTENT)).isEqualTo("content".getBytes());
     }
 
     @Test

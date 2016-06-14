@@ -17,6 +17,7 @@ package org.bonitasoft.web.rest.server.datastore.organization;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
@@ -65,9 +66,13 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     }
 
     public UserItem update(final APIID id, final Map<String, String> attributes) {
-        UserUpdater userUpdater = new UserUpdaterConverter().convert(attributes, getEngineSession().getTenantId());
+        UserUpdater userUpdater = new UserUpdaterConverter().convert(attributes, getEngineSession().getTenantId(), getBonitaHomeFolderAccessor());
         User user = getUserEngineClient().update(id.toLong(), userUpdater);
         return userItemConverter.convert(user);
+    }
+
+    BonitaHomeFolderAccessor getBonitaHomeFolderAccessor() {
+        return new BonitaHomeFolderAccessor();
     }
 
     @Override
