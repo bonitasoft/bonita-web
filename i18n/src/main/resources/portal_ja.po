@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 16:51+0200\n"
-"PO-Revision-Date: 2016-06-07 11:32-0400\n"
+"POT-Creation-Date: 2016-06-14 01:00+0200\n"
+"PO-Revision-Date: 2016-06-14 08:25-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -395,7 +395,7 @@ msgid "Archived"
 msgstr "完了済み"
 
 msgid "Archived date"
-msgstr "アーカイブされた日時"
+msgstr "完了日時"
 
 msgid "Archives"
 msgstr "アーカイブ"
@@ -857,7 +857,7 @@ msgid "Done on"
 msgstr "実行された日時"
 
 msgid "Done tasks"
-msgstr "アーカイブされたタスク"
+msgstr "完了したタスク"
 
 msgid "Due date"
 msgstr "期日"
@@ -1343,7 +1343,7 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "yyyy/MM/dd HH:mm"
 
 msgid "MM/dd/yyyy h:mm:ss a"
-msgstr "yyyy/MM/dd hh:MM:ss"
+msgstr "yyyy/MM/dd HH:mm:ss"
 
 msgid "MMMM dd, yyyy"
 msgstr "yyyy年MM月dd日"
@@ -1563,8 +1563,8 @@ msgstr "その他"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "このタスクはもはや着手できません。 \n"
-"着手可能なタスクに移動します。"
+msgstr "このタスクは既に着手済みです。 \n"
+"その他の着手可能なタスクに移動します。"
 
 msgid "Overview"
 msgstr "案件概況"
@@ -1706,6 +1706,9 @@ msgstr "プロセス"
 
 msgid "Profile"
 msgstr "プロファイル"
+
+msgid "Profile member already exists"
+msgstr "プロファイルのメンバーは既に存在します"
 
 msgid "Profiles"
 msgstr "プロファイル"
@@ -2157,7 +2160,7 @@ msgid "The name for the URL must start with %namePrefix% followed only by alphan
 msgstr "URL の名前は %namePrefix% の後に英数字のみで続ける必要があります。"
 
 msgid "The number of archived cases."
-msgstr "アーカイブされた案件数。"
+msgstr "完了済み案件数。"
 
 msgid "The number of failed tasks."
 msgstr "失敗したタスクの数です。"

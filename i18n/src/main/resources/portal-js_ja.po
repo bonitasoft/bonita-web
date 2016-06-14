@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-06-06 11:06-0400\n"
+"PO-Revision-Date: 2016-06-14 08:25-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -120,7 +120,7 @@ msgstr "適用"
 
 #: main/common/i18n/i18n-keys.js:10
 msgid "Archived cases"
-msgstr "アーカイブされた案件"
+msgstr "完了済み案件"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 #: target/dist/features/user/tasks/list/table/task-table.html:1
@@ -321,7 +321,7 @@ msgstr "表示名"
 
 #: target/dist/features/user/tasks/list/filters/task-filters.html:2
 msgid "Done tasks"
-msgstr "アーカイブされたタスク"
+msgstr "完了したタスク"
 
 #: main/common/i18n/i18n-keys.js:49
 msgid "Drawing process..."
