@@ -15,11 +15,12 @@ package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
 
+import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 
 /**
  * @author Laurent Leseigneur
@@ -29,7 +30,7 @@ public class DataInstanceSerializer extends JsonSerializer<DataInstanceImpl> {
     JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
 
     @Override
-    public void serialize(DataInstanceImpl value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+    public void serialize(final DataInstanceImpl value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException, JsonProcessingException {
         jgen.writeStartObject();
         jgen.writeObjectField("name", value.getName());
         jgen.writeObjectField("description", value.getDescription());
@@ -37,10 +38,10 @@ public class DataInstanceSerializer extends JsonSerializer<DataInstanceImpl> {
         jgen.writeObjectField("className", value.getClassName());
         jgen.writeObjectField("containerType", value.getContainerType());
 
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "id", value.getId());
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "containerId", value.getContainerId());
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "value", value.getValue());
+        jacksonSerializerHelper.writeNumberField(jgen, "tenantId", value.getTenantId());
+        jacksonSerializerHelper.writeNumberField(jgen, "id", value.getId());
+        jacksonSerializerHelper.writeNumberField(jgen, "containerId", value.getContainerId());
+        jacksonSerializerHelper.writeNumberField(jgen, "value", value.getValue());
         jgen.writeEndObject();
     }
 

@@ -18,8 +18,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
@@ -27,41 +25,19 @@ import com.fasterxml.jackson.core.JsonGenerator;
  */
 public class JacksonSerializerHelper {
 
-    private final Set<String> numberTypes;
+    private final Set<String> supportedNumberTypes;
 
     public JacksonSerializerHelper() {
-        numberTypes = new HashSet<>();
-        numberTypes.add(Long.class.getCanonicalName());
-        numberTypes.add(Float.class.getCanonicalName());
-        numberTypes.add(Double.class.getCanonicalName());
+        supportedNumberTypes = new HashSet<>();
+        supportedNumberTypes.add(Long.class.getCanonicalName());
+        supportedNumberTypes.add(Float.class.getCanonicalName());
+        supportedNumberTypes.add(Double.class.getCanonicalName());
     }
 
-    protected String getStringValue(Serializable value) {
-        if (value == null) {
-            return null;
-        }
-        return String.valueOf(value);
-    }
-
-    protected void writeValueAndStringValue(JsonGenerator jgen, String fieldName, Serializable value) throws IOException {
+    public void writeNumberField(final JsonGenerator jgen, final String fieldName, final Serializable value) throws IOException {
         jgen.writeObjectField(fieldName, value);
-        if (numberTypes.contains(value.getClass().getCanonicalName())) {
-            jgen.writeObjectField(fieldName + "_string", getStringValue(value));
+        if (value != null && supportedNumberTypes.contains(value.getClass().getCanonicalName())) {
+            jgen.writeObjectField(fieldName + "_string", String.valueOf(value));
         }
-    }
-
-    public void serializeDataInstance(DataInstanceImpl value, JsonGenerator jgen) throws IOException {
-        jgen.writeStartObject();
-        jgen.writeObjectField("name", value.getName());
-        jgen.writeObjectField("description", value.getDescription());
-        jgen.writeObjectField("transientData", value.isTransientData());
-        jgen.writeObjectField("className", value.getClassName());
-        jgen.writeObjectField("containerType", value.getContainerType());
-
-        writeValueAndStringValue(jgen, "tenantId", value.getTenantId());
-        writeValueAndStringValue(jgen, "id", value.getId());
-        writeValueAndStringValue(jgen, "containerId", value.getContainerId());
-        writeValueAndStringValue(jgen, "value", value.getValue());
-        jgen.writeEndObject();
     }
 }

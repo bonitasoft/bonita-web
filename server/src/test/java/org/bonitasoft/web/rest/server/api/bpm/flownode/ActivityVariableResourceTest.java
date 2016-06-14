@@ -92,35 +92,30 @@ public class ActivityVariableResourceTest extends RestletTest {
     }
 
     private DataInstanceImpl createShortTextDataInstance(String value) {
-        DataDefinition dataDefinition = createDataDefinition();
-        final ShortTextDataInstanceImpl dataInstance = new ShortTextDataInstanceImpl(dataDefinition, value);
+        final ShortTextDataInstanceImpl dataInstance = new ShortTextDataInstanceImpl(createDataDefinition(), value);
         fillIds(dataInstance);
         return dataInstance;
     }
 
-
     private DataInstanceImpl createLongDataInstance(Long value) {
-        DataDefinition dataDefinition = createDataDefinition();
-        final LongDataInstanceImpl dataInstance = new LongDataInstanceImpl(dataDefinition, value);
+        final LongDataInstanceImpl dataInstance = new LongDataInstanceImpl(createDataDefinition(), value);
         fillIds(dataInstance);
         return dataInstance;
     }
 
     private DataInstanceImpl createFloatDataInstance(float value) {
-        DataDefinition dataDefinition = createDataDefinition();
-        final FloatDataInstanceImpl dataInstance = new FloatDataInstanceImpl(dataDefinition, value);
+        final FloatDataInstanceImpl dataInstance = new FloatDataInstanceImpl(createDataDefinition(), value);
         fillIds(dataInstance);
         return dataInstance;
     }
 
     private DataInstanceImpl createDoubleDataInstance(double value) {
-        DataDefinition dataDefinition = createDataDefinition();
-        final DoubleDataInstanceImpl dataInstance = new DoubleDataInstanceImpl(dataDefinition, value);
+        final DoubleDataInstanceImpl dataInstance = new DoubleDataInstanceImpl(createDataDefinition(), value);
         fillIds(dataInstance);
         return dataInstance;
     }
 
-    private void fillIds(DataInstanceImpl dataInstance) {
+    private void fillIds(final DataInstanceImpl dataInstance) {
         dataInstance.setId(5L);
         dataInstance.setTenantId(2L);
         dataInstance.setContainerId(7L);
@@ -167,9 +162,10 @@ public class ActivityVariableResourceTest extends RestletTest {
         checkJsonDataInstance(createShortTextDataInstance("abc"), "stringDataInstance.json");
         checkJsonDataInstance(createFloatDataInstance(123.456F), "floatDataInstance.json");
         checkJsonDataInstance(createDoubleDataInstance(123.5D), "doubleDataInstance.json");
+        checkJsonDataInstance(createLongDataInstance(null), "nullDataInstance.json");
     }
 
-    private void checkJsonDataInstance(DataInstanceImpl dataInstance, String jsonFile) throws Exception {
+    private void checkJsonDataInstance(final DataInstanceImpl dataInstance, final String jsonFile) throws Exception {
         //given
         doReturn(dataInstance).when(processAPI).getActivityDataInstance(anyString(), anyLong());
 
