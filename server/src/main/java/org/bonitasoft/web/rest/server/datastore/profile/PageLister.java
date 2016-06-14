@@ -31,9 +31,9 @@ public class PageLister {
 
     protected final static List<BonitaPageItem> pages = new ArrayList<BonitaPageItem>();
     static {
-        pages.add(new BonitaPageItem("tasklistinguser", _("visualize & do tasks"), _("visualize & do tasks"), _("Tasks")));
-        pages.add(new BonitaPageItem("tasklistingadmin", _("manage tasks"), _("manage tasks"), _("Tasks")));
-        pages.add(new BonitaPageItem("tasklistingpm", _("Manage tasks of processes that an entity with this profile can supervise as PM."), _("Manage tasks of processes that an entity with this profile can supervise as PM."), _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistinguser", _("For user-type of profiles. To view and do tasks  if he is a candidate"), _("For user-type of profiles. To view and do tasks  if he is a candidate"), _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingadmin", _("For administrator-type of profiles. To monitor task completion for all processes"), _("For administrator-type of profiles. To monitor task completion for all processes"), _("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingpm", _("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), _("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), _("Tasks")));
         pages.add(new BonitaPageItem("caselistinguser", _("visualize cases"), _("visualize cases"), _("Cases")));
         pages.add(new BonitaPageItem("caselistingadmin", _("manage cases"), _("manage cases"), _("Cases")));
         pages.add(new BonitaPageItem("caselistingpm", _("Manage cases of processes that an entity with this profile can supervise as PM."), _("Manage cases of processes that an entity with this profile can supervise as PM."), _("Cases")));
