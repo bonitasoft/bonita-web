@@ -152,13 +152,15 @@
         <url-pattern>/portal/formsDocumentImage</url-pattern>
         <url-pattern>/portal/downloadDocument</url-pattern>
         <url-pattern>/portal/documentDownload</url-pattern>
-        <url-pattern>/API/documentDownload</url-pattern>
+        <url-pattern>/API/*</url-pattern>
         <url-pattern>/portal/runreport</url-pattern>
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/login.jsp</url-pattern>
         <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
         <url-pattern>/apps/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
