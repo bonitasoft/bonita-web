@@ -14,10 +14,7 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
-import static org.bonitasoft.engine.io.IOUtil.createTempDirectory;
-
 import java.io.File;
-import java.lang.management.ManagementFactory;
 
 /**
  * @author Ruiheng.Fan
@@ -43,21 +40,15 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      *
      * @param tenantId Tenant Id
      */
-    public WebBonitaConstantsTenancyImpl(final long tenantId) {
+    WebBonitaConstantsTenancyImpl(final long tenantId) {
         tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
-        tempFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
-    }
-
-    private String getTempFolder() {
-        final String tempDir = System.getProperty("java.io.tmpdir") + File.separator + tmpFolderName + ManagementFactory.getRuntimeMXBean().getName();
-        createTempDirectory(new File(tempDir).toURI());
-        return tempDir;
+        tempFolderPath = rootTempDir + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
     }
 
     @Override
     public String getTenantsFolderPath() {
         if (tenantsFolderPath == null) {
-            tenantsFolderPath = getTempFolder() + File.separator + tenantsFolderName + File.separator;
+            tenantsFolderPath = rootTempDir + File.separator + tenantsFolderName + File.separator;
         }
         return tenantsFolderPath;
     }

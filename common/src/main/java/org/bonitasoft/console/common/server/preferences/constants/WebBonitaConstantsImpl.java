@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import java.io.File;
-import java.lang.management.ManagementFactory;
 import java.nio.file.Paths;
 
 /**
@@ -77,9 +76,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getTempFolderPath() {
         if (tempFolderPath == null) {
-            // We use a tempFolder specific to the running JVM, so that 2 JVMs running on the same machine are isolated:
-            tempFolderPath = System.getProperty("java.io.tmpdir") + File.separator + tmpFolderName + ManagementFactory.getRuntimeMXBean().getName()
-                    + File.separator + platformFolderName + File.separator;
+            tempFolderPath = rootTempDir + File.separator + platformFolderName + File.separator;
         }
         return tempFolderPath;
     }

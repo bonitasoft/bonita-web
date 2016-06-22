@@ -50,7 +50,13 @@ public class PlatformTenantListener implements ServletContextListener {
         PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
         try {
             platformManagementUtils.initializePlatformConfiguration();
-        } catch (BonitaException | IOException e) {
+            // Create temporary folder specific to portal at startup:
+            WebBonitaConstantsUtils.getInstance().getTempFolder();
+        } catch (BonitaException e) {
+            LOGGER.log(Level.SEVERE,
+                    "Error initializing platform configuration. Engine most likely failed to start. Check previous error logs for more details.");
+            return;
+        } catch (IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while retrieving configuration", e);
             }
@@ -71,9 +77,6 @@ public class PlatformTenantListener implements ServletContextListener {
             // retrieve active theme for default tenant:
             themeExtractor.retrieveAndExtractCurrentTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session, ThemeType.PORTAL);
 
-            // TODO: should we do something for the mobile as well?
-            // final Theme mobileTheme = TenantAPIAccessor.getThemeAPI(session).getCurrentTheme(ThemeType.MOBILE);
-
             logout(session);
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -93,7 +96,6 @@ public class PlatformTenantListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(final ServletContextEvent sce) {
-
     }
 
 }
