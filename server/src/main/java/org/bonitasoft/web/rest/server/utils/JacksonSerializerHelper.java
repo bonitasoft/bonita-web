@@ -15,29 +15,20 @@ package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
  * @author Laurent Leseigneur
+ * @author Anthony Birembaut
  */
 public class JacksonSerializerHelper {
 
-    private final Set<String> supportedNumberTypes;
-
     public JacksonSerializerHelper() {
-        supportedNumberTypes = new HashSet<>();
-        supportedNumberTypes.add(Long.class.getCanonicalName());
-        supportedNumberTypes.add(Float.class.getCanonicalName());
-        supportedNumberTypes.add(Double.class.getCanonicalName());
     }
 
     public void writeNumberField(final JsonGenerator jgen, final String fieldName, final Serializable value) throws IOException {
         jgen.writeObjectField(fieldName, value);
-        if (value != null && supportedNumberTypes.contains(value.getClass().getCanonicalName())) {
-            jgen.writeObjectField(fieldName + "_string", String.valueOf(value));
-        }
+        jgen.writeObjectField(fieldName + "_string", String.valueOf(value));
     }
 }

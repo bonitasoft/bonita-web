@@ -10,5 +10,6 @@
   "id_string": "5",
   "containerId": 7,
   "containerId_string": "7",
-  "value": "abc"
+  "value": "abc",
+  "value_string": "abc"
 }
