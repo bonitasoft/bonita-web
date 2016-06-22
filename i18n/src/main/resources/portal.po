@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 01:00+0200\n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1106,16 +1106,40 @@ msgstr ""
 msgid "Firstname"
 msgstr ""
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr ""
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr ""
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr ""
+
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
 msgstr ""
 
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr ""
 
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr ""
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr ""
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr ""
+
 msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
 msgstr ""
 
 msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr ""
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr ""
+
+msgid "For user-type of profiles. To visualize processes and start cases"
 msgstr ""
 
 msgid "Form"
@@ -1217,6 +1241,9 @@ msgid "Import or export data"
 msgstr ""
 
 msgid "Import/Export"
+msgstr ""
+
+msgid "Import/export organization"
 msgstr ""
 
 msgid "In case of conflict, priority is given to the imported file"
@@ -1366,19 +1393,22 @@ msgstr ""
 msgid "Manage applications"
 msgstr ""
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr ""
-
 msgid "Manage custom pages"
 msgstr ""
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
+msgid "Manage groups"
 msgstr ""
 
 msgid "Manage profiles"
 msgstr ""
 
 msgid "Manage resources"
+msgstr ""
+
+msgid "Manage roles"
+msgstr ""
+
+msgid "Manage users"
 msgstr ""
 
 msgid "Manager"
@@ -2442,6 +2472,9 @@ msgstr ""
 msgid "User not found"
 msgstr ""
 
+msgid "User privilege settings"
+msgstr ""
+
 msgid "Username"
 msgstr ""
 
@@ -2575,28 +2608,10 @@ msgstr ""
 msgid "human task"
 msgstr ""
 
-msgid "import/export organization"
-msgstr ""
-
 msgid "in %time%"
 msgstr ""
 
 msgid "in menu "
-msgstr ""
-
-msgid "manage cases"
-msgstr ""
-
-msgid "manage groups"
-msgstr ""
-
-msgid "manage processes"
-msgstr ""
-
-msgid "manage roles"
-msgstr ""
-
-msgid "manage users"
 msgstr ""
 
 msgid "message"
@@ -2687,15 +2702,6 @@ msgid "this field"
 msgstr ""
 
 msgid "true"
-msgstr ""
-
-msgid "user privilege settings"
-msgstr ""
-
-msgid "visualize & start processes"
-msgstr ""
-
-msgid "visualize cases"
 msgstr ""
 
 msgid "yr"
