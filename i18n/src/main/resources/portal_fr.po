@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 01:00+0200\n"
-"PO-Revision-Date: 2016-06-14 08:22-0400\n"
+"POT-Creation-Date: 2016-06-15 01:00+0200\n"
+"PO-Revision-Date: 2016-06-21 06:08-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1105,8 +1105,17 @@ msgstr "Prénom de l'utilisateur"
 msgid "Firstname"
 msgstr "Prénom"
 
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr "Pour un profil de type administrateur. Permet de suivre la réalisation des tâches pour tous les processus"
+
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr "Pour un profil de type gestionnaire de processus. Permet de suivre la réalisation des tâches, uniquement pour les processus placés sous sa responsabilité"
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr "Pour un profil de type utilisateur. Permet de voir et de faire les tâches pour lesquels il est candidat"
 
 msgid "Form"
 msgstr "Formulaire"
@@ -1370,9 +1379,6 @@ msgstr "Gérer les profils"
 
 msgid "Manage resources"
 msgstr "Gérer les ressources"
-
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Gérer les tâches de processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
 
 msgid "Manager"
 msgstr "Supérieur "
@@ -2588,9 +2594,6 @@ msgstr "gérer les processus"
 msgid "manage roles"
 msgstr "Gérer les rôles"
 
-msgid "manage tasks"
-msgstr "gérer des tâches"
-
 msgid "manage users"
 msgstr "Gérer les utilisateurs"
 
@@ -2686,9 +2689,6 @@ msgstr "vraie"
 
 msgid "user privilege settings"
 msgstr "Paramètres des privilèges utilisateur"
-
-msgid "visualize & do tasks"
-msgstr "visualiser & effectuer des tâches"
 
 msgid "visualize & start processes"
 msgstr "Visualiser & démarrer les processus"

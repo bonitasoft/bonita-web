@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 01:00+0200\n"
-"PO-Revision-Date: 2016-06-14 08:27-0400\n"
+"POT-Creation-Date: 2016-06-15 01:00+0200\n"
+"PO-Revision-Date: 2016-06-21 06:16-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1105,8 +1105,17 @@ msgstr "Nombre del usuario"
 msgid "Firstname"
 msgstr "Nombre"
 
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr ""
+
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Para cada actor, compruebe que cada entidad (usuario, grupo, rol, membresia) tiene el perfil de usuario correspondiente en el Portal."
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr ""
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr ""
 
 msgid "Form"
 msgstr "Formulario"
@@ -1370,9 +1379,6 @@ msgstr "Administrar perfiles"
 
 msgid "Manage resources"
 msgstr "Gestionar recursos"
-
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Gestionar las tareas de los procesos que una entidad con este perfil puede supervisar como PM."
 
 msgid "Manager"
 msgstr "Responsable"
@@ -2588,9 +2594,6 @@ msgstr "gestionar procesos"
 msgid "manage roles"
 msgstr "gestionar roles"
 
-msgid "manage tasks"
-msgstr "gestionar tareas"
-
 msgid "manage users"
 msgstr "gestionar usuarios"
 
@@ -2686,9 +2689,6 @@ msgstr "verdadero"
 
 msgid "user privilege settings"
 msgstr "Configuración de privilegios de usuario"
-
-msgid "visualize & do tasks"
-msgstr "visualice y ejecute tareas"
 
 msgid "visualize & start processes"
 msgstr "visualizar & iniciar procesos"

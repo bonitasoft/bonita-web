@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-06-14 08:25-0400\n"
+"PO-Revision-Date: 2016-06-21 06:12-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -92,7 +92,7 @@ msgstr "すべて"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "All done. Good job!"
-msgstr "すべて完了。よくできました！"
+msgstr "実行すべきタスクがアサインされていません。"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."

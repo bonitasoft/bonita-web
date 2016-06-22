@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 01:00+0200\n"
-"PO-Revision-Date: 2016-06-14 08:25-0400\n"
+"POT-Creation-Date: 2016-06-15 01:00+0200\n"
+"PO-Revision-Date: 2016-06-21 06:12-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1105,8 +1105,17 @@ msgstr "ユーザーの姓"
 msgid "Firstname"
 msgstr "姓"
 
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr "システム管理者プロファイル： すべてのプロセスのタスク完了状態をモニタリングできる。"
+
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr "プロセス管理者プロファイル： 特定のプロセスのタスク完了状態をモニタリングできる"
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr "ユーザープロファイル： 自己にアサインされたタスクを参照、実行できる。"
 
 msgid "Form"
 msgstr "フォーム"
@@ -1371,9 +1380,6 @@ msgstr "プロファイルの管理"
 
 msgid "Manage resources"
 msgstr "リソースを管理"
-
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "このプロファイルを持つエンティティ（ユーザー、グループ、ロールなど）がプロセス管理者として監督できるタスクを管理します。"
 
 msgid "Manager"
 msgstr "マネージャ"
@@ -2590,9 +2596,6 @@ msgstr "プロセスの管理"
 msgid "manage roles"
 msgstr "役割を管理"
 
-msgid "manage tasks"
-msgstr "タスクを管理"
-
 msgid "manage users"
 msgstr "ユーザーを管理"
 
@@ -2688,9 +2691,6 @@ msgstr "true"
 
 msgid "user privilege settings"
 msgstr "利用者特権の設定"
-
-msgid "visualize & do tasks"
-msgstr "タスクを表示して行う"
 
 msgid "visualize & start processes"
 msgstr "プロセスの視覚化 & 開始"

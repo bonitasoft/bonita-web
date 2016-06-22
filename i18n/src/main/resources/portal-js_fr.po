@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-06-06 11:05-0400\n"
+"PO-Revision-Date: 2016-06-21 06:09-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -526,7 +526,7 @@ msgstr "dd/MM/yyyy HH:mm"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Make this task available to other team members again"
-msgstr "Rendre cette tâche disponible à nouveau pour les autres membres de l’équipe"
+msgstr "Libérer - rendre cette tâche à nouveau disponible pour les autres membres de l’équipe"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Make this task personal: only I will be able to do it"

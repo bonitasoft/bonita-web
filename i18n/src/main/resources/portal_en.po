@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 01:00+0200\n"
-"PO-Revision-Date: 2016-06-14 08:22-0400\n"
+"POT-Creation-Date: 2016-06-15 01:00+0200\n"
+"PO-Revision-Date: 2016-06-21 06:08-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1105,8 +1105,17 @@ msgstr "First name of the user"
 msgid "Firstname"
 msgstr "Firstname"
 
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr "For administrator-type of profiles. To monitor task completion for all processes"
+
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr "For user-type of profiles. To view and do tasks  if he is a candidate"
 
 msgid "Form"
 msgstr "Form"
@@ -1370,9 +1379,6 @@ msgstr "Manage profiles"
 
 msgid "Manage resources"
 msgstr "Manage resources"
-
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Manage tasks of processes that an entity with this profile can supervise as PM."
 
 msgid "Manager"
 msgstr "Manager"
@@ -2588,9 +2594,6 @@ msgstr "manage processes"
 msgid "manage roles"
 msgstr "manage roles"
 
-msgid "manage tasks"
-msgstr "manage tasks"
-
 msgid "manage users"
 msgstr "manage users"
 
@@ -2686,9 +2689,6 @@ msgstr "true"
 
 msgid "user privilege settings"
 msgstr "user privilege settings"
-
-msgid "visualize & do tasks"
-msgstr "visualize & do tasks"
 
 msgid "visualize & start processes"
 msgstr "visualize & start processes"
