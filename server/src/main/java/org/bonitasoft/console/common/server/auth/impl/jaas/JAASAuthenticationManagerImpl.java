@@ -29,7 +29,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.Credentials;
 
 /**
  *

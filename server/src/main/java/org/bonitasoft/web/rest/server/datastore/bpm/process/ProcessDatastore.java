@@ -27,6 +27,7 @@ import org.bonitasoft.console.common.server.preferences.properties.PropertiesFac
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -164,6 +165,20 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
         } else if (ProcessItem.VALUE_ACTIVATION_STATE_ENABLED.equals(state)) {
             engineClient.enableProcess(processId);
         }
+        refreshAutologinConfiguration();
+    }
+
+    protected void refreshAutologinConfiguration() {
+        try {
+            final PlatformManagementUtils platformManagementUtils = getPlatformManagementUtils();
+            platformManagementUtils.retrieveAutologinConfiguration(getEngineSession().getTenantId());
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+
+    protected PlatformManagementUtils getPlatformManagementUtils() {
+        return new PlatformManagementUtils();
     }
 
     @Override

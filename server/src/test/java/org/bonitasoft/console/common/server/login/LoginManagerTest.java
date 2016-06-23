@@ -15,9 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
-import org.bonitasoft.console.common.server.login.datastore.Credentials;
-import org.bonitasoft.console.common.server.login.datastore.StandardCredentials;
-import org.bonitasoft.console.common.server.login.datastore.UserLogger;
+import org.bonitasoft.console.common.server.login.credentials.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
+import org.bonitasoft.console.common.server.login.credentials.UserLogger;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;

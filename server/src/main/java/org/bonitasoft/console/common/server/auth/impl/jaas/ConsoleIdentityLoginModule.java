@@ -32,7 +32,7 @@ import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import org.bonitasoft.console.common.server.login.datastore.LoginDatastore;
+import org.bonitasoft.console.common.server.login.credentials.LoginDatastore;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
 

@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,7 +33,11 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.datastore.UserLogger;
+import org.bonitasoft.console.common.server.login.credentials.AutoLoginCredentials;
+import org.bonitasoft.console.common.server.login.credentials.AutoLoginCredentialsFinder;
+import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
+import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,25 +63,21 @@ public class AutoLoginRuleTest {
     @Mock
     private TenantIdAccessor tenantAccessor;
 
+    @Mock
+    private AutoLoginCredentialsFinder autoLoginCredentialsFinder;
+
     @Before
     public void setUp() throws Exception {
         initMocks(this);
+        when(rule.getAutoLoginCredentialsFinder()).thenReturn(autoLoginCredentialsFinder);
     }
 
     @Test
-    public void testWeAreNotAutoLoggedWhenNotRequested() throws Exception {
-        doReturn(false).when(request).isAutoLoginRequested();
-
-        final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
-
-        assertFalse(authorized);
-    }
-
-    @Test
-    public void testWeAreNotAutoLoggedWhenRequestedButNotConfigured() throws Exception {
-        doReturn(false).when(request).isAutoLoginRequested();
+    public void testWeAreNotAutoLoggedWhenNotConfigured() throws Exception {
         doReturn("process3--2.9").when(request).getAutoLoginScope();
         doReturn(1L).when(tenantAccessor).getRequestedTenantId();
+
+        when(autoLoginCredentialsFinder.getCredential(new ProcessIdentifier("process3--2.9"),1L)).thenReturn(null);
 
         final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
 
@@ -85,26 +86,18 @@ public class AutoLoginRuleTest {
 
     @Test
     public void testWeAreAutoLoggedWhenRequestedAndConfigured() throws Exception {
-        doReturn(true).when(request).isAutoLoginRequested();
-        doReturn("process1--1.0").when(request).getAutoLoginScope();
+        when(autoLoginCredentialsFinder.getCredential(any(ProcessIdentifier.class), eq(1L))).thenReturn(new AutoLoginCredentials());
         doReturn(1L).when(tenantAccessor).ensureTenantId();
         // avoid having an exception result into an authorized false
         doReturn(mock(AuthenticationManager.class)).when(rule).getAuthenticationManager(anyLong());
         doReturn(mock(UserLogger.class)).when(rule).createUserLogger();
         doReturn(mock(LoginManager.class)).when(rule).getLoginManager();
-        final SecurityProperties secu = autoLoginAllowedSecurityConfig();
-        doReturn(secu).when(rule).getSecurityProperties(any(HttpServletRequestAccessor.class), anyLong());
+
+
 
         final boolean authorized = rule.doAuthorize(request, response, tenantAccessor);
 
         assertTrue(authorized);
     }
 
-    private SecurityProperties autoLoginAllowedSecurityConfig() {
-        final SecurityProperties secu = mock(SecurityProperties.class);
-        when(secu.allowAutoLogin()).thenReturn(true);
-        when(secu.getAutoLoginPassword()).thenReturn("aPasswordForTenant");
-        when(secu.getAutoLoginUserName()).thenReturn("aUserNameForTenant");
-        return secu;
-    }
 }

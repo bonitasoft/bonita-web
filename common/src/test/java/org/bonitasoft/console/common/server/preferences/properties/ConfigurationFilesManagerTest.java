@@ -20,8 +20,11 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,13 +52,15 @@ public class ConfigurationFilesManagerTest {
 
     @Before
     public void before() throws Exception {
-        HashMap<String, byte[]> configurationFiles = new HashMap<>();
+        final HashMap<String, byte[]> configurationFiles = new HashMap<>();
         configurationFiles.put("configFile1.properties",
                 ("myProp1=authKey\n" +
                         "myProp2=passHash").getBytes());
         configurationFiles.put(MY_PROP_PROPERTIES,
                 ("testProperty=testValue\n" +
                         "propToRemove=willBeRemoved").getBytes());
+        configurationFiles.put(PlatformManagementUtils.AUTOLOGIN_V6_JSON,
+                "[{processname:\"Pool1\", processversion:\"1.0\"}]".getBytes());
         configurationFilesManager.setTenantConfigurations(configurationFiles, TENANT_ID);
         doReturn(platformManagementUtils).when(configurationFilesManager).getPlatformManagementUtils();
     }
@@ -80,6 +85,31 @@ public class ConfigurationFilesManagerTest {
         assertThat(configurationFilesManager.getTenantProperties(MY_PROP_PROPERTIES, TENANT_ID)).contains(entry("testProperty", "new Value"));
         verify(platformManagementUtils).updateConfigurationFile(eq(TENANT_ID), eq(MY_PROP_PROPERTIES), contentCaptor.capture());
         assertThat(new String(contentCaptor.getValue())).doesNotContain("testValue").contains("testProperty", "new Value");
+    }
+
+    @Test
+    public void should_update_configuration_when_calling_setTenantConfiguration() throws Exception {
+        //given
+        final String newFileContent = "[{processname:\"Pool2\", processversion:\"2.0\"}]";
+        //when
+        configurationFilesManager.setTenantConfiguration(PlatformManagementUtils.AUTOLOGIN_V6_JSON,
+                newFileContent.getBytes(), TENANT_ID);
+        //then
+        final File configurationFile = configurationFilesManager.getTenantConfigurationFile(PlatformManagementUtils.AUTOLOGIN_V6_JSON, TENANT_ID);
+        assertThat(FileUtils.readFileToString(configurationFile)).isEqualTo(newFileContent);
+    }
+
+    @Test
+    public void should_update_configurations_when_calling_setTenantConfigurations() throws Exception {
+        //given
+        final String newFileContent = "[{processname:\"Pool2\", processversion:\"2.0\"}]";
+        final Map<String, byte[]> configurationFiles = new HashMap<String, byte[]>();
+        configurationFiles.put(PlatformManagementUtils.AUTOLOGIN_V6_JSON, newFileContent.getBytes());
+        //when
+        configurationFilesManager.setTenantConfigurations(configurationFiles, TENANT_ID);
+        //then
+        final File configurationFile = configurationFilesManager.getTenantConfigurationFile(PlatformManagementUtils.AUTOLOGIN_V6_JSON, TENANT_ID);
+        assertThat(FileUtils.readFileToString(configurationFile)).isEqualTo(newFileContent);
     }
 
 }

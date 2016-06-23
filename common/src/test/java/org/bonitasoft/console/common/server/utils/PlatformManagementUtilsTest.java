@@ -59,5 +59,16 @@ public class PlatformManagementUtilsTest {
         inOrder.verify(platformAPI).updateClientTenantConfigurationFile(TENANT_ID, "myFile", "theNewContent".getBytes());
         inOrder.verify(platformManagementUtils).platformLogout(any(PlatformSession.class));
     }
+    
+    @Test
+    public void should_retrieveAutologinConfiguration() throws Exception {
+        //when
+        platformManagementUtils.retrieveAutologinConfiguration(TENANT_ID);
+        //then
+        InOrder inOrder = inOrder(platformManagementUtils, platformAPI);
+        inOrder.verify(platformManagementUtils).platformLogin();
+        inOrder.verify(platformAPI).getClientTenantConfiguration(TENANT_ID, PlatformManagementUtils.AUTOLOGIN_V6_JSON);
+        inOrder.verify(platformManagementUtils).platformLogout(any(PlatformSession.class));
+    }
 
 }

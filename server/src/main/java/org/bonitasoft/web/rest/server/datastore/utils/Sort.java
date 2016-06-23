@@ -21,7 +21,7 @@ import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 
 /**
- * Convenient object to deal with datastore sort options
+ * Convenient object to deal with credentials sort options
  * 
  * Default sort order is ASCENDING
  * 
