@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
 
 /**
  * @author Nicolas Chabanoles
@@ -35,6 +36,9 @@ public interface WebBonitaConstants {
     String confFolderName = "conf";
 
     String tmpFolderName = "bonita_portal_";
+
+    // We use a tempFolder specific to the running JVM, so that 2 JVMs running on the same machine are isolated:
+    String rootTempDir = System.getProperty("java.io.tmpdir") + File.separator + tmpFolderName + ManagementFactory.getRuntimeMXBean().getName();
 
     String formsFolderName = "forms";
 

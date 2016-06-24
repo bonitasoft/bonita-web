@@ -14,7 +14,9 @@
  */
 package org.bonitasoft.console.common.server.preferences.constants;
 
+import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants.rootTempDir;
 import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsTenancyImpl.ICONS_WORK_FOLDER_NAME;
+import static org.bonitasoft.engine.io.IOUtil.createTempDirectory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -60,6 +62,10 @@ public class WebBonitaConstantsUtils {
      * applications.
      */
     public File getTempFolder() {
+        final File tempFolder = new File(rootTempDir);
+        if (!tempFolder.exists()) {
+            createTempDirectory(tempFolder.toURI());
+        }
         return getFolder(webBonitaConstants.getTempFolderPath());
     }
 
