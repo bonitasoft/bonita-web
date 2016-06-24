@@ -15,11 +15,12 @@ package org.bonitasoft.web.rest.server.utils;
 
 import java.io.IOException;
 
+import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 
 /**
  * @author Laurent Leseigneur
@@ -29,13 +30,13 @@ public class TimerEventTriggerInstanceSerializer extends JsonSerializer<TimerEve
     JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
 
     @Override
-    public void serialize(TimerEventTriggerInstance timerEventTriggerInstance, JsonGenerator jgen, SerializerProvider provider) throws IOException,
+    public void serialize(final TimerEventTriggerInstance timerEventTriggerInstance, final JsonGenerator jgen, final SerializerProvider provider) throws IOException,
             JsonProcessingException {
         jgen.writeStartObject();
         jgen.writeObjectField("eventInstanceName", timerEventTriggerInstance.getEventInstanceName());
         jgen.writeObjectField("executionDate", timerEventTriggerInstance.getExecutionDate());
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "id", timerEventTriggerInstance.getId());
-        jacksonSerializerHelper.writeValueAndStringValue(jgen, "eventInstanceId", timerEventTriggerInstance.getEventInstanceId());
+        jacksonSerializerHelper.writeNumberField(jgen, "id", timerEventTriggerInstance.getId());
+        jacksonSerializerHelper.writeNumberField(jgen, "eventInstanceId", timerEventTriggerInstance.getEventInstanceId());
         jgen.writeEndObject();
     }
 

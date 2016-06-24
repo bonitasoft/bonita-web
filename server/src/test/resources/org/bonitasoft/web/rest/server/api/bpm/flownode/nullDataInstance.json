@@ -10,6 +10,6 @@
   "id_string": "5",
   "containerId": 7,
   "containerId_string": "7",
-  "value": "abc",
-  "value_string": "abc"
+  "value": null,
+  "value_string": "null"
 }
