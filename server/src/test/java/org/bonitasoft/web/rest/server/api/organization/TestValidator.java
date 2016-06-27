@@ -26,8 +26,8 @@ public class TestValidator extends AbstractStringValidator {
 
     @Override
     protected void _check(String attributeValue) {
-        if ("a".equals(attributeValue)) {
-            addError("there is an error");
+        if ("this password is not accepted by the TestValidator validator".equals(attributeValue)) {
+            addError("the validator TestValidator rejected this password");
         }
     }
 }

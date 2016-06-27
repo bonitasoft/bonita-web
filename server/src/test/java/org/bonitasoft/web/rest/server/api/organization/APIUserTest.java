@@ -78,27 +78,27 @@ public class APIUserTest {
     public void should_check_password_robustness_on_update() throws Exception {
         expectedException.expect(ValidationException.class);
         //see TestValidator class
-        expectedException.expectMessage("there is an error");
+        expectedException.expectMessage("the validator TestValidator rejected this password");
 
-        apiUser.update(USER_ID, map(UserItem.ATTRIBUTE_PASSWORD, "a"));
+        apiUser.update(USER_ID, map(UserItem.ATTRIBUTE_PASSWORD, "this password is not accepted by the TestValidator validator"));
     }
 
     @Test
     public void should_update_password_if_valid() throws Exception {
-        apiUser.update(USER_ID, map(UserItem.ATTRIBUTE_PASSWORD, "b"));
+        apiUser.update(USER_ID, map(UserItem.ATTRIBUTE_PASSWORD, "accepted password"));
 
-        verify(userDatastore).update(eq(USER_ID), eq(map(UserItem.ATTRIBUTE_PASSWORD, "b")));
+        verify(userDatastore).update(eq(USER_ID), eq(map(UserItem.ATTRIBUTE_PASSWORD, "accepted password")));
     }
 
     @Test
     public void should_check_password_robustness_on_add() throws Exception {
         UserItem userItem = new UserItem();
         userItem.setUserName("John");
-        userItem.setPassword("a");
+        userItem.setPassword("this password is not accepted by the TestValidator validator");
 
         expectedException.expect(ValidationException.class);
         //see TestValidator class
-        expectedException.expectMessage("there is an error");
+        expectedException.expectMessage("the validator TestValidator rejected this password");
         apiUser.add(userItem);
     }
 
@@ -115,7 +115,7 @@ public class APIUserTest {
     public void should_add_user_if_password_is_valid() throws Exception {
         UserItem userItem = new UserItem();
         userItem.setUserName("John");
-        userItem.setPassword("b");
+        userItem.setPassword("accepted password");
 
         apiUser.add(userItem);
     }
