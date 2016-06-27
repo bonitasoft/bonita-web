@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.Credentials;
 
 /**
  * Interface to implement in order to delegate the authentication to an external provider

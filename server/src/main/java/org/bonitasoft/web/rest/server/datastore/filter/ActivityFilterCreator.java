@@ -26,7 +26,7 @@ public class ActivityFilterCreator implements FilterCreator {
 
     /*
      * (non-Javadoc)
-     * @see org.bonitasoft.web.rest.server.datastore.filter.FilterCreator#create(java.lang.String, java.lang.String)
+     * @see org.bonitasoft.web.rest.server.credentials.filter.FilterCreator#create(java.lang.String, java.lang.String)
      */
     @Override
     public Filter<? extends Serializable> create(String attribute, String value) {

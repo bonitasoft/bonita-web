@@ -112,7 +112,7 @@ public class ArchivedCommentDatastore extends CommonDatastore<ArchivedCommentIte
 
     /*
      * (non-Javadoc)
-     * @see org.bonitasoft.console.server.datastore.bpm.CommonDatastore#convertEngineToConsoleItem(java.io.Serializable)
+     * @see org.bonitasoft.console.server.credentials.bpm.CommonDatastore#convertEngineToConsoleItem(java.io.Serializable)
      */
     @Override
     protected ArchivedCommentItem convertEngineToConsoleItem(final ArchivedComment item) {

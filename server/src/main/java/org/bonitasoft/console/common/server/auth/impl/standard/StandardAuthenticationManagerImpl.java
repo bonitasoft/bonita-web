@@ -25,9 +25,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.PortalCookies;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**

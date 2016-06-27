@@ -28,7 +28,7 @@ public class SearchOptionsBuilderUtil {
     /**
      * build SearchOptionsBuilder
      * 
-     * @deprecated use org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator
+     * @deprecated use org.bonitasoft.web.rest.server.credentials.utils.SearchOptionsCreator
      */
 	@Deprecated
     public static SearchOptionsBuilder buildSearchOptions(final int pageIndex, final int numberOfResults, final String sort, final String search) {

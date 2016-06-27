@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.login.datastore;
+package org.bonitasoft.console.common.server.login.credentials;
 
 
 
@@ -38,7 +38,7 @@ public class StandardCredentials implements Credentials {
     }
 
     /**
-     * @see org.bonitasoft.console.common.server.login.datastore.Credentials#getName()
+     * @see org.bonitasoft.console.common.server.login.credentials.Credentials#getName()
      */
     @Override
     public String getName() {
@@ -46,7 +46,7 @@ public class StandardCredentials implements Credentials {
     }
 
     /**
-     * @see org.bonitasoft.console.common.server.login.datastore.Credentials#getPassword()
+     * @see org.bonitasoft.console.common.server.login.credentials.Credentials#getPassword()
      */
     @Override
     public String getPassword() {
@@ -54,7 +54,7 @@ public class StandardCredentials implements Credentials {
     }
 
     /**
-     * @see org.bonitasoft.console.common.server.login.datastore.Credentials#getTenantId()
+     * @see org.bonitasoft.console.common.server.login.credentials.Credentials#getTenantId()
      */
     @Override
     public long getTenantId() {

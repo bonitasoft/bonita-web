@@ -38,12 +38,13 @@ public class ConfigurationFilesManager {
         return INSTANCE;
     }
 
-    private Map<Long, Map<String, Properties>> tenantConfigurations = new HashMap<>();
-    private Map<String, Properties> platformConfiguration = new HashMap<>();
+    private Map<Long, Map<String, Properties>> tenantsConfigurations = new HashMap<>();
+    private Map<Long, Map<String, File>> tenantsConfigurationFiles = new HashMap<>();
+    private Map<String, Properties> platformConfigurations = new HashMap<>();
     private Map<String, File> platformConfigurationFiles = new HashMap<>();
 
     public Properties getPlatformProperties(String propertiesFile) {
-        Properties properties = platformConfiguration.get(propertiesFile);
+        Properties properties = platformConfigurations.get(propertiesFile);
         if (properties == null) {
             return new Properties();
         }
@@ -51,7 +52,7 @@ public class ConfigurationFilesManager {
     }
 
     public Properties getTenantProperties(String propertiesFile, long tenantId) {
-        Map<String, Properties> map = tenantConfigurations.get(tenantId);
+        Map<String, Properties> map = tenantsConfigurations.get(tenantId);
         if (map != null && map.containsKey(propertiesFile)) {
             return map.get(propertiesFile);
         }
@@ -67,10 +68,10 @@ public class ConfigurationFilesManager {
     }
 
     public void setPlatformConfigurations(Map<String, byte[]> configurationFiles) throws IOException {
-        platformConfiguration = new HashMap<>(configurationFiles.size());
+        platformConfigurations = new HashMap<>(configurationFiles.size());
         for (Map.Entry<String, byte[]> entry : configurationFiles.entrySet()) {
             if (entry.getKey().endsWith(".properties")) {
-                platformConfiguration.put(entry.getKey(), getProperties(entry.getValue()));
+                platformConfigurations.put(entry.getKey(), getProperties(entry.getValue()));
             } else {
                 File file = new File(WebBonitaConstantsUtils.getInstance().getTempFolder(), entry.getKey());
                 FileUtils.writeByteArrayToFile(file, entry.getValue());
@@ -80,13 +81,35 @@ public class ConfigurationFilesManager {
     }
 
     public void setTenantConfigurations(Map<String, byte[]> configurationFiles, long tenantId) throws IOException {
-        HashMap<String, Properties> tenantProperties = new HashMap<>(configurationFiles.size());
+        Map<String, Properties> tenantProperties = new HashMap<>();
+        Map<String, File> tenantFiles = new HashMap<>();
         for (Map.Entry<String, byte[]> entry : configurationFiles.entrySet()) {
             if (entry.getKey().endsWith(".properties")) {
                 tenantProperties.put(entry.getKey(), getProperties(entry.getValue()));
+            } else {
+                File file = new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), entry.getKey());
+                FileUtils.writeByteArrayToFile(file, entry.getValue());
+                tenantFiles.put(entry.getKey(), file);
             }
         }
-        tenantConfigurations.put(tenantId, tenantProperties);
+        tenantsConfigurations.put(tenantId, tenantProperties);
+        tenantsConfigurationFiles.put(tenantId, tenantFiles);
+    }
+    
+    public void setTenantConfiguration(String fileName, byte[] content, long tenantId) throws IOException {
+        if (fileName.endsWith(".properties")) {
+            Map<String, Properties> tenantConfiguration = tenantsConfigurations.get(tenantId);
+            if (tenantConfiguration != null) {
+                tenantConfiguration.put(fileName, getProperties(content));
+            }
+        } else {
+            Map<String, File> tenantConfigurationFiles = tenantsConfigurationFiles.get(tenantId);
+            if (tenantConfigurationFiles != null) {
+                File file = new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), fileName);
+                FileUtils.writeByteArrayToFile(file, content);
+                tenantConfigurationFiles.put(fileName, file);
+            }
+        }
     }
 
     public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
@@ -112,9 +135,9 @@ public class ConfigurationFilesManager {
     private Map<String, Properties> getResources(long tenantId) {
         Map<String, Properties> resources;
         if (tenantId > 0) {
-            resources = tenantConfigurations.get(tenantId);
+            resources = tenantsConfigurations.get(tenantId);
         } else {
-            resources = platformConfiguration;
+            resources = platformConfigurations;
         }
         return resources;
     }
@@ -128,5 +151,17 @@ public class ConfigurationFilesManager {
 
     public File getPlatformConfigurationFile(String fileName) {
         return platformConfigurationFiles.get(fileName);
+    }
+    
+    public File getTenantConfigurationFile(String fileName, long tenantId) {
+        Map<String, File> tenantConfigurationFiles = tenantsConfigurationFiles.get(tenantId);
+        if(tenantConfigurationFiles != null){
+            return tenantConfigurationFiles.get(fileName);
+        }
+        return null;
+    }
+    
+    public File getTenantAutoLoginConfiguration(long tenantId) {
+        return getTenantConfigurationFile(PlatformManagementUtils.AUTOLOGIN_V6_JSON, tenantId);
     }
 }

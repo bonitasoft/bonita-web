@@ -12,11 +12,14 @@ import static org.mockito.Mockito.verify;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.Page;
@@ -62,12 +65,16 @@ public class ProcessDatastoreTest extends APITestWithMock {
     @Mock
     private SearchResult<Page> searchResult;
 
+    @Mock
+    private PlatformManagementUtils platformManagementUtils;
+
     private final ProcessItem processItem = new ProcessItem();
 
     @Before
     public void setUp() throws Exception {
         processDatastore = spy(new ProcessDatastore(engineSession));
         doReturn(tenantFolder).when(processDatastore).getTenantFolder();
+        doReturn(platformManagementUtils).when(processDatastore).getPlatformManagementUtils();
         doReturn(processEngineClient).when(processDatastore).getProcessEngineClient();
         doReturn(customPageService).when(processDatastore).getCustomPageService();
         doReturn(pageAPI).when(processDatastore).getPageAPI();
@@ -139,5 +146,19 @@ public class ProcessDatastoreTest extends APITestWithMock {
         verify(processDatastore).removeProcessPagesFromHome(id);
         verify(customPageService, times((int) nbOfPages)).removePage(engineSession, page);
         verify(compoundPermissionsMapping, times((int) nbOfPages)).removeProperty("page");
+    }
+
+    @Test
+    public void should_retrieve_the_autologin_configuration_when_updating_the_process_state() throws Exception {
+
+        final long tenantId = 1L;
+        doReturn(tenantId).when(engineSession).getTenantId();
+        final APIID id = APIID.makeAPIID(2L);
+        final Map<String, String> attributes = new HashMap<String, String>();
+        attributes.put(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, ProcessItem.VALUE_ACTIVATION_STATE_ENABLED);
+
+        processDatastore.update(id, attributes);
+
+        verify(platformManagementUtils).retrieveAutologinConfiguration(tenantId);;
     }
 }

@@ -27,7 +27,7 @@ import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.datastore.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.engine.session.APISession;

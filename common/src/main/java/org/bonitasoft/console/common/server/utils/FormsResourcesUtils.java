@@ -141,10 +141,6 @@ public class FormsResourcesUtils {
             }
         }
 
-        final ProcessDefinition definition = process.getDefinition(processDefinitionID);
-        SecurityProperties.cleanProcessConfig(session.getTenantId(),
-                new ProcessIdentifier(definition.getName(), definition.getVersion()));
-
         final File processApplicationsResourcesDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
         final ClassLoader processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
         PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
