@@ -34,6 +34,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -83,7 +84,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
 
     private void checkPasswordRobustness(final String password) {
         try {
-            final Class<?> validatorClass = Class.forName(PropertiesFactory.getSecurityProperties(getEngineSession().getTenantId()).getPasswordValidator());
+            final Class<?> validatorClass = Class.forName(getValidatorClassName());
             Object instanceClass;
             try {
                 instanceClass = validatorClass.newInstance();
@@ -112,8 +113,17 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
         }
     }
 
+    String getValidatorClassName() {
+        return PropertiesFactory.getSecurityProperties(getEngineSession().getTenantId()).getPasswordValidator();
+    }
+
     @Override
     public UserItem update(final APIID id, final Map<String, String> item) {
+        // Do not update password if not set
+        MapUtil.removeIfBlank(item, UserItem.ATTRIBUTE_PASSWORD);
+        if (item.get(UserItem.ATTRIBUTE_PASSWORD) != null) {
+            checkPasswordRobustness(item.get(UserItem.ATTRIBUTE_PASSWORD));
+        }
         return getUserDatastore().update(id, item);
     }
 
