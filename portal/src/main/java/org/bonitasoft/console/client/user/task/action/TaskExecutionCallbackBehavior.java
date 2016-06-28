@@ -2,9 +2,7 @@ package org.bonitasoft.console.client.user.task.action;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.user.task.view.PerformTaskPage;
 import org.bonitasoft.console.client.user.task.view.TasksListingPage;
-import org.bonitasoft.console.client.user.task.view.more.HumanTaskMoreDetailsPage;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
@@ -30,12 +28,7 @@ public class TaskExecutionCallbackBehavior {
     }
 
     protected void redirectToTaskList() {
-        if (HumanTaskMoreDetailsPage.TOKEN.equals(ClientApplicationURL.getPageToken())
-                || PerformTaskPage.TOKEN.equals(ClientApplicationURL.getPageToken())) {
-            History.newItem("?_p=" + TasksListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
-        } else {
-            ViewController.refreshCurrentPage();
-        }
+        History.newItem("?_p=" + TasksListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     public void onSuccess(final String responseContent) {
