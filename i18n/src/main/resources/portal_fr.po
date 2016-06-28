@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 01:00+0200\n"
-"PO-Revision-Date: 2016-06-21 06:08-0400\n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
+"PO-Revision-Date: 2016-06-28 06:31-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1105,17 +1105,41 @@ msgstr "Prénom de l'utilisateur"
 msgid "Firstname"
 msgstr "Prénom"
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr "Pour des profils de type administrateur. Permet de gérer les processus : installer, supprimer et configurer tous les processus"
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr "Pour des profils de type administrateur. Permet de suivre le statut de tous les processus"
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr "Pour des profils de type administrateur. Permet de suivre la progression des cas de tous les processus"
+
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
 msgstr "Pour un profil de type administrateur. Permet de suivre la réalisation des tâches pour tous les processus"
 
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
 
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr "Pour des profils de type gestionnaire de processus. Permet de gérer les processus placés sous sa responsabilité"
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr "Pour des profils de type gestionnaire de processus. Permet de suivre la progression des cas des processus placés sous sa responsabilité"
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr "Pour des profils de type gestionnaire de processus. Permet de suivre le statut des processus placés sous sa responsabilité"
+
 msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
 msgstr "Pour un profil de type gestionnaire de processus. Permet de suivre la réalisation des tâches, uniquement pour les processus placés sous sa responsabilité"
 
 msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
 msgstr "Pour un profil de type utilisateur. Permet de voir et de faire les tâches pour lesquels il est candidat"
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr "Pour des profils de type utilisateur. Permet de visualiser les cas démarrés par l’utilisateur ou ceux sur lesquels il a travaillé"
+
+msgid "For user-type of profiles. To visualize processes and start cases"
+msgstr "Pour des profils de type utilisateur. Permet de visualier les processus et de démarrer des cas"
 
 msgid "Form"
 msgstr "Formulaire"
@@ -1217,6 +1241,9 @@ msgstr "Importer ou exporter des données"
 
 msgid "Import/Export"
 msgstr "Importer/Exporter"
+
+msgid "Import/export organization"
+msgstr "Importer/exporter une organisation"
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "En cas de conflit, la priorité est donnée au fichier importé"
@@ -1365,20 +1392,23 @@ msgstr "Gérer le look and feel"
 msgid "Manage applications"
 msgstr "Gérer les applications"
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Gérer les cas de processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
-
 msgid "Manage custom pages"
 msgstr "Gérer les pages personnalisées"
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Gérer les processus que tout utilisateur avec ce profil peut superviser en tant que Gestionnaire de Processus."
+msgid "Manage groups"
+msgstr "Gérer les groupes"
 
 msgid "Manage profiles"
 msgstr "Gérer les profils"
 
 msgid "Manage resources"
 msgstr "Gérer les ressources"
+
+msgid "Manage roles"
+msgstr "Gérer les rôles"
+
+msgid "Manage users"
+msgstr "Gérer les utilisateurs"
 
 msgid "Manager"
 msgstr "Supérieur "
@@ -2441,6 +2471,9 @@ msgstr "Nom d'utilisateur"
 msgid "User not found"
 msgstr "Utilisateur introuvable"
 
+msgid "User privilege settings"
+msgstr "Gestion des privilèges utilisateur"
+
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -2573,29 +2606,11 @@ msgstr "hr"
 msgid "human task"
 msgstr "tâche humaine"
 
-msgid "import/export organization"
-msgstr "importer/exporter l'organisation"
-
 msgid "in %time%"
 msgstr "dans %time%"
 
 msgid "in menu "
 msgstr "dans le menu "
-
-msgid "manage cases"
-msgstr "Gérer des cas"
-
-msgid "manage groups"
-msgstr "Gérer les groupes"
-
-msgid "manage processes"
-msgstr "gérer les processus"
-
-msgid "manage roles"
-msgstr "Gérer les rôles"
-
-msgid "manage users"
-msgstr "Gérer les utilisateurs"
 
 msgid "message"
 msgstr "Message"
@@ -2686,15 +2701,6 @@ msgstr "Ce champ"
 
 msgid "true"
 msgstr "vraie"
-
-msgid "user privilege settings"
-msgstr "Paramètres des privilèges utilisateur"
-
-msgid "visualize & start processes"
-msgstr "Visualiser & démarrer les processus"
-
-msgid "visualize cases"
-msgstr "visualiser les cas"
 
 msgid "yr"
 msgstr "an"

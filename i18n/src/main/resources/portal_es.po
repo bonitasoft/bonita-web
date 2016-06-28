@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 01:00+0200\n"
-"PO-Revision-Date: 2016-06-21 06:16-0400\n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
+"PO-Revision-Date: 2016-06-28 06:33-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -182,7 +182,7 @@ msgid "A business archive has a .bar extension"
 msgstr "Un archivo de negocios tiene una extensión de .bar"
 
 msgid "A case has been started successfully."
-msgstr ""
+msgstr "El caso se ha iniciado con éxito."
 
 msgid "A form is a page mapped to case start or a human task."
 msgstr "Un formulario es una página asignada al caso inicial o una tarea humana."
@@ -1105,17 +1105,41 @@ msgstr "Nombre del usuario"
 msgid "Firstname"
 msgstr "Nombre"
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr "Para perfiles de tipo administrador. Permite gestionar los procesos: instalar, eliminar y configurar todos los procesos"
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr "Para perfiles de tipo administrador. Permite monitorizar todos los procesos"
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr "Para perfiles de tipo administrador. Permite monitorizar los casos de todos los procesos"
+
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
-msgstr ""
+msgstr "Para perfiles de tipo administrador. Permite monitorizar la realización de tareas de todos los procesos"
 
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Para cada actor, compruebe que cada entidad (usuario, grupo, rol, membresia) tiene el perfil de usuario correspondiente en el Portal."
 
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr "Para perfiles de tipo gestor de procesos. Permite gestionar los procesos bajo su responsabilidad"
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr "Para perfiles de tipo gestor de procesos. Permite monitorizar casos de procesos bajo su responsabildiad"
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr "Para perfiles de tipo gestor de procesos. Permite monitorizar procesos bajo su responsabilidad"
+
 msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
-msgstr ""
+msgstr "Para perfiles de tipo gestor de procesos. Permite monitorizar la realización de las tareas, sólo para procesos bajo su responsabilidad"
 
 msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
-msgstr ""
+msgstr "Para perfiles de tipo usuario. Permite visualizar y realizar tareas si es el candidato"
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr "Para perfiles de tipo usuario. Permite visualizar casos comenzados por el usuario o casos en los que ha trabajado"
+
+msgid "For user-type of profiles. To visualize processes and start cases"
+msgstr "Para perfiles de tipo usuario. Permite visualizar procesos y comenzar casos"
 
 msgid "Form"
 msgstr "Formulario"
@@ -1217,6 +1241,9 @@ msgstr "Importar o exportar datos"
 
 msgid "Import/Export"
 msgstr "Importar/exportar"
+
+msgid "Import/export organization"
+msgstr "Importar/exportar organización"
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "En caso de conflicto, se da prioridad a el archivo importado"
@@ -1365,20 +1392,23 @@ msgstr "Administrar el Look & Feel"
 msgid "Manage applications"
 msgstr "Administrar aplicaciones"
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Gestionar los casos de procesos que una entidad con este perfil puede supervisar como PM."
-
 msgid "Manage custom pages"
 msgstr "Gestionar Páginas Personalizadas"
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Administrar procesos que una entidad con este perfil puede supervisar como PM."
+msgid "Manage groups"
+msgstr "Administrar grupos"
 
 msgid "Manage profiles"
 msgstr "Administrar perfiles"
 
 msgid "Manage resources"
 msgstr "Gestionar recursos"
+
+msgid "Manage roles"
+msgstr "Administrar roles"
+
+msgid "Manage users"
+msgstr "Administrar usuarios"
 
 msgid "Manager"
 msgstr "Responsable"
@@ -1713,7 +1743,7 @@ msgid "Profile"
 msgstr "Perfil"
 
 msgid "Profile member already exists"
-msgstr ""
+msgstr "El usuario ya está asociado con este perfil "
 
 msgid "Profiles"
 msgstr "Perfiles"
@@ -2441,6 +2471,9 @@ msgstr "Usuario"
 msgid "User not found"
 msgstr "Usuario no encontrado"
 
+msgid "User privilege settings"
+msgstr "Configuración de privilegios de usuario"
+
 msgid "Username"
 msgstr "Nombre de usuario"
 
@@ -2573,29 +2606,11 @@ msgstr "hr"
 msgid "human task"
 msgstr "tarea humana"
 
-msgid "import/export organization"
-msgstr "Importación/exportación de organización"
-
 msgid "in %time%"
 msgstr "en %time%"
 
 msgid "in menu "
 msgstr "en el menú "
-
-msgid "manage cases"
-msgstr "gestionar casos"
-
-msgid "manage groups"
-msgstr "gestionar grupos"
-
-msgid "manage processes"
-msgstr "gestionar procesos"
-
-msgid "manage roles"
-msgstr "gestionar roles"
-
-msgid "manage users"
-msgstr "gestionar usuarios"
 
 msgid "message"
 msgstr "mensaje"
@@ -2686,15 +2701,6 @@ msgstr "este campo"
 
 msgid "true"
 msgstr "verdadero"
-
-msgid "user privilege settings"
-msgstr "Configuración de privilegios de usuario"
-
-msgid "visualize & start processes"
-msgstr "visualizar & iniciar procesos"
-
-msgid "visualize cases"
-msgstr "visualizar casos"
 
 msgid "yr"
 msgstr "yr"

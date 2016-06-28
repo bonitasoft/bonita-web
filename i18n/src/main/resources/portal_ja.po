@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 01:00+0200\n"
-"PO-Revision-Date: 2016-06-21 06:12-0400\n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
+"PO-Revision-Date: 2016-06-28 06:32-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -530,10 +530,10 @@ msgid "Case"
 msgstr "案件"
 
 msgid "Case id"
-msgstr "案件 ID"
+msgstr "案件ID"
 
 msgid "Case id: "
-msgstr "案件 ID:"
+msgstr "案件ID:"
 
 msgid "Case variables"
 msgstr "案件変数"
@@ -860,7 +860,7 @@ msgid "Done tasks"
 msgstr "完了したタスク"
 
 msgid "Due date"
-msgstr "期日"
+msgstr "期限"
 
 msgid "Due in:"
 msgstr "期限："
@@ -1105,17 +1105,41 @@ msgstr "ユーザーの姓"
 msgid "Firstname"
 msgstr "姓"
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr "システム管理者プロファイル。すべてのプロセスを管理（インストール、削除、構成設定）"
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr "システム管理者プロファイル： すべてのプロセスをモニタリング"
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr "システム管理者プロファイル： すべてのプロセスの案件をモニタリング"
+
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
 msgstr "システム管理者プロファイル： すべてのプロセスのタスク完了状態をモニタリングできる。"
 
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
 
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr "プロセス管理者プロファイル： その管理者が所轄するプロセスを管理"
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr "プロセス管理者プロファイル： その管理者が所轄するプロセスの案件をモニタリング"
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr "プロセス管理者プロファイル： その管理者が所轄するプロセスをモニタリング"
+
 msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
 msgstr "プロセス管理者プロファイル： 特定のプロセスのタスク完了状態をモニタリングできる"
 
 msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
 msgstr "ユーザープロファイル： 自己にアサインされたタスクを参照、実行できる。"
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr "利用者プロファイル： 彼または彼女が開始した案件、または作業した案件を表示"
+
+msgid "For user-type of profiles. To visualize processes and start cases"
+msgstr "利用者プロファイル： プロセスと起案案件を表示"
 
 msgid "Form"
 msgstr "フォーム"
@@ -1219,6 +1243,9 @@ msgstr "インポートまたはエクスポートするデータ"
 msgid "Import/Export"
 msgstr "インポート/エクスポート"
 
+msgid "Import/export organization"
+msgstr "組織をインポート/エクスポート"
+
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "マージ結合の場合、ファイルを優先します。"
 
@@ -1292,16 +1319,16 @@ msgid "Last name of the user"
 msgstr "ユーザーの名前"
 
 msgid "Last update"
-msgstr "最終更新日"
+msgstr "最新更新日時"
 
 msgid "Last update date"
-msgstr "最終更新日"
+msgstr "最新更新日時"
 
 msgid "Last updated"
-msgstr "最終更新日"
+msgstr "最新更新日時"
 
 msgid "Last updated on"
-msgstr "最終更新日"
+msgstr "最新更新日時"
 
 msgid "Lastname"
 msgstr "名"
@@ -1366,20 +1393,23 @@ msgstr "ルック＆フィールの管理"
 msgid "Manage applications"
 msgstr "アプリケーションを管理します"
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "このプロファイルを持つエンティティ（ユーザー、グループ、ロールなど）が プロセス管理者として監督できるプロセス案件を管理します。"
-
 msgid "Manage custom pages"
 msgstr "カスタム ページを管理します"
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "このプロファイルを持つエンティティ（ユーザー、グループ、ロールなど）がプロセス管理者として監督できるプロセスを管理します。"
+msgid "Manage groups"
+msgstr "グループを管理"
 
 msgid "Manage profiles"
 msgstr "プロファイルの管理"
 
 msgid "Manage resources"
 msgstr "リソースを管理"
+
+msgid "Manage roles"
+msgstr "役割を管理"
+
+msgid "Manage users"
+msgstr "ユーザーを管理"
 
 msgid "Manager"
 msgstr "マネージャ"
@@ -1490,10 +1520,10 @@ msgid "No opened task"
 msgstr "オープンされたタスクがありません。"
 
 msgid "No overview page has been defined for this process"
-msgstr "このプロセスには案件概況フォームが定義されていません。"
+msgstr "このプロセスには案件概況ページが定義されていません。"
 
 msgid "No overview page has been defined for this process."
-msgstr "このプロセスには案件概況フォームが定義されていません。"
+msgstr "このプロセスには案件概況ページが定義されていません。"
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "応答がまだ受信されていませんが、バック グラウンドで操作がまだ進行中です。数秒待ってから、このページを再表示してください。"
@@ -2154,7 +2184,7 @@ msgid "The group parent path"
 msgstr "グループの親のパス"
 
 msgid "The id of the related case"
-msgstr "関連する案件の id"
+msgstr "関連する案件ID"
 
 msgid "The index file must be present in the zip but is ignored, so can be empty."
 msgstr "インデックス ファイルは、zip ファイル内に存在する必要がありますが、空にして無効にすることができます。"
@@ -2443,6 +2473,9 @@ msgstr "ユーザー名"
 msgid "User not found"
 msgstr "利用者が見つかりません"
 
+msgid "User privilege settings"
+msgstr "ユーザー権限の設定"
+
 msgid "Username"
 msgstr "ユーザー名"
 
@@ -2575,29 +2608,11 @@ msgstr "時"
 msgid "human task"
 msgstr "ヒューマン タスク"
 
-msgid "import/export organization"
-msgstr "組織をインポート/エクスポート"
-
 msgid "in %time%"
 msgstr "%time%以内"
 
 msgid "in menu "
 msgstr "メニュー "
-
-msgid "manage cases"
-msgstr "案件を管理"
-
-msgid "manage groups"
-msgstr "グループを管理"
-
-msgid "manage processes"
-msgstr "プロセスの管理"
-
-msgid "manage roles"
-msgstr "役割を管理"
-
-msgid "manage users"
-msgstr "ユーザーを管理"
 
 msgid "message"
 msgstr "Message"
@@ -2688,15 +2703,6 @@ msgstr "このフィールド"
 
 msgid "true"
 msgstr "true"
-
-msgid "user privilege settings"
-msgstr "利用者特権の設定"
-
-msgid "visualize & start processes"
-msgstr "プロセスの視覚化 & 開始"
-
-msgid "visualize cases"
-msgstr "案件を表示"
 
 msgid "yr"
 msgstr "年"

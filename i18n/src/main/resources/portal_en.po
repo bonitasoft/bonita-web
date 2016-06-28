@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm-new-features\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 01:00+0200\n"
-"PO-Revision-Date: 2016-06-21 06:08-0400\n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
+"PO-Revision-Date: 2016-06-28 06:31-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1105,17 +1105,41 @@ msgstr "First name of the user"
 msgid "Firstname"
 msgstr "Firstname"
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr "For administrator-type of profiles. To monitor all processes"
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr "For administrator-type of profiles. To monitor cases of all processes"
+
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
 msgstr "For administrator-type of profiles. To monitor task completion for all processes"
 
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr "For process manager-type of profiles. To manage processes under her responsibility"
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr "For process manager-type of profiles. To monitor processes under her responsibility"
+
 msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
 msgstr "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
 
 msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
 msgstr "For user-type of profiles. To view and do tasks  if he is a candidate"
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+
+msgid "For user-type of profiles. To visualize processes and start cases"
+msgstr "For user-type of profiles. To visualize processes and start cases"
 
 msgid "Form"
 msgstr "Form"
@@ -1217,6 +1241,9 @@ msgstr "Import or export data"
 
 msgid "Import/Export"
 msgstr "Import/Export"
+
+msgid "Import/export organization"
+msgstr "Import/export organization"
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "In case of conflict, priority is given to the imported file"
@@ -1365,20 +1392,23 @@ msgstr "Manage Look and Feel"
 msgid "Manage applications"
 msgstr "Manage applications"
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Manage cases of processes that an entity with this profile can supervise as PM."
-
 msgid "Manage custom pages"
 msgstr "Manage custom pages"
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Manage processes that an entity with this profile can supervise as PM."
+msgid "Manage groups"
+msgstr "Manage groups"
 
 msgid "Manage profiles"
 msgstr "Manage profiles"
 
 msgid "Manage resources"
 msgstr "Manage resources"
+
+msgid "Manage roles"
+msgstr "Manage roles"
+
+msgid "Manage users"
+msgstr "Manage users"
 
 msgid "Manager"
 msgstr "Manager"
@@ -2441,6 +2471,9 @@ msgstr "User name"
 msgid "User not found"
 msgstr "User not found"
 
+msgid "User privilege settings"
+msgstr "User privilege settings"
+
 msgid "Username"
 msgstr "Username"
 
@@ -2573,29 +2606,11 @@ msgstr "hr"
 msgid "human task"
 msgstr "human task"
 
-msgid "import/export organization"
-msgstr "import/export organization"
-
 msgid "in %time%"
 msgstr "in %time%"
 
 msgid "in menu "
 msgstr "in menu "
-
-msgid "manage cases"
-msgstr "manage cases"
-
-msgid "manage groups"
-msgstr "manage groups"
-
-msgid "manage processes"
-msgstr "manage processes"
-
-msgid "manage roles"
-msgstr "manage roles"
-
-msgid "manage users"
-msgstr "manage users"
 
 msgid "message"
 msgstr "message"
@@ -2686,15 +2701,6 @@ msgstr "this field"
 
 msgid "true"
 msgstr "true"
-
-msgid "user privilege settings"
-msgstr "user privilege settings"
-
-msgid "visualize & start processes"
-msgstr "visualize & start processes"
-
-msgid "visualize cases"
-msgstr "visualize cases"
 
 msgid "yr"
 msgstr "yr"

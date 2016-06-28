@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-06-06 11:08-0400\n"
+"PO-Revision-Date: 2016-06-28 06:33-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -526,11 +526,11 @@ msgstr "dd/MM/yyyy HH:mm"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Make this task available to other team members again"
-msgstr ""
+msgstr "Liberar - hacer esta tarea disponible de nuevo para los otros miembros del equipo"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Make this task personal: only I will be able to do it"
-msgstr ""
+msgstr "Hacer esta tarea personal: sólo yo podré realizarla"
 
 #: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Manage Categories"
@@ -835,7 +835,7 @@ msgstr "Mostrar el menú"
 
 #: target/dist/features/user/tasks/list/filters/task-filters.html:2
 msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
-msgstr ""
+msgstr "Mostrar todas las tareas que puedo hacer: tanto personales como disponibles para otros miembros del equipo"
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
@@ -843,7 +843,7 @@ msgstr "Mostrar menú"
 
 #: target/dist/features/user/tasks/list/filters/task-filters.html:2
 msgid "Show my personal tasks: the ones I took and the ones assigned to me, automatically or by a process manager"
-msgstr ""
+msgstr "Mostrar mis tareas personales: las tomadas y las asignadas a mí, automáticamente o por un gestor de procesos"
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show panel"
@@ -851,7 +851,7 @@ msgstr "Mostrar panel"
 
 #: target/dist/features/user/tasks/list/filters/task-filters.html:2
 msgid "Show the tasks that I have done"
-msgstr ""
+msgstr "Mostrar las tareas que he realizado"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "Sort by URL"
@@ -1043,7 +1043,7 @@ msgstr "Para ello, vaya a"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
-msgstr ""
+msgstr "Para rellenar el formulario, es necesario tomar esta tarea. Esto significa que serás el único que podrá realizarla. Para que esté disponible de nuevo para el equipo, libérala."
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
 #: target/dist/features/user/cases/list/cases-list.html:1
@@ -1145,7 +1145,7 @@ msgstr "Ver esta tarea"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "We couldn't find what you are looking for."
-msgstr ""
+msgstr "No pudimos encontrar lo que estás buscando."
 
 #: target/dist/features/admin/applications/export-application.html:1
 msgid "When you export an application, pages and profiles are not exported in the file."
