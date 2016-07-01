@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-06-28 06:32-0400\n"
+"PO-Revision-Date: 2016-06-30 10:33-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -133,7 +133,7 @@ msgstr "アサイン日時"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
 msgid "Available or My tasks"
-msgstr "応受援タスク、またはマイタスク"
+msgstr "このマークはあなただけに指名されたタスクを示します"
 
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "Available tasks"
