@@ -190,7 +190,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
         roleItem.setName(item.getName());
         roleItem.setDisplayName(item.getDisplayName());
         roleItem.setDescription(item.getDescription());
-        roleItem.setIcon(item.getIconId() == null ? "" : "../avatars/" + item.getIconId());
+        roleItem.setIcon(item.getIconId() == null ? "" : Avatars.PATH + item.getIconId());
         roleItem.setCreatedByUserId(item.getCreatedBy());
         roleItem.setCreationDate(item.getCreationDate());
         roleItem.setLastUpdateDate(item.getLastUpdate());

@@ -54,7 +54,7 @@ public class RestRequestParser {
 
     public RestRequestParser invoke() {
         String pathInfo = request.getPathInfo();
-        if (pathInfo == null) {
+        if (pathInfo == null || pathInfo.split("/").length < 3) {
             // it's not an URL like API/bpm/...
             pathInfo = request.getServletPath();
         }
