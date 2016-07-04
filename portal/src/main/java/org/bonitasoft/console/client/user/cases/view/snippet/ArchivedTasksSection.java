@@ -51,7 +51,6 @@ public class ArchivedTasksSection extends Section {
         ItemTable tasksTable = getTaskTable(item);
         tasksTable.setView(VIEW_TYPE.VIEW_LIST);
         tasksTable.setNbLinesByPage(nbLinesByPage);
-        tasksTable.setDefaultAction(new RedirectionAction(ArchivedHumanTaskMoreDetailsPage.TOKEN));
         addBody(tasksTable);
     }
 
