@@ -92,7 +92,6 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     @Override
     protected void preparetasksTable(final ItemTable subtasksTable) {
         subtasksTable.setNbLinesByPage(10);
-        subtasksTable.setDefaultAction(new RedirectionAction(HumanTaskMoreDetailsPage.TOKEN));
     }
 
     @Override
