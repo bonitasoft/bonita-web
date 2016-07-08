@@ -94,18 +94,6 @@ public class JSonSerializer extends JSonUtil {
         json.append(quote("exception")).append(":").append(quote(e.getClass().toString()));
         json.append(",");
         json.append(quote("message")).append(":").append(quote(e.getMessage()));
-
-        if (e.getStackTrace() != null) {
-
-            json.append(",");
-            json.append(quote("stacktrace")).append(":").append(serialize(Arrays.asList(e.getStackTrace())));
-        }
-
-        if (e.getCause() != null && e.getCause() != e) {
-            json.append(",");
-            json.append(quote("cause")).append(":").append(serialize(e.getCause()));
-        }
-
         json.append("}");
 
         return json.toString();
