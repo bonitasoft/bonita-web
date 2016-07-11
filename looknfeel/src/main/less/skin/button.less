@@ -1,0 +1,60 @@
+.btn {
+	position: relative;
+	.skinButton(@btnColor, @btnTxtColor, @btnTxtStrokeColor);
+	
+	&.btn-primary-action {
+		.specialButton(@btnPrimaryActionColor, @btnPrimaryActionTxtColor, @btnPrimaryActionTxtStokeColor);
+	}
+	&.btn-action {
+		.skinButton(@btnActionColor, @btnActionTxtColor, @btnActionTxtStokeColor);
+	}
+	
+	&.disabled{ 
+		.skinButton(@btnDisabledColor, @btnDisabledTextColor, @btnPrimaryActionTxtStokeColor);
+		.setDisable();
+		//bootstrap css match
+		&,&:hover{
+			background-color: @btnDisabledColor;
+			color: @btnDisabledTextColor;
+			opacity: 0.65;
+			border:none;
+		}
+	}
+	
+	&.btn-refresh{
+		min-width: @tablesPanel-refresh-button-min-width;
+		float: left;
+		.bg(@tablesPanel-refresh-button-bg, no-repeat, transparent, @tablesPanel-search-button-bgX, @tablesPanel-search-button-bgY);
+	}
+	
+	&#btn-more, &.btn-more{
+		.skinButton(@btnActionColor, @btnActionTxtColor, @btnActionTxtStokeColor);
+		&:after{
+			position: @moreButton-glyphicon-position;
+			vertical-align: @moreButton-glyphicon-verticalAlign;
+			margin: @moreButton-glyphicon-margin;
+			display: @moreButton-glyphicon-display;
+			font-family: @moreButton-glyphicon-fontFamily;
+			font-style: @moreButton-glyphicon-fontStyle;
+			font-weight: @moreButton-glyphicon-fontWeight;
+			line-height: @moreButton-glyphicon-lineHeight;
+			-webkit-font-smoothing: @moreButton-glyphicon-webkitFontSmoothing;
+			-moz-osx-font-smoothing: @moreButton-glyphicon-mozOsxFontSmoothing;
+			content: @moreButton-glyphicon-content;
+			background-color: @moreButton-glyphicon-backgroundColor;
+			padding: @moreButton-glyphicon-padding;
+			border: @moreButton-glyphicon-border;
+			.borderRadius(@moreButton-glyphicon-borderRadius);
+			text-align: @moreButton-glyphicon-textAlign;
+			color: @moreButton-glyphicon-color;
+		}
+		&:hover&:after{
+			display: @moreButton-hover-glyphicon-display;
+		}
+	}
+
+}
+
+
+
+

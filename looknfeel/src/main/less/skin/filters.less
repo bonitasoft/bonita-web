@@ -1,0 +1,287 @@
+.page_tasklistingadmin .filters_panel .primary_filters{
+    a{
+        color: @filtersPanel-textColor;
+        font-weight: @filtersPanel-fontWeight;
+        .fontSize(@filtersPanel-fontSize);
+        .borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
+        display: block;
+        padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
+        min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+        
+    }
+    
+    .body a.current, .body a.current:hover{
+        position: relative;
+        background-color: @filtersPanel-filtersCurrent-background !important;
+        color: @filtersPanel-filtersCurrent-link-textColor;
+    }
+}
+.filters_panel{
+    font-family: @filtersPanel-font;
+    color: @filtersPanel-textColor;
+    padding: @filtersPanel-padding;
+    margin: @filtersPanel-margin;
+    position: @filtersPanel-position;
+    >.body{
+        position: relative;
+        >.actions{
+            z-index: @zIndex-actionFilter;
+            position: @filtersPanel-actions-position;
+            top: @filtersPanel-actions-positionTop;
+            left: @filtersPanel-actions-positionLeft;
+            a{
+                .addButton(@filtersPanel-actions-addButton-bgColor, @filtersPanel-actions-addButton-txtColor);
+                //max-width: @filtersPanel-width -(@filtersPanel-padding-left*2) -(@filtersPanel-actions-positionLeft*2) -(@button-paddingX*2);
+            }
+            //TO BE DELETED: once we will have page title in portal, this workaround (BS-448) will be not necessary
+            .bigAddButton{
+                left: -15px;
+            }
+        }
+    }
+  .section .body {
+    padding-left: 1*@w;
+  }
+    
+    h1, h2, h3, h4, h5, h6, h7{
+        color: @filtersPanel-titleColor;
+        .boxSizing();
+    }
+    .primary, .secondary, .resource{
+        &_filters{
+            a{
+                color: @filtersPanel-textColor;
+                font-weight: @filtersPanel-fontWeight;
+                .fontSize(@filtersPanel-fontSize);
+                .borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
+                display: block;
+                padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
+                min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+                position: relative;
+                &.enabledprocesses{
+                    .bgFilter(@filtersPanel-filters-bgAvailable-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgAvailable-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgAvailable-selected);
+                    }
+                }
+                &.available{
+                    .bgFilter(@filtersPanel-filters-users-tasks-todo-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-todo-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-users-tasks-todo-selected);
+                    }
+                }
+                &.unassigned{
+                    .bgSubFilter(@filtersPanel-filters-users-tasks-available-selected);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-available-selected);
+                    }
+                    &.current{
+                        .bgCurrentSubFilter(@filtersPanel-filters-users-tasks-available-selected);
+                    }
+                }
+                &.disabledprocesses{
+                    .bgFilter(@filtersPanel-filters-bgUnassigned-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgUnassigned-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgUnassigned-selected);
+                    }
+                }
+                &.resolvedprocesses{
+                    .bgSubFilter(@filtersPanel-filters-bg-resolved-selected);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-bg-resolved-selected);
+                    }
+                    &.current{
+                        .bgCurrentSubFilter(@filtersPanel-filters-bg-resolved-selected);
+                    }
+                }
+                &.unresolvedprocesses{
+                    .bgSubFilter(@filtersPanel-filters-bg-unresolved-selected);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-bg-unresolved-selected);
+                    }
+                    &.current{
+                        .bgCurrentSubFilter(@filtersPanel-filters-bg-unresolved-selected);
+                    }
+                }
+                &.assigned{
+                    .bgSubFilter(@filtersPanel-filters-users-tasks-mytasks-selected);
+                    &:hover{
+                        .bgHoverSubFilter(@filtersPanel-filters-users-tasks-mytasks-selected);
+                    }
+                    &.current{
+                        .bgCurrentSubFilter(@filtersPanel-filters-users-tasks-mytasks-selected);
+                    }
+                }
+                &.ignored{
+                    .bgFilter(@filtersPanel-filters-users-tasks-hidden-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-hidden-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-users-tasks-hidden-selected);
+                    }
+                }
+                &.performed{
+                    .bgFilter(@filtersPanel-filters-users-tasks-performed-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-users-tasks-performed-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-users-tasks-performed-selected);
+                    }
+                }
+                &.mycases{
+                    .bgFilter(@filtersPanel-filters-bgMyCases-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgMyCases-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgMyCases-selected);
+                    }
+                }
+                &.workedoncases, &.openedcases{
+                    .bgFilter(@filtersPanel-filters-bgWorkedOn-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgWorkedOn-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgWorkedOn-selected);
+                    }
+                }
+                &.archivedcases{
+                    .bgFilter(@filtersPanel-filters-bgArchived-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgArchived-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgArchived-selected);
+                    }
+                }
+                &.allusersfilter, &.allgroupsfilter, &.allrolesfilter, &.all{
+                    .bgFilter(@filtersPanel-filters-bgAll-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgAll-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgAll-selected);
+                    }
+                }
+                &.humantask{
+                    .bgFilter(@filtersPanel-filters-bgHumanTask-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgHumanTask-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgHumanTask-selected);
+                    }
+                }
+                &.failed{
+                    .bgFilter(@filtersPanel-filters-bgFailed-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bgFailed-selected);
+                    }
+                    &.current{
+                        .bgCurrentFilter(@filtersPanel-filters-bgFailed-selected);
+                    }
+                }
+                &.monitoring{
+                    .bgFilter(@filtersPanel-filters-bg-monitoring-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bg-monitoring-selected);
+                    }
+                    &.current{
+                        .bgFilter(@filtersPanel-filters-bg-monitoring-selected);
+                    }
+                }
+                &.reports{
+                    .bgFilter(@filtersPanel-filters-bg-reporting-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bg-reporting-selected);
+                    }
+                    &.current{
+                        .bgFilter(@filtersPanel-filters-bg-reporting-selected);
+                    }
+                }
+                &.enabledusers{
+                    .bgFilter(@filtersPanel-filters-bg-user-active-selected);
+                &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bg-user-active-selected);
+                    }
+                    &.current{
+                        .bgFilter(@filtersPanel-filters-bg-user-active-selected);
+                    }
+                }
+                &.disabledusers{
+                    .bgFilter(@filtersPanel-filters-bg-user-inactive-selected);
+                    &:hover{
+                        .bgHoverFilter(@filtersPanel-filters-bg-user-inactive-selected);
+                    }
+                    &.current{
+                        .bgFilter(@filtersPanel-filters-bg-user-inactive-selected);
+                    }
+                }
+                &:hover{
+                    background-color: @filtersPanel-filters-hover-bgColor;
+                    color: @filtersPanel-filters-hover-txtColor;
+                }
+                &.current{
+                    &:hover{
+                        background: @filtersPanel-filterHover-bgColor;
+                    }
+                }
+            }
+            .body{
+                position: relative;
+                a.current, .body a.current:hover{
+                position: relative;
+                background-color: @filtersPanel-filtersCurrent-background !important;
+                color: @filtersPanel-filtersCurrent-link-textColor;
+                }
+            }
+        }
+    }
+    .resource_filters{
+        .header{
+            background-color: darken(@filtersPanel-bgColor, 6%);
+            border-bottom: 1px solid darken(@filtersPanel-bgColor, 9%);
+            border-top: 1px solid darken(@filtersPanel-bgColor, 9%);
+            margin: 8*@h 0 @h 0;
+            h1{
+                display: block;
+                font-size: 140%;
+                font-style: italic;
+                margin: 0;
+                padding: 2*@h 1*@w 2*@h 4*@w;
+            }
+        }
+        .body{
+            position: relative;
+            a, a.current{
+                img{
+                    position: @filtersPanel-filters-filtersResource-linkImage-position;
+                    display: @filtersPanel-filters-filtersResource-linkImage-display;
+                    margin: @filtersPanel-filters-filtersResource-linkImage-margin;
+                    width: @filtersPanel-filters-filtersResource-linkImage-width;
+                    height: @filtersPanel-filters-filtersResource-linkImage-height;
+                    &.empty{
+                        .bg(@filtersPanel-filters-filtersResource-linkImageCurrent-bgImg);
+                    }
+                }
+                > span {
+                    margin-left: 10px;
+                    font-size: 80%;
+                }
+            }
+
+        }
+    }
+}

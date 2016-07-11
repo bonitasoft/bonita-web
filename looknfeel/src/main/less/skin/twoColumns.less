@@ -1,0 +1,129 @@
+.page.twoCols{
+	>.header{
+		display: none;
+	}
+	>.body{
+		min-width: @twoCols-min-width;
+		top: @twoCols-body-top;
+		padding: @twoCols-body-padding !important;
+		.boxSizing();
+		
+		.sections_panel{
+			li{
+				.skinFontFamily();
+				.borderRadiusLeft(@filtersPanel-filtersCurrent-borderRadiusSize);
+				display: block;
+				padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-filters-paddingLeft;
+				min-height: @filtersPanel-filters-height - @filtersPanel-filters-paddingTop - @filtersPanel-filters-paddingBottom;
+				position: relative;
+				&.current{
+					background: @twoCols-sectionsPanel-section-bgColor;
+					a{
+						color: @twoCols-filtersCurrent-link-textColor;
+					}
+				}
+				&:hover{
+					.pointerAsLink();
+				}
+				
+				a{
+					color: @filtersPanel-textColor;
+					font-weight: @filtersPanel-fontWeight;
+					.fontSize(@filtersPanel-fontSize);
+				}
+			}
+		}
+		
+		
+		
+		.section{
+			.boxSizing();
+			float: left;
+			width: @twoCols-section-width;
+			padding: @twoCols-sectionLeft-padding;
+			&.doublesection{
+				clear: both;
+				width: @twoCols-double-section-width;
+				.boxSizing();
+				.section{
+					&:nth-child(even){
+						clear: none;
+					}
+					&:nth-child(odd){
+						clear: left;
+					}
+					h1{
+						.revertfontSize(@twoCols-title-fontSize);
+					}
+					.table, .pager {
+						.fontSize(@skinFontSize - 3px);
+					}
+				}
+			} 
+			+ .section, + css3-container + .section{
+				padding: @twoCols-sectionLeft-padding;
+				.boxSizing();
+			}
+			&.tabSection{
+				.boxSizing();
+				width: @twoCols-tabsection-width;
+				padding: @twoCols-tabsection-padding;
+				display: none;
+				clear: both;
+				&.current{
+					display: block;
+				}
+			}
+			&:first-child{
+				border-top:none;
+				> .header{
+					border: none;
+				}
+			}
+			&:nth-child(even){
+				clear: left;
+			}
+			> .header{
+				.section_border();
+				h1{
+					padding: @twoCols-title-padding;
+					margin: @twoCols-title-margin;
+					display: inline-block;
+					.fontSize(@twoCols-title-fontSize);
+				}
+			}
+			> .body{
+				padding: @twoCols-section-body-padding; 
+				position: @twoCols-section-body-position; 
+				.boxSizing();
+			}
+			margin: @twoCols-section-margin;
+			form{
+				max-width: 100%;
+			}
+		}
+		> .header{
+		    min-width: @twoCols-min-width; 
+			min-height: @button-globalHeight;
+			padding: @twoCols-header-padding;
+			margin: @twoCols-header-margin;
+			position: @twoCols-header-position;
+			width: 100%;
+			.boxSizing();
+			
+			h1{
+				display: @twoCols-header-title-display;
+			}
+		}
+	}
+}
+.page.twoCols.page_thememoredetailsadminext {
+	.formentry.fileupload{
+		.label{
+			display: none;
+		}
+		.input, css3-container+.input{
+			margin-top: 1*@h;
+		}
+	}
+}

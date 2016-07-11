@@ -1,0 +1,47 @@
+.page_profileList{
+	.tables_panel {
+		.form_search{
+			display: none;
+		}
+		.table{
+			.thead{
+				.tr{ 
+					.th_icon{
+						width: @profileList-header-icon-width;
+						height: 0.01px;//ie8 need a height to display a block with a "invisible" text
+						.hideText();
+						overflow: hidden;
+					}
+					.th_description{
+						display: none;
+					}
+					.th_lastUpdateDate{
+					float: @pageListAdmin-header-lastUpdateDate-float;
+					}
+				}
+			}
+			.tbody{
+				.tr{
+					position: @profileList-line-position;
+					.td{
+						&.td_description{
+							top: @profileList-description-top;
+							left: @profileList-description-left;
+							color: @profileList-description-textColor;
+							.fontSize(@profileList-description-fontSize);
+							position: @profileList-description-position;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							width: @profileList-description-width;							
+						}
+						&.td_lastupdatedate {
+							width: @pageListAdmin-lastUpdateDate-width;
+							float: @pageListAdmin-header-lastUpdateDate-float;
+						}
+					}
+				} 
+			}
+		}
+	}
+}

@@ -1,0 +1,1291 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"PO-Revision-Date: 2016-06-21 06:09-0400\n"
+
+#: main/common/i18n/i18n-keys.js:11
+msgid "1 case has been deleted"
+msgstr "1 cas a été supprimé"
+
+#: main/common/i18n/i18n-keys.js:62
+msgid "A page with this name already exists."
+msgstr "Une page portant ce nom existe déjà."
+
+#: main/features/user/tasks/list/common/priorities.service.js:15
+msgid "Above normal"
+msgstr "Haute priorité"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Actions"
+msgstr "Actions"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Activation state"
+msgstr "État d'activation"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actor name"
+msgstr "Nom de l'acteur"
+
+#: main/features/admin/processes/details/details.js:55
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actors"
+msgstr "Acteurs"
+
+#: main/common/i18n/i18n-keys.js:65
+msgid "Actors must be resolved before enabling the Process."
+msgstr "Tous les acteurs doivent être associés à des entités de l'organisation pour que le processus puisse être activé."
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/details/page-list.html:1
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Add"
+msgstr "Ajouter"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Add from custom pages"
+msgstr "Ajouter une page parmi les pages personalisées"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu"
+msgstr "Ajouter un menu"
+
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu item"
+msgstr "Ajouter une option de menu"
+
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Add page"
+msgstr "Ajouter une page"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add pages in Navigation"
+msgstr "Ajouter des pages à la navigation"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Add top-level menu"
+msgstr "Ajouter un menu "
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
+msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
+
+#: main/features/user/tasks/list/common/store.js:61
+msgid "All"
+msgstr "Tous"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "All done. Good job!"
+msgstr "Vous avez accompli toutes vos tâches. Bravo !"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
+msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
+
+#: main/common/i18n/i18n-keys.js:13
+msgid "An error occured during categories update"
+msgstr "Une erreur s'est produite à la mise à jour des catégories"
+
+#: main/features/user/tasks/list/tasks-app.js:257
+msgid "An error occurred while submitting the form."
+msgstr "Une erreur s'est produite lors de la soumission du formulaire."
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Application XML file"
+msgstr "Fichier XML de l'application"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Application list"
+msgstr "Liste des applications"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Apply"
+msgstr "Appliquer"
+
+#: main/common/i18n/i18n-keys.js:10
+msgid "Archived cases"
+msgstr "Cas archivés"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Assign to me. Only I will be able to do it"
+msgstr "Me l'assigner. Je serai le seul en mesure de la faire"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Assigned on"
+msgstr "Assignée le"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Available or My tasks"
+msgstr "Disponible ou dans Mes tâches"
+
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Available tasks"
+msgstr "Tâches disponibles"
+
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "Back"
+msgstr "Précédent"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
+msgstr "Avant d'importer une application, les pages et le profils utilisés doivent avoir été déployés dans le Portail."
+
+#: main/common/i18n/i18n-keys.js:57
+msgid "Can't import page or form to the process"
+msgstr "Impossible d'importer la page ou le formulaire dans le processus"
+
+#: main/common/i18n/i18n-keys.js:74
+msgid "Can't update expression content"
+msgstr "Impossible de mettre à jour le contenu de l'expression"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/applications/export-application.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Cancel"
+msgstr "Annuler"
+
+#: main/common/i18n/i18n-keys.js:42
+msgid "Cancelled, skipped instances"
+msgstr "Instances en état cancelled ou skipped (passées)"
+
+#: main/common/i18n/i18n-keys.js:54
+msgid "Cannot upload the file"
+msgstr "Impossible de charger le fichier"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Case Id"
+msgstr "ID de cas"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Case comments"
+msgstr "Commentaires du cas"
+
+#: main/common/i18n/i18n-keys.js:47
+msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
+msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Case list"
+msgstr "Liste des cas"
+
+#: main/common/i18n/i18n-keys.js:71
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Case overview"
+msgstr "Page de synthèse du cas"
+
+#: main/common/i18n/i18n-keys.js:72
+msgid "Case start"
+msgstr "Démarrage d'un cas"
+
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Case state"
+msgstr "Etat du cas"
+
+#: target/dist/features/admin/cases/list/cases.html:1
+#: target/dist/features/user/cases/list/cases.html:1
+msgid "Cases"
+msgstr "Cas"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Categories"
+msgstr "Catégories"
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Class name"
+msgstr "Nom de la classe"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Click here to choose your file. XML file (.xml)"
+msgstr "Cliquez pour choisir votre fichier XML (.xml)"
+
+#: target/dist/features/admin/applications/import-application.html:1
+#: target/dist/features/user/tasks/list/details/task-details-modal.html:1
+msgid "Close"
+msgstr "Fermer"
+
+#: table-settings/tableSettings.tpl.html:25
+msgid "Columns selection"
+msgstr "Sélection des colonnes"
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "Comment:"
+msgstr "Commentaire :"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Comments"
+msgstr "Commentaires"
+
+#: main/common/i18n/i18n-keys.js:64
+msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
+msgstr "Échec de compilation. Vérifiez que le fichier Index.groovy implémente l'interface PageController."
+
+#: main/common/i18n/i18n-keys.js:43
+msgid "Completed instances"
+msgstr "Instances en état completed (faites)"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Configuration state"
+msgstr "Etat de la configuration"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "Confirm delete?"
+msgstr "Confirmer la suppression ?"
+
+#: main/features/admin/processes/details/details.js:65
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Connectors"
+msgstr "Connecteurs"
+
+#: main/common/i18n/i18n-keys.js:66
+msgid "Connectors must be resolved before enabling the Process."
+msgstr "Tous les connecteurs doivent avoir une implémentation pour que le processus puisse être activé."
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Create a new membership"
+msgstr "Créer une nouvelle adhésion"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Create an application"
+msgstr "Créer une application"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Created by"
+msgstr "Créé par"
+
+#: target/dist/features/admin/applications/details/application-details-app.html:1
+msgid "Creation"
+msgstr "Création"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Creation on"
+msgstr "Créée le"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/delete-application.html:1
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "Delete"
+msgstr "Supprimer"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "Delete application"
+msgstr "Supprimer l'application"
+
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete process"
+msgstr "Supprimer un processus"
+
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete the process"
+msgstr "Supprimer le processus"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/processes/details/params.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Description"
+msgstr "Description"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "Display name"
+msgstr "Nom affiché"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Done tasks"
+msgstr "Tâches terminées"
+
+#: main/common/i18n/i18n-keys.js:49
+msgid "Drawing process..."
+msgstr "Dessin du processus ..."
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Due date"
+msgstr "Echéance"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+msgid "Edit"
+msgstr "Modifier"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu"
+msgstr "Editer l'option de menu"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu item"
+msgstr "Editer l'option de menu"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Enable all"
+msgstr "Tout associer"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "End date"
+msgstr "Date de fin "
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
+msgstr "Saisissez le nom de la nouvelle catégorie puis faites « Entrée » pour finaliser sa création et l'assigner au processus."
+
+#: main/common/i18n/i18n-keys.js:56
+msgid "Enter the user to start the case for..."
+msgstr "Saisissez le nom de l'utilisateur pour qui vous allez démarrer le cas..."
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Error"
+msgstr "Erreur"
+
+#: main/common/i18n/i18n-keys.js:48
+msgid "Error on drawing process!"
+msgstr "Erreur lors du dessin de processus !"
+
+#: main/common/i18n/i18n-keys.js:77
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Erreur lors de l'exécution la tâche. Certaines informations requises sont manquantes (contrat non respecté)."
+
+#: main/common/i18n/i18n-keys.js:51
+msgid "Error!"
+msgstr "Erreur!"
+
+#: main/common/i18n/i18n-keys.js:38
+msgid "Error: value must be a boolean"
+msgstr "Erreur : la valeur doit être un booléen"
+
+#: main/common/i18n/i18n-keys.js:39
+msgid "Error: value must be a double"
+msgstr "Erreur : valeur doit être un double"
+
+#: main/common/i18n/i18n-keys.js:40
+msgid "Error: value must be an integer"
+msgstr "Erreur : la valeur doit être un entier"
+
+#: main/common/i18n/i18n-keys.js:45
+msgid "Executing, completing, initializing instances"
+msgstr "Instances en état executing, completing, initializing"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "Export"
+msgstr "Exporter"
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "Export application"
+msgstr "Exporter l'application"
+
+#: main/common/i18n/i18n-keys.js:73
+msgid "Expression content has been updated"
+msgstr "Le contenu de l'expression a été mis à jour"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Failed Flow Nodes"
+msgstr "Flow nodes en erreur"
+
+#: main/common/i18n/i18n-keys.js:44
+msgid "Failed instances"
+msgstr "Instances en état failed (en échec)"
+
+#: main/common/i18n/i18n-keys.js:60
+msgid "Filename too long. The zip filename must be no longer than 50 characters"
+msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caractères"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Filters"
+msgstr "Filtres"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, rôle, adhesion) a bien le profil d'utilisateur approprié sur le Portal."
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Form"
+msgstr "Formulaire"
+
+#: main/common/i18n/i18n-keys.js:59
+msgid "Form cannot be empty"
+msgstr "Un formulaire ne peut pas être vide"
+
+#: main/features/user/tasks/list/tasks-app.js:263
+msgid "Form submitted.<br/>The next task in the list is now selected."
+msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant sélectionnée."
+
+#: main/features/admin/processes/details/details.js:50
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "General"
+msgstr "Général"
+
+#: main/common/i18n/i18n-keys.js:24 main/common/i18n/i18n-keys.js:25
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Groups"
+msgstr "Groupes"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide Menu"
+msgstr "Masquer le Menu"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide menu"
+msgstr "Masquer le menu"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide panel"
+msgstr "Masquer le panneau"
+
+#: main/features/user/tasks/list/common/priorities.service.js:14
+msgid "Highest"
+msgstr "Plus haute"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "ID"
+msgstr "Id"
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Implementation version"
+msgstr "Version de l'implémentation"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Import"
+msgstr "Importer"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Import an application"
+msgstr "Importer une application"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "In task name column"
+msgstr "Dans la colonne \"Tâche\""
+
+#: table-settings/tableSettings.tpl.html:13
+msgid "Items per page"
+msgstr "Eléments par page"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Last update"
+msgstr "Dernière mise à jour"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Layout"
+msgstr "Layout"
+
+#: main/common/i18n/i18n-keys.js:52
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Look & Feel"
+msgstr "Look & Feel"
+
+#: main/features/user/tasks/list/common/priorities.service.js:18
+msgid "Lowest"
+msgstr "Plus basse"
+
+#: main/common/filters/date-parser.js:39
+msgid "MM/dd/yyyy h:mm a"
+msgstr "dd/MM/yyyy HH:mm"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Make this task available to other team members again"
+msgstr "Libérer - rendre cette tâche à nouveau disponible pour les autres membres de l’équipe"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Make this task personal: only I will be able to do it"
+msgstr "Rendre cette tâche personnelle : je serai le(la) seul(e) à pouvoir la faire"
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Manage Categories"
+msgstr "Gérer les catégories"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:2
+msgid "Maximum size 255 characters"
+msgstr "Taille maximum de 255 caractères"
+
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Me"
+msgstr "Moi"
+
+#: main/common/i18n/i18n-keys.js:30
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Memberships"
+msgstr "Adhésions"
+
+#: main/common/i18n/i18n-keys.js:31
+msgid "Memberships mapped to {}"
+msgstr "Adhésions associées à {}"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Multi-page menu"
+msgstr "Menu"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "My tasks"
+msgstr "Mes tâches"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Name"
+msgstr "Nom"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Navigation"
+msgstr "Navigation"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "New"
+msgstr "Nouveau"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+msgid "New comment"
+msgstr "Nouveau commentaire"
+
+#: main/common/i18n/i18n-keys.js:58
+msgid "No Mapping"
+msgstr "Aucun mapping"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "No application available."
+msgstr "Aucune application définie."
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "No cases to display"
+msgstr "Aucun cas à afficher"
+
+#: main/common/i18n/i18n-keys.js:50
+msgid "No data"
+msgstr "Pas de donnée disponible"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "No description."
+msgstr "Aucune description disponible."
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "No done task yet."
+msgstr "Aucune tâche accomplie pour l'instant."
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "No form is needed. You can enter a comment and confirm."
+msgstr "Aucun formulaire à remplir. Vous pouvez saisir un commentaire et confirmer."
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "No mapping"
+msgstr "Aucun mapping"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "No profile mapped to this application"
+msgstr "Cette application n'a pas de profil associé"
+
+#: main/features/user/tasks/list/common/priorities.service.js:16
+msgid "Normal"
+msgstr "Normale"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "One or more connectors on case start or case end failed"
+msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
+
+#: main/features/user/tasks/list/table/task-table.directive.js:121
+msgid "One or more tasks are not available anymore. The list is now up to date."
+msgstr "Une ou plusieurs tâches ne sont plus disponibles. La liste est maintenant à jour."
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "One-page menu"
+msgstr "Lien vers une page"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Only I can do this task"
+msgstr "Je suis le seul en mesure de faire cette tâche"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "Le tableau ci-dessous affiche uniquement les cas provenant de processus racines. Le détail des cas démarrés par des activités appelantes n'est pas disponible."
+
+#: main/common/i18n/i18n-keys.js:9
+msgid "Open cases"
+msgstr "Cas démarrés"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Open in a popup"
+msgstr "Ouvrir dans une pop-up"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Open the task to perform it"
+msgstr "Ouvrez la tâche pour l'exécuter"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Overview"
+msgstr "Synthèse"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Page"
+msgstr "Page"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Pages"
+msgstr "Pages"
+
+#: main/features/admin/processes/details/details.js:60
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Parameters"
+msgstr "Paramètres"
+
+#: main/common/i18n/i18n-keys.js:67
+msgid "Parameters must be resolved before enabling the Process."
+msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Pending Flow Nodes"
+msgstr "Flow nodes en attente"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Priority"
+msgstr "Priorité"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Process"
+msgstr "Processus"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Process name"
+msgstr "Nom du processus"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Process version"
+msgstr "Version du processus"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Process:"
+msgstr "Processus :"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "Profile"
+msgstr "Profils"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Profiles"
+msgstr "Profils"
+
+#: main/common/i18n/i18n-keys.js:46
+msgid "Ready, waiting instances"
+msgstr "Instances en état ready, waiting (en attente)"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Refresh data"
+msgstr "Actualiser les données"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Release"
+msgstr "Liberer"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Remove"
+msgstr "Supprimer"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Remove all"
+msgstr "Tout supprimer"
+
+#: main/common/i18n/i18n-keys.js:19
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: main/common/i18n/i18n-keys.js:27 main/common/i18n/i18n-keys.js:28
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Roles"
+msgstr "Rôles"
+
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Save"
+msgstr "Enregistrer"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 1"
+msgstr "Clé de recherche 1"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 2"
+msgstr "Clé de recherche 2"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 3"
+msgstr "Clé de recherche 3"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 4"
+msgstr "Clé de recherche 4"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 5"
+msgstr "Clé de recherche 5"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Search..."
+msgstr "Chercher..."
+
+#: main/common/i18n/i18n-keys.js:32
+msgid "Select a group..."
+msgstr "Sélectionnez un groupe ..."
+
+#: main/common/i18n/i18n-keys.js:33
+msgid "Select a role..."
+msgstr "Sélectionnez un rôle ..."
+
+#: main/common/i18n/i18n-keys.js:17
+msgid "Select all"
+msgstr "Tout sélectionner "
+
+#: main/common/i18n/i18n-keys.js:26
+msgid "Select groups..."
+msgstr "Sélectionnez les groupes..."
+
+#: main/common/i18n/i18n-keys.js:18
+msgid "Select none"
+msgstr "Tout désélectionner"
+
+#: main/common/i18n/i18n-keys.js:29
+msgid "Select roles..."
+msgstr "Sélectionnez des rôles ..."
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" du processus."
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Select the page"
+msgstr "Sélectionnez la page"
+
+#: main/common/i18n/i18n-keys.js:23
+msgid "Select users..."
+msgstr "Sélectionnez des utilisateurs ..."
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Set as Home page"
+msgstr "Définir en tant que page d'accueil"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show Menu"
+msgstr "Afficher le Menu"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
+msgstr "Afficher toutes les tâches que je peux faire : mes tâches personnelles et les tâches disponibles pour moi et les autres membres de l’équipe"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show menu"
+msgstr "Afficher le menu"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show my personal tasks: the ones I took and the ones assigned to me, automatically or by a process manager"
+msgstr "Afficher mes tâches personnelles : celles que j’ai prises et celles qui m'ont été assignées, automatiquement ou par un gestionnaire de processus"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show panel"
+msgstr "Afficher le panneau"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show the tasks that I have done"
+msgstr "Afficher les tâches que j’ai faites"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by URL"
+msgstr "Trier par URL"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by name"
+msgstr "Trier par nom"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by updated on"
+msgstr "Trier par date de mise à jour"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by version"
+msgstr "Trier par version"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Specify the menu structure."
+msgstr "Définir le menu de navigation."
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Start date"
+msgstr "Débuté le"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Started by"
+msgstr "Démarré par"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "State"
+msgstr "Etat"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Status of import"
+msgstr "Statut de l'import"
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "Submit"
+msgstr "Soumettre"
+
+#: main/common/i18n/i18n-keys.js:14
+msgid "Successfully updated categories"
+msgstr "Les catégories ont été mises à jour avec succès"
+
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
+msgid "Table settings"
+msgstr "Paramètres du tableau"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Take"
+msgstr "Prendre"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Task Id"
+msgstr "ID de tâche"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Task form"
+msgstr "Formulaire de tâche"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Task list"
+msgstr "Liste de tâches"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Task name"
+msgstr "Tâche"
+
+#: main/common/i18n/i18n-keys.js:53
+msgid "Technical error."
+msgstr "Erreur technique."
+
+#: main/common/i18n/i18n-keys.js:70
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "The Process cannot be enabled"
+msgstr "Le processus ne peut être activé"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "The application"
+msgstr "L'application"
+
+#: main/features/user/tasks/list/tasks-app.js:252
+msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
+msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
+
+#: main/common/i18n/i18n-keys.js:68
+msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
+msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
+
+#: target/dist/features/user/tasks/list/comments/comments.html:2
+msgid "The case is archived. You cannot add comments anymore"
+msgstr "Le cas est archivé. Il n'est plus possible d'ajouter de nouveaux commentaires"
+
+#: main/common/i18n/i18n-keys.js:76
+msgid "The case {{caseId}} has been started successfully."
+msgstr "Le cas {{caseId}} a été démarré avec succès."
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "The current process has no connectors defined."
+msgstr "Aucun connecteur n'a été défini pour ce processus."
+
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "The current process has no parameters defined."
+msgstr "Aucun paramètre n'a été défini pour ce processus."
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "Le cas supprimé sera définitivement supprimé des archives."
+
+#: main/common/i18n/i18n-keys.js:69
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr "Les éléments suivants ne sont associés à aucun formulaire : [ {} ]. Ils doivent être associés pour que le processus puisse être activé."
+
+#: main/common/i18n/i18n-keys.js:63
+msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
+msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
+
+#: main/features/user/tasks/list/details/task-no-form.directive.js:54
+msgid "The task has been submitted but an error occurred while adding the comment"
+msgstr "La tâche a été soumise, mais une erreur s'est produite à l'ajout du commentaire"
+
+#: main/common/i18n/i18n-keys.js:75
+msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
+msgstr "Les mots 'content', 'API' et 'theme' sont réservés pour un usage interne. Ils ne doivent pas être utilisés dans l'URL d'une page ou d'une application."
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Theme"
+msgstr " Thème"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Ces cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Ces cas supprimés disparaîtront définitivement des archives."
+
+#: main/common/i18n/i18n-msg.service.js:28
+msgid "This URL is already in use"
+msgstr "Cette URL est déjà utilisée"
+
+#: main/common/i18n/i18n-msg.service.js:27
+msgid "This field is mandatory"
+msgstr "Ce champ est obligatoire"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "This is the task details panel. No information to display"
+msgstr "Cette zone est dédiée aux détails d'une tâche. Aucune information à afficher pour l'instant"
+
+#: main/common/i18n/i18n-msg.service.js:29
+msgid "This name is already in use"
+msgstr "Ce nom est déjà utilisé"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "This task is completed."
+msgstr "Cette tâche est terminée."
+
+#: main/features/user/tasks/list/details/task-details-helper.service.js:40
+msgid "This task is not available anymore. The list is now up to date."
+msgstr "Cette tâche n'est plus disponible. La liste est maintenant à jour."
+
+#: main/features/user/tasks/list/table/task-table.controller.js:114
+msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
+msgstr "Cette tâche est en retard. Elle aurait dû être faite pour le {{dueDate}}"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "To create an application, click New or Import."
+msgstr "Pour créer une application, cliquez sur Nouveau ou Importer."
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "To do"
+msgstr "À faire"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "To do so, go to"
+msgstr "Pour cela, consultez la page"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
+msgstr "Pour remplir le formulaire, vous devez \"prendre\" cette tâche. Cela signifie que vous serez le(la) seul(e) à pouvoir la faire. Pour la rendre à nouveau disponible à l'équipe, \"libérez\"-la."
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
+msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
+
+#: main/common/i18n/i18n-keys.js:41
+msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du processus dans un Bonita BPM Studio version 6.4 ou ultérieure, générez le fichier .bar puis déployez-le dans le portail."
+
+#: target/dist/features/admin/processes/details/params.html:1
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Type"
+msgstr "Type"
+
+#: main/common/i18n/i18n-keys.js:55
+msgid "Type here to search for a user..."
+msgstr "Saisissez le nom d'un utilisateur..."
+
+#: main/common/i18n/i18n-keys.js:20
+msgid "Type here to search..."
+msgstr "Rechercher..."
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "URL"
+msgstr "URL"
+
+#: main/features/user/tasks/list/comments/comments.controller.js:33
+msgid "Unable to add the comment. Refresh your task list and try again. If the problem persists, contact your administrator"
+msgstr "Impossible d'ajouter le commentaire. Actualisez votre liste de tâches, puis réessayez. Si le problème persiste, contactez votre administrateur"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Unassign. This will make it available to team again"
+msgstr "Désassigner. Cela la rendra à nouveau disponible pour les membres de l'équipe"
+
+#: main/features/user/tasks/list/common/priorities.service.js:17
+msgid "Under normal"
+msgstr "Basse priorité"
+
+#: target/dist/features/admin/applications/details/application-details-app.html:1
+msgid "Update"
+msgstr "Mise à jour"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Updated by"
+msgstr "Mise à jour par"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Updated on"
+msgstr "Mise à jour le"
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Use Arrow up and Arrow down keys to browse among existing categories."
+msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
+
+#: main/common/i18n/i18n-keys.js:21
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: main/common/i18n/i18n-keys.js:22
+msgid "Users mapped to {}"
+msgstr "Utilisateurs associés à {}"
+
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Value"
+msgstr "Valeur"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Version"
+msgstr "Version"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "View case details"
+msgstr "Voir les détails du cas"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "View case overview"
+msgstr "Afficher la page de synthèse du cas"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "View task"
+msgstr "Voir la tâche"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "View this task"
+msgstr "Voir cette tâche"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "We couldn't find what you are looking for."
+msgstr "Nous n'avons pas trouvé ce que vous recherchez."
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "When you export an application, pages and profiles are not exported in the file."
+msgstr "Lorsque vous exportez une application, les pages et profils liés ne sont pas exportés dans le fichier."
+
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "With failures"
+msgstr "Avec erreurs"
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "You are about to export the application"
+msgstr "Vous allez exporter l'application."
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "You must add a page before you can reference it in a menu."
+msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un menu."
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
+msgstr "Votre liste de tâches personnelles est vide. Vous pouvez prendre une tâche dans la liste <a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">A faire</a>."
+
+#: main/common/i18n/i18n-keys.js:61
+msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
+msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)"
+
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "an Application"
+msgstr "une application"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "an application"
+msgstr "une application"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "application has been partially imported. The following items are not loaded in the Portal."
+msgstr "application a été partiellement importée. Les composants suivants ne sont pas chargés dans le portail."
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "application has been successfully imported, with complete page mapping and menu mapping."
+msgstr "L'application a été importée avec le menu et les liens de pages."
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "of"
+msgstr "de"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date ascending"
+msgstr "tri par Date de fin, croissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date descending"
+msgstr "tri par Date de fin, décroissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID ascending"
+msgstr "tri par Id, croissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID descending"
+msgstr "tri par Id, décroissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name ascending"
+msgstr "tri par Nom du Processus, croissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name descending"
+msgstr "tri par Nom du Processus, décroissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date ascending"
+msgstr "tri par Date de début, croissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date descending"
+msgstr "tri par Date de début, décroissant"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "username:"
+msgstr "nom d'utilisateur :"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "will be permanently deleted."
+msgstr "va être supprimée définitivement"
+
+#: main/common/i18n/i18n-keys.js:16
+msgid "{{nbErrors}} errors on mapping updates"
+msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
+
+#: main/common/i18n/i18n-keys.js:36
+msgid "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus n'ont pas pu être mis à jour"
+
+#: main/common/i18n/i18n-keys.js:37
+msgid "{{nbMapping}} Process manager mappings have been updated"
+msgstr "{{nbMapping}} mappings du profil Gestionnaire de processus ont été mis à jour"
+
+#: main/common/i18n/i18n-keys.js:12
+msgid "{{nbOfDeletedCases}} cases have been deleted"
+msgstr "{{nbOfDeletedCases}} cas ont été supprimés avec succès"
+
+#: main/common/i18n/i18n-keys.js:15
+msgid "{{nbSucess}} actor mapping updates succeeded"
+msgstr "{{nbSucess}} mappings d'acteurs ont été mis à jour avec succès"
+
+#: main/common/i18n/i18n-keys.js:34
+msgid "{{role}} of {{group}}"
+msgstr "{{role}} de {{group}}"
+
+#: main/common/i18n/i18n-keys.js:35
+msgid "{{role}} of {{group}} has been created"
+msgstr "{{role}} de {{group}} a été créée"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mapped"
+msgstr "{} associés"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mappings to delete"
+msgstr "{} associés à supprimer"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} more"
+msgstr "{} autres"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} of {}"
+msgstr "{} de {}"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "{}-{} of {}"
+msgstr "{}-{} de {}"
+

@@ -1,0 +1,37 @@
+<assembly>
+	<id>less</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}/src/main/less</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources</directory>
+			<outputDirectory></outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>**/*.html</include>
+				<include>VERSION</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources</directory>
+			<outputDirectory></outputDirectory>
+			<excludes>
+				<exclude>**/*.html</exclude>
+			</excludes>
+		</fileSet>
+		<!-- compiled bootstrap.min.css need to be added to less package since for now it is not compiled at runtime by portal -->
+		<fileSet>
+			<directory>${project.build.directory}/css</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>css/bootstrap.min.css</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

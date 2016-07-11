@@ -1,0 +1,143 @@
+.popupwrapper{
+	.popupoverlay {
+		background-color:#000;
+		.opacity(.3);
+	}
+
+	.popupcontainer{
+		margin: auto;
+		text-align: left;
+		padding: 0;
+		background: @popup-bgColor;
+		background-clip: content-box;//TODO check this rule
+		position: relative;
+		min-width: 500px;
+		.boxShadow(@popup-shadowX, @popup-shadowY, @popup-shadowBlur, @popup-shadowColor);
+		display: inline-block;
+		max-width: @popup-maxWidth;
+		.page{
+			padding: @popup-padding;
+			> .header {
+				h1{
+					.fontSize(@popup-title-fontSize);
+					margin: @popup-title-margin;
+				}
+			}
+			.form {
+				max-width: none;
+			}
+		}
+		p {
+		  margin: 15px 0;
+		}
+	}
+
+	.popupcontainerheader{
+		.clearFix();
+		h2{
+			float: left;
+		}
+		a.close_popup{
+			position: absolute;
+			.hideText();
+			.bg(@popup-closeButton-bgImg);
+			width: @popup-closeButton-width;
+			height: @popup-closeButton-height;
+			top: @popup-closeButton-top;
+			right: @popup-closeButton-right;
+		}
+	}
+
+	.popupcontainerbody{
+		>.page{
+			>.header>img{
+				height:24px;
+				width:auto;
+			}
+			>.body{
+				position: static;
+				.datatable{
+					&.table_view_table, &.table_view_form{
+						.table{
+							table-layout: auto;
+							.td, .th{
+								word-break: break-all;
+								word-wrap: break-word;
+							}
+						}
+					}
+
+					.td_icon{
+						.iconMixin(popup);
+					}
+					.actions{
+						text-align: @popup-actions-textAlign;
+						margin: @popup-actions-margin;
+						a {
+							&.cancel{
+
+							}
+							&.add{
+
+							}
+							+a, + css3-container + a{
+								margin-left: @popup-button-marginBetween;
+							}
+						}
+					}
+				}
+			}
+		}
+        .page_AddCustomProfileEntry{
+            .body{
+                .tableTitle{
+                    padding: 5px 0;
+                }
+                .pages_added .pager{
+                    display: none;
+                }
+                .pages_added .table {
+	            	.thead .tr {
+                        .th_1 {
+                            width: 180px;
+                            min-width: 100px;
+                            &.th_icon {
+                                 width: auto;
+                                     min-width: 0px;
+                                     padding: 0;
+                                     margin: 0;
+                                     border-right: none;
+                            }
+
+                        }
+		                .th_2 {
+	                    	&.th_page_name:before {
+	                    		border-left: none;
+                            }
+	                    }
+	                }
+	                .tbody .tr {
+	                	.td_icon {
+	                		padding: 0 0 0 15px;
+	                		border-right: medium none;
+							text-align: right;
+	                	}
+	                	.td_page_name {
+	                		border-left: none;
+	                	}
+	                }
+	            }
+                .pages_to_add .table .thead .tr .th_2{
+                    width: 120px;
+                    min-width: 80px;
+                    border-left:none;
+                }
+            }
+        }
+	}
+
+	.popupframe{
+		top: 150px;
+		text-align: center;
+	}
+}

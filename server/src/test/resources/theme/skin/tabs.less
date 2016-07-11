@@ -1,0 +1,38 @@
+.tabs{
+	>.header{
+		overflow: hidden;
+		.tabtitle{
+			float: left;
+			position: relative;
+			.pointerAsLink();
+			border: @tabs-tab-border;
+			margin: 0 @tabs-tab-marginBetween 0 0 ;
+			.verticalGradient (@tabs-tab-gradientColor1 , @tabs-tab-gradientPostition1 , @tabs-tab-gradientColor2 , @tabs-tab-gradientPostition2);
+			.borderRadiusTop (@tabs-tab-radiusTL);
+			padding: @tabs-tab-padding;
+			&.tabtitle_active{
+				border: @tabs-tab-border-active;
+				border-bottom: none;
+				.verticalGradient (@tabs-tabactive-gradientColor1 , @tabs-tab-gradientPostition1 , @tabs-tabactive-gradientColor2 , @tabs-tab-gradientPostition2);
+				h1{
+					color: @tabs-tabActive-txtColor;
+				}
+			}
+
+			h1{
+				color: @tabs-tab-txtColor;
+			}
+		}
+	}
+
+	> .body{
+		> .tab{
+			> .body{
+				margin-top: 0 - @border-width - @border-width;
+				padding: @tabs-tabBody-padding;
+				border: @tabs-tabBody-border;
+			}
+		}
+	}
+}
+

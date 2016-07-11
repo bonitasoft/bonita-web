@@ -1,0 +1,25 @@
+<assembly>
+    <id>css</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.directory}/css</directory>
+            <outputDirectory></outputDirectory>
+            <filtered>true</filtered>
+            <includes>
+                <include>**/*.html</include>
+                <include>VERSION</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/css</directory>
+            <outputDirectory></outputDirectory>
+            <excludes>
+                <exclude>**/*.html</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>

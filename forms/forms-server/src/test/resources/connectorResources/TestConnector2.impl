@@ -1,0 +1,13 @@
+<connectorImplementation>
+	
+	<definitionId>org.bonitasoft.forms.server.testConnectors.testConnector</definitionId>
+	<definitionVersion>1.0</definitionVersion>
+	<implementationClassname>org.bonitasoft.forms.server.testConnectors.TestConnector2</implementationClassname>
+	<implementationId>org.bonitasoft.forms.server.testConnectors.testConnector2</implementationId>
+	<implementationVersion>1.0</implementationVersion>
+	
+	<jarDependencies>
+		<jarDependency>TestConnector2.jar</jarDependency>
+	</jarDependencies>
+	
+</connectorImplementation>

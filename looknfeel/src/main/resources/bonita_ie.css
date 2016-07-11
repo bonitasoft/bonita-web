@@ -1,0 +1,11 @@
+.page_DisplayCaseForm .form-view .toolbar {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    height: 80px;
+}
+
+.page_DisplayCaseForm #bonitaframe {
+    /* 100% - toolbar height + 10 */
+    height: calc(100% - 90px);
+}

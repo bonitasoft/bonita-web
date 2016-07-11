@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+    <group name="bonita">
+        <css>/less/main.less</css>
+    </group>
+    <group name="bonita-skin">
+        <css>/less/skin/bootstrap/portal/main.less</css>
+    </group>
+</groups>

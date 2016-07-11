@@ -1,0 +1,332 @@
+.skinFontFamily(){
+    font-family: @skinFont, sans-serif;
+}
+
+.fontSize(@pFontSize){
+    font-size: percentage(@pFontSize / @skinFontSize);
+}
+
+.revertfontSize(@pFontSize){
+    font-size: percentage((@pFontSize - 6px)/@skinFontSize);
+}
+
+//-----------------------------------------------------------------------------
+// specific application mixin
+//-----------------------------------------------------------------------------
+
+/* buttons */
+.skinButton(@btnColor, @txtColor: #fff, @strokeColor: transparent){
+    color: @txtColor;
+    span{
+        color: @txtColor;
+    }
+    padding: @button-padding;
+    outline-color: lighten(@btnColor, 10%);
+    min-width: @button-minWidth;
+    border: @button-border;
+    border-color: @btnColor;
+    text-transform: uppercase;
+    font-family: @skinFont;
+    .fontSize(@button-fontSize);
+    .borderRadius(@button-radius);
+    .button(@button-height);
+    background: @btnColor;
+    .pointerAsLink();
+    + .btn, +css3-container +.btn{
+        margin-left: @button-marginBetween;
+    }
+    overflow: hidden;
+    zoom: 1;
+
+    //to match with bootstrap styles
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        color: @txtColor;
+        background-color: darken(@btnColor, 10%);
+        border-color: darken(@btnColor, 12%);
+    }
+}
+
+.dynamicStroke(@txtColor) when(lightness(@txtColor) < 50%){
+    .stroke(1px, lighten(@txtColor, 100% - lightness(@txtColor)));
+}
+
+.pagerButton(@btnColor, @btnImage, @btnImageDisable){
+    outline-color: lighten(@btnColor, 10%);
+    border: @button-pager-border;
+    position: relative; //CSS PIE Z-Index fix
+    .hideText();
+    .borderRadius(@button-radius);
+    .button(@button-pager-height);
+    width: @button-pager-width;
+    .bg(@btnImage, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
+    &:hover{
+        border: @button-pager-borderHover;
+    }
+    &.disable{
+        border: @button-pager-border-disable;
+        .bg(@btnImageDisable, no-repeat, @btnColor, @button-pager-bgX, @button-pager-bgY);
+        cursor: default !important;
+    }
+    + a, + css3-container + a{
+        margin: @button-pager-marginBetween;
+    }
+}
+.addButton(@btnColor, @txtColor: #fff){
+    .specialButton(@btnColor, @txtColor, transparent);
+    
+    &:before{
+        position: @addButton-glyphicon-position;
+        vertical-align: @addButton-glyphicon-verticalAlign;
+        margin: @addButton-glyphicon-margin;
+        display: @addButton-glyphicon-display;
+        font-family: @addButton-glyphicon-fontFamily;
+        font-style: @addButton-glyphicon-fontStyle;
+        font-weight: @addButton-glyphicon-fontWeight;
+        line-height: @addButton-glyphicon-lineHeight;
+        -webkit-font-smoothing: @addButton-glyphicon-webkitFontSmoothing;
+        -moz-osx-font-smoothing: @addButton-glyphicon-mozOsxFontSmoothing;
+        content: @addButton-glyphicon-content;
+        background-color: @addButton-glyphicon-backgroundColor;
+        padding: @addButton-glyphicon-padding;
+        border: @addButton-glyphicon-border;
+        .borderRadius(@addButton-glyphicon-borderRadius);
+        text-align: @addButton-glyphicon-textAlign;
+        color: @addButton-glyphicon-color;
+    }
+    &:hover&:before{
+        display: @moreButton-hover-glyphicon-display;
+    }
+    padding: @addbutton-padding;
+    text-align: @addbutton-txtAlign;
+    
+}
+
+.specialButton(@btnColor, @txtColor: #fff, @strokeTxtColor: transparent){
+    text-transform: uppercase;
+    color: @txtColor;
+    padding: @button-padding;
+    outline-color: lighten(@btnColor, 10%);
+    min-width: @button-minWidth;
+    border: @button-border;
+    border-color: darken(@btnColor, 3%);
+    .fontSize(@button-fontSize);
+    .borderRadius(@button-radius);
+    .button(@button-height);
+    background-color: @btnColor;
+    .stroke(1px, @strokeTxtColor);
+    position: relative;
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        color: @txtColor;
+        background-color: darken(@btnColor, 10%);
+        border-color: darken(@btnColor, 12%);
+    }
+}
+
+
+.stroke(@strokeWidth, @strokeColor){
+    text-shadow:
+    0 0 0 @strokeColor,
+    -@strokeWidth -@strokeWidth 0 @strokeColor,  
+    @strokeWidth -@strokeWidth 0 @strokeColor,
+    -@strokeWidth @strokeWidth 0 @strokeColor,
+    @strokeWidth @strokeWidth 0 @strokeColor;
+}
+
+.loginButton(@btnColor, @txtColor: #fff){
+    .skinButton(@btnColor, @txtColor);
+}
+
+/* filters */
+
+.bgFilter(@bg, @bgColor: transparent, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft){
+    .bg(@bg, no-repeat, @bgColor, @bgLeft, @filtersPanel-filters-currentLine-backgroundTop);
+}
+.bgSubFilter(@bg, @bgColor: transparent, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft){
+    padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
+    .fontSize(@filtersPanel-subfilters-fontSize);
+    .bgFilter(@bg, @bgColor, @bgLeft);
+}
+.bgHoverFilter(@bg, @bgLeft: @filtersPanel-filters-currentLine-backgroundLeft, @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
+    .bg(@bg, ~"no-repeat @{bgLeft} #b4b9c2");
+}
+.bgHoverSubFilter(@bg, @bgLeft: @filtersPanel-subfilters-currentLine-backgroundLeft,  @bgTop: @filtersPanel-filters-currentLine-backgroundTop, @c1:@header-menu-gradientColor1Hover, @p1:@header-menu-gradientPosition1, @c2:@header-menu-gradientColor2Hover, @p2:@header-menu-gradientPosition2){
+    padding: @filtersPanel-filters-paddingTop @filtersPanel-filters-paddingRight @filtersPanel-filters-paddingBottom @filtersPanel-subfilters-paddingLeft;
+    .fontSize(@filtersPanel-subfilters-fontSize);
+    .bgHoverFilter(@bg, @bgLeft, @bgTop, @c1, @p1, @c2, @p2);
+}
+.bgCurrentFilter(@bg, @bgColor: @filtersPanel-filterHover-bgColor){
+    .bgFilter(@bg,@bgColor);
+}
+.bgCurrentSubFilter(@bg, @bgColor:@filtersPanel-filterHover-bgColor){
+    .bgSubFilter(@bg, @bgColor);
+}
+
+/* avatar sizes */
+
+
+.iconMixin(@context) when(@context=list){
+    .iconMaxSize(@tablesPanel-table-icon-maxHeight, @tablesPanel-table-icon-maxWidth);
+}
+
+.iconMixin(@context) when(@context=details){
+    .iconMaxSize(@detailsPanel-table-icon-maxHeight, @detailsPanel-table-icon-maxWidth);
+}
+
+.iconMixin(@context) when(@context=moreDetails){
+    .iconMaxSize(@moreDetails-table-icon-maxHeight, @moreDetails-table-icon-maxWidth);
+}
+
+.iconMixin(@context) when(@context=popup){
+    .iconMaxSize(@popup-table-icon-maxHeight, @popup-table-icon-maxWidth);
+}
+
+.iconMixin(@context) when(@context=userAvatar){
+    .iconMaxSize(@userAvatar-table-icon-maxHeight, @userAvatar-table-icon-maxWidth);
+}
+
+.iconMaxSize(@max-height, @max-width){
+    img{
+        max-height: @max-height;
+        max-width: @max-width;
+    }
+}
+
+
+/* more details mixins which are used in specific views(ej. report)*/
+.moreDetails_title(){
+    overflow: hidden;
+    float: @moreDetails-metadatas-title-float;
+    width: @moreDetails-metadatas-title-width;
+    padding: @moreDetails-metadatas-title-padding;
+    margin: @moreDetails-metadatas-title-margin;
+    .fontSize(@moreDetails-metadatas-title-fontSize);
+    .boxSizing();
+}
+.moreDetails_description(){
+    overflow: hidden;
+    padding: @moreDetails-metadatas-description-padding;
+    float: @moreDetails-metadatas-description-float;
+    width: @moreDetails-metadatas-description-width;
+    .boxSizing();
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    padding-bottom: @moreDetails-metadatas-description-padding-bottom;
+}
+
+.label(){
+    font-weight: bold;
+    color:@secondAccentColor;
+}
+label{
+    .label();
+}
+.moreDetails_section_title{
+    padding: @moreDetails-title-padding;
+    margin: @moreDetails-title-margin;
+    display: inline-block;
+    .fontSize(@moreDetails-title-fontSize);
+}
+.table_header(){
+    display: table-header-group;
+    float: none;
+    width: 100%;
+    color: @table-header-color;
+    border-collapse: separate;
+    .tr{
+        .skinFontFamily();
+        position: relative;
+        display: table-row;
+        float: none;
+        //background-color: #2c3e50; //@table-header-gradientColor1;
+
+        //.verticalGradient(@table-header-gradientColor1, @table-header-gradientPosition1, @table-header-gradientColor2, @table-header-gradientPosition2);
+        .th{
+            position: relative;
+            .fontSize(@table-header-fontSize);
+            height: @table-header-cell-height;
+            padding: @table-header-cell-padding;
+            border: none;
+            display: table-cell;
+            float: none;
+            &:before{
+                border-left: @table-header-cell-borderLeft;
+                margin: @table-header-cell-border-top 0 0 (0 - @table-header-cell-paddingX);
+                content: "";
+                display: block;
+                width: 0;
+                height: @table-header-cell-borderHeight;
+                position: absolute;
+            }
+            &_1:before{
+                display: none;
+            }
+            &_1{
+                .borderRadius(@defaultRadius, 0px, 0px, 0px);
+            }
+            &_last{
+                .borderRadius(0px, @defaultRadius, 0px, 0px);
+            }
+        }
+    }
+}
+
+.table_line(){
+    width: 100%;
+    display: table-row;
+    float: none;
+    position: relative;
+    background: #fff;
+    .td{
+        position: relative;
+        float: none;
+        display: table-cell;
+        border: @table-cell-border;
+        padding: @table-cell-paddingY @table-cell-paddingX;
+        vertical-align: middle;
+        &.td_icon{
+            .iconMixin(list);
+        }
+        &.td_actions{
+            a{
+                margin-right: @table-cell-actions-link-marginRight;
+                color: @table-cell-actions-link-color;
+                text-decoration: @table-cell-actions-link-textDecoration;
+                &:hover{
+                    text-decoration: @table-cell-actions-linkHover-textDecoration;
+                }
+            }
+        }
+    }
+    &_last{
+        .td{
+            &_1{
+                position: relative;
+                .borderRadius(0px, 0px, 0px, @defaultRadius);
+            }
+            &_last{
+                position: relative;
+                .borderRadius(0px, 0px, @defaultRadius, 0px);
+            }
+        }
+    }
+
+}
+.section_border(){
+    border-top: @moreDetails-section-header-borderTop;
+    padding: @moreDetails-section-header-padding;
+}
+
+.link {
+    color: @fontColor;
+    text-decoration: underline;
+}

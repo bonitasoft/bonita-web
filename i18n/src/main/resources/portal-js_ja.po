@@ -1,0 +1,1291 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Language: ja\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
+"PO-Revision-Date: 2016-06-30 10:33-0400\n"
+
+#: main/common/i18n/i18n-keys.js:11
+msgid "1 case has been deleted"
+msgstr "1 案件が削除されました"
+
+#: main/common/i18n/i18n-keys.js:62
+msgid "A page with this name already exists."
+msgstr "この名前のページは既に存在します。"
+
+#: main/features/user/tasks/list/common/priorities.service.js:15
+msgid "Above normal"
+msgstr "平均以上"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Actions"
+msgstr "アクション"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Activation state"
+msgstr "有効化の状態"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actor name"
+msgstr "アクター名"
+
+#: main/features/admin/processes/details/details.js:55
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actors"
+msgstr "アクター"
+
+#: main/common/i18n/i18n-keys.js:65
+msgid "Actors must be resolved before enabling the Process."
+msgstr "アクターは、プロセスを有効にする前に設定する必要があります。"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/details/page-list.html:1
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Add"
+msgstr "追加"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Add from custom pages"
+msgstr "カスタム ページを追加します"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu"
+msgstr "メニューを追加します"
+
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu item"
+msgstr "メニュー項目を追加します"
+
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Add page"
+msgstr "ページを追加"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add pages in Navigation"
+msgstr "ナビゲーションにページを追加します"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Add top-level menu"
+msgstr "最上位のメニューを追加します"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
+msgstr "レディ、待機、実行、完了および初期化状態のタスクを集約"
+
+#: main/features/user/tasks/list/common/store.js:61
+msgid "All"
+msgstr "すべて"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "All done. Good job!"
+msgstr "実行すべきタスクがアサインされていません。"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
+msgstr "アプリケーションは、特定のユーザー プロファイル用にカスタマイズされた環境になり、利用者はビジネス データおよびビジネス プロセスを最も効率的な方法で利用できるようになります。"
+
+#: main/common/i18n/i18n-keys.js:13
+msgid "An error occured during categories update"
+msgstr "カテゴリの更新中にエラーが発生しました"
+
+#: main/features/user/tasks/list/tasks-app.js:257
+msgid "An error occurred while submitting the form."
+msgstr "フォームの送信中にエラーが発生しました。"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Application XML file"
+msgstr "アプリケーションのXMLファイル"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Application list"
+msgstr "アプリケーション リスト"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Apply"
+msgstr "適用"
+
+#: main/common/i18n/i18n-keys.js:10
+msgid "Archived cases"
+msgstr "完了済み案件"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Assign to me. Only I will be able to do it"
+msgstr "自分にアサイン。それを実行できるのは、自分だけになります。"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Assigned on"
+msgstr "アサイン日時"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Available or My tasks"
+msgstr "このマークはあなただけに指名されたタスクを示します"
+
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Available tasks"
+msgstr "応受援タスク"
+
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "Back"
+msgstr "戻る"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
+msgstr "そのページとプロファイルは、アプリケーションをインポートする前にポータルに既に読み込まれていなければなりません。"
+
+#: main/common/i18n/i18n-keys.js:57
+msgid "Can't import page or form to the process"
+msgstr "プロセスにページまたはフォームをインポートできません"
+
+#: main/common/i18n/i18n-keys.js:74
+msgid "Can't update expression content"
+msgstr "式のコンテンツを更新できません"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/applications/export-application.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: main/common/i18n/i18n-keys.js:42
+msgid "Cancelled, skipped instances"
+msgstr "キャンセル、スキップされたインスタンス"
+
+#: main/common/i18n/i18n-keys.js:54
+msgid "Cannot upload the file"
+msgstr "ファイルをアップロードできません"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Case Id"
+msgstr "案件ID"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Case comments"
+msgstr "案件コメント"
+
+#: main/common/i18n/i18n-keys.js:47
+msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
+msgstr "案件ID: {{caseId}} - プロセス: {{processName}} ({{processVersion}})"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Case list"
+msgstr "案件リスト"
+
+#: main/common/i18n/i18n-keys.js:71
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Case overview"
+msgstr "案件概況"
+
+#: main/common/i18n/i18n-keys.js:72
+msgid "Case start"
+msgstr "案件の開始"
+
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Case state"
+msgstr "案件の状態"
+
+#: target/dist/features/admin/cases/list/cases.html:1
+#: target/dist/features/user/cases/list/cases.html:1
+msgid "Cases"
+msgstr "案件"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Class name"
+msgstr "クラス名"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Click here to choose your file. XML file (.xml)"
+msgstr "XML ファイル (.xml) を選択するには、ここをクリックします。"
+
+#: target/dist/features/admin/applications/import-application.html:1
+#: target/dist/features/user/tasks/list/details/task-details-modal.html:1
+msgid "Close"
+msgstr "閉じる"
+
+#: table-settings/tableSettings.tpl.html:25
+msgid "Columns selection"
+msgstr "列の選択"
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "Comment:"
+msgstr "コメント："
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Comments"
+msgstr "コメント"
+
+#: main/common/i18n/i18n-keys.js:64
+msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
+msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
+
+#: main/common/i18n/i18n-keys.js:43
+msgid "Completed instances"
+msgstr "完了したインスタンス"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Configuration state"
+msgstr "構成設定の状態"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "Confirm delete?"
+msgstr "削除していいですか？"
+
+#: main/features/admin/processes/details/details.js:65
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Connectors"
+msgstr "コネクタ"
+
+#: main/common/i18n/i18n-keys.js:66
+msgid "Connectors must be resolved before enabling the Process."
+msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Create a new membership"
+msgstr "新しいメンバーシップを作成します"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Create an application"
+msgstr "アプリケーションを作成します"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Created by"
+msgstr "作成者"
+
+#: target/dist/features/admin/applications/details/application-details-app.html:1
+msgid "Creation"
+msgstr "作成"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Creation on"
+msgstr "作成対象："
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/delete-application.html:1
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "Delete"
+msgstr "削除"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "Delete application"
+msgstr "アプリケーションを削除"
+
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete process"
+msgstr "プロセスを削除"
+
+#: target/dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete the process"
+msgstr "このプロセスを削除します"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/processes/details/params.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Description"
+msgstr "説明"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "Display name"
+msgstr "表示名"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Done tasks"
+msgstr "完了したタスク"
+
+#: main/common/i18n/i18n-keys.js:49
+msgid "Drawing process..."
+msgstr "プロセス図を描画中 ..."
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Due date"
+msgstr "期限"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/details/menubuilder-actionBar.html:1
+msgid "Edit"
+msgstr "編集"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu"
+msgstr "メニューを編集します"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu item"
+msgstr "メニュー項目を編集"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Enable all"
+msgstr "すべて有効にする"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "End date"
+msgstr "終了日"
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
+msgstr "新しいカテゴリ名を入力し、\"Enter\"キーを押して新しいカテゴリを作成したうえで、現在のプロセスにそれをアサインします。"
+
+#: main/common/i18n/i18n-keys.js:56
+msgid "Enter the user to start the case for..."
+msgstr "案件を開始するユーザーを入力..."
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Error"
+msgstr "エラー"
+
+#: main/common/i18n/i18n-keys.js:48
+msgid "Error on drawing process!"
+msgstr "プロセス図の描画中にエラーが発生しました！"
+
+#: main/common/i18n/i18n-keys.js:77
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "案件を開始しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
+
+#: main/common/i18n/i18n-keys.js:51
+msgid "Error!"
+msgstr "エラー！"
+
+#: main/common/i18n/i18n-keys.js:38
+msgid "Error: value must be a boolean"
+msgstr "エラー: 値はブール値である必要があります"
+
+#: main/common/i18n/i18n-keys.js:39
+msgid "Error: value must be a double"
+msgstr "エラー: 値は double 型の値である必要があります"
+
+#: main/common/i18n/i18n-keys.js:40
+msgid "Error: value must be an integer"
+msgstr "エラー: 値は整数でなければなりません"
+
+#: main/common/i18n/i18n-keys.js:45
+msgid "Executing, completing, initializing instances"
+msgstr "実行中、完了中、インスタンスを初期化中"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "Export"
+msgstr "エクスポート"
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "Export application"
+msgstr "アプリケーションをエクスポート"
+
+#: main/common/i18n/i18n-keys.js:73
+msgid "Expression content has been updated"
+msgstr "式のコンテンツが更新されました"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Failed Flow Nodes"
+msgstr "作業中にエラー発生"
+
+#: main/common/i18n/i18n-keys.js:44
+msgid "Failed instances"
+msgstr "エラーのあったインスタンス"
+
+#: main/common/i18n/i18n-keys.js:60
+msgid "Filename too long. The zip filename must be no longer than 50 characters"
+msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Filters"
+msgstr "フィルター"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Form"
+msgstr "フォーム"
+
+#: main/common/i18n/i18n-keys.js:59
+msgid "Form cannot be empty"
+msgstr "フォームは空にできません"
+
+#: main/features/user/tasks/list/tasks-app.js:263
+msgid "Form submitted.<br/>The next task in the list is now selected."
+msgstr "フォームを送信しました。 <br/>リスト中の次のタスクが選択されました。"
+
+#: main/features/admin/processes/details/details.js:50
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "General"
+msgstr "全般"
+
+#: main/common/i18n/i18n-keys.js:24 main/common/i18n/i18n-keys.js:25
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Groups"
+msgstr "グループ"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide Menu"
+msgstr "メニューを非表示"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide menu"
+msgstr "メニューを非表示"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Hide panel"
+msgstr "パネルを非表示"
+
+#: main/features/user/tasks/list/common/priorities.service.js:14
+msgid "Highest"
+msgstr "最高"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "ID"
+msgstr "id"
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Implementation version"
+msgstr "実装のバージョン"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Import"
+msgstr "インポート"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Import an application"
+msgstr "アプリケーションをインポート"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "In task name column"
+msgstr "[タスク名] 列"
+
+#: table-settings/tableSettings.tpl.html:13
+msgid "Items per page"
+msgstr "ページあたりの表示件数"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Last update"
+msgstr "最新更新日時"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Layout"
+msgstr "レイアウト"
+
+#: main/common/i18n/i18n-keys.js:52
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Loading..."
+msgstr "ロード中..."
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Look & Feel"
+msgstr "ルック＆フィール"
+
+#: main/features/user/tasks/list/common/priorities.service.js:18
+msgid "Lowest"
+msgstr "最低"
+
+#: main/common/filters/date-parser.js:39
+msgid "MM/dd/yyyy h:mm a"
+msgstr "yyyy/MM/dd HH:mm"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Make this task available to other team members again"
+msgstr "このタスクは他のチーム メンバーでも行えるようにする"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Make this task personal: only I will be able to do it"
+msgstr "このタスクは自分だけが行えるようにする"
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Manage Categories"
+msgstr "カテゴリを管理"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:2
+msgid "Maximum size 255 characters"
+msgstr "最大 255 文字"
+
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Me"
+msgstr "自分"
+
+#: main/common/i18n/i18n-keys.js:30
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Memberships"
+msgstr "所属"
+
+#: main/common/i18n/i18n-keys.js:31
+msgid "Memberships mapped to {}"
+msgstr "{} にマップされたメンバーシップ"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Multi-page menu"
+msgstr "複数ページ メニュー"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "My tasks"
+msgstr "マイタスク"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Name"
+msgstr "名前"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "New"
+msgstr "新規"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+msgid "New comment"
+msgstr "新しいコメント"
+
+#: main/common/i18n/i18n-keys.js:58
+msgid "No Mapping"
+msgstr "マッピングなし"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "No application available."
+msgstr "利用可能なアプリケーションはありません。"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "No cases to display"
+msgstr "表示する案件はありません"
+
+#: main/common/i18n/i18n-keys.js:50
+msgid "No data"
+msgstr "データがありません。"
+
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "No description."
+msgstr "説明がありません。"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "No done task yet."
+msgstr "まだ完了したタスクはありません。"
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "No form is needed. You can enter a comment and confirm."
+msgstr "フォームは不要です。コメントを入力し、確認することができます。"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "No mapping"
+msgstr "マッピングなし"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "No profile mapped to this application"
+msgstr "このアプリケーションにマップされているプロファイルはありません。"
+
+#: main/features/user/tasks/list/common/priorities.service.js:16
+msgid "Normal"
+msgstr "普通"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "One or more connectors on case start or case end failed"
+msgstr "案件の開始または終了時に、1 つ、または複数のコネクタでエラーが発生しました"
+
+#: main/features/user/tasks/list/table/task-table.directive.js:121
+msgid "One or more tasks are not available anymore. The list is now up to date."
+msgstr "1つ以上のタスクは、もうご使用いただけません。タスク一覧が新しくなっています。"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "One-page menu"
+msgstr "1 ページ メニュー"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Only I can do this task"
+msgstr "私だけがこのタスクを実行できる"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
+
+#: main/common/i18n/i18n-keys.js:9
+msgid "Open cases"
+msgstr "進行中の案件"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Open in a popup"
+msgstr "ポップアップで開く"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Open the task to perform it"
+msgstr "実行するタスクを開く"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Overview"
+msgstr "案件概況"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Page"
+msgstr "ページ"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Pages"
+msgstr "ページ"
+
+#: main/features/admin/processes/details/details.js:60
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: main/common/i18n/i18n-keys.js:67
+msgid "Parameters must be resolved before enabling the Process."
+msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "Pending Flow Nodes"
+msgstr "作業実行を待機中"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Priority"
+msgstr "優先度"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Process"
+msgstr "プロセス"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Process name"
+msgstr "プロセス名"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Process version"
+msgstr "プロセスのバージョン"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Process:"
+msgstr "プロセス:"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "Profile"
+msgstr "プロファイル"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Profiles"
+msgstr "プロファイル"
+
+#: main/common/i18n/i18n-keys.js:46
+msgid "Ready, waiting instances"
+msgstr "インスタンス開始を待機中"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Refresh"
+msgstr "リフレッシュ"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Refresh data"
+msgstr "データを再読み込み"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Release"
+msgstr "手放す"
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Remove"
+msgstr "削除"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Remove all"
+msgstr "すべて削除"
+
+#: main/common/i18n/i18n-keys.js:19
+msgid "Reset"
+msgstr "リセット"
+
+#: main/common/i18n/i18n-keys.js:27 main/common/i18n/i18n-keys.js:28
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Roles"
+msgstr "役割"
+
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Save"
+msgstr "保存"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 1"
+msgstr "検索キー 1"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 2"
+msgstr "検索キー 2"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 3"
+msgstr "検索キー 3"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 4"
+msgstr "検索キー 4"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 5"
+msgstr "検索キー 5"
+
+#: target/dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Search..."
+msgstr "検索..."
+
+#: main/common/i18n/i18n-keys.js:32
+msgid "Select a group..."
+msgstr "グループを選択..."
+
+#: main/common/i18n/i18n-keys.js:33
+msgid "Select a role..."
+msgstr "役割を選択..."
+
+#: main/common/i18n/i18n-keys.js:17
+msgid "Select all"
+msgstr "すべて選択"
+
+#: main/common/i18n/i18n-keys.js:26
+msgid "Select groups..."
+msgstr "グループを選択..."
+
+#: main/common/i18n/i18n-keys.js:18
+msgid "Select none"
+msgstr "選択を解除"
+
+#: main/common/i18n/i18n-keys.js:29
+msgid "Select roles..."
+msgstr "役割を選択..."
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "アクターにアサインするエンティティ（ユーザー、グループ、役割、所属など）を選択します。これらのエンティティは、プロセスにヒューマン タスクを実行します。"
+
+#: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Select the page"
+msgstr "ページを選択します"
+
+#: main/common/i18n/i18n-keys.js:23
+msgid "Select users..."
+msgstr "ユーザーを選択..."
+
+#: target/dist/features/admin/applications/details/page-list.html:1
+msgid "Set as Home page"
+msgstr "ホーム ページとして設定します"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show Menu"
+msgstr "メニューを表示"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
+msgstr "自分が行うことができるすべてのタスクを表示する： 自分だけにアサインされたタスクおよび他のチーム メンバーでも行えるタスクの両方を表示"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show menu"
+msgstr "メニューを表示"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show my personal tasks: the ones I took and the ones assigned to me, automatically or by a process manager"
+msgstr "自分だけにアサインされたタスクを表示する： 自分自身で引き受けたもの、自動的、またはプロセス管理者によってアサインされたもの"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Show panel"
+msgstr "パネルを表示"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "Show the tasks that I have done"
+msgstr "自分が関与し実行したタスクを表示"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by URL"
+msgstr "URL で並べ替え"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by name"
+msgstr "名前で並べ替え"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by updated on"
+msgstr "更新日で並べ替え"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "Sort by version"
+msgstr "バージョンで並び替え"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Specify the menu structure."
+msgstr "メニュー構造を指定します"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Start date"
+msgstr "起案日"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list-filters.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Started by"
+msgstr "起案者"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+msgid "State"
+msgstr "状態"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Status of import"
+msgstr "インポートの状態"
+
+#: target/dist/features/user/tasks/list/details/task-no-form.html:1
+msgid "Submit"
+msgstr "送信"
+
+#: main/common/i18n/i18n-keys.js:14
+msgid "Successfully updated categories"
+msgstr "正常に更新されたカテゴリ"
+
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
+msgid "Table settings"
+msgstr "テーブルの設定"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Take"
+msgstr "引き受ける"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Task Id"
+msgstr "タスクID"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "Task form"
+msgstr "タスク フォーム"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Task list"
+msgstr "タスク リスト"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Task name"
+msgstr "タスク名"
+
+#: main/common/i18n/i18n-keys.js:53
+msgid "Technical error."
+msgstr "技術的なエラーが発生。"
+
+#: main/common/i18n/i18n-keys.js:70
+#: target/dist/features/admin/processes/details/menu.html:1
+msgid "The Process cannot be enabled"
+msgstr "プロセスを有効にすることができません"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "The application"
+msgstr "アプリケーション"
+
+#: main/features/user/tasks/list/tasks-app.js:252
+msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
+msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
+
+#: main/common/i18n/i18n-keys.js:68
+msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
+msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:2
+msgid "The case is archived. You cannot add comments anymore"
+msgstr "この案件は完了しています。もうコメントを追加することはできません。"
+
+#: main/common/i18n/i18n-keys.js:76
+msgid "The case {{caseId}} has been started successfully."
+msgstr "案件ID： %caseId% が正常に開始されました。"
+
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "The current process has no connectors defined."
+msgstr "現在のプロセスには、コネクタが定義されていません。"
+
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "The current process has no parameters defined."
+msgstr "現在のプロセスには、パラメータが定義されていません。"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "削除された案件は完全に削除され、アーカイブには格納されません。"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "削除された案件は、アーカイブから完全に削除されます。"
+
+#: main/common/i18n/i18n-keys.js:69
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr "次のフォームのマッピングが設定されていません： [ {} ]。これらは、プロセスを有効にする前に設定する必要があります。"
+
+#: main/common/i18n/i18n-keys.js:63
+msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
+msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
+
+#: main/features/user/tasks/list/details/task-no-form.directive.js:54
+msgid "The task has been submitted but an error occurred while adding the comment"
+msgstr "タスクが送信されましたが、コメントを追加するときにエラーが発生しました。"
+
+#: main/common/i18n/i18n-keys.js:75
+msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
+msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Theme"
+msgstr "テーマ"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "これらの削除された案件は完全に削除され、アーカイブには格納されません。"
+
+#: target/dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "これらの削除された案件は、アーカイブから完全に削除されます。"
+
+#: main/common/i18n/i18n-msg.service.js:28
+msgid "This URL is already in use"
+msgstr "この URL は、既に使用中"
+
+#: main/common/i18n/i18n-msg.service.js:27
+msgid "This field is mandatory"
+msgstr "このフィールドは必須です"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "This is the task details panel. No information to display"
+msgstr "これは、タスクの詳細パネルです。表示する情報がありません。"
+
+#: main/common/i18n/i18n-msg.service.js:29
+msgid "This name is already in use"
+msgstr "この名前は既に使用中"
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "This task is completed."
+msgstr "このタスクは完了しました。"
+
+#: main/features/user/tasks/list/details/task-details-helper.service.js:40
+msgid "This task is not available anymore. The list is now up to date."
+msgstr "1 つまたは複数のタスクは、もうご使用いただけません。タスク一覧が新しくなっています。"
+
+#: main/features/user/tasks/list/table/task-table.controller.js:114
+msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
+msgstr "このタスクは期限切れです。 {{dueDate}} までに完了する予定でした。"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+msgid "To create an application, click New or Import."
+msgstr "アプリケーションを作成するには、新規またはインポート をクリックします。"
+
+#: target/dist/features/user/tasks/list/filters/task-filters.html:2
+msgid "To do"
+msgstr "To do"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "To do so, go to"
+msgstr "これを行うには、次へ進む: "
+
+#: target/dist/features/user/tasks/list/details/task-details.html:1
+msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
+msgstr "フォームに記入するには、このタスクを引き受ける必要があります。つまり、あなただけがこのタスクを実行できることになります。もう一度、チームで実行できるようにする（つまり、応受援タスクにする）には、そのタスクを手放します。"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
+msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
+
+#: main/common/i18n/i18n-keys.js:41
+msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr "この機能を使用するには、Bonita BPM Studio バージョン 6.4 以上でプロセスの新しいバージョンを作成し、その新しい .bar ファイルをポータルにインストールします。"
+
+#: target/dist/features/admin/processes/details/params.html:1
+#: target/dist/features/admin/processes/details/process-connectors.html:1
+msgid "Type"
+msgstr "タイプ"
+
+#: main/common/i18n/i18n-keys.js:55
+msgid "Type here to search for a user..."
+msgstr "ユーザーを検索するには、ここを入力..."
+
+#: main/common/i18n/i18n-keys.js:20
+msgid "Type here to search..."
+msgstr "検索キーワードをここで入力..."
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "URL"
+msgstr "URL"
+
+#: main/features/user/tasks/list/comments/comments.controller.js:33
+msgid "Unable to add the comment. Refresh your task list and try again. If the problem persists, contact your administrator"
+msgstr "コメントを追加することができません。タスク一覧を更新し、もう一度やり直してください。問題が解決しない場合はシステム管理者に問い合わせてください。"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Unassign. This will make it available to team again"
+msgstr "アサインを解除します。このタスクはもう一度、応受援タスクに戻ります。"
+
+#: main/features/user/tasks/list/common/priorities.service.js:17
+msgid "Under normal"
+msgstr "平均以下"
+
+#: target/dist/features/admin/applications/details/application-details-app.html:1
+msgid "Update"
+msgstr "更新"
+
+#: target/dist/features/admin/applications/details/application-details.html:1
+msgid "Updated by"
+msgstr "更新者"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/details/application-details.html:1
+#: target/dist/features/admin/processes/details/information.html:1
+msgid "Updated on"
+msgstr "更新日時"
+
+#: target/dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Use Arrow up and Arrow down keys to browse among existing categories."
+msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
+
+#: main/common/i18n/i18n-keys.js:21
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Users"
+msgstr "ユーザー"
+
+#: main/common/i18n/i18n-keys.js:22
+msgid "Users mapped to {}"
+msgstr "{} にマップされているユーザー"
+
+#: target/dist/features/admin/processes/details/params.html:1
+msgid "Value"
+msgstr "値"
+
+#: target/dist/features/admin/applications/applications-list.html:1
+#: target/dist/features/admin/applications/edit-application.html:1
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Version"
+msgstr "バージョン"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "View case details"
+msgstr "案件詳細を表示"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "View case overview"
+msgstr "案件概況を表示"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "View task"
+msgstr "タスクを見る"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "View this task"
+msgstr "このタスクを見る"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "We couldn't find what you are looking for."
+msgstr "お探しのものが見つかりませんでした。"
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "When you export an application, pages and profiles are not exported in the file."
+msgstr "アプリケーションをエクスポートするとき、ページとプロファイルはそのファイルにエクスポートされません。"
+
+#: target/dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "With failures"
+msgstr "エラー発生"
+
+#: target/dist/features/admin/applications/export-application.html:1
+msgid "You are about to export the application"
+msgstr "あなたは、アプリケーションをエクスポートしようとしています"
+
+#: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "You must add a page before you can reference it in a menu."
+msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
+
+#: target/dist/features/user/tasks/list/table/task-table.html:1
+msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
+msgstr "マイタスク リストは空です。​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> リストからタスクを選ぶことができます。"
+
+#: main/common/i18n/i18n-keys.js:61
+msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
+msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
+
+#: target/dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "an Application"
+msgstr "アプリケーション"
+
+#: target/dist/features/admin/applications/edit-application.html:1
+msgid "an application"
+msgstr "アプリケーション"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "application has been partially imported. The following items are not loaded in the Portal."
+msgstr "アプリケーションは部分的にインポートされています。ポータルには次の項目がロードされていません。"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "application has been successfully imported, with complete page mapping and menu mapping."
+msgstr "アプリケーションは、ページのマッピングや メニューのマッピングを伴って正常にインポートされています。"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "of"
+msgstr "日目/"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date ascending"
+msgstr "終了日を昇順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date descending"
+msgstr "終了日を降順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID ascending"
+msgstr "ID を昇順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID descending"
+msgstr "ID を降順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name ascending"
+msgstr "プロセス名を昇順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name descending"
+msgstr "プロセス名を降順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date ascending"
+msgstr "開始日を昇順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date descending"
+msgstr "開始日を降順で並べ替える"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "username:"
+msgstr "ユーザー名:"
+
+#: target/dist/features/admin/applications/delete-application.html:1
+msgid "will be permanently deleted."
+msgstr "恒久的に削除されます。"
+
+#: main/common/i18n/i18n-keys.js:16
+msgid "{{nbErrors}} errors on mapping updates"
+msgstr "マッピングの更新で {{nbErrors}} のエラーが発生しました"
+
+#: main/common/i18n/i18n-keys.js:36
+msgid "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "{{nbMapping}} のプロセス管理者マッピングを更新できませんでした。"
+
+#: main/common/i18n/i18n-keys.js:37
+msgid "{{nbMapping}} Process manager mappings have been updated"
+msgstr "{{nbMapping}} のプロセス管理者マッピングが更新されました"
+
+#: main/common/i18n/i18n-keys.js:12
+msgid "{{nbOfDeletedCases}} cases have been deleted"
+msgstr "{{nbOfDeletedCases}} の案件が削除されました"
+
+#: main/common/i18n/i18n-keys.js:15
+msgid "{{nbSucess}} actor mapping updates succeeded"
+msgstr "{{nbSucess}} のアクターマッピングの更新に成功しました"
+
+#: main/common/i18n/i18n-keys.js:34
+msgid "{{role}} of {{group}}"
+msgstr "{{group}} の {{role}}"
+
+#: main/common/i18n/i18n-keys.js:35
+msgid "{{role}} of {{group}} has been created"
+msgstr "{{group}} の {{role}} が作成されました"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mapped"
+msgstr "{} がマップされました"
+
+#: target/dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mappings to delete"
+msgstr "{} のマッピングが削除されます"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} more"
+msgstr "{} 以上"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} of {}"
+msgstr "{} / {}"
+
+#: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "{}-{} of {}"
+msgstr "{}-{} / {}"
+

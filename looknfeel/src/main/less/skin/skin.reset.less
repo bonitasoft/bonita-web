@@ -1,0 +1,152 @@
+// -----------------------------------------------------------------------------
+// Web fonts
+// -----------------------------------------------------------------------------
+@font-face {
+	font-family: 'Signika-Regular';
+	src: url("@{skinFontPath}Signika-Regular.eot");
+	src: local('☺'), url("@{skinFontPath}Signika-Regular.woff") format('woff'), url("@{skinFontPath}Signika-Regular.ttf") format('truetype'), url("@{skinFontPath}Signika-Regular.svg") format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Signika-Semibold';
+	src: url("@{skinFontPath}Signika-Semibold.eot");
+	src: local('☺'), url("@{skinFontPath}Signika-Semibold.woff") format('woff'), url("@{skinFontPath}Signika-Semibold.ttf") format('truetype'), url("@{skinFontPath}Signika-Semibold.svg") format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Glyphicons Halflings';
+	src:url("@{skinFontPath}glyphicons-halflings-regular.eot");
+	src:url("@{skinFontPath}glyphicons-halflings-regular.eot#iefix") format('embedded-opentype'),url("@{skinFontPath}glyphicons-halflings-regular.woff2") format('woff2'),url("@{skinFontPath}glyphicons-halflings-regular.woff") format('woff'),url("@{skinFontPath}glyphicons-halflings-regular.ttf") format('truetype'),url("@{skinFontPath}glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-option-horizontal:before {
+  content: "\e234";
+}
+// -----------------------------------------------------------------------------
+// HTML reset
+// -----------------------------------------------------------------------------
+html{
+	font-family: @regularFont;
+	font-size: 100%;
+	color: @fontColor;
+}
+
+body{
+	font-size: @fontSize;
+	margin: 0;
+	padding: 0;
+}
+
+ul{
+	list-style: none;
+	&, li{
+		.noPadding();
+		.noMargin();
+		list-style: none;
+	}
+}
+
+h1, h2, h3, h4, h5, h6, h7{
+	.skinFontFamily();
+	font-weight: 300;
+	color: @mainAccentColor;
+	margin: 0;
+}
+
+a{
+	.pointerAsLink();
+	text-decoration: none;
+	color: @color4;
+	&:visited, &:active, &:current{
+		color: @color4;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// default behaviour
+// -----------------------------------------------------------------------------
+.page_StartProcess{
+	background-color: #ffffff;
+}
+// -----------------------------------------------------------------------------
+// dropdown reset
+// -----------------------------------------------------------------------------
+.dropdownmenu{
+	.clearFix();
+	>li{
+		>a{
+			text-decoration: none;
+		}
+	}
+}
+// -----------------------------------------------------------------------------
+// 3panel reset
+// -----------------------------------------------------------------------------
+.itemlistingpage{
+	.table, .tr{
+		width: 100%;
+		display: block;
+		float: left;
+		clear: both;
+		.td, .th{
+			display: block;
+			float: left;
+		}
+	}
+	.tbody, .thead, .tfoot{
+		.boxSizing();
+		.clearFix();
+		width: 100%;
+	}
+	
+}
+.section{
+	display: block;
+}
+.filters_panel, .tables_panel, .details_panel{
+	.boxSizing();
+	position: relative;
+	.primary, .secondary, .resource{
+		&_filters{
+			a{
+				display: block;
+			}
+		}
+	}
+}
+
+.table{
+	.thead{
+		display: block;
+		.tr{
+			display: table-header-group;
+			.th{
+				display: table-cell;
+			}
+		}
+	}
+	.tbody{
+		.tr{
+			display: table-row;
+			float: left;
+			clear: both;
+			.td{
+				display: table-cell;
+				float: left;
+			}
+		}
+	}
+}

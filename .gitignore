@@ -1,0 +1,23 @@
+# eclipse settings
+*.project
+*.settings
+*.classpath
+target/
+
+# intellij settings
+*.iml
+**/.idea/**
+.idea
+
+btm1.tlog
+btm2.tlog
+
+*.class
+/en.po
+
+*.orig
+*.tmp
+node
+node_modules
+
+.java-version

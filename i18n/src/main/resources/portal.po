@@ -1,0 +1,2711 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-23 01:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid " To do so, go to %entitymappingprofilelink%."
+msgstr ""
+
+msgid " for "
+msgstr ""
+
+msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
+msgstr ""
+
+msgid "%attribute% file format not allowed"
+msgstr ""
+
+msgid "%attribute% is mandatory"
+msgstr ""
+
+msgid "%attribute% is not a valid Color value"
+msgstr ""
+
+msgid "%attribute% is not a valid URL"
+msgstr ""
+
+msgid "%attribute% is not a valid email"
+msgstr ""
+
+msgid "%attribute% is not well written"
+msgstr ""
+
+msgid "%attribute% must be a boolean value"
+msgstr ""
+
+msgid "%attribute% must be a negative value"
+msgstr ""
+
+msgid "%attribute% must be a negative value diffrent from 0"
+msgstr ""
+
+msgid "%attribute% must be a numeric value"
+msgstr ""
+
+msgid "%attribute% must be a positive value"
+msgstr ""
+
+msgid "%attribute% must be a positive value different from 0"
+msgstr ""
+
+msgid "%attribute% must be a valid date"
+msgstr ""
+
+msgid "%attribute% must be an integer value"
+msgstr ""
+
+msgid "%attribute% must be equal to %secondAttribute%"
+msgstr ""
+
+msgid "%attribute% must be less or equal than %value%"
+msgstr ""
+
+msgid "%attribute% must be less than %secondAttribute%"
+msgstr ""
+
+msgid "%attribute% must be less than %value%"
+msgstr ""
+
+msgid "%attribute% must be more or equal than %secondAttribute%"
+msgstr ""
+
+msgid "%attribute% must be more or equal than %value%"
+msgstr ""
+
+msgid "%attribute% must be more than %secondAttribute%"
+msgstr ""
+
+msgid "%attribute% must be more than %value%"
+msgstr ""
+
+msgid "%attribute% must be on a single line"
+msgstr ""
+
+msgid "%attribute% must be one of {%list%}"
+msgstr ""
+
+msgid "%attribute% must contain exactly %length% characters"
+msgstr ""
+
+msgid "%attribute% must not be equal to %secondAttribute%"
+msgstr ""
+
+msgid "%attribute% mustn't contains blank spaces"
+msgstr ""
+
+msgid "%attribute% mustn't contains spaces"
+msgstr ""
+
+msgid "%className% is not Serializable"
+msgstr ""
+
+msgid "%className% not found. Only jdk types are supported"
+msgstr ""
+
+msgid "%current_page% of %total_pages%"
+msgstr ""
+
+msgid "%firstname% %lastname%"
+msgstr ""
+
+msgid "%firstname% %lastname% for"
+msgstr ""
+
+msgid "%groupname%"
+msgstr ""
+
+msgid "%nb_archived% archived"
+msgstr ""
+
+msgid "%nb_ongoing% ongoing"
+msgstr ""
+
+msgid "%pageName% is used by:"
+msgstr ""
+
+msgid "%rolename%"
+msgstr ""
+
+msgid "%rolename% of %groupname%"
+msgstr ""
+
+msgid "%secondAttribute% must be a numeric value"
+msgstr ""
+
+msgid "%start_result% - %end_result% of %total_results%"
+msgstr ""
+
+msgid "%start_result% of %total_results%"
+msgstr ""
+
+msgid "%time% ago"
+msgstr ""
+
+msgid "%user%"
+msgstr ""
+
+msgid "%value% is not a valid value for %className%"
+msgstr ""
+
+msgid "'%applicationName%' as page '%associationName%'"
+msgstr ""
+
+msgid "'%layoutName%' is used as layout for:"
+msgstr ""
+
+msgid "'%pageName%' is used by:"
+msgstr ""
+
+msgid "'%themeName%' is used as Theme for:"
+msgstr ""
+
+msgid "?"
+msgstr ""
+
+msgid "A Business Data Model has a .%fileExtension% extension"
+msgstr ""
+
+msgid "A business archive has a .bar extension"
+msgstr ""
+
+msgid "A case has been started successfully."
+msgstr ""
+
+msgid "A form is a page mapped to case start or a human task."
+msgstr ""
+
+msgid "A page archive has a .zip extension"
+msgstr ""
+
+msgid "A page with this name already exists."
+msgstr ""
+
+msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
+msgstr ""
+
+msgid "Aborted by:"
+msgstr ""
+
+msgid "Aborted on:"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Activate a BDM"
+msgstr ""
+
+msgid "Activate selected users"
+msgstr ""
+
+msgid "Activation state"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Active Users"
+msgstr ""
+
+msgid "Actor mapping"
+msgstr ""
+
+msgid "Actor name"
+msgstr ""
+
+msgid "Actors: %ok_ko%"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Add Comment"
+msgstr ""
+
+msgid "Add a category"
+msgstr ""
+
+msgid "Add a comment"
+msgstr ""
+
+msgid "Add a group"
+msgstr ""
+
+msgid "Add a group to %actor_name%"
+msgstr ""
+
+msgid "Add a group to profile %%"
+msgstr ""
+
+msgid "Add a membership"
+msgstr ""
+
+msgid "Add a membership to %actor_name%"
+msgstr ""
+
+msgid "Add a membership to %user%"
+msgstr ""
+
+msgid "Add a membership to profile %%"
+msgstr ""
+
+msgid "Add a new category"
+msgstr ""
+
+msgid "Add a new category to %%"
+msgstr ""
+
+msgid "Add a new custom page"
+msgstr ""
+
+msgid "Add a new membership to this user"
+msgstr ""
+
+msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
+msgstr ""
+
+msgid "Add a resource"
+msgstr ""
+
+msgid "Add a role"
+msgstr ""
+
+msgid "Add a role to %actor_name%"
+msgstr ""
+
+msgid "Add a role to profile %%"
+msgstr ""
+
+msgid "Add a user"
+msgstr ""
+
+msgid "Add a user to %actor_name%"
+msgstr ""
+
+msgid "Add a user to profile %%"
+msgstr ""
+
+msgid "Add new memberships for %user%"
+msgstr ""
+
+msgid "Add resource"
+msgstr ""
+
+msgid "Add selected group(s) to this profile"
+msgstr ""
+
+msgid "Add selected role(s) to this profile"
+msgstr ""
+
+msgid "Add selected user(s) to this profile"
+msgstr ""
+
+msgid "Add this group to %actor_name%"
+msgstr ""
+
+msgid "Add this membership"
+msgstr ""
+
+msgid "Add this membership to %actor_name%"
+msgstr ""
+
+msgid "Add this role to %actor_name%"
+msgstr ""
+
+msgid "Add this user to %actor_name%"
+msgstr ""
+
+msgid "Add your comment"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Alert"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "All Groups"
+msgstr ""
+
+msgid "All Profiles"
+msgstr ""
+
+msgid "All Roles"
+msgstr ""
+
+msgid "All groups"
+msgstr ""
+
+msgid "All pages"
+msgstr ""
+
+msgid "All processes are automatically paused."
+msgstr ""
+
+msgid "An archive has a .zip extension"
+msgstr ""
+
+msgid "An error has occurred when deploying Business Data Model."
+msgstr ""
+
+msgid "An error occurred while creating a definition"
+msgstr ""
+
+msgid "An error occurred while deleting an item with the id %id%"
+msgstr ""
+
+msgid "Analytics"
+msgstr ""
+
+msgid "Applications"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Archived"
+msgstr ""
+
+msgid "Archived date"
+msgstr ""
+
+msgid "Archives"
+msgstr ""
+
+msgid "Are you sur you want to remove selected actor members from the process ?"
+msgstr ""
+
+msgid "Are you sure you want to delete this membership ?"
+msgstr ""
+
+msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
+msgstr ""
+
+msgid "Assign"
+msgstr ""
+
+msgid "Assign selected tasks to user"
+msgstr ""
+
+msgid "Assign task to someone"
+msgstr ""
+
+msgid "Assign this task to me. Other allowed users will no longer see it"
+msgstr ""
+
+msgid "Assigned date"
+msgstr ""
+
+msgid "Assigned to"
+msgstr ""
+
+msgid "Assigned to me"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "Available"
+msgstr ""
+
+msgid "Available tasks"
+msgstr ""
+
+msgid "Avatar"
+msgstr ""
+
+msgid "BPM Services are paused. You may need to resume them."
+msgstr ""
+
+msgid "BPM services"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Be careful, your organization will be merged with existing data."
+msgstr ""
+
+msgid "Bonita Archive"
+msgstr ""
+
+msgid "Bonita BPM Portal"
+msgstr ""
+
+msgid "Browse your computer and select the business archive containing the process definition to install."
+msgstr ""
+
+msgid "Business Data Model"
+msgstr ""
+
+msgid "Business archive"
+msgstr ""
+
+msgid "Business card"
+msgstr ""
+
+msgid "By default, forms are included in the process bar file for deployment."
+msgstr ""
+
+msgid "Call activity"
+msgstr ""
+
+msgid "Call activity (launches another process)"
+msgstr ""
+
+msgid "Can't create group. Group '%groupName%' already exists"
+msgstr ""
+
+msgid "Can't create role. Role '%roleName%' already exists"
+msgstr ""
+
+msgid "Can't create user. User '%userName%' already exists"
+msgstr ""
+
+msgid "Can't import Applications."
+msgstr ""
+
+msgid "Can't import applications. An application '%token%' already exists"
+msgstr ""
+
+msgid "Can't import organization. Please check that your file is well-formed"
+msgstr ""
+
+msgid "Can't parse json, non-well formed content"
+msgstr ""
+
+msgid "Can't start process %processId%, user %userId% not found"
+msgstr ""
+
+msgid "Can't start process, process %processId% is not enabled"
+msgstr ""
+
+msgid "Can't start process, process %processId% not found"
+msgstr ""
+
+msgid "Can't update group. Group not found"
+msgstr ""
+
+msgid "Can't update user. User not found"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Cancel this action"
+msgstr ""
+
+msgid "Cancel this form"
+msgstr ""
+
+msgid "Case"
+msgstr ""
+
+msgid "Case id"
+msgstr ""
+
+msgid "Case id: "
+msgstr ""
+
+msgid "Case variables"
+msgstr ""
+
+msgid "Cases"
+msgstr ""
+
+msgid "Cases I have started"
+msgstr ""
+
+msgid "Cases I have started or I have worked on"
+msgstr ""
+
+msgid "Cases I worked on"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category with name %categoryName% already exists"
+msgstr ""
+
+msgid "Change to selected language"
+msgstr ""
+
+msgid "Choose a language"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Class name"
+msgstr ""
+
+msgid "Click here to choose your file."
+msgstr ""
+
+msgid "Click here to choose your file. "
+msgstr ""
+
+msgid "Click here to go to Profile listing page"
+msgstr ""
+
+msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
+msgstr ""
+
+msgid "Click to export this page"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close without saving"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Configuration state "
+msgstr ""
+
+msgid "Configure BPM services for maintenance"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Confirm Delete?"
+msgstr ""
+
+msgid "Confirm delete ?"
+msgstr ""
+
+msgid "Confirm deletion"
+msgstr ""
+
+msgid "Confirm deletion ?"
+msgstr ""
+
+msgid "Confirm password"
+msgstr ""
+
+msgid "Confirm removing"
+msgstr ""
+
+msgid "Confirm removing ?"
+msgstr ""
+
+msgid "Confirm services pause?"
+msgstr ""
+
+msgid "Confirm services resumption?"
+msgstr ""
+
+msgid "Confirm the new page"
+msgstr ""
+
+msgid "Confirm the page adding"
+msgstr ""
+
+msgid "Confirm the password for this user"
+msgstr ""
+
+msgid "Confirm this action"
+msgstr ""
+
+msgid "Confirm update"
+msgstr ""
+
+msgid "Connector definitions"
+msgstr ""
+
+msgid "Connector definitions must be resolved before enabling the Process."
+msgstr ""
+
+msgid "Connectors"
+msgstr ""
+
+msgid "Connectors: %ok_ko%"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Content type is 'apiExtension'."
+msgstr ""
+
+msgid "Content type is 'form'."
+msgstr ""
+
+msgid "Content type is 'layout'."
+msgstr ""
+
+msgid "Content type is 'page'."
+msgstr ""
+
+msgid "Content type is 'theme'."
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Create"
+msgstr ""
+
+msgid "Create a form from the contract in Bonita BPM Studio."
+msgstr ""
+
+msgid "Create a group"
+msgstr ""
+
+msgid "Create a new category"
+msgstr ""
+
+msgid "Create a new element"
+msgstr ""
+
+msgid "Create a role"
+msgstr ""
+
+msgid "Create a user"
+msgstr ""
+
+msgid "Create this group"
+msgstr ""
+
+msgid "Create this role"
+msgstr ""
+
+msgid "Create this user"
+msgstr ""
+
+msgid "Created by"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Creation date"
+msgstr ""
+
+msgid "Custom Pages"
+msgstr ""
+
+msgid "Dactivate selected user"
+msgstr ""
+
+msgid "Data definition %dataName% doesn't exists for process %processId%"
+msgstr ""
+
+msgid "Data included are : Users, groups and roles"
+msgstr ""
+
+msgid "Deactivate"
+msgstr ""
+
+msgid "Deactivate selected users"
+msgstr ""
+
+msgid "Deactivated user"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Deletable"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete %resource_name%"
+msgstr ""
+
+msgid "Delete pages"
+msgstr ""
+
+msgid "Delete selected groups"
+msgstr ""
+
+msgid "Delete selected pages"
+msgstr ""
+
+msgid "Delete selected processes"
+msgstr ""
+
+msgid "Delete selected roles"
+msgstr ""
+
+msgid "Delete the pages"
+msgstr ""
+
+msgid "Delete the process %app_name%?"
+msgstr ""
+
+msgid "Delete this member"
+msgstr ""
+
+msgid "Delete this membership"
+msgstr ""
+
+msgid "Delete this process"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Description:"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Direct users"
+msgstr ""
+
+msgid "Disable"
+msgstr ""
+
+msgid "Disable selected processes"
+msgstr ""
+
+msgid "Disable this process"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Disabled processes"
+msgstr ""
+
+msgid "Discuss :"
+msgstr ""
+
+msgid "Display a case form of process %app_name%"
+msgstr ""
+
+msgid "Display a summary of all processes"
+msgstr ""
+
+msgid "Display name"
+msgstr ""
+
+msgid "Display tasks I have done"
+msgstr ""
+
+msgid "Display the case overview"
+msgstr ""
+
+msgid "Do it"
+msgstr ""
+
+msgid "Do not delete this membership"
+msgstr ""
+
+msgid "Do you still want to delete the selected pages?"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Done %task_last_update% by %executed_by%"
+msgstr ""
+
+msgid "Done by"
+msgstr ""
+
+msgid "Done on"
+msgstr ""
+
+msgid "Done tasks"
+msgstr ""
+
+msgid "Due date"
+msgstr ""
+
+msgid "Due in:"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit %pageName%"
+msgstr ""
+
+msgid "Edit a role"
+msgstr ""
+
+msgid "Edit a user"
+msgstr ""
+
+msgid "Edit case variable"
+msgstr ""
+
+msgid "Edit groups of actor %actor_name%"
+msgstr ""
+
+msgid "Edit memberships of actor %actor_name%"
+msgstr ""
+
+msgid "Edit roles of actor %actor_name%"
+msgstr ""
+
+msgid "Edit selected page"
+msgstr ""
+
+msgid "Edit this group"
+msgstr ""
+
+msgid "Edit this value"
+msgstr ""
+
+msgid "Edit user"
+msgstr ""
+
+msgid "Edit users of actor %actor_name%"
+msgstr ""
+
+msgid "Edit variable"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Enable selected processes"
+msgstr ""
+
+msgid "Enable this process"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Enabled processes"
+msgstr ""
+
+msgid "Enter a category name"
+msgstr ""
+
+msgid "Enter the address of this user"
+msgstr ""
+
+msgid "Enter the city of this user"
+msgstr ""
+
+msgid "Enter the country of this user"
+msgstr ""
+
+msgid "Enter the description for this category"
+msgstr ""
+
+msgid "Enter the description of this group"
+msgstr ""
+
+msgid "Enter the description of this role"
+msgstr ""
+
+msgid "Enter the display name of this group"
+msgstr ""
+
+msgid "Enter the display name of this role"
+msgstr ""
+
+msgid "Enter the email of this user"
+msgstr ""
+
+msgid "Enter the first name of this user"
+msgstr ""
+
+msgid "Enter the job title of this user"
+msgstr ""
+
+msgid "Enter the last name of this user"
+msgstr ""
+
+msgid "Enter the mobile phone of this user"
+msgstr ""
+
+msgid "Enter the name of this group"
+msgstr ""
+
+msgid "Enter the name of this role"
+msgstr ""
+
+msgid "Enter the password for this user"
+msgstr ""
+
+msgid "Enter the phone of this user"
+msgstr ""
+
+msgid "Enter the state of this user"
+msgstr ""
+
+msgid "Enter the text to search for"
+msgstr ""
+
+msgid "Enter the title of this user"
+msgstr ""
+
+msgid "Enter the username for this user"
+msgstr ""
+
+msgid "Enter the zip code of this user"
+msgstr ""
+
+msgid "Entity Mapping must be resolved before enabling the Process."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Error during Application import file reading."
+msgstr ""
+
+msgid "Error occured when starting process %processId%"
+msgstr ""
+
+msgid "Error when adding group to actor member"
+msgstr ""
+
+msgid "Error when creating group"
+msgstr ""
+
+msgid "Error when creating user"
+msgstr ""
+
+msgid "Error when deleting groups"
+msgstr ""
+
+msgid "Error when deleting users"
+msgstr ""
+
+msgid "Error when pausing BPM services"
+msgstr ""
+
+msgid "Error when resuming BPM services"
+msgstr ""
+
+msgid "Error when searching users"
+msgstr ""
+
+msgid "Error when updating %activityId% activity variables"
+msgstr ""
+
+msgid "Error when updating group"
+msgstr ""
+
+msgid "Error when updating process deployment informations"
+msgstr ""
+
+msgid "Error when updating user"
+msgstr ""
+
+msgid "Error while trying to execute the task."
+msgstr ""
+
+msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
+msgstr ""
+
+msgid "Error while trying to start the case."
+msgstr ""
+
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr ""
+
+msgid "Executed by"
+msgstr ""
+
+msgid "Executed by:"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Export the installed organization"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "Failed on"
+msgstr ""
+
+msgid "Failed on %task_last_update%"
+msgstr ""
+
+msgid "Failed on:"
+msgstr ""
+
+msgid "Failed tasks"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "Filename too long. The zip filename must be no longer than %number% characters"
+msgstr ""
+
+msgid "Filters are not supported by this API"
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
+msgid "Finish this page"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "First name of the user"
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr ""
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr ""
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr ""
+
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr ""
+
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr ""
+
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr ""
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr ""
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr ""
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr ""
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr ""
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr ""
+
+msgid "For user-type of profiles. To visualize processes and start cases"
+msgstr ""
+
+msgid "Form"
+msgstr ""
+
+msgid "Format: %namePrefix% followed only by alphanumeric characters."
+msgstr ""
+
+msgid "Forms"
+msgstr ""
+
+msgid "Fr"
+msgstr ""
+
+msgid "Getting more information about the specified case"
+msgstr ""
+
+msgid "Go back to previous view"
+msgstr ""
+
+msgid "Go to BPM Services"
+msgstr ""
+
+msgid "Go to Configuration > BPM Services."
+msgstr ""
+
+msgid "Go to page %pagenumber%"
+msgstr ""
+
+msgid "Go to previous step"
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Group (%nb_group%)"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "Groups mapping"
+msgstr ""
+
+msgid "Groups: %nb_groups%"
+msgstr ""
+
+msgid "High"
+msgstr ""
+
+msgid "Highest"
+msgstr ""
+
+msgid "Human Task"
+msgstr ""
+
+msgid "Human task"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Icon"
+msgstr ""
+
+msgid "Id:"
+msgstr ""
+
+msgid "If these pages are used in a profile, the pages and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid "If you create a resource with the UI designer, the exported zip automatically has the correct format."
+msgstr ""
+
+msgid ""
+"If you delete a page that is used by a process, the process becomes unresolved.\n"
+"Before deleting a page, you should also check whether it is used in a custom profile navigation."
+msgstr ""
+
+msgid "Image files"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Import / Export"
+msgstr ""
+
+msgid "Import an existing organization"
+msgstr ""
+
+msgid "Import and activate a new Business Data Model"
+msgstr ""
+
+msgid "Import or export data"
+msgstr ""
+
+msgid "Import/Export"
+msgstr ""
+
+msgid "Import/export organization"
+msgstr ""
+
+msgid "In case of conflict, priority is given to the imported file"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Inactive Users"
+msgstr ""
+
+msgid "Inactive user"
+msgstr ""
+
+msgid "Install"
+msgstr ""
+
+msgid "Install a process"
+msgstr ""
+
+msgid "Install the Business Data Model"
+msgstr ""
+
+msgid "Installed by"
+msgstr ""
+
+msgid "Installed on"
+msgstr ""
+
+msgid "Invalid Business Data Model content"
+msgstr ""
+
+msgid "It is still assigned to you until you release it."
+msgstr ""
+
+msgid "Item not found"
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "Jasper Archive"
+msgstr ""
+
+msgid "Job title"
+msgstr ""
+
+msgid "Job title of the user"
+msgstr ""
+
+msgid "Json can't be mapped to "
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Last executed task : "
+msgstr ""
+
+msgid "Last login"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Last name of the user"
+msgstr ""
+
+msgid "Last update"
+msgstr ""
+
+msgid "Last update date"
+msgstr ""
+
+msgid "Last updated"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+msgid "Layouts"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "Link to the tasks"
+msgstr ""
+
+msgid "List memberships of %user%"
+msgstr ""
+
+msgid "Login failed. No profile has been set up for this user. Contact your administrator."
+msgstr ""
+
+msgid "Login form"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Look and Feel"
+msgstr ""
+
+msgid "Loop activity"
+msgstr ""
+
+msgid "Loop activity (launches and controls loop execution)"
+msgstr ""
+
+msgid "Low"
+msgstr ""
+
+msgid "Lowest"
+msgstr ""
+
+msgid "MM/dd/yyyy"
+msgstr ""
+
+msgid "MM/dd/yyyy h:mm a"
+msgstr ""
+
+msgid "MM/dd/yyyy h:mm:ss a"
+msgstr ""
+
+msgid "MMMM dd, yyyy"
+msgstr ""
+
+msgid "Make sure all your processes are compatible with the new Business Data Model."
+msgstr ""
+
+msgid "Manage Look and Feel"
+msgstr ""
+
+msgid "Manage applications"
+msgstr ""
+
+msgid "Manage custom pages"
+msgstr ""
+
+msgid "Manage groups"
+msgstr ""
+
+msgid "Manage profiles"
+msgstr ""
+
+msgid "Manage resources"
+msgstr ""
+
+msgid "Manage roles"
+msgstr ""
+
+msgid "Manage users"
+msgstr ""
+
+msgid "Manager"
+msgstr ""
+
+msgid "Manager of the specified user"
+msgstr ""
+
+msgid "Mapping"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Membership"
+msgstr ""
+
+msgid "Membership (%nb_membership%)"
+msgstr ""
+
+msgid "Memberships mapping"
+msgstr ""
+
+msgid "Memberships: %nb_memberships%"
+msgstr ""
+
+msgid "Menu name"
+msgstr ""
+
+msgid "Mo"
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Monitoring"
+msgstr ""
+
+msgid "More"
+msgstr ""
+
+msgid "More information"
+msgstr ""
+
+msgid "Move this element after the next one"
+msgstr ""
+
+msgid "Move this element before the previous one"
+msgstr ""
+
+msgid "Multi-instanciation activity"
+msgstr ""
+
+msgid "Multi-instanciation activity (launches and controls instances execution)"
+msgstr ""
+
+msgid "My cases"
+msgstr ""
+
+msgid "My tasks"
+msgstr ""
+
+msgid "N/A"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Name for the URL"
+msgstr ""
+
+msgid "Name of the role"
+msgstr ""
+
+msgid "Name of the user who executed this task"
+msgstr ""
+
+msgid "Name of the user who started this case"
+msgstr ""
+
+msgid "Name of the variable"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next >"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No attachments"
+msgstr ""
+
+msgid "No data"
+msgstr ""
+
+msgid "No description."
+msgstr ""
+
+msgid "No opened task"
+msgstr ""
+
+msgid "No overview page has been defined for this process"
+msgstr ""
+
+msgid "No overview page has been defined for this process."
+msgstr ""
+
+msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
+msgstr ""
+
+msgid "No task done"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Not implemented"
+msgstr ""
+
+msgid "Notice"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "Number of attachments : %nb_attachments%"
+msgstr ""
+
+msgid "Number of cases: %nb_cases%"
+msgstr ""
+
+msgid "Number of open tasks : %nb_openTask%"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Only one Business Data Model can be active at a time."
+msgstr ""
+
+msgid "Only the technical user can log in to the Portal."
+msgstr ""
+
+msgid "Only the value attribute can be updated"
+msgstr ""
+
+msgid "Opens a popup to create a group"
+msgstr ""
+
+msgid "Opens a popup to create a role"
+msgstr ""
+
+msgid "Opens a popup to create a user"
+msgstr ""
+
+msgid "Opens a popup to install a process"
+msgstr ""
+
+msgid "Organisation file"
+msgstr ""
+
+msgid "Organization"
+msgstr ""
+
+msgid "Organization successfully imported."
+msgstr ""
+
+msgid "Original name"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid ""
+"Oups... This item is not available anymore.\n"
+"You will be redirected to a safest place."
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid "Page archive"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Parameters"
+msgstr ""
+
+msgid "Parameters must be resolved before enabling the Process."
+msgstr ""
+
+msgid "Parent Group"
+msgstr ""
+
+msgid "Parent group"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Password must be at least %number% characters long"
+msgstr ""
+
+msgid "Password must contain at least %number% digits"
+msgstr ""
+
+msgid "Password must contain at least %number% lower case characters"
+msgstr ""
+
+msgid "Password must contain at least %number% special characters"
+msgstr ""
+
+msgid "Password must contain at least %number% upper case characters"
+msgstr ""
+
+msgid "Passwords don't match"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Paused"
+msgstr ""
+
+msgid "Pending"
+msgstr ""
+
+msgid "Pending tasks"
+msgstr ""
+
+msgid "Perform by"
+msgstr ""
+
+msgid "Performed"
+msgstr ""
+
+msgid "Performed by:"
+msgstr ""
+
+msgid "Performed date"
+msgstr ""
+
+msgid "Performed on"
+msgstr ""
+
+msgid "Performed on:"
+msgstr ""
+
+msgid "Permission denied: you do not have the rights to perform this action."
+msgstr ""
+
+msgid "Permission denied: you do not have the rights to view this item."
+msgstr ""
+
+msgid "Personal information"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Please choose a file to import"
+msgstr ""
+
+msgid "Please contact your administrator."
+msgstr ""
+
+msgid "Please select a file first"
+msgstr ""
+
+msgid "Please wait for your files to be uploaded."
+msgstr ""
+
+msgid "Please, contact your administrator."
+msgstr ""
+
+msgid "Portal"
+msgstr ""
+
+msgid "Post time"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Process"
+msgstr ""
+
+msgid "Process %appName% in version %version% already exists"
+msgstr ""
+
+msgid "Process definition not found for id %processId%"
+msgstr ""
+
+msgid "Process management"
+msgstr ""
+
+msgid "Process manager"
+msgstr ""
+
+msgid "Process name"
+msgstr ""
+
+msgid "Process version"
+msgstr ""
+
+msgid "Processes"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Profile member already exists"
+msgstr ""
+
+msgid "Profiles"
+msgstr ""
+
+msgid "RESOLVED"
+msgstr ""
+
+msgid "REST API extensions"
+msgstr ""
+
+msgid "Ready since %task_last_update%"
+msgstr ""
+
+msgid "Refresh this table"
+msgstr ""
+
+msgid "Release"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove this category"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "Request parameter \"id\" must be set."
+msgstr ""
+
+msgid "Resolved"
+msgstr ""
+
+msgid "Resolved processes"
+msgstr ""
+
+msgid "Resources"
+msgstr ""
+
+msgid "Resources not recognized:"
+msgstr ""
+
+msgid "Rest API extension"
+msgstr ""
+
+msgid "Resume"
+msgstr ""
+
+msgid "Resume BPM Services"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Role (%nb_role%)"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
+msgid "Roles mapping"
+msgstr ""
+
+msgid "Roles: %nb_roles%"
+msgstr ""
+
+msgid "Running"
+msgstr ""
+
+msgid "Sa"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Save this element"
+msgstr ""
+
+msgid "Save this group changes"
+msgstr ""
+
+msgid "Save this user modifications"
+msgstr ""
+
+msgid "Saving a page will change it immediately for all users who can view it."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Search terms are not supported by this API"
+msgstr ""
+
+msgid "Search..."
+msgstr ""
+
+msgid "Select a group"
+msgstr ""
+
+msgid "Select a group by typing a part of its name."
+msgstr ""
+
+msgid "Select a group to set to this profile"
+msgstr ""
+
+msgid "Select a group to set to this user"
+msgstr ""
+
+msgid "Select a process in the list below to display the available tasks"
+msgstr ""
+
+msgid "Select a role"
+msgstr ""
+
+msgid "Select a role by typing a part of its name."
+msgstr ""
+
+msgid "Select a user"
+msgstr ""
+
+msgid "Select a user by typing a part of his name."
+msgstr ""
+
+msgid "Select a user to be added to actor"
+msgstr ""
+
+msgid "Select an avatar for this group"
+msgstr ""
+
+msgid "Select an avatar for this role"
+msgstr ""
+
+msgid "Select an avatar for this user"
+msgstr ""
+
+msgid "Select profile"
+msgstr ""
+
+msgid "Select the category which the process will be linked to"
+msgstr ""
+
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr ""
+
+msgid "Select the manager of this user"
+msgstr ""
+
+msgid "Select the parent group"
+msgstr ""
+
+msgid "Select the role of this profile in the selected group"
+msgstr ""
+
+msgid "Select the role of this user in the selected group"
+msgstr ""
+
+msgid "Select user to assign task"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "Service task"
+msgstr ""
+
+msgid "Service task (performed automatically)"
+msgstr ""
+
+msgid "Services will be paused for maintenance.\n"
+msgstr ""
+
+msgid "Services will resume. Users will be able to log in.\n"
+msgstr ""
+
+msgid "Session expired. Please log in again."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Show all profiles of portal"
+msgstr ""
+
+msgid "Show more details about this process"
+msgstr ""
+
+msgid "Show more details about this profile"
+msgstr ""
+
+msgid "Show more details about this task"
+msgstr ""
+
+msgid "Show more details about this user"
+msgstr ""
+
+msgid "Show the group list"
+msgstr ""
+
+msgid "Show the role list"
+msgstr ""
+
+msgid "Show the user list"
+msgstr ""
+
+msgid "Skip"
+msgstr ""
+
+msgid "Skip this task"
+msgstr ""
+
+msgid "Skipped on %task_last_update% by %executed_by%"
+msgstr ""
+
+msgid "Some of the pages you selected for deletion are used by processes:"
+msgstr ""
+
+msgid "Sorry the variable %variableName% has a type which is not editable"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "Sorting is not supported by this API"
+msgstr ""
+
+msgid "Start"
+msgstr ""
+
+msgid "Start a case"
+msgstr ""
+
+msgid "Start an instance of process %app_name%"
+msgstr ""
+
+msgid "Start date"
+msgstr ""
+
+msgid "Start this process"
+msgstr ""
+
+msgid "Started by"
+msgstr ""
+
+msgid "Started by:"
+msgstr ""
+
+msgid "Started on"
+msgstr ""
+
+msgid "Started on:"
+msgstr ""
+
+msgid "State"
+msgstr ""
+
+msgid "State:"
+msgstr ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Status: "
+msgstr ""
+
+msgid "Su"
+msgstr ""
+
+msgid "Sub groups"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Submit a comment"
+msgstr ""
+
+msgid "Subprocess"
+msgstr ""
+
+msgid "Subprocess version"
+msgstr ""
+
+msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
+msgstr ""
+
+msgid "Success"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "Take"
+msgstr ""
+
+msgid "Task name:"
+msgstr ""
+
+msgid "Tasks"
+msgstr ""
+
+msgid "Tasks "
+msgstr ""
+
+msgid "Tasks I can do"
+msgstr ""
+
+msgid "Tasks assigned to me"
+msgstr ""
+
+msgid "Tasks in failed status: %nb_tasks%"
+msgstr ""
+
+msgid "Tasks to do"
+msgstr ""
+
+msgid "Technical details"
+msgstr ""
+
+msgid "Technical user warning"
+msgstr ""
+
+msgid "Th"
+msgstr ""
+
+msgid "The BPM Services must be paused"
+msgstr ""
+
+msgid "The BPM Services must be paused before importing a new Business Data Model."
+msgstr ""
+
+msgid "The Business Data Model was successfully installed."
+msgstr ""
+
+msgid ""
+"The Business Data Model will now be installed.\n"
+"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
+msgstr ""
+
+msgid "The Process cannot be enabled"
+msgstr ""
+
+msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
+msgstr ""
+
+msgid "The URL token for accessing this page"
+msgstr ""
+
+msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
+msgstr ""
+
+msgid "The application encountered an error."
+msgstr ""
+
+msgid ""
+"The application encountered an unexpected error. Please try again.\n"
+"If the error persists, please contact Bonitasoft support"
+msgstr ""
+
+msgid "The case %caseId% has been started successfully."
+msgstr ""
+
+msgid "The configuration state of the process"
+msgstr ""
+
+msgid "The content type is defined in page.properties."
+msgstr ""
+
+msgid "The current state of the case"
+msgstr ""
+
+msgid "The date of the creation of the group"
+msgstr ""
+
+msgid "The date of the creation of the user"
+msgstr ""
+
+msgid "The date of the group creation"
+msgstr ""
+
+msgid "The date of the last connection of the user"
+msgstr ""
+
+msgid "The date of the last modification"
+msgstr ""
+
+msgid "The date of the last update of the group"
+msgstr ""
+
+msgid "The date of the last update of the user"
+msgstr ""
+
+msgid "The date when the case was updated"
+msgstr ""
+
+msgid "The date when the page was updated"
+msgstr ""
+
+msgid "The date when the process was updated"
+msgstr ""
+
+msgid "The date when the task must be finished"
+msgstr ""
+
+msgid "The date when the task was assigned"
+msgstr ""
+
+msgid "The date when this page has been added"
+msgstr ""
+
+msgid "The date when this process has been installed"
+msgstr ""
+
+msgid "The date while the case has been started"
+msgstr ""
+
+msgid "The element you try to edit can't be retrieved due to a connection problem."
+msgstr ""
+
+msgid "The element you try to edit can't be retrieved due to a server problem."
+msgstr ""
+
+msgid "The element you try to edit doesn't exists."
+msgstr ""
+
+msgid "The elements you try to display can't be retrieved due to a connection problem."
+msgstr ""
+
+msgid "The elements you try to display can't be retrieved due to a server problem."
+msgstr ""
+
+msgid "The group parent path"
+msgstr ""
+
+msgid "The id of the related case"
+msgstr ""
+
+msgid "The index file must be present in the zip but is ignored, so can be empty."
+msgstr ""
+
+msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
+msgstr ""
+
+msgid "The name for the URL must start with %namePrefix% followed only by alphanumeric characters."
+msgstr ""
+
+msgid "The number of archived cases."
+msgstr ""
+
+msgid "The number of failed tasks."
+msgstr ""
+
+msgid "The number of on going cases."
+msgstr ""
+
+msgid "The only mandatory filter is %name%"
+msgstr ""
+
+msgid "The page allows users with relevant profiles to access the following permissions:"
+msgstr ""
+
+msgid "The page you try to display is out of range."
+msgstr ""
+
+msgid "The platform already exist !"
+msgstr ""
+
+msgid "The priority of the task"
+msgstr ""
+
+msgid "The process responsible for the creation of this task"
+msgstr ""
+
+msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
+msgstr ""
+
+msgid "The server is not available"
+msgstr ""
+
+msgid "The state of the case"
+msgstr ""
+
+msgid "The state of the process"
+msgstr ""
+
+msgid "The state of the task"
+msgstr ""
+
+msgid "The sub process responsible for the creation of this task"
+msgstr ""
+
+msgid "The task %taskName% has been executed. The task list is being refreshed."
+msgstr ""
+
+msgid "The task %taskName% has not been executed. "
+msgstr ""
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr ""
+
+msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
+msgstr ""
+
+msgid "The type of the task"
+msgstr ""
+
+msgid "The user can view and perform tasks and can start a new case of a process."
+msgstr ""
+
+msgid "The user that has added this page"
+msgstr ""
+
+msgid "The user that has started this case"
+msgstr ""
+
+msgid "The user that has uploaded this process"
+msgstr ""
+
+msgid "The user that updated this page"
+msgstr ""
+
+msgid "The user who did the task."
+msgstr ""
+
+msgid "The username to which the task is assigned."
+msgstr ""
+
+msgid "The version of the process"
+msgstr ""
+
+msgid "The version of the process that created this case"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Themes"
+msgstr ""
+
+msgid "These %item_name_plural% and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid "These %item_name_plural% will be definitively deleted."
+msgstr ""
+
+msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
+msgstr ""
+
+msgid "This %item_name% and related profile entries will be permanently deleted."
+msgstr ""
+
+msgid "This %item_name% will be definitively deleted."
+msgstr ""
+
+msgid "This category has already been added to this process"
+msgstr ""
+
+msgid "This category was not found or this field is mandatory"
+msgstr ""
+
+msgid "This file format is not allowed. Only .zip files are allowed."
+msgstr ""
+
+msgid "This group has already been mapped to actor"
+msgstr ""
+
+msgid "This membership has already been mapped to actor"
+msgstr ""
+
+msgid "This membership is already added to user"
+msgstr ""
+
+msgid ""
+"This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
+" update the page definition to specify the list of resources used."
+msgstr ""
+
+msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
+msgstr ""
+
+msgid "This role has already been mapped to actor"
+msgstr ""
+
+msgid "This service is offline for maintenance. Please try later."
+msgstr ""
+
+msgid "This user has already been mapped to actor"
+msgstr ""
+
+msgid "This will export a file containing your whole organization data. "
+msgstr ""
+
+msgid "This will import a file containing your whole organization data."
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "To change the content of this custom page, specify a new zip file in the field below."
+msgstr ""
+
+msgid "To do"
+msgstr ""
+
+msgid "To do so, contact your administrator"
+msgstr ""
+
+msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
+msgstr ""
+
+msgid "To view an imported page, add it to an application page list and navigation."
+msgstr ""
+
+msgid "Tu"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Type new comment"
+msgstr ""
+
+msgid "Type of the variable"
+msgstr ""
+
+msgid "Type the new value for %variableName%"
+msgstr ""
+
+msgid "Type to search"
+msgstr ""
+
+msgid "UNRESOLVED"
+msgstr ""
+
+msgid "URL token"
+msgstr ""
+
+msgid "Unable to deploy business archive"
+msgstr ""
+
+msgid "Unable to disable process"
+msgstr ""
+
+msgid "Unable to enable process"
+msgstr ""
+
+msgid "Unable to find data instance %dataName% for activity %activityId%"
+msgstr ""
+
+msgid "Unable to find group %groupId%"
+msgstr ""
+
+msgid "Unable to get group path, group not found"
+msgstr ""
+
+msgid "Unable to get process data definitions, process %processId% not found"
+msgstr ""
+
+msgid "Unable to log in. Please check your username and password."
+msgstr ""
+
+msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
+msgstr ""
+
+msgid "Unassign"
+msgstr ""
+
+msgid "Unassign this task. Other allowed users will see it"
+msgstr ""
+
+msgid "Unassigned"
+msgstr ""
+
+msgid "Unassigned tasks I can do"
+msgstr ""
+
+msgid "Unresolved"
+msgstr ""
+
+msgid "Unresolved processes"
+msgstr ""
+
+msgid "Unsupported file."
+msgstr ""
+
+msgid "Update a group"
+msgstr ""
+
+msgid "Update a role"
+msgstr ""
+
+msgid "Update date"
+msgstr ""
+
+msgid "Update the page"
+msgstr ""
+
+msgid "Update the user"
+msgstr ""
+
+msgid "Update this page using the defined search query"
+msgstr ""
+
+msgid "Update this role"
+msgstr ""
+
+msgid "Updated by"
+msgstr ""
+
+msgid "Updated on"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "User (%nb_user%)"
+msgstr ""
+
+msgid "User name"
+msgstr ""
+
+msgid "User not found"
+msgstr ""
+
+msgid "User privilege settings"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Username of the user"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Users mapping"
+msgstr ""
+
+msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
+msgstr ""
+
+msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
+msgstr ""
+
+msgid "Users with the app above can see this page."
+msgstr ""
+
+msgid "Users: %nb_users%"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Version of the process"
+msgstr ""
+
+msgid "Visible to"
+msgstr ""
+
+msgid "Warning"
+msgstr ""
+
+msgid "Warning:"
+msgstr ""
+
+msgid "We"
+msgstr ""
+
+msgid "Welcome to"
+msgstr ""
+
+msgid "Welcome: "
+msgstr ""
+
+msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
+msgstr ""
+
+msgid "When you resume the services, tell your users that they can log back in to the Portal."
+msgstr ""
+
+msgid "Worked on"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "You are going to start a new case. No form is needed."
+msgstr ""
+
+msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
+msgstr ""
+
+msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
+msgstr ""
+
+msgid ""
+"You risk interrupting one or more processes.\n"
+"\n"
+"Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n"
+"\n"
+"Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n"
+"\n"
+"Are you sure you want to deactivate this user now ?"
+msgstr ""
+
+msgid "You will be rediected"
+msgstr ""
+
+msgid "Your session has expired. Please log in again and retry."
+msgstr ""
+
+msgid "Zip Archive"
+msgstr ""
+
+msgid "Zip code"
+msgstr ""
+
+msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
+msgstr ""
+
+msgid "add"
+msgstr ""
+
+msgid "ascending"
+msgstr ""
+
+msgid "by"
+msgstr ""
+
+msgid "cancel"
+msgstr ""
+
+msgid "create"
+msgstr ""
+
+msgid "day"
+msgstr ""
+
+msgid "descending"
+msgstr ""
+
+msgid "false"
+msgstr ""
+
+msgid "group"
+msgstr ""
+
+msgid "groups"
+msgstr ""
+
+msgid "hr"
+msgstr ""
+
+msgid "human task"
+msgstr ""
+
+msgid "in %time%"
+msgstr ""
+
+msgid "in menu "
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "min"
+msgstr ""
+
+msgid "mm/dd/yy"
+msgstr ""
+
+msgid "mm/dd/yyyy"
+msgstr ""
+
+msgid "mo"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "page"
+msgstr ""
+
+msgid "pages"
+msgstr ""
+
+msgid "process"
+msgstr ""
+
+msgid "processes"
+msgstr ""
+
+msgid "remove"
+msgstr ""
+
+msgid "sec"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "the address of the user"
+msgstr ""
+
+msgid "the city"
+msgstr ""
+
+msgid "the company address of the user"
+msgstr ""
+
+msgid "the country of the user"
+msgstr ""
+
+msgid "the country of the user company"
+msgstr ""
+
+msgid "the personnal email the user"
+msgstr ""
+
+msgid "the personnal mobile phone number of the user"
+msgstr ""
+
+msgid "the personnal phone number of the user"
+msgstr ""
+
+msgid "the professional email the user"
+msgstr ""
+
+msgid "the professional mobile phone number of the user"
+msgstr ""
+
+msgid "the professional phone number of the user"
+msgstr ""
+
+msgid "the state of the user"
+msgstr ""
+
+msgid "the state of the user company"
+msgstr ""
+
+msgid "the zip code of the user"
+msgstr ""
+
+msgid "the zip code of the user company"
+msgstr ""
+
+msgid "this field"
+msgstr ""
+
+msgid "true"
+msgstr ""
+
+msgid "yr"
+msgstr ""
+
+msgid "zip file"
+msgstr ""

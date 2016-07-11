@@ -1,0 +1,48 @@
+.page_pageList{
+	.tables_panel {
+		.form_search{
+			display: none;
+		}
+		.table .thead .th{
+			&.th_{
+				&description{
+					display: @pageListAdmin-header-description-display;
+				}
+				&lastUpdateDate{
+					float: @pageListAdmin-header-lastUpdateDate-float;
+				}
+			}
+		}
+		.table .tbody .tr {
+			position: relative;
+			.td{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				.boxSizing();
+				&.td_{
+					&displayname{
+						width: @pageListAdmin-displayname-width;
+						margin : @pageListAdmin-displayname-margin;
+					}
+					&description {
+						top: @pageListAdmin-description-top;
+						left: @pageListAdmin-description-left;
+						color: @pageListAdmin-description-textColor;
+						.fontSize(@pageListAdmin-description-fontSize);
+						position: @pageListAdmin-description-position;
+						width: @pageListAdmin-description-width;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+						height: 1.15em;
+					}
+					&lastupdatedate {
+						width: @pageListAdmin-lastUpdateDate-width;
+						float: @pageListAdmin-header-lastUpdateDate-float;
+					}
+				}
+			}
+		}
+	}
+}

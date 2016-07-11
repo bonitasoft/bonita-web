@@ -1,0 +1,217 @@
+@section-padding-left: 4*@w;
+.sectionTableLineHover() {
+	background-color: @secondary-background;
+	border-color: darken(@secondary-background, 5%);
+}
+
+
+.twoCols, .moredetails{
+	.section.even{
+		clear: left;
+	}
+}
+
+.section {
+	.section_description {
+			width: 90%;
+			padding: 1px 0 4*@h @section-padding-left;
+			/** hack for merging border on tr hover */
+			margin-bottom: -1px;
+			word-wrap: break-word;
+	}
+}
+
+// ****************************************************//
+//					TASKS SECTIONS
+// ****************************************************//
+.section.tasks {	
+	.datatable {
+		.td {
+			> span{
+				&.prepend {
+					font-weight: bold;
+					padding-right: @w;
+				}
+				overflow: hidden; 
+			}
+		}
+		.td_displaydescription {
+			width: 90%;
+			padding: 1px 0 2*@h @section-padding-left;
+			border-bottom: 2px dotted darken(@secondary-background, 5%);
+			/** hack for merging border on tr hover */
+			margin-bottom: -1px;
+			word-wrap: break-word;
+		}
+		.tr_last .td_displaydescription {
+			border-color: transparent;
+		}
+		.td_displayname {
+			width: 50%;
+			> span.prepend {
+				padding-left: @section-padding-left;
+				.bgLeft("metadata-task.png");
+				
+				&.user_task{
+					.bgLeft("metadata-user.png");
+				}
+				&.manual_task{
+					.bgLeft("metadata-user.png");
+				}
+				&.automatic_task{
+					.bgLeft("metadata_automaticTask_small.png");
+				}
+				&.call_activity{
+					.bgLeft("metadata_callactivity_small.png");
+				}
+				&.multi_instance_activity{
+					.bgLeft("metadata_multi_instance_small.png");
+				}
+				&.loop_activity{
+					.bgLeft("metadata_loop_small.png");
+				}
+			}
+		}
+		.td_duedate > span.prepend, .td_archiveddate > span.prepend, .td_last_update_date > span.prepend {
+			.bgLeft("metadata-due-date.png");
+			padding-left: @section-padding-left;
+		}
+		.td_executedby_executedby > span.prepend {
+			padding-left: @section-padding-left;
+		}
+		.td_executedbysubstitute_executedbysubstitute{
+			display: none;
+		}
+		.tr {
+			padding: 2*@h 0 0 2*@w;
+			width: 100%;
+			.pointerAsLink();
+			border: 1px solid transparent;
+			.borderRadius(5px);
+			&:hover {
+				.sectionTableLineHover();
+				/** hack for merging border on hover */
+				margin-top: -3px;
+				padding-top: 13px;
+			}
+		}
+	}
+}
+
+.section.tasks.failed, .section.tasks.performed {
+	.datatable {
+		.td_displayname {
+			width: 100%;
+		}
+		.td_last_update_date, .td_archiveddate {
+			width: 50%;
+			padding-top: 2px;
+		}
+	}
+}
+
+// ****************************************************//
+//					CASES SECTIONS
+// ****************************************************//
+.section.cases {
+	.datatable {
+		.td > span.prepend {
+			font-weight: bold;
+			padding-right: @w;
+		}
+	}
+	.td_start, .td_archiveddate{
+		> span.prepend {
+			.bgLeft("metadata-due-date.png");
+			padding-left: @section-padding-left;
+		}
+	}
+	.td_started_by_started_by {
+		> span.prepend {
+			padding-left: @section-padding-left;
+			.bgLeft("metadata-task.png");
+				
+			&.user_task{
+				.bgLeft("metadata-user.png");
+			}
+			&.manual_task{
+				.bgLeft("metadata-user.png");
+			}
+			&.automatic_task{
+				.bgLeft("metadata_automaticTask_small.png");
+			}
+			&.call_activity{
+				.bgLeft("metadata_callactivity_small.png");
+			}
+			&.multi_instance_activity{
+				.bgLeft("metadata_multi_instance_small.png");
+			}
+			&.loop_activity{
+				.bgLeft("metadata_loop_small.png");
+			}
+		}
+	}
+	.tr {
+		padding: 1*@h+1 0 1*@h+1 2*@w;
+		width: 100%;
+		.pointerAsLink();
+		border: 1px solid transparent;
+		.borderRadius(5px);
+		&:hover {
+			.sectionTableLineHover();
+		}
+		.td{
+			line-height: 1.5; 
+			.boxSizing();
+			width: 50%;
+		}
+	}
+}
+
+// ****************************************************//
+//				  USERS MAPPING SECTION
+// ****************************************************//
+.section.usersmapping {
+	.datatable { 
+		.td {
+			float: none;
+			vertical-align: middle;
+		}
+		.td_firstname {
+			width: 150px;
+		}
+		.tr {
+			padding: 5px 0 2px 2*@w;
+			.pointerAsLink();
+			border: 1px solid transparent;
+			.borderRadius(5px);
+			&:hover {
+				.sectionTableLineHover();
+			}
+			.td_icon{
+				.iconMixin(list);
+			}
+		}
+	}
+}
+
+// ****************************************************//
+//				  SUB GROUPS SECTION
+// ****************************************************//
+.section.subgroups {
+	.datatable { 
+		.td {
+			float: none;
+			vertical-align: middle;
+		}
+		.td_icon {
+			height: 6*@h;
+			width: 10*@h;
+			.iconMixin(list);
+			img {
+				max-height: 25px;
+				max-width: 25px;
+			}
+		}
+	}
+}

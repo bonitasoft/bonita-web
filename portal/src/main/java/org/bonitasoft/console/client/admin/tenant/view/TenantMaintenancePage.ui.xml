@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright (C) 2014 BonitaSoft S.A.
+  ~ BonitaSoft is a trademark of BonitaSoft SA.
+  ~ This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+  ~ For commercial licensing information, contact:
+  ~ BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
+  ~ or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+  -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:btn='urn:import:org.bonitasoft.web.toolkit.client.ui.component.button'>
+
+    <ui:with type="java.lang.String" field="PAGE_TITLE"/>
+	<ui:with type="java.lang.String" field="PAGE_MESSAGE"/>
+    <ui:with type="java.lang.String" field="BUTTON_LABEL"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION_LIST_ELMENT1"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION_LIST_ELMENT2"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION_LIST_ELMENT3"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION_LIST_ELMENT4"/>
+    <ui:with type="java.lang.String" field="PAGE_DESCRIPTION_END"/>
+    <ui:with type="java.lang.String" field="STATUS"/>
+    
+    <g:HTMLPanel styleName="page">
+        <div class="body">
+            <img ui:field='image' class="stateImg" />
+            <div class='section'>
+                <div class='header'>
+                    <h1>
+                        <ui:text from='{PAGE_TITLE}'/>
+                    </h1>
+                </div>
+                <div class='body'>
+                    <p class='tenantStateLabel'><label><ui:text from='{STATUS}'/></label><span ui:field='message' class='tenantState'/></p>
+                    <p><ui:text from='{PAGE_DESCRIPTION}'/></p>
+                    <ul>
+                		<li><ui:text from='{PAGE_DESCRIPTION_LIST_ELMENT1}'/></li>
+                		<li><ui:text from='{PAGE_DESCRIPTION_LIST_ELMENT2}'/></li>
+                		<li><ui:text from='{PAGE_DESCRIPTION_LIST_ELMENT3}'/></li>
+                		<li><ui:text from='{PAGE_DESCRIPTION_LIST_ELMENT4}'/></li>
+                	</ul>
+                	<p><ui:text from='{PAGE_DESCRIPTION_END}'/></p>
+                </div>
+            	<btn:ButtonAction ui:field="actionButton" addStyleNames='changeStateBtn' label='{BUTTON_LABEL}'/>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,221 @@
+.doublesection .body {
+	.menuOptions {
+		padding-top: @h;
+	}
+	
+	.descriptionNavBar {
+		display: inline;
+	}
+	
+	.imgIconCustom {
+		display: inline;
+		padding-left: 10px;
+	}
+	
+	.menuEditor {
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding-top: 10px;
+		.menu {
+			position: absolute;
+			width: 100%;
+			.height (@header-menu-height);
+			.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
+		}
+		
+		> .tablesPannel {
+			padding:@profileMoreDetails-menuEditor-padding;
+			float: left;
+			position: relative;
+			
+			#btn-addprofileentry {
+				.noBoxShadow()
+			}
+
+			>.btn-action{
+				margin: @profileMoreDetails-addMenulink-margin;
+				#btn-addprofileentry {
+					color:red;
+				}
+			}
+			> .tablePannel {
+				float: left;
+				width: auto;
+				text-align: center;
+				.table .tbody .tr .td{
+					border: none;
+				}
+				> .datatable {
+					width: auto;
+					text-align: center;
+					&.resetOption{
+						height: (@header-menu-height);
+					}
+					> .pager {
+						display: none;
+					}
+					> .table {
+						width: auto;
+						margin: 0;
+						border: @profileMoreDetails-menuEditor-folder-borderTop;
+						.boxShadow(@dropdown-shadowX , 0 , @dropdown-shadowBlur , @dropdown-shadowColor);
+						.borderRadius(0px);
+						> .thead {
+							display: none;
+						}
+						> .tbody {
+							.tr {
+								color: @header-menu-link-textColorHover;
+								background: @header-submenuCurrent-bgColor;
+								text-align: left;
+								&:hover{
+									cursor: move;
+								}
+								/* menu editor, Perent menu font size*/
+								&_1 {
+								    .fontSize (@header-menu-fontSize); 
+								}
+								&_last{
+									.td{
+										&_last, &_1{
+											.noBorderRadius();
+										}
+									}
+									
+								}
+								
+								.td{
+									&_1{
+										border: @table-border;
+										border-top: none;
+										border-bottom: none;
+										border-right: none;
+									}
+									&_last{
+										border: @table-border;
+										border-left: none;
+										border-top: none;
+										border-bottom: none;
+										
+									}
+									//.table_view_table .table .tbody .tr_last .td_last
+								}
+								
+								> .td_actions {
+									padding: 0;
+									a {
+										margin: 0;
+										visibility: hidden;
+                                        					display: inline-block;
+                                        					width: @profileMoreDetails-deleteProfileEntryLink-width;
+                                        					.height(@header-menu-height);
+                                        					.hideText();
+                                        					vertical-align: middle;
+										&.deleteProfileEntryLink{
+											.bg(@profileMoreDetails-deleteProfileEntryLink-bg);
+										}
+										&.editProfileEntryLink{
+                                            						.bg("pencil.png");
+                                        					}
+									}
+								}
+								&:hover > .td_actions a {
+									visibility: visible;
+								}
+							}
+							.tr.tr_1 { // menu
+								.verticalGradient (@header-menu-gradientColor1 , @header-menu-gradientPosition1 , @header-menu-gradientColor2 , @header-menu-gradientPosition2);
+								color: @header-menu-link-textColor;
+								text-align: @profileMoreDetails-menuEditor-folder-textAlign;
+								.height(@header-menu-height);
+								&:hover{
+									cursor: move;
+								}
+								> .td {
+									border: none;
+									padding: @profileMoreDetails-menuEditor-folder-padding;
+									.height(@header-menu-height);
+								}
+								.td_icon {
+									padding: 0 0 0 10px;
+								}
+								.td_page_name {
+									padding-left: 10px;
+								}
+
+								> .td_actions {
+									padding: 0;
+									
+									a {
+										margin: 0;
+										.pointerAsLink();
+									}
+								}
+							}
+							.td_icon {
+								padding: 0 0 0 5px;
+								text-align: center;
+							}
+							.td_page_name {
+								padding-left: 10px;
+							}
+						}
+					}
+				}
+				p.addProfileEntry, p.addProfileEntryDisabled {
+					clear: both;
+					padding: @profileMoreDetails-linkEditor-padding;
+					color: @header-menu-link-textColorHover;
+					.boxShadow (@dropdown-shadowX , @dropdown-shadowY , @dropdown-shadowBlur , @dropdown-shadowColor);
+					border: @profileMoreDetails-linkEditor-border;
+					text-decoration: underline;
+					text-align: left;
+					.borderRadiusBottom(@defaultRadius);
+					background: @profileMoreDetails-linkEditor-bg;
+					margin: 0;
+				}
+				p.addProfileEntryDisabled{
+					color: @header-menu-link-disabled-color;
+					pointer-events: none;
+   					cursor: default;
+				}
+			}
+		}
+	}
+}
+
+.page_resetMenuPopupPage {
+	.resetMenuButtons {
+		text-align:center;
+	}
+}
+
+.page_AddCustomProfileTab .body {
+	.datatable .actions {
+		display: none;
+	}
+	.form {
+		margin-top: 0;
+	}
+}
+
+//Temporary fix for description in more details
+.body .page_profilemoredetails .body .metadatas h1{
+	width: 30%;
+}
+
+.status-message {
+    .status-log {
+        width: 100%;
+        height: @status-log-height;
+        overflow: scroll;
+        overflow-x: hidden;
+        background: @status-log-bg-color;
+        resize: none;
+	}
+}
+
+
+.status-popup {
+    width: @status-popup-width;
+}

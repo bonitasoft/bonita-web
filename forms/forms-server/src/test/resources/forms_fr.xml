@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="forms.xsd" product-version="5.3">
+	<application name="firstProcess" version="1.0">
+		<permissions>process#ApprovalWorkflow--1.0</permissions>
+		<application-label>
+			<expression>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<expression-content>Approval Workflow</expression-content>
+				<return-type>java.lang.String</return-type>
+			</expression>
+		</application-label>
+		<application-layout>html/bonita_process_default.html</application-layout>
+		<mandatory-symbol>
+			<expression>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<expression-content>!</expression-content>
+				<return-type>java.lang.String</return-type>
+			</expression>
+		</mandatory-symbol>
+		<mandatory-label>
+			<expression>
+				<expression-type>TYPE_CONSTANT</expression-type>
+				<expression-content>obligatoire</expression-content>
+				<return-type>java.lang.String</return-type>
+			</expression>
+		</mandatory-label>
+		<mandatory-style>form_mandatory</mandatory-style>
+		<error-template>html/bonita_default_error.html</error-template>
+		<forms>
+			<form id="firstProcess--1.0--task1$entry">
+				<first-page>
+					<expression>
+						<expression-type>TYPE_CONSTANT</expression-type>
+						<expression-content>0</expression-content>
+						<return-type>java.lang.String</return-type>
+					</expression>
+				</first-page>
+				<permissions>activity#firstProcess--1.0--task1</permissions>
+				<form-type>entry</form-type>
+				<pages>
+					<page id="0">
+						<page-label>
+							<expression>
+								<expression-type>TYPE_CONSTANT</expression-type>
+								<expression-content>Page 1 label</expression-content>
+								<return-type>java.lang.String</return-type>
+							</expression>
+						</page-label>
+						<page-layout>html/request.html</page-layout>
+						<widgets>
+							<widget id="Request_Applications" type="TEXTBOX">
+								<max-length>8</max-length>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Commentaire</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+								<validators>
+									<validator id="field_validator">
+										<classname>org.bonitasoft.forms.server.validator.NumericDoubleFieldValidator
+										</classname>
+										<label>
+											<expression>
+												<expression-type>TYPE_CONSTANT</expression-type>
+												<expression-content>wrong field value : this field only tolerates numbers</expression-content>
+												<return-type>java.lang.String</return-type>
+											</expression>
+										</label>
+										<style>field_validator</style>
+									</validator>
+								</validators>
+							</widget>
+							<widget id="test_widget1" type="FILEUPLOAD">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>File</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>attachment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>File</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+							</widget>
+							<widget id="test_widget2" type="TEXTAREA">
+								<max-length>50</max-length>
+								<max-height>2</max-height>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>test content</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test_widget3" type="CHECKBOX">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>true</expression-content>
+										<return-type>java.lang.Boolean</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment checkbox</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment checkbox</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+							</widget>
+							<widget id="test_widget4" type="RADIOBUTTON_GROUP">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>yes</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment radio</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment radio</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<items-style>form_input</items-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>yes</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>yes</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>no</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>no</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>maybe</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>maybe</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test_widget5" type="LISTBOX_SIMPLE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>elem1</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test_widget6" type="MESSAGE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Information message</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<style>form_input</style>
+							</widget>
+							<widget id="test_widget7" type="LISTBOX_MULTIPLE">
+								<max-height>3</max-height>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_READ_ONLY_SCRIPT</expression-type>
+										<expression-content>["elem4", "elem2"]</expression-content>
+										<interpreter>GROOVY</interpreter>
+										<return-type>java.util.List</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox multiple</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox multiple</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 4</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem4</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test_widget8" type="DATE">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment date</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment date</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test_widget9" type="TEXT">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>test content text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+							</widget>
+							<widget id="next_widget" type="BUTTON_NEXT">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Next</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>button_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Next</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+							</widget>
+						</widgets>
+						<page-validators>
+							<validator id="page_validator">
+								<classname>org.bonitasoft.forms.application.server.validator.CustomPageValidator</classname>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>wrong page values : Comment text area and password fields must be filled in</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<style>page_validator</style>
+							</validator>
+						</page-validators>
+						<actions>
+							<action type="ASSIGNMENT">
+								<expression>
+									<return-type>java.lang.String</return-type>
+									<expression-type>TYPE_INPUT</expression-type>
+									<expression-content>field_Request_Applications</expression-content>
+								</expression>
+								<operator>=</operator>
+								<variable>application</variable>
+							</action>
+						</actions>
+					</page>
+					<page id="1">
+						<page-label>
+							<expression>
+								<expression-type>TYPE_CONSTANT</expression-type>
+								<expression-content>Page 2 label</expression-content>
+								<return-type>java.lang.String</return-type>
+							</expression>
+						</page-label>
+						<page-layout>html/request2.html</page-layout>
+						<widgets>
+							<widget id="test2_widget" type="TEXTBOX">
+								<max-length>8</max-length>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+								<validators>
+									<validator id="field_validator2">
+										<classname>org.bonitasoft.forms.server.validator.NumericDoubleFieldValidator</classname>
+										<label>
+											<expression>
+												<expression-type>TYPE_CONSTANT</expression-type>
+												<expression-content>wrong field value : this field only tolerates numbers</expression-content>
+												<return-type>java.lang.String</return-type>
+											</expression>
+										</label>
+										<style>field_validator</style>
+									</validator>
+								</validators>
+							</widget>
+							<widget id="test2_widget1" type="PASSWORD">
+								<max-length>10</max-length>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>password</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>password</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+							</widget>
+							<widget id="test2_widget2" type="TEXTAREA">
+								<max-length>50</max-length>
+								<max-height>2</max-height>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>test content</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+							</widget>
+							<widget id="test2_widget3" type="CHECKBOX">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment checkbox 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment checkbox 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test2_widget4" type="RADIOBUTTON_GROUP">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment radio 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment radio 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<items-style>form_input</items-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test2_widget5" type="LISTBOX_SIMPLE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Word</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox 2</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>MS Word</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>Word</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>MS Excel</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>Excel</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>MS Outlook</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>MailReader</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>Firefox</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>WebBrowser</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test2_widget6" type="MESSAGE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Information message</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<style>form_input</style>
+							</widget>
+							<widget id="test2_widget7" type="LISTBOX_MULTIPLE">
+								<max-height>3</max-height>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_READ_ONLY_SCRIPT</expression-type>
+										<expression-content>["elem4", "elem2"]</expression-content>
+										<interpreter>GROOVY</interpreter>
+										<return-type>java.util.List</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox multiple</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment listbox multiple</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<available-values>
+									<values-list>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem1</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem2</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem3</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+										<available-value>
+											<label>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>element 4</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</label>
+											<value>
+												<expression>
+													<expression-type>TYPE_CONSTANT</expression-type>
+													<expression-content>elem4</expression-content>
+													<return-type>java.lang.String</return-type>
+												</expression>
+											</value>
+										</available-value>
+									</values-list>
+								</available-values>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test2_widget8" type="DATE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>2009.09.01</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<display-format>EEEE, MMMM d, yyyy</display-format>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment date</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment date</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test2_widget9" type="TEXT">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>test content text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+							</widget>
+							<widget id="previous_widget" type="BUTTON_PREVIOUS">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Previous</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>button_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Previous</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+							</widget>
+							<widget id="next_widget2" type="BUTTON_NEXT">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Next</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>button_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Next</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+							</widget>
+						</widgets>
+						<actions>
+							<action type="ASSIGNMENT">
+								<variable>Applications</variable>
+								<operator>=</operator>
+								<expression>
+									<expression-type>TYPE_INPUT</expression-type>
+									<expression-content>field_test2_widget5</expression-content>
+									<return-type>java.lang.String</return-type>
+								</expression>
+							</action>
+						</actions>
+					</page>
+					<page id="2">
+						<page-label>
+							<expression>
+								<expression-type>TYPE_CONSTANT</expression-type>
+								<expression-content>Page 3 label</expression-content>
+								<return-type>java.lang.String</return-type>
+							</expression>
+						</page-label>
+						<page-layout>html/request3.html</page-layout>
+						<widgets>
+							<widget id="test3_widget" type="TEXTBOX">
+								<max-length>8</max-length>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>true</mandatory>
+								<validators>
+									<validator id="field_validator3">
+										<classname>org.bonitasoft.forms.server.validator.NumericDoubleFieldValidator</classname>
+										<label>
+											<expression>
+												<expression-type>TYPE_CONSTANT</expression-type>
+												<expression-content>wrong field value : this field only tolerates numbers</expression-content>
+												<return-type>java.lang.String</return-type>
+											</expression>
+										</label>
+										<style>field_validator</style>
+									</validator>
+								</validators>
+							</widget>
+							<widget id="test3_widget1" type="MESSAGE">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Information message very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very long</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<style>form_input</style>
+							</widget>
+							<widget id="test3_widget2" type="TEXTAREA">
+								<max-length>50</max-length>
+								<max-height>3</max-height>
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>test content</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text area</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+								<mandatory>false</mandatory>
+							</widget>
+							<widget id="test3_widget3" type="TEXT">
+								<initial-value>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Information message very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very very very very
+										very very very very very very very very very long</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</initial-value>
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>form_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Comment text</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+								<label-style>form_label</label-style>
+							</widget>
+							<widget id="previous_widget2" type="BUTTON_PREVIOUS">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Previous</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>button_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Previous</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+							</widget>
+							<widget id="submit_widget" type="BUTTON_SUBMIT">
+								<title>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Submit</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</title>
+								<style>button_input</style>
+								<label>
+									<expression>
+										<expression-type>TYPE_CONSTANT</expression-type>
+										<expression-content>Submit</expression-content>
+										<return-type>java.lang.String</return-type>
+									</expression>
+								</label>
+							</widget>
+						</widgets>
+					</page>
+				</pages>
+				<confirmation-layout>html/bonita_default_confirm.html
+				</confirmation-layout>
+			</form>
+			<form id="firstProcess--1.0--Request$entry">
+				<permissions>activity#firstProcess--1.0--Request</permissions>
+				<form-type>entry</form-type>
+			</form>
+		</forms>
+	</application>
+</forms-definition>

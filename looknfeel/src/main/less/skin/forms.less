@@ -1,0 +1,495 @@
+form{
+	min-width: @form-container-minWidth;
+	max-width: @form-container-maxWidth;
+	.formentries{
+		.tabs{
+			margin: @form-tabsContainer-margin;
+			h1{
+				.fontSize(@form-tabs-fontSize);
+			}
+		}
+
+		.formentry{
+			width: 100%;
+			.input{
+				position: relative; //CSS PIE z-index fix
+				input{
+					height: @inputHeight;
+				}
+				//override bootstrap
+				.alert{
+					padding:0;
+					margin:0;
+					.borderRadius(@form-input-radius);
+				}
+			}
+			&.select .input, textarea, input{
+				.fontSize(@form-input-fontSize);
+				width: 100%;
+				padding: @inputPaddingTop @inputPaddingRight @inputPaddingBottom @inputPaddingLeft;
+				border: @form-input-border;
+				.boxSizing();
+				.borderRadius(@form-input-radius);
+				.boxShadow(@form-input-shadowX, @form-input-shadowY, @form-input-shadowColor, @form-input-shadowColor);
+				position: relative;//CSS PIE for z-index: -1
+			}
+			input[type="password"]{
+				font-family: sans-serif !important;//IE fix when it is not a websafe font, password is displayed incorrectly
+			}
+			input[type="radio"], input[type="checkbox"]{
+				width: @form-input-radioCheckbox-width;
+				height: @form-input-radioCheckbox-height;
+			}
+			input.inputDate{
+				.bgRight(@form-input-date-bgImg);
+				padding-right: @form-input-date-padding;
+				.boxSizing();
+				.pointerAsLink();
+			}
+			.label{
+				margin: @form-labelContainer-margin;
+				label{
+					color: @form-label-color;
+					span.mandatoryflag{
+						color: @form-mandatoryFlag-txtColor;
+					}
+				}
+			}
+			.input{
+				div.alert.ERROR, div.alert_message.ERROR{
+					margin: @form-input-error-margin;
+					color: @form-input-error-txtColor;
+					border-color: @form-input-error-borderColor;
+				}
+			}
+			&.select{
+				.input{
+					overflow: hidden;
+					width: 100%;
+					padding: 0;
+					.bgRight(@form-select-bgImg);
+					select{
+						font-size: inherit;
+						font-family: inherit;
+						padding: @form-select-padding;
+						background: transparent;
+						-webkit-appearance: none;
+						border: 0;
+						border-radius: 0;
+						width: 110%;
+					}
+				}
+			}
+			+ .formentry, + css3-container + .formentry{
+				margin: @form-fieldContainer-margin;
+			}
+		}
+		fieldset{
+			margin: @form-fieldContainer-margin;
+			legend{
+				margin: @form-labelContainer-margin;
+				color: @form-label-color;
+			}
+		}
+		.uploader{
+			.bg(@form-input-file-bgImg, no-repeat, transparent, right, center, "");
+			padding: 0;
+			height: @inputHeight;
+			.borderRadius(@form-input-radius);
+			border: @form-input-border;
+			position: relative;
+			*{
+				border: none !important;
+			}
+			input, .input{
+				behavior: none !important;// ie8 fix, input background is not well rendered and hides the link
+				.pointerAsLink();
+			}
+			a{
+				.pointerAsLink();
+				.boxSizing();
+				line-height: @form-input-file-lineHeight;
+				padding: 0 @form-input-file-padding 0 @inputPaddingLeft;
+				border: none;
+				height: 100%;
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			&.done{
+				.bgRight(@form-input-fileOk-bgImg);
+			}
+			&.uploading{
+				.bgRight(@form-input-fileProgress-bgImg);
+			}
+			&.failed{
+				.bgRight(@form-input-fileKo-bgImg);
+				border-color: @form-input-error-borderColor;
+			}
+		}
+		.disabled .uploader {
+          input, .input, a {
+               .disablePointerAsLink();
+          }
+        }
+	}
+	.dropdown.autocomplete{
+		z-index: @zIndex-dropdown;
+		width: 100%;
+		display: none;
+		position: absolute;
+		border: @form-autocomplete-suggestions-border;
+		background: @form-autocomplete-suggestions-bgColor;
+		padding: @form-autocomplete-suggestions-padding;
+		.boxShadow(@form-autocomplete-suggestions-shadowX, @form-autocomplete-suggestions-shadowY, @form-autocomplete-suggestions-shadowBlur, @form-autocomplete-suggestions-shadowColor);
+		a{
+			display: block;
+			padding: @form-autocomplete-suggestion-padding;
+			&:hover{
+				background-color: @form-autocomplete-suggestion-hover-bgColor;
+				color: @form-autocomplete-suggestion-hover-txtColor;
+			}
+		}
+	}
+	.fileupload div.input{
+		/* fix bug ie9 */
+		display: inline-block;
+		width: 100%;
+	}
+}
+
+// Forms in popup
+.popupcontainer .form{
+	margin-top: 30px;
+	min-width: 480px;
+}
+
+// Message in popup
+.popupcontainer .message{
+	margin-top: 15px;
+	margin-bottom: 5px;
+	min-width: 480px;
+	color: @form-label-color;
+}
+
+.popupcontainer .viewchoice label{
+	color: @form-label-color;
+}
+
+.formactions, .popupcontainer .footer{
+	margin: @form-formactions-margin;
+	text-align: @form-formactions-textAlign;
+}
+
+// custom checkboxes &radio
+.datatable, .form{
+	.custom-{
+		&checkbox, &radio{
+			position: relative;
+			height: @form-input-checkbox-height;
+			width: @form-input-checkbox-width;
+			input{
+				position: absolute;
+				left: 0;
+				top: 0;
+				margin: 0;
+				z-index: 0;
+			}
+			label{
+				display: block;
+				position: absolute;
+				//TODO check position: relative;
+				left: 0;
+				top: 0;
+				margin: 0;
+				cursor: pointer;
+				z-index: 1;
+			}
+		}
+		&checkbox{
+			line-height: @form-input-checkbox-height;
+			label{
+				.hideText();
+				height: @form-input-checkbox-height;
+				width: @form-input-checkbox-width;
+				.bg(@form-input-checkbox-bgImg);
+				z-index: 1;
+				&.checked{
+					.bg(@form-input-checkboxChecked-bgImg);
+				}
+			}
+			input{
+				height: @form-input-custom-checkbox-height;
+				width: @form-input-custom-checkbox-width;
+				margin: 1px 0 0 1px; 
+			}
+		}
+		&radio{
+			line-height: @form-input-radio-height;
+			label{
+				height: @form-input-radio-height;
+				width: @form-input-radio-width;
+				.bg(@form-input-radio-bgImg);
+				&.checked{
+					.bg(@form-input-radioChecked-bgImg);
+				}
+			}
+			input{
+				height: @form-input-radio-height - 5px;
+				width: @form-input-radio-width - 5px;
+				margin: 2px 0 0 2px;
+			}
+		}
+	}
+}
+.form{
+	.custom-{
+		&checkbox, &radio{
+			label, label.checked{
+					//overrides datatables properties
+				background-position: @form-input-checkboxRadio-bgPosition !important;
+				.boxSizing();
+				margin: 0 !important;
+				width: 100%;
+				padding-left: @form-label-checkboxRadio-padding !important;
+			}
+			input{
+				height: @form-input-radio-height - 8 !important;
+				width: @form-input-radio-width - 8 !important;
+				display: block;
+			}
+		}
+	}
+}
+
+form{
+	&.success{
+		.formentries{
+			.formentry{
+				.input{
+					div.alert_message.ERROR{
+						margin :  @form-input-error-margin;
+						color: #000000; 
+						border-color: @form-input-error-borderColor;
+					}
+				}
+			}	
+		}		
+	}
+	
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.datepicker{
+	&Border{
+		&T, &TL, &TR, &B, &BL, &BR, &L, &R{
+			display: none;
+		}
+	}
+	position: @form-datepicker-position;
+	text-align: @form-datepicker-textAlign;
+	display: none;
+	z-index: @zIndex-datepicker !important;
+	&Container{
+		.boxShadow(@form-datepicker-shadowX, @form-datepicker-shadowY, @form-datepicker-shadowBlur, @form-datepicker-shadowColor);
+		border: @form-datepicker-container-border;
+		background: @form-datepicker-container-bgColor;
+	}
+	&GoPrev, &Month, &GoNext{
+		.fontSize(@form-datepicker-header-fontSize);
+		background: @form-datepicker-header-bgColor;
+		color: @form-datepicker-header-txtColor;
+		a{
+			color: @form-datepicker-header-linkColor;
+		}
+		padding: @form-datepicker-header-paddingY 0 @form-datepicker-header-paddingY 0;
+	}
+	&GoPrev{
+		padding-left: @form-datepicker-header-paddingX;
+	}
+	&GoNext{
+		padding-right: @form-datepicker-header-paddingX;
+	}
+	&DoW{
+		.verticalGradient(@form-datepicker-dayHeader-gradientColor1, @form-datepicker-dayHeader-gradientPositon1, @form-datepicker-dayHeader-gradientColor2, @form-datepicker-dayHeader-gradientPositon2);
+		th{
+			padding: @form-datepicker-dayHeader-day-padding;
+			text-transform: @form-datepicker-dayHeader-day-textTransform;
+			span{
+				.fontSize(@form-datepicker-dayHeader-fontSize);
+				width: @form-datepicker-day-width;
+				display: block;
+			}
+		}
+	}
+	&Days{
+		.fontSize(@form-datepicker-day-fontSize);
+		tr{
+			.verticalGradient(@form-datepicker-day-row-gradientColor1, @form-datepicker-day-row-gradientPosition1, @form-datepicker-day-row-gradientColor2, @form-datepicker-day-row-gradientPosition2);
+			td, th{
+				border: @form-datepicker-day-border;
+				a{
+					display: block;
+					padding: @form-datepicker-day-padding;
+					height: @form-datepicker-day-height - @form-datepicker-day-paddingY - @form-datepicker-day-paddingY;
+					color: @form-datepicker-day-link-txtColor;
+					border: @form-datepicker-day-link-border;
+					&:hover{
+						border: @form-datepicker-day-link-hover-border;
+					}
+				}
+			}
+		}
+		.datepickerSelected{
+			position: relative;
+			a{
+				position: relative;
+				z-index: @zIndex-datepicker;
+				color: @form-datepicker-daySelected-txtColor;
+				font-weight: @form-datepicker-daySelected-fontWeight;
+				border-color: @form-datepicker-daySelected-borderColor;
+				.verticalGradient(@form-datepicker-daySelected-gradientColor1, @form-datepicker-daySelected-gradientPosition1, @form-datepicker-daySelected-gradientColor2, @form-datepicker-daySelected-gradientPosition2);
+			}
+		}
+		.datepickerNotInMonth{
+			a{
+				background: @form-datepicker-dayNotInMonth-bg !important;
+				color: @form-datepicker-dayNotInMonth-txtColor !important;
+				&:hover{
+					border: @form-datepicker-day-link-hover-border !important;
+				}
+			}
+		}
+		.datepickerDisabled{
+			a{
+				cursor: default;
+				background: @form-datepicker-dayNotInMonth-bg;
+				color: @form-datepicker-dayNotInMonth-txtColor !important;
+				&:hover{
+					border-color: transparent !important;
+				}
+			}
+		}
+	}
+	&Months, &Years{
+		display: none;
+	}
+
+	
+	&Week{
+		border: @form-datepicker-week-border !important;
+		background: @form-datepicker-week-bg !important;
+		a{
+			&:hover{
+				border: @form-datepicker-day-link-border !important;
+				color: @form-datepicker-week-txtColor !important;
+			}
+		}
+	}
+	
+}
+
+/*styles for jquery ui daterangepicker plugin */
+
+.ui-daterangepickercontain{
+	position: absolute;
+	z-index: 999;
+	.ui-daterangepicker{
+		float: left;
+		padding: 5px !important;
+		width: auto;
+		display: inline;
+		background-image: none !important;
+		clear: left;
+		ul, .ranges, .range-start, .range-end{
+			float: left;
+			padding: 0;
+			margin: 0;
+		}
+		.ranges{
+			width: auto;
+			position: relative;
+			padding: 5px 5px 40px 0;
+			margin-left: 10px;
+		}
+		.range-start, .ui-daterangepicker .range-end{
+			margin-left: 5px;
+		}
+		button.btnDone{
+			margin: 0 5px 5px 0;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			clear: both;
+			cursor: pointer;
+			font-size: 1.1em;
+		}
+		ul{
+			width: 17.6em;
+			background: none;
+			border: 0;
+		}
+		li{
+			list-style: none;
+			padding: 1px;
+			cursor: pointer;
+			margin: 1px 0;
+			&.ui-state-hover, &.ui-state-active{
+				padding: 0;
+			}
+			&.preset_0{
+				margin-top: 1.5em !important;
+			}
+			a{
+				font-weight: normal;
+				margin: .3em .5em;
+				display: block;
+			}
+			span{
+				float: right;
+				margin: .3em .2em;
+			}
+		}
+		.ui-widget-content a{
+			text-decoration: none !important;
+		}
+		.title-start, .title-end{
+			display: block;
+			margin: 0 0 .2em;
+			font-size: 1em;
+			padding: 0 4px 2px;
+		}
+		.ui-datepicker-inline{
+			font-size: 1em;
+		}
+		&-arrows{
+			padding: 2px;
+			width: 204px;
+			position: relative;
+			input.ui-rangepicker-input{
+				width: 158px;
+				margin: 0 2px 0 20px;
+				padding: 2px;
+				height: 1.1em;
+			}
+			.ui-daterangepicker-prev, .ui-daterangepicker-arrows .ui-daterangepicker-next{
+				position: absolute;
+				top: 2px;
+				padding: 1px;
+			}
+			.ui-daterangepicker-prev{
+				left: 2px;
+			}
+			.ui-daterangepicker-next{
+				right: 2px;
+			}
+			.ui-daterangepicker-{
+				&prev:hover, 
+				&next:hover,
+				&prev:focus, 
+				&next:focus{
+					padding: 0;
+				}
+			}
+		}
+	}
+}
