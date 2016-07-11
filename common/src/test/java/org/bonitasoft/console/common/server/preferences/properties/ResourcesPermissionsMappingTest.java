@@ -57,16 +57,27 @@ public class ResourcesPermissionsMappingTest {
     @Test
     public void testGetResourcePermissionWithWildCard() throws Exception {
         //given
-        final String fileContent = "POST|bpm/process [Process Deploy]\n" +
-                "POST|bpm/process/*/instantiation [Custom permission]";
+        final String fileContent = "POST|bpm/process/* [Process Deploy]\n" +
+                "POST|bpm/process/*/instantiation [Custom permission]\n" +
+                "PUT|bpm/process/*/expression [Expression update]";
+
         final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(fileContent);
 
         //when
+        final Set<String> getWithResourcesQualifier = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("GET", "bpm", "process",
+                Arrays.asList("6"));
+        final Set<String> postWithResourcesQualifier = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("POST", "bpm", "process",
+                Arrays.asList("6"));
         final Set<String> postWithResourcesQualifiers = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("POST", "bpm", "process",
                 Arrays.asList("6", "instantiation"));
+        final Set<String> putWithResourcesQualifiers = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("PUT", "bpm", "process",
+                Arrays.asList("6", "expression", "10"));
 
         //then
+        Assertions.assertThat(getWithResourcesQualifier).isEmpty();
+        Assertions.assertThat(postWithResourcesQualifier).containsOnly("Process Deploy");
         Assertions.assertThat(postWithResourcesQualifiers).containsOnly("Custom permission");
+        Assertions.assertThat(putWithResourcesQualifiers).containsOnly("Expression update");
     }
 
     public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) throws IOException {
