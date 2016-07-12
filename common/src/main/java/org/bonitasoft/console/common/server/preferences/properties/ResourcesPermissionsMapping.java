@@ -50,7 +50,7 @@ public class ResourcesPermissionsMapping extends ConfigurationFile {
 
     public Set<String> getResourcePermissionsWithWildCard(final String method, final String apiName, final String resourceName,
             final List<String> resourceQualifiers) {
-        if (resourceQualifiers != null) {
+        if (resourceQualifiers != null && resourceQualifiers.size() > 0) {
             for (int i = resourceQualifiers.size() - 1; i >= 0; i--) {
                 final List<String> resourceQualifiersWithWildCard = getResourceQualifiersWithWildCard(resourceQualifiers, i);
                 final String key = buildResourceKey(method, apiName, resourceName, resourceQualifiersWithWildCard);
@@ -59,6 +59,9 @@ public class ResourcesPermissionsMapping extends ConfigurationFile {
                     return permissions;
                 }
             }
+            final List<String> reducedResourceQualifiers = new ArrayList<String>(resourceQualifiers);
+            reducedResourceQualifiers.remove(resourceQualifiers.size() - 1);
+            return getResourcePermissionsWithWildCard(method, apiName, resourceName, reducedResourceQualifiers);
         }
         return Collections.emptySet();
     }
