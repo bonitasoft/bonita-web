@@ -89,7 +89,7 @@ public class RoleDatastoreTest {
         //when
         RoleItem roleItem = roleDatastore.get(APIID.makeAPIID(12L));
         //then
-        assertThat(roleItem.getIcon()).isEqualTo("../avatars/2134");
+        assertThat(roleItem.getIcon()).isEqualTo("../API/avatars/2134");
     }
 
     @Test
