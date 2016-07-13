@@ -38,7 +38,7 @@ public class UserItemConverter extends ItemConverter<UserItem, User> {
 
         // Add default icon if icon if empty
         if (user.getIconId() != null) {
-            result.setIcon("../avatars/" + String.valueOf(user.getIconId()));
+            result.setIcon(Avatars.PATH + String.valueOf(user.getIconId()));
         } else {
             result.setIcon(UserItem.DEFAULT_USER_ICON);
         }
