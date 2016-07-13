@@ -63,6 +63,7 @@ public class RestRequestParserTest {
     @Test(expected = APIMalformedUrlException.class)
     public void should_parsePath_with_bad_request() {
         doReturn("API/bpm").when(httpServletRequest).getPathInfo();
+        doReturn("/API").when(httpServletRequest).getServletPath();
 
         restRequestParser.invoke();
     }
