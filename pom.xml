@@ -26,7 +26,6 @@
         <powermock.version>1.5.1</powermock.version>
         <gwtmockito.version>1.1.3</gwtmockito.version>
         <spring.version>4.2.4.RELEASE</spring.version>
-        <bonita.client.home>${user.home}/lic</bonita.client.home>
         <restlet-version>2.3.1</restlet-version>
         <jackson-mapper-asl-version>1.9.13</jackson-mapper-asl-version>
         <jackson-databind-version>2.4.4</jackson-databind-version>
@@ -593,9 +592,6 @@
                         </goals>
                         <configuration>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-                            <systemPropertyVariables>
-                                <bonita.client.home>${bonita.client.home}</bonita.client.home>
-                            </systemPropertyVariables>
                             <includes>
                                 <!--the following are failsafe conventions -->
                                 <include>**/*IT.java</include>
