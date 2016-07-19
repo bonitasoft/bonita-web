@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -65,6 +66,8 @@ public class PlatformLoginServlet extends HttpServlet {
     protected String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
     public static final String ERROR_MESSAGE = "Error while logging in to the platform";
 
+    protected TokenGenerator tokenGenerator = new TokenGenerator();
+
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -87,6 +90,8 @@ public class PlatformLoginServlet extends HttpServlet {
             platformLoginAPI = getPlatformLoginAPI();
             platformSession = platformLoginAPI.login(username, password);
             request.getSession().setAttribute(PLATFORMSESSION, platformSession);
+            tokenGenerator.setTokenToResponseCookie(request.getContextPath(), response, tokenGenerator.createOrLoadToken(request.getSession()));
+
             if (redirectAfterLogin) {
                 response.sendRedirect(PLATFORM_PAGE);
             }

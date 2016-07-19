@@ -2,12 +2,14 @@ package org.bonitasoft.console.common.server.login.servlet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Test;
@@ -43,6 +46,9 @@ public class LoginServletTest {
 
     @Mock
     APISession apiSession;
+
+    @Mock
+    TokenGenerator tokenGenerator;
 
     @Test
     public void testPasswordIsDroppedWhenParameterIsLast() throws Exception {
@@ -154,18 +160,23 @@ public class LoginServletTest {
 
         //given
         final LoginServlet servlet = spy(new LoginServlet());
+        servlet.tokenGenerator = tokenGenerator;
         doReturn(tenantId).when(servlet).getTenantId(req);
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(true).when(apiSession).isTechnicalUser();
         doReturn(null).when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doNothing().when(servlet).doLogin(req, resp);
+        final Object token = new Object();
+        when(tokenGenerator.createOrLoadToken(req.getSession())).thenReturn(token.toString());
 
         //when
         servlet.doPost(req, resp);
 
         //then
         verify(req, never()).getQueryString();
+        verify(tokenGenerator).createOrLoadToken(req.getSession());
+        verify(tokenGenerator).setTokenToResponseCookie(req.getContextPath(), resp, token.toString());
+        verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());
     }
-
 }
