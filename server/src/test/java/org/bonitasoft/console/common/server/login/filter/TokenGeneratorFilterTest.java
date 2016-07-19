@@ -39,7 +39,7 @@ public class TokenGeneratorFilterTest {
 
     @Test
     public void should_add_security_token_in_headers_and_in_cookies_when_token_already_exists() throws Exception {
-        session.setAttribute(TokenGeneratorFilter.API_TOKEN, bonitaTokenValue);
+        session.setAttribute(TokenGenerator.API_TOKEN, bonitaTokenValue);
         response.addHeader(bonitaTokenName, bonitaTokenValue);
 
         tokenGeneratorFilter.doFilter(request, response, filterChain);
@@ -50,7 +50,7 @@ public class TokenGeneratorFilterTest {
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isEqualTo(bonitaTokenValue);
 
-        assertThat(session.getAttribute(TokenGeneratorFilter.API_TOKEN)).isEqualTo(bonitaTokenValue);
+        assertThat(session.getAttribute(TokenGenerator.API_TOKEN)).isEqualTo(bonitaTokenValue);
         assertThat(response.getHeader(bonitaTokenName)).isEqualTo(bonitaTokenValue);
 
         verify(filterChain).doFilter(request, response);
@@ -66,7 +66,7 @@ public class TokenGeneratorFilterTest {
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isNotEqualTo(bonitaTokenValue);
 
-        assertThat(session.getAttribute(TokenGeneratorFilter.API_TOKEN)).isEqualTo(csrfCookie.getValue());
+        assertThat(session.getAttribute(TokenGenerator.API_TOKEN)).isEqualTo(csrfCookie.getValue());
         assertThat(response.getHeader(bonitaTokenName)).isEqualTo(csrfCookie.getValue());
 
         verify(filterChain).doFilter(request, response);
