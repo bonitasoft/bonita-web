@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -24,22 +23,17 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.api.token.APIToken;
 
 /**
  * @author Paul AMAR
  */
 public class TokenGeneratorFilter implements Filter {
 
-    public static final String API_TOKEN = "api_token";
-
-    public static final String X_BONITA_API_TOKEN = "X-Bonita-API-Token";
-
     protected static final Logger LOGGER = Logger.getLogger(TokenGeneratorFilter.class.getName());
+
+    protected TokenGenerator tokenGenerator = new TokenGenerator();
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
@@ -47,22 +41,9 @@ public class TokenGeneratorFilter implements Filter {
         final HttpServletResponse res = (HttpServletResponse) response;
 
         // Create
-        Object apiTokenFromClient = req.getSession().getAttribute(API_TOKEN);
-        if (apiTokenFromClient == null) {
-            apiTokenFromClient = new APIToken().getToken();
-            req.getSession().setAttribute(API_TOKEN, apiTokenFromClient);
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Bonita BPM API Token generated: " + apiTokenFromClient);
-            }
-        }
-        if(res.containsHeader(X_BONITA_API_TOKEN)){
-            res.setHeader(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
-        } else {
-            res.addHeader(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
-        }
-        final Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
-        csrfCookie.setPath(req.getContextPath());
-        res.addCookie(csrfCookie);
+        final String apiTokenFromClient = tokenGenerator.createOrLoadToken(req.getSession());
+        tokenGenerator.setTokenToResponseHeader(res, apiTokenFromClient);
+        tokenGenerator.setTokenToResponseCookie(req.getContextPath(), res, apiTokenFromClient);
         chain.doFilter(req, res);
     }
 
