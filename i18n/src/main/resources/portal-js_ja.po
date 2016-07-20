@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
@@ -54,7 +54,6 @@ msgstr "アクターは、プロセスを有効にする前に設定する必要
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: target/dist/features/admin/applications/details/page-list.html:1
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
-#: target/dist/features/user/tasks/list/comments/comments.html:2
 msgid "Add"
 msgstr "追加"
 
