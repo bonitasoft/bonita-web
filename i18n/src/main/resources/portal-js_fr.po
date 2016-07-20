@@ -54,7 +54,6 @@ msgstr "Tous les acteurs doivent être associés à des entités de l'organisati
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: target/dist/features/admin/applications/details/page-list.html:1
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
-#: target/dist/features/user/tasks/list/comments/comments.html:2
 msgid "Add"
 msgstr "Ajouter"
 
@@ -616,7 +615,7 @@ msgstr "Aucun mapping"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr "Cette application n'a pas de profil associé"
+msgstr "Aucun profil associé à cette application"
 
 #: main/features/user/tasks/list/common/priorities.service.js:16
 msgid "Normal"
