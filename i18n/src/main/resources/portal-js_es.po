@@ -54,7 +54,6 @@ msgstr "Los actores deben resolverse antes de activar el proceso."
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: target/dist/features/admin/applications/details/page-list.html:1
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
-#: target/dist/features/user/tasks/list/comments/comments.html:2
 msgid "Add"
 msgstr "Añadir"
 
