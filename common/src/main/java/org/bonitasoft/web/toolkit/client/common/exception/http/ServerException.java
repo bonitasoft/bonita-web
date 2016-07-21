@@ -64,30 +64,6 @@ public class ServerException extends HttpException {
         return this;
     }
 
-    /**
-     * @return the originalStackTrace
-     */
-    public List<String> getOriginalStackTrace() {
-        return this.originalStackTrace;
-    }
-
-    /**
-     * @param originalStackTrace
-     *            the originalStackTrace to set
-     */
-    public ServerException setOriginalStackTrace(final List<String> originalStackTrace) {
-        this.originalStackTrace.addAll(originalStackTrace);
-        return this;
-    }
-
-    /**
-     * @param originalStackTrace
-     *            the originalStackTrace to set
-     */
-    public ServerException setOriginalStackTrace(final String... originalStackTrace) {
-        return this.setOriginalStackTrace(Arrays.asList(originalStackTrace));
-    }
-
     @Override
     protected String defaultMessage() {
         return "The server has encountered an unknown error";
