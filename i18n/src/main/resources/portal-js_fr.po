@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-07-18 09:53-0400\n"
+"PO-Revision-Date: 2016-07-20 08:47-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -54,6 +54,7 @@ msgstr "Tous les acteurs doivent être associés à des entités de l'organisati
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: target/dist/features/admin/applications/details/page-list.html:1
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
+#: target/dist/features/user/tasks/list/comments/comments.html:2
 msgid "Add"
 msgstr "Ajouter"
 
