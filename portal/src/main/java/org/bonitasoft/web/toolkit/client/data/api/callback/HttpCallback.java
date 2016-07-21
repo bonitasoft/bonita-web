@@ -147,14 +147,6 @@ public abstract class HttpCallback implements RequestCallback {
                 ex.setOriginalClassName(((TreeIndexed<String>) causeNode).getValue("exception"));
             }
     
-            final AbstractTreeNode<String> stacktrace = tree2.get("stacktrace");
-            if (stacktrace != null) {
-                if (stacktrace instanceof Tree<?>) {
-                    ex.setOriginalStackTrace(((Tree<String>) stacktrace).getValues());
-                } else if (stacktrace instanceof TreeLeaf<?>) {
-                    ex.setOriginalStackTrace(((TreeLeaf<String>) stacktrace).getValue());
-                }
-            }
             ex.setStatusCode(errorCode);
     
             return ex;
