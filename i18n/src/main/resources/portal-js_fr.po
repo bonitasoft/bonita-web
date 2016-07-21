@@ -54,6 +54,7 @@ msgstr "Tous les acteurs doivent être associés à des entités de l'organisati
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
 #: target/dist/features/admin/applications/details/page-list.html:1
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
+#: target/dist/features/user/tasks/list/comments/comments.html:2
 msgid "Add"
 msgstr "Ajouter"
 
