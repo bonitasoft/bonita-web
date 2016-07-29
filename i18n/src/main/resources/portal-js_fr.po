@@ -616,7 +616,7 @@ msgstr "Aucun mapping"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr "Aucun profil associé à cette application"
+msgstr "Cette application n'a pas de profil associé"
 
 #: main/features/user/tasks/list/common/priorities.service.js:16
 msgid "Normal"
