@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-07-20 08:47-0400\n"
+"PO-Revision-Date: 2016-07-28 04:20-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -616,7 +616,7 @@ msgstr "Aucun mapping"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "No profile mapped to this application"
-msgstr "Aucun profil associé à cette application"
+msgstr "Cette application n'a pas de profil associé"
 
 #: main/features/user/tasks/list/common/priorities.service.js:16
 msgid "Normal"
