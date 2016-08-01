@@ -17,9 +17,9 @@
 
 package org.bonitasoft.web.toolkit.client.common.exception.http;
 
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
+import static org.bonitasoft.web.toolkit.client.common.json.JSonUtil.quote;
 
-import java.util.Arrays;
+import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 
 /**
  * Created by Vincent Elcrin
@@ -28,18 +28,9 @@ import java.util.Arrays;
  */
 public class JsonExceptionSerializer {
 
-    public static final String EXCEPTION_ATTRIBUTE = "exception";
-    public static final String CAUSE_ATTRIBUTE = "cause";
-    public static final String STACK_TRACE_ATTRIBUTE = "stacktrace";
-    public static final String MESSAGE_ATTRIBUTE = "message";
-    public static final String JSON_OPEN = "{";
-    public static final String ATTRIBUTE_SEPARATOR = ",";
-    public static final String VALUE_SEPARATOR = ":";
-    public static final String JSON_CLOSE = "}";
-
     private StringBuilder json;
 
-    public JsonExceptionSerializer(Exception exception) {
+    public JsonExceptionSerializer(Throwable exception) {
         if (exception == null) {
             throw new IllegalArgumentException("exception cannot be null");
         }
@@ -47,9 +38,29 @@ public class JsonExceptionSerializer {
         json = serialize(exception);
     }
 
-    public String end() {
-        json.append(JSON_CLOSE);
+    private StringBuilder serialize(final Throwable e) {
+        final StringBuilder json = new StringBuilder().append("{");
+
+        json.append(exceptionInnerJson(e));
+        if (e.getCause() != null && e.getCause() != e) {
+            json.append(",");
+            // only add the first cause (used by some code in portal's frontend)
+            json.append(quote("cause")).append(":{").append(exceptionInnerJson(e.getCause())).append("}");
+        }
+
+        return json;
+    }
+
+    private String exceptionInnerJson(final Throwable e) {
+        final StringBuilder json = new StringBuilder();
+        json.append(quote("exception")).append(":").append(quote(e.getClass().toString()));
+        json.append(",");
+        json.append(quote("message")).append(":").append(quote(e.getMessage()));
         return json.toString();
+    }
+
+    public String end() {
+        return json.append("}").toString();
     }
 
     public JsonExceptionSerializer appendAttribute(final String name, final Object value) {
@@ -57,32 +68,12 @@ public class JsonExceptionSerializer {
         return this;
     }
 
-    private StringBuilder serialize(Exception exception) {
-        final StringBuilder json = new StringBuilder().append(JSON_OPEN);
-
-        addAttribute(json, EXCEPTION_ATTRIBUTE, exception.getClass());
-        addMessage(json, exception.getMessage());
-        addNextAttribute(json, STACK_TRACE_ATTRIBUTE, Arrays.toString(exception.getStackTrace()));
-        addNextAttribute(json, CAUSE_ATTRIBUTE, exception.getCause());
-
-        return json;
-    }
-
-    private void addMessage(final StringBuilder json, String message) {
-        addNextAttribute(json, MESSAGE_ATTRIBUTE, message);
-    }
-
     private void addNextAttribute(final StringBuilder json, final String name, final Object value) {
         if (value != null) {
-            json.append(ATTRIBUTE_SEPARATOR);
-            addAttribute(json, name, value);
+            json.append(",");
+            json.append(quote(name))
+                    .append(":")
+                    .append(JSonSerializer.serialize(value));
         }
     }
-
-    private void addAttribute(StringBuilder json, String name, Object value) {
-        json.append(JSonSerializer.quote(name))
-                .append(VALUE_SEPARATOR)
-                .append(JSonSerializer.serialize(value));
-    }
-
 }
