@@ -22,6 +22,8 @@ import java.util.Arrays;
 
 import org.bonitasoft.console.common.FakeI18n;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.junit.Before;
@@ -73,7 +75,6 @@ public class JsonExceptionSerializerTest {
         assertThat(json, equalTo(
                 "{\"exception\":\"" + exception.getClass().toString() + "\"," +
                         "\"message\":\"" + exception.getMessage() + "\"," +
-                        "\"stacktrace\":\"" + Arrays.toString(exception.getStackTrace()) + "\"," +
                         "\"attributeKey\":\"attributeValue\"}"));
     }
 
@@ -88,14 +89,12 @@ public class JsonExceptionSerializerTest {
 
         assertThat(json, equalTo(
                 "{\"exception\":\"" + exception.getClass().toString() + "\"," +
-                        "\"message\":\"localization\"," +
-                        "\"stacktrace\":\"" + Arrays.toString(exception.getStackTrace()) + "\"}"));
+                        "\"message\":\"localization\"" + "}"));
     }
 
     private void assertEquals(Exception e, String json) {
         assertThat(json, equalTo("{\"exception\":\"" + e.getClass().toString() + "\"," +
-                "\"message\":\"" + e.getMessage() + "\"," +
-                "\"stacktrace\":\"" + Arrays.toString(e.getStackTrace()) + "\"}"));
+                "\"message\":\"" + e.getMessage() + "\"}"));
     }
 
 }
