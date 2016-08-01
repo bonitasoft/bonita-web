@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Map;
 
 import com.google.gwt.i18n.shared.DateTimeFormat;
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 
 /**
  * @author Séverin Moussel
@@ -89,25 +90,7 @@ public class JSonSerializer extends JSonUtil {
     }
 
     public static String serializeException(final Throwable e) {
-        final StringBuilder json = new StringBuilder().append("{");
-
-        json.append(exceptionInnerJson(e));
-        if (e.getCause() != null && e.getCause() != e) {
-            json.append(",");
-            // only add the first cause (used by some code in portal's frontend)
-            json.append(quote("cause")).append(":{").append(exceptionInnerJson(e.getCause())).append("}");
-        }
-        json.append("}");
-
-        return json.toString();
-    }
-
-    public static String exceptionInnerJson(final Throwable e) {
-        final StringBuilder json = new StringBuilder();
-        json.append(quote("exception")).append(":").append(quote(e.getClass().toString()));
-        json.append(",");
-        json.append(quote("message")).append(":").append(quote(e.getMessage()));
-        return json.toString();
+        return new JsonExceptionSerializer(e).end();
     }
 
     public static String serializeStringMap(final Map<? extends Object, String> map) {
