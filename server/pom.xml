@@ -214,8 +214,19 @@
             </resource>
             <resource>
                 <directory>src/main/webapp/WEB-INF</directory>
+                <targetPath>WEB-INF</targetPath>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>*.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/webapp/WEB-INF</directory>
                 <filtering>true</filtering>
                 <targetPath>WEB-INF</targetPath>
+                <includes>
+                    <include>*.xml</include>
+                </includes>
             </resource>
         </resources>
 
@@ -234,6 +245,17 @@
                             <directory>src/main/webapp/WEB-INF</directory>
                             <filtering>true</filtering>
                             <targetPath>WEB-INF</targetPath>
+                            <includes>
+                                <include>*.xml</include>
+                            </includes>
+                        </resource>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF</directory>
+                            <filtering>false</filtering>
+                            <targetPath>WEB-INF</targetPath>
+                            <excludes>
+                                <exclude>*.xml</exclude>
+                            </excludes>
                         </resource>
                     </webResources>
                     <archive>
