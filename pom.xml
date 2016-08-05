@@ -201,10 +201,15 @@
                 <artifactId>org.restlet</artifactId>
                 <version>${restlet-version}</version>
             </dependency>
+            <!-- Due to a bug in restlet/wildfly, org.restlet.ext.servlet has been patched org.restlet.ext.servlet jar is directly
+                embedded in WEB-INF/lib of server project and dependency is declared as provided.
+                See ./server/src/main/webapp/WEB-INF/lib/org.restlet.ext.servlet-2.3.1-patched.md
+                -->
             <dependency>
                 <groupId>org.restlet.jee</groupId>
                 <artifactId>org.restlet.ext.servlet</artifactId>
                 <version>${restlet-version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.restlet.jse</groupId>
