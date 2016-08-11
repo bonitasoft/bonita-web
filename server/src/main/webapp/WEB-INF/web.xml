@@ -153,12 +153,27 @@
         <url-pattern>/portal/downloadDocument</url-pattern>
         <url-pattern>/portal/documentDownload</url-pattern>
         <url-pattern>/API/documentDownload</url-pattern>
+        <url-pattern>/API/identity/*</url-pattern>
+        <url-pattern>/API/customuserinfo/*</url-pattern>
+        <url-pattern>/API/system/*</url-pattern>
+        <url-pattern>/API/userXP/*</url-pattern>
+        <url-pattern>/API/portal/*</url-pattern>
+        <url-pattern>/API/bpm/*</url-pattern>
+        <url-pattern>/API/bdm/*</url-pattern>
+        <url-pattern>/API/living/*</url-pattern>
+        <url-pattern>/API/tenant/*</url-pattern>
+        <url-pattern>/API/platform/*</url-pattern>
+        <url-pattern>/API/monitoring/*</url-pattern>
+        <url-pattern>/API/form/*</url-pattern>
+        <url-pattern>/API/extension/*</url-pattern>
         <url-pattern>/portal/runreport</url-pattern>
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/login.jsp</url-pattern>
         <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
         <url-pattern>/apps/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
