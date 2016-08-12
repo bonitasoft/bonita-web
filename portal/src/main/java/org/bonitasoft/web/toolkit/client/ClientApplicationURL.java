@@ -37,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 
 /**
  * @author Anthony Birembaut, Julien Mege
@@ -211,8 +212,23 @@ public class ClientApplicationURL {
 
     public static void initPageToken(final String token) {
         self.attributes.addValue(ATTRIBUTE_TOKEN, token);
-        Window.Location.replace(Window.Location.getPath() + "?" + Window.Location.getQueryString() + "#?" + UrlSerializer.serialize(self.attributes));
+        final String landingPageUrl = Window.Location.getPath() + "?" + Window.Location.getQueryString() + "#?" + UrlSerializer.serialize(self.attributes);
+        if (isIE9()) {
+            Window.Location.replace(landingPageUrl);
+        } else {
+            replaceState(landingPageUrl);
+        }
     }
+
+    private static boolean isIE9() {
+        final String userAgent = Navigator.getUserAgent();
+        return userAgent != null
+                && userAgent.toLowerCase().contains("msie 9");
+    }
+
+    public static native void replaceState(String url) /*-{
+        $wnd.history.replaceState('', 'bonita', url);
+    }-*/;
 
     public static void setPageAttributes(final TreeIndexed<String> params) {
         self._setPageAttributes(params);
