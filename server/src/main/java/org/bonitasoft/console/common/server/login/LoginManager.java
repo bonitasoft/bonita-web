@@ -40,7 +40,7 @@ import org.bonitasoft.web.rest.model.user.User;
 
 /**
  * This class performs the authentication, the login and initialize the HTTP session
- * 
+ *
  * @author Anthony Birembaut
  */
 public class LoginManager {
@@ -96,6 +96,9 @@ public class LoginManager {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "HTTP session initialization");
         }
+        //invalidating session allows to fix session fixation security issue
+        request.getHttpSession().invalidate();
+        //calling request.getSession() creates a new Session if no any valid exists
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
 
