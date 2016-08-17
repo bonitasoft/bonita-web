@@ -35,6 +35,7 @@ public class CaseDatastoreIntegrationTest extends AbstractConsoleTest {
     public void twoPoolsWithOneWithACallActivityCaseTest() throws Exception {
         final long before = caseDatastore.search(0, 100, null, null, new HashMap<String, String>()).getTotal();
         final TestProcess process2 = TestProcessFactory.getDefaultHumanTaskProcess();
+        process2.enable();
 
         // start process1 case via call activity
         final TestProcess process1 = TestProcessFactory.getCallActivityProcess(process2.getProcessDefinition());
