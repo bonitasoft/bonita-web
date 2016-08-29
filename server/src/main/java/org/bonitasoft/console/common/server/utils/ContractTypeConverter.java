@@ -83,7 +83,7 @@ public class ContractTypeConverter {
     public Map<String,Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs, final long maxSizeForTenant, final long tenantId, final boolean deleteFile) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
-        final Map<String, Serializable> processedInputs = new HashMap<String, Serializable>();
+        final Map<String, Serializable> processedInputs = new HashMap<>();
         final Map<String, Serializable> contractDefinitionMap = processContract == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(processContract.getInputs());
 
         if (inputs != null) {
@@ -109,7 +109,7 @@ public class ContractTypeConverter {
             throws FileNotFoundException {
         @SuppressWarnings("unchecked")
         final List<Serializable> listOfValues = (List<Serializable>) inputValue;
-        final List<Serializable> convertedListOfValues = new ArrayList<Serializable>();
+        final List<Serializable> convertedListOfValues = new ArrayList<>();
         for (final Serializable value : listOfValues) {
             Serializable convertedValue = null;
             if (value != null) {
@@ -142,7 +142,7 @@ public class ContractTypeConverter {
         if (inputValue instanceof Map) {
             @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
-            final Map<String, Serializable> convertedMapOfValues = new HashMap<String, Serializable>();
+            final Map<String, Serializable> convertedMapOfValues = new HashMap<>();
             for (final Entry<String, Serializable> valueEntry : mapOfValues.entrySet()) {
                 final Serializable childInputDefinition = mapOfInputDefinition.get(valueEntry.getKey());
                 final Serializable convertedValue = convertInputToExpectedType(valueEntry.getValue(), childInputDefinition, deleteFile);
@@ -215,7 +215,7 @@ public class ContractTypeConverter {
     }
 
     protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
-        final Map<String, Serializable> contractDefinitionMap = new HashMap<String, Serializable>();
+        final Map<String, Serializable> contractDefinitionMap = new HashMap<>();
         for (final InputDefinition inputDefinition : inputDefinitions) {
             if (inputDefinition.hasChildren() && !Type.FILE.equals(inputDefinition.getType())) {
                 contractDefinitionMap.put(inputDefinition.getName(),
@@ -235,7 +235,7 @@ public class ContractTypeConverter {
     }
 
     protected List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {
-        final List<InputDefinition> contractDefinition = new ArrayList<InputDefinition>();
+        final List<InputDefinition> contractDefinition = new ArrayList<>();
         for (final InputDefinition inputDefinition : inputDefinitions) {
             List<InputDefinition> childInputDefinitions;
             if (Type.FILE.equals(inputDefinition.getType())) {
@@ -243,7 +243,7 @@ public class ContractTypeConverter {
             } else if (inputDefinition.hasChildren()) {
                 childInputDefinitions = adaptContractInputList(inputDefinition.getInputs());
             } else {
-                childInputDefinitions = new ArrayList<InputDefinition>();
+                childInputDefinitions = new ArrayList<>();
             }
             final InputDefinition newInputDefinition = new InputDefinitionImpl(inputDefinition.getName(), inputDefinition.getDescription(), inputDefinition.isMultiple(), inputDefinition.getType(), childInputDefinitions);
             contractDefinition.add(newInputDefinition);
@@ -253,7 +253,7 @@ public class ContractTypeConverter {
 
     private List<InputDefinition> getFileChildInputDefinitions(final InputDefinition inputDefinition) {
         List<InputDefinition> childInputDefinitions;
-        childInputDefinitions = new ArrayList<InputDefinition>();
+        childInputDefinitions = new ArrayList<>();
         for (final InputDefinition childInputDefinition : inputDefinition.getInputs()) {
             if(Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
                 childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION,false, Type.TEXT, new ArrayList<InputDefinition>()));
@@ -297,6 +297,8 @@ public class ContractTypeConverter {
                 return Double.class;
             case BYTE_ARRAY:
                 return Byte[].class;
+            case LONG:
+                return Long.class;
             default:
                 return String.class;
         }
