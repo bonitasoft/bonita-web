@@ -12,6 +12,11 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.bonitasoft.test.toolkit.api.json.AddToProfile;
 import org.bonitasoft.test.toolkit.api.json.CreateGroup;
 import org.bonitasoft.test.toolkit.api.json.CreateProfile;
@@ -48,8 +53,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unchecked")
 public class APIHelper {
 
-    private String siteUrl;
-
     public static final long DEFAULT_TENANT_ID = 1;
 
     public static final String TECHUSER_LOGIN = "install";
@@ -57,6 +60,12 @@ public class APIHelper {
     public static final String TECHUSER_PASSWORD = "install";
 
     public static final int SEARCH_COUNT = 100;
+    
+    private static final String BONITA_API_TOKEN_HEADER = "X-Bonita-API-Token";
+    
+    private String apiToken;
+
+    private String siteUrl;
 
     /** JSON parser. */
     protected JSONParser jsonParser;
@@ -96,15 +105,36 @@ public class APIHelper {
         this.logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
 
         RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
-        this.executor = new ApacheHttpClient4Executor();
+        CookieStore cookieStore = new BasicCookieStore();
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.setCookieStore(cookieStore);
+        this.executor = new ApacheHttpClient4Executor(httpClient) {
+            @Override
+            public void commitHeaders(ClientRequest request, HttpRequestBase httpMethod) {
+                super.commitHeaders(request, httpMethod);
+                if (apiToken != null) {
+                    httpMethod.setHeader(BONITA_API_TOKEN_HEADER, apiToken);
+                }
+            }
+        };
         setSiteUrl(pSiteUrl);
         this.client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, this.executor);
-
         final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword, Boolean.FALSE.toString());
         consumeResponse(res);
+        
+        this.apiToken = fetchAPIToken(cookieStore);
 
         this.jsonParser = new JSONParser();
         this.xmlReader = new SAXReader();
+    }
+
+    private String fetchAPIToken(CookieStore cookieStore) {
+        for (Cookie cookie : cookieStore.getCookies()) {
+            if (BONITA_API_TOKEN_HEADER.equalsIgnoreCase(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 
     /**
