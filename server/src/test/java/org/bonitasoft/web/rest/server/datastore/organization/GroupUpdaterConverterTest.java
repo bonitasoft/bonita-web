@@ -15,8 +15,9 @@
 package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -82,6 +83,25 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
         assertThat(getFieldValue(updater, GroupField.ICON_CONTENT)).isEqualTo(content);
         assertThat(getFieldValue(updater, GroupField.NAME)).isEqualTo("aNewName");
         assertThat(getFieldValue(updater, GroupField.DISPLAY_NAME)).isEqualTo("aNewDisplayName");
+    }
+
+    @Test
+    public void convert_should_skip_empty_icon() throws Exception {
+        //given
+        HashMap<String, String> attributes = new HashMap<>();
+        attributes.put(GroupItem.ATTRIBUTE_ICON, "");
+        attributes.put(GroupItem.ATTRIBUTE_NAME, "aNewName");
+
+        //when
+        GroupUpdater updater = groupUpdaterConverter.convert(attributes, 12L);
+
+        //then
+        assertThat(getFieldValue(updater, GroupField.ICON_FILENAME)).isNull();
+        assertThat(getFieldValue(updater, GroupField.ICON_CONTENT)).isNull();
+        assertThat(getFieldValue(updater, GroupField.NAME)).isEqualTo("aNewName");
+
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+
     }
 
     @Test

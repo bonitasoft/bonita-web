@@ -39,7 +39,7 @@ public class GroupUpdaterConverter {
         if (attributes.containsKey(GroupItem.ATTRIBUTE_DESCRIPTION)) {
             updater.updateDescription(attributes.get(GroupItem.ATTRIBUTE_DESCRIPTION));
         }
-        if (attributes.containsKey(GroupItem.ATTRIBUTE_ICON)) {
+        if (!MapUtil.isBlank(attributes, GroupItem.ATTRIBUTE_ICON)) {
             IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(GroupItem.ATTRIBUTE_ICON), tenantId);
             updater.updateIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }

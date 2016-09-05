@@ -47,6 +47,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -93,7 +94,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
             if (attributes.containsKey(RoleItem.ATTRIBUTE_DESCRIPTION)) {
                 updater.setDescription(attributes.get(RoleItem.ATTRIBUTE_DESCRIPTION));
             }
-            if (attributes.containsKey(RoleItem.ATTRIBUTE_ICON)) {
+            if (!MapUtil.isBlank(attributes, RoleItem.ATTRIBUTE_ICON)) {
                 IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(RoleItem.ATTRIBUTE_ICON),
                         getEngineSession().getTenantId());
                 updater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
