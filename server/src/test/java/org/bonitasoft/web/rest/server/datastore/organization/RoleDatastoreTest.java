@@ -138,6 +138,23 @@ public class RoleDatastoreTest {
     }
 
     @Test
+    public void should_update_role_with_empty_icon() throws Exception {
+        //given
+        doReturn(new RoleImpl(123, "newName")).when(identityAPI).updateRole(anyLong(), any(RoleUpdater.class));
+
+        //when
+        roleDatastore.update(APIID.makeAPIID(123L), Collections.singletonMap("icon", ""));
+
+        //then
+        verify(identityAPI).updateRole(eq(123L), roleUpdaterArgumentCaptor.capture());
+        RoleUpdater roleUpdater = roleUpdaterArgumentCaptor.getValue();
+        assertThat(roleUpdater.getFields().get(RoleUpdater.RoleField.ICON_FILENAME)).isNull();
+        assertThat(roleUpdater.getFields().get(RoleUpdater.RoleField.ICON_CONTENT)).isNull();
+
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+    }
+
+    @Test
     public void should_add_role_with_icon_give_content_to_engine() throws Exception {
         doReturn(new RoleImpl(123, "newName")).when(identityAPI).createRole(any(RoleCreator.class));
         IconDescriptor iconDescriptor = new IconDescriptor("iconName", "content".getBytes());
