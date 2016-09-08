@@ -18,7 +18,7 @@
 
         <slf4j.version>1.6.1</slf4j.version>
         <gwt.version>2.5.1</gwt.version>
-        <!-- The following property is used by the gwt-maven plugin. As it does not follow the same naming convention as others, we decided to have both gwt.version 
+        <!-- The following property is used by the gwt-maven plugin. As it does not follow the same naming convention as others, we decided to have both gwt.version
             and gwtVersion properties. Of course the two properties refer to the same value. -->
         <gwtVersion>${gwt.version}</gwtVersion>
         <wro4j.version>1.7.0</wro4j.version>
@@ -346,6 +346,11 @@
             <id>oauth</id>
             <url>http://oauth.googlecode.com/svn/code/maven/</url>
         </repository>
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.com</url>
+        </repository> 
     </repositories>
 
     <pluginRepositories>
@@ -670,7 +675,7 @@
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <!-- Report output directory, in Jenkins use: -Djacoco.outputDir=${WORKSPACE} -->
                 <jacoco.outputDir>${user.home}</jacoco.outputDir>
-                <!-- The destination file for the code coverage report has to be set to the same value in the parent pom and in each module pom. Then JaCoCo will 
+                <!-- The destination file for the code coverage report has to be set to the same value in the parent pom and in each module pom. Then JaCoCo will
                     add up information in the same report, so that, it will give the cross-module code coverage. -->
                 <!-- Jacoco output file for UTs -->
                 <jacoco.out.ut.file>jacoco-web-ut.exec</jacoco.out.ut.file>
