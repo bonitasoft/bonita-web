@@ -43,7 +43,9 @@ public class TokenGenerator {
      */
     public void setTokenToResponseCookie(final String contextPath, final HttpServletResponse res, final Object apiTokenFromClient) {
         final Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
-        csrfCookie.setPath(contextPath);
+        // cookie path can be set via system property.
+        // Can be set to '/' when another app is deployed in same server than bonita and want to share csrf cookie
+        csrfCookie.setPath(System.getProperty("bonita.csrf.cookie.path", contextPath));
         res.addCookie(csrfCookie);
     }
 
