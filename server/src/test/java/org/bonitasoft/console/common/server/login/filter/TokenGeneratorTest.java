@@ -5,7 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.EnvironmentVariables;
+import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -24,6 +27,9 @@ public class TokenGeneratorTest {
 
     @Spy
     TokenGenerator tokenGenerator = new TokenGenerator();
+
+    @Rule
+    public final RestoreSystemProperties restoreSystemProperties = new RestoreSystemProperties();
 
     @Test
     public void should_create_token_and_store_it_in_session() throws Exception {
@@ -49,6 +55,16 @@ public class TokenGeneratorTest {
         assertThat(csrfCookie.getName()).isEqualTo(bonitaTokenName);
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isEqualTo(bonitaTokenValue);
+    }
+
+    @Test
+    public void should_set_csrf_token_cookie_path_specified_via_system_property() throws Exception {
+        System.setProperty("bonita.csrf.cookie.path", "/");
+
+        tokenGenerator.setTokenToResponseCookie("somepath", response, "sdfsdfjhvèzv");
+
+        Cookie csrfCookie = response.getCookie(bonitaTokenName);
+        assertThat(csrfCookie.getPath()).isEqualTo("/");
     }
 
     @Test
