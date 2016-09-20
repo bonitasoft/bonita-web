@@ -36,6 +36,8 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuFolder;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuItem;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 
+import com.google.gwt.user.client.History;
+
 /**
  * @author Vincent Elcrin
  *
@@ -120,7 +122,11 @@ public class MenuListCreator {
 
     private void displayFirstPage(final ProfileEntryItem entry) {
         if (ClientApplicationURL.getPageToken() == null) {
-            ClientApplicationURL.initPageToken(getEntryUrlToken(entry));
+            boolean hasProfileInHistory = History.getToken().contains("_p=");
+            ClientApplicationURL.setPageToken(getEntryUrlToken(entry), hasProfileInHistory);
+            if (!hasProfileInHistory) {
+                ClientApplicationURL.initPageToken(getEntryUrlToken(entry));
+            }
         }
     }
 
@@ -145,7 +151,7 @@ public class MenuListCreator {
         }
 
         return new ProfileEntryNameAttributeReader(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntryItem.ATTRIBUTE_PAGE, BonitaPageItem.ATTRIBUTE_DISPLAY_NAME)
-        .read(entry);
+                .read(entry);
     }
 
     protected String getEntryUrlToken(final ProfileEntryItem entry) {
