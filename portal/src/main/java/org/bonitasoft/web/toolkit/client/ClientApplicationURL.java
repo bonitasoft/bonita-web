@@ -210,8 +210,9 @@ public class ClientApplicationURL {
     }
 
     public static void initPageToken(final String token) {
-        self.attributes.addValue(ATTRIBUTE_TOKEN, token);
-        Window.Location.replace(Window.Location.getPath() + "?" + Window.Location.getQueryString() + "#?" + UrlSerializer.serialize(self.attributes));
+        self._setPageToken(token, false);
+        String queryString = Window.Location.getQueryString();
+        Window.Location.replace(Window.Location.getPath() + (queryString == null ? "" : queryString) + "#?" + UrlSerializer.serialize(self.attributes));
     }
 
     public static void setPageAttributes(final TreeIndexed<String> params) {
