@@ -17,12 +17,14 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 
 /**
@@ -33,8 +35,8 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
 
     @Override
     boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
-        if (PropertiesFactory.getSecurityProperties().isCSRFProtectionEnabled()) {
-            String headerFromRequest = httpRequest.getHeader("X-Bonita-API-Token");
+        if (isCsrfProtectionEnabled()) {
+            String headerFromRequest = getCSRFToken(httpRequest);
             String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
@@ -47,4 +49,19 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
         }
         return true;
     }
+
+    // protected for testing
+    protected boolean isCsrfProtectionEnabled() {
+        return PropertiesFactory.getSecurityProperties().isCSRFProtectionEnabled();
+    }
+
+    private String getCSRFToken(HttpServletRequest httpRequest) {
+        String token = httpRequest.getHeader("X-Bonita-API-Token");
+        if (isBlank(token)) {
+            token = httpRequest.getParameter("CSRFToken");
+        }
+        return token;
+    }
+
+
 }
