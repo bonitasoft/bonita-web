@@ -96,7 +96,7 @@ public class ClientApplicationURL {
         return UrlUnserializer.unserializeTreeNodeIndexed(decodedToken);
     }
 
-    protected void parseUrl() {
+    protected void updateAttributesFromHistory() {
         // If Token or profile disappeared, keep the previous one
         final String token = _getPageToken();
         final String profileId = _getProfileId();
@@ -211,19 +211,30 @@ public class ClientApplicationURL {
     }
 
     public static void initPageToken(final String token) {
-        self.attributes.addValue(ATTRIBUTE_TOKEN, token);
-        final String landingPageUrl = Window.Location.getPath() + "?" + Window.Location.getQueryString() + "#?" + UrlSerializer.serialize(self.attributes);
-        if (isIE9()) {
+        String queryString = Window.Location.getQueryString();
+        final String landingPageUrl = Window.Location.getPath() + (queryString == null ? "" : queryString) + "#?"
+                + UrlSerializer.serialize(self.attributes);
+        if (isIE("9")) {
             Window.Location.replace(landingPageUrl);
         } else {
             replaceState(landingPageUrl);
+            if(isIE("")) {
+                //we cannot simply use a ViewController#showView
+                //because currently, History.getToken return empty string
+                //therefore, ViewController#showView will add an entry in history
+                //which is what we want to avoid
+                Window.Location.reload();
+            }
         }
     }
 
-    private static boolean isIE9() {
+    private static boolean isIE(String version) {
+        if (version == null) {
+            version = "";
+        }
         final String userAgent = Navigator.getUserAgent();
         return userAgent != null
-                && userAgent.toLowerCase().contains("msie 9");
+                && userAgent.toLowerCase().contains("msie " + version);
     }
 
     public static native void replaceState(String url) /*-{
@@ -361,7 +372,7 @@ public class ClientApplicationURL {
 
     protected void refreshView() {
         if (History.getToken().contains("_p=")) {
-            parseUrl();
+            updateAttributesFromHistory();
             ViewController.showView(_getPageToken(), _getPageAttributes());
         }
     }
