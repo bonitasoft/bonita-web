@@ -77,7 +77,7 @@ public abstract class ClientApplication implements EntryPoint {
 
         JSonItemReader.setUnserializer(new JSonUnserializerClient());
 
-        this.clientApplicationURL.parseUrl();
+        this.clientApplicationURL.updateAttributesFromHistory();
 
         // Init the i18n instance
         I18n.getInstance();
