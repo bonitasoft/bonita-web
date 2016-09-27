@@ -38,6 +38,11 @@ public class SecurityProperties {
      * property for the CSRF protection activation
      */
     public static final String CSRF_PROTECTION = "security.csrf.enabled";
+    
+    /**
+     * property for the CSRF token cookie to have the secure flag (HTTPS only)
+     */
+    public static final String SECURE_TOKEN_COOKIE = "security.csrf.cookie.secure";
 
     /**
      * property for the REST API Authorization checks activation
@@ -92,6 +97,14 @@ public class SecurityProperties {
      */
     public boolean isCSRFProtectionEnabled() {
         final String res = getProperties().getProperty(CSRF_PROTECTION);
+        return res != null && res.equals("true");
+    }
+    
+    /**
+     * @return the value to add or not secure flag to the cookies for CSRF token
+     */
+    public boolean isCSRFTokenCookieSecure() {
+        final String res = getProperties().getProperty(SECURE_TOKEN_COOKIE);
         return res != null && res.equals("true");
     }
 
