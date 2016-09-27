@@ -1,13 +1,13 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
 import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -55,6 +55,7 @@ public class TokenGeneratorTest {
         assertThat(csrfCookie.getName()).isEqualTo(bonitaTokenName);
         assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
         assertThat(csrfCookie.getValue()).isEqualTo(bonitaTokenValue);
+        assertThat(csrfCookie.getSecure()).isFalse();
     }
 
     @Test
@@ -65,6 +66,19 @@ public class TokenGeneratorTest {
 
         Cookie csrfCookie = response.getCookie(bonitaTokenName);
         assertThat(csrfCookie.getPath()).isEqualTo("/");
+    }
+    
+    @Test
+    public void should_set_secure_csrf_token_cookie_when_specified() throws Exception {
+        doReturn(true).when(tokenGenerator).isCSRFTokenCookieSecure();
+
+        tokenGenerator.setTokenToResponseCookie(contextPath, response, bonitaTokenValue);
+
+        Cookie csrfCookie = response.getCookie(bonitaTokenName);
+        assertThat(csrfCookie.getName()).isEqualTo(bonitaTokenName);
+        assertThat(csrfCookie.getPath()).isEqualTo(contextPath);
+        assertThat(csrfCookie.getValue()).isEqualTo(bonitaTokenValue);
+        assertThat(csrfCookie.getSecure()).isTrue();
     }
 
     @Test

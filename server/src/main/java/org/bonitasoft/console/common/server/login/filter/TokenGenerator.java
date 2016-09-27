@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.api.token.APIToken;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 
 /**
  * @author Julien Reboul
@@ -46,9 +47,15 @@ public class TokenGenerator {
         // cookie path can be set via system property.
         // Can be set to '/' when another app is deployed in same server than bonita and want to share csrf cookie
         csrfCookie.setPath(System.getProperty("bonita.csrf.cookie.path", contextPath));
+        csrfCookie.setSecure(isCSRFTokenCookieSecure());
         res.addCookie(csrfCookie);
     }
 
+    // protected for testing
+    protected boolean isCSRFTokenCookieSecure() {
+        return PropertiesFactory.getSecurityProperties().isCSRFTokenCookieSecure();
+    }
+    
     /**
      * generate and store the CSRF security inside HTTP session
      * or retrieve it token from the HTTP session
