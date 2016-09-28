@@ -44,12 +44,12 @@ public class CacheUtil {
                 final DiskStoreConfiguration diskStoreConfiguration = new DiskStoreConfiguration();
                 diskStoreConfiguration.setPath(diskStorePath);
                 configuration.addDiskStore(diskStoreConfiguration);
-                CACHE_MANAGER = new CacheManager(configuration);
+                CACHE_MANAGER = CacheManager.create(configuration);
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "Unable to retrieve the cache configuration file. Creating a cache manager with the default configuration");
                 }
-                CACHE_MANAGER = new CacheManager();
+                CACHE_MANAGER = CacheManager.create();
             }
         }
         return CACHE_MANAGER;
