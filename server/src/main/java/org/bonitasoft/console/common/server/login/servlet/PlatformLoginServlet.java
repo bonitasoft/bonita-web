@@ -90,7 +90,7 @@ public class PlatformLoginServlet extends HttpServlet {
             platformLoginAPI = getPlatformLoginAPI();
             platformSession = platformLoginAPI.login(username, password);
             request.getSession().setAttribute(PLATFORMSESSION, platformSession);
-            tokenGenerator.setTokenToResponseCookie(request.getContextPath(), response, tokenGenerator.createOrLoadToken(request.getSession()));
+            tokenGenerator.setTokenToResponseCookie(request, response, tokenGenerator.createOrLoadToken(request.getSession()));
 
             if (redirectAfterLogin) {
                 response.sendRedirect(PLATFORM_PAGE);

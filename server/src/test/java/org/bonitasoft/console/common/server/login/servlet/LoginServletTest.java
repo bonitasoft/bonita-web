@@ -176,7 +176,7 @@ public class LoginServletTest {
         //then
         verify(req, never()).getQueryString();
         verify(tokenGenerator).createOrLoadToken(req.getSession());
-        verify(tokenGenerator).setTokenToResponseCookie(req.getContextPath(), resp, token.toString());
+        verify(tokenGenerator).setTokenToResponseCookie(req, resp, token.toString());
         verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());
     }
 }

@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
             doLogin(request, response);
             final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
 
-            tokenGenerator.setTokenToResponseCookie(request.getContextPath(), response, tokenGenerator.createOrLoadToken(request.getSession()));
+            tokenGenerator.setTokenToResponseCookie(request, response, tokenGenerator.createOrLoadToken(request.getSession()));
 
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
