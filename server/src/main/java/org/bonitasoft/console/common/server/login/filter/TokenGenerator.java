@@ -18,10 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.api.token.APIToken;
+import org.bonitasoft.console.common.server.login.PortalCookies;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 
 /**
@@ -37,18 +39,27 @@ public class TokenGenerator {
 
     /**
      * set the CSRF security token to the HTTP response as cookie.
-     *
-     * @param contextPath the current context path to set the cookie onto
-     * @param res the http response
-     * @param apiTokenFromClient the security token to set
      */
-    public void setTokenToResponseCookie(final String contextPath, final HttpServletResponse res, final Object apiTokenFromClient) {
-        final Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
+    public void setTokenToResponseCookie(HttpServletRequest request, HttpServletResponse res, Object apiTokenFromClient) {
+        String path = System.getProperty("bonita.csrf.cookie.path", request.getContextPath());
+        invalidateCookieOnDifferentPath(request, res, path);
+
+        Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
         // cookie path can be set via system property.
         // Can be set to '/' when another app is deployed in same server than bonita and want to share csrf cookie
-        csrfCookie.setPath(System.getProperty("bonita.csrf.cookie.path", contextPath));
+        csrfCookie.setPath(path);
         csrfCookie.setSecure(isCSRFTokenCookieSecure());
         res.addCookie(csrfCookie);
+    }
+
+    // when cookie already exists on a different path than the one expected, we need to invalidate it
+    // see https://bonitasoft.atlassian.net/browse/BS-15883
+    private void invalidateCookieOnDifferentPath(HttpServletRequest request, HttpServletResponse res, String path) {
+        Cookie cookie = PortalCookies.getCookie(request, X_BONITA_API_TOKEN);
+        if (cookie != null && cookie.getPath() != path) {
+            cookie.setMaxAge(0);
+            res.addCookie(cookie);
+        }
     }
 
     // protected for testing
