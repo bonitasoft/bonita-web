@@ -43,7 +43,7 @@ public class TokenGeneratorFilter implements Filter {
         // Create
         final String apiTokenFromClient = tokenGenerator.createOrLoadToken(req.getSession());
         tokenGenerator.setTokenToResponseHeader(res, apiTokenFromClient);
-        tokenGenerator.setTokenToResponseCookie(req.getContextPath(), res, apiTokenFromClient);
+        tokenGenerator.setTokenToResponseCookie(req, res, apiTokenFromClient);
         chain.doFilter(req, res);
     }
 
