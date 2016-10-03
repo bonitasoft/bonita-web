@@ -74,7 +74,7 @@ public class CustomPageDependenciesResolver {
     }
 
     private Map<String, byte[]> loadLibraries(final File customPageLibDirectory) {
-        final Map<String, byte[]> result = new HashMap<String, byte[]>();
+        final Map<String, byte[]> result = new HashMap<>();
         try {
             Files.walkFileTree(customPageLibDirectory.toPath(), new SimpleFileVisitor<Path>() {
 
