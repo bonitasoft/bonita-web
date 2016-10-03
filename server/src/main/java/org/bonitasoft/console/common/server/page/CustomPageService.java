@@ -194,11 +194,13 @@ public class CustomPageService {
         if (pageClassLoader == null
                 || getConsoleProperties(apiSession).isPageInDebugMode()
                 || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
-            pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
-                    new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
-                    bdmDependenciesResolver));
-            pageClassLoader.addClasspath(pageDirectory.getPath());
-            PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+            synchronized (this) {//Handle multiple queries to create several classloaders at the same time
+                pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
+                        new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
+                        bdmDependenciesResolver));
+                pageClassLoader.addClasspath(pageDirectory.getPath());
+                PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+            }
         }
         return pageClassLoader;
     }
@@ -323,7 +325,7 @@ public class CustomPageService {
 
     public Set<String> getCustomPagePermissions(final Properties pageProperties, final ResourcesPermissionsMapping resourcesPermissionsMapping,
             final boolean alsoReturnResourcesNotFound) {
-        PropertiesWithSet pagePropertiesWithSet = new PropertiesWithSet(pageProperties);
+        final PropertiesWithSet pagePropertiesWithSet = new PropertiesWithSet(pageProperties);
         final Set<String> pageRestResources = new HashSet<>(pagePropertiesWithSet.getPropertyAsSet(RESOURCES_PROPERTY));
         // pageRestResources.addAll(Arrays.asList(GET_SYSTEM_SESSION, GET_PORTAL_PROFILE, GET_IDENTITY_USER));
         final Set<String> permissions = new HashSet<>();
