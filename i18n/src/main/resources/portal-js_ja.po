@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-07-18 09:53-0400\n"
+"PO-Revision-Date: 2016-10-05 11:52-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -644,7 +644,7 @@ msgstr "ルート親プロセスの案件だけが、次の表に表示されま
 
 #: main/common/i18n/i18n-keys.js:9
 msgid "Open cases"
-msgstr "進行中の案件"
+msgstr "進行中案件"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Open in a popup"
