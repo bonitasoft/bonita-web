@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-10-05 11:51-0400\n"
+"PO-Revision-Date: 2016-10-09 07:40-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -602,6 +602,10 @@ msgstr "Aucune application définie."
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "No cases to display"
 msgstr "Aucun cas à afficher"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
+msgstr ""
 
 #: main/common/i18n/i18n-keys.js:50
 msgid "No data"
