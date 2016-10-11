@@ -22,3 +22,4 @@ skin/bootstrap/portal/main.less:        The entry point that identifies the file
 skin/skin.config.less:                  The main LESS file that defines the appearance. Change this file to modify the appearance of Bonita BPM Portal web (not mobile). You only need to modify the other LESS files if you want to change the behaviour of the pages.
 tools:                                  Contains special files required for compatibility with Internet Explorer.
 VERSION:                                Contains the version flag. Do not update or delete this file.
+theme.css:                              Default file use as theme for forms in portal. Overwrite it to customize your portal forms.

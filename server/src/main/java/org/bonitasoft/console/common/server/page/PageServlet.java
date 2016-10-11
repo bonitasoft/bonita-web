@@ -16,6 +16,9 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,14 +28,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpHeaders;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.livingapps.ApplicationModelFactory;
+import org.bonitasoft.livingapps.exception.CreationException;
 
 /**
  * Servlet allowing to display a page or the resource of a page
@@ -58,6 +67,8 @@ public class PageServlet extends HttpServlet {
 
     public static final String THEME_PATH_SEPARATOR = "/theme";
 
+    public static final String APPLICATION_PARAM = "app";
+
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected PageMappingService pageMappingService = new PageMappingService();
@@ -71,16 +82,12 @@ public class PageServlet extends HttpServlet {
     @Override
     protected void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         final String pathInfo = request.getPathInfo();
+
         if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
             //Support relative calls to the REST API from the forms using ../API/
             final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
             request.getRequestDispatcher(apiPath).forward(request, response);
-        } else if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
-            //BS-14188 : as theme are only currently managed in living app, we cannot currently serve
-            // theme request from Forms. But, it shouldn't produce any 400 request error either
-            // thus, we return 200
-            return ;
-        } else {
+        } else{
             super.service(request, response);
         }
     }
@@ -90,24 +97,31 @@ public class PageServlet extends HttpServlet {
 
         final HttpSession session = request.getSession();
         final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+
         final String pathInfo = request.getPathInfo();
         // Check if requested URL is missing final slash (necessary in order to be able to use relative URLs for resources)
         if (pathInfo.endsWith(RESOURCE_PATH_SEPARATOR)) {
             customPageRequestModifier.redirectToValidPageUrl(request, response);
         } else if (pathInfo.indexOf(RESOURCE_PATH_SEPARATOR + "/") > 0) {
             final String[] pathInfoSegments = pathInfo.split(RESOURCE_PATH_SEPARATOR + "/", 2);
+            String resourcePath = getResourcePath(pathInfoSegments);
             final String mappingKey = pathInfoSegments[0].substring(1);
-            String resourcePath = null;
-            if (pathInfoSegments.length > 1 && !pathInfoSegments[1].isEmpty()) {
-                resourcePath = pathInfoSegments[1];
-            }
             try {
                 resolveAndDisplayPage(request, response, apiSession, mappingKey, resourcePath);
             } catch (final Exception e) {
                 handleException(response, mappingKey, e);
             }
+        } else if (pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
+            final String[] pathInfoSegments = pathInfo.split(THEME_PATH_SEPARATOR + "/", 2);
+            String resourcePath = getResourcePath(pathInfoSegments);
+            final String mappingKey = pathInfoSegments[0].substring(1);
+            try {
+                renderThemeResource(request, response, apiSession, resourcePath);
+            } catch (final Exception e) {
+                handleException(response, mappingKey, e);
+            }
         } else {
-            final String message = "/content is expected in the URL after the page mapping key";
+            final String message = "/content or /theme is expected in the URL after the page mapping key";
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Bad request: " + message);
             }
@@ -115,6 +129,60 @@ public class PageServlet extends HttpServlet {
         }
     }
 
+    protected void renderThemeResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, String resourcePath)
+            throws BonitaException, CreationException, IllegalAccessException, IOException, ServletException {
+        String referer =  request.getHeader(HttpHeaders.REFERER);
+        if (referer != null) {
+            String appToken = parseReferer(referer);
+            if(appToken!=null) {
+                // Try to get requested resource from the current Living application theme
+                Long themeId = getThemeId(apiSession, appToken);
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, themeId, resourcePath), apiSession);
+            } else {
+                // Try to get requested resource from portal theme
+                request.getRequestDispatcher(THEME_PATH_SEPARATOR + "/" + resourcePath).forward(request, response);
+            }
+        } else {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Unable tor retrieve app parameter. Request referer is null.");
+            }
+        }
+    }
+
+    private String getResourcePath(final String[] pathInfoSegments) {
+        String resourcePath = null;
+        if (pathInfoSegments.length > 1 && !pathInfoSegments[1].isEmpty()) {
+            resourcePath = pathInfoSegments[1];
+        }
+        return resourcePath;
+    }
+
+    private String parseReferer(String referer){
+        List<NameValuePair> paramList = null;
+        try {
+            paramList = URLEncodedUtils.parse(new URI(referer), "UTF-8");
+        } catch (URISyntaxException e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Unable tor retrieve app parameter. Bad request referer: " + e.getMessage());
+            }
+        }
+        for (NameValuePair param: paramList) {
+            if(APPLICATION_PARAM.equalsIgnoreCase(param.getName())){
+                return param.getValue();
+            }
+        }
+        return null;
+    }
+
+    protected Long getThemeId(APISession apiSession, final String appToken) throws BonitaException, CreationException {
+            ApplicationModelFactory applicationModelFactory = new ApplicationModelFactory(
+                    TenantAPIAccessor.getLivingApplicationAPI(apiSession),
+                    TenantAPIAccessor.getCustomPageAPI(apiSession),
+                    TenantAPIAccessor.getProfileAPI(apiSession));
+            return applicationModelFactory.createApplicationModel(appToken).getApplicationThemeId();
+    }
+    
+    
     protected void resolveAndDisplayPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final String mappingKey, final String resourcePath)
                     throws BonitaException, IOException, InstantiationException, IllegalAccessException {
@@ -198,7 +266,7 @@ public class PageServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
-                    final String message = "Error while trying to display a page for key " + mappingKey;
+                    final String message = "Error while trying to display a page or resource for key " + mappingKey;
                     LOGGER.log(Level.WARNING, message, e);
                 }
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());

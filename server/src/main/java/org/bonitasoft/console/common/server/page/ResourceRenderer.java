@@ -46,7 +46,7 @@ public class ResourceRenderer {
     private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
 
     public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
-            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+            throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
         response.setCharacterEncoding("UTF-8");

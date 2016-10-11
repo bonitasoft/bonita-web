@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpHeaders;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.NotFoundException;
@@ -99,7 +100,7 @@ public class PageServletTest {
         when(hsRequest.getPathInfo()).thenReturn("");
         when(hsRequest.getParameter(anyString())).thenReturn(null);
         pageServlet.service(hsRequest, hsResponse);
-        verify(hsResponse, times(1)).sendError(400, "/content is expected in the URL after the page mapping key");
+        verify(hsResponse, times(1)).sendError(400, "/content or /theme is expected in the URL after the page mapping key");
     }
 
     @Test
@@ -137,7 +138,7 @@ public class PageServletTest {
 
         final PageResourceProviderImpl pageResourceProvider = mock(PageResourceProviderImpl.class);
         final File resourceFile = mock(File.class);
-        when(pageResourceProvider.getResourceAsFile("resources" +File.separator + "path/of/resource.css")).thenReturn(resourceFile);
+        when(pageResourceProvider.getResourceAsFile("resources" + File.separator + "path/of/resource.css")).thenReturn(resourceFile);
         when(pageRenderer.getPageResourceProvider(PAGE_ID, apiSession)).thenReturn(pageResourceProvider);
         when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
 
@@ -233,11 +234,29 @@ public class PageServletTest {
     }
 
     @Test
-    public void should_return_200_when_THEME_call() throws Exception {
+    public void should_forward_when_THEME_call_and_no_app_in_refered() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsRequest, never()).getRequestDispatcher(anyString());
+        verify(hsRequest, times(1)).getRequestDispatcher("/theme/theme.css");
     }
+    
+    @Test
+    public void should_display_theme_resource() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+        when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/content/?app=myApp");
+        doReturn(12L).when(pageServlet).getThemeId(apiSession, "myApp");
+        
+        final PageResourceProviderImpl pageResourceProvider = mock(PageResourceProviderImpl.class);
+        final File resourceFile = mock(File.class);
+        when(pageResourceProvider.getResourceAsFile("resources" + File.separator + "theme.css")).thenReturn(resourceFile);
+        when(pageRenderer.getPageResourceProvider(12L, apiSession)).thenReturn(pageResourceProvider);
+        when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+    }
+
 }

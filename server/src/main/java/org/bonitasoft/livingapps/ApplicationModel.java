@@ -1,7 +1,5 @@
 package org.bonitasoft.livingapps;
 
-import java.util.List;
-
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
@@ -18,6 +16,8 @@ import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.livingapps.menu.Menu;
 import org.bonitasoft.livingapps.menu.MenuFactory;
+
+import java.util.List;
 
 public class ApplicationModel {
 
@@ -50,6 +50,10 @@ public class ApplicationModel {
 
     public String getApplicationThemeName() throws PageNotFoundException {
         return pageApi.getPage(application.getThemeId()).getName();
+    }
+
+    public Long getApplicationThemeId() throws PageNotFoundException {
+        return pageApi.getPage(application.getThemeId()).getId();
     }
 
     public String getApplicationHomePage() throws ApplicationPageNotFoundException {
