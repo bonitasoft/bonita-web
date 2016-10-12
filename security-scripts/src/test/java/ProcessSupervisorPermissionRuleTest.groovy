@@ -62,10 +62,10 @@ public class ProcessSupervisorPermissionRuleTest {
     public void should_check_verify_post_is_true_when_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn('''
-            [{
+            {
                 "process_id":"154",
                 "other":"sample"
-            }]
+            }
         ''').when(apiCallContext).getBody()
         doReturn(true).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
@@ -80,10 +80,10 @@ public class ProcessSupervisorPermissionRuleTest {
     public void should_check_verify_post_is_false_when_not_process_owner() {
         doReturn(true).when(apiCallContext).isPOST()
         doReturn('''
-            [{
+            {
                 "process_id":"154",
                 "other":"sample"
-            }]
+            }
         ''').when(apiCallContext).getBody()
         doReturn(false).when(processAPI).isUserProcessSupervisor(154l, currentUserId);
 
