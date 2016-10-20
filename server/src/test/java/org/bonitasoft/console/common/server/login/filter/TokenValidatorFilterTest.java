@@ -4,7 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -79,5 +84,45 @@ public class TokenValidatorFilterTest {
 
         assertThat(valid).isFalse();
         assertThat(response.getStatus()).isEqualTo(401);
+    }
+
+    @Test
+    public void should_check_csrf_token_from_request_form_data() throws Exception {
+        request = mockMultipartRequestFor(SESSION_CSRF_TOKEN);
+
+        boolean valid = filter.checkValidCondition(request, response);
+
+        assertThat(valid).isTrue();
+    }
+
+    @Test
+    public void should_set_401_status_when_csrf_form_data_is_wrong() throws Exception {
+        request = mockMultipartRequestFor("notAValidToken");
+
+        boolean valid = filter.checkValidCondition(request, response);
+
+        assertThat(valid).isFalse();
+        assertThat(response.getStatus()).isEqualTo(401);
+    }
+
+    public MockHttpServletRequest mockMultipartRequestFor(String csrfToken) {
+        MockMultipartHttpServletRequest request = new MockMultipartHttpServletRequest();
+        request.setMethod("POST");
+        request.getSession().setAttribute("api_token", SESSION_CSRF_TOKEN);
+
+        String boundary = "----WebKitFormBoundaryRmUZEc9hkTjU1FKc";
+        request.setContentType(format("multipart/form-data; boundary=%s", boundary));
+        request.setContent(multipartContent(boundary, csrfToken));
+        return request;
+    }
+
+    public byte[] multipartContent(String boundary, String csrfToken){
+        return new StringBuilder()
+                .append("--").append(boundary).append("\r\n")
+                .append("Content-Disposition: form-data; name=\"CSRFToken\"").append("\r\n")
+                .append("\r\n")
+                .append(csrfToken).append("\r\n")
+                .append("--").append(boundary).append("--")
+                .toString().getBytes(StandardCharsets.UTF_8);
     }
 }
