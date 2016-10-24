@@ -343,11 +343,13 @@
   padding: 0;
 }
 
-.page_performTask .body, .page_StartProcess .body, .page_DisplayCaseForm .body, .page_custompage_ .body {
-  padding-bottom: 0 !important;
-  margin-bottom: 0 !important;
-  display: block !important;
-  overflow: hidden;
+[class*="page_performTask"], [class*="page_StartProcess"], .page_DisplayCaseForm, .page_custompage_ {
+  .body {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    display: block !important;
+    overflow: hidden;
+  }
 }
 #bonitaframe{
 	display: block;
