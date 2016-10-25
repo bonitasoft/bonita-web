@@ -50,7 +50,8 @@ public abstract class AbstractAuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        final HttpServletRequest httpRequest = getRequest(request);
+        //we need to use a MultiReadHttpServletRequest wrapper in order to be able to get the inputstream twice (in the filter and in the API servlet)
+        MultiReadHttpServletRequest httpRequest = new MultiReadHttpServletRequest((HttpServletRequest) request);
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         final String requestURL = httpRequest.getRequestURI();
 
@@ -59,16 +60,6 @@ public abstract class AbstractAuthorizationFilter implements Filter {
         } else if (checkValidCondition(httpRequest, httpResponse)) {
             chain.doFilter(httpRequest, httpResponse);
         }
-    }
-
-    /**
-     * Override this to be able to wrap the servlet (this is useful if the filter needs to read the body for example)
-     * 
-     * @param request the servlet request
-     * @return the HttpServletRequest
-     */
-    protected HttpServletRequest getRequest(final ServletRequest request) {
-        return (HttpServletRequest) request;
     }
 
     @Override

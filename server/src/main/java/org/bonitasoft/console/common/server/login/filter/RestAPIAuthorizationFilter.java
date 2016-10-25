@@ -70,12 +70,6 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     @Override
-    protected HttpServletRequest getRequest(final ServletRequest request) {
-        //we need to use a MultiReadHttpServletRequest wrapper in order to be able to get the inputstream twice (in the filter and in the API servlet)
-        return new MultiReadHttpServletRequest((HttpServletRequest) request);
-    }
-
-    @Override
     protected boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
         try {
             if (httpRequest.getRequestURI().matches(PLATFORM_API_URI_REGEXP)) {
