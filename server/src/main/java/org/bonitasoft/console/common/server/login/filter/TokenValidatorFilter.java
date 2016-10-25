@@ -15,6 +15,8 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +29,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  */
 public class TokenValidatorFilter extends AbstractAuthorizationFilter {
 
+    private static final String CSRF_TOKEN_PARAM = "CSRFToken";
+    private static final String CSRF_TOKEN_HEADER = "X-Bonita-API-Token";
+
     @Override
     boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+
         if (isCsrfProtectionEnabled() && !isGetMethod(httpRequest.getMethod())) {
             String headerFromRequest = getCSRFToken(httpRequest);
             String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
@@ -49,12 +55,28 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
         return PropertiesFactory.getSecurityProperties().isCSRFProtectionEnabled();
     }
 
+    /**
+     * Get CSRF token from request following order as below
+     * - In 'X-Bonita-API-Token' header
+     * - In 'CSRFToken' parameter
+     * - In 'CSRFToken' multipart body parameter
+     */
     private String getCSRFToken(HttpServletRequest httpRequest) {
-        String token = httpRequest.getHeader("X-Bonita-API-Token");
+        String token = httpRequest.getHeader(CSRF_TOKEN_HEADER);
         if (isBlank(token)) {
-            token = httpRequest.getParameter("CSRFToken");
+            token = httpRequest.getParameter(CSRF_TOKEN_PARAM);
+        }
+        if (isBlank(token) && isFormData(httpRequest.getContentType())) {
+            MultipartHttpServletRequest multiPartRequest = new CommonsMultipartResolver().resolveMultipart(httpRequest);
+            if (multiPartRequest.getParameterMap().containsKey(CSRF_TOKEN_PARAM)) {
+                token = multiPartRequest.getParameter(CSRF_TOKEN_PARAM);
+            }
         }
         return token;
+    }
+
+    private boolean isFormData(String contentType) {
+        return contentType != null && contentType.toLowerCase().contains("multipart/form-data");
     }
 
     private boolean isGetMethod(String method) {
