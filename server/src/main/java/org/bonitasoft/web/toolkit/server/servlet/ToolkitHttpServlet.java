@@ -157,6 +157,9 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
             }
             outputException(exception, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIItemNotFoundException) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, exception.getMessage(), exception);
+            }
             outputException(null, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIForbiddenException) {
             outputException(exception, req, resp, HttpServletResponse.SC_FORBIDDEN);
