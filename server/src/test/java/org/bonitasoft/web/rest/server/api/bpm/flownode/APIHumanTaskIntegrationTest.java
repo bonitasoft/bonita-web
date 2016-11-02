@@ -76,7 +76,8 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
         final HashMap<String, String> attributes = new HashMap<String, String>();
         attributes.put(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID,
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
-        final HumanTaskItem updateHumanTaskItem = apiHumanTask.update(apiId, attributes);
+        apiHumanTask.update(apiId, attributes);
+        final HumanTaskItem updateHumanTaskItem = apiHumanTask.get(apiId);
         assertNotSame("Attributes are not update", updateHumanTaskItem.getAssignedId(),
                 TestUserFactory.getJohnCarpenter().getId());
 

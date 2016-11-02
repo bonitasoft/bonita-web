@@ -117,16 +117,8 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
         if (!isBlank(jsonVariables)) {
             updateActivityVariables(id.toLong(), jsonVariables);
         }
-
         update(get(id), attributes);
-        try {
-            return get(id);
-        } catch (final APIException e) {
-            if (e.getCause() instanceof ActivityInstanceNotFoundException) {
-                return null;
-            }
-            throw e;
-        }
+        return null;
     }
 
     private void updateActivityVariables(final long activityId, final String jsonValue) {
