@@ -35,7 +35,7 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
     @Override
     boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 
-        if (isCsrfProtectionEnabled() && !isGetMethod(httpRequest.getMethod())) {
+        if (isCsrfProtectionEnabled() && !isSafeMethod(httpRequest.getMethod())) {
             String headerFromRequest = getCSRFToken(httpRequest);
             String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
 
@@ -79,8 +79,8 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
         return contentType != null && contentType.toLowerCase().contains("multipart/form-data");
     }
 
-    private boolean isGetMethod(String method) {
-        return "GET".equalsIgnoreCase(method);
+    private boolean isSafeMethod(String method) {
+        return "GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method);
     }
 
 }

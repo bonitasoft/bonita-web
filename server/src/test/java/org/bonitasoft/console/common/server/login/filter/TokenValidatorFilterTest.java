@@ -46,6 +46,15 @@ public class TokenValidatorFilterTest {
 
         assertThat(valid).isTrue();
     }
+    
+    @Test
+    public void should_not_check_csrf_token_for_HEAD_request() throws Exception {
+        request.setMethod("HEAD");
+
+        boolean valid = filter.checkValidCondition(request, response);
+
+        assertThat(valid).isTrue();
+    }
 
     @Test
     public void should_set_401_status_when_csrf_request_header_is_wrong() throws Exception {
