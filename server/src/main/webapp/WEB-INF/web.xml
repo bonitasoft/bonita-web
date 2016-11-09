@@ -185,10 +185,16 @@
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
         <!--
-            In the case of a custom page served in a living application calls to the
-            REST API are done though /portal/custom-page/API then forwarded to /API which breaks dynamic security rules.
+            In the case of a custom page served in a custom profile calls to the
+            REST API are done though /portal/custom-page/API
         -->
         <url-pattern>/portal/custom-page/API/*</url-pattern>
+        <!--
+            In the case of a form or in the case of a custom page served in a living application
+            REST API are done though /portal/resource/*/API or /apps/*/API (layout)
+        -->
+        <url-pattern>/portal/resource/*</url-pattern>
+        <url-pattern>/apps/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
