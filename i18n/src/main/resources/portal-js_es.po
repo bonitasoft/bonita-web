@@ -7,12 +7,12 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-10-09 07:42-0400\n"
+"PO-Revision-Date: 2016-10-09 07:43-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -103,13 +103,9 @@ msgstr "Una aplicación es un entorno personalizado para un perfil de usuario es
 msgid "An error occured during categories update"
 msgstr "Se produjo un error durante la actualización de las categorías"
 
-#: main/features/user/tasks/list/tasks-app.js:305
+#: main/features/user/tasks/list/tasks-app.js:257
 msgid "An error occurred while submitting the form."
 msgstr "Ocurrió un error al enviar el formulario."
-
-#: main/features/user/tasks/list/tasks-app.js:299
-msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
-msgstr ""
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -183,13 +179,8 @@ msgid "Cannot upload the file"
 msgstr "No se puede cargar el archivo"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
-#: target/dist/features/user/tasks/list/tasks-list.html:6
-msgid "Case"
-msgstr "Caso"
-
-#: target/dist/features/user/tasks/list/tasks-list.html:6
-msgid "Case ID"
-msgstr ""
+msgid "Case Id"
+msgstr "Id del Caso"
 
 #: target/dist/features/user/tasks/list/comments/comments.html:1
 #: target/dist/features/user/tasks/list/details/task-details.html:1
@@ -449,7 +440,7 @@ msgstr "Formulario"
 msgid "Form cannot be empty"
 msgstr "El formulario no puede estar vacío"
 
-#: main/features/user/tasks/list/tasks-app.js:312
+#: main/features/user/tasks/list/tasks-app.js:263
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "Formulario enviado. <br/> La siguiente tarea en la lista está ahora seleccionada."
 
@@ -602,10 +593,6 @@ msgstr "Ninguna aplicación disponible."
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "No cases to display"
 msgstr "No hay casos para mostrar"
-
-#: target/dist/features/user/tasks/list/comments/comments.html:1
-msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
-msgstr ""
 
 #: main/common/i18n/i18n-keys.js:50
 msgid "No data"
@@ -851,14 +838,6 @@ msgstr "Mostrar el menú"
 msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
 msgstr "Mostrar todas las tareas que puedo hacer: tanto personales como disponibles para otros miembros del equipo"
 
-#: target/dist/features/user/cases/list/cases-list.html:1
-msgid "Show available tasks in task list for archived case"
-msgstr ""
-
-#: target/dist/features/user/cases/list/cases-list.html:1
-msgid "Show available tasks in task list for case"
-msgstr ""
-
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
 msgstr "Mostrar menú"
@@ -962,7 +941,7 @@ msgstr "El proceso no se puede habilitar"
 msgid "The application"
 msgstr "La aplicación"
 
-#: main/features/user/tasks/list/tasks-app.js:294
+#: main/features/user/tasks/list/tasks-app.js:252
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "El archivo adjunto es demasiado grande. <br/> Seleccione un archivo más pequeño y envíe el formulario de nuevo."
 
@@ -1089,10 +1068,6 @@ msgstr "Escriba aquí para buscar un usuario..."
 msgid "Type here to search..."
 msgstr "Escriba aquí para buscar..."
 
-#: target/dist/features/user/tasks/list/tasks-list.html:6
-msgid "Type in a case id and <br> press enter to search for <br> human task of a specific case"
-msgstr ""
-
 #: target/dist/features/admin/applications/applications-list.html:1
 #: target/dist/features/admin/applications/details/application-details.html:1
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -1152,6 +1127,7 @@ msgid "Version"
 msgstr "Version"
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
+#: target/dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "Ver detalles del caso"
 
