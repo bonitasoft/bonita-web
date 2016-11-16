@@ -12,13 +12,13 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-10-09 07:42-0400\n"
+"PO-Revision-Date: 2016-11-15 10:16-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
 
-#: main/common/i18n/i18n-keys.js:62
+#: main/common/i18n/i18n-keys.js:60
 msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
 
@@ -46,7 +46,7 @@ msgstr "アクター名"
 msgid "Actors"
 msgstr "アクター"
 
-#: main/common/i18n/i18n-keys.js:65
+#: main/common/i18n/i18n-keys.js:63
 msgid "Actors must be resolved before enabling the Process."
 msgstr "アクターは、プロセスを有効にする前に設定する必要があります。"
 
@@ -103,9 +103,13 @@ msgstr "アプリケーションは、特定のユーザー プロファイル�
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
-#: main/features/user/tasks/list/tasks-app.js:257
+#: main/features/user/tasks/list/tasks-app.js:305
 msgid "An error occurred while submitting the form."
 msgstr "フォームの送信中にエラーが発生しました。"
+
+#: main/features/user/tasks/list/tasks-app.js:299
+msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
+msgstr "フォームの送信中にエラーが発生しました。 <br/>このタスクはもう利用できません。"
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -152,7 +156,7 @@ msgstr "そのページとプロファイルは、アプリケーションをイ
 msgid "Can't import page or form to the process"
 msgstr "プロセスにページまたはフォームをインポートできません"
 
-#: main/common/i18n/i18n-keys.js:74
+#: main/common/i18n/i18n-keys.js:72
 msgid "Can't update expression content"
 msgstr "式のコンテンツを更新できません"
 
@@ -179,7 +183,12 @@ msgid "Cannot upload the file"
 msgstr "ファイルをアップロードできません"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
-msgid "Case Id"
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Case"
+msgstr "案件"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Case ID"
 msgstr "案件ID"
 
 #: target/dist/features/user/tasks/list/comments/comments.html:1
@@ -196,12 +205,12 @@ msgstr "案件ID: {{caseId}} - プロセス: {{processName}} ({{processVersion}}
 msgid "Case list"
 msgstr "案件リスト"
 
-#: main/common/i18n/i18n-keys.js:71
+#: main/common/i18n/i18n-keys.js:69
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Case overview"
 msgstr "案件概況"
 
-#: main/common/i18n/i18n-keys.js:72
+#: main/common/i18n/i18n-keys.js:70
 msgid "Case start"
 msgstr "案件の開始"
 
@@ -243,7 +252,7 @@ msgstr "コメント："
 msgid "Comments"
 msgstr "コメント"
 
-#: main/common/i18n/i18n-keys.js:64
+#: main/common/i18n/i18n-keys.js:62
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
 
@@ -264,7 +273,7 @@ msgstr "削除していいですか？"
 msgid "Connectors"
 msgstr "コネクタ"
 
-#: main/common/i18n/i18n-keys.js:66
+#: main/common/i18n/i18n-keys.js:64
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
 
@@ -371,7 +380,7 @@ msgstr "エラー"
 msgid "Error on drawing process!"
 msgstr "プロセス図の描画中にエラーが発生しました！"
 
-#: main/common/i18n/i18n-keys.js:77
+#: main/common/i18n/i18n-keys.js:75
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "案件を開始しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
 
@@ -404,7 +413,7 @@ msgstr "エクスポート"
 msgid "Export application"
 msgstr "アプリケーションをエクスポート"
 
-#: main/common/i18n/i18n-keys.js:73
+#: main/common/i18n/i18n-keys.js:71
 msgid "Expression content has been updated"
 msgstr "式のコンテンツが更新されました"
 
@@ -416,7 +425,7 @@ msgstr "作業中にエラー発生"
 msgid "Failed instances"
 msgstr "エラーのあったインスタンス"
 
-#: main/common/i18n/i18n-keys.js:60
+#: main/common/i18n/i18n-keys.js:58
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
 
@@ -436,11 +445,7 @@ msgstr "各アクターに対し、各エンティティ （ユーザー、グ�
 msgid "Form"
 msgstr "フォーム"
 
-#: main/common/i18n/i18n-keys.js:59
-msgid "Form cannot be empty"
-msgstr "フォームは空にできません"
-
-#: main/features/user/tasks/list/tasks-app.js:263
+#: main/features/user/tasks/list/tasks-app.js:312
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "フォームを送信しました。 <br/>リスト中の次のタスクが選択されました。"
 
@@ -581,10 +586,6 @@ msgstr "新規"
 msgid "New comment"
 msgstr "新しいコメント"
 
-#: main/common/i18n/i18n-keys.js:58
-msgid "No Mapping"
-msgstr "マッピングなし"
-
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
 msgstr "利用可能なアプリケーションはありません。"
@@ -593,6 +594,10 @@ msgstr "利用可能なアプリケーションはありません。"
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "No cases to display"
 msgstr "表示する案件はありません"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
+msgstr "まだこの案件に対するコメントがありません。追加するには、このパネルの下部にあるコメント入力フィールドを使用します。"
 
 #: main/common/i18n/i18n-keys.js:50
 msgid "No data"
@@ -672,7 +677,7 @@ msgstr "ページ"
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: main/common/i18n/i18n-keys.js:67
+#: main/common/i18n/i18n-keys.js:65
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
 
@@ -838,6 +843,14 @@ msgstr "メニューを表示"
 msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
 msgstr "自分が行うことができるすべてのタスクを表示する： 自分だけにアサインされたタスクおよび他のチーム メンバーでも行えるタスクの両方を表示"
 
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Show available tasks in task list for archived case"
+msgstr "完了済み案件タスク リスト内の応受援タスクを表示"
+
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Show available tasks in task list for case"
+msgstr "案件タスク リスト内の応受援タスクを表示"
+
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
 msgstr "メニューを表示"
@@ -932,7 +945,7 @@ msgstr "タスク名"
 msgid "Technical error."
 msgstr "技術的なエラーが発生。"
 
-#: main/common/i18n/i18n-keys.js:70
+#: main/common/i18n/i18n-keys.js:68
 #: target/dist/features/admin/processes/details/menu.html:1
 msgid "The Process cannot be enabled"
 msgstr "プロセスを有効にすることができません"
@@ -941,11 +954,11 @@ msgstr "プロセスを有効にすることができません"
 msgid "The application"
 msgstr "アプリケーション"
 
-#: main/features/user/tasks/list/tasks-app.js:252
+#: main/features/user/tasks/list/tasks-app.js:294
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
 
-#: main/common/i18n/i18n-keys.js:68
+#: main/common/i18n/i18n-keys.js:66
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ モデル内に定義されていないビジネス オブジェクトを使用しています。プロセスを有効にする前に互換性のあるビジネス データ モデルをデプロイしてください。"
 
@@ -953,7 +966,7 @@ msgstr "ビジネス データ:  [ {} ]  は、現在のビジネス データ �
 msgid "The case is archived. You cannot add comments anymore"
 msgstr "この案件は完了しています。もうコメントを追加することはできません。"
 
-#: main/common/i18n/i18n-keys.js:76
+#: main/common/i18n/i18n-keys.js:74
 msgid "The case {{caseId}} has been started successfully."
 msgstr "案件ID： %caseId% が正常に開始されました。"
 
@@ -973,11 +986,11 @@ msgstr "削除された案件は完全に削除され、アーカイブには格
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "削除された案件は、アーカイブから完全に削除されます。"
 
-#: main/common/i18n/i18n-keys.js:69
-msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
-msgstr "次のフォームのマッピングが設定されていません： [ {} ]。これらは、プロセスを有効にする前に設定する必要があります。"
+#: main/common/i18n/i18n-keys.js:67
+msgid "The form mappings must be resolved before enabling the Process."
+msgstr "プロセスを有効にする前にフォームの マッピングを解決する必要があります。"
 
-#: main/common/i18n/i18n-keys.js:63
+#: main/common/i18n/i18n-keys.js:61
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
 
@@ -985,7 +998,7 @@ msgstr "URL の名前は、英数字のみが続く custompage_ で始まらな�
 msgid "The task has been submitted but an error occurred while adding the comment"
 msgstr "タスクが送信されましたが、コメントを追加するときにエラーが発生しました。"
 
-#: main/common/i18n/i18n-keys.js:75
+#: main/common/i18n/i18n-keys.js:73
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
 
@@ -1068,6 +1081,10 @@ msgstr "ユーザーを検索するには、ここを入力..."
 msgid "Type here to search..."
 msgstr "検索キーワードをここで入力..."
 
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Type in a case id and <br> press enter to search for <br> human task of a specific case"
+msgstr "特定案件のヒューマンタスクを検索するには、<br>案件ID を入力し <br>エンターキーを押してください。"
+
 #: target/dist/features/admin/applications/applications-list.html:1
 #: target/dist/features/admin/applications/details/application-details.html:1
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -1127,7 +1144,6 @@ msgid "Version"
 msgstr "バージョン"
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
-#: target/dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "案件詳細を表示"
 
@@ -1168,7 +1184,7 @@ msgstr "それをメニューで参照する前に、ページを追加する必
 msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
 msgstr "マイタスク リストは空です。​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> リストからタスクを選ぶことができます。"
 
-#: main/common/i18n/i18n-keys.js:61
+#: main/common/i18n/i18n-keys.js:59
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
 

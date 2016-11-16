@@ -12,13 +12,13 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-10-09 07:41-0400\n"
+"PO-Revision-Date: 2016-11-15 10:14-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
 
-#: main/common/i18n/i18n-keys.js:62
+#: main/common/i18n/i18n-keys.js:60
 msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
 
@@ -46,7 +46,7 @@ msgstr "Nom de l'acteur"
 msgid "Actors"
 msgstr "Acteurs"
 
-#: main/common/i18n/i18n-keys.js:65
+#: main/common/i18n/i18n-keys.js:63
 msgid "Actors must be resolved before enabling the Process."
 msgstr "Tous les acteurs doivent être associés à des entités de l'organisation pour que le processus puisse être activé."
 
@@ -103,9 +103,13 @@ msgstr "Une application est un environnement adapté à un profil particulier, d
 msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
-#: main/features/user/tasks/list/tasks-app.js:257
+#: main/features/user/tasks/list/tasks-app.js:305
 msgid "An error occurred while submitting the form."
 msgstr "Une erreur s'est produite lors de la soumission du formulaire."
+
+#: main/features/user/tasks/list/tasks-app.js:299
+msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
+msgstr "Une erreur s’est produite lors de l’envoi du formulaire. <br/> Il se peut que la tâche ne soit plus disponible."
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -152,7 +156,7 @@ msgstr "Avant d'importer une application, les pages et le profils utilisés doiv
 msgid "Can't import page or form to the process"
 msgstr "Impossible d'importer la page ou le formulaire dans le processus"
 
-#: main/common/i18n/i18n-keys.js:74
+#: main/common/i18n/i18n-keys.js:72
 msgid "Can't update expression content"
 msgstr "Impossible de mettre à jour le contenu de l'expression"
 
@@ -179,8 +183,13 @@ msgid "Cannot upload the file"
 msgstr "Impossible de charger le fichier"
 
 #: target/dist/features/user/tasks/list/table/task-table.html:1
-msgid "Case Id"
-msgstr "ID de cas"
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Case"
+msgstr "Cas"
+
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Case ID"
+msgstr "Cas"
 
 #: target/dist/features/user/tasks/list/comments/comments.html:1
 #: target/dist/features/user/tasks/list/details/task-details.html:1
@@ -196,12 +205,12 @@ msgstr "Cas : {{caseId}} - Processus : {{processName}} ({{processVersion}})"
 msgid "Case list"
 msgstr "Liste des cas"
 
-#: main/common/i18n/i18n-keys.js:71
+#: main/common/i18n/i18n-keys.js:69
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Case overview"
 msgstr "Page de synthèse du cas"
 
-#: main/common/i18n/i18n-keys.js:72
+#: main/common/i18n/i18n-keys.js:70
 msgid "Case start"
 msgstr "Démarrage d'un cas"
 
@@ -243,7 +252,7 @@ msgstr "Commentaire :"
 msgid "Comments"
 msgstr "Commentaires"
 
-#: main/common/i18n/i18n-keys.js:64
+#: main/common/i18n/i18n-keys.js:62
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Échec de compilation. Vérifiez que le fichier Index.groovy implémente l'interface PageController."
 
@@ -264,7 +273,7 @@ msgstr "Confirmer la suppression ?"
 msgid "Connectors"
 msgstr "Connecteurs"
 
-#: main/common/i18n/i18n-keys.js:66
+#: main/common/i18n/i18n-keys.js:64
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "Tous les connecteurs doivent avoir une implémentation pour que le processus puisse être activé."
 
@@ -371,7 +380,7 @@ msgstr "Erreur"
 msgid "Error on drawing process!"
 msgstr "Erreur lors du dessin de processus !"
 
-#: main/common/i18n/i18n-keys.js:77
+#: main/common/i18n/i18n-keys.js:75
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erreur lors de l'exécution la tâche. Certaines informations requises sont manquantes (contrat non respecté)."
 
@@ -404,7 +413,7 @@ msgstr "Exporter"
 msgid "Export application"
 msgstr "Exporter l'application"
 
-#: main/common/i18n/i18n-keys.js:73
+#: main/common/i18n/i18n-keys.js:71
 msgid "Expression content has been updated"
 msgstr "Le contenu de l'expression a été mis à jour"
 
@@ -416,7 +425,7 @@ msgstr "Flow nodes en erreur"
 msgid "Failed instances"
 msgstr "Instances en état failed (en échec)"
 
-#: main/common/i18n/i18n-keys.js:60
+#: main/common/i18n/i18n-keys.js:58
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caractères"
 
@@ -436,11 +445,7 @@ msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, r
 msgid "Form"
 msgstr "Formulaire"
 
-#: main/common/i18n/i18n-keys.js:59
-msgid "Form cannot be empty"
-msgstr "Un formulaire ne peut pas être vide"
-
-#: main/features/user/tasks/list/tasks-app.js:263
+#: main/features/user/tasks/list/tasks-app.js:312
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant sélectionnée."
 
@@ -581,10 +586,6 @@ msgstr "Nouveau"
 msgid "New comment"
 msgstr "Nouveau commentaire"
 
-#: main/common/i18n/i18n-keys.js:58
-msgid "No Mapping"
-msgstr "Aucun mapping"
-
 #: target/dist/features/admin/applications/applications-list.html:1
 msgid "No application available."
 msgstr "Aucune application définie."
@@ -593,6 +594,10 @@ msgstr "Aucune application définie."
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "No cases to display"
 msgstr "Aucun cas à afficher"
+
+#: target/dist/features/user/tasks/list/comments/comments.html:1
+msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
+msgstr "Aucun commentaire sur ce cas pour l'instant. Le champ de saisie se trouve en bas de ce panneau"
 
 #: main/common/i18n/i18n-keys.js:50
 msgid "No data"
@@ -672,7 +677,7 @@ msgstr "Pages"
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: main/common/i18n/i18n-keys.js:67
+#: main/common/i18n/i18n-keys.js:65
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
 
@@ -838,6 +843,14 @@ msgstr "Afficher le Menu"
 msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
 msgstr "Afficher toutes les tâches que je peux faire : mes tâches personnelles et les tâches disponibles pour moi et les autres membres de l’équipe"
 
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Show available tasks in task list for archived case"
+msgstr "Afficher les tâches disponibles dans la liste des tâches pour les cas archivés"
+
+#: target/dist/features/user/cases/list/cases-list.html:1
+msgid "Show available tasks in task list for case"
+msgstr "Afficher les tâches disponibles dans la liste des tâches pour le cas"
+
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
 msgstr "Afficher le menu"
@@ -932,7 +945,7 @@ msgstr "Tâche"
 msgid "Technical error."
 msgstr "Erreur technique."
 
-#: main/common/i18n/i18n-keys.js:70
+#: main/common/i18n/i18n-keys.js:68
 #: target/dist/features/admin/processes/details/menu.html:1
 msgid "The Process cannot be enabled"
 msgstr "Le processus ne peut être activé"
@@ -941,11 +954,11 @@ msgstr "Le processus ne peut être activé"
 msgid "The application"
 msgstr "L'application"
 
-#: main/features/user/tasks/list/tasks-app.js:252
+#: main/features/user/tasks/list/tasks-app.js:294
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
 
-#: main/common/i18n/i18n-keys.js:68
+#: main/common/i18n/i18n-keys.js:66
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
 
@@ -953,7 +966,7 @@ msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne s
 msgid "The case is archived. You cannot add comments anymore"
 msgstr "Le cas est archivé. Il n'est plus possible d'ajouter de nouveaux commentaires"
 
-#: main/common/i18n/i18n-keys.js:76
+#: main/common/i18n/i18n-keys.js:74
 msgid "The case {{caseId}} has been started successfully."
 msgstr "Le cas {{caseId}} a été démarré avec succès."
 
@@ -973,11 +986,11 @@ msgstr "Le cas supprimés le seront définitivement et ne seront pas stockés da
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
-#: main/common/i18n/i18n-keys.js:69
-msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
-msgstr "Les éléments suivants ne sont associés à aucun formulaire : [ {} ]. Ils doivent être associés pour que le processus puisse être activé."
+#: main/common/i18n/i18n-keys.js:67
+msgid "The form mappings must be resolved before enabling the Process."
+msgstr "Le mapping de tous les éléments en attente d'un formulaire ou d'une page doit être effectif pour pouvoir activer le processus."
 
-#: main/common/i18n/i18n-keys.js:63
+#: main/common/i18n/i18n-keys.js:61
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
 
@@ -985,7 +998,7 @@ msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement 
 msgid "The task has been submitted but an error occurred while adding the comment"
 msgstr "La tâche a été soumise, mais une erreur s'est produite à l'ajout du commentaire"
 
-#: main/common/i18n/i18n-keys.js:75
+#: main/common/i18n/i18n-keys.js:73
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "Les mots 'content', 'API' et 'theme' sont réservés pour un usage interne. Ils ne doivent pas être utilisés dans l'URL d'une page ou d'une application."
 
@@ -1068,6 +1081,10 @@ msgstr "Saisissez le nom d'un utilisateur..."
 msgid "Type here to search..."
 msgstr "Rechercher..."
 
+#: target/dist/features/user/tasks/list/tasks-list.html:6
+msgid "Type in a case id and <br> press enter to search for <br> human task of a specific case"
+msgstr "Saisissez un Id de cas puis <br> tapez entrée pour lister <br> les tâches de ce cas"
+
 #: target/dist/features/admin/applications/applications-list.html:1
 #: target/dist/features/admin/applications/details/application-details.html:1
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
@@ -1127,7 +1144,6 @@ msgid "Version"
 msgstr "Version"
 
 #: target/dist/features/admin/cases/list/cases-list.html:1
-#: target/dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "Voir les détails du cas"
 
@@ -1168,7 +1184,7 @@ msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un men
 msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
 msgstr "Votre liste de tâches personnelles est vide. Vous pouvez prendre une tâche dans la liste <a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">A faire</a>."
 
-#: main/common/i18n/i18n-keys.js:61
+#: main/common/i18n/i18n-keys.js:59
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)"
 
