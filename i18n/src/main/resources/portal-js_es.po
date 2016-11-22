@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-11-15 10:18-0500\n"
+"PO-Revision-Date: 2016-11-21 07:21-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -103,13 +103,13 @@ msgstr "Una aplicación es un entorno personalizado para un perfil de usuario es
 msgid "An error occured during categories update"
 msgstr "Se produjo un error durante la actualización de las categorías"
 
-#: main/features/user/tasks/list/tasks-app.js:305
+#: main/features/user/tasks/list/tasks-app.js:309
 msgid "An error occurred while submitting the form."
 msgstr "Ocurrió un error al enviar el formulario."
 
-#: main/features/user/tasks/list/tasks-app.js:299
+#: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
-msgstr ""
+msgstr "Error al enviar el formulario.<br/>Puede ser que la tarea ya no esta disponible."
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -189,7 +189,7 @@ msgstr "Caso"
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Case ID"
-msgstr ""
+msgstr "ID del Caso"
 
 #: target/dist/features/user/tasks/list/comments/comments.html:1
 #: target/dist/features/user/tasks/list/details/task-details.html:1
@@ -445,7 +445,7 @@ msgstr "Para cada actor, compruebe que cada entidad (usuario, grupo, rol, membre
 msgid "Form"
 msgstr "Formulario"
 
-#: main/features/user/tasks/list/tasks-app.js:312
+#: main/features/user/tasks/list/tasks-app.js:316
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "Formulario enviado. <br/> La siguiente tarea en la lista está ahora seleccionada."
 
@@ -597,7 +597,7 @@ msgstr "No hay casos para mostrar"
 
 #: target/dist/features/user/tasks/list/comments/comments.html:1
 msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
-msgstr ""
+msgstr "Ningún comentario sobre este caso todavía. Para agregar uno, utilice el campo de entrada en la parte inferior de este panel"
 
 #: main/common/i18n/i18n-keys.js:50
 msgid "No data"
@@ -845,11 +845,11 @@ msgstr "Mostrar todas las tareas que puedo hacer: tanto personales como disponib
 
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "Show available tasks in task list for archived case"
-msgstr ""
+msgstr "Muestra las tareas disponibles en la lista de tareas para un caso archivado"
 
 #: target/dist/features/user/cases/list/cases-list.html:1
 msgid "Show available tasks in task list for case"
-msgstr ""
+msgstr "Muestra las tareas disponibles en la lista de tareas para el caso"
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Show menu"
@@ -954,7 +954,7 @@ msgstr "El proceso no se puede habilitar"
 msgid "The application"
 msgstr "La aplicación"
 
-#: main/features/user/tasks/list/tasks-app.js:294
+#: main/features/user/tasks/list/tasks-app.js:298
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "El archivo adjunto es demasiado grande. <br/> Seleccione un archivo más pequeño y envíe el formulario de nuevo."
 
@@ -988,7 +988,7 @@ msgstr "El caso eliminado se eliminará permanentemente del histórico."
 
 #: main/common/i18n/i18n-keys.js:67
 msgid "The form mappings must be resolved before enabling the Process."
-msgstr ""
+msgstr "El mapeo de formularios debe resolverse antes de activar el proceso."
 
 #: main/common/i18n/i18n-keys.js:61
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
@@ -1083,7 +1083,7 @@ msgstr "Escriba aquí para buscar..."
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Type in a case id and <br> press enter to search for <br> human task of a specific case"
-msgstr ""
+msgstr "Escriba el id del caso y <br> pulse intro para buscar tareas <br> humanas de un caso en concreto"
 
 #: target/dist/features/admin/applications/applications-list.html:1
 #: target/dist/features/admin/applications/details/application-details.html:1
