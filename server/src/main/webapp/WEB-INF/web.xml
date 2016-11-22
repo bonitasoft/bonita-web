@@ -537,6 +537,7 @@
     <servlet-mapping>
         <servlet-name>formFileUploadServlet</servlet-name>
         <url-pattern>/API/formFileUpload</url-pattern>
+        <url-pattern>/portal/custom-page/API/formFileUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>exportProcessActorsServlet</servlet-name>
@@ -545,6 +546,7 @@
     <servlet-mapping>
         <servlet-name>iconServlet</servlet-name>
         <url-pattern>/API/avatars/*</url-pattern>
+        <url-pattern>/portal/custom-page/API/avatars/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>
@@ -554,6 +556,7 @@
         <servlet-name>documentDownload</servlet-name>
         <url-pattern>/portal/documentDownload</url-pattern>
         <url-pattern>/API/documentDownload</url-pattern>
+        <url-pattern>/portal/custom-page/API/documentDownload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>formsDocumentDownload</servlet-name>
@@ -563,6 +566,7 @@
         <servlet-name>formsDocumentImage</servlet-name>
         <url-pattern>/portal/formsDocumentImage</url-pattern>
         <url-pattern>/API/formsDocumentImage</url-pattern>
+        <url-pattern>/portal/custom-page/API/formsDocumentImage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginService</servlet-name>
