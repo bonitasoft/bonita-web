@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-11-15 10:16-0500\n"
+"PO-Revision-Date: 2016-11-21 07:19-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -103,11 +103,11 @@ msgstr "アプリケーションは、特定のユーザー プロファイル�
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
-#: main/features/user/tasks/list/tasks-app.js:305
+#: main/features/user/tasks/list/tasks-app.js:309
 msgid "An error occurred while submitting the form."
 msgstr "フォームの送信中にエラーが発生しました。"
 
-#: main/features/user/tasks/list/tasks-app.js:299
+#: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
 msgstr "フォームの送信中にエラーが発生しました。 <br/>このタスクはもう利用できません。"
 
@@ -445,7 +445,7 @@ msgstr "各アクターに対し、各エンティティ （ユーザー、グ�
 msgid "Form"
 msgstr "フォーム"
 
-#: main/features/user/tasks/list/tasks-app.js:312
+#: main/features/user/tasks/list/tasks-app.js:316
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "フォームを送信しました。 <br/>リスト中の次のタスクが選択されました。"
 
@@ -954,7 +954,7 @@ msgstr "プロセスを有効にすることができません"
 msgid "The application"
 msgstr "アプリケーション"
 
-#: main/features/user/tasks/list/tasks-app.js:294
+#: main/features/user/tasks/list/tasks-app.js:298
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
 

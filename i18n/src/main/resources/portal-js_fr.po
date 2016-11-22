@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-11-15 10:14-0500\n"
+"PO-Revision-Date: 2016-11-21 10:51-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -103,11 +103,11 @@ msgstr "Une application est un environnement adapté à un profil particulier, d
 msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
-#: main/features/user/tasks/list/tasks-app.js:305
+#: main/features/user/tasks/list/tasks-app.js:309
 msgid "An error occurred while submitting the form."
 msgstr "Une erreur s'est produite lors de la soumission du formulaire."
 
-#: main/features/user/tasks/list/tasks-app.js:299
+#: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
 msgstr "Une erreur s’est produite lors de l’envoi du formulaire. <br/> Il se peut que la tâche ne soit plus disponible."
 
@@ -445,7 +445,7 @@ msgstr "Pour chaque acteur, vérifiez que chaque entité (utilisateur, groupe, r
 msgid "Form"
 msgstr "Formulaire"
 
-#: main/features/user/tasks/list/tasks-app.js:312
+#: main/features/user/tasks/list/tasks-app.js:316
 msgid "Form submitted.<br/>The next task in the list is now selected."
 msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant sélectionnée."
 
@@ -954,7 +954,7 @@ msgstr "Le processus ne peut être activé"
 msgid "The application"
 msgstr "L'application"
 
-#: main/features/user/tasks/list/tasks-app.js:294
+#: main/features/user/tasks/list/tasks-app.js:298
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
 
