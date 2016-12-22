@@ -16,20 +16,8 @@
  */
 package org.bonitasoft.console.client.admin.organization.users.view;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
-import org.bonitasoft.web.rest.model.identity.GroupItem;
-import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
-import org.bonitasoft.web.rest.model.identity.MembershipItem;
-import org.bonitasoft.web.rest.model.identity.RoleItem;
-import org.bonitasoft.web.rest.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.rest.model.identity.*;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
@@ -39,8 +27,16 @@ import org.bonitasoft.web.toolkit.client.ui.CssId;
 import org.bonitasoft.web.toolkit.client.ui.component.Section;
 import org.bonitasoft.web.toolkit.client.ui.component.table.ItemTable;
 import org.bonitasoft.web.toolkit.client.ui.component.table.Table.VIEW_TYPE;
+import org.bonitasoft.web.toolkit.client.ui.component.table.formatter.I18NCellFormatter;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemQuickDetailsPage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Paul AMAR
@@ -97,6 +93,7 @@ public class UserQuickDetailsPage extends ItemQuickDetailsPage<UserItem> {
     protected ItemTable profileTable(final UserItem item) {
         return new ItemTable(ProfileDefinition.get())
                 .addColumn(ProfileItem.ATTRIBUTE_NAME, _("Profile"))
+                .addCellFormatter(ProfileItem.ATTRIBUTE_NAME, new I18NCellFormatter())
                 .addHiddenFilter(ProfileItem.FILTER_USER_ID, item.getId())
                 .setShowSearch(false);
     }
