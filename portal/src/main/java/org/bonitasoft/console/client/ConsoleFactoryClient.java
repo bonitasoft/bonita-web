@@ -2,10 +2,9 @@ package org.bonitasoft.console.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import com.google.gwt.core.shared.GWT;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.ArchivedCaseQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.cases.view.CaseMoreDetailsAdminPage;
@@ -94,8 +93,6 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.view.BlankPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ChangeLangPage;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
 
-import com.google.gwt.core.shared.GWT;
-
 /**
  * console client page
  *
@@ -116,13 +113,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
         AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
-
     }
 
     protected List<String> getCurrentUserAccessRights() {
         if (currentUserAccessRights == null) {
             currentUserAccessRights = new ArrayList<String>(AvailableTokens.tokens);
-            GWT.log("Current log user as access to (with SP pages) :" + listAUthorizedTokens(AvailableTokens.tokens));
         }
         return currentUserAccessRights;
     }
@@ -375,19 +370,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
                                              console.log(content);
                                              }-*/;
 
-    protected String listAUthorizedTokens(final List<String> currentUserAccessRights) {
-        String result = "";
-
-        final Map<String, List<String>> pagePrivileges = buildApplicationPagesPrivileges();
-
-        for (final Map.Entry<String, List<String>> entry : pagePrivileges.entrySet()) {
-            result = isUserAuthorized(entry.getValue(), currentUserAccessRights) ? result + entry.getKey() + ", " : result;
-        }
-
-        return result;
-
-    }
-
     protected boolean isUserAuthorized(final String token, final List<String> accessRights) {
 
         final String sessionId = new String(Session.getParameter("session_id"));
@@ -399,76 +381,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         }
 
         return false;
-    }
-
-    protected Map<String, List<String>> buildApplicationPagesPrivileges() {
-        final Map<String, List<String>> pagePrivileges = new HashMap<String, List<String>>();
-        pagePrivileges.put(CaseQuickDetailsAdminPage.TOKEN, CaseQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(CaseMoreDetailsAdminPage.TOKEN, CaseMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedCaseQuickDetailsAdminPage.TOKEN, ArchivedCaseQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedCaseMoreDetailsAdminPage.TOKEN, ArchivedCaseMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(DisplayCaseFormPage.TOKEN, DisplayCaseFormPage.PRIVILEGES);
-        pagePrivileges.put(OrganizationImportAndExportPage.TOKEN, OrganizationImportAndExportPage.PRIVILEGES);
-        pagePrivileges.put(UserListingAdminPage.TOKEN, UserListingAdminPage.PRIVILEGES);
-        pagePrivileges.put(UserQuickDetailsAdminPage.TOKEN, UserQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(UserQuickDetailsPage.TOKEN, UserQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(UserMoreDetailsAdminPage.TOKEN, UserMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(PopupAddUserPage.TOKEN, PopupAddUserPage.PRIVILEGES);
-        pagePrivileges.put(AddMembershipPage.TOKEN, AddMembershipPage.PRIVILEGES);
-        pagePrivileges.put(DeleteMembershipPage.TOKEN, DeleteMembershipPage.PRIVILEGES);
-        pagePrivileges.put(ListMembershipPage.TOKEN, ListMembershipPage.PRIVILEGES);
-        pagePrivileges.put(UpdateUserPage.TOKEN, UpdateUserPage.PRIVILEGES);
-        pagePrivileges.put(ProcessListingAdminPage.TOKEN, ProcessListingAdminPage.PRIVILEGES);
-        pagePrivileges.put(ProcessQuickDetailsAdminPage.TOKEN, ProcessQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(ProcessMoreDetailsAdminPage.TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, ProcessMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(UploadProcessPage.TOKEN, UploadProcessPage.PRIVILEGES);
-        pagePrivileges.put(CreateCategoryAndAddToProcessPage.TOKEN, CreateCategoryAndAddToProcessPage.PRIVILEGES);
-        pagePrivileges.put(AddProcessCategoryPage.TOKEN, AddProcessCategoryPage.PRIVILEGES);
-        pagePrivileges.put(ListProcessActorUserPage.TOKEN, ListProcessActorUserPage.PRIVILEGES);
-        pagePrivileges.put(ListProcessActorGroupPage.TOKEN, ListProcessActorGroupPage.PRIVILEGES);
-        pagePrivileges.put(ListProcessActorRolePage.TOKEN, ListProcessActorRolePage.PRIVILEGES);
-        pagePrivileges.put(ListProcessActorMembershipPage.TOKEN, ListProcessActorMembershipPage.PRIVILEGES);
-        pagePrivileges.put(SelectMembershipForActorPage.TOKEN, SelectMembershipForActorPage.PRIVILEGES);
-        pagePrivileges.put(SelectUserForActorPage.TOKEN, SelectUserForActorPage.PRIVILEGES);
-        pagePrivileges.put(SelectGroupForActorPage.TOKEN, SelectGroupForActorPage.PRIVILEGES);
-        pagePrivileges.put(SelectRoleForActorPage.TOKEN, SelectRoleForActorPage.PRIVILEGES);
-        pagePrivileges.put(RoleListingPage.TOKEN, RoleListingPage.PRIVILEGES);
-        pagePrivileges.put(RoleQuickDetailsPage.TOKEN, RoleQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(AddRolePage.TOKEN, AddRolePage.PRIVILEGES);
-        pagePrivileges.put(UpdateRolePage.TOKEN, UpdateRolePage.PRIVILEGES);
-        pagePrivileges.put(GroupListingAdminPage.TOKEN, GroupListingAdminPage.PRIVILEGES);
-        pagePrivileges.put(GroupQuickDetailsAdminPage.TOKEN, GroupQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(AddGroupPage.TOKEN, AddGroupPage.PRIVILEGES);
-        pagePrivileges.put(UpdateGroupPage.TOKEN, UpdateGroupPage.PRIVILEGES);
-        pagePrivileges.put(ProfileListingPage.TOKEN, ProfileListingPage.PRIVILEGES);
-        pagePrivileges.put(ProfileMoreDetailsPage.TOKEN, ProfileMoreDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ProfileQuickDetailsPage.TOKEN, ProfileQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(AddGroupToProfileMemberPage.TOKEN, AddGroupToProfileMemberPage.PRIVILEGES);
-        pagePrivileges.put(AddRoleToProfileMemberPage.TOKEN, AddRoleToProfileMemberPage.PRIVILEGES);
-        pagePrivileges.put(AddUserToProfileMemberPage.TOKEN, AddUserToProfileMemberPage.PRIVILEGES);
-        pagePrivileges.put(AddMembershipToProfileMemberPage.TOKEN, AddMembershipToProfileMemberPage.PRIVILEGES);
-        pagePrivileges.put(DeleteProfileMemberPage.TOKEN, DeleteProfileMemberPage.PRIVILEGES);
-        pagePrivileges.put(TaskListingAdminPage.TOKEN, TaskListingAdminPage.PRIVILEGES);
-        pagePrivileges.put(SelectUserAndAssignTaskPage.TOKEN, SelectUserAndAssignTaskPage.PRIVILEGES);
-        pagePrivileges.put(TaskQuickDetailsAdminPage.TOKEN, TaskQuickDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(TaskMoreDetailsAdminPage.TOKEN, TaskMoreDetailsAdminPage.PRIVILEGES);
-        pagePrivileges.put(TasksListingPage.TOKEN, TasksListingPage.PRIVILEGES);
-        pagePrivileges.put(AngularIFrameView.TASK_LISTING_TOKEN, TasksListingPage.PRIVILEGES);
-        pagePrivileges.put(HumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(HumanTaskMoreDetailsPage.TOKEN, HumanTaskMoreDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedHumanTaskQuickDetailsPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedHumanTaskMoreDetailsPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.PRIVILEGES);
-        pagePrivileges.put(PerformTaskPage.TOKEN, PerformTaskPage.PRIVILEGES);
-        pagePrivileges.put(ProcessListingPage.TOKEN, ProcessListingPage.PRIVILEGES);
-        pagePrivileges.put(ProcessQuickDetailsPage.TOKEN, ProcessQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(StartProcessFormPage.TOKEN, StartProcessFormPage.PRIVILEGES);
-        pagePrivileges.put(CaseQuickDetailsPage.TOKEN, CaseQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedCaseQuickDetailsPage.TOKEN, ArchivedCaseQuickDetailsPage.PRIVILEGES);
-        pagePrivileges.put(ArchivedCaseMoreDetailsPage.TOKEN, ArchivedCaseMoreDetailsPage.PRIVILEGES);
-        pagePrivileges.put(CaseMoreDetailsPage.TOKEN, CaseMoreDetailsPage.PRIVILEGES);
-
-        return pagePrivileges;
     }
 
     protected boolean isUserAuthorized(final List<String> privileges, final List<String> accessRights) {
