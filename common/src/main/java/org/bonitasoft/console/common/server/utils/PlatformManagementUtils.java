@@ -14,6 +14,10 @@
 
 package org.bonitasoft.console.common.server.utils;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.engine.api.ApiAccessType;
 import org.bonitasoft.engine.api.PlatformAPI;
@@ -23,11 +27,9 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.platform.InvalidPlatformCredentialsException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.engine.util.APITypeManager;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Baptiste Mesta
@@ -38,26 +40,53 @@ public class PlatformManagementUtils {
 
     private final ConfigurationFilesManager configurationFilesManager = ConfigurationFilesManager.getInstance();
 
-    private boolean isLocal() throws UnknownAPITypeException, ServerAPIException, IOException {
+    //package local for testing purpose
+    boolean isLocal() throws UnknownAPITypeException, ServerAPIException, IOException {
         return ApiAccessType.LOCAL.equals(APITypeManager.getAPIType());
+    }
+
+    //package local for testing purpose
+    PlatformAPI getPlatformAPI(final PlatformSession platformSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return PlatformAPIAccessor.getPlatformAPI(platformSession);
+    }
+
+    //package local for testing purpose
+    PlatformLoginAPI getPlatformLoginAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return PlatformAPIAccessor.getPlatformLoginAPI();
     }
 
     PlatformSession platformLogin() throws BonitaException, IOException {
         if (isLocal()) {
             try {
-                final Class<?> api = Class.forName("org.bonitasoft.engine.LocalLoginMechanism");
-                return (PlatformSession) api.getDeclaredMethod("login").invoke(api.newInstance());
+                return localPlatformLogin();
             } catch (final Exception e) {
                 throw new ServerAPIException("unable to do the local login", e);
             }
         } else {
-            return PlatformAPIAccessor.getPlatformLoginAPI().login(System.getProperty("org.bonitasoft.platform.username"),
-                    System.getProperty("org.bonitasoft.platform.password"));
+            String username = System.getProperty("org.bonitasoft.platform.username");
+            String password = System.getProperty("org.bonitasoft.platform.password");
+            try {
+
+                return getPlatformLoginAPI().login(username,
+                        password);
+            } catch (InvalidPlatformCredentialsException e) {
+                throw new InvalidPlatformCredentialsException("The portal is not able to login to the engine because " +
+                        "system properties org.bonitasoft.platform.username and org.bonitasoft.platform.password are " +
+                        "not set correctly to the platform administrator credentials.\n " +
+                        "These properties must be set when connecting to a BonitaBPM engine that is not local. " +
+                        "If the engine is local, change the connection to LOCAL using the APITypeManager");
+            }
         }
     }
 
+    private PlatformSession localPlatformLogin() throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        final Class<?> api = Class.forName("org.bonitasoft.engine.LocalLoginMechanism");
+        return (PlatformSession) api.getDeclaredMethod("login").invoke(api.newInstance());
+    }
+
+
     void platformLogout(final PlatformSession platformSession) throws BonitaException {
-        final PlatformLoginAPI platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
+        final PlatformLoginAPI platformLoginAPI = getPlatformLoginAPI();
         platformLoginAPI.logout(platformSession);
     }
 
@@ -105,9 +134,5 @@ public class PlatformManagementUtils {
         final PlatformAPI platformAPI = getPlatformAPI(platformSession);
         retrieveTenantAutologinConfiguration(platformAPI, tenantId);
         platformLogout(platformSession);
-    }
-
-    PlatformAPI getPlatformAPI(final PlatformSession platformSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        return PlatformAPIAccessor.getPlatformAPI(platformSession);
     }
 }
