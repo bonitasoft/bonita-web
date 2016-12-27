@@ -77,7 +77,16 @@ public class ContractTypeConverter {
 
     public Object convertToType(final Type type, final Serializable parameterValue) {
         final Class<? extends Serializable> clazz = getClassFromType(type);
-        return convertToType(clazz, parameterValue);
+        Serializable preprocessedParameterValue = preprocessInputs(type, parameterValue);
+        return convertToType(clazz, preprocessedParameterValue);
+    }
+
+    private Serializable preprocessInputs(final Type type, final Serializable parameterValue) {
+        //Also support Integer as DATE contract input (as deserialization is handled by jackson it can be mapped to an integer instead of a long when it is a small number)
+        if (Type.DATE.equals(type) && parameterValue instanceof Integer) {
+            return Long.valueOf((Integer)parameterValue);
+        }
+        return parameterValue;
     }
 
     public Map<String,Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs, final long maxSizeForTenant, final long tenantId, final boolean deleteFile) throws FileNotFoundException {

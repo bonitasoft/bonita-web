@@ -105,7 +105,7 @@ public class ContractTypeConverterTest {
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
 
-        assertThat(processedInput).containsOnly(entry("inputText", "0"), entry("inputBoolean", "hello"), entry("inputDate", 0),
+        assertThat(processedInput).containsOnly(entry("inputText", "0"), entry("inputBoolean", "hello"), entry("inputDate","0"),
                 entry("inputInteger", "hello"), entry("inputDecimal", "hello"), entry("inputLong", "hello"));
     }
 
@@ -271,6 +271,15 @@ public class ContractTypeConverterTest {
         assertThat(tempPathFileInputDefinition.getName()).isEqualTo(ContractTypeConverter.FILE_TEMP_PATH);
         assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(ContractTypeConverter.TEMP_PATH_DESCRIPTION);
     }
+    
+    @Test
+    public void should_be_able_to_convert_Integer_to_Date() throws Exception {
+        
+        Object convertionResult = contractTypeConverter.convertToType(Type.DATE, new Integer(86400000));
+        assertThat(convertionResult).isNotNull();
+        assertThat(convertionResult).isInstanceOf(Date.class);
+        assertThat(((Date)convertionResult).getTime()).isEqualTo(86400000L);
+    }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
         final File tempFile = generateTempFile();
@@ -298,7 +307,7 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> inputMap = new HashMap<>();
         inputMap.put("inputText", 0);
         inputMap.put("inputBoolean", "hello");
-        inputMap.put("inputDate", 0);
+        inputMap.put("inputDate", "0");
         inputMap.put("inputInteger", "hello");
         inputMap.put("inputDecimal", "hello");
         inputMap.put("inputLong", "hello");
