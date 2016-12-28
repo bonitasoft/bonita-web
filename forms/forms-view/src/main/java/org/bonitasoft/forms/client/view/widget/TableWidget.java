@@ -506,15 +506,10 @@ public class TableWidget extends Composite implements HasValueChangeHandlers<Lis
         return selectedItems;
     }
 
-    public void setAvailableValues(final List<List<ReducedFormFieldAvailableValue>> availableValues, final boolean fireEvents) {
+    public void setAvailableValues(final List<List<ReducedFormFieldAvailableValue>> availableValues) {
         flowPanel.clear();
         this.availableValues = availableValues;
         createWidget(null);
-        if (fireEvents) {
-            for (final ValueChangeHandler<List<String>> valueChangeHandler : valueChangeHandlers) {
-                valueChangeHandler.onValueChange(null);
-            }
-        }
     }
 
     /**

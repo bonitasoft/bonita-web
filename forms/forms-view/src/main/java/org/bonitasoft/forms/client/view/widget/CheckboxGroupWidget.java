@@ -198,16 +198,13 @@ public class CheckboxGroupWidget extends Composite implements HasClickHandlers, 
      *
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues) {
         clearCheckboxes();
         for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
             final CheckBox checkBox = createCheckbox(allowHTML, availableValue);
             addItemsStyle(checkBox, itemsStyle);
             saveCheckbox(checkBox);
             groupWidgets.add(checkBox);
-        }
-        if (fireEvents) {
-            ValueChangeEvent.fire(this, true);
         }
         inputDiv.add(groupWidgets);
     }

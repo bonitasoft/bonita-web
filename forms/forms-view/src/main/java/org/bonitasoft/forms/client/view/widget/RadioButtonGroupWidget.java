@@ -246,16 +246,13 @@ public class RadioButtonGroupWidget extends Composite implements HasClickHandler
      *
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues) {
         clearRadioButtons();
         for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
             final RadioButton radioButton = createRadioButton(radioButtonGroupName, availableValue, allowHTML);
             addItemsStyle(radioButton, itemsStyle);
             saveRadioButton(radioButton);
             groupWidgets.add(radioButton);
-        }
-        if (fireEvents) {
-            ValueChangeEvent.fire(this, true);
         }
     }
 

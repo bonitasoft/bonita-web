@@ -1445,11 +1445,11 @@ ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestio
      *
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues) {
         switch (widgetType) {
             case RADIOBUTTON_GROUP:
                 final RadioButtonGroupWidget radioButtonGroupWidget = (RadioButtonGroupWidget) fieldWidget;
-                radioButtonGroupWidget.setAvailableValues(availableValues, fireEvents);
+                radioButtonGroupWidget.setAvailableValues(availableValues);
                 break;
             case LISTBOX_SIMPLE:
                 final ListBox listBox = (ListBox) fieldWidget;
@@ -1457,7 +1457,8 @@ ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestio
                 for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
                     listBox.addItem(availableValue.getLabel(), availableValue.getValue());
                 }
-                if (fireEvents) {
+                if (listBox.getItemCount() > 0) {
+                    listBox.setItemSelected(0, true);
                     DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBox);
                 }
                 break;
@@ -1466,9 +1467,6 @@ ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestio
                 listBoxMulti.clear();
                 for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
                     listBoxMulti.addItem(availableValue.getLabel(), availableValue.getValue());
-                }
-                if (fireEvents) {
-                    DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxMulti);
                 }
                 break;
             case SUGGESTBOX:
@@ -1480,17 +1478,14 @@ ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestio
                     suggestionsMap.put(availableValue.getLabel(), availableValue.getValue());
                     oracle.add(availableValue.getLabel());
                 }
-                if (fireEvents) {
-                    DomEvent.fireNativeEvent(Document.get().createChangeEvent(), suggestBox);
-                }
                 break;
             case SUGGESTBOX_ASYNC:
                 final AsyncSuggestBoxWidget formAsyncSuggestBoxWidget = (AsyncSuggestBoxWidget) fieldWidget;
-                formAsyncSuggestBoxWidget.setAvailableValues(availableValues, fireEvents);
+                formAsyncSuggestBoxWidget.setAvailableValues(availableValues);
                 break;
             case CHECKBOX_GROUP:
                 final CheckboxGroupWidget checkboxGroupWidget = (CheckboxGroupWidget) fieldWidget;
-                checkboxGroupWidget.setAvailableValues(availableValues, fireEvents);
+                checkboxGroupWidget.setAvailableValues(availableValues);
                 break;
             default:
                 Window.alert("The modification of the available values of a " + widgetType + " widget is not supported.");
@@ -1503,10 +1498,10 @@ ValueChangeHandler, HasSelectionHandlers<Suggestion>, SelectionHandler<Suggestio
      *
      * @param newTableWidgetAvailableValues
      */
-    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues, final boolean fireEvents) {
+    public void setTableAvailableValues(final List<List<ReducedFormFieldAvailableValue>> newTableWidgetAvailableValues) {
         if (WidgetType.TABLE.equals(widgetType)) {
             final TableWidget formTableWidget = (TableWidget) fieldWidget;
-            formTableWidget.setAvailableValues(newTableWidgetAvailableValues, fireEvents);
+            formTableWidget.setAvailableValues(newTableWidgetAvailableValues);
         } else {
             Window.alert("The modification of the table available values of a " + widgetType + " widget is not supported.");
         }
