@@ -199,15 +199,12 @@ public class AsyncSuggestBoxWidget extends Composite {
      *
      * @param availableValues
      */
-    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues, final boolean fireEvents) {
+    public void setAvailableValues(final List<ReducedFormFieldAvailableValue> availableValues) {
 
         final MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) asyncSuggestBox.getSuggestOracle();
         oracle.clear();
         for (final ReducedFormFieldAvailableValue availableValue : availableValues) {
             oracle.add(availableValue.getValue());
-        }
-        if (fireEvents) {
-            DomEvent.fireNativeEvent(Document.get().createChangeEvent(), asyncSuggestBox);
         }
     }
 
