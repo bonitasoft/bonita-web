@@ -18,7 +18,6 @@ package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -141,7 +140,7 @@ public class LogoutServlet extends HttpServlet {
             // Append tenant parameter in url parameters
             tempURL.append(AuthenticationManager.TENANT).append("=").append(tenantIdStr).append("&");
         }
-        final String encodedRedirectURL = URLEncoder.encode(createRedirectUrl(request), "UTF-8");
+        final String encodedRedirectURL = createRedirectUrl(request);
         tempURL.append(AuthenticationManager.REDIRECT_URL).append("=").append(encodedRedirectURL);
 
         final String logoutPage = loginManager.getLogoutPageURL(requestAccessor, encodedRedirectURL);
