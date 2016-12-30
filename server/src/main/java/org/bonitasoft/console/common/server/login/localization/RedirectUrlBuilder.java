@@ -29,11 +29,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
  */
 public class RedirectUrlBuilder {
 
-    abstract class AppendParameter {
-
-        public abstract void append(UrlBuilder urlBuilder, String key, UrlValue urlValue);
-    }
-
     private final UrlBuilder urlBuilder;
 
     private final List<String> blackList = Arrays.asList(
@@ -44,26 +39,17 @@ public class RedirectUrlBuilder {
         urlBuilder = new UrlBuilder(redirectUrl != null ? redirectUrl : "");
     }
 
-    public RedirectUrlBuilder appendParameters(final Map<String, String[]> parameters) {
-        appendParameters(parameters, new AppendParameter() {
-
-            @Override
-            public void append(final UrlBuilder urlBuilder, final String key, final UrlValue urlValue) {
-                urlBuilder.appendParameter(key, urlValue);
-            }
-        });
-        return this;
-    }
-
     public RedirectUrl build() {
         return new RedirectUrl(urlBuilder.build());
 
     }
 
-    public void appendParameters(final Map<String, String[]> parameters, final AppendParameter appender) {
+    public void appendParameters(final Map<String, String[]> parameters) {
         for (final Entry<String, String[]> next : parameters.entrySet()) {
             if (!isBlackListed(next.getKey())) {
-                appender.append(urlBuilder, next.getKey(), new UrlValue(next.getValue()));
+                for (String value : next.getValue()) {
+                    urlBuilder.appendParameter(next.getKey(), value);
+                }
             }
         }
     }

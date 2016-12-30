@@ -1,6 +1,9 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+
+import java.net.URISyntaxException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +23,14 @@ public class LogoutServletTest {
 
     @Test
     public void testBuildLoginPageUrlFromMaliciousRedirectShouldReturnBrokenUrl() throws Exception {
-        String loginPage = logoutServlet.buildLoginPageUrl("http://www.test.com");
-        assertThat(loginPage).isEqualToIgnoringCase(":.test.com");
+        try {
+            logoutServlet.buildLoginPageUrl("http://www.test.com");
+            fail("building a login page with a different host on the redirectURL should fail");
+        } catch (Exception e) {
+            if (!(e.getCause() instanceof URISyntaxException)) {
+                fail("Exception root cause should be a URISyntaxException");
+            }
+        }
     }
 
     @Test

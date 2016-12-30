@@ -52,9 +52,7 @@ public class LoginUrl implements Locator {
             throws LoginUrlException, ServletException {
         try {
             return loginManager.getLoginPageURL(request, URLEncoder.encode(redirectURL, "UTF-8"));
-        } catch (final UnsupportedEncodingException e) {
-            throw new LoginUrlException(e);
-        } catch (final ConsumerNotFoundException e) {
+        } catch (final UnsupportedEncodingException | ConsumerNotFoundException e) {
             throw new LoginUrlException(e);
         }
     }
