@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2016-11-21 10:51-0500\n"
+"PO-Revision-Date: 2016-12-30 05:30-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,6 +87,7 @@ msgstr "Ajouter un menu "
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
 
+#: main/features/user/cases/list/cases-list-values.js:54
 #: main/features/user/tasks/list/common/store.js:61
 msgid "All"
 msgstr "Tous"
@@ -110,6 +111,10 @@ msgstr "Une erreur s'est produite lors de la soumission du formulaire."
 #: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
 msgstr "Une erreur s’est produite lors de l’envoi du formulaire. <br/> Il se peut que la tâche ne soit plus disponible."
+
+#: main/features/user/cases/list/cases-list-values.js:55
+msgid "Anyone"
+msgstr "Tout le monde"
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -417,6 +422,10 @@ msgstr "Exporter l'application"
 msgid "Expression content has been updated"
 msgstr "Le contenu de l'expression a été mis à jour"
 
+#: main/features/user/cases/list/cases-list-values.js:86
+msgid "Failed"
+msgstr "En échec"
+
 #: target/dist/features/admin/cases/list/cases-list.html:1
 msgid "Failed Flow Nodes"
 msgstr "Flow nodes en erreur"
@@ -546,6 +555,7 @@ msgstr "Gérer les catégories"
 msgid "Maximum size 255 characters"
 msgstr "Taille maximum de 255 caractères"
 
+#: main/features/user/cases/list/cases-list-values.js:46
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Me"
@@ -892,6 +902,10 @@ msgstr "Définir le menu de navigation."
 msgid "Start date"
 msgstr "Débuté le"
 
+#: main/features/user/cases/list/cases-list-values.js:85
+msgid "Started"
+msgstr "Démarré"
+
 #: target/dist/features/admin/cases/list/cases-list.html:1
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
@@ -914,6 +928,10 @@ msgstr "Soumettre"
 #: main/common/i18n/i18n-keys.js:14
 msgid "Successfully updated categories"
 msgstr "Les catégories ont été mises à jour avec succès"
+
+#: main/features/user/cases/list/cases-list-values.js:75
+msgid "System"
+msgstr "Système"
 
 #: table-settings/tableSettings.tpl.html:5
 #: table-settings/tableSettings.tpl.html:9
