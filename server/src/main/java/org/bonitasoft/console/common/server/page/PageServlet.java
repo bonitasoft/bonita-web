@@ -175,14 +175,14 @@ public class PageServlet extends HttpServlet {
     }
 
     protected Long getThemeId(APISession apiSession, final String appToken) throws BonitaException, CreationException {
-            ApplicationModelFactory applicationModelFactory = new ApplicationModelFactory(
-                    TenantAPIAccessor.getLivingApplicationAPI(apiSession),
-                    TenantAPIAccessor.getCustomPageAPI(apiSession),
-                    TenantAPIAccessor.getProfileAPI(apiSession));
-            return applicationModelFactory.createApplicationModel(appToken).getApplicationThemeId();
+        ApplicationModelFactory applicationModelFactory = new ApplicationModelFactory(
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession),
+                TenantAPIAccessor.getCustomPageAPI(apiSession),
+                TenantAPIAccessor.getProfileAPI(apiSession));
+        return applicationModelFactory.createApplicationModel(appToken).getApplicationThemeId();
     }
-    
-    
+
+
     protected void resolveAndDisplayPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final String mappingKey, final String resourcePath)
                     throws BonitaException, IOException, InstantiationException, IllegalAccessException {
@@ -252,7 +252,8 @@ public class PageServlet extends HttpServlet {
         return resourceFile;
     }
 
-    protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final String url) throws IOException {
+    protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final String url)
+            throws IOException {
         response.sendRedirect(response.encodeRedirectURL(url));
     }
 

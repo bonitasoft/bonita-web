@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
