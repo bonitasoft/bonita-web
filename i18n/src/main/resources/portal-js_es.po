@@ -7,12 +7,12 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-12-30 05:32-0500\n"
+"PO-Revision-Date: 2016-12-30 05:31-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,8 +87,7 @@ msgstr "Agregar menú superior"
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "Agrupa tareas en estado ready, waiting,<br>executing, completing, y initializing"
 
-#: main/features/user/cases/list/cases-list-values.js:54
-#: main/features/user/tasks/list/common/store.js:61
+#: main/features/user/tasks/list/common/store.js:57
 msgid "All"
 msgstr "Todos"
 
@@ -111,10 +110,6 @@ msgstr "Ocurrió un error al enviar el formulario."
 #: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
 msgstr "Error al enviar el formulario.<br/>Puede ser que la tarea ya no esta disponible."
-
-#: main/features/user/cases/list/cases-list-values.js:55
-msgid "Anyone"
-msgstr "Cualquiera"
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -422,10 +417,6 @@ msgstr "Exportar Aplicación"
 msgid "Expression content has been updated"
 msgstr "Se ha actualizado el contenido de la expresión"
 
-#: main/features/user/cases/list/cases-list-values.js:86
-msgid "Failed"
-msgstr "Fallido"
-
 #: target/dist/features/admin/cases/list/cases-list.html:1
 msgid "Failed Flow Nodes"
 msgstr "Flow Nodes fallidos"
@@ -555,7 +546,6 @@ msgstr "Gestionar categorías"
 msgid "Maximum size 255 characters"
 msgstr "Máximo 250 caracteres"
 
-#: main/features/user/cases/list/cases-list-values.js:46
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Me"
@@ -902,10 +892,6 @@ msgstr "Especificar la estructura del menú."
 msgid "Start date"
 msgstr "Fecha de inicio"
 
-#: main/features/user/cases/list/cases-list-values.js:85
-msgid "Started"
-msgstr "Empezado"
-
 #: target/dist/features/admin/cases/list/cases-list.html:1
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
@@ -928,10 +914,6 @@ msgstr "Enviar"
 #: main/common/i18n/i18n-keys.js:14
 msgid "Successfully updated categories"
 msgstr "Categorías actualizadas correctamente"
-
-#: main/features/user/cases/list/cases-list-values.js:75
-msgid "System"
-msgstr "sistema"
 
 #: table-settings/tableSettings.tpl.html:5
 #: table-settings/tableSettings.tpl.html:9

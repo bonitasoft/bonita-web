@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -530,10 +530,10 @@ msgid "Case"
 msgstr "Cas"
 
 msgid "Case id"
-msgstr "Id de cas"
+msgstr "Numéro de cas"
 
 msgid "Case id: "
-msgstr "Id de cas : "
+msgstr "Numéro de cas: "
 
 msgid "Case variables"
 msgstr "Variable de cas"
