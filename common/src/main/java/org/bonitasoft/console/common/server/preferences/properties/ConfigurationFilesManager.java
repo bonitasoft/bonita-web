@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -38,6 +40,11 @@ public class ConfigurationFilesManager {
         return INSTANCE;
     }
 
+    private static Logger LOGGER = Logger.getLogger(ConfigurationFilesManager.class.getName());
+
+    /*
+     * Map<tenantId, Map<propertiesFileName, Properties>>
+     */
     private Map<Long, Map<String, Properties>> tenantsConfigurations = new HashMap<>();
     private Map<Long, Map<String, File>> tenantsConfigurationFiles = new HashMap<>();
     private Map<String, Properties> platformConfigurations = new HashMap<>();
@@ -51,12 +58,28 @@ public class ConfigurationFilesManager {
         return properties;
     }
 
-    public Properties getTenantProperties(String propertiesFile, long tenantId) {
-        Map<String, Properties> map = tenantsConfigurations.get(tenantId);
-        if (map != null && map.containsKey(propertiesFile)) {
-            return map.get(propertiesFile);
+    Properties getAlsoCustomAndInternalPropertiesFromFilename(Map<String, Properties> propertiesByFilename, String propertiesFileName) {
+        Properties properties = new Properties();
+        if (propertiesByFilename != null) {
+            if (propertiesByFilename.containsKey(propertiesFileName)) {
+                properties.putAll(propertiesByFilename.get(propertiesFileName));
+            }
+            // if -internal properties also exists, merge key/value pairs:
+            final String internalFilename = getSuffixedPropertyFilename(propertiesFileName, "-internal");
+            if (propertiesByFilename.containsKey(internalFilename)) {
+                properties.putAll(propertiesByFilename.get(internalFilename));
+            }
+            // if -custom properties also exists, merge key/value pairs (and overwrite previous values if same key name):
+            final String customFilename = getSuffixedPropertyFilename(propertiesFileName, "-custom");
+            if (propertiesByFilename.containsKey(customFilename)) {
+                properties.putAll(propertiesByFilename.get(customFilename));
+            }
         }
-        return new Properties();
+        return properties;
+    }
+
+    public Properties getTenantProperties(String propertiesFile, long tenantId) {
+        return getAlsoCustomAndInternalPropertiesFromFilename(tenantsConfigurations.get(tenantId), propertiesFile);
     }
 
     private Properties getProperties(byte[] content) throws IOException {
@@ -95,7 +118,7 @@ public class ConfigurationFilesManager {
         tenantsConfigurations.put(tenantId, tenantProperties);
         tenantsConfigurationFiles.put(tenantId, tenantFiles);
     }
-    
+
     public void setTenantConfiguration(String fileName, byte[] content, long tenantId) throws IOException {
         if (fileName.endsWith(".properties")) {
             Map<String, Properties> tenantConfiguration = tenantsConfigurations.get(tenantId);
@@ -114,9 +137,21 @@ public class ConfigurationFilesManager {
 
     public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
         Map<String, Properties> resources = getResources(tenantId);
-        Properties properties = resources.get(propertiesFilename);
-        properties.remove(propertyName);
-        update(tenantId, propertiesFilename, properties);
+        // Now internal behavior stores and removes from -internal file:
+        final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
+        Properties properties = resources.get(internalFilename);
+        if (properties != null) {
+            properties.remove(propertyName);
+            update(tenantId, internalFilename, properties);
+        } else {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
+            }
+        }
+    }
+
+    private String getSuffixedPropertyFilename(String propertiesFilename, String suffix) {
+        return propertiesFilename.replaceAll("\\.properties$", suffix + ".properties");
     }
 
     private void update(long tenantId, String propertiesFilename, Properties properties) throws IOException {
@@ -132,7 +167,7 @@ public class ConfigurationFilesManager {
         return new PlatformManagementUtils();
     }
 
-    private Map<String, Properties> getResources(long tenantId) {
+    Map<String, Properties> getResources(long tenantId) {
         Map<String, Properties> resources;
         if (tenantId > 0) {
             resources = tenantsConfigurations.get(tenantId);
@@ -144,23 +179,31 @@ public class ConfigurationFilesManager {
 
     public void setProperty(String propertiesFilename, long tenantId, String propertyName, String propertyValue) throws IOException {
         Map<String, Properties> resources = getResources(tenantId);
-        Properties properties = resources.get(propertiesFilename);
-        properties.setProperty(propertyName, propertyValue);
-        update(tenantId, propertiesFilename, properties);
+        // Now internal behavior stores and removes from -internal file:
+        final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
+        Properties properties = resources.get(internalFilename);
+        if (properties != null) {
+            properties.setProperty(propertyName, propertyValue);
+            update(tenantId, internalFilename, properties);
+        } else {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
+            }
+        }
     }
 
     public File getPlatformConfigurationFile(String fileName) {
         return platformConfigurationFiles.get(fileName);
     }
-    
+
     public File getTenantConfigurationFile(String fileName, long tenantId) {
         Map<String, File> tenantConfigurationFiles = tenantsConfigurationFiles.get(tenantId);
-        if(tenantConfigurationFiles != null){
+        if (tenantConfigurationFiles != null) {
             return tenantConfigurationFiles.get(fileName);
         }
         return null;
     }
-    
+
     public File getTenantAutoLoginConfiguration(long tenantId) {
         return getTenantConfigurationFile(PlatformManagementUtils.AUTOLOGIN_V6_JSON, tenantId);
     }
