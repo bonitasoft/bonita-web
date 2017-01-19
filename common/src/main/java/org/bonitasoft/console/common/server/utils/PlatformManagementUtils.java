@@ -79,11 +79,11 @@ public class PlatformManagementUtils {
         }
     }
 
-    private PlatformSession localPlatformLogin() throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    private PlatformSession localPlatformLogin()
+            throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         final Class<?> api = Class.forName("org.bonitasoft.engine.LocalLoginMechanism");
         return (PlatformSession) api.getDeclaredMethod("login").invoke(api.newInstance());
     }
-
 
     void platformLogout(final PlatformSession platformSession) throws BonitaException {
         final PlatformLoginAPI platformLoginAPI = getPlatformLoginAPI();
@@ -91,8 +91,8 @@ public class PlatformManagementUtils {
     }
 
     private void retrieveTenantsConfiguration(final PlatformAPI platformAPI) throws IOException {
-        final Map<Long, Map<String, byte[]>> clientPlatformConfigurations = platformAPI.getClientTenantConfigurations();
-        for (final Map.Entry<Long, Map<String, byte[]>> tenantConfiguration : clientPlatformConfigurations.entrySet()) {
+        final Map<Long, Map<String, byte[]>> clientTenantConfigurations = platformAPI.getClientTenantConfigurations();
+        for (final Map.Entry<Long, Map<String, byte[]>> tenantConfiguration : clientTenantConfigurations.entrySet()) {
             configurationFilesManager.setTenantConfigurations(tenantConfiguration.getValue(), tenantConfiguration.getKey());
         }
     }
