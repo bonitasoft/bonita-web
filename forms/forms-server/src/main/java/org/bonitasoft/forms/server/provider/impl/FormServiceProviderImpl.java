@@ -39,6 +39,7 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundExceptio
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -588,6 +589,10 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                 logSevereMessage(e, message);
             }
             throw new SessionTimeoutException(message);
+        } catch (final BonitaException e) {
+            final String message = "Error while checking the access rights!";
+            getLogger().log(Level.SEVERE, message, e, context);
+            throw new ForbiddenFormAccessException(message);
         }
     }
 
