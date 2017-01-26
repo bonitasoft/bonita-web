@@ -92,6 +92,33 @@ public class FormWorkflowAPIImplTest {
         //given
         doReturn(userId).when(session).getUserId();
         doReturn(expected).when(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
+        doReturn(false).when(formWorkflowAPIImpl).isManagerAuthorized(session);
+        //when
+        final boolean canUserSeeProcessInstance = formWorkflowAPIImpl.canUserSeeProcessInstance(session, processInstanceId);
+
+        //then
+        verify(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
+        assertThat(canUserSeeProcessInstance).as("should return " + expected).isEqualTo(expected);
+    }
+    
+    @Test
+    public void should_authorize_manager_to_see_process_instance() throws Exception {
+        checkCanManagerSeeProcessInstanceWhenApiReturn(true);
+    }
+
+    @Test
+    public void should_not_authorize_manager_to_see_process_instance() throws Exception {
+        checkCanManagerSeeProcessInstanceWhenApiReturn(false);
+    }
+    
+    private void checkCanManagerSeeProcessInstanceWhenApiReturn(final boolean expected) throws Exception {
+        final long userId = 25L;
+        final long processInstanceId = 1L;
+        //given
+        doReturn(userId).when(session).getUserId();
+        doReturn(false).when(processApi).isInvolvedInProcessInstance(userId, processInstanceId);
+        doReturn(expected).when(processApi).isManagerOfUserInvolvedInProcessInstance(userId, processInstanceId);
+        doReturn(true).when(formWorkflowAPIImpl).isManagerAuthorized(session);
         //when
         final boolean canUserSeeProcessInstance = formWorkflowAPIImpl.canUserSeeProcessInstance(session, processInstanceId);
 
