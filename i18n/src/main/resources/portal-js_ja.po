@@ -8,11 +8,10 @@ msgstr ""
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2016-12-30 05:30-0500\n"
+"PO-Revision-Date: 2017-02-02 05:30-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,6 +86,7 @@ msgstr "最上位のメニューを追加します"
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "レディ、待機、実行、完了および初期化状態のタスクを集約"
 
+#: main/features/user/cases/list/cases-list-values.js:54
 #: main/features/user/tasks/list/common/store.js:57
 msgid "All"
 msgstr "すべて"
@@ -110,6 +110,10 @@ msgstr "フォームの送信中にエラーが発生しました。"
 #: main/features/user/tasks/list/tasks-app.js:303
 msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
 msgstr "フォームの送信中にエラーが発生しました。 <br/>このタスクはもう利用できません。"
+
+#: main/features/user/cases/list/cases-list-values.js:55
+msgid "Anyone"
+msgstr "すべて"
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "Application XML file"
@@ -417,6 +421,10 @@ msgstr "アプリケーションをエクスポート"
 msgid "Expression content has been updated"
 msgstr "式のコンテンツが更新されました"
 
+#: main/features/user/cases/list/cases-list-values.js:86
+msgid "Failed"
+msgstr "エラー"
+
 #: target/dist/features/admin/cases/list/cases-list.html:1
 msgid "Failed Flow Nodes"
 msgstr "作業中にエラー発生"
@@ -546,6 +554,7 @@ msgstr "カテゴリを管理"
 msgid "Maximum size 255 characters"
 msgstr "最大 255 文字"
 
+#: main/features/user/cases/list/cases-list-values.js:46
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Me"
@@ -892,6 +901,10 @@ msgstr "メニュー構造を指定します"
 msgid "Start date"
 msgstr "起案日"
 
+#: main/features/user/cases/list/cases-list-values.js:85
+msgid "Started"
+msgstr "開始済み"
+
 #: target/dist/features/admin/cases/list/cases-list.html:1
 #: target/dist/features/user/cases/list/archived-cases-list-filters.html:1
 #: target/dist/features/user/cases/list/cases-list-filters.html:1
@@ -914,6 +927,10 @@ msgstr "送信"
 #: main/common/i18n/i18n-keys.js:14
 msgid "Successfully updated categories"
 msgstr "正常に更新されたカテゴリ"
+
+#: main/features/user/cases/list/cases-list-values.js:75
+msgid "System"
+msgstr "システム"
 
 #: table-settings/tableSettings.tpl.html:5
 #: table-settings/tableSettings.tpl.html:9
