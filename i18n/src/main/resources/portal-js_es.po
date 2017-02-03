@@ -8,11 +8,10 @@ msgstr ""
 "X-Crowdin-Project: bonita-bpm-new-features\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2016-12-30 05:32-0500\n"
+"PO-Revision-Date: 2017-02-02 05:32-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
