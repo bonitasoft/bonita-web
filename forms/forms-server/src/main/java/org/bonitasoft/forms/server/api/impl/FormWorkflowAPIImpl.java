@@ -60,6 +60,7 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
 import org.bonitasoft.engine.command.CommandParameterizationException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -881,9 +882,15 @@ public class FormWorkflowAPIImpl implements IFormWorkflowAPI {
      */
     @Override
     public boolean canUserSeeProcessInstance(final APISession session, final long processInstanceID)
-            throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, UserNotFoundException, ProcessDefinitionNotFoundException {
+            throws BPMEngineException, InvalidSessionException, BonitaException {
         final ProcessAPI processAPI = getBpmEngineAPIUtil().getProcessAPI(session);
-        return processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID);
+        return processAPI.isInvolvedInProcessInstance(session.getUserId(), processInstanceID) 
+                || (isManagerAuthorized(session) 
+                        && processAPI.isManagerOfUserInvolvedInProcessInstance(session.getUserId(), processInstanceID));
+    }
+    
+    protected boolean isManagerAuthorized(final APISession session) {
+        return DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId()).isManagerAuthorized();
     }
 
     /**
