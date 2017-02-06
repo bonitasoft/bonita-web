@@ -31,6 +31,7 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundExceptio
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.RetrieveException;
@@ -523,10 +524,11 @@ public interface IFormWorkflowAPI {
      * @throws BPMEngineException
      * @throws UserNotFoundException
      * @throws ProcessDefinitionNotFoundException
+     * @throws BonitaException 
      */
     boolean canUserSeeProcessInstance(APISession session, long processInstanceID)
             throws ProcessInstanceNotFoundException, BPMEngineException, InvalidSessionException, RetrieveException, UserNotFoundException,
-            ProcessDefinitionNotFoundException;
+            ProcessDefinitionNotFoundException, BonitaException;
 
     /**
      * Retrieve some fields initial value
