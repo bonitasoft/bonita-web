@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.CharEncoding;
+import org.apache.http.HttpResponse;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
@@ -150,7 +151,7 @@ public class LoginServlet extends HttpServlet {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, e.getMessage());
             }
-            throw new ServletException(e);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
