@@ -6,6 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -14,17 +15,20 @@ import static org.mockito.Mockito.when;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -179,4 +183,29 @@ public class LoginServletTest {
         verify(tokenGenerator).setTokenToResponseCookie(req, resp, token.toString());
         verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());
     }
+
+	@Test
+	public void should_send_error_401_with_wrong_credentials_and_no_redirect() throws Exception {
+		// given
+		final LoginServlet servlet = spy(new LoginServlet());
+		doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+		doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
+
+		// when
+		servlet.doPost(req, resp);
+
+		// then
+		verify(resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	}
+
+	@Test(expected = ServletException.class)
+	public void should_send_servlet_exception_with_wrong_credentials_and_redirect() throws Exception {
+		// given
+		final LoginServlet servlet = spy(new LoginServlet());
+		doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+		doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
+
+		// when
+		servlet.doPost(req, resp);
+	}
 }
