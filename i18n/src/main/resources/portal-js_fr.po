@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-02-02 05:29-0500\n"
+"PO-Revision-Date: 2017-02-20 03:02-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -1219,7 +1219,7 @@ msgstr "application a été partiellement importée. Les composants suivants ne 
 
 #: target/dist/features/admin/applications/import-application.html:1
 msgid "application has been successfully imported, with complete page mapping and menu mapping."
-msgstr "L'application a été importée avec le menu et les liens de pages."
+msgstr "application a été importée avec le menu et les liens de pages."
 
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
