@@ -43,9 +43,9 @@ public class TestCase {
 
     private ProcessInstance processInstance;
 
-    private final static int GET_NEXT_NB_ATTEMPT = 30;
+    public final static int GET_NEXT_NB_ATTEMPT = 30;
 
-    private final static int SLEEP_TIME_MS = 100;
+    public final static int SLEEP_TIME_MS = 100;
 
     public final static String READY_STATE = "started";
 
