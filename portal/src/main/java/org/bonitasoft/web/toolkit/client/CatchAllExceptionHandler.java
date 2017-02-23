@@ -46,13 +46,9 @@ public class CatchAllExceptionHandler implements UncaughtExceptionHandler {
             }
         }
         if (e instanceof APIException || e instanceof KnownException || e instanceof UmbrellaException) {
-            if (message != null && !message.isEmpty()) {
-                Message.error(message);
-            } else {
-                Message.error(_("The application encountered an error."));
-            }
+            Message.error(_("The application encountered an error."));
         } else {
-        	ViewController.showPopup(new UnexpectedErrorPage());
+            ViewController.showPopup(new UnexpectedErrorPage());
         }
     }
 

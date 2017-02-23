@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.common.json;
 
+import static java.lang.Integer.toHexString;
+
 import java.util.HashMap;
 
 /**
@@ -35,7 +37,6 @@ public class JSonUtil {
 
         char b;
         char c = 0;
-        String hhhh;
         int i;
         final int len = string.length();
         final StringBuffer sb = new StringBuffer(len + 4);
@@ -44,10 +45,12 @@ public class JSonUtil {
             b = c;
             c = string.charAt(i);
             switch (c) {
+                case '<':
+                case '>':
+                case '\'':
                 case '\\':
                 case '"':
-                    sb.append('\\');
-                    sb.append(c);
+                    sb.append(convertToUnicode(c));
                     break;
                 case '/':
                     if (b == '<') {
@@ -71,10 +74,8 @@ public class JSonUtil {
                     sb.append("\\r");
                     break;
                 default:
-                    if (c < ' ' || c >= '\u0080' && c < '\u00a0' ||
-                            c >= '\u2000' && c < '\u2100') {
-                        hhhh = "000" + Integer.toHexString(c);
-                        sb.append("\\u" + hhhh.substring(hhhh.length() - 4));
+                    if (c < ' ' || c >= '\u0080' && c < '\u00a0' || c >= '\u2000' && c < '\u2100') {
+                        sb.append(convertToUnicode(c));
                     } else {
                         sb.append(c);
                     }
@@ -82,6 +83,11 @@ public class JSonUtil {
         }
 
         return sb.toString();
+    }
+
+    private static String convertToUnicode(char character) {
+        String hexString = "000" + toHexString(character);
+        return "\\u" + hexString.substring(hexString.length() - 4);
     }
 
     private static Character next(final String string, int currentPos) {
