@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.resource;
 
+import static org.bonitasoft.web.toolkit.client.common.json.JSonUtil.escape;
+
 import org.restlet.ext.jackson.JacksonRepresentation;
 
 /**
@@ -29,7 +31,7 @@ public class ErrorMessage {
     public ErrorMessage(final Throwable t) {
         if (t != null) {
             exception = t.getClass().toString();
-            message = t.getMessage();
+            setMessage(t.getMessage());
         }
     }
 
@@ -46,7 +48,7 @@ public class ErrorMessage {
     }
 
     public void setMessage(final String message) {
-        this.message = message;
+        this.message = escape(message);
     }
 
     public JacksonRepresentation<ErrorMessage> toEntity() {

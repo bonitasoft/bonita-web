@@ -18,12 +18,8 @@ package org.bonitasoft.web.toolkit.client.common.exception.http;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
-
 import org.bonitasoft.console.common.FakeI18n;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.http.HttpException;
-import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.junit.Before;
