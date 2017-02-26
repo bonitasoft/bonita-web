@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-02-22 10:45-0500\n"
+"PO-Revision-Date: 2017-02-24 23:10-0500\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,7 +87,7 @@ msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and 
 msgstr "Agrupa tareas en estado ready, waiting,<br>executing, completing, y initializing"
 
 #: main/features/user/cases/list/cases-list-values.js:54
-#: main/features/user/tasks/list/common/store.js:61
+#: main/features/user/tasks/list/common/store.js:57
 msgid "All"
 msgstr "Todos"
 
@@ -230,6 +230,10 @@ msgstr "Casos"
 #: target/dist/features/admin/processes/details/information.html:1
 msgid "Categories"
 msgstr "Categorías"
+
+#: target/dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Check that each entity is mapped to a profile, for either Bonita BPM Portal or for applications you have created."
+msgstr ""
 
 #: target/dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
@@ -444,10 +448,6 @@ msgstr "Nombre de archivo demasiado largo. El nombre del archivo zip debe ser no
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "Filters"
 msgstr "Filtros"
-
-#: target/dist/features/admin/processes/details/actors-mapping.html:1
-msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "Para cada actor, compruebe que cada entidad (usuario, grupo, rol, membresia) tiene el perfil de usuario correspondiente en el Portal."
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Form"
