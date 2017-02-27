@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.CharEncoding;
-import org.apache.http.HttpResponse;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
@@ -43,7 +42,6 @@ import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
- *
  */
 public class LoginServlet extends HttpServlet {
 
@@ -61,7 +59,6 @@ public class LoginServlet extends HttpServlet {
      * login fail message
      */
     protected static final String LOGIN_FAIL_MESSAGE = "loginFailMessage";
-
 
     /**
      * the Tenant In maintenance message key
@@ -121,15 +118,20 @@ public class LoginServlet extends HttpServlet {
             }
             throw new ServletException(e);
         } catch (final LoginFailedException e) {
-            handleLoginFailedException(request, response, redirectAfterLogin, e);
+            handleException(request, response, redirectAfterLogin, e);
+        } catch (final AuthenticationFailedException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
+            }
+            handleException(request, response, redirectAfterLogin, e);
         } catch (final Exception e) {
             LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
             throw new ServletException(e);
         }
     }
 
-    private void handleLoginFailedException(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin,
-            final LoginFailedException e) throws ServletException {
+    private void handleException(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin,
+        final Exception e) throws ServletException {
         // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
         if (redirectAfterLogin) {
             try {
@@ -148,8 +150,8 @@ public class LoginServlet extends HttpServlet {
                 throw new ServletException(e1);
             }
         } else {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage());
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, e.getMessage());
             }
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
@@ -184,19 +186,20 @@ public class LoginServlet extends HttpServlet {
         return new RedirectUrlBuilder(redirectURL).build().getUrl();
     }
 
-    protected void doLogin(final HttpServletRequest request, HttpServletResponse response) throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException {
+    protected void doLogin(final HttpServletRequest request, final HttpServletResponse response)
+        throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException, AuthenticationFailedException {
         try {
             final long tenantId = getTenantId(request);
             final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
             final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
             final LoginManager loginManager = getLoginManager();
             loginManager.login(requestAccessor, response, createUserLogger(), userCredentials);
-        } catch (final AuthenticationFailedException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
-            }
-            throw new LoginFailedException(e);
         } catch (final TenantStatusException e) {
+            final String message = "Tenant with ID " + getTenantId(request)
+                + " is in pause, unable to login with other user than the technical user.";
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, message, e);
+            }
             request.setAttribute(TENANT_IN_MAINTENACE_MESSAGE, TENANT_IN_MAINTENACE_MESSAGE);
             throw new LoginFailedException(TENANT_IN_MAINTENACE_MESSAGE, e);
         }
@@ -221,7 +224,7 @@ public class LoginServlet extends HttpServlet {
         long tenantId = -1L;
         try {
             final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
-                    TenantsManagementUtils.getTechnicalUserPassword());
+                TenantsManagementUtils.getTechnicalUserPassword());
             tenantId = session.getTenantId();
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

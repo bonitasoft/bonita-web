@@ -24,6 +24,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.platform.LoginException;
 import org.bonitasoft.engine.platform.LogoutException;
+import org.bonitasoft.engine.platform.UnknownUserException;
 import org.bonitasoft.engine.session.APISession;
 
 /**
@@ -36,31 +37,24 @@ public class LoginDatastore {
      */
     private static final Logger LOGGER = Logger.getLogger(LoginDatastore.class.getName());
 
-    /**
-     * login.
-     * 
-     * @param username
-     * @param password
-     * @return APISession aAPISession
-     * @throws BonitaException
-     */
     public APISession login(final String username, final String password) throws BonitaException {
         APISession apiSession = null;
+        final String errorMessage = "Error while logging in the engine API.";
         try {
             if (username == null || password == null) {
-                final String errorMessage = "Error while logging in the engine API.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage);
-                }
+                LOGGER.log(Level.SEVERE, errorMessage);
                 throw new LoginException(errorMessage);
             }
             apiSession = getLoginAPI().login(username, password);
+        } catch (final UnknownUserException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            throw e;
         } catch (final LoginException e) {
-            final String errorMessage = "Error while logging in the engine API.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
-            }
-            throw new BonitaException(e);
+            LOGGER.log(Level.SEVERE, errorMessage);
+            throw e;
+        } catch (final BonitaException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            throw e;
         }
         return apiSession;
     }
@@ -71,7 +65,7 @@ public class LoginDatastore {
      * @return APISession aAPISession
      * @throws BonitaException
      */
-    public APISession login(Map<String, Serializable> credentials) throws BonitaException {
+    public APISession login(final Map<String, Serializable> credentials) throws BonitaException {
         APISession apiSession = null;
         try {
             if (credentials == null) {
@@ -94,7 +88,7 @@ public class LoginDatastore {
 
     /**
      * logout .
-     * 
+     *
      * @throws BonitaException
      */
     public void logout(final APISession apiSession) throws BonitaException {

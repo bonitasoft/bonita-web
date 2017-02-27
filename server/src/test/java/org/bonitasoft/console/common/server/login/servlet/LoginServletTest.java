@@ -20,16 +20,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
 
 /**
  * Created by Vincent Elcrin
@@ -113,13 +116,14 @@ public class LoginServletTest {
         final LoginServlet servlet = new LoginServlet();
 
         final String cleanUrl = servlet
-                .dropPassword("?username=walter.bates&password=bpm&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n"
-                        +
-                        "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp");
+            .dropPassword(
+                "?username=walter.bates&password=bpm&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n"
+                    +
+                    "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp");
 
         assertThat(cleanUrl,
-                is("?username=walter.bates&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n" +
-                        "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp"));
+            is("?username=walter.bates&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n" +
+                "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp"));
     }
 
     @Test
@@ -184,28 +188,51 @@ public class LoginServletTest {
         verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());
     }
 
-	@Test
-	public void should_send_error_401_with_wrong_credentials_and_no_redirect() throws Exception {
-		// given
-		final LoginServlet servlet = spy(new LoginServlet());
-		doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-		doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
+    @Test
+    public void should_send_error_401_when_login_with_wrong_credentials_and_no_redirect() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
 
-		// when
-		servlet.doPost(req, resp);
+        servlet.doPost(req, resp);
 
-		// then
-		verify(resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	}
+        verify(resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
 
-	@Test(expected = ServletException.class)
-	public void should_send_servlet_exception_with_wrong_credentials_and_redirect() throws Exception {
-		// given
-		final LoginServlet servlet = spy(new LoginServlet());
-		doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-		doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
+    @Test(expected = ServletException.class)
+    public void should_send_servlet_exception_when_login_with_wrong_credentials_and_redirect() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
 
-		// when
-		servlet.doPost(req, resp);
-	}
+        servlet.doPost(req, resp);
+    }
+
+    @Test(expected = ServletException.class)
+    public void should_throw_tenant_status_exception() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doThrow(new TenantStatusException("")).when(servlet).doLogin(req, resp);
+
+        servlet.doPost(req, resp);
+    }
+
+    @Test(expected = ServletException.class)
+    public void should_return_servlet_exception_when_throw_authentication_failed_exception() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doThrow(new AuthenticationFailedException("")).when(servlet).doLogin(req, resp);
+
+        servlet.doPost(req, resp);
+    }
+
+    @Test(expected = ServletException.class)
+    public void should_return_servlet_exception_when_authentication_manager_not_found_exception() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doThrow(new AuthenticationManagerNotFoundException("")).when(servlet).doLogin(req, resp);
+
+        servlet.doPost(req, resp);
+    }
+
 }
