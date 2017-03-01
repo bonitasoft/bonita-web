@@ -38,14 +38,13 @@ import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.data.CharacterSet;
-import org.restlet.data.Header;
+import org.restlet.data.Range;
 import org.restlet.data.Status;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
-import org.restlet.util.Series;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -281,8 +280,8 @@ public class CommonResource extends ServerResource {
     }
 
     protected void setContentRange(final int pageNumber, final int pageSize, final long count) {
-        final Series<Header> headers = getResponse().getHeaders();
-        headers.add(new Header("Content-range", pageNumber + "-" + pageSize + "/" + count));
+        //This is mandatory as our API is not conform to the Content-range header specs
+        getResponse().getEntity().setRange(new Range(pageNumber, pageSize - pageNumber + 1, count, ""));
     }
 
     protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {

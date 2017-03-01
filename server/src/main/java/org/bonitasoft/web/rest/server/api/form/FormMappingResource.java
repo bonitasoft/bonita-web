@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.web.rest.server.api.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.form.FormMapping;
 import org.bonitasoft.engine.search.SearchResult;
@@ -23,9 +26,6 @@ import org.bonitasoft.web.rest.server.datastore.filter.FormMappingTypeCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * REST resource to operate on Form Mapping.
@@ -41,13 +41,13 @@ public class FormMappingResource extends CommonResource {
     }
 
     @Get("json")
-    public List<FormMappingItem> searchFormMapping() throws ResourceException {
+    public void searchFormMapping() throws ResourceException {
         try {
             final SearchResult<FormMapping> searchResult = processAPI.searchFormMappings(buildSearchOptions());
-            setContentRange(searchResult);
             List<FormMapping> result = searchResult.getResult();
             List<FormMappingItem> resultConverted = convertMapping(result);
-            return resultConverted;
+            getResponse().setEntity(getConverterService().toRepresentation(resultConverted));
+            setContentRange(searchResult);
         } catch (final Exception e) {
             throw new APIException(e);
         }

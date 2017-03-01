@@ -15,12 +15,9 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import java.util.Date;
-import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
-import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -43,20 +40,15 @@ public class TimerEventTriggerResource extends CommonResource {
     }
 
     @Get("json")
-    public List<TimerEventTriggerInstance> searchTimerEventTriggers() {
+    public void searchTimerEventTriggers() {
         try {
             final Long caseId = getLongParameter("caseId", true);
-            final List<TimerEventTriggerInstance> triggers = runEngineSearch(caseId, buildSearchOptions());
-            return triggers;
+            final SearchResult<TimerEventTriggerInstance> searchResult = processAPI.searchTimerEventTriggerInstances(caseId, buildSearchOptions());
+            getResponse().setEntity(getConverterService().toRepresentation(searchResult.getResult()));
+            setContentRange(searchResult);
         } catch (final Exception e) {
             throw new APIException(e);
         }
-    }
-
-    protected List<TimerEventTriggerInstance> runEngineSearch(final long caseId, final SearchOptions searchOptions) throws SearchException {
-        final SearchResult<TimerEventTriggerInstance> searchResult = processAPI.searchTimerEventTriggerInstances(caseId, searchOptions);
-        setContentRange(searchResult);
-        return searchResult.getResult();
     }
 
     @Put("json")
