@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.bonitasoft.web.rest.server.api.bdm;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class BusinessDataQueryResource extends CommonResource {
     }
 
     @Get("json")
-    public Serializable getProcessBusinessDataQuery() throws CommandNotFoundException, CommandParameterizationException, CommandExecutionException {
+    public void getProcessBusinessDataQuery() throws CommandNotFoundException, CommandParameterizationException, CommandExecutionException, IOException {
         final Map<String, Serializable> parameters = new HashMap<>();
         final Integer searchPageNumber = getSearchPageNumber();
         final Integer searchPageSize = getSearchPageSize();
@@ -49,12 +50,11 @@ public class BusinessDataQueryResource extends CommonResource {
 
         BusinessDataQueryResult businessDataQueryResult = (BusinessDataQueryResult) commandAPI.execute(COMMAND_NAME, parameters);
 
+        getResponse().setEntity(getConverterService().toRepresentation(businessDataQueryResult.getJsonResults()));
         final BusinessDataQueryMetadata businessDataQueryMetadata = businessDataQueryResult.getBusinessDataQueryMetadata();
         if (businessDataQueryMetadata != null) {
             setContentRange(searchPageNumber, searchPageSize, businessDataQueryMetadata.getCount());
         }
-
-        return businessDataQueryResult.getJsonResults();
     }
 
 }

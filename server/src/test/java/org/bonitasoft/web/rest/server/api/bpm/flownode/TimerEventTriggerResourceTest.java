@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -36,6 +37,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Response;
+import org.restlet.representation.Representation;
 import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -61,14 +63,21 @@ public class TimerEventTriggerResourceTest extends RestletTest {
         // given:
         final SearchOptions searchOptions = mock(SearchOptions.class);
         doReturn(1L).when(restResource).getLongParameter(anyString(), anyBoolean());
+        doReturn(1).when(restResource).getIntegerParameter(anyString(), anyBoolean());
+        Response mockResponse = mock(Response.class);
+        doReturn(mockResponse).when(restResource).getResponse();
+        doReturn(mock(Representation.class)).when(mockResponse).getEntity();
         doReturn(searchOptions).when(restResource).buildSearchOptions();
-        doReturn(new ArrayList<TimerEventTriggerInstance>()).when(restResource).runEngineSearch(anyLong(), eq(searchOptions));
+        SearchResult<TimerEventTriggerInstance> searchResult = mock(SearchResult.class);
+        doReturn(Collections.emptyList()).when(searchResult).getResult();
+        doReturn(1L).when(searchResult).getCount();
+        doReturn(searchResult).when(processAPI).searchTimerEventTriggerInstances(anyLong(), eq(searchOptions));
 
         // when:
         restResource.searchTimerEventTriggers();
 
         // then:
-        verify(restResource).runEngineSearch(1L, searchOptions);
+        verify(processAPI).searchTimerEventTriggerInstances(1L, searchOptions);
     }
 
     @Test(expected = APIException.class)

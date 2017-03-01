@@ -26,7 +26,7 @@
         <powermock.version>1.5.1</powermock.version>
         <gwtmockito.version>1.1.3</gwtmockito.version>
         <spring.version>4.2.4.RELEASE</spring.version>
-        <restlet-version>2.3.1</restlet-version>
+        <restlet-version>2.3.9</restlet-version>
         <jackson-mapper-asl-version>1.9.13</jackson-mapper-asl-version>
         <jackson-databind-version>2.4.4</jackson-databind-version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
@@ -206,15 +206,10 @@
                 <artifactId>org.restlet</artifactId>
                 <version>${restlet-version}</version>
             </dependency>
-            <!-- Due to a bug in restlet/wildfly, org.restlet.ext.servlet has been patched org.restlet.ext.servlet jar is directly
-                embedded in WEB-INF/lib of server project and dependency is declared as provided.
-                See ./server/src/main/webapp/WEB-INF/lib/org.restlet.ext.servlet-2.3.1-patched.md
-                -->
             <dependency>
                 <groupId>org.restlet.jee</groupId>
                 <artifactId>org.restlet.ext.servlet</artifactId>
                 <version>${restlet-version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.restlet.jse</groupId>
