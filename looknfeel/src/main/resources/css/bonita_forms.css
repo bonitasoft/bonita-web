@@ -175,7 +175,7 @@ span.bonita_form_field{
 }
 
 .bonita_form_date {
-	background: url("images/date_16x16.png") no-repeat scroll right center #FFF;
+	background: url("images/form-input-date.png") no-repeat scroll right center #FFF;
 	border-top: 1px #acaeb4 solid;
 	border-left: 1px #dde1e7 solid;
 	border-right: 1px #dde1e7 solid;
