@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,13 +26,18 @@ import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.forms.client.model.exception.AbortedFormException;
+import org.bonitasoft.forms.client.model.exception.CanceledFormException;
 import org.bonitasoft.forms.client.model.exception.ForbiddenFormAccessException;
+import org.bonitasoft.forms.client.model.exception.FormAlreadySubmittedException;
+import org.bonitasoft.forms.client.model.exception.FormInErrorException;
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
+import org.bonitasoft.forms.client.model.exception.SkippedFormException;
+import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
 import org.bonitasoft.forms.server.api.IFormWorkflowAPI;
 import org.bonitasoft.forms.server.api.impl.FormWorkflowAPIImpl;
 import org.bonitasoft.forms.server.exception.FormNotFoundException;
 import org.bonitasoft.forms.server.provider.impl.util.FormServiceProviderUtil;
-import org.bonitasoft.forms.server.util.FormContextUtil;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,16 +53,7 @@ public class FormServiceProviderImplTest {
     FormServiceProviderImpl formServiceProviderImpl;
 
     @Mock
-    Map<String, Object> context;
-
-    @Mock
     IFormWorkflowAPI workflowAPI;
-
-    @Mock
-    Map<String, Object> urlContext;
-
-    @Mock
-    FormContextUtil formContextUtil;
 
     @Mock
     APISession apiSession;
@@ -73,8 +70,9 @@ public class FormServiceProviderImplTest {
     @Mock
     private User user;
 
-    @Mock
-    private Map<String, Object> mapUrlContext;
+    Map<String, Object> context;
+
+    Map<String, Object> urlContext;
 
     private List<Class<? extends Exception>> givenExceptions;
 
@@ -85,18 +83,18 @@ public class FormServiceProviderImplTest {
         givenExceptions = new ArrayList<Class<? extends Exception>>();
         expectedExceptions = new ArrayList<Class<? extends Exception>>();
 
-        doReturn(urlContext).when(context).get(FormServiceProviderUtil.URL_CONTEXT);
+        context = new HashMap<>();
+        urlContext = new HashMap<>();
+        context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         doReturn(processAPI).when(bpmEngineAPIUtil).getProcessAPI(any(APISession.class));
         doReturn(workflowAPI).when(formServiceProviderImpl).getFormWorkFlowApi();
-        doReturn(apiSession).when(formContextUtil).getAPISessionFromContext();
-
     }
 
     @Test
     public void getProcessDefinitionId_with_process_UUID() throws Exception {
         final long expectedProcessDefinitionId = 123l;
         // given
-        doReturn(expectedProcessDefinitionId).when(urlContext).get(FormServiceProviderUtil.PROCESS_UUID);
+        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, expectedProcessDefinitionId);
 
         // when
         final long processDefinitionID = formServiceProviderImpl.getProcessDefinitionID(context);
@@ -110,8 +108,8 @@ public class FormServiceProviderImplTest {
     @Test
     public void getProcessDefinitionId_with_form_ID() throws Exception {
         // given
-        doReturn(null).when(urlContext).get(FormServiceProviderUtil.PROCESS_UUID);
-        doReturn("processName--1.0$entry").when(urlContext).get(FormServiceProviderUtil.FORM_ID);
+        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, null);
+        urlContext.put(FormServiceProviderUtil.FORM_ID, "processName--1.0$entry");
 
         doThrow(ActivityInstanceNotFoundException.class).when(workflowAPI).getProcessDefinitionIDFromActivityInstanceID(any(APISession.class), anyLong());
         final long processDefinitionId = 123l;
@@ -297,76 +295,108 @@ public class FormServiceProviderImplTest {
     }
 
     @Test
-    public void testIsAllowed() throws Exception {
+    public void should_allow_task_form_access() throws Exception {
         //given
-
-        final String formId = "formId";
-        final String processDefinitionUUIDStr = "processDefinitionUUIDStr";
-        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
-        final String productVersion = "";
-        final String migrationProductVersion = "";
-        final boolean isFormPermissions = true;
-        final long processInstanceId = 1L;
-        final long userId = 2L;
-        final long processDefinitionId = 3L;
-
-        doReturn(processInstanceId).when(mapUrlContext).get(FormServiceProviderUtil.INSTANCE_UUID);
-        doReturn(formContextUtil).when(formServiceProviderImpl).createFormContextUtil(context);
-        doReturn(userId).when(formContextUtil).getUserId();
-        doReturn(apiSession).when(formContextUtil).getAPISessionFromContext();
-
-        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
-        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
-
-        doReturn(mapUrlContext).when(context).get(FormServiceProviderUtil.URL_CONTEXT);
-        doReturn(user).when(context).get(FormServiceProviderUtil.USER);
-
-        doNothing().when(formServiceProviderImpl).canUserViewInstanceForm(apiSession, user, workflowAPI, processInstanceId, formId,
-                userId, context);
-
-        final boolean allowed = formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+        final String formId = "taskDefinitionUUID$entry";
+        
+        //when
+        final boolean allowed = testAllowTaskFormAccess(formId, "taskDefinitionUUID", "taskDefinitionUUID");
 
         //then
         assertThat(allowed).as("should allow user").isTrue();
-
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_task_form_access_with_wrong_instance_id() throws Exception {
+        //given
+        final String formId = "taskDefinitionUUID$entry";
+        
+        //when
+        testAllowTaskFormAccess(formId, "taskDefinitionUUID", "anotherTaskDefinitionUUID");
     }
 
     @Test
-    public void testIsNotAllowed() throws Exception {
+    public void should_allow_task_form_access_with_custom_form_id_allowed() throws Exception {
         //given
-
         final String formId = "formId";
-        final String processDefinitionUUIDStr = "processDefinitionUUIDStr";
-        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
+        doReturn(true).when(formServiceProviderImpl).isCustomFormIdAuthorized(apiSession);
+        
+        //when
+        final boolean allowed = testAllowTaskFormAccess(formId, "taskDefinitionUUID", "taskDefinitionUUID");
+
+        //then
+        assertThat(allowed).as("should allow user").isTrue();
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_task_form_access_with_invalid_form_id() throws Exception {
+        //given
+        final String formId = "taskDefinitionUUID$recap";
+        
+        //when
+        testAllowTaskFormAccess(formId, "taskDefinitionUUID", "taskDefinitionUUID");
+    }
+
+    private boolean testAllowTaskFormAccess(final String formId, final String taskDefinitionUUIDStr, final String taskDefinitionUUIDFromActivityInstanceID) throws Exception {
+        final String permissions = FormServiceProviderUtil.ACTIVITY_UUID + "#" + taskDefinitionUUIDStr;
         final String productVersion = "";
         final String migrationProductVersion = "";
         final boolean isFormPermissions = true;
-        final long processInstanceId = 1L;
+        final long taskInstanceId = 1L;
         final long userId = 2L;
-        final long processDefinitionId = 3L;
 
-        doReturn(processInstanceId).when(mapUrlContext).get(FormServiceProviderUtil.INSTANCE_UUID);
-        doReturn(formContextUtil).when(formServiceProviderImpl).createFormContextUtil(context);
-        doReturn(userId).when(formContextUtil).getUserId();
-        doReturn(apiSession).when(formContextUtil).getAPISessionFromContext();
+        urlContext.put(FormServiceProviderUtil.TASK_UUID, taskInstanceId);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        urlContext.put(FormServiceProviderUtil.ASSIGN_TASK, "true");
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
 
-        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
-        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+        doReturn(taskDefinitionUUIDFromActivityInstanceID).when(workflowAPI).getActivityDefinitionUUIDFromActivityInstanceID(apiSession, taskInstanceId);
+        doNothing().when(formServiceProviderImpl).canUserViewActivityInstanceForm(apiSession, user, workflowAPI, taskInstanceId, formId,
+                userId, context);
 
-        doReturn(mapUrlContext).when(context).get(FormServiceProviderUtil.URL_CONTEXT);
-        doReturn(user).when(context).get(FormServiceProviderUtil.USER);
+        boolean isAllowed = formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+        if (isAllowed) {
+            verify(workflowAPI).assignTaskIfNotAssigned(apiSession, taskInstanceId, userId);
+        }
+        
+        return isAllowed;
+    }
+    
+    @Test
+    public void should_not_allow_task_form_access() throws Exception {
+        //given
+        final String formId = "taskDefinitionUUID$entry";
+        final String taskDefinitionUUIDStr = "taskDefinitionUUID";
+        final String permissions = FormServiceProviderUtil.TASK_UUID + "#" + taskDefinitionUUIDStr;
+        final String productVersion = "";
+        final String migrationProductVersion = "";
+        final boolean isFormPermissions = true;
+        final long taskInstanceId = 1L;
+        final long userId = 2L;
 
+        urlContext.put(FormServiceProviderUtil.TASK_UUID, taskInstanceId);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
+
+        doReturn("taskDefinitionUUID").when(workflowAPI).getActivityDefinitionUUIDFromActivityInstanceID(apiSession, taskInstanceId);
         addGivenAndExpectedException(InvalidSessionException.class, SessionTimeoutException.class);
         addGivenAndExpectedException(BPMEngineException.class, FormNotFoundException.class);
         addGivenAndExpectedException(FormNotFoundException.class, FormNotFoundException.class);
         addGivenAndExpectedException(ForbiddenFormAccessException.class, ForbiddenFormAccessException.class);
-        addGivenAndExpectedException(SessionTimeoutException.class, SessionTimeoutException.class);
+        addGivenAndExpectedException(SuspendedFormException.class, SuspendedFormException.class);
+        addGivenAndExpectedException(CanceledFormException.class, CanceledFormException.class);
+        addGivenAndExpectedException(SuspendedFormException.class, SuspendedFormException.class);
+        addGivenAndExpectedException(FormInErrorException.class, FormInErrorException.class);
+        addGivenAndExpectedException(SkippedFormException.class, SkippedFormException.class);
+        addGivenAndExpectedException(FormAlreadySubmittedException.class, FormAlreadySubmittedException.class);
+        addGivenAndExpectedException(AbortedFormException.class, AbortedFormException.class);
 
         for (int i = 0; i < givenExceptions.size(); i++) {
             //given
-            doThrow(givenExceptions.get(i)).when(formServiceProviderImpl).canUserViewInstanceForm(apiSession, user, workflowAPI, processInstanceId,
-                    formId,
-                    userId, context);
+            doThrow(givenExceptions.get(i)).when(formServiceProviderImpl).canUserViewActivityInstanceForm(apiSession, user, workflowAPI, taskInstanceId,
+                    formId, userId, context);
 
             //when
             try {
@@ -380,20 +410,246 @@ public class FormServiceProviderImplTest {
                 }
             }
         }
+    }
+    
+    @Test
+    public void should_allow_instance_overview_access() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$recap";
+        
+        //when
+        final boolean allowed = testAllowInstanceOverviewFormAccess(formId, 3L, 3L);
 
+        //then
+        assertThat(allowed).as("should allow user").isTrue();
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_instance_overview_access_with_wrong_instance_id() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$recap";
+        
+        //when
+        testAllowInstanceOverviewFormAccess(formId, 3L, 4L);
+    }
+
+    @Test
+    public void should_allow_instance_overview_access_with_custom_form_id_allowed() throws Exception {
+        //given
+        final String formId = "formId";
+        doReturn(true).when(formServiceProviderImpl).isCustomFormIdAuthorized(apiSession);
+        
+        //when
+        final boolean allowed = testAllowInstanceOverviewFormAccess(formId, 3L, 3L);
+
+        //then
+        assertThat(allowed).as("should allow user").isTrue();
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_instance_overview_access_with_invalid_form_id() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$entry";
+        
+        //when
+        testAllowInstanceOverviewFormAccess(formId, 3L, 3L);
+    }
+
+    private boolean testAllowInstanceOverviewFormAccess(final String formId, final long processDefinitionIDFromUUID, final long processDefinitionIDFromProcessInstanceID) throws Exception {
+        final String processDefinitionUUIDStr = "processDefinitionUUID";
+        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
+        final String productVersion = "";
+        final String migrationProductVersion = "";
+        final boolean isFormPermissions = true;
+        final long processInstanceId = 1L;
+        final long userId = 2L;
+
+        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
+
+        doReturn(processDefinitionIDFromUUID).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
+        doReturn(processDefinitionIDFromProcessInstanceID).when(workflowAPI).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+        doNothing().when(formServiceProviderImpl).canUserViewInstanceForm(apiSession, user, workflowAPI, processInstanceId, formId,
+                userId, context);
+
+        return formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+    }
+    
+    @Test
+    public void should_not_allow_instance_overview_access() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$recap";
+        final String processDefinitionUUIDStr = "processDefinitionUUID";
+        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
+        final String productVersion = "";
+        final String migrationProductVersion = "";
+        final boolean isFormPermissions = true;
+        final long processInstanceId = 1L;
+        final long userId = 2L;
+        final long processDefinitionId = 3L;
+
+        urlContext.put(FormServiceProviderUtil.INSTANCE_UUID, processInstanceId);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
+
+        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
+        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromProcessInstanceID(apiSession, processInstanceId);
+
+        addGivenAndExpectedException(InvalidSessionException.class, SessionTimeoutException.class);
+        addGivenAndExpectedException(BPMEngineException.class, FormNotFoundException.class);
+        addGivenAndExpectedException(FormNotFoundException.class, FormNotFoundException.class);
+        addGivenAndExpectedException(ForbiddenFormAccessException.class, ForbiddenFormAccessException.class);
+        addGivenAndExpectedException(SessionTimeoutException.class, SessionTimeoutException.class);
+
+        for (int i = 0; i < givenExceptions.size(); i++) {
+            //given
+            doThrow(givenExceptions.get(i)).when(formServiceProviderImpl).canUserViewInstanceForm(apiSession, user, workflowAPI, processInstanceId,
+                    formId, userId, context);
+
+            //when
+            try {
+                formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+
+            } catch (final Exception e) {
+                assertThat(e.getClass()).as("bad exception with given exception " + givenExceptions.get(i).getClass()).isEqualTo(
+                        expectedExceptions.get(i));
+                if (e.getClass() != expectedExceptions.get(i)) {
+                    fail("bad exception");
+                }
+            }
+        }
+    }
+    
+    @Test
+    public void should_allow_process_form_access() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$entry";
+        
+        //when
+        final boolean allowed = testAllowProcessFormAccess(formId, 3L, 3L, true);
+
+        //then
+        assertThat(allowed).as("should allow user").isTrue();
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_process_form_access_with_wrong_instance_id() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$entry";
+        
+        //when
+        testAllowProcessFormAccess(formId, 3L, 4L, true);
+    }
+
+    @Test
+    public void should_allow_process_form_access_with_custom_form_id_allowed() throws Exception {
+        //given
+        final String formId = "formId";
+        doReturn(true).when(formServiceProviderImpl).isCustomFormIdAuthorized(apiSession);
+        
+        //when
+        final boolean allowed = testAllowProcessFormAccess(formId, 3L, 3L, true);
+
+        //then
+        assertThat(allowed).as("should allow user").isTrue();
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_process_form_access_with_invalid_form_id() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$recap";
+        
+        //when
+        testAllowProcessFormAccess(formId, 3L, 3L, true);
+    }
+    
+    @Test(expected = ForbiddenFormAccessException.class)
+    public void should_not_allow_process_form_access_with_disabled_process() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$entry";
+        
+        //when
+        testAllowProcessFormAccess(formId, 3L, 3L, false);
+    }
+
+    private boolean testAllowProcessFormAccess(final String formId, final long processDefinitionIDFromUUID, final long processDefinitionIdFromURL, final boolean isProcessEnabled) throws Exception {
+        final String processDefinitionUUIDStr = "processDefinitionUUID";
+        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
+        final String productVersion = "";
+        final String migrationProductVersion = "";
+        final boolean isFormPermissions = true;
+        final long userId = 2L;
+
+        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processDefinitionIdFromURL);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
+
+        doReturn(processDefinitionIDFromUUID).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
+        doReturn(isProcessEnabled).when(workflowAPI).isProcessEnabled(apiSession, processDefinitionIdFromURL);
+        doNothing().when(formServiceProviderImpl).canUserInstantiateProcess(apiSession, user, processDefinitionIdFromURL, userId, context);
+
+        return formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+    }
+
+    @Test
+    public void should_not_allow_process_form_access() throws Exception {
+        //given
+        final String formId = "processDefinitionUUID$entry";
+        final String processDefinitionUUIDStr = "processDefinitionUUID";
+        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
+        final String productVersion = "";
+        final String migrationProductVersion = "";
+        final boolean isFormPermissions = true;
+        final long userId = 2L;
+        final long processDefinitionId = 3L;
+
+        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processDefinitionId);
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
+        context.put(FormServiceProviderUtil.USER, user);
+
+        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
+        doReturn(true).when(workflowAPI).isProcessEnabled(apiSession, processDefinitionId);
+
+        addGivenAndExpectedException(InvalidSessionException.class, SessionTimeoutException.class);
+        addGivenAndExpectedException(BPMEngineException.class, FormNotFoundException.class);
+        addGivenAndExpectedException(ForbiddenFormAccessException.class, ForbiddenFormAccessException.class);
+
+        for (int i = 0; i < givenExceptions.size(); i++) {
+            //given
+            doThrow(givenExceptions.get(i)).when(formServiceProviderImpl).canUserInstantiateProcess(apiSession, user, processDefinitionId, userId, context);
+
+            //when
+            try {
+                formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
+
+            } catch (final Exception e) {
+                assertThat(e.getClass()).as("bad exception with given exception " + givenExceptions.get(i).getClass()).isEqualTo(
+                        expectedExceptions.get(i));
+                if (e.getClass() != expectedExceptions.get(i)) {
+                    fail("bad exception");
+                }
+            }
+        }
     }
 
     @Test
     public void should_assignForm_call_worflowAPI() throws Exception {
         final String formId = "formId";
         final String expectedTaskId = "42";
-        doReturn(formContextUtil).when(formServiceProviderImpl).createFormContextUtil(context);
-        doReturn(apiSession).when(formContextUtil).getAPISessionFromContext();
-        doReturn(expectedTaskId).when(urlContext).get(FormServiceProviderUtil.TASK_UUID);
+        final String userId = "3";
+
+        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
+        urlContext.put(FormServiceProviderUtil.TASK_UUID, expectedTaskId);
+        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
 
         formServiceProviderImpl.assignForm(formId, context);
 
-        verify(workflowAPI, times(1)).assignTaskIfNotAssigned(apiSession, Long.parseLong(expectedTaskId), apiSession.getUserId());
+        verify(workflowAPI, times(1)).assignTaskIfNotAssigned(apiSession, Long.parseLong(expectedTaskId), 3L);
     }
 
 }

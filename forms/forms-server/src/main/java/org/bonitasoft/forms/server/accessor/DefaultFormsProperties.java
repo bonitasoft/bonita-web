@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
 
 /**
@@ -212,6 +211,10 @@ public class DefaultFormsProperties extends ConfigurationFile {
             return true;
         }
         return Boolean.valueOf(actionConditionEnabled);
+    }
+    
+    public boolean isCustomFormIdAuthorized() {
+        return Boolean.parseBoolean(getProperty("form.id.custom.allowed"));
     }
 
     public boolean isManagerAuthorized() {
