@@ -29,7 +29,7 @@ public class I18nTest {
 
     @Test
     public void getAvailableLocalesFor_should_look_in_classpath() throws Exception {
-        final Map<String, String> availableLocales = I18n.getAvailableLocalesFor("test");
+        final Map<String, String> availableLocales = I18n.getInstance().getAvailableLocalesFor("test");
         assertThat(availableLocales).containsKey("fr");
     }
 

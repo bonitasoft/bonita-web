@@ -42,7 +42,7 @@ public class APII18nLocale extends API<I18nLocaleItem> {
     public ItemSearchResult<I18nLocaleItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final Map<String, String> availableLocales = I18n.getAvailableLocalesFor(DEFAULT_APPLICATION);
+        final Map<String, String> availableLocales = I18n.getInstance().getAvailableLocalesFor(DEFAULT_APPLICATION);
         final LinkedList<I18nLocaleItem> items = new LinkedList<I18nLocaleItem>();
 
         for (final String locale : availableLocales.keySet()) {

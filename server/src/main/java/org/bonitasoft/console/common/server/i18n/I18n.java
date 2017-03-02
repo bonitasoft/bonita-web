@@ -129,7 +129,7 @@ public class I18n extends AbstractI18n {
         return "*" + locale.toString().trim() + ".po";
     }
 
-    public static Map<String, String> getAvailableLocalesFor(String application) {
+    public Map<String, String> getAvailableLocalesFor(String application) {
         final Map<String, String> results = new LinkedHashMap<>();
         final Map<String, String> locales = getLocales();
 
