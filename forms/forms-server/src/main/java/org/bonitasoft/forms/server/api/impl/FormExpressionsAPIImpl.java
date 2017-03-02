@@ -399,8 +399,8 @@ public class FormExpressionsAPIImpl implements IFormExpressionsAPI {
                 theSourceFile.delete();
             }
         } else {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while retrieving the uploaded file " + uri + ": File not found.");
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "The uploaded file " + uri + " is not available anymore. You are most likely trying to display a confirmation message and the file has already been sent to the engine.");
             }
         }
         return documentValue;
