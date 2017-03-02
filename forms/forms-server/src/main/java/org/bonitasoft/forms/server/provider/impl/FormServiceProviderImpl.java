@@ -64,6 +64,7 @@ import org.bonitasoft.forms.client.model.exception.MigrationProductVersionNotIde
 import org.bonitasoft.forms.client.model.exception.SessionTimeoutException;
 import org.bonitasoft.forms.client.model.exception.SkippedFormException;
 import org.bonitasoft.forms.client.model.exception.SuspendedFormException;
+import org.bonitasoft.forms.server.accessor.DefaultFormsPropertiesFactory;
 import org.bonitasoft.forms.server.accessor.FormDefAccessorFactory;
 import org.bonitasoft.forms.server.accessor.IApplicationConfigDefAccessor;
 import org.bonitasoft.forms.server.accessor.IApplicationFormDefAccessor;
@@ -282,7 +283,6 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             final String time = DATE_FORMAT.format(new Date());
             defaultLogger.log(Level.FINEST, "### " + time + " - isAllowed - start");
         }
-        final Map<String, Object> urlContext = getUrlContext(context);
         final User user = (User) context.get(FormServiceProviderUtil.USER);
         if (user == null) {
             final String message = "Can't find the user.";
@@ -291,7 +291,7 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             }
             throw new NoCredentialsInSessionException(message);
         }
-        // No migration to perform in 6.1 since the forms.xml model didn't change between 6.0 and 6.1
+        // No migration to perform since the forms.xml model didn't change since 6.0
         // if the model changes in a later version, restore this check and provide the migration scripts in the distribution
         // final String currentProductVersion = FormBuilderImpl.PRODUCT_VERSION;
         // if (productVersion != null) {
@@ -305,120 +305,16 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         // }
         // }
         if (permissions != null) {
-            final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
-            final APISession session = ctxu.getAPISessionFromContext();
             final String uuidType = permissions.split("#")[0];
             try {
                 if (FormServiceProviderUtil.ACTIVITY_UUID.equals(uuidType)) {
-                    // The user has the permission for this task (= the task UUID is in the <perison/> of the form)
-                    final String activityDefinitionUUIDStr = permissions.split("#")[1];
-                    if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
-                        // Trying to display a Form for a TASK.
-                        final long activityInstanceID = getActivityInstanceId(urlContext);
-                        try {
-                            if (!getActivityDefinitionUUID(session, workflowAPI, activityInstanceID).equals(activityDefinitionUUIDStr)) {
-                                final String message = "User tried to access an unauthorized activity <" + activityDefinitionUUIDStr + ">";
-                                if (getLogger().isLoggable(Level.INFO)) {
-                                    getLogger().log(Level.INFO, message, context);
-                                }
-                                throw new ForbiddenFormAccessException(message);
-                            }
-                        } catch (final FormWorflowApiException e) {
-                            logInfoMessageWithContext(e.getMessage(), e, context);
-                            throw new FormNotFoundException(e);
-                        }
-                        if (isFormPermissions) {
-                            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
-                            // If assignTask=true in the contextURL assign the task to the user
-                            if (isAssignTask(urlContext)) {
-                                try {
-                                    getFormWorkFlowApi().assignTaskIfNotAssigned(session, activityInstanceID, ctxu.getUserId(true));
-                                } catch (final TaskAssignationException e) {
-                                    logSevereWithContext(e.getMessage(), e, context);
-                                    throw e;
-                                }
-                            }
-                        }
-                    } else {
-                        final String message = "A task parameter is required to display the form for activity " + activityDefinitionUUIDStr;
-                        if (getLogger().isLoggable(Level.INFO)) {
-                            getLogger().log(Level.INFO, message, context);
-                        }
-                        throw new ForbiddenFormAccessException(message);
-                    }
+                    // The user has the permission for this task (= the task UUID is in the <permission/> of the form)
+                    final String activityDefinitionUUIDFromPermission = permissions.split("#")[1];
+                    isAllowedWithTaskPermissionType(formId, activityDefinitionUUIDFromPermission, context, ctxu, user, isFormPermissions);
                 } else if (FormServiceProviderUtil.PROCESS_UUID.equals(uuidType)) {
-                    // The user has the permission for this Process (= the process UUID is in the <perison/> on the form)
-                    final String processDefinitionUUIDStr = permissions.split("#")[1];
-                    try {
-                        final long processDefinitionID = workflowAPI.getProcessDefinitionIDFromUUID(session, processDefinitionUUIDStr);
-                        if (urlContext.get(FormServiceProviderUtil.TASK_UUID) != null) {
-                            // trying to display a form for a task (
-                            final long activityInstanceID = getActivityInstanceId(urlContext);
-                            try {
-                                final long activityInstanceProcessDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
-                                if (activityInstanceProcessDefinitionID != processDefinitionID) {
-                                    final String message = "The task required is not an instance of an activity of process" + processDefinitionUUIDStr;
-                                    if (getLogger().isLoggable(Level.INFO)) {
-                                        getLogger().log(Level.INFO, message, context);
-                                    }
-                                    throw new ForbiddenFormAccessException(message);
-                                }
-                            } catch (final FormWorflowApiException e) {
-                                logSevereMessageWithContext(e, e.getMessage(), context);
-                                throw new FormNotFoundException(e);
-                            }
-                            if (isFormPermissions) {
-                                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
-                            }
-                        } else if (urlContext.get(FormServiceProviderUtil.INSTANCE_UUID) != null) {
-                            // Trying to display the overview form
-                            final long processInstanceID = getProcessInstanceId(urlContext);
-                            try {
-                                final long processInstanceProcessDefinitionID = workflowAPI.getProcessDefinitionIDFromProcessInstanceID(session,
-                                        processInstanceID);
-                                if (processInstanceProcessDefinitionID != processDefinitionID) {
-                                    final String message = "The process instance required is not an instance of process" + processDefinitionUUIDStr;
-                                    if (getLogger().isLoggable(Level.INFO)) {
-                                        getLogger().log(Level.INFO, message, context);
-                                    }
-                                    throw new ForbiddenFormAccessException(message);
-                                }
-                            } catch (final ProcessInstanceNotFoundException e) {
-                                final String message = "The process instance with ID " + processInstanceID + " does not exist!";
-                                logInfoMessageWithContext(message, e, context);
-                                throw new FormNotFoundException(message);
-                            } catch (final ArchivedProcessInstanceNotFoundException e) {
-                                final String message = "Archived process instance not found";
-                                logSevereWithContext(message, e, context);
-                                throw new FormNotFoundException(message);
-                            }
-                            if (isFormPermissions) {
-                                canUserViewInstanceForm(session, user, workflowAPI, processInstanceID, formId, ctxu.getUserId(), context);
-                            }
-                        } else if (urlContext.get(FormServiceProviderUtil.PROCESS_UUID) != null) {
-                            // Trying to display the Instantiation Form for a process
-                            final long processDefinitionIDFromURL = Long.valueOf(urlContext.get(FormServiceProviderUtil.PROCESS_UUID).toString());
-                            if (processDefinitionIDFromURL != processDefinitionID) {
-                                final String message = "The process required does not match the form required " + processDefinitionUUIDStr;
-                                logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
-                                throw new ForbiddenFormAccessException(message);
-                            }
-                            if (!workflowAPI.isProcessEnabled(session, processDefinitionID)) {
-                                final String message = "The process definition with ID " + processDefinitionID + " is not enabled.";
-                                logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
-                                throw new ForbiddenFormAccessException(message);
-                            }
-                            if (isFormPermissions) {
-                                canUserInstantiateProcess(session, user, processDefinitionID, ctxu.getUserId(), context);
-                            }
-                        }
-                    } catch (final ProcessDefinitionNotFoundException e) {
-                        final String message = "The process definition " + processDefinitionUUIDStr + " does not exist!";
-                        if (getLogger().isLoggable(Level.INFO)) {
-                            getLogger().log(Level.INFO, message, e, context);
-                        }
-                        throw new FormNotFoundException(message);
-                    }
+                    // The user has the permission for this Process (= the process UUID is in the <permission/> on the form)
+                    final String processDefinitionUUIDFromPermissions = permissions.split("#")[1];
+                    isAllowedWithProcessPermissionType(formId, processDefinitionUUIDFromPermissions, context, ctxu, user, isFormPermissions);
                 }
             } catch (final BPMEngineException e) {
                 final String message = "Error while communicating with the engine.";
@@ -441,6 +337,212 @@ public class FormServiceProviderImpl implements FormServiceProvider {
             getLogger().log(Level.FINEST, "### " + time + " - isAllowed - end", context);
         }
         return true;
+    }
+
+    private void isAllowedWithProcessPermissionType(final String formId, final String processDefinitionUUIDFromPermissions, final Map<String, Object> context,
+            final FormContextUtil ctxu, final User user, final boolean isFormPermissions) throws BPMEngineException, ForbiddenFormAccessException, FormNotFoundException, SuspendedFormException,
+            CanceledFormException, FormInErrorException, SkippedFormException, FormAlreadySubmittedException, AbortedFormException, SessionTimeoutException {
+        try {
+            final long processDefinitionID = getFormWorkFlowApi().getProcessDefinitionIDFromUUID(ctxu.getAPISessionFromContext(), processDefinitionUUIDFromPermissions);
+            if (ctxu.getTaskId() != null) {
+                // trying to display a form for a task (
+                isAllowedToSeeTaskWithProcessPermissionType(formId, processDefinitionID, processDefinitionUUIDFromPermissions, context, ctxu, user, isFormPermissions);
+            } else if (ctxu.getProcessInstanceId() != null) {
+                // Trying to display the overview form
+                isAllowedToSeeOverviewWithProcessPermissionType(formId, processDefinitionID, processDefinitionUUIDFromPermissions, context, ctxu, user, isFormPermissions);
+            } else if (ctxu.getProcessDefinitionId() != null) {
+                // Trying to display the Instantiation Form for a process
+                isAllowedToSeeProcessWithProcessPermissionType(formId, processDefinitionID, processDefinitionUUIDFromPermissions, context, ctxu, user, isFormPermissions);
+            }
+        } catch (final ProcessDefinitionNotFoundException e) {
+            final String message = "The process definition " + processDefinitionUUIDFromPermissions + " does not exist!";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e, context);
+            }
+            throw new FormNotFoundException(message);
+        }
+    }
+
+    private void isAllowedToSeeProcessWithProcessPermissionType(final String formId, final long processDefinitionID, final String processDefinitionUUIDFromPermissions,
+            final Map<String, Object> context, final FormContextUtil ctxu, final User user, final boolean isFormPermissions)
+            throws ForbiddenFormAccessException, BPMEngineException, ProcessDefinitionNotFoundException {
+        final long processDefinitionIDFromURL = ctxu.getProcessDefinitionId();
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        final APISession session = ctxu.getAPISessionFromContext();
+        verifyProcessInURL(processDefinitionIDFromURL, processDefinitionID, processDefinitionUUIDFromPermissions, context);
+        verifyProcessFormID(formId, processDefinitionUUIDFromPermissions, session, context);
+        if (!workflowAPI.isProcessEnabled(session, processDefinitionID)) {
+            final String message = "The process definition with ID " + processDefinitionID + " is not enabled.";
+            logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
+            throw new ForbiddenFormAccessException(message);
+        }
+        if (isFormPermissions) {
+            canUserInstantiateProcess(session, user, processDefinitionIDFromURL, ctxu.getUserId(), context);
+        }
+    }
+
+    private void isAllowedToSeeOverviewWithProcessPermissionType(final String formId, final long processDefinitionID, final String processDefinitionUUIDFromPermissions,
+            final Map<String, Object> context, final FormContextUtil ctxu, final User user, final boolean isFormPermissions)
+            throws BPMEngineException, ProcessDefinitionNotFoundException, ForbiddenFormAccessException, FormNotFoundException, SessionTimeoutException {
+        final long processInstanceID = getProcessInstanceId(ctxu.getUrlContext());
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        final APISession session = ctxu.getAPISessionFromContext();
+        try {
+            final long processInstanceProcessDefinitionID = workflowAPI.getProcessDefinitionIDFromProcessInstanceID(session,
+                    processInstanceID);
+            verifyInstanceIsPartOfProcess(processInstanceProcessDefinitionID, processDefinitionID, processDefinitionUUIDFromPermissions, context);
+            verifyInstanceFormID(formId, processDefinitionUUIDFromPermissions, session, context);
+        } catch (final ProcessInstanceNotFoundException e) {
+            final String message = "The process instance with ID " + processInstanceID + " does not exist!";
+            logInfoMessageWithContext(message, e, context);
+            throw new FormNotFoundException(message);
+        } catch (final ArchivedProcessInstanceNotFoundException e) {
+            final String message = "Archived process instance not found";
+            logSevereWithContext(message, e, context);
+            throw new FormNotFoundException(message);
+        }
+        if (isFormPermissions) {
+            canUserViewInstanceForm(session, user, workflowAPI, processInstanceID, formId, ctxu.getUserId(), context);
+        }
+    }
+
+    private void isAllowedToSeeTaskWithProcessPermissionType(final String formId, final long processDefinitionID, final String processDefinitionUUIDFromPermissions, 
+            final Map<String, Object> context, final FormContextUtil ctxu, final User user, final boolean isFormPermissions) throws ForbiddenFormAccessException, 
+            FormNotFoundException, BPMEngineException, SuspendedFormException, CanceledFormException, FormInErrorException, SkippedFormException, 
+            FormAlreadySubmittedException, AbortedFormException {
+        final long activityInstanceID = getActivityInstanceId(ctxu.getUrlContext());
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        final APISession session = ctxu.getAPISessionFromContext();
+        try {
+            final long activityInstanceProcessDefinitionID = getProcessDefinitionId(session, workflowAPI, activityInstanceID);
+            verifyActivityIsPartOfProcess(activityInstanceProcessDefinitionID, processDefinitionID, processDefinitionUUIDFromPermissions, context);
+            final String activityDefinitionUUIDFromURL = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID);
+            verifyActivityFormID(formId, activityDefinitionUUIDFromURL, session, context);
+        } catch (final FormWorflowApiException e) {
+            logSevereMessageWithContext(e, e.getMessage(), context);
+            throw new FormNotFoundException(e);
+        }
+        if (isFormPermissions) {
+            canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
+        }
+    }
+
+    private void isAllowedWithTaskPermissionType(final String formId, final String activityDefinitionUUIDFromPermissions, final Map<String, Object> context, final FormContextUtil ctxu, final User user, final boolean isFormPermissions) throws ForbiddenFormAccessException, FormNotFoundException, BPMEngineException, SuspendedFormException,
+            CanceledFormException, FormInErrorException, SkippedFormException, FormAlreadySubmittedException, AbortedFormException, TaskAssignationException {
+        final IFormWorkflowAPI workflowAPI = getFormWorkFlowApi();
+        final APISession session = ctxu.getAPISessionFromContext();
+        if (ctxu.getTaskId() != null) {
+            // Trying to display a Form for a TASK.
+            final long activityInstanceID = getActivityInstanceId(ctxu.getUrlContext());
+            try {
+                String activityDefinitionUUIDFromURL = getActivityDefinitionUUID(session, workflowAPI, activityInstanceID);
+                verifyActivityInURL(activityDefinitionUUIDFromURL, activityDefinitionUUIDFromPermissions, context);
+                verifyActivityFormID(formId, activityDefinitionUUIDFromURL, session, context);
+            } catch (final FormWorflowApiException e) {
+                logInfoMessageWithContext(e.getMessage(), e, context);
+                throw new FormNotFoundException(e);
+            }
+            if (isFormPermissions) {
+                canUserViewActivityInstanceForm(session, user, workflowAPI, activityInstanceID, formId, ctxu.getUserId(false), context);
+                // If assignTask=true in the contextURL assign the task to the user
+                if (isAssignTask(ctxu.getUrlContext())) {
+                    try {
+                        workflowAPI.assignTaskIfNotAssigned(session, activityInstanceID, ctxu.getUserId(true));
+                    } catch (final TaskAssignationException e) {
+                        logSevereWithContext(e.getMessage(), e, context);
+                        throw e;
+                    }
+                }
+            }
+        } else {
+            final String message = "A task parameter is required to display the form for activity " + activityDefinitionUUIDFromPermissions;
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    private void verifyActivityIsPartOfProcess(final long activityInstanceProcessDefinitionID, final long processDefinitionID,
+            final String processDefinitionUUID, final Map<String, Object> context) throws ForbiddenFormAccessException {
+        if (activityInstanceProcessDefinitionID != processDefinitionID) {
+            final String message = "The task required is not an instance of an activity of process" + processDefinitionUUID;
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    private void verifyInstanceIsPartOfProcess(final long processInstanceProcessDefinitionID, final long processDefinitionID,
+            final String processDefinitionUUID, final Map<String, Object> context) throws ForbiddenFormAccessException {
+        if (processInstanceProcessDefinitionID != processDefinitionID) {
+            final String message = "The process instance required is not an instance of process" + processDefinitionUUID;
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+    
+    private void verifyProcessInURL(final long processDefinitionIDFromURL, final long processDefinitionID, final String processDefinitionUUID,
+            final Map<String, Object> context) throws ForbiddenFormAccessException {
+        if (processDefinitionIDFromURL != processDefinitionID) {
+            final String message = "The process required does not match the form required " + processDefinitionUUID;
+            logInfoMessageWithContext(message, new ForbiddenFormAccessException(), context);
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    private void verifyActivityInURL(String activityDefinitionUUIDFromURL, final String activityDefinitionUUID, final Map<String, Object> context)
+            throws ForbiddenFormAccessException {
+        if (!activityDefinitionUUIDFromURL.equals(activityDefinitionUUID)) {
+            final String message = "User tried to access an unauthorized activity <" + activityDefinitionUUID + ">";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+    
+    private void verifyProcessFormID(final String formId, final String processDefinitionUUID, final APISession session, final Map<String, Object> context)
+            throws ForbiddenFormAccessException {
+        if(!isCustomFormIdAuthorized(session) 
+                && !formId.equals(processDefinitionUUID + FormServiceProviderUtil.FORM_ID_SEPARATOR + FormServiceProviderUtil.ENTRY_FORM_TYPE)) {
+            final String message = "User tried to access an unauthorized form <" + formId + ">. To allow custom form IDs, you need to add the line \"form.id.custom.allowed  true\" in the file forms-config.properties of the tenant.";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    private void verifyInstanceFormID(final String formId, final String processDefinitionUUID, final APISession session, final Map<String, Object> context)
+            throws ForbiddenFormAccessException {
+        if (!isCustomFormIdAuthorized(session) 
+                && !formId.equals(processDefinitionUUID + FormServiceProviderUtil.FORM_ID_SEPARATOR + FormServiceProviderUtil.RECAP_FORM_TYPE)) {
+            final String message = "User tried to access an unauthorized form <" + formId + ">. To allow custom form IDs, you need to add the line \"form.id.custom.allowed  true\" in the file forms-config.properties of the tenant.";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    private void verifyActivityFormID(final String formId, String activityDefinitionUUID, final APISession session, final Map<String, Object> context)
+            throws ForbiddenFormAccessException {
+        if (!isCustomFormIdAuthorized(session) 
+                && !formId.equals(activityDefinitionUUID + FormServiceProviderUtil.FORM_ID_SEPARATOR + FormServiceProviderUtil.ENTRY_FORM_TYPE)) {
+            final String message = "User tried to access an unauthorized form <" + formId + ">. To allow custom form IDs, you need to add the line \"form.id.custom.allowed  true\" in the file forms-config.properties of the tenant.";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, context);
+            }
+            throw new ForbiddenFormAccessException(message);
+        }
+    }
+
+    protected boolean isCustomFormIdAuthorized(final APISession session) {
+        return DefaultFormsPropertiesFactory.getDefaultFormProperties(session.getTenantId()).isCustomFormIdAuthorized();
     }
 
     protected FormContextUtil createFormContextUtil(final Map<String, Object> context) {
@@ -504,6 +606,15 @@ public class FormServiceProviderImpl implements FormServiceProvider {
                         getLogger().log(Level.INFO, message, context);
                     }
                     throw new FormAlreadySubmittedException(message);
+                }
+            } else if (ActivityEditState.EDITABLE.equals(activityEditState)) {
+                if (FormServiceProviderUtil.VIEW_FORM_TYPE.equals(getFormType(formId, context))) {
+                    final String message = "The activity instance with ID " + activityInstanceID
+                            + " has not been executed yet. It cannot be viewed";
+                    if (getLogger().isLoggable(Level.INFO)) {
+                        getLogger().log(Level.INFO, message, context);
+                    }
+                    throw new ForbiddenFormAccessException(message);
                 }
             }
         } catch (final ActivityInstanceNotFoundException e) {
@@ -1298,9 +1409,9 @@ public class FormServiceProviderImpl implements FormServiceProvider {
         return (Map<String, Object>) context.get(FormServiceProviderUtil.URL_CONTEXT);
     }
 
-    private boolean isAssignTask(final Map<String, Object> context) {
-        if (context.containsKey(FormServiceProviderUtil.ASSIGN_TASK)) {
-            return Boolean.parseBoolean((String) context.get(FormServiceProviderUtil.ASSIGN_TASK));
+    private boolean isAssignTask(final Map<String, Object> urlContext) {
+        if (urlContext.containsKey(FormServiceProviderUtil.ASSIGN_TASK)) {
+            return Boolean.parseBoolean((String) urlContext.get(FormServiceProviderUtil.ASSIGN_TASK));
         }
         return false;
     }

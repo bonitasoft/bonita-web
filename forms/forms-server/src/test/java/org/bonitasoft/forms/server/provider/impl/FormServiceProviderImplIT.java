@@ -176,14 +176,13 @@ public class FormServiceProviderImplIT extends FormsTestCase {
         context.put(FormServiceProviderUtil.URL_CONTEXT, urlContext);
         context.put(FormServiceProviderUtil.LOCALE, Locale.ENGLISH);
         context.put(FormServiceProviderUtil.API_SESSION, getSession());
-        // TODO re-establish this once it will be possible to give some access rights to the overview form
-        // boolean isAllowed1 = formServiceProvider.isAllowed(processDefinitionUUIDStr + FormServiceProviderUtil.FORM_ID_SEPARATOR
-        // + FormServiceProviderUtil.RECAP_FORM_TYPE, FormServiceProviderUtil.INSTANCE_UUID + "#" + processDefinitionUUIDStr, "6.0", "6.0", context, true);
-        // Assert.assertEquals(true, isAllowed1);
+        String processDefinitionUUIDStr = processDefinition.getName() + "--" + processDefinition.getVersion();
+        boolean isAllowedWithCredentials = formServiceProvider.isAllowed(processDefinitionUUIDStr + FormServiceProviderUtil.FORM_ID_SEPARATOR + FormServiceProviderUtil.RECAP_FORM_TYPE, 
+                FormServiceProviderUtil.INSTANCE_UUID + "#" + processDefinitionUUIDStr, "6.0", "6.0", context, true);
+        Assert.assertTrue(isAllowedWithCredentials);
         context.remove(FormServiceProviderUtil.USER);
         // expected = NoCredentialsInSessionException.class
-        formServiceProvider.isAllowed(processDefinition.getName() + "--" + processDefinition.getVersion() + FormServiceProviderUtil.FORM_ID_SEPARATOR
-                + FormServiceProviderUtil.RECAP_FORM_TYPE,
+        formServiceProvider.isAllowed(processDefinitionUUIDStr + FormServiceProviderUtil.FORM_ID_SEPARATOR + FormServiceProviderUtil.RECAP_FORM_TYPE,
                 FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinition.getId(), "6.0", "6.0", context, true);
     }
 
