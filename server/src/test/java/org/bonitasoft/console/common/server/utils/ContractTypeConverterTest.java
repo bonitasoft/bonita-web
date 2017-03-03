@@ -2,17 +2,16 @@ package org.bonitasoft.console.common.server.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.bonitasoft.console.common.server.utils.ContractTypeConverter.ISO_8601_DATE_PATTERNS;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -34,13 +33,16 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-
 @RunWith(MockitoJUnitRunner.class)
 public class ContractTypeConverterTest {
 
     public static final long DATE_01_01_1970_13H_AS_LONG_GMT = 46800000L;
-    
+
     public static final String DATE_01_01_1970_13H_AS_STRING_GMT = "1970-01-01T13:00:00.000Z";
+
+    public static final LocalDate testLocalDate = LocalDate.of(2012, 4, 21);
+
+    public static final LocalDateTime testLocalDateTime = LocalDateTime.of(2012, 4, 21, 17, 42, 29);
 
     @Mock
     ContractDefinition contractDefinition;
@@ -58,7 +60,7 @@ public class ContractTypeConverterTest {
 
     @Spy
     @InjectMocks
-    ContractTypeConverter contractTypeConverter = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
+    ContractTypeConverter contractTypeConverter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
 
     private File generateTempFile() throws IOException {
         final File tempFile = File.createTempFile(this.getClass().getName(), null);
@@ -69,7 +71,7 @@ public class ContractTypeConverterTest {
 
     @Test
     public void getProcessedInputs_with_empty_contract_should_return_unmodified_inputs() throws Exception {
-        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition>emptyList());
+        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
         final Map<String, Serializable> input = new HashMap<>();
         input.put("input1", "value1");
         input.put("input2", "value2");
@@ -105,7 +107,7 @@ public class ContractTypeConverterTest {
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
 
-        assertThat(processedInput).containsOnly(entry("inputText", "0"), entry("inputBoolean", "hello"), entry("inputDate","0"),
+        assertThat(processedInput).containsOnly(entry("inputText", "0"), entry("inputBoolean", "hello"), entry("inputDate", "0"),
                 entry("inputInteger", "hello"), entry("inputDecimal", "hello"), entry("inputLong", "hello"));
     }
 
@@ -120,8 +122,10 @@ public class ContractTypeConverterTest {
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
 
-        assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
-                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE),
+        assertThat(processedInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true),
+                entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE), entry("inputLocalDate", testLocalDate),
+                entry("inputLocalDateTime", testLocalDateTime),
                 entry("inputFile", new FileInputValue(filename, "", fileContentString.getBytes("UTF-8"))));
     }
 
@@ -139,8 +143,10 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId, false);
         assertThat(processedInput).containsKey("inputComplex");
         final Map<String, Serializable> processedComplexInput = (Map<String, Serializable>) processedInput.get("inputComplex");
-        assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
-                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE),
+        assertThat(processedComplexInput).containsOnly(entry("inputText", "text"), entry("inputBoolean", true),
+                entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE), entry("inputLocalDate", testLocalDate),
+                entry("inputLocalDateTime", testLocalDateTime),
                 entry("inputFile", new FileInputValue(filename, "", fileContentString.getBytes("UTF-8"))));
     }
 
@@ -162,8 +168,10 @@ public class ContractTypeConverterTest {
         assertThat(processedMultipleComplexInput).hasSize(2);
         for (final Serializable processedComplexInput : processedMultipleComplexInput) {
             final Map<String, Serializable> processedComplexInputMap = (Map<String, Serializable>) processedComplexInput;
-            assertThat(processedComplexInputMap).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
-                    entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE),
+            assertThat(processedComplexInputMap).containsOnly(entry("inputText", "text"), entry("inputBoolean", true),
+                    entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
+                    entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE), entry("inputLocalDate", testLocalDate),
+                    entry("inputLocalDateTime", testLocalDateTime),
                     entry("inputFile", new FileInputValue(filename, "", fileContentString.getBytes("UTF-8"))));
         }
     }
@@ -212,8 +220,10 @@ public class ContractTypeConverterTest {
         assertThat(processedMultipleComplexInput).hasSize(3);
         final Serializable processedComplexInput1 = processedMultipleComplexInput.get(0);
         final Map<String, Serializable> processedComplexInputMap1 = (Map<String, Serializable>) processedComplexInput1;
-        assertThat(processedComplexInputMap1).containsOnly(entry("inputText", "text"), entry("inputBoolean", true), entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
-                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE),
+        assertThat(processedComplexInputMap1).containsOnly(entry("inputText", "text"), entry("inputBoolean", true),
+                entry("inputDate", new Date(DATE_01_01_1970_13H_AS_LONG_GMT)),
+                entry("inputInteger", 125686181), entry("inputDecimal", 12.8), entry("inputLong", Long.MAX_VALUE), entry("inputLocalDate", testLocalDate),
+                entry("inputLocalDateTime", testLocalDateTime),
                 entry("inputFile", new FileInputValue(filename, "", fileContentString.getBytes("UTF-8"))));
         final Serializable processedComplexInput2 = processedMultipleComplexInput.get(1);
         final Map<String, Serializable> processedComplexInputMap2 = (Map<String, Serializable>) processedComplexInput2;
@@ -252,7 +262,6 @@ public class ContractTypeConverterTest {
         verify(contractTypeConverter, times(1)).deleteFile(any(File.class), anyString());
     }
 
-
     @Test
     public void getAdaptedContractDefinition_should_return_a_converter_contract() throws IOException {
         //given
@@ -271,14 +280,14 @@ public class ContractTypeConverterTest {
         assertThat(tempPathFileInputDefinition.getName()).isEqualTo(ContractTypeConverter.FILE_TEMP_PATH);
         assertThat(tempPathFileInputDefinition.getDescription()).isEqualTo(ContractTypeConverter.TEMP_PATH_DESCRIPTION);
     }
-    
+
     @Test
     public void should_be_able_to_convert_Integer_to_Date() throws Exception {
-        
-        Object convertionResult = contractTypeConverter.convertToType(Type.DATE, new Integer(86400000));
-        assertThat(convertionResult).isNotNull();
-        assertThat(convertionResult).isInstanceOf(Date.class);
-        assertThat(((Date)convertionResult).getTime()).isEqualTo(86400000L);
+
+        Object conversionResult = contractTypeConverter.convertToType(Type.DATE, 86400000);
+        assertThat(conversionResult).isNotNull();
+        assertThat(conversionResult).isInstanceOf(Date.class);
+        assertThat(((Date) conversionResult).getTime()).isEqualTo(86400000L);
     }
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
@@ -295,6 +304,8 @@ public class ContractTypeConverterTest {
         inputMap.put("inputInteger", "125686181");
         inputMap.put("inputDecimal", "12.8");
         inputMap.put("inputLong", "9223372036854775807");
+        inputMap.put("inputLocalDate", testLocalDate.toString());
+        inputMap.put("inputLocalDateTime", testLocalDateTime.toString());
         final Map<String, Serializable> fileMap = new HashMap<>();
         fileMap.put(InputDefinition.FILE_INPUT_FILENAME, filename);
         fileMap.put(ContractTypeConverter.FILE_TEMP_PATH, tempFilePath);
@@ -374,6 +385,14 @@ public class ContractTypeConverterTest {
         when(longInputDefinition.getType()).thenReturn(Type.LONG);
         when(longInputDefinition.getName()).thenReturn("inputLong");
         inputDefinitions.add(longInputDefinition);
+        final InputDefinition localDateInputDefinition = mock(InputDefinitionImpl.class);
+        when(localDateInputDefinition.getType()).thenReturn(Type.LOCALDATE);
+        when(localDateInputDefinition.getName()).thenReturn("inputLocalDate");
+        inputDefinitions.add(localDateInputDefinition);
+        final InputDefinition localDateTimeInputDefinition = mock(InputDefinitionImpl.class);
+        when(localDateTimeInputDefinition.getType()).thenReturn(Type.LOCALDATETIME);
+        when(localDateTimeInputDefinition.getName()).thenReturn("inputLocalDateTime");
+        inputDefinitions.add(localDateTimeInputDefinition);
         return inputDefinitions;
     }
 
@@ -386,5 +405,44 @@ public class ContractTypeConverterTest {
         when(inputDefinition.getInputs()).thenReturn(childInputDefinitions);
         inputDefinitions.add(inputDefinition);
         return inputDefinitions;
+    }
+
+    @Test
+    public void convertToType_should_correctly_parse_incoming_objects() {
+        Object date = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.DATE, "2017-12-25");
+        assertThat(date.getClass()).isEqualTo(Date.class);
+        Object validLocalDate = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATE, "2017-12-25");
+        assertThat(validLocalDate).isNotNull().isEqualTo(LocalDate.of(2017, 12, 25));
+        Object validLocalDateTime = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, "2017-12-17T21:42:57");
+        assertThat(validLocalDateTime).isEqualTo(LocalDateTime.of(2017, 12, 17, 21, 42, 57));
+        Object invalidDateFormat = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, "2017-22-37T21:42:57");
+        assertThat(invalidDateFormat.getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    public void convertToType_with_null_localDate_value_should_silently_return_null() throws Exception {
+        // when:
+        final Object nullLocalDate = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATE, null);
+
+        // then:
+        assertThat(nullLocalDate).isNull();
+    }
+
+    @Test
+    public void convertToType_with_null_localDateTime_value_should_silently_return_null() throws Exception {
+        // when:
+        final Object nullLocalDateTime = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, null);
+
+        // then:
+        assertThat(nullLocalDateTime).isNull();
+    }
+
+    @Test
+    public void convertToType_with_null_String_value_should_silently_return_null() throws Exception {
+        // when:
+        final Object nullString = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.TEXT, null);
+
+        // then:
+        assertThat(nullString).isNull();
     }
 }
