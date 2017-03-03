@@ -17,6 +17,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -51,8 +54,8 @@ public class ContractTypeConverter {
      */
     protected static final Logger LOGGER = Logger.getLogger(ContractTypeConverter.class.getName());
 
-    public static final String[] ISO_8601_DATE_PATTERNS = new String[]{"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"};
+    public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
 
     public static final String CONTENT_TYPE = "contentType";
     public static final String FILE_TEMP_PATH = "tempPath";
@@ -84,16 +87,18 @@ public class ContractTypeConverter {
     private Serializable preprocessInputs(final Type type, final Serializable parameterValue) {
         //Also support Integer as DATE contract input (as deserialization is handled by jackson it can be mapped to an integer instead of a long when it is a small number)
         if (Type.DATE.equals(type) && parameterValue instanceof Integer) {
-            return Long.valueOf((Integer)parameterValue);
+            return Long.valueOf((Integer) parameterValue);
         }
         return parameterValue;
     }
 
-    public Map<String,Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs, final long maxSizeForTenant, final long tenantId, final boolean deleteFile) throws FileNotFoundException {
+    public Map<String, Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs,
+            final long maxSizeForTenant, final long tenantId, final boolean deleteFile) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
         final Map<String, Serializable> processedInputs = new HashMap<>();
-        final Map<String, Serializable> contractDefinitionMap = processContract == null? Collections.<String, Serializable>emptyMap() : createContractInputMap(processContract.getInputs());
+        final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.<String, Serializable> emptyMap()
+                : createContractInputMap(processContract.getInputs());
 
         if (inputs != null) {
             for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
@@ -104,7 +109,8 @@ public class ContractTypeConverter {
         return processedInputs;
     }
 
-    protected Serializable convertInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile) throws FileNotFoundException {
+    protected Serializable convertInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+            throws FileNotFoundException {
         if (inputValue == null) {
             return null;
         } else if (inputValue instanceof List) {
@@ -129,7 +135,8 @@ public class ContractTypeConverter {
         return (Serializable) convertedListOfValues;
     }
 
-    protected Serializable convertSingleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile) throws FileNotFoundException {
+    protected Serializable convertSingleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+            throws FileNotFoundException {
         if (inputDefinition == null) {
             return inputValue;
         } else if (inputDefinition instanceof Map) {
@@ -173,7 +180,7 @@ public class ContractTypeConverter {
                         filename,
                         (String) mapOfValues.get(CONTENT_TYPE),
                         retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH),
-                        deleteFile));
+                                deleteFile));
                 return fileInputValue;
             }
         }
@@ -215,7 +222,7 @@ public class ContractTypeConverter {
     }
 
     protected void deleteFile(final File sourceFile, final String fileTempPath) {
-        if (!sourceFile.delete()){
+        if (!sourceFile.delete()) {
             sourceFile.deleteOnExit();
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
@@ -254,7 +261,8 @@ public class ContractTypeConverter {
             } else {
                 childInputDefinitions = new ArrayList<>();
             }
-            final InputDefinition newInputDefinition = new InputDefinitionImpl(inputDefinition.getName(), inputDefinition.getDescription(), inputDefinition.isMultiple(), inputDefinition.getType(), childInputDefinitions);
+            final InputDefinition newInputDefinition = new InputDefinitionImpl(inputDefinition.getName(), inputDefinition.getDescription(),
+                    inputDefinition.isMultiple(), inputDefinition.getType(), childInputDefinitions);
             contractDefinition.add(newInputDefinition);
         }
         return contractDefinition;
@@ -264,8 +272,8 @@ public class ContractTypeConverter {
         List<InputDefinition> childInputDefinitions;
         childInputDefinitions = new ArrayList<>();
         for (final InputDefinition childInputDefinition : inputDefinition.getInputs()) {
-            if(Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
-                childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION,false, Type.TEXT, new ArrayList<InputDefinition>()));
+            if (Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
+                childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION, false, Type.TEXT, new ArrayList<InputDefinition>()));
             } else {
                 childInputDefinitions.add(childInputDefinition);
             }
@@ -275,20 +283,29 @@ public class ContractTypeConverter {
 
     protected ContractDefinitionImpl getContractDefinition(final List<ConstraintDefinition> constraints, final List<InputDefinition> inputDefinitions) {
         final ContractDefinitionImpl contractDefinition = new ContractDefinitionImpl();
-        for (final ConstraintDefinition constraint: constraints) {
+        for (final ConstraintDefinition constraint : constraints) {
             contractDefinition.addConstraint(constraint);
         }
 
-        for (final InputDefinition input: inputDefinitions) {
+        for (final InputDefinition input : inputDefinitions) {
             contractDefinition.addInput(input);
         }
         return contractDefinition;
     }
 
     protected Object convertToType(final Class<? extends Serializable> clazz, final Serializable parameterValue) {
+        if (parameterValue == null) {
+            return null;
+        }
         try {
-            return convertUtilsBean.convert(parameterValue, clazz);
-        } catch (final ConversionException e) {
+            if (clazz == LocalDate.class) {
+                return LocalDate.parse((CharSequence) parameterValue);
+            } else if (clazz == LocalDateTime.class) {
+                return LocalDateTime.parse((CharSequence) parameterValue);
+            } else {
+                return convertUtilsBean.convert(parameterValue, clazz);
+            }
+        } catch (final ConversionException | DateTimeParseException e) {
             LOGGER.log(Level.INFO, "unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
             return parameterValue;
         }
@@ -308,6 +325,10 @@ public class ContractTypeConverter {
                 return Byte[].class;
             case LONG:
                 return Long.class;
+            case LOCALDATE:
+                return LocalDate.class;
+            case LOCALDATETIME:
+                return LocalDateTime.class;
             default:
                 return String.class;
         }
