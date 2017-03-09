@@ -1017,7 +1017,7 @@ public abstract class AbstractI18n {
         }
 
         final String translation = localeMap.get(string);
-        if (translation == null) {
+        if (StringUtil.isBlank(translation)) {
             return string;
         }
 
