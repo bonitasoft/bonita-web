@@ -22,6 +22,8 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
+import java.util.HashMap;
+
 /**
  * Created by Vincent Elcrin
  * Date: 23/09/13
@@ -37,5 +39,28 @@ public class AbstractI18nTest {
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyLocaleConversion() throws Exception {
         LOCALE.valueOf("");
+    }
+
+
+    @Test
+    public void should_return_key_when_no_translation_is_available() throws Exception {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("a translation key", "une cle de traduction");
+        I18n.getInstance().setLocale(LOCALE.fr_FR, map);
+
+        String text = I18n.getInstance().getText(LOCALE.fr_FR, "an unknown translation key");
+
+        assertEquals(text, "an unknown translation key");
+    }
+
+    @Test
+    public void should_return_key_when_translation_is_empty() throws Exception {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("an untranslated key", "");
+        I18n.getInstance().setLocale(LOCALE.fr_FR, map);
+
+        String text = I18n.getInstance().getText(LOCALE.fr_FR, "an untranslated key");
+
+        assertEquals(text, "an untranslated key");
     }
 }
