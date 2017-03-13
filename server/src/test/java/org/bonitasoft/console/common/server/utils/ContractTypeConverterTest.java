@@ -445,4 +445,77 @@ public class ContractTypeConverterTest {
         // then:
         assertThat(nullString).isNull();
     }
+
+    @Test
+    public void convertToType_should_ignore_extra_characters_in_String_for_LocalDates() {
+
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDateString = converter.convertToType(Type.LOCALDATE, "1987-12-12T10:00:00");
+
+        assertThat(localDateString).isEqualTo(LocalDate.of(1987, 12, 12));
+
+    }
+
+    @Test
+    public void convertToType_should_ignore_extra_characters_in_String_for_LocalDatesTime() {
+
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDateTimeString1 = converter.convertToType(Type.LOCALDATETIME, "1987-12-12T10:00:00Z");
+        final Object localDateTimeString2 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258Z");
+        final Object localDateTimeString3 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753Z");
+        final Object localDateTimeString4 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20+01:00");
+        final Object localDateTimeString5 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258+01:00");
+        final Object localDateTimeString6 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753+01:00");
+        final Object localDateTimeString7 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20+01:00[Europe/Berlin]");
+        final Object localDateTimeString8 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258+01:00[Europe/Berlin]");
+        final Object localDateTimeString9 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753+01:00[Europe/Berlin]");
+        final Object localDateTimeString10 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753-01:00");
+
+        assertThat(localDateTimeString1).isEqualTo(LocalDateTime.of(1987, 12, 12, 10, 0, 0, 0));
+        assertThat(localDateTimeString2).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        assertThat(localDateTimeString3).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        assertThat(localDateTimeString4).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20));
+        assertThat(localDateTimeString5).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        assertThat(localDateTimeString6).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        assertThat(localDateTimeString7).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20));
+        assertThat(localDateTimeString8).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        assertThat(localDateTimeString9).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        assertThat(localDateTimeString10).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+    }
+
+    @Test
+    public void convertToType_should_not_convert_into_a_LocalDate_a_String_that_is_too_short() {
+
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDateString = converter.convertToType(Type.LOCALDATE, "1987-12");
+
+        assertThat(localDateString.getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    public void convertToType_should_not_convert_into_a_LocalDateTime_a_String_that_is_too_short() {
+
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDateTimeString1 = converter.convertToType(Type.LOCALDATETIME, "1987");
+        final Object localDateTimeString2 = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19");
+        final Object localDateTimeString3 = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32:4");
+
+        assertThat(localDateTimeString1.getClass()).isEqualTo(String.class);
+        assertThat(localDateTimeString2.getClass()).isEqualTo(String.class);
+        assertThat(localDateTimeString3.getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    public void convertToType_should_convert_a_String_without_seconds_into_a_LocalDateTime_objects() {
+
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDateTimeString = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32");
+
+        assertThat(localDateTimeString).isEqualTo(LocalDateTime.of(1987, 10, 11, 19, 32));
+    }
 }

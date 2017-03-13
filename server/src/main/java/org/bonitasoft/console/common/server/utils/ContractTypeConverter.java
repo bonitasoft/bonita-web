@@ -297,11 +297,21 @@ public class ContractTypeConverter {
         if (parameterValue == null) {
             return null;
         }
+        String paramValueString = parameterValue.toString();
         try {
             if (clazz == LocalDate.class) {
-                return LocalDate.parse((CharSequence) parameterValue);
+
+                //We drop useless info received from the widget ex: 2010-12-04T18:42:10Z, we drop T18:42:10Z to allow conversion
+                try {
+                    paramValueString = paramValueString.substring(0, 10);
+                } catch (StringIndexOutOfBoundsException e) {
+                    //Ignore. Will throw a DateTimeParseException next line, wich is more suitable.
+                }
+                return LocalDate.parse(paramValueString);
             } else if (clazz == LocalDateTime.class) {
-                return LocalDateTime.parse((CharSequence) parameterValue);
+                //We drop the timezone info from the String
+                paramValueString = paramValueString.replaceAll("Z$|[+-](?!([-\\d]*T.*)).+$", "");
+                return LocalDateTime.parse(paramValueString);
             } else {
                 return convertUtilsBean.convert(parameterValue, clazz);
             }
