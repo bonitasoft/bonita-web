@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-03-11 18:06-0500\n"
+"PO-Revision-Date: 2017-03-12 23:58-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,7 +87,7 @@ msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and 
 msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
 
 #: main/features/user/cases/list/cases-list-values.js:54
-#: main/features/user/tasks/list/common/store.js:61
+#: main/features/user/tasks/list/common/store.js:57
 msgid "All"
 msgstr "Tous"
 
