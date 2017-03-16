@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-03-12 23:58-0400\n"
+"PO-Revision-Date: 2017-03-15 19:11-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -87,7 +87,7 @@ msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and 
 msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
 
 #: main/features/user/cases/list/cases-list-values.js:54
-#: main/features/user/tasks/list/common/store.js:57
+#: main/features/user/tasks/list/common/store.js:61
 msgid "All"
 msgstr "Tous"
 
@@ -233,7 +233,7 @@ msgstr "Catégories"
 
 #: target/dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Check that each entity is mapped to a profile, for either Bonita BPM Portal or for applications you have created."
-msgstr ""
+msgstr "Vérifiez que chaque entité est mappée à un profil, pour le Bonita BPM Portal ou pour les applications que vous avez créées."
 
 #: target/dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
