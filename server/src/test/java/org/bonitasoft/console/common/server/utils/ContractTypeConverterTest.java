@@ -12,12 +12,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -415,8 +419,9 @@ public class ContractTypeConverterTest {
         assertThat(validLocalDate).isNotNull().isEqualTo(LocalDate.of(2017, 12, 25));
         Object validLocalDateTime = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, "2017-12-17T21:42:57");
         assertThat(validLocalDateTime).isEqualTo(LocalDateTime.of(2017, 12, 17, 21, 42, 57));
-        Object invalidDateFormat = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, "2017-22-37T21:42:57");
-        assertThat(invalidDateFormat.getClass()).isEqualTo(String.class);
+        final String invalidDateTime = "2017-22-37T21:42:57";
+        Object invalidDateFormat = new ContractTypeConverter(ISO_8601_DATE_PATTERNS).convertToType(Type.LOCALDATETIME, invalidDateTime);
+        assertThat(invalidDateFormat).isEqualTo(invalidDateTime);
     }
 
     @Test
@@ -448,7 +453,6 @@ public class ContractTypeConverterTest {
 
     @Test
     public void convertToType_should_ignore_extra_characters_in_String_for_LocalDates() {
-
         ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
 
         final Object localDateString = converter.convertToType(Type.LOCALDATE, "1987-12-12T10:00:00");
@@ -459,40 +463,61 @@ public class ContractTypeConverterTest {
 
     @Test
     public void convertToType_should_ignore_extra_characters_in_String_for_LocalDatesTime() {
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+        Map<String, Object> conversionMap = new HashMap<>();
+        conversionMap.put("1987-12-12T10:00Z", LocalDateTime.of(1987, 12, 12, 10, 0, 0, 0));
+        conversionMap.put("1987-12-12T10:00:00Z", LocalDateTime.of(1987, 12, 12, 10, 0, 0, 0));
+        conversionMap.put("2017-03-09T12:20:20.258Z", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        conversionMap.put("2017-03-09T12:20:20.258854753Z", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        conversionMap.put("2017-03-09T12:20:20+01:00", LocalDateTime.of(2017, 3, 9, 12, 20, 20));
+        conversionMap.put("2017-03-09T12:20:20.258+01:00", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        conversionMap.put("2017-03-09T12:20:20.258854753+01:00", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        conversionMap.put("2017-03-09T12:20:20+01:00[Europe/Berlin]", LocalDateTime.of(2017, 3, 9, 12, 20, 20));
+        conversionMap.put("2017-03-09T12:20:20.258+01:00[Europe/Berlin]", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
+        conversionMap.put("2017-03-09T12:20:20.258854753+01:00[Europe/Berlin]", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        conversionMap.put("2017-03-09T12:20:20.258854753-01:00", LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
 
+        for (Map.Entry<String, Object> entry : conversionMap.entrySet()) {
+            assertThat(converter.convertToType(Type.LOCALDATETIME, entry.getKey())).isEqualTo(entry.getValue());
+        }
+    }
+
+    @Test
+    public void convertToType_should_convert_to_OffsetDateTime_every_input_format_string() {
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+        Map<String, Object> conversionMap = new HashMap<>();
+        conversionMap.put("1987-12-12T10:00:00Z", OffsetDateTime.of(1987, 12, 12, 10, 0, 0, 0, ZoneOffset.UTC));
+        conversionMap.put("2017-03-09T12:20:20.258Z", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258000000, ZoneOffset.UTC));
+        conversionMap.put("2017-03-09T12:20:20.258854753Z", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258854753, ZoneOffset.UTC));
+        conversionMap.put("2017-03-09T12:20:20+01:00", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 0, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20.258+01:00", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258000000, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20.258854753+01:00", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258854753, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20+01:00[Europe/Berlin]", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 0, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20.258+01:00[Europe/Berlin]", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258000000, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20.258854753+01:00[Europe/Berlin]", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258854753, ZoneOffset.ofHours(1)));
+        conversionMap.put("2017-03-09T12:20:20.258854753-01:00", OffsetDateTime.of(2017, 3, 9, 12, 20, 20, 258854753, ZoneOffset.ofHours(-1)));
+        for (Map.Entry<String, Object> entry : conversionMap.entrySet()) {
+            assertThat(converter.convertToType(Type.OFFSETDATETIME, entry.getKey())).isEqualTo(entry.getValue());
+        }
+    }
+
+    @Test
+    public void convertToType_should_not_convert_into_an_OffsetDate_a_String_that_is_too_short() {
         ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
 
-        final Object localDateTimeString1 = converter.convertToType(Type.LOCALDATETIME, "1987-12-12T10:00:00Z");
-        final Object localDateTimeString2 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258Z");
-        final Object localDateTimeString3 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753Z");
-        final Object localDateTimeString4 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20+01:00");
-        final Object localDateTimeString5 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258+01:00");
-        final Object localDateTimeString6 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753+01:00");
-        final Object localDateTimeString7 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20+01:00[Europe/Berlin]");
-        final Object localDateTimeString8 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258+01:00[Europe/Berlin]");
-        final Object localDateTimeString9 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753+01:00[Europe/Berlin]");
-        final Object localDateTimeString10 = converter.convertToType(Type.LOCALDATETIME, "2017-03-09T12:20:20.258854753-01:00");
+        final Object unparseableString = converter.convertToType(Type.OFFSETDATETIME, "1987-12");
 
-        assertThat(localDateTimeString1).isEqualTo(LocalDateTime.of(1987, 12, 12, 10, 0, 0, 0));
-        assertThat(localDateTimeString2).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
-        assertThat(localDateTimeString3).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
-        assertThat(localDateTimeString4).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20));
-        assertThat(localDateTimeString5).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
-        assertThat(localDateTimeString6).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
-        assertThat(localDateTimeString7).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20));
-        assertThat(localDateTimeString8).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258000000));
-        assertThat(localDateTimeString9).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
-        assertThat(localDateTimeString10).isEqualTo(LocalDateTime.of(2017, 3, 9, 12, 20, 20, 258854753));
+        assertThat(unparseableString).isEqualTo("1987-12");
     }
 
     @Test
     public void convertToType_should_not_convert_into_a_LocalDate_a_String_that_is_too_short() {
-
-        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+        ContractTypeConverter converter = spy(new ContractTypeConverter(ISO_8601_DATE_PATTERNS));
 
         final Object localDateString = converter.convertToType(Type.LOCALDATE, "1987-12");
 
-        assertThat(localDateString.getClass()).isEqualTo(String.class);
+        assertThat(localDateString).isEqualTo("1987-12");
+        verify(converter).logMessage(eq(Level.INFO), eq("unable to parse '1987-12' to type " + LocalDate.class.getName()), any(DateTimeParseException.class));
     }
 
     @Test
@@ -500,22 +525,48 @@ public class ContractTypeConverterTest {
 
         ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
 
-        final Object localDateTimeString1 = converter.convertToType(Type.LOCALDATETIME, "1987");
-        final Object localDateTimeString2 = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19");
-        final Object localDateTimeString3 = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32:4");
+        final String year = "1987";
+        final Object localDateTimeString1 = converter.convertToType(Type.LOCALDATETIME, year);
+        final String yearAndHour = "1987-10-11T19";
+        final Object localDateTimeString2 = converter.convertToType(Type.LOCALDATETIME, yearAndHour);
+        final String invalidDateAndTime = "1987-10-11T19:32:4";
+        final Object localDateTimeString3 = converter.convertToType(Type.LOCALDATETIME, invalidDateAndTime);
 
-        assertThat(localDateTimeString1.getClass()).isEqualTo(String.class);
-        assertThat(localDateTimeString2.getClass()).isEqualTo(String.class);
-        assertThat(localDateTimeString3.getClass()).isEqualTo(String.class);
+        assertThat(localDateTimeString1).isEqualTo(year);
+        assertThat(localDateTimeString2).isEqualTo(yearAndHour);
+        assertThat(localDateTimeString3).isEqualTo(invalidDateAndTime);
     }
 
     @Test
     public void convertToType_should_convert_a_String_without_seconds_into_a_LocalDateTime_objects() {
-
         ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
 
         final Object localDateTimeString = converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32");
 
         assertThat(localDateTimeString).isEqualTo(LocalDateTime.of(1987, 10, 11, 19, 32));
+    }
+
+    @Test
+    public void convertToType_should_convert_a_LongString_to_a_LocalDate() {
+        ContractTypeConverter converter = new ContractTypeConverter(ISO_8601_DATE_PATTERNS);
+
+        final Object localDate = converter.convertToType(Type.LOCALDATE, "1987-10-11T19:32");
+
+        assertThat(localDate).isEqualTo(LocalDate.of(1987, 10, 11));
+    }
+
+    @Test
+    public void convertToType_should_log_if_value_is_truncated() {
+        ContractTypeConverter converter = spy(new ContractTypeConverter(ISO_8601_DATE_PATTERNS));
+
+        converter.convertToType(Type.LOCALDATE, "1987-10-11T19:32");
+
+        verify(converter).logMessage(any(Level.class),
+                eq("The string 1987-10-11T19:32 contains information that will be dropped to convert it to a LocalDate (most likely time and timezone information which are not relevant)."));
+
+        converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32Z");
+
+        verify(converter).logMessage(any(Level.class),
+                eq("The string 1987-10-11T19:32Z contains information that will be dropped to convert it to a LocalDateTime (most likely time and timezone information which are not relevant)."));
     }
 }

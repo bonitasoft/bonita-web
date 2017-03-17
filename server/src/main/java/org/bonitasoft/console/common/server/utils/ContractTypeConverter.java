@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,7 +101,6 @@ public class ContractTypeConverter {
         final Map<String, Serializable> processedInputs = new HashMap<>();
         final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.<String, Serializable> emptyMap()
                 : createContractInputMap(processContract.getInputs());
-
         if (inputs != null) {
             for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
                 processedInputs.put(inputEntry.getKey(),
@@ -225,7 +226,7 @@ public class ContractTypeConverter {
         if (!sourceFile.delete()) {
             sourceFile.deleteOnExit();
             if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
+                logMessage(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
             }
         }
     }
@@ -300,25 +301,40 @@ public class ContractTypeConverter {
         String paramValueString = parameterValue.toString();
         try {
             if (clazz == LocalDate.class) {
-
                 //We drop useless info received from the widget ex: 2010-12-04T18:42:10Z, we drop T18:42:10Z to allow conversion
-                try {
+                if (paramValueString.length() > 10) {
+                    logMessage(Level.FINE, "The string " + paramValueString
+                            + " contains information that will be dropped to convert it to a LocalDate (most likely time and timezone information which are not relevant).");
                     paramValueString = paramValueString.substring(0, 10);
-                } catch (StringIndexOutOfBoundsException e) {
-                    //Ignore. Will throw a DateTimeParseException next line, wich is more suitable.
                 }
                 return LocalDate.parse(paramValueString);
             } else if (clazz == LocalDateTime.class) {
-                //We drop the timezone info from the String
-                paramValueString = paramValueString.replaceAll("Z$|[+-](?!([-\\d]*T.*)).+$", "");
-                return LocalDateTime.parse(paramValueString);
+                try {
+                    return LocalDateTime.parse(paramValueString);
+                } catch (DateTimeParseException e) {
+                    logMessage(Level.FINE, "The string " + paramValueString
+                            + " contains information that will be dropped to convert it to a LocalDateTime (most likely time and timezone information which are not relevant).");
+                    //We drop the timezone info from the String:
+                    return ZonedDateTime.parse(paramValueString).toLocalDateTime();
+                }
+            } else if (clazz == OffsetDateTime.class) {
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(paramValueString);
+                return zonedDateTime.toOffsetDateTime();
             } else {
                 return convertUtilsBean.convert(parameterValue, clazz);
             }
         } catch (final ConversionException | DateTimeParseException e) {
-            LOGGER.log(Level.INFO, "unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
+            logMessage(Level.INFO, "unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
             return parameterValue;
         }
+    }
+
+    protected void logMessage(Level level, String msg) {
+        LOGGER.log(level, msg);
+    }
+
+    protected void logMessage(Level level, String msg, Throwable th) {
+        LOGGER.log(level, msg, th);
     }
 
     protected Class<? extends Serializable> getClassFromType(final Type type) {
@@ -339,6 +355,8 @@ public class ContractTypeConverter {
                 return LocalDate.class;
             case LOCALDATETIME:
                 return LocalDateTime.class;
+            case OFFSETDATETIME:
+                return OffsetDateTime.class;
             default:
                 return String.class;
         }
