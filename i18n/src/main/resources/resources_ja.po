@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-02-28 23:09-0500\n"
+"PO-Revision-Date: 2017-03-17 14:19-0400\n"
 
 msgid "Add"
 msgstr "追加"
@@ -49,17 +49,23 @@ msgstr "{{ dataType }} の一覧"
 msgid "Name"
 msgstr "名前"
 
-msgid "No Documents used in this case."
-msgstr "この案件には、ドキュメントは使用されていません。"
-
 msgid "No business data used in this case."
 msgstr "この案件には、ビジネスデータは使用されていません。"
+
+msgid "no description defined in contract for this input"
+msgstr "この入力項目のコントラクトには、説明が定義されていません"
+
+msgid "No Documents used in this case."
+msgstr "この案件には、ドキュメントは使用されていません。"
 
 msgid "No tasks executed yet."
 msgstr "実行済みのタスクはまだありません。"
 
 msgid "Not a valid number!"
 msgstr "有効な数値ではないです"
+
+msgid "remove"
+msgstr "削除"
 
 msgid "Select a file"
 msgstr "ファイルを選択します。"
@@ -70,15 +76,9 @@ msgstr "開始"
 msgid "Tasks executed by any participant will be displayed here ordered by date. Most recent on the top."
 msgstr "ここで任意の参加者によって実行されたタスクが日付順で表示されます。トップが最新の実行済みタスクです。"
 
-msgid "Timeline"
-msgstr "実行履歴"
-
-msgid "no description defined in contract for this input"
-msgstr "この入力項目のコントラクトには、説明が定義されていません"
-
-msgid "remove"
-msgstr "削除"
-
 msgid "this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms."
 msgstr "これはテスト用に自動生成された一時的なフォームです。本番環境にプロセスを移行する前に必要なフォームを作成し、マップしてください。"
+
+msgid "Timeline"
+msgstr "実行履歴"
 
