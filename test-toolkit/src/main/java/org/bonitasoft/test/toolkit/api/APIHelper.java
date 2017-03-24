@@ -16,7 +16,8 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.bonitasoft.test.toolkit.api.json.AddToProfile;
 import org.bonitasoft.test.toolkit.api.json.CreateGroup;
 import org.bonitasoft.test.toolkit.api.json.CreateProfile;
@@ -106,8 +107,10 @@ public class APIHelper {
 
         RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
         CookieStore cookieStore = new BasicCookieStore();
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.setCookieStore(cookieStore);
+        CloseableHttpClient httpClient = HttpClientBuilder
+                .create()
+                .setDefaultCookieStore(cookieStore)
+                .build();
         this.executor = new ApacheHttpClient4Executor(httpClient) {
             @Override
             public void commitHeaders(ClientRequest request, HttpRequestBase httpMethod) {
