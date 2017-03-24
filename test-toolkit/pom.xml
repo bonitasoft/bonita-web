@@ -68,7 +68,10 @@
             <artifactId>spring-test</artifactId>
             <version>3.1.2.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
