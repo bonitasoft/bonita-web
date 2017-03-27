@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 public class PortalCookies {
 
     private static final String TENANT_COOKIE_NAME = "bonita.tenant";
-    private static final String CSRF_COOKIE_NAME = "X-Bonita-API-Token";
 
     public static void addTenantCookieToResponse(HttpServletResponse response, Long tenantId) {
         Cookie tenantCookie = new Cookie(TENANT_COOKIE_NAME, String.valueOf(tenantId));
