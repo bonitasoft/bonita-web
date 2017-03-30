@@ -241,7 +241,7 @@ public class TestCase {
     private void addComment(final APISession apiSession, final String content) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
-            processAPI.addComment(processInstance.getId(), content);
+            processAPI.addProcessComment(processInstance.getId(), content);
         } catch (final Exception e) {
             throw new TestToolkitException("Can't add comment to <" + processInstance.getId() + ">", e);
         }
