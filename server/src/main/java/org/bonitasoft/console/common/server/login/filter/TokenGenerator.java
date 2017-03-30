@@ -42,7 +42,7 @@ public class TokenGenerator {
      */
     public void setTokenToResponseCookie(HttpServletRequest request, HttpServletResponse res, Object apiTokenFromClient) {
         String path = System.getProperty("bonita.csrf.cookie.path", request.getContextPath());
-        invalidateCookieOnDifferentPath(request, res, path);
+        invalidatePreviousCookie(request, res);
 
         Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
         // cookie path can be set via system property.
@@ -52,12 +52,14 @@ public class TokenGenerator {
         res.addCookie(csrfCookie);
     }
 
-    // when cookie already exists on a different path than the one expected, we need to invalidate it
-    // see https://bonitasoft.atlassian.net/browse/BS-15883
-    private void invalidateCookieOnDifferentPath(HttpServletRequest request, HttpServletResponse res, String path) {
+    // when a cookie already exists on a different path than the one expected, we need to invalidate it.
+    // since there is no way of knowing the path as it is not sent server-side (getPath return null) we invalidate any cookie found
+    // see https://bonitasoft.atlassian.net/browse/BS-15883 and BS-16241
+    private void invalidatePreviousCookie(HttpServletRequest request, HttpServletResponse res) {
         Cookie cookie = PortalCookies.getCookie(request, X_BONITA_API_TOKEN);
-        if (cookie != null && cookie.getPath() != path) {
+        if (cookie != null) {
             cookie.setMaxAge(0);
+            cookie.setValue("");
             res.addCookie(cookie);
         }
     }
