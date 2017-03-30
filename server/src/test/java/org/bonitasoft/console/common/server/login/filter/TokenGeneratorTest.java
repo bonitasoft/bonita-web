@@ -122,5 +122,6 @@ public class TokenGeneratorTest {
 
         Cookie cookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, "aPath");
         assertThat(cookie.getMaxAge()).isEqualTo(0);
+        assertThat(cookie.getValue()).isEqualTo("");
     }
 }
