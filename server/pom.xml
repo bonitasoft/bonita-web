@@ -59,7 +59,7 @@
         <!--Vendors-->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -207,8 +207,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <!-- needs this version for tests -->
-            <version>3.1.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
