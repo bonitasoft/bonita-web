@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,31 +18,39 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  * @author Nicolas Chabanoles
- * 
  */
 public class MockHttpServletRequest implements HttpServletRequest {
 
     HttpSession session = null;
 
-    Map<String, Object> parametersMap = null;
-    
+    Map<String, String[]> parametersMap = null;
+
     Map<String, Object> attributesMap = null;
 
     HttpServletRequest req = null;
-    
+
     String pathInfo = null;
 
     public MockHttpServletRequest(final HttpServletRequest req) {
@@ -53,8 +59,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public MockHttpServletRequest() {
-        attributesMap = new HashMap<String, Object>();
-        parametersMap = new HashMap<String, Object>();
+        parametersMap = new HashMap<>();
+        attributesMap = new HashMap<>();
     }
 
     /*
@@ -173,9 +179,9 @@ public class MockHttpServletRequest implements HttpServletRequest {
      */
     @Override
     public String getPathInfo() {
-        if(pathInfo != null){
+        if (pathInfo != null) {
             return this.pathInfo;
-        }else if (this.req != null) {
+        } else if (this.req != null) {
             return this.req.getPathInfo();
         }
         return null;
@@ -346,6 +352,31 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return false;
     }
 
+    @Override
+    public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+        return false;
+    }
+
+    @Override
+    public void login(String username, String password) throws ServletException {
+
+    }
+
+    @Override
+    public void logout() throws ServletException {
+
+    }
+
+    @Override
+    public Collection<Part> getParts() throws IOException, ServletException {
+        return null;
+    }
+
+    @Override
+    public Part getPart(String name) throws IOException, ServletException {
+        return null;
+    }
+
     /*
      * (non-Javadoc)
      * @see javax.servlet.http.HttpServletRequest#isRequestedSessionIdValid()
@@ -480,6 +511,41 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return 0;
     }
 
+    @Override
+    public ServletContext getServletContext() {
+        return null;
+    }
+
+    @Override
+    public AsyncContext startAsync() throws IllegalStateException {
+        return null;
+    }
+
+    @Override
+    public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse) throws IllegalStateException {
+        return null;
+    }
+
+    @Override
+    public boolean isAsyncStarted() {
+        return false;
+    }
+
+    @Override
+    public boolean isAsyncSupported() {
+        return false;
+    }
+
+    @Override
+    public AsyncContext getAsyncContext() {
+        return null;
+    }
+
+    @Override
+    public DispatcherType getDispatcherType() {
+        return null;
+    }
+
     /*
      * (non-Javadoc)
      * @see javax.servlet.ServletRequest#getLocale()
@@ -510,12 +576,17 @@ public class MockHttpServletRequest implements HttpServletRequest {
      * @see javax.servlet.ServletRequest#getParameter(java.lang.String)
      */
     @Override
-    public String getParameter(final String anName) {
-        return (String) this.parametersMap.get(anName);
+    public String getParameter(final String aName) {
+        final String[] strings = this.parametersMap.get(aName);
+        if (strings != null && strings.length > 0) {
+            return strings[0];
+        } else {
+            return null;
+        }
     }
 
-    public void setParameter(final String anName, final Object value) {
-        this.parametersMap.put(anName, value);
+    public void setParameter(final String anName, final String value) {
+        this.parametersMap.put(anName, new String[] { value });
     }
 
     /*
@@ -524,8 +595,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getParameterMap() {
-        if (req == null){
+    public Map<String, String[]> getParameterMap() {
+        if (req == null) {
             return this.parametersMap;
         } else {
             return this.req.getParameterMap();
@@ -724,13 +795,13 @@ public class MockHttpServletRequest implements HttpServletRequest {
             this.req.setCharacterEncoding(anEnv);
         }
     }
-    
+
     /*
      * (non-Javadoc)
      * @see javax.servlet.ServletRequest#setCharacterEncoding(java.lang.String)
      */
     public void setPathInfo(final String pathInfo) {
-            this.pathInfo = pathInfo;
+        this.pathInfo = pathInfo;
     }
 
 }
