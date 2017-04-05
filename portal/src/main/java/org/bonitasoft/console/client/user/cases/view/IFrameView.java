@@ -14,13 +14,9 @@
  */
 package org.bonitasoft.console.client.user.cases.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bonitasoft.console.client.user.task.action.PostMessageEventListener;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -28,6 +24,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.bonitasoft.console.client.user.task.action.PostMessageEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Vincent Elcrin, Anthony Birembaut
@@ -52,6 +52,7 @@ public class IFrameView extends Composite {
     public IFrameView() {
         initWidget(binder.createAndBindUi(this));
         frame.setId("bonitaframe");
+        ScriptInjector.fromString(getScriptToFixIEFocus()).setWindow(ScriptInjector.TOP_WINDOW).inject();
     }
 
     public IFrameView(final String url) {
@@ -84,6 +85,30 @@ public class IFrameView extends Composite {
             iframe.src = urlLocation;
         }
     }-*/;
+
+    /**
+     * Need to inject this script into UIbinder template.
+     * It allows to set focus on the "bonitaframe" if the current browser is IE.
+     * That fix the ticket BS-16350 "Bug IE, IFrame removal causes loss of the ability to focus input elements".
+     */
+    protected String getScriptToFixIEFocus(){
+
+        return  "   function isIE() {\n" +
+                "        var ua =  window.navigator.userAgent;\n" +
+                "        // MSIE: ie <= 10,  Trident: ie 11\n" +
+                "        return ua.indexOf('Trident/') > 0 || ua.indexOf('MSIE ') > 0;  \n" +
+                "   };\n" +
+                "   \n" +
+                "   function setFocusOnIframe(){\n" +
+                "        if(isIE()) {\n" +
+                "           var bonitaIframe = window.document.getElementById('bonitaframe');\n" +
+                "           if (bonitaIframe) {\n" +
+                "               bonitaIframe.contentWindow.focus();   \n" +
+                "           }\n" +
+                "        }   \n" +
+                "   };";
+    }
+
 
     public void addTool(final Widget widget) {
         toolbar.removeStyleName("empty");
@@ -144,4 +169,5 @@ public class IFrameView extends Composite {
             $wnd.detachEvent("onmessage", postMessageListenerFunction);
         }
     }-*/;
+
 }
