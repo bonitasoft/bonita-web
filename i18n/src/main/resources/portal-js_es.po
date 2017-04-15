@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-03-21 19:18-0400\n"
+"PO-Revision-Date: 2017-04-14 18:20-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -153,8 +153,8 @@ msgid "Back"
 msgstr "Atrás"
 
 #: target/dist/features/admin/applications/import-application.html:1
-msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
-msgstr "Antes de importar la aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
+msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
+msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
 #: main/common/i18n/i18n-keys.js:57
 msgid "Can't import page or form to the process"
@@ -233,15 +233,15 @@ msgstr "Categorías"
 
 #: target/dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Check that each entity is mapped to a profile, for either Bonita BPM Portal or for applications you have created."
-msgstr ""
+msgstr "Verifique que cada entidad está mapeada a un perfil, ya sea para el Bonita BPM Portal o para las aplicaciones que ha creado."
 
 #: target/dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
 msgstr "Nombre de la clase"
 
 #: target/dist/features/admin/applications/import-application.html:1
-msgid "Click here to choose your file. XML file (.xml)"
-msgstr "Haga clic aquí para elegir tu archivo. Archivo XML (.xml)"
+msgid "Click here to choose the .xml file"
+msgstr "Haga clic para seleccionar el archivo .xml."
 
 #: target/dist/features/admin/applications/import-application.html:1
 #: target/dist/features/user/tasks/list/details/task-details-modal.html:1
@@ -418,8 +418,8 @@ msgid "Export"
 msgstr "Exportar"
 
 #: target/dist/features/admin/applications/export-application.html:1
-msgid "Export application"
-msgstr "Exportar Aplicación"
+msgid "Export application descriptor"
+msgstr "Exportar el descriptor de aplicación"
 
 #: main/common/i18n/i18n-keys.js:71
 msgid "Expression content has been updated"
@@ -498,9 +498,12 @@ msgid "Import"
 msgstr "Importar"
 
 #: target/dist/features/admin/applications/applications-list.html:1
-#: target/dist/features/admin/applications/import-application.html:1
 msgid "Import an application"
 msgstr "Importar una aplicación"
+
+#: target/dist/features/admin/applications/import-application.html:1
+msgid "Import an application descriptor"
+msgstr "Importar un descriptor de aplicación"
 
 #: target/dist/features/user/tasks/list/tasks-list.html:6
 msgid "In task name column"
@@ -917,7 +920,7 @@ msgid "State"
 msgstr "Estado"
 
 #: target/dist/features/admin/applications/import-application.html:1
-msgid "Status of import"
+msgid "Status of importation"
 msgstr "Estado de la importación"
 
 #: target/dist/features/user/tasks/list/details/task-no-form.html:1
@@ -1182,16 +1185,16 @@ msgid "We couldn't find what you are looking for."
 msgstr "No pudimos encontrar lo que estás buscando."
 
 #: target/dist/features/admin/applications/export-application.html:1
-msgid "When you export an application, pages and profiles are not exported in the file."
-msgstr "Al exportar una aplicación, las páginas y perfiles no se exportan en el archivo."
+msgid "When you export an application descriptor, pages and profiles are not exported in the file."
+msgstr "Al exportar un descriptor de aplicación, las páginas y perfiles no se exportan en el archivo."
 
 #: target/dist/features/admin/cases/list/cases-list-filters.html:1
 msgid "With failures"
 msgstr "Con fallos"
 
 #: target/dist/features/admin/applications/export-application.html:1
-msgid "You are about to export the application"
-msgstr "Está a punto de exportar la aplicación"
+msgid "You are about to export the descriptor of the application"
+msgstr "Está a punto de exportar el descriptor de la aplicación"
 
 #: target/dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "You must add a page before you can reference it in a menu."
@@ -1214,12 +1217,12 @@ msgid "an application"
 msgstr "una Aplicación"
 
 #: target/dist/features/admin/applications/import-application.html:1
-msgid "application has been partially imported. The following items are not loaded in the Portal."
-msgstr "la aplicación ha sido parcialmente importada. Los siguientes elementos no se han cargado en el Portal."
+msgid "application descriptor has been partially imported. The following items are not loaded in the Portal."
+msgstr "el descriptor de aplicación ha sido parcialmente importado. Los siguientes elementos no se han cargado en el Portal."
 
 #: target/dist/features/admin/applications/import-application.html:1
-msgid "application has been successfully imported, with complete page mapping and menu mapping."
-msgstr "la aplicación ha sido importado con éxito, con la asignación de páginas completa y la asignación de menú."
+msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
+msgstr "el descriptor de aplicación ha sido importado con éxito, con un completo mapeo de páginas y de menú."
 
 #: target/dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "of"
