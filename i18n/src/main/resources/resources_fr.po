@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-03-17 14:17-0400\n"
+"PO-Revision-Date: 2017-04-18 12:04-0400\n"
 
 msgid "Add"
 msgstr "Ajouter"
@@ -33,6 +33,9 @@ msgstr "Documents"
 
 msgid "Download"
 msgstr "Télécharger"
+
+msgid "Example:"
+msgstr "Exemple :"
 
 msgid "Execute"
 msgstr "Exécuter"
