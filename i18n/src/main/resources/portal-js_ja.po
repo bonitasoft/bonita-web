@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-03-15 19:14-0400\n"
+"PO-Revision-Date: 2017-04-18 12:06-0400\n"
 
 #: main/common/i18n/i18n-keys.js:11
 msgid "1 case has been deleted"
@@ -233,7 +233,7 @@ msgstr "カテゴリ"
 
 #: target/dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Check that each entity is mapped to a profile, for either Bonita BPM Portal or for applications you have created."
-msgstr ""
+msgstr "各エンティティが Bonita BPM ポータル、またはあなたが作成したアプリケーションのいずれかのプロファイルにマップされていることを確認します。"
 
 #: target/dist/features/admin/processes/details/process-connectors.html:1
 msgid "Class name"
@@ -670,7 +670,7 @@ msgstr "実行するタスクを開く"
 
 #: target/dist/features/user/tasks/list/details/task-details.html:1
 msgid "Overview"
-msgstr "案件概況"
+msgstr "オーバービュー"
 
 #: target/dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 #: target/dist/features/admin/applications/details/page-list-addPageModal.html:1
