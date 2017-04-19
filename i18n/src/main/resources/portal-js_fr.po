@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-04-18 12:04-0400\n"
+"PO-Revision-Date: 2017-04-19 08:23-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -110,7 +110,7 @@ msgid "Back"
 msgstr "Précédent"
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
-msgstr ""
+msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
 
 msgid "Can't import page or form to the process"
 msgstr "Impossible d'importer la page ou le formulaire dans le processus"
@@ -164,7 +164,7 @@ msgid "Class name"
 msgstr "Nom de la classe"
 
 msgid "Click here to choose the .xml file"
-msgstr ""
+msgstr "Cliquez ici pour choisir le fichier .xml"
 
 msgid "Close"
 msgstr "Fermer"
@@ -287,7 +287,7 @@ msgid "Export"
 msgstr "Exporter"
 
 msgid "Export application descriptor"
-msgstr ""
+msgstr "Exporter le descripteur d’application"
 
 msgid "Expression content has been updated"
 msgstr "Le contenu de l'expression a été mis à jour"
@@ -344,7 +344,7 @@ msgid "Import an application"
 msgstr "Importer une application"
 
 msgid "Import an application descriptor"
-msgstr ""
+msgstr "Importer un descripteur d’application"
 
 msgid "In task name column"
 msgstr "Dans la colonne \"Tâche\""
@@ -629,7 +629,7 @@ msgid "State"
 msgstr "Etat"
 
 msgid "Status of importation"
-msgstr ""
+msgstr "Statut de l'importation"
 
 msgid "Submit"
 msgstr "Soumettre"
@@ -815,13 +815,13 @@ msgid "We couldn't find what you are looking for."
 msgstr "Nous n'avons pas trouvé ce que vous recherchez."
 
 msgid "When you export an application descriptor, pages and profiles are not exported in the file."
-msgstr ""
+msgstr "Lorsque vous exportez un descripteur d'application, les pages et profil associés ne sont pas exportés dans le fichier."
 
 msgid "With failures"
 msgstr "Avec erreurs"
 
 msgid "You are about to export the descriptor of the application"
-msgstr ""
+msgstr "Vous êtes sur le point d'exporter le descripteur de l'application"
 
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un menu."
@@ -839,10 +839,10 @@ msgid "an application"
 msgstr "une application"
 
 msgid "application descriptor has been partially imported. The following items are not loaded in the Portal."
-msgstr ""
+msgstr "descripteur d'application a été partiellement importé. Les composants suivants n'ont pas été ajoutés dans le portail."
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
-msgstr ""
+msgstr "descripteur d'application a été importé avec succès, avec son menu de navigation et les liens vers les pages utilisées."
 
 msgid "of"
 msgstr "de"
