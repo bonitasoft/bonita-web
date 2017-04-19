@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-04-18 12:06-0400\n"
+"PO-Revision-Date: 2017-04-19 06:06-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -110,7 +110,7 @@ msgid "Back"
 msgstr "戻る"
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
-msgstr ""
+msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
 
 msgid "Can't import page or form to the process"
 msgstr "プロセスにページまたはフォームをインポートできません"
@@ -164,7 +164,7 @@ msgid "Class name"
 msgstr "クラス名"
 
 msgid "Click here to choose the .xml file"
-msgstr ""
+msgstr ".xml ファイルを選択するにはここをクリック"
 
 msgid "Close"
 msgstr "閉じる"
@@ -287,7 +287,7 @@ msgid "Export"
 msgstr "エクスポート"
 
 msgid "Export application descriptor"
-msgstr ""
+msgstr "アプリケーション記述子をエクスポート"
 
 msgid "Expression content has been updated"
 msgstr "式のコンテンツが更新されました"
@@ -344,7 +344,7 @@ msgid "Import an application"
 msgstr "アプリケーションをインポート"
 
 msgid "Import an application descriptor"
-msgstr ""
+msgstr "アプリケーション記述子をインポート"
 
 msgid "In task name column"
 msgstr "[タスク名] 列"
@@ -629,7 +629,7 @@ msgid "State"
 msgstr "状態"
 
 msgid "Status of importation"
-msgstr ""
+msgstr "インポートの状態"
 
 msgid "Submit"
 msgstr "送信"
@@ -815,13 +815,13 @@ msgid "We couldn't find what you are looking for."
 msgstr "お探しのものが見つかりませんでした。"
 
 msgid "When you export an application descriptor, pages and profiles are not exported in the file."
-msgstr ""
+msgstr "アプリケーション記述子をエクスポートする場合、ページとプロファイルはそのファイルにエクスポートされません。"
 
 msgid "With failures"
 msgstr "エラー発生"
 
 msgid "You are about to export the descriptor of the application"
-msgstr ""
+msgstr "アプリケーションの記述子をエクスポートしようとしています"
 
 msgid "You must add a page before you can reference it in a menu."
 msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
@@ -839,10 +839,10 @@ msgid "an application"
 msgstr "アプリケーション"
 
 msgid "application descriptor has been partially imported. The following items are not loaded in the Portal."
-msgstr ""
+msgstr "アプリケーション記述子は、部分的にインポートされています。ポータル内に次の項目が読み込まれていません。"
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
-msgstr ""
+msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
 
 msgid "of"
 msgstr "日目/"
