@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-25 09:14+0200\n"
-"PO-Revision-Date: 2017-05-02 18:34-0400\n"
+"PO-Revision-Date: 2017-05-04 21:58-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1218,7 +1218,7 @@ msgstr "Si creas un recurso con el UI Designer, el zip exportado automáticament
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr ""
+msgstr "Si se elimina una página que se utiliza en un proceso, el proceso se marca sin resolver. \\nAntes de borrar una página, también deberá verificar si se utiliza en el menú de un perfil personalizado."
 
 msgid "Image files"
 msgstr "Archivos de imagen"
@@ -1597,7 +1597,7 @@ msgstr "Otras"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr ""
+msgstr "¡Vaya!... Este artículo ya no está disponible.\\nSerá redirigido a un lugar más seguro."
 
 msgid "Overview"
 msgstr "Vista global"
@@ -1912,10 +1912,10 @@ msgid "Service task (performed automatically)"
 msgstr "Tarea de servicio (ejecutada automáticamente)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr ""
+msgstr "Los servicios se pausarán por mantenimiento. \\n.\n"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr ""
+msgstr "Los servicios se reanudarán. Los usuarios podrán conectarse. \\n.\n"
 
 msgid "Session expired. Please log in again."
 msgstr "La sesión expiró. Por favor inicie sesión de nuevo."
@@ -2081,7 +2081,7 @@ msgstr "El Modelo de Datos de Negocio fue instalado con éxito."
 
 msgid "The Business Data Model will now be installed.\n"
 "Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr ""
+msgstr "Ahora se instalará el Modelo de Datos de Negocio.\\n Preste atención a que se modificarán definitivamente las tablas de base de datos de negocio existentes. Esta acción no se puede revertir. Es muy recomendado que realice una copia de seguridad de la base de datos antes de proceder."
 
 msgid "The Process cannot be enabled"
 msgstr "El proceso no se puede habilitar"
@@ -2100,7 +2100,7 @@ msgstr "The application encountered an error."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr ""
+msgstr "La aplicación ha encontrado un error inesperado. Por favor intentelo nuevamente. \\nSi el error persiste, póngase en contacto con el equipo de soporte de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "El caso %caseId% se ha iniciado con éxito."
@@ -2317,7 +2317,7 @@ msgstr "Este usuario ya posee esta membresia"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr ""
+msgstr "Esta página no tiene permisos de autorización definidos. Si la página utiliza los recursos REST y la verificación de autorización está activada, \\n actualice la definición de página para especificar la lista de recursos utilizados."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Este perfil estará disponible en el siguiente inicio de sesión para los usuarios asignados. Si se asigna el perfil a si mismo, estará disponible después de que refresque la página en su navegador."
@@ -2545,7 +2545,7 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr ""
+msgstr "Se arriesga a interrumpir uno o más procesos.\\n\\nDesactivar el único usuario que puede realizar la(s) tarea(s) causará la interrupción del (de los) proceso(s).\\n\\nAntes de proceder, quizá quiera ir al apartado 'Más' del proceso y comprobar el mapeo de actores.\\n\\n¿Esta seguro que quiere desactivar este usuario ahora ?"
 
 msgid "You will be rediected"
 msgstr "Usted será redirigido"
