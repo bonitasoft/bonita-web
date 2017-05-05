@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-05-02 18:29-0400\n"
+"PO-Revision-Date: 2017-05-04 21:43-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -659,7 +659,7 @@ msgid "Task name"
 msgstr "タスク名"
 
 msgid "Technical error."
-msgstr "技術的なエラーが発生。"
+msgstr "テクニカルなエラーが発生。"
 
 msgid "The Process cannot be enabled"
 msgstr "プロセスを有効にすることができません"
