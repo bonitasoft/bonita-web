@@ -41,7 +41,6 @@ public class CustomPageDependenciesResolver {
 
     private static final Logger LOGGER = Logger.getLogger(CustomPageDependenciesResolver.class.getName());
 
-
     private File libTempFolder;
 
     private final WebBonitaConstantsUtils webBonitaConstantsUtils;
@@ -100,7 +99,7 @@ public class CustomPageDependenciesResolver {
             } catch (final IOException e) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "The custom page temporary lib directory " + libTempFolder.getPath()
-                    + " cannot be deleted. This is likely to be due to a JDK bug on Windows. You can safely delete it after a server restart.");
+                            + " cannot be deleted. This is likely to be due to a JDK bug on Windows. You can safely delete it after a server restart.");
                 }
             }
         }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Method;
 import org.restlet.data.Range;
+import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 
@@ -104,11 +106,12 @@ public class ApiExtensionResourceTest {
         final Representation representation = apiExtensionResource.doHandle();
 
         //then
-        assertThat(representation.getText()).as("should return response").isEqualTo("error: restApiResponse is null");
+        assertThat(representation).isNull();
+        verify(apiExtensionResource.getResponse()).setStatus(Status.SERVER_ERROR_INTERNAL);
     }
 
     @Test
-    public void should_handle_return_exception_message() throws Exception {
+    public void should_handle_return_500_error_when_exception_is_thrown() throws Exception {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
@@ -120,7 +123,8 @@ public class ApiExtensionResourceTest {
         final Representation representation = apiExtensionResource.doHandle();
 
         //then
-        assertThat(representation.getText()).as("should return error message").isEqualTo("error message");
+        assertThat(representation).isNull();
+        verify(apiExtensionResource.getResponse()).setStatus(Status.SERVER_ERROR_INTERNAL);
     }
 
     @Test
