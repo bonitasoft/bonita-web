@@ -2,11 +2,14 @@ package org.bonitasoft.web.rest.server.api.extension;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpHeaders;
+import org.bonitasoft.console.common.server.page.CustomPageDependenciesResolver;
 import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.console.common.server.page.RestApiResponse;
@@ -34,6 +37,8 @@ public class ApiExtensionResource extends ServerResource {
 
     private final PageMappingService pageMappingService;
 
+    private static final Logger LOGGER = Logger.getLogger(ApiExtensionResource.class.getName());
+
     public ApiExtensionResource(RestApiRenderer restApiRenderer, PageMappingService pageMappingService) {
         this.restApiRenderer = restApiRenderer;
         this.pageMappingService = pageMappingService;
@@ -47,7 +52,9 @@ public class ApiExtensionResource extends ServerResource {
             fillAllContent(stringRepresentation, restApiResponse);
             return stringRepresentation;
         } catch (final BonitaException e) {
-            return new StringRepresentation(e.getMessage());
+            LOGGER.log(Level.SEVERE, "Failed to handle API Extension call", e);
+            getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
+            return null;
         }
     }
 
@@ -126,7 +133,7 @@ public class ApiExtensionResource extends ServerResource {
         try {
             return restApiRenderer.handleRestApiCall(httpServletRequest, resourceExtensionResolver);
         } catch (InstantiationException | IllegalAccessException | IOException | BonitaException e) {
-            throw new BonitaException(e.getMessage());
+            throw new BonitaException(e.getMessage(), e);
         }
     }
 }
