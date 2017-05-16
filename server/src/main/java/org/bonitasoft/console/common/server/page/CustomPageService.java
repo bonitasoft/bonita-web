@@ -202,7 +202,7 @@ public class CustomPageService {
         if (pageClassLoader == null
                 || getConsoleProperties(apiSession).isPageInDebugMode()
                 || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
-            synchronized (this) {//Handle multiple queries to create several classloaders at the same time
+            synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
                 pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
                         new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
                         bdmDependenciesResolver));
