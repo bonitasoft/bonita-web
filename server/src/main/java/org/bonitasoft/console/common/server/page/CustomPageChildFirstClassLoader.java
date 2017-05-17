@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 
-
 /**
  * @author Elias Ricken de Medeiros
  * @author Charles Souillard
@@ -38,7 +37,7 @@ import org.apache.commons.io.FileUtils;
  *         A Classloader adding given custom page resources and bdm resources in its classpath.
  *         This classloader is versioned with a runtime bdm version and should be discard when bdm is updated
  */
-public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoader implements VersionedClassloader{
+public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoader implements VersionedClassloader {
 
     protected Map<String, byte[]> nonJarResources = new HashMap<>();
 
@@ -75,22 +74,21 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
         }
     }
 
-
     private void addOtherDependencies() throws IOException {
         final Map<String, byte[]> customPageDependencies = customPageDependenciesResolver.resolveCustomPageDependencies();
         for (final Map.Entry<String, byte[]> resource : customPageDependencies.entrySet()) {
             if (resource.getKey().matches(".*\\.jar") && !bdmDependenciesResolver.isABDMDependency(resource.getKey())) {
                 final byte[] data = resource.getValue();
-                    final File file = File.createTempFile(resource.getKey(), null, customPageDependenciesResolver.getTempFolder());
-                    file.deleteOnExit();
-                    FileUtils.writeByteArrayToFile(file, data);
-                    addURL(new File(file.getAbsolutePath()).toURI().toURL());
+                final File file = File.createTempFile(resource.getKey(), null,
+                        customPageDependenciesResolver.getTempFolder());
+                file.deleteOnExit();
+                FileUtils.writeByteArrayToFile(file, data);
+                addURL(new File(file.getAbsolutePath()).toURI().toURL());
             } else {
                 nonJarResources.put(resource.getKey(), resource.getValue());
             }
         }
     }
-
 
     @Override
     public InputStream getResourceAsStream(final String name) {
