@@ -1,6 +1,7 @@
 package org.bonitasoft.forms.server;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -49,8 +50,9 @@ public class DocumentImageServletTest {
 
         try {
             documentImageServlet.doGet(req, res);
+            failBecauseExceptionWasNotThrown(ServletException.class);
         } catch (final ServletException e) {
-            assertTrue(e.getMessage().startsWith("Unauthorized access to the file"));
+            assertThat(e).hasMessageStartingWith("Unauthorized access to the file");
         }
     }
 }
