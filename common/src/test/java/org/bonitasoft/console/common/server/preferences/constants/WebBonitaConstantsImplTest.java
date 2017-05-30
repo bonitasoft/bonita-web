@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.preferences.constants;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
+import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -36,6 +37,6 @@ public class WebBonitaConstantsImplTest {
 
         final String tenantsFolderPath = webBonitaConstants.getTenantsFolderPath();
 
-        assertThat(tenantsFolderPath).isEqualTo("some/path/to/tenants/");
+        assertThat(tenantsFolderPath).isEqualTo(FilenameUtils.separatorsToSystem("some/path/to/tenants/"));
     }
 }
