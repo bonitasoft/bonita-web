@@ -82,7 +82,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>Bonita BPM Portal</title>
+<title>Bonita Portal</title>
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
 <!-- Load LESS CSS -->
 <script type="text/javascript" src="portal/scripts/includes/array.prototype.js"></script>
@@ -111,7 +111,7 @@
 
 </head>
 <body id="LoginPage">
-	<div id="LoginHeader"><h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita BPM Portal") %></h1></div>
+	<div id="LoginHeader"><h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita Portal") %></h1></div>
 	<div id="floater"></div>
 	<div id="LoginFormContainer" >
 		<div id="logo">

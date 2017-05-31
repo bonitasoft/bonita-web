@@ -82,7 +82,7 @@ public class I18nTest {
 
         assertThat(translations.get("test key")).isEqualTo("Valeur modifiée");
         assertThat(translations.get("about")).isEqualTo("Copyright Bonitasoft 2016");
-        assertThat(translations.get("web site title")).isEqualTo("Bienvenue dans Bonita BPM Portal 7+");
+        assertThat(translations.get("web site title")).isEqualTo("Bienvenue dans Bonita Portal 7+");
 
         System.clearProperty(I18n.I18N_CUSTOM_DIR_PROPERTY);
     }
