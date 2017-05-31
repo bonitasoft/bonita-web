@@ -73,7 +73,7 @@ public class PlatformManagementUtils {
                 throw new InvalidPlatformCredentialsException("The portal is not able to login to the engine because " +
                         "system properties org.bonitasoft.platform.username and org.bonitasoft.platform.password are " +
                         "not set correctly to the platform administrator credentials.\n " +
-                        "These properties must be set when connecting to a BonitaBPM engine that is not local. " +
+                        "These properties must be set when connecting to a Bonita engine that is not local. " +
                         "If the engine is local, change the connection to LOCAL using the APITypeManager");
             }
         }

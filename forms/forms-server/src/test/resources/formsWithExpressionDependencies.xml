@@ -153,8 +153,8 @@
               </input-parameter>
               <input-parameter name="url">
                 <expression>
-                  <name>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaBPMSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</name>
-                  <expression-content>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaBPMSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</expression-content>
+                  <name>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</name>
+                  <expression-content>jdbc:h2:C:\Users\julien.mege\Downloads\BonitaSubscription-6.3.0-SNAPSHOT-Tomcat-6.0.37\bonita\server\platform\work\bonita_journal.db.h2;FILE_LOCK=NO</expression-content>
                   <expression-type>TYPE_CONSTANT</expression-type>
                   <return-type>java.lang.String</return-type>
                 </expression>

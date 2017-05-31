@@ -134,7 +134,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
                                 _("Form"),
                                 _("Content type is 'form'."),
                                 _("A form is a page mapped to case start or a human task."),
-                                _("Create a form from the contract in Bonita BPM Studio."),
+                                _("Create a form from the contract in Bonita Studio."),
                                 _("By default, forms are included in the process bar file for deployment."),
                                 _("Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."),
                                 _("To share a form between processes, upload the zip and map it to the relevant processes and tasks.")));
