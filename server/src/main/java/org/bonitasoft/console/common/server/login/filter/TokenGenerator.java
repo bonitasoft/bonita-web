@@ -82,7 +82,7 @@ public class TokenGenerator {
             apiTokenFromClient = new APIToken().getToken();
             session.setAttribute(API_TOKEN, apiTokenFromClient);
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Bonita BPM API Token generated: " + apiTokenFromClient);
+                LOGGER.log(Level.FINE, "Bonita API Token generated: " + apiTokenFromClient);
             }
         }
         return apiTokenFromClient.toString();

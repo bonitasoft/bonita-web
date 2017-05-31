@@ -1,2 +1,2 @@
 msgid "web site title"
-msgstr "Bienvenue dans Bonita BPM Portal 7+"
+msgstr "Bienvenue dans Bonita Portal 7+"

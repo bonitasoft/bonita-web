@@ -34,7 +34,7 @@ public class PopupAboutPage extends Page {
 
     @Override
     public void defineTitle() {
-        this.setTitle("Bonita BPM Portal");
+        this.setTitle("Bonita Portal");
     }
 
     @Override

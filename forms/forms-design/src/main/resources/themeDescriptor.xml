@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<theme author="BonitaSoft" creationDate="0" description="Default BonitaBPM looknfeel" imagePreview="printscreen.png" name="Default Application" provided="true" type="application" updateDate="1365068013804">
+<theme author="BonitaSoft" creationDate="0" description="Default Bonita looknfeel" imagePreview="printscreen.png" name="Default Application" provided="true" type="application" updateDate="1365068013804">
   <bindings>
     <binding description="Hyperlink to the portal" name="portal_link">
       <css-rule>.bonita_user_xp_link</css-rule>
