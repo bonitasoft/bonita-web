@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-05-04 21:43-0400\n"
+"PO-Revision-Date: 2017-06-01 20:52-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -157,8 +157,8 @@ msgstr "案件"
 msgid "Categories"
 msgstr "カテゴリ"
 
-msgid "Check that each entity is mapped to a profile, for either Bonita BPM Portal or for applications you have created."
-msgstr "各エンティティが Bonita BPM ポータル、またはあなたが作成したアプリケーションのいずれかのプロファイルにマップされていることを確認します。"
+msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
+msgstr ""
 
 msgid "Class name"
 msgstr "クラス名"
@@ -748,8 +748,8 @@ msgstr "フォームに記入するには、このタスクを引き受ける必
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
 
-msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "この機能を使用するには、Bonita BPM Studio バージョン 6.4 以上でプロセスの新しいバージョンを作成し、その新しい .bar ファイルをポータルにインストールします。"
+msgid "To use this feature, create a new version of the process in Bonita Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr ""
 
 msgid "Type"
 msgstr "タイプ"
