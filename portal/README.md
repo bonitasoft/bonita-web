@@ -3,20 +3,13 @@
 Bonita web main webapp.  
 Build a webapp containing bonita portal and bonita forms
 
-## Launch dev mode ##
-To launch application in development mode, you have to run the following command in portal folder
-    
-    mvn -Pdev gwt:run
-
-## Launch debug mode ##
-Run the following command
-    
-    mvn -Pdev gwt:debug
-
-Then launch a remote debugger on port 8000.  
-You can modify sources and put breakpoints to debug your code
+Please launch server dev mode before portal one.
 
 ## Launch super dev mode ##
 Run the following command
     
-    mvn process-classes gwt:run-codeserver -Pdev
+    mvn -Pdev process-classes gwt:run-codeserver
+    
+Visit the indicated URL and bookmark the Dev Mode On/Off links
+Then visit localhost:8080 and click on the Dev Mode On link
+click on the portal module link to re-generate the portal Javascript
