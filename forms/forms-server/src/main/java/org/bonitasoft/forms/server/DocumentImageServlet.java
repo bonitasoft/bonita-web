@@ -27,6 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -73,7 +74,7 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
         if (filePath != null) {
             final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
             try {
-                final File file = tempFolderAccessor.getTempFile(filePath, apiSession.getTenantId());
+                final File file = tempFolderAccessor.getTempFile(FilenameUtils.separatorsToSystem(filePath), apiSession.getTenantId());
                 if (fileName == null) {
                     fileName = file.getName();
                 }
