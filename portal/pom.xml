@@ -99,6 +99,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                     <archiveClasses>true</archiveClasses>
                     <attachClasses>true</attachClasses>
 				</configuration>
