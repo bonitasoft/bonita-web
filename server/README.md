@@ -8,10 +8,13 @@ The module need to first be built using
 
     mvn clean install -Pdev
     
-Then we can launch jetty to host the app using
+Then we can build and launch a tomcat to host the app using
 
-    mvn jetty:run -Pdev
+    mvn clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev
+
+H2 database is created (if it does not already exist) in ${user.home}/.bonita/community/database
+When you checkout a different branch you need to clean this directory because the database schema may have changed.
     
-To launch jetty in debug mode
+Hot reload is not supported, but hen you update a class in portal/, server/ or common/ in your IDE all you need to do is to restart the tomcat with the previous command (classes will be retrived from the projects target/classes directory)
 
-	mvnDebug jetty:run -Pdev -pl server
+You can debug the server code using the Remote Debug configuration of your ide on the port 5005.
