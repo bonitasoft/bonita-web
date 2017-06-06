@@ -1,4 +1,4 @@
-# Bonita Console #
+# Bonita Web #
 
 ## Compilation ##
 At root level (same location as the parent pom.xml) :
@@ -10,14 +10,22 @@ For develoment purpose use the *dev* profile (don't compile every gwt permutatio
     mvn clean install -Pdev
     
 ## Execution in hosted mode for dev/debug ##
-In server module :
+In server module, to build and launch a tomcat hosting the app :
 
-    mvn jetty:run -Pdev
+    mvn clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev
+
+H2 database is created (if it does not already exist) in ${user.home}/bonita/community/database
+When you checkout a different branch you need to clean this directory because the database schema may have changed.
+
+Hot reload is not supported, but when you update a class in portal/, server/ or common/ in your IDE all you need to do is to restart the tomcat with the previous command (classes will be retrieved from the projects target/classes directory)
     
 In portal module :
-     
+    
     Super dev mode: mvn -Pdev process-classes gwt:run-codeserver
-    Dev mode: mvn -Pdev gwt:debug
+    
+Visit the indicated URL and bookmark the Dev Mode On/Off links
+Then visit localhost:8080 and click on the Dev Mode On link
+click on the portal module link to re-generate the portal Javascript
     
 ## Structure ##
 
@@ -29,7 +37,7 @@ Contains the common maven configuration such as:
 ### common module ###
 Contains the back-end business logic, i.e., the code executed on the server side. But also contains shared code between back end and front (e.g. model) and the implement of the REST API. 
 
-### common-test-toolkit
+### test-toolkit
 Contains integration tests utils
 
 ### portal module
@@ -40,8 +48,8 @@ Build the portal web application
 ### server module
 Contains the server side code of portal
 	
-### Form module ###
-Module containing forms implementation
+### Forms module ###
+Module containing 6.x forms implementation
 
 #### forms-design
 Contains customizable theme shared between form's web application & studio.
