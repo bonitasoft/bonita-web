@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-06-01 20:52-0400\n"
+"PO-Revision-Date: 2017-06-11 18:08-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -122,7 +122,7 @@ msgid "Cancel"
 msgstr "キャンセル"
 
 msgid "Cancelled, skipped instances"
-msgstr "キャンセル、スキップされたインスタンス"
+msgstr "キャンセル/スキップ"
 
 msgid "Cannot upload the file"
 msgstr "ファイルをアップロードできません"
@@ -158,7 +158,7 @@ msgid "Categories"
 msgstr "カテゴリ"
 
 msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
-msgstr ""
+msgstr "各エンティティが Bonita ポータル、またはあなたが作成したアプリケーションのいずれかのプロファイルにマップされていることを確認します。"
 
 msgid "Class name"
 msgstr "クラス名"
@@ -182,7 +182,7 @@ msgid "Compilation failure. Verify that the Index.groovy class implements the Pa
 msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
 
 msgid "Completed instances"
-msgstr "完了したインスタンス"
+msgstr "実行完了"
 
 msgid "Configuration state"
 msgstr "構成設定の状態"
@@ -281,7 +281,7 @@ msgid "Error: value must be an integer"
 msgstr "エラー: 値は整数でなければなりません"
 
 msgid "Executing, completing, initializing instances"
-msgstr "実行中、完了中、インスタンスを初期化中"
+msgstr "初期化中, 実行中, 完了途中"
 
 msgid "Export"
 msgstr "エクスポート"
@@ -299,7 +299,7 @@ msgid "Failed Flow Nodes"
 msgstr "作業中にエラー発生"
 
 msgid "Failed instances"
-msgstr "エラーのあったインスタンス"
+msgstr "エラーがあった"
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以内である必要があります。"
@@ -464,7 +464,7 @@ msgid "Open the task to perform it"
 msgstr "実行するタスクを開く"
 
 msgid "Overview"
-msgstr "オーバービュー"
+msgstr "案件概況"
 
 msgid "Page"
 msgstr "ページ"
@@ -503,7 +503,7 @@ msgid "Profiles"
 msgstr "プロファイル"
 
 msgid "Ready, waiting instances"
-msgstr "インスタンス開始を待機中"
+msgstr "作業開始を待機中"
 
 msgid "Refresh"
 msgstr "リフレッシュ"
@@ -749,7 +749,7 @@ msgid "To personalize the display of search keys (and columns in general), use t
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
 
 msgid "To use this feature, create a new version of the process in Bonita Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr ""
+msgstr "この機能を使用するには、Bonita Studio バージョン 6.4 以上でプロセスの新しいバージョンを作成し、その新しい .bar ファイルをポータルにインストールします。"
 
 msgid "Type"
 msgstr "タイプ"
