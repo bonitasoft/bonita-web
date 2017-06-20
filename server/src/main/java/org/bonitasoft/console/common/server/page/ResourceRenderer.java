@@ -58,7 +58,6 @@ public class ResourceRenderer {
                     .getMimeType(resourceFile.getName()));
             response.setContentLength(content.length);
             response.setBufferSize(content.length);
-            response.setHeader("Cache-Control", "no-cache");
 
             try (OutputStream out = response.getOutputStream()) {
                 out.write(content, 0, content.length);
