@@ -93,6 +93,11 @@ public class BDMImportWarningPopUp extends Page {
         public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
             ViewController.showPopup(new MessagePage(MessagePage.TYPE.SUCCESS, _("The Business Data Model was successfully installed.")));
         }
+
+        @Override
+        public void onError(final String message, final Integer errorCode) {
+            ViewController.showPopup(new MessagePage(MessagePage.TYPE.ERROR, _("An error occurred when deploying the Business Data Model.\nConsult the logs for more information.")));
+        }
     }
 
 }

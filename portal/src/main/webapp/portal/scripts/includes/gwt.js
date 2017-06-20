@@ -45,3 +45,19 @@ function updateGWT(e) {
 function historyBack() {
 	window.history.back();
 }
+
+//BS-16350: Manage bug IE, IFrame removal causes lost of the ability to focus input elements
+function isIE() {
+    var ua =  window.navigator.userAgent;
+    // MSIE: ie <= 10,  Trident: ie 11+
+    return ua.indexOf('Trident/') > 0 || ua.indexOf('MSIE ') > 0;
+}
+
+function setFocusOnIframe(){
+    if(isIE()) {
+        var bonitaIframe = window.document.getElementById('bonitaframe');
+        if (bonitaIframe) {
+            bonitaIframe.contentWindow.focus();
+        }
+    }
+}
