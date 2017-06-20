@@ -34,67 +34,50 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Haojie Yuan
- *
  */
 public class CacheFilter implements Filter {
 
-	protected Map<String, Integer> expiresMap = new HashMap<String, Integer>();
+    public static final String ALWAYS_CACHING = "alwaysCaching";
+    public static final String NO_CUSTOMPAGE_CACHE = "noCacheCustomPage";
+    protected Map<String, String> paramMap = new HashMap<String, String>();
 
-	/**
-     * Logger
-     */
-    private static final Logger LOGGER = Logger.getLogger(CacheFilter.class.getName());
+    private final String DURATION = "duration";
 
-	@Override
+    @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
-		final Enumeration<?> names = filterConfig.getInitParameterNames();
-		while (names.hasMoreElements()) {
+        final Enumeration<?> names = filterConfig.getInitParameterNames();
+        while (names.hasMoreElements()) {
             final String name = (String) names.nextElement();
             final String value = filterConfig.getInitParameter(name);
-            try {
-                final Integer expire = Integer.valueOf(value);
-                expiresMap.put(name, expire);
-            } catch (final NumberFormatException e) {
-                LOGGER.log(Level.WARNING, name + " parameter value should be an integer");
-            }
+            paramMap.put(name, value);
         }
     }
 
-	@Override
+    @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-		final HttpServletRequest req = (HttpServletRequest) request;
-		final HttpServletResponse res = (HttpServletResponse) response;
-
-		chain.doFilter(req, res);
+        final HttpServletRequest req = (HttpServletRequest) request;
+        final HttpServletResponse res = (HttpServletResponse) response;
 
         final String uri = req.getRequestURI();
-        if (!uri.endsWith("nocache.js")) {
-            String ext = null;
-            final int dot = uri.lastIndexOf(".");
-            if (dot != -1) {
-                ext = uri.substring(dot + 1);
-            }
-            setResponseHeader(res, ext);
+        if (!uri.endsWith("nocache.js") || !uri.endsWith("portal.js/index.html")) {
+            setResponseHeader(res);
         }
-	}
+
+        chain.doFilter(req, res);
+    }
 
     @Override
     public void destroy() {
     }
 
-	private void setResponseHeader(final HttpServletResponse response, final String ext) {
-		if (ext != null && ext.length() > 0) {
-			final Integer expires = expiresMap.get(ext);
-			if (expires != null) {
-				if (expires.intValue() > 0) {
-					response.setHeader("Cache-Control", "max-age=" + expires.intValue()); // HTTP 1.1
-				} else {
-					response.setHeader("Cache-Control", "no-cache");
-					response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-					response.setDateHeader("Expires", 0);
-				}
-			}
-		}
-	}
-
+    private void setResponseHeader(final HttpServletResponse response) {
+        final Integer duration = Integer.valueOf(paramMap.get(DURATION));
+        final boolean alwaysCaching = Boolean.parseBoolean(paramMap.get(ALWAYS_CACHING));
+        final boolean noCustomPageCache = Boolean.parseBoolean(System.getProperty(NO_CUSTOMPAGE_CACHE));
+        if (!noCustomPageCache || alwaysCaching) {
+            response.setHeader("Cache-Control", "max-age=" + duration.intValue());
+        } else {
+            response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        }
+    }
 }

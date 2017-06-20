@@ -101,7 +101,6 @@ public class ResourceRendererTest {
         verify(res).setContentType("text/css");
         verify(res).setContentLength((int) contentLength);
         verify(res).setBufferSize((int) contentLength);
-        verify(res).setHeader("Cache-Control", "no-cache");
         verify(outputStream).write(any(byte[].class), eq(0), eq((int) contentLength));
         verify(res).flushBuffer();
         verify(outputStream).close();

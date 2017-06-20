@@ -85,15 +85,6 @@ public class APIServletCall extends ServletCall {
 
     public APIServletCall(final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);
-        final Date expdate = new Date();
-        expdate.setTime(expdate.getTime() - 3600000 * 24);
-        final SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy kk:mm:ss z");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-        head("Pragma", "No-cache");
-        head("Cache-Control", "no-cache,no-store,no-transform,max-age=0");
-        head("Expires", df.format(expdate));
-
     }
 
     /**
