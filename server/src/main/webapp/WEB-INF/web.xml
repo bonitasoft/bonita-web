@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="console-war" version="2.5">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
     <display-name>Bonita</display-name>
 
     <!--  Error pages -->
@@ -85,48 +85,25 @@
         <filter-name>CacheFilter</filter-name>
         <filter-class>org.bonitasoft.forms.server.filter.CacheFilter</filter-class>
         <init-param>
-            <param-name>js</param-name>
-            <param-value>604800</param-value>
+            <param-name>duration</param-name>
+            <param-value>36000</param-value>
         </init-param>
         <init-param>
-            <param-name>gif</param-name>
-            <param-value>604800</param-value>
-        </init-param>
-        <init-param>
-            <param-name>png</param-name>
-            <param-value>604800</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jpg</param-name>
-            <param-value>604800</param-value>
-        </init-param>
-        <init-param>
-            <param-name>css</param-name>
-            <param-value>604800</param-value>
+            <param-name>alwaysCaching</param-name>
+            <param-value>true</param-value>
         </init-param>
     </filter>
+
     <filter>
-        <filter-name>ApplicationResourceCacheFilter</filter-name>
-        <filter-class>org.bonitasoft.forms.server.filter.ApplicationResourceCacheFilter</filter-class>
+        <filter-name>CustomPageCacheFilter</filter-name>
+        <filter-class>org.bonitasoft.forms.server.filter.CacheFilter</filter-class>
         <init-param>
-            <param-name>js</param-name>
-            <param-value>3600</param-value>
+            <param-name>duration</param-name>
+            <param-value>36000</param-value>
         </init-param>
         <init-param>
-            <param-name>gif</param-name>
-            <param-value>3600</param-value>
-        </init-param>
-        <init-param>
-            <param-name>png</param-name>
-            <param-value>3600</param-value>
-        </init-param>
-        <init-param>
-            <param-name>jpg</param-name>
-            <param-value>3600</param-value>
-        </init-param>
-        <init-param>
-            <param-name>css</param-name>
-            <param-value>3600</param-value>
+            <param-name>alwaysCaching</param-name>
+            <param-value>false</param-value>
         </init-param>
     </filter>
     <!-- BPM URLSupport filter -->
@@ -146,16 +123,17 @@
 
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/portal/homepage</url-pattern>
         <url-pattern>/portal/formsService</url-pattern>
         <url-pattern>/portal/formsDocumentDownload</url-pattern>
         <url-pattern>/portal/formsDocumentImage</url-pattern>
         <url-pattern>/portal/downloadDocument</url-pattern>
         <url-pattern>/portal/documentDownload</url-pattern>
+        <url-pattern>/portal/runreport</url-pattern>
         <url-pattern>/API/documentDownload</url-pattern>
         <url-pattern>/API/identity/*</url-pattern>
         <url-pattern>/API/customuserinfo/*</url-pattern>
-        <url-pattern>/API/system/*</url-pattern>
+        <url-pattern>/API/system/session/*</url-pattern>
+        <url-pattern>/API/system/tenant/*</url-pattern>
         <url-pattern>/API/userXP/*</url-pattern>
         <url-pattern>/API/portal/*</url-pattern>
         <url-pattern>/API/bpm/*</url-pattern>
@@ -166,12 +144,16 @@
         <url-pattern>/API/monitoring/*</url-pattern>
         <url-pattern>/API/form/*</url-pattern>
         <url-pattern>/API/extension/*</url-pattern>
-        <url-pattern>/portal/runreport</url-pattern>
-        <url-pattern>/portal/BonitaConsole.html</url-pattern>
-        <url-pattern>/login.jsp</url-pattern>
+        <url-pattern>/API/avatars/*</url-pattern>
+        <url-pattern>/API/formsDocumentImage</url-pattern>
+        <url-pattern>/APIToolkit/*</url-pattern>
         <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
-        <url-pattern>/apps/*</url-pattern>
+        <!-- New manage on no cache Filter -->
+        <url-pattern>/portal/exportOrganization</url-pattern>
+        <url-pattern>/portal/pageDownload</url-pattern>
+        <url-pattern>/portal/exportActors</url-pattern>
+        <url-pattern>/portal/ReportScreenshotServlet</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -245,18 +227,36 @@
     <!-- Cache Filter Mapping Start -->
     <filter-mapping>
         <filter-name>CacheFilter</filter-name>
-        <url-pattern>*.js</url-pattern>
-        <url-pattern>*.css</url-pattern>
-        <url-pattern>*.gif</url-pattern>
-        <url-pattern>*.png</url-pattern>
-        <url-pattern>*.jpg</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>ApplicationResourceCacheFilter</filter-name>
-        <url-pattern>/portal/applicationResource</url-pattern>
+        <url-pattern>/portal/homepage</url-pattern>
+        <url-pattern>/login.jsp</url-pattern>
         <url-pattern>/portal/themeResource</url-pattern>
-        <url-pattern>/theme/*</url-pattern>
+        <url-pattern>/portal/pageResource</url-pattern>
+        <url-pattern>/platformloginservice</url-pattern>
+        <url-pattern>/platformlogoutservice</url-pattern>
+        <url-pattern>/API/system/i18ntranslation</url-pattern>
+        <!-- War -->
+        <url-pattern>/css</url-pattern>
+        <url-pattern>/images</url-pattern>
+        <url-pattern>/mobile</url-pattern>
+        <url-pattern>/mobile/*</url-pattern>
+        <url-pattern>/portal/css/*</url-pattern>
+        <url-pattern>/portal/fonts/*</url-pattern>
+        <url-pattern>/portal/images/*</url-pattern>
+        <url-pattern>/portal/scripts/*</url-pattern>
+        <url-pattern>/portal/deferredjs/*</url-pattern>
+        <url-pattern>/portal.js/*</url-pattern>
     </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CustomPageCacheFilter</filter-name>
+        <url-pattern>/portal/resource/*</url-pattern>
+        <url-pattern>/portal/resource/app/*</url-pattern>
+        <url-pattern>/apps/*</url-pattern>
+        <url-pattern>/theme/*</url-pattern>
+        <url-pattern>/portal/form/*</url-pattern>
+        <url-pattern>/portal/custom-page/*</url-pattern>
+    </filter-mapping>
+
     <!-- Cache Filter Mapping End -->
     <!--  Filter for restlet URLs -->
     <filter-mapping>
@@ -298,7 +298,6 @@
         <servlet-name>ConsoleServiceServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.server.ConsoleServiceServlet</servlet-class>
     </servlet>
-
     <!-- Portal file upload servlets -->
     <servlet>
         <servlet-name>fileUploadServlet</servlet-name>

@@ -88,9 +88,6 @@ abstract class BonitaExportServlet extends HttpServlet {
 
     protected void setResponseHeaders(final HttpServletRequest request, final HttpServletResponse response) throws UnsupportedEncodingException {
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("Expires", "0");
-        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-        response.setHeader("Pragma", "public");
         response.setContentType("application/octet-stream");
         final String encodedfileName = URLEncoder.encode(getFileExportName(), "UTF-8");
         final String userAgent = request.getHeader("User-Agent");
