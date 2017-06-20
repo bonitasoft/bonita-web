@@ -188,11 +188,13 @@ public class CustomPageService {
         if (pageClassLoader == null
                 || getConsoleProperties(apiSession).isPageInDebugMode()
                 || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
-            pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
-                    new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
-                    bdmDependenciesResolver));
-            pageClassLoader.addClasspath(pageDirectory.getPath());
-            PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+            synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
+                pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
+                        new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
+                        bdmDependenciesResolver));
+                pageClassLoader.addClasspath(pageDirectory.getPath());
+                PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+            }
         }
         return pageClassLoader;
     }

@@ -62,7 +62,7 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
         this.version = bdmDependenciesResolver.getBusinessDataModelVersion();
     }
 
-    public void addCustomPageResources() {
+    public void addCustomPageResources() throws IOException {
         addBDMDependencies();
         addOtherDependencies();
     }
@@ -76,21 +76,15 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
     }
 
 
-    private void addOtherDependencies() {
+    private void addOtherDependencies() throws IOException {
         final Map<String, byte[]> customPageDependencies = customPageDependenciesResolver.resolveCustomPageDependencies();
         for (final Map.Entry<String, byte[]> resource : customPageDependencies.entrySet()) {
             if (resource.getKey().matches(".*\\.jar") && !bdmDependenciesResolver.isABDMDependency(resource.getKey())) {
                 final byte[] data = resource.getValue();
-                try {
-                    final File file = File.createTempFile(resource.getKey(), null, customPageDependenciesResolver.getTempFolder());
-                    file.deleteOnExit();
-                    FileUtils.writeByteArrayToFile(file, data);
-                    addURL(new File(file.getAbsolutePath()).toURI().toURL());
-                } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, String.format("Failed to add file %s in classpath", resource.getKey()), e);
-                    }
-                }
+                final File file = File.createTempFile(resource.getKey(), null, customPageDependenciesResolver.getTempFolder());
+                file.deleteOnExit();
+                FileUtils.writeByteArrayToFile(file, data);
+                addURL(new File(file.getAbsolutePath()).toURI().toURL());
             } else {
                 nonJarResources.put(resource.getKey(), resource.getValue());
             }
