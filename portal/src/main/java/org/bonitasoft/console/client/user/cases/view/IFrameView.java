@@ -52,7 +52,6 @@ public class IFrameView extends Composite {
     public IFrameView() {
         initWidget(binder.createAndBindUi(this));
         frame.setId("bonitaframe");
-        ScriptInjector.fromString(getScriptToFixIEFocus()).setWindow(ScriptInjector.TOP_WINDOW).inject();
     }
 
     public IFrameView(final String url) {
@@ -85,30 +84,6 @@ public class IFrameView extends Composite {
             iframe.src = urlLocation;
         }
     }-*/;
-
-    /**
-     * Need to inject this script into UIbinder template.
-     * It allows to set focus on the "bonitaframe" if the current browser is IE.
-     * That fix the ticket BS-16350 "Bug IE, IFrame removal causes loss of the ability to focus input elements".
-     */
-    protected String getScriptToFixIEFocus(){
-
-        return  "   function isIE() {\n" +
-                "        var ua =  window.navigator.userAgent;\n" +
-                "        // MSIE: ie <= 10,  Trident: ie 11\n" +
-                "        return ua.indexOf('Trident/') > 0 || ua.indexOf('MSIE ') > 0;  \n" +
-                "   };\n" +
-                "   \n" +
-                "   function setFocusOnIframe(){\n" +
-                "        if(isIE()) {\n" +
-                "           var bonitaIframe = window.document.getElementById('bonitaframe');\n" +
-                "           if (bonitaIframe) {\n" +
-                "               bonitaIframe.contentWindow.focus();   \n" +
-                "           }\n" +
-                "        }   \n" +
-                "   };";
-    }
-
 
     public void addTool(final Widget widget) {
         toolbar.removeStyleName("empty");
