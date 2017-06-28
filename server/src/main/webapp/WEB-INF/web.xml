@@ -22,7 +22,7 @@
     <!-- No Cache Filter -->
     <filter>
         <filter-name>NoCacheFilter</filter-name>
-        <filter-class>org.bonitasoft.console.common.server.login.filter.NoCacheFilter</filter-class>
+        <filter-class>org.bonitasoft.console.common.server.filter.NoCacheFilter</filter-class>
     </filter>
     <!-- Security Filter -->
     <filter>
@@ -69,21 +69,22 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.AuthenticationFilter</filter-class>
         <!--
-            the AuthenticationFilter check credentials when access is requested
+            The AuthenticationFilter check credentials when access is requested
             However, to ensure authentication redirect and/or error handling works properly,
             we need to let a set of pages not securized :
             portal/scripts & portal/themeResource : to enable the layout and JS handling on login.jsp
             formService : to enable GWT RPC call directly by its servlet
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)</param-value>
+            <param-value>^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)</param-value>
         </init-param -->
     </filter>
     <!-- Cache Filter -->
     <filter>
         <filter-name>CacheFilter</filter-name>
-        <filter-class>org.bonitasoft.forms.server.filter.CacheFilter</filter-class>
+        <filter-class>org.bonitasoft.console.common.server.filter.CacheFilter</filter-class>
         <init-param>
             <param-name>duration</param-name>
             <param-value>36000</param-value>
@@ -92,11 +93,19 @@
             <param-name>alwaysCaching</param-name>
             <param-value>true</param-value>
         </init-param>
+        <!--
+            We need to let a set of URL not cached (the ones serving the HTML content) in order to handle the sessions timeout
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)</param-value>
+        </init-param -->
     </filter>
 
     <filter>
         <filter-name>CustomPageCacheFilter</filter-name>
-        <filter-class>org.bonitasoft.forms.server.filter.CacheFilter</filter-class>
+        <filter-class>org.bonitasoft.console.common.server.filter.CacheFilter</filter-class>
         <init-param>
             <param-name>duration</param-name>
             <param-value>36000</param-value>
