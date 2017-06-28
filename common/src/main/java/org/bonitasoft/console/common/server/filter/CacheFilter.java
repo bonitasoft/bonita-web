@@ -14,16 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.forms.server.filter;
+package org.bonitasoft.console.common.server.filter;
 
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -34,17 +31,24 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Haojie Yuan
+ * @author Benjamin Parisel
+ * @author Anthony Birembaut
  */
-public class CacheFilter implements Filter {
+public class CacheFilter extends ExcludingPatternFilter {
 
     public static final String ALWAYS_CACHING = "alwaysCaching";
+    
     public static final String NO_CUSTOMPAGE_CACHE = "noCacheCustomPage";
+    
+    private static final String CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN = "^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)";
+    
     protected Map<String, String> paramMap = new HashMap<String, String>();
 
     private final String DURATION = "duration";
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
+        super.init(filterConfig);
         final Enumeration<?> names = filterConfig.getInitParameterNames();
         while (names.hasMoreElements()) {
             final String name = (String) names.nextElement();
@@ -53,8 +57,12 @@ public class CacheFilter implements Filter {
         }
     }
 
+    public String getDefaultExcludedPages() {
+        return CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN;
+    }
+
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+    public void proceedWithFiltering(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
@@ -65,9 +73,15 @@ public class CacheFilter implements Filter {
 
         chain.doFilter(req, res);
     }
-
+    
     @Override
-    public void destroy() {
+    public void excludePatternFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest req = (HttpServletRequest) request;
+        final HttpServletResponse res = (HttpServletResponse) response;
+
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        
+        chain.doFilter(req, res);
     }
 
     private void setResponseHeader(final HttpServletResponse response) {
