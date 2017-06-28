@@ -15,15 +15,11 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -31,10 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
+import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
@@ -45,20 +41,18 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 
 /**
  * @author Vincent Elcrin
+ * @author Anthony Birembaut
  */
-public class AuthenticationFilter implements Filter {
+public class AuthenticationFilter extends ExcludingPatternFilter {
 
     /**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());
 
-    private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)";
+    private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)";
 
     protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
-
-    /** the Pattern of url not to filter */
-    protected Pattern excludePattern = null;
 
     private final LinkedList<AuthenticationRule> rules = new LinkedList<AuthenticationRule>();
 
@@ -75,48 +69,14 @@ public class AuthenticationFilter implements Filter {
         rules.add(rule);
     }
 
-    /**
-     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
-     */
-    @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-
-        final String contextPath = filterConfig.getServletContext().getContextPath();
-        String webappName;
-        if (contextPath.length() > 0) {
-            webappName = contextPath.substring(1);
-        } else {
-            webappName = "";
-        }
-        excludePattern = compilePattern(StringUtils.isBlank(filterConfig.getInitParameter("excludePattern")) ? getDefaultExcludedPages()
-                .replace("bonita", webappName)
-                : filterConfig.getInitParameter("excludePattern"));
-    }
-
-    protected String getDefaultExcludedPages() {
+    public String getDefaultExcludedPages() {
         return AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN;
     }
 
-    protected Pattern compilePattern(final String stringPattern) {
-        if (StringUtils.isNotBlank(stringPattern)) {
-            try {
-                return Pattern.compile(stringPattern);
-            } catch (final Exception e) {
-                LOGGER.log(Level.SEVERE, " impossible to create pattern from [" + stringPattern + "] : " + e);
-            }
-        }
-        return null;
-    }
-
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+    public void proceedWithFiltering(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException, IOException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor((HttpServletRequest) request);
-        final String url = ((HttpServletRequest) request).getRequestURL().toString();
-        if (matchExcludePatterns(url)) {
-            chain.doFilter(request, response);
-        } else {
-            doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, createTenantAccessor(requestAccessor), chain);
-        }
+        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, createTenantAccessor(requestAccessor), chain);
     }
 
     protected TenantIdAccessor createTenantAccessor(final HttpServletRequestAccessor requestAccessor) throws ServletException {
@@ -199,33 +159,6 @@ public class AuthenticationFilter implements Filter {
             return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
-        }
-    }
-
-    /**
-     * check the given url against the local url exclude pattern
-     *
-     * @param url
-     *        the url to check
-     * @return true if the url match the pattern
-     */
-    protected boolean matchExcludePatterns(final String url) {
-        try {
-            final boolean isExcluded = excludePattern != null && excludePattern.matcher(new URL(url).getPath()).find();
-            if (LOGGER.isLoggable(Level.FINE)) {
-                if (isExcluded) {
-                    LOGGER.log(Level.FINE, " Exclude pattern match with this url:" + url);
-                } else {
-                    LOGGER.log(Level.FINE, " Exclude pattern does not match with this url:" + url);
-                }
-            }
-            return isExcluded;
-        } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "impossible to get URL from given input [" + url + "]:" + e);
-            }
-            return excludePattern.matcher(url).find();
-
         }
     }
 
