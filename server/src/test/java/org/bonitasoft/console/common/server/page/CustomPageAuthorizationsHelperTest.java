@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +20,9 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.livingapps.ApplicationModel;
+import org.bonitasoft.livingapps.ApplicationModelFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
@@ -33,6 +37,9 @@ public class CustomPageAuthorizationsHelperTest {
     @InjectMocks
     CustomPageAuthorizationsHelper customPageAuthorizationsHelper;
 
+    @Mock(answer = Answers.RETURNS_MOCKS)
+    APISession sessionAPI;
+
     @Mock
     GetUserRightsHelper getUserRightsHelper;
 
@@ -42,12 +49,17 @@ public class CustomPageAuthorizationsHelperTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     PageAPI pageAPI;
 
+    @Mock(answer = Answers.RETURNS_MOCKS)
+    ApplicationModelFactory applicationModelFactory;
+
+    @Mock(answer = Answers.RETURNS_MOCKS)
+    ApplicationModel applicationModel;
+
     @Mock
     SearchResult<Application> applicationResult;
 
     @Mock
     Application application;
-
 
     @Test
     public void should_authorize_page_when_appToken_not_null_and_page_authorized_in_application() throws Exception {
@@ -59,9 +71,28 @@ public class CustomPageAuthorizationsHelperTest {
         given(applicationResult.getResult()).willReturn(Arrays.asList(application));
         given(application.getId()).willReturn(1L);
 
+        given(applicationModelFactory.createApplicationModel(any(String.class))).willReturn(applicationModel);
+        when(applicationModel.authorize(any(APISession.class))).thenReturn(true);
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
 
         assertThat(isPageAuthorized).isTrue();
+    }
+
+    @Test
+    public void should_unAuthorize_page_when_appToken_not_null_and_page_not_authorized_in_application() throws Exception {
+        given(applicationAPI.searchApplicationPages(any(SearchOptions.class)))
+                .willReturn(new SearchResultImpl<>(1, Collections.<ApplicationPage>emptyList()));
+        given(applicationAPI.searchApplications(any(SearchOptions.class)))
+                .willReturn(applicationResult);
+        given(applicationResult.getCount()).willReturn(1L);
+        given(applicationResult.getResult()).willReturn(Arrays.asList(application));
+        given(application.getId()).willReturn(1L);
+
+        given(applicationModelFactory.createApplicationModel(any(String.class))).willReturn(applicationModel);
+        when(applicationModel.authorize(any(APISession.class))).thenReturn(false);
+        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
+
+        assertThat(isPageAuthorized).isFalse();
     }
 
     @Test
@@ -73,6 +104,8 @@ public class CustomPageAuthorizationsHelperTest {
         given(applicationResult.getResult()).willReturn(Arrays.asList(application));
         given(application.getId()).willReturn(1L);
 
+        given(applicationModelFactory.createApplicationModel(any(String.class))).willReturn(applicationModel);
+        when(applicationModel.authorize(any(APISession.class))).thenReturn(true);
         customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
         verify(applicationAPI).searchApplicationPages(captor.capture());
 
@@ -83,7 +116,7 @@ public class CustomPageAuthorizationsHelperTest {
 
     @Test
     public void should_filter_application_page_search_on_custom_page_id() throws Exception {
-        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, "", ContentType.PAGE,null));
+        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, "", ContentType.PAGE, null));
         given(applicationAPI.searchApplications(any(SearchOptions.class)))
                 .willReturn(applicationResult);
         given(applicationResult.getCount()).willReturn(1L);
@@ -91,7 +124,8 @@ public class CustomPageAuthorizationsHelperTest {
         given(application.getId()).willReturn(1L);
 
         final ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
-
+        given(applicationModelFactory.createApplicationModel(any(String.class))).willReturn(applicationModel);
+        when(applicationModel.authorize(any(APISession.class))).thenReturn(true);
         customPageAuthorizationsHelper.isPageAuthorized("appToken", "pageToken");
         verify(applicationAPI).searchApplicationPages(captor.capture());
 
