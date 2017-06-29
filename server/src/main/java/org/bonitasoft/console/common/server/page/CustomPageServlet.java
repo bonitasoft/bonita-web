@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,21 +34,19 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.livingapps.ApplicationModelFactory;
 
 public class CustomPageServlet extends HttpServlet {
 
-    /**
-     * Logger
-     */
-    private static Logger LOGGER = Logger.getLogger(CustomPageServlet.class.getName());
-
+    public static final String APP_TOKEN_PARAM = "appToken";
     /**
      * uuid
      */
     private static final long serialVersionUID = -5410859017103815654L;
-
-    public static final String APP_TOKEN_PARAM = "appToken";
-
+    /**
+     * Logger
+     */
+    private static Logger LOGGER = Logger.getLogger(CustomPageServlet.class.getName());
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -83,18 +80,18 @@ public class CustomPageServlet extends HttpServlet {
 
         try {
 
-            if (isPageRequest(pathSegments)) {
-                if (!isAuthorized(apiSession, appToken, pageName)) {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
-                    return;
+            if (isAuthorized(apiSession, appToken, pageName)) {
+                if (isPageRequest(pathSegments)) {
+                    pageRenderer.displayCustomPage(request, response, apiSession, pageName);
+                } else {
+                    final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
+                    pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId()));
+                    resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                 }
-                pageRenderer.displayCustomPage(request, response, apiSession, pageName);
             } else {
-                final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
-                pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId()));
-                resourceRenderer.renderFile(request, response, resourceFile, apiSession);
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+                return;
             }
-
         } catch (final Exception e) {
             handleException(pageName, e);
         }
@@ -120,7 +117,7 @@ public class CustomPageServlet extends HttpServlet {
     }
 
     private File getResourceFile(final String resourcePath, final String pageName, final APISession apiSession) throws IOException, BonitaException {
-        final PageResourceProviderImpl pageResourceProvider =  pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutPageName(resourcePath, pageName));
 
@@ -149,6 +146,9 @@ public class CustomPageServlet extends HttpServlet {
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
         return new CustomPageAuthorizationsHelper(new GetUserRightsHelper(apiSession),
-                TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession));
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession), new ApplicationModelFactory(
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession),
+                TenantAPIAccessor.getCustomPageAPI(apiSession),
+                TenantAPIAccessor.getProfileAPI(apiSession)));
     }
 }
