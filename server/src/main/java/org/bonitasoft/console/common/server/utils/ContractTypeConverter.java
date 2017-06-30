@@ -59,9 +59,9 @@ public class ContractTypeConverter {
     public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
 
-    public static final String CONTENT_TYPE = "contentType";
-    public static final String FILE_TEMP_PATH = "tempPath";
-    public static final String TEMP_PATH_DESCRIPTION = "file name in the temporary upload directory";
+    static final String CONTENT_TYPE = "contentType";
+    static final String FILE_TEMP_PATH = "tempPath";
+    static final String TEMP_PATH_DESCRIPTION = "file name in the temporary upload directory";
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
@@ -80,7 +80,7 @@ public class ContractTypeConverter {
         convertUtilsBean.register(dateConverter, Date.class);
     }
 
-    public Object convertToType(final Type type, final Serializable parameterValue) {
+    Object convertToType(final Type type, final Serializable parameterValue) {
         final Class<? extends Serializable> clazz = getClassFromType(type);
         Serializable preprocessedParameterValue = preprocessInputs(type, parameterValue);
         return convertToType(clazz, preprocessedParameterValue);
@@ -95,7 +95,7 @@ public class ContractTypeConverter {
     }
 
     public Map<String, Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs,
-            final long maxSizeForTenant, final long tenantId, final boolean deleteFile) throws FileNotFoundException {
+            final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         this.tenantId = tenantId;
         final Map<String, Serializable> processedInputs = new HashMap<>();
@@ -104,24 +104,61 @@ public class ContractTypeConverter {
         if (inputs != null) {
             for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
                 processedInputs.put(inputEntry.getKey(),
-                        convertInputToExpectedType(inputEntry.getValue(), contractDefinitionMap.get(inputEntry.getKey()), deleteFile));
+                        convertInputToExpectedType(inputEntry.getValue(),
+                                contractDefinitionMap.get(inputEntry.getKey())));
             }
         }
         return processedInputs;
     }
 
-    protected Serializable convertInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+    public void deleteTemporaryFiles(Map<String, Serializable> inputs,
+            long tenantId) {
+        if (inputs != null) {
+            deleteTemporaryFilesInternal((Serializable) inputs, tenantId);
+
+        }
+
+    }
+
+    private void deleteTemporaryFilesInternal(Serializable inputValue,
+            long tenantId) {
+        if (inputValue == null) {
+            return;
+        }
+        if (inputValue instanceof List) {
+            for (Object element : ((List) inputValue)) {
+                deleteTemporaryFilesInternal(((Serializable) element), tenantId);
+            }
+        } else if (inputValue instanceof Map) {
+            for (Map.Entry<String, Serializable> element : ((Map<String, Serializable>) inputValue).entrySet()) {
+                if (element.getKey().equals(FILE_TEMP_PATH)) {
+                    String path = (String) element.getValue();
+                    try {
+                        deleteFile(bonitaHomeFolderAccessor.getTempFile(path, tenantId));
+                    } catch (IOException e) {
+                        logMessage(Level.INFO, "Cannot delete " + path + "in the tenant temp directory.", e);
+                    }
+                } else {
+                    deleteTemporaryFilesInternal(element.getValue(), tenantId);
+                }
+            }
+        }
+
+    }
+
+    private Serializable convertInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition)
             throws FileNotFoundException {
         if (inputValue == null) {
             return null;
         } else if (inputValue instanceof List) {
-            return convertMultipleInputToExpectedType(inputValue, inputDefinition, deleteFile);
+            return convertMultipleInputToExpectedType(inputValue, inputDefinition);
         } else {
-            return convertSingleInputToExpectedType(inputValue, inputDefinition, deleteFile);
+            return convertSingleInputToExpectedType(inputValue, inputDefinition);
         }
     }
 
-    protected Serializable convertMultipleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+    private Serializable convertMultipleInputToExpectedType(final Serializable inputValue,
+            final Serializable inputDefinition)
             throws FileNotFoundException {
         @SuppressWarnings("unchecked")
         final List<Serializable> listOfValues = (List<Serializable>) inputValue;
@@ -129,40 +166,42 @@ public class ContractTypeConverter {
         for (final Serializable value : listOfValues) {
             Serializable convertedValue = null;
             if (value != null) {
-                convertedValue = convertSingleInputToExpectedType(value, inputDefinition, deleteFile);
+                convertedValue = convertSingleInputToExpectedType(value, inputDefinition);
             }
             convertedListOfValues.add(convertedValue);
         }
         return (Serializable) convertedListOfValues;
     }
 
-    protected Serializable convertSingleInputToExpectedType(final Serializable inputValue, final Serializable inputDefinition, final boolean deleteFile)
+    private Serializable convertSingleInputToExpectedType(final Serializable inputValue,
+            final Serializable inputDefinition)
             throws FileNotFoundException {
         if (inputDefinition == null) {
             return inputValue;
         } else if (inputDefinition instanceof Map) {
             @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfInputDefinition = (Map<String, Serializable>) inputDefinition;
-            return convertComplexInputToExpectedType(inputValue, mapOfInputDefinition, deleteFile);
+            return convertComplexInputToExpectedType(inputValue, mapOfInputDefinition);
         } else {
             final InputDefinition simpleInputDefinition = (InputDefinition) inputDefinition;
             if (Type.FILE.equals(simpleInputDefinition.getType())) {
-                return convertFileInputToExpectedType(inputValue, deleteFile);
+                return convertFileInputToExpectedType(inputValue);
             } else {
                 return (Serializable) convertToType(simpleInputDefinition.getType(), inputValue);
             }
         }
     }
 
-    protected Serializable convertComplexInputToExpectedType(final Serializable inputValue, final Map<String, Serializable> mapOfInputDefinition,
-            final boolean deleteFile) throws FileNotFoundException {
+    private Serializable convertComplexInputToExpectedType(final Serializable inputValue,
+            final Map<String, Serializable> mapOfInputDefinition) throws FileNotFoundException {
         if (inputValue instanceof Map) {
             @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
             final Map<String, Serializable> convertedMapOfValues = new HashMap<>();
             for (final Entry<String, Serializable> valueEntry : mapOfValues.entrySet()) {
                 final Serializable childInputDefinition = mapOfInputDefinition.get(valueEntry.getKey());
-                final Serializable convertedValue = convertInputToExpectedType(valueEntry.getValue(), childInputDefinition, deleteFile);
+                final Serializable convertedValue = convertInputToExpectedType(valueEntry.getValue(),
+                        childInputDefinition);
                 convertedMapOfValues.put(valueEntry.getKey(), convertedValue);
             }
             return (Serializable) convertedMapOfValues;
@@ -171,7 +210,7 @@ public class ContractTypeConverter {
         }
     }
 
-    protected Serializable convertFileInputToExpectedType(final Serializable inputValue, final boolean deleteFile) throws FileNotFoundException {
+    private Serializable convertFileInputToExpectedType(final Serializable inputValue) throws FileNotFoundException {
         if (inputValue instanceof Map) {
             @SuppressWarnings("unchecked")
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
@@ -180,58 +219,53 @@ public class ContractTypeConverter {
                 final FileInputValue fileInputValue = new FileInputValue(
                         filename,
                         (String) mapOfValues.get(CONTENT_TYPE),
-                        retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH),
-                                deleteFile));
+                        retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH)));
                 return fileInputValue;
             }
         }
         return inputValue;
     }
 
-    protected byte[] retrieveFileAndGetContent(final String fileTempPath, final boolean deleteFile) throws FileNotFoundException {
+    private byte[] retrieveFileAndGetContent(final String fileTempPath) throws FileNotFoundException {
         byte[] fileContent = null;
         if (fileTempPath != null) {
             try {
                 final File sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
                 if (sourceFile.exists()) {
-                    fileContent = getFileContent(sourceFile, fileTempPath, deleteFile);
+                    fileContent = getFileContent(sourceFile);
                 } else {
                     throw new FileNotFoundException("Cannot find " + fileTempPath + " in the tenant temp directory.");
                 }
             } catch (final FileNotFoundException e) {
                 throw new FileNotFoundException(e.getMessage());
-            } catch (final IOException e) {
-                throw new RuntimeException(e);
-            } catch (final DocumentException e) {
+            } catch (final IOException | DocumentException e) {
                 throw new RuntimeException(e);
             }
         }
         return fileContent;
     }
 
-    protected byte[] getFileContent(final File sourceFile, final String fileTempPath, final boolean deleteFile) throws DocumentException, IOException {
+    private byte[] getFileContent(final File sourceFile)
+            throws DocumentException, IOException {
         byte[] fileContent;
         if (sourceFile.length() > maxSizeForTenant * 1048576) {
             final String errorMessage = "This document is exceeded " + maxSizeForTenant + "Mb";
             throw new DocumentException(errorMessage);
         }
         fileContent = DocumentUtil.getArrayByteFromFile(sourceFile);
-        if (deleteFile) {
-            deleteFile(sourceFile, fileTempPath);
-        }
         return fileContent;
     }
 
-    protected void deleteFile(final File sourceFile, final String fileTempPath) {
+    void deleteFile(final File sourceFile) {
         if (!sourceFile.delete()) {
             sourceFile.deleteOnExit();
             if (LOGGER.isLoggable(Level.INFO)) {
-                logMessage(Level.INFO, "Cannot delete " + fileTempPath + "in the tenant temp directory.");
+                logMessage(Level.INFO, "Cannot delete " + sourceFile.getPath() + "in the tenant temp directory.");
             }
         }
     }
 
-    protected Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
+    private Map<String, Serializable> createContractInputMap(final List<InputDefinition> inputDefinitions) {
         final Map<String, Serializable> contractDefinitionMap = new HashMap<>();
         for (final InputDefinition inputDefinition : inputDefinitions) {
             if (inputDefinition.hasChildren() && !Type.FILE.equals(inputDefinition.getType())) {
@@ -251,7 +285,7 @@ public class ContractTypeConverter {
         return contractDefinition;
     }
 
-    protected List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {
+    private List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {
         final List<InputDefinition> contractDefinition = new ArrayList<>();
         for (final InputDefinition inputDefinition : inputDefinitions) {
             List<InputDefinition> childInputDefinitions;
@@ -282,7 +316,7 @@ public class ContractTypeConverter {
         return childInputDefinitions;
     }
 
-    protected ContractDefinitionImpl getContractDefinition(final List<ConstraintDefinition> constraints, final List<InputDefinition> inputDefinitions) {
+    private ContractDefinitionImpl getContractDefinition(final List<ConstraintDefinition> constraints, final List<InputDefinition> inputDefinitions) {
         final ContractDefinitionImpl contractDefinition = new ContractDefinitionImpl();
         for (final ConstraintDefinition constraint : constraints) {
             contractDefinition.addConstraint(constraint);
@@ -294,7 +328,7 @@ public class ContractTypeConverter {
         return contractDefinition;
     }
 
-    protected Object convertToType(final Class<? extends Serializable> clazz, final Serializable parameterValue) {
+    private Object convertToType(final Class<? extends Serializable> clazz, final Serializable parameterValue) {
         if (parameterValue == null) {
             return null;
         }
@@ -329,15 +363,15 @@ public class ContractTypeConverter {
         }
     }
 
-    protected void logMessage(Level level, String msg) {
+    void logMessage(Level level, String msg) {
         LOGGER.log(level, msg);
     }
 
-    protected void logMessage(Level level, String msg, Throwable th) {
+    void logMessage(Level level, String msg, Throwable th) {
         LOGGER.log(level, msg, th);
     }
 
-    protected Class<? extends Serializable> getClassFromType(final Type type) {
+    private Class<? extends Serializable> getClassFromType(final Type type) {
         switch (type) {
             case BOOLEAN:
                 return Boolean.class;

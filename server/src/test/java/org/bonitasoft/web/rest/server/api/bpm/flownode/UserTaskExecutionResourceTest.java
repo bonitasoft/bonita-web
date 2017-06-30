@@ -86,6 +86,8 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     @Before
     public void initializeMocks() {
         userTaskExecutionResource = spy(new UserTaskExecutionResource(processAPI, apiSession));
+        // this allows us to track method calls on this internal dependency
+        userTaskExecutionResource.typeConverterUtil = spy(userTaskExecutionResource.typeConverterUtil);
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
     }
 
@@ -143,7 +145,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         assertThat(response)
                 .hasJsonEntityEqualTo(
                         "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
-        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -154,7 +156,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
-        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -162,7 +164,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -174,7 +176,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         final Response response = request("/bpm/userTask/2/execution").post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
-        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -198,7 +200,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
 
         //then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
-        verify(userTaskExecutionResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -213,7 +215,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         //when
         userTaskExecutionResource.executeTask(inputs);
 
-        verify(userTaskExecutionResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(userTaskExecutionResource.typeConverterUtil, times(1)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
