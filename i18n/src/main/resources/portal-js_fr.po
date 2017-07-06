@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-06-01 20:46-0400\n"
+"PO-Revision-Date: 2017-07-05 20:45-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -158,7 +158,7 @@ msgid "Categories"
 msgstr "Catégories"
 
 msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
-msgstr ""
+msgstr "Vérifiez que chaque entité est mappée à un profil, pour le Bonita Portal ou pour les applications que vous avez créées."
 
 msgid "Class name"
 msgstr "Nom de la classe"
@@ -749,7 +749,7 @@ msgid "To personalize the display of search keys (and columns in general), use t
 msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
 
 msgid "To use this feature, create a new version of the process in Bonita Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr ""
+msgstr "Pour utiliser cette fonctionnalité, créez une nouvelle version du processus dans un Bonita Studio version 6.4 ou ultérieure, générez le fichier .bar puis déployez-le dans le portail."
 
 msgid "Type"
 msgstr "Type"
