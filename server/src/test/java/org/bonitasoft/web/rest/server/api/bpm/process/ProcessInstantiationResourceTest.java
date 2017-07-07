@@ -3,18 +3,23 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
+import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
@@ -37,16 +42,6 @@ import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessInstantiationResourceTest extends RestletTest {
 
@@ -61,7 +56,6 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
     private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
-
 
     @Mock
     ProcessAPI processAPI;
@@ -91,6 +85,8 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Before
     public void initializeMocks() {
         processInstantiationResource = spy(new ProcessInstantiationResource(processAPI, apiSession));
+        // this allows us to track method calls on this internal dependency
+        processInstantiationResource.typeConverterUtil = spy(processInstantiationResource.typeConverterUtil);
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
         when(apiSession.getTenantId()).thenReturn(1L);
     }
@@ -158,7 +154,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response)
         .hasJsonEntityEqualTo(
                 "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
-        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -169,7 +165,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
-        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -177,7 +173,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -211,7 +207,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
         // then
         verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
-        verify(processInstantiationResource, times(0)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test
@@ -227,7 +223,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         //when
         processInstantiationResource.instantiateProcess(inputs);
 
-        verify(processInstantiationResource, times(1)).deleteFiles(any(ContractDefinition.class),anyMap(),anyLong(),anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(1)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 
     @Test

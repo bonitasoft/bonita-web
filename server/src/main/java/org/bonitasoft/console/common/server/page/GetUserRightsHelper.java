@@ -39,6 +39,10 @@ public class GetUserRightsHelper {
         this.apiSession = apiSession;
     }
 
+    public APISession getApiSession() {
+        return apiSession;
+    }
+
     public List<String> getUserRights() throws BonitaException {
         final List<String> rights = new ArrayList<>();
         final ProfileAPI profileAPI = TenantAPIAccessor.getProfileAPI(apiSession);
