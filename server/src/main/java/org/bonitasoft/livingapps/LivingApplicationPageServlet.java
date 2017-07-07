@@ -18,19 +18,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
-import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
-import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.page.GetUserRightsHelper;
-import org.bonitasoft.console.common.server.page.PageRenderer;
-import org.bonitasoft.console.common.server.page.ResourceRenderer;
+import org.bonitasoft.console.common.server.page.*;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -47,22 +41,17 @@ import org.bonitasoft.engine.session.APISession;
 
 public class LivingApplicationPageServlet extends HttpServlet {
 
-    /**
-     * Logger
-     */
-    private static Logger LOGGER = Logger.getLogger(LivingApplicationPageServlet.class.getName());
-
+    public static final String RESOURCE_PATH_SEPARATOR = "/content";
+    public static final String API_PATH_SEPARATOR = "/API";
+    public static final String THEME_PATH_SEPARATOR = "/theme";
     /**
      * uuid
      */
     private static final long serialVersionUID = -5410859017103815654L;
-
-    public static final String RESOURCE_PATH_SEPARATOR = "/content";
-
-    public static final String API_PATH_SEPARATOR = "/API";
-
-    public static final String THEME_PATH_SEPARATOR = "/theme";
-
+    /**
+     * Logger
+     */
+    private static Logger LOGGER = Logger.getLogger(LivingApplicationPageServlet.class.getName());
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -110,23 +99,22 @@ public class LivingApplicationPageServlet extends HttpServlet {
             customPageName = getCustomPageName(appToken, pageToken, apiSession, response);
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
-
                 final String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
-
                 try {
-                    if (resourcePath == null || isNotResourcePath(resourcePath)) {
-                        if (!isAuthorized(apiSession, appToken, customPageName)) {
-                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
-                            return;
+                    if (isAuthorized(apiSession, appToken, customPageName)) {
+                        if (resourcePath == null || isNotResourcePath(resourcePath)) {
+                            pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
+                        } else {
+                            final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
+                            pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName, apiSession.getTenantId()));
+                            resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                         }
-                        pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                     } else {
-                        final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
-                        pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName, apiSession.getTenantId()));
-                        resourceRenderer.renderFile(request, response, resourceFile, apiSession);
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+                        return;
                     }
                 } catch (final Exception e) {
                     handleException(customPageName, e);
@@ -147,12 +135,12 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     }
 
-    private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws IOException, ServletException {
+    private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws IOException, ServletException {
         try {
             return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
         } catch (final ApplicationPageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "Cannot found the page" + pageToken + "for the application" + appToken + ".");
@@ -162,16 +150,16 @@ public class LivingApplicationPageServlet extends HttpServlet {
         return null;
     }
 
-    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession,  final HttpServletResponse response) throws ServletException, IOException {
+    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws ServletException, IOException {
         try {
-            final Long customPageId = getCustomPageId(appToken, pageToken,apiSession,response);
+            final Long customPageId = getCustomPageId(appToken, pageToken, apiSession, response);
             return getPageApi(apiSession).getPage(customPageId).getName();
         } catch (final PageNotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken+ "/" +pageToken, e);
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Cannot found the page"+pageToken+"for the application"+appToken+".");
+                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
         } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }
@@ -220,6 +208,9 @@ public class LivingApplicationPageServlet extends HttpServlet {
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
         return new CustomPageAuthorizationsHelper(new GetUserRightsHelper(apiSession),
-                TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession));
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession), new ApplicationModelFactory(
+                TenantAPIAccessor.getLivingApplicationAPI(apiSession),
+                TenantAPIAccessor.getCustomPageAPI(apiSession),
+                TenantAPIAccessor.getProfileAPI(apiSession)));
     }
 }

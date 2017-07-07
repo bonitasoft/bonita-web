@@ -2,14 +2,11 @@ package org.bonitasoft.console.common.server.page;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
@@ -80,7 +77,7 @@ public class CustomPageServletTest {
 
         servlet.doGet(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(403 ,"User not Authorized");
+        verify(hsResponse).sendError(403, "User not Authorized");
     }
 
     @Test
@@ -105,10 +102,10 @@ public class CustomPageServletTest {
     @Test
     public void getPage_should_call_the_page_renderer() throws Exception {
         testPageIsWellCalled("custompage_htmlexample1", "/custompage_htmlexample1/", Arrays.asList("custompage_htmlexample1"));
-        testPageIsWellCalled("custompage_htmlexample2", "/custompage_htmlexample2/index", Arrays.asList("custompage_htmlexample2","index"));
-        testPageIsWellCalled("custompage_htmlexample3", "/custompage_htmlexample3/Index", Arrays.asList("custompage_htmlexample3","Index"));
-        testPageIsWellCalled("custompage_htmlexample4", "/custompage_htmlexample4/index.html", Arrays.asList("custompage_htmlexample4","index.html"));
-        testPageIsWellCalled("custompage_htmlexample5", "/custompage_htmlexample5/index.groovy", Arrays.asList("custompage_htmlexample5","index.groovy"));
+        testPageIsWellCalled("custompage_htmlexample2", "/custompage_htmlexample2/index", Arrays.asList("custompage_htmlexample2", "index"));
+        testPageIsWellCalled("custompage_htmlexample3", "/custompage_htmlexample3/Index", Arrays.asList("custompage_htmlexample3", "Index"));
+        testPageIsWellCalled("custompage_htmlexample4", "/custompage_htmlexample4/index.html", Arrays.asList("custompage_htmlexample4", "index.html"));
+        testPageIsWellCalled("custompage_htmlexample5", "/custompage_htmlexample5/index.groovy", Arrays.asList("custompage_htmlexample5", "index.groovy"));
     }
 
     private void testPageIsWellCalled(final String token, final String path, final List<String> pathSegment) throws Exception {
@@ -127,9 +124,10 @@ public class CustomPageServletTest {
         final File pageDir = new File("/pageDir");
         final String pageName = "custompage_htmlexample";
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList(pageName, "css", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName,1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
+        given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(true);
 
         servlet.doGet(hsRequest, hsResponse);
 
@@ -137,8 +135,8 @@ public class CustomPageServletTest {
                 new File(pageDir, File.separator + "resources" + File.separator + "css" + File.separator + "file.css"), apiSession);
     }
 
-    @Test(expected=ServletException.class)
-    public void getResource_should_throw_exception_if_unauthorised() throws Exception {
+    @Test
+    public void getResource_should_get_Forbidden_Status_when_unAuthorize() throws Exception {
         hsRequest.setPathInfo("/custompage_htmlexample/css/../../../file.css");
         final File pageDir = new File(".");
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/../../../file.css")).willReturn(
@@ -146,8 +144,10 @@ public class CustomPageServletTest {
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
         doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
+        given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);
+        verify(hsResponse).sendError(403, "User not Authorized");
     }
 
 }

@@ -13,6 +13,10 @@
  **/
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Map;
+
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -24,10 +28,6 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
-
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author Emmanuel Duchastenier
@@ -58,22 +58,17 @@ public class UserTaskExecutionResource extends CommonResource {
             final ContractDefinition taskContract = processAPI.getUserTaskContract(taskId);
             final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs, maxSizeForTenant, tenantId, false);
-    		if (userId == null) {
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs, maxSizeForTenant, tenantId);
+            if (userId == null) {
                 processAPI.executeUserTask(taskId, processedInputs);
             } else {
                 processAPI.executeUserTask(Long.parseLong(userId), taskId, processedInputs);
-    		}
-            //clean temp files
-            deleteFiles(taskContract, inputs, maxSizeForTenant, tenantId);
+            }
+            typeConverterUtil.deleteTemporaryFiles(inputs, tenantId);
 
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");
         }
-    }
-
-    protected void deleteFiles(ContractDefinition processContract, Map<String, Serializable> inputs, long maxSizeForTenant, long tenantId) throws FileNotFoundException {
-        typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 
     protected long getTaskIdParameter() {
