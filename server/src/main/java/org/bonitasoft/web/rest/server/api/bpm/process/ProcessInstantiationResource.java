@@ -67,7 +67,7 @@ public class ProcessInstantiationResource extends CommonResource {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
             final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties(tenantId).getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, false);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
             long processInstanceId;
             if (userId == null) {
                 processInstanceId = processAPI.startProcessWithInputs(processDefinitionId, processedInputs).getId();
@@ -75,7 +75,7 @@ public class ProcessInstantiationResource extends CommonResource {
                 processInstanceId = processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs).getId();
             }
             //clean temp files
-            deleteFiles(processContract, inputs, maxSizeForTenant, tenantId);
+            typeConverterUtil.deleteTemporaryFiles(inputs, tenantId);
 
             final JsonNodeFactory factory = JsonNodeFactory.instance;
             final ObjectNode returnedObject = factory.objectNode();
@@ -85,10 +85,6 @@ public class ProcessInstantiationResource extends CommonResource {
             manageContractViolationException(e, "Cannot instantiate process task.");
             return null;
         }
-    }
-
-    protected void deleteFiles(final ContractDefinition processContract, final Map<String, Serializable> inputs, final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
-        typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId, true);
     }
 
     protected CaseItem convertEngineToConsoleItem(final ProcessInstance item) {
