@@ -435,7 +435,7 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <version>1.5.0</version>
+                        <version>1.6.4</version>
                         <configuration>
                             <container>
                                 <!-- https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html#Maven2PluginReferenceGuide-container -->
@@ -445,6 +445,11 @@
                                 <append>false</append>
                                 <!-- set this value if your web app is taking some time to start -->
                                 <!--timeout>360000</timeout-->
+                                <artifactInstaller>
+                                    <groupId>org.apache.tomcat</groupId>
+                                    <artifactId>tomcat</artifactId>
+                                    <version>${tomcat.version}</version>
+                                </artifactInstaller>
                                 <dependencies>
                                     <dependency>
                                         <location>${project.build.directory}/tomcat-libs</location>
