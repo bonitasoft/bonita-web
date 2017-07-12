@@ -24,7 +24,7 @@ In portal module :
     Super dev mode: mvn -Pdev process-classes gwt:run-codeserver
     
 Visit the indicated URL and bookmark the Dev Mode On/Off links
-Then visit localhost:8080 and click on the Dev Mode On link
+Then visit http://localhost:8080/bonita, login with install/install and click on the Dev Mode On link
 click on the portal module link to re-generate the portal Javascript
     
 ## Structure ##
