@@ -26,6 +26,7 @@ import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringFormatValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
@@ -46,7 +47,15 @@ public class EditGroupForm extends Form {
                 GroupItem.ATTRIBUTE_ID);
         addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_DESCRIPTION), _("Description"), _("Enter the description of this group"));
 
-        getEntry(new JsId(RoleItem.ATTRIBUTE_NAME)).addValidator(new MandatoryValidator());
+        getEntry(new JsId(RoleItem.ATTRIBUTE_NAME))
+        .addValidator(new MandatoryValidator())
+        .addValidator(new AbstractStringFormatValidator("/", true) {
+            
+            @Override
+            protected String defineErrorMessage() {
+                return _("%attribute% mustn't contains '/'");
+            }
+        });
     }
 
     public EditGroupForm addGroupFiller(final String groupId) {
