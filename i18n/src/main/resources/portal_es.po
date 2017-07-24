@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-15 05:07+0200\n"
-"PO-Revision-Date: 2017-07-03 18:13-0400\n"
+"POT-Creation-Date: 2017-07-21 05:07+0200\n"
+"PO-Revision-Date: 2017-07-23 18:43-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -102,6 +102,9 @@ msgstr "%attribute%  debe contener exactamente  %length% characters"
 
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% no debe ser igual a %secondAttribute%"
+
+msgid "%attribute% mustn't contains '/'"
+msgstr ""
 
 msgid "%attribute% mustn't contains blank spaces"
 msgstr "%attribute% no debe contiene espacios en blanco"
@@ -383,6 +386,10 @@ msgstr "Error al crear una definición"
 
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Error al eliminar un elemento con el identificador %id%"
+
+msgid "An error occurred while importing the organization.\n"
+"Consult the logs for more information."
+msgstr ""
 
 msgid "Analytics"
 msgstr "Análisis"
