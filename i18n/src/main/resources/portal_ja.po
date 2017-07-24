@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-15 05:07+0200\n"
-"PO-Revision-Date: 2017-06-18 18:08-0400\n"
+"POT-Creation-Date: 2017-07-21 05:07+0200\n"
+"PO-Revision-Date: 2017-07-23 18:38-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -102,6 +102,9 @@ msgstr "%attribute% には、正確に%length%文字が含まれている必要�
 
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% は、 %secondAttribute% と異なっていなければなりません。"
+
+msgid "%attribute% mustn't contains '/'"
+msgstr "%attribute% には、'/' を含めてはいけません。"
 
 msgid "%attribute% mustn't contains blank spaces"
 msgstr "%attribute% には、空白スペースを含むことができません。"
@@ -383,6 +386,11 @@ msgstr "定義の作成中にエラーが発生しました"
 
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Id %id% を持つ項目を削除中にエラーが発生しました"
+
+msgid "An error occurred while importing the organization.\n"
+"Consult the logs for more information."
+msgstr "組織のインポート中にエラーが発生しました。\n"
+"詳細については、ログを参照してください。"
 
 msgid "Analytics"
 msgstr "分析"
