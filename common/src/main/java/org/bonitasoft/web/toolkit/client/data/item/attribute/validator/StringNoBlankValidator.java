@@ -30,6 +30,6 @@ public class StringNoBlankValidator extends AbstractStringFormatValidator {
 
     @Override
     protected String defineErrorMessage() {
-        return _("%attribute% mustn't contains blank spaces");
+        return _("%attribute% must not contain blank spaces");
     }
 }
