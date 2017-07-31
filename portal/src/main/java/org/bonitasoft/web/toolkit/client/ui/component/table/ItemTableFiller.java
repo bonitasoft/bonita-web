@@ -54,7 +54,7 @@ class ItemTableFiller extends Filler<ItemTable> {
 
     @Override
     protected void setData(final String json, final Map<String, String> headers) {
-        final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers.get("Content-Range"));
+        final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
 
         this.target.setPager(
                 resultPager.getCurrentPage(),

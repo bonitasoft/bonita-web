@@ -24,8 +24,6 @@ import java.util.Map;
  */
 public class ApiSearchResultPager {
 
-    private static final String PAGER_HTTP_HEADER_KEY = "Content-Range";
-
     private final int currentPage;
 
     private final int nbResultsByPage;
@@ -76,6 +74,6 @@ public class ApiSearchResultPager {
     }
 
     public static final ApiSearchResultPager parse(final Map<String, String> headers) {
-        return parse(headers.get(PAGER_HTTP_HEADER_KEY));
+        return parse(headers.get("content-range"));
     }
 }
