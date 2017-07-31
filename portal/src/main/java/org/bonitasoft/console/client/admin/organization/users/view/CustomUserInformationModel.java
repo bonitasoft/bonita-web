@@ -48,7 +48,7 @@ public class CustomUserInformationModel {
 
         @Override
         public void onSuccess(int httpStatusCode, String response, Map<String, String> headers) {
-            ApiSearchResultPager pagination = ApiSearchResultPager.parse(headers.get("Content-Range"));
+            ApiSearchResultPager pagination = ApiSearchResultPager.parse(headers);
             onSuccess(
                     JSonItemReader.parseItems(response, CustomUserInfoDefinition.get()),
                     pagination.getCurrentPage(),

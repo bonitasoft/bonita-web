@@ -107,7 +107,7 @@ public class ItemTreeTableFiller extends ItemTableFiller {
 
         this.target.setPager(
                 this.target.getPage(),
-                Integer.valueOf(headers.get("Content-Range").split("/")[1]),
+                Integer.valueOf(headers.get("content-range").split("/")[1]),
                 this.target.getNbLinesByPage()
                 );
     }
