@@ -303,13 +303,16 @@ public class ClientApplicationURL {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected void initSession(final Action callback) {
+
+        String csrfToken = Cookies.getCookie("X-Bonita-API-Token");
+        if (csrfToken != null) {
+            UserSessionVariables.addUserVariable(UserSessionVariables.API_TOKEN, csrfToken);
+        }
+
         new APICaller(new SessionDefinition()).get("unusedId", new APICallback() {
 
             @Override
             public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
-                if (headers.get("X-Bonita-API-Token") != null) {
-                    UserSessionVariables.addUserVariable(UserSessionVariables.API_TOKEN, headers.get("X-Bonita-API-Token"));
-                }
                 final IItem session = JSonItemReader.parseItem(response, new SessionDefinition());
                 for (final String name : session.getAttributeNames()) {
                     if (name.equals("conf")) {
