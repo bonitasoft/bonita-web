@@ -51,7 +51,7 @@ public class OngoingCasesFiller extends Filler<Link> {
 
     @Override
     protected void setData(final String json, final Map<String, String> headers) {
-        final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers.get("Content-Range"));
+        final ApiSearchResultPager resultPager = ApiSearchResultPager.parse(headers);
         this.target.setLabel(_("%nb_ongoing% ongoing", new Arg("nb_ongoing", resultPager.getNbTotalResults())));
         if (resultPager.getNbTotalResults() == 0) {
             this.target.setEnabled(false);

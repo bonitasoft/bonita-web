@@ -25,6 +25,7 @@ import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.SendFormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.form.AbstractForm;
+import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 public class OrganisationImportAction extends SendFormAction {
 
@@ -39,6 +40,11 @@ public class OrganisationImportAction extends SendFormAction {
             form.addError(new JsId("organizationDataUpload"), _("Organization successfully imported."));
             form.addClass("success");
         }
+        
+        @Override
+        public void onError(String message, Integer errorCode) {
+            Message.error(_("An error occurred while importing the organization.\nConsult the logs for more information."));
+        };
 
     };
 

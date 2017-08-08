@@ -14,22 +14,23 @@
  */
 package org.bonitasoft.console.client.admin.organization.group;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-import static org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text.INCREASED_MAX_LENGTH;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringFormatValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.ui.component.form.entry.Text.INCREASED_MAX_LENGTH;
 
 /**
  * @author Colin PUY
@@ -46,7 +47,15 @@ public class EditGroupForm extends Form {
                 GroupItem.ATTRIBUTE_ID);
         addItemAttributeEntry(def.getAttribute(GroupItem.ATTRIBUTE_DESCRIPTION), _("Description"), _("Enter the description of this group"));
 
-        getEntry(new JsId(RoleItem.ATTRIBUTE_NAME)).addValidator(new MandatoryValidator());
+        getEntry(new JsId(RoleItem.ATTRIBUTE_NAME))
+        .addValidator(new MandatoryValidator())
+        .addValidator(new AbstractStringFormatValidator("/", true) {
+            
+            @Override
+            protected String defineErrorMessage() {
+                return _("%attribute% must not contain '/'");
+            }
+        });
     }
 
     public EditGroupForm addGroupFiller(final String groupId) {
