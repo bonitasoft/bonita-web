@@ -16,6 +16,8 @@ package org.bonitasoft.web.toolkit.client.ui.action.form;
 
 import java.util.Map;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.Response;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.APICaller;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
@@ -46,7 +48,7 @@ public class DeleteItemFormAction<T extends IItem> extends ItemFormAction<T> {
 
     @Override
     public void execute() {
-
+        this.isStarted = true;
         new APICaller<Item>(this.itemDefinition).delete(this.getArrayParameter("id"), new APICallback() {
 
             @Override
@@ -58,6 +60,11 @@ public class DeleteItemFormAction<T extends IItem> extends ItemFormAction<T> {
                 }
             }
 
+            @Override
+            public void onResponseReceived(Request request, Response response) {
+                super.onResponseReceived(request, response);
+                DeleteItemFormAction.this.isStarted = false;
+            }
         });
 
     }

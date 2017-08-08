@@ -8,7 +8,6 @@ import java.util.Set;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
-import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
@@ -34,16 +33,14 @@ public class PermissionsBuilder {
     private final ApplicationAPI applicationAPI;
     private final CustomPermissionsMapping customPermissionsMapping;
     private final CompoundPermissionsMapping compoundPermissionsMapping;
-    private final boolean apiAuthorizationsCheckEnabled;
 
     protected PermissionsBuilder(final APISession session, final ProfileAPI profileAPI,final ApplicationAPI applicationAPI, final CustomPermissionsMapping customPermissionsMapping,
-            final CompoundPermissionsMapping compoundPermissionsMapping, final SecurityProperties securityProperties) {
+            final CompoundPermissionsMapping compoundPermissionsMapping) {
         this.session = session;
         this.profileAPI = profileAPI;
         this.applicationAPI = applicationAPI;
         this.customPermissionsMapping = customPermissionsMapping;
         this.compoundPermissionsMapping = compoundPermissionsMapping;
-        apiAuthorizationsCheckEnabled = securityProperties.isAPIAuthorizationsCheckEnabled();
     }
 
     public Set<String> getPermissions() throws LoginFailedException {
@@ -52,10 +49,8 @@ public class PermissionsBuilder {
             permissions = Collections.emptySet();
         } else {
             permissions = new HashSet<>();
-            if (apiAuthorizationsCheckEnabled) {
-                addProfilesPermissions(permissions);
-                addCustomUserPermissions(permissions);
-            }
+            addProfilesPermissions(permissions);
+            addCustomUserPermissions(permissions);
         }
         return permissions;
     }

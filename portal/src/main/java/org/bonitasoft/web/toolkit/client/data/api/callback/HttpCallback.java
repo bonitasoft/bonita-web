@@ -68,20 +68,29 @@ public abstract class HttpCallback implements RequestCallback {
         // Success
         else {
 
-            final Map<String, String> headersMap = new LinkedHashMap<String, String>();
-            final Header[] headers = response.getHeaders();
-            for (int i = 0; i < headers.length; i++) {
-                if (headers[i] != null) {
-                    if (headersMap.containsKey(headers[i].getName())) {
-                        headersMap.put(headers[i].getName(), headersMap.get(headers[i].getName()) + "," + headers[i].getValue());
-                    } else {
-                        headersMap.put(headers[i].getName(), headers[i].getValue());
-                    }
+            Map<String, String> headers = getHeaders(response);
+            onSuccess(response.getStatusCode(), response.getText(), headers);
+        }
+    }
+
+    private Map<String, String> getHeaders(Response response) {
+        final Map<String, String> headersMap = new LinkedHashMap<String, String>();
+        final Header[] headers = response.getHeaders();
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i] != null) {
+                // Storing headers in lower case:
+                //   - Fixes new xhr spec (see https://github.com/whatwg/xhr/issues/146)
+                //   - Make it compatible with Http/2 protocol
+                // That means header should be accessed in this map using lowercases names
+                String name = headers[i].getName().toLowerCase();
+                if (headersMap.containsKey(name)) {
+                    headersMap.put(name, headersMap.get(name) + "," + headers[i].getValue());
+                } else {
+                    headersMap.put(name, headers[i].getValue());
                 }
             }
-
-            onSuccess(response.getStatusCode(), response.getText(), headersMap);
         }
+        return headersMap;
     }
 
     /**

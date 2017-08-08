@@ -11,7 +11,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -76,13 +75,11 @@ public class PermissionsBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        init(true);
+        init();
     }
 
-    private void init(final boolean apiAuthorizationsCheckEnabled) {
-        doReturn(apiAuthorizationsCheckEnabled).when(securityProperties).isAPIAuthorizationsCheckEnabled();
-        permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping,
-                securityProperties));
+    private void init() {
+        permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping));
         doReturn("myUser").when(apiSession).getUserName();
         doReturn(1l).when(apiSession).getTenantId();
         doReturn(1l).when(apiSession).getUserId();
@@ -187,16 +184,18 @@ public class PermissionsBuilderTest {
     }
 
     @Test
-    public void should_getPermissions_return_empty_list_if_secu_not_active() throws Exception {
+    public void should_getPermissions_retrieve_permisions_even_if_secu_not_active() throws Exception {
         //given
-        init(false);
+        doReturn(false).when(securityProperties).isAPIAuthorizationsCheckEnabled();
+        doReturn(new HashSet<String>(Arrays.asList("Page1"))).when(permissionsBuilder).getAllPagesForUser(anySetOf(String.class));
+        doReturn(new HashSet<String>(Arrays.asList("Perm2", "Perm1"))).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page1"));
 
         //when
         final Set<String> permissions = permissionsBuilder.getPermissions();
 
         //then
-        assertThat(permissions).isEmpty();
-        verify(permissionsBuilder, never()).addProfilesPermissions(anySetOf(String.class));
+        assertThat(permissions).containsOnly("Perm1","Perm2");
+        verify(permissionsBuilder).addProfilesPermissions(anySetOf(String.class));
     }
 
     @Test

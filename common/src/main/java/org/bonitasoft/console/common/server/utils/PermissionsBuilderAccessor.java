@@ -28,7 +28,7 @@ public class PermissionsBuilderAccessor {
         reloadPropertiesIfInDebug(securityProperties, new PlatformManagementUtils());
         final CustomPermissionsMapping customPermissionsMapping = PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
         final CompoundPermissionsMapping compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
-        return new PermissionsBuilder(session, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping, securityProperties);
+        return new PermissionsBuilder(session, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping);
     }
 
     static void reloadPropertiesIfInDebug(SecurityProperties securityProperties, PlatformManagementUtils platformManagementUtils) throws LoginFailedException {
