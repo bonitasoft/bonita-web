@@ -131,7 +131,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             id = APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
             if (id != null) {
                 @SuppressWarnings("unchecked")
-                final SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchHumanTaskInstances(builder.done());
+                final SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksAssignedToUser(id.toLong(), builder.done());
                 return searchHumanTaskInstances;
             }
 
