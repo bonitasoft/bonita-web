@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 05:07+0200\n"
-"PO-Revision-Date: 2017-06-21 18:09-0400\n"
+"POT-Creation-Date: 2017-08-09 05:07+0200\n"
+"PO-Revision-Date: 2017-08-12 18:17-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -103,11 +103,14 @@ msgstr "%attribute% には、正確に%length%文字が含まれている必要�
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% は、 %secondAttribute% と異なっていなければなりません。"
 
-msgid "%attribute% mustn't contains blank spaces"
-msgstr "%attribute% には、空白スペースを含むことができません。"
+msgid "%attribute% must not contain '/'"
+msgstr "%attribute% には、'/' を含めてはいけません。"
 
-msgid "%attribute% mustn't contains spaces"
-msgstr "%attribute% にはスペースを含めてはいけません。"
+msgid "%attribute% must not contain blank spaces"
+msgstr "%attribute% には、空白スペースを含むことができません"
+
+msgid "%attribute% must not contain spaces"
+msgstr "%attribute% にはスペースを含めてはいけません"
 
 msgid "%className% is not Serializable"
 msgstr "%className% は、シリアライズ可能ではありません"
@@ -375,7 +378,7 @@ msgstr "ビジネス データ モデルをデプロイするときにエラー�
 
 msgid "An error occurred when deploying the Business Data Model.\n"
 "Consult the logs for more information."
-msgstr "ビジネス データ モデルをデプロイしているときにエラーが発生しました。\n"
+msgstr "ビジネス データ モデルをデプロイ中にエラーが発生しました。\n"
 "詳細についてはログを参照してください。"
 
 msgid "An error occurred while creating a definition"
@@ -383,6 +386,11 @@ msgstr "定義の作成中にエラーが発生しました"
 
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Id %id% を持つ項目を削除中にエラーが発生しました"
+
+msgid "An error occurred while importing the organization.\n"
+"Consult the logs for more information."
+msgstr "組織のインポート中にエラーが発生しました。\n"
+"詳細については、ログを参照してください。"
 
 msgid "Analytics"
 msgstr "分析"
