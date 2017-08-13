@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 05:07+0200\n"
-"PO-Revision-Date: 2017-07-03 18:06-0400\n"
+"POT-Creation-Date: 2017-08-09 05:07+0200\n"
+"PO-Revision-Date: 2017-08-12 18:15-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -103,10 +103,13 @@ msgstr "%attribute% doit contenir %length% caractères exactement"
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% ne doit pas être égale à %secondAttribute%"
 
-msgid "%attribute% mustn't contains blank spaces"
-msgstr "%attribute% ne doit pas contenir d'espace"
+msgid "%attribute% must not contain '/'"
+msgstr "%attribute% ne doit pas contenir '/'"
 
-msgid "%attribute% mustn't contains spaces"
+msgid "%attribute% must not contain blank spaces"
+msgstr "%attribute% ne doit pas contenir d'espaces"
+
+msgid "%attribute% must not contain spaces"
 msgstr "%attribute% ne doit pas contenir d'espaces"
 
 msgid "%className% is not Serializable"
@@ -384,6 +387,10 @@ msgstr "Une erreur s'est produite lors de la création d'une définition"
 
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'id est %id%"
+
+msgid "An error occurred while importing the organization.\n"
+"Consult the logs for more information."
+msgstr ""
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -1920,7 +1927,7 @@ msgid "Service task (performed automatically)"
 msgstr "Tâche automatique (exécutée automatiquement)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "Les services vont être suspendus pour des raisons de maintenance.\n"
+msgstr "Les services vont être suspendus pour des raisons de maintenance."
 
 msgid "Services will resume. Users will be able to log in.\n"
 msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\n"
