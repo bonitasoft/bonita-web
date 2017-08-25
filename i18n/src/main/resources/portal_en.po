@@ -382,8 +382,6 @@ msgstr "An error has occurred when deploying Business Data Model."
 msgid "An error occurred when deploying the Business Data Model.\n"
 msgstr "An error occurred when deploying the Business Data Model.\n"
 "Consult the logs for more information."
-"\n"
-"Pour plus d’informations, consultez les logs."
 
 msgid "An error occurred while creating a definition"
 msgstr "An error occurred while creating a definition"
