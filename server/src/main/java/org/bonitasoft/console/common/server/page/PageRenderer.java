@@ -110,6 +110,8 @@ public class PageRenderer {
     private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final PageResourceProviderImpl pageResourceProvider)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         try {
