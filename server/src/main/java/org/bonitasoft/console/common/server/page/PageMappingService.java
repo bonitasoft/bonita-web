@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,7 +43,11 @@ public class PageMappingService {
     public PageReference getPage(final HttpServletRequest request, final APISession apiSession, final String mappingKey, final Locale locale,
             final boolean executeAuthorizationRules) throws BonitaException {
         final Map<String, Serializable> context = new HashMap<>();
-        context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) request.getParameterMap());
+        //clone the request parameters map to a HashMap to avoid deserialization exceptions when calling a remote engine
+        //see BS-16992 (the parameters map implementation is specific to the servlet container). 
+        Map<String, String[]> parametersMapCopy = request.getParameterMap().entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
+        context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) parametersMapCopy);
         context.put(AuthorizationRuleConstants.IS_ADMIN, isLoggedUserAdmin(request));
         context.put(URLAdapterConstants.LOCALE, locale.toString());
         context.put(URLAdapterConstants.CONTEXT_PATH, request.getContextPath());

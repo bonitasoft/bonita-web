@@ -2,8 +2,11 @@ package org.bonitasoft.console.common.server.page;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
@@ -25,6 +28,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -53,25 +57,31 @@ public class PageMappingServiceTest {
         doReturn(pageAPI).when(pageMappingService).getPageAPI(apiSession);
         when(apiSession.getUserId()).thenReturn(1L);
         when(hsRequest.getContextPath()).thenReturn("/bonita");
+        Map<String, String[]> params = new HashMap<>();
+        params.put("key", new String[]{"value"});
+        when(hsRequest.getParameterMap()).thenReturn(params);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void getPage() throws Exception {
         final PageURL pageURL = mock(PageURL.class);
         when(pageURL.getUrl()).thenReturn("/externalURL");
         when(pageURL.getPageId()).thenReturn(null);
-        final Map<String, Serializable> context = new HashMap<>();
-        context.put(URLAdapterConstants.QUERY_PARAMETERS, (Serializable) hsRequest.getParameterMap());
-        context.put(AuthorizationRuleConstants.IS_ADMIN, false);
-        context.put(URLAdapterConstants.LOCALE, "en");
-        context.put(URLAdapterConstants.CONTEXT_PATH, "/bonita");
-        when(pageAPI.resolvePageOrURL("process/processName/processVersion", context, true)).thenReturn(pageURL);
+        ArgumentCaptor<Map> contextCaptor = ArgumentCaptor.forClass(Map.class);
+        when(pageAPI.resolvePageOrURL(eq("process/processName/processVersion"), anyMap(), eq(true))).thenReturn(pageURL);
         final Set<String> userPermissions = new HashSet<>();
         when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
 
         final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"),
                 true);
 
+        verify(pageAPI).resolvePageOrURL(eq("process/processName/processVersion"), contextCaptor.capture(), eq(true));
+        Map<String, Serializable> capturedContext = contextCaptor.getValue();
+        assertEquals("/bonita", (String)capturedContext.get(URLAdapterConstants.CONTEXT_PATH));
+        assertEquals("en", (String)capturedContext.get(URLAdapterConstants.LOCALE));
+        assertEquals(false, (Boolean)capturedContext.get(AuthorizationRuleConstants.IS_ADMIN));
+        assertEquals("value", ((Map<String, String[]>)capturedContext.get(URLAdapterConstants.QUERY_PARAMETERS)).get("key")[0]);
         assertNotNull(returnedPageReference);
         assertEquals(null, returnedPageReference.getPageId());
         assertEquals("/externalURL", returnedPageReference.getURL());
