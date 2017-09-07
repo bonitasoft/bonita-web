@@ -118,7 +118,7 @@
 			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
 		<div class="body">
-			<form id="LoginForm" action="<%=actionUrl%>" method="post">
+			<form id="LoginForm" action="<%=actionUrl%>" method="post" autocomplete="off">
 				<div class="header">
 					<h2><%=i18n._("Login form")%></h2>
 				</div>
@@ -129,7 +129,7 @@
 							<label for="username"><%=i18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>" placeholder="<%=i18n._("User")%>" type="text" tabindex="1" maxlength="255" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>" placeholder="<%=i18n._("User")%>" type="text" autocomplete="off" tabindex="1" maxlength="255" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 					</div>
 					<div class="formentry" title="<%=i18n._("Enter your password")%>">
@@ -137,7 +137,7 @@
 							<label for="password"><%=i18n._("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Password")%>" id="password" name="password" type="password" tabindex="2" maxlength="50" placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Password")%>" id="password" name="password" type="password" tabindex="2" autocomplete="off" maxlength="50" placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
 						</div>
 						<input name="_l" type="hidden" value="<%=i18n.getLocale()%>" />
 					</div>
