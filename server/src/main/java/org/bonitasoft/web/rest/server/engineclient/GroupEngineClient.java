@@ -85,6 +85,9 @@ public class GroupEngineClient {
             throw new APIException(new _("Can't update group. Group not found"));
         } catch (UpdateException e) {
             throw new APIException(new _("Error when updating group"), e);
+        } catch (AlreadyExistsException e) {
+            throw new APIException(new _("A group with the name %groupName% already exists",
+                new Arg("groupName", groupUpdater.getFields().get(GroupField.NAME))));
         }
     }
     
@@ -92,7 +95,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.createGroup(groupCreator);
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(new _(
+            throw new APIException(new _(
                     "Can't create group. Group '%groupName%' already exists",
                     new Arg("groupName", groupCreator.getFields().get(GroupField.NAME))));
         } catch (CreationException e) {

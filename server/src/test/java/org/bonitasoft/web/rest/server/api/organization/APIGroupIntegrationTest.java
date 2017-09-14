@@ -9,6 +9,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class APIGroupIntegrationTest extends AbstractConsoleTest {
         return TestUserFactory.getJohnCarpenter();
     }
 
-    @Test(expected = APIForbiddenException.class)
+    @Test(expected = APIException.class)
     public void addingTwiceSameGroupIsForbidden() {
         final GroupItem groupItem = aGroup().build();
 
