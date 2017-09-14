@@ -31,6 +31,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.List;
 
 import org.bonitasoft.engine.api.GroupAPI;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.identity.Group;
@@ -111,6 +112,13 @@ public class GroupEngineClientTest extends APITestWithMock {
     public void update_throw_APIException_if_an_exception_occurs_when_updating_in_engine_repository() throws Exception {
         when(groupAPI.updateGroup(eq(1L), any(GroupUpdater.class))).thenThrow(new UpdateException(""));
         
+        groupEngineClient.update(1L, new GroupUpdater());
+    }
+
+    @Test(expected = APIException.class)
+    public void update_throw_APIException_if_an_exception_occurs_when_updating_with_name_alreayExist() throws Exception {
+        when(groupAPI.updateGroup(eq(1L), any(GroupUpdater.class))).thenThrow(new AlreadyExistsException(""));
+
         groupEngineClient.update(1L, new GroupUpdater());
     }
 
