@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -123,5 +122,19 @@ public class TokenGeneratorTest {
         Cookie cookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, "aPath");
         assertThat(cookie.getMaxAge()).isEqualTo(0);
         assertThat(cookie.getValue()).isEqualTo("");
+    }
+    
+    @Test
+    public void should_invalidate_csrf_cookie_already_existing_on_root_path() throws Exception {
+        request.setCookies(aCookie(BONITA_TOKEN_NAME, "aValue", "aPath"));
+
+        tokenGenerator.setTokenToResponseCookie(request, response, "whatever");
+
+        Cookie cookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, CONTEXT_PATH);
+        assertThat(cookie.getValue()).isEqualTo("whatever");
+        
+        Cookie rootCookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, "/");
+        assertThat(rootCookie.getMaxAge()).isEqualTo(0);
+        assertThat(rootCookie.getValue()).isEqualTo("");
     }
 }
