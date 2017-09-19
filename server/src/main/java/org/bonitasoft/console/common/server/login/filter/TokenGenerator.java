@@ -42,7 +42,7 @@ public class TokenGenerator {
      */
     public void setTokenToResponseCookie(HttpServletRequest request, HttpServletResponse res, Object apiTokenFromClient) {
         String path = System.getProperty("bonita.csrf.cookie.path", request.getContextPath());
-        invalidatePreviousCookie(request, res);
+        invalidatePreviousCookie(request, res, path);
 
         Cookie csrfCookie = new Cookie(X_BONITA_API_TOKEN, apiTokenFromClient.toString());
         // cookie path can be set via system property.
@@ -55,12 +55,22 @@ public class TokenGenerator {
     // when a cookie already exists on a different path than the one expected, we need to invalidate it.
     // since there is no way of knowing the path as it is not sent server-side (getPath return null) we invalidate any cookie found
     // see https://bonitasoft.atlassian.net/browse/BS-15883 and BS-16241
-    private void invalidatePreviousCookie(HttpServletRequest request, HttpServletResponse res) {
+    private void invalidatePreviousCookie(HttpServletRequest request, HttpServletResponse res, String path) {
         Cookie cookie = PortalCookies.getCookie(request, X_BONITA_API_TOKEN);
         if (cookie != null) {
             cookie.setMaxAge(0);
             cookie.setValue("");
             res.addCookie(cookie);
+            invalidateRootCookie(res, cookie, path);
+        }
+    }
+
+    //Studio sets the cookie to the path '/' so this is required when using a bunble after a studio in the same browser
+    public void invalidateRootCookie(HttpServletResponse res, Cookie cookie, String path) {
+        if (!"/".equals(path)) {
+            Cookie rootCookie = (Cookie) cookie.clone();
+            rootCookie.setPath("/");
+            res.addCookie(rootCookie);
         }
     }
 
