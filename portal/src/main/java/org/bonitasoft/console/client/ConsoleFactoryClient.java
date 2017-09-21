@@ -113,6 +113,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
         AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.USER_MORE_DETAILS_ADMIN, "/admin/organisation/users");
     }
 
     protected List<String> getCurrentUserAccessRights() {
