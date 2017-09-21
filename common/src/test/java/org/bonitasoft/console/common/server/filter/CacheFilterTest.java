@@ -24,8 +24,6 @@ import org.mockito.Spy;
 
 public class CacheFilterTest {
 
-    private static final String excludeCacheResourcesPattern = "^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)";
-
     @Mock
     private FilterChain chain;
 
@@ -111,7 +109,7 @@ public class CacheFilterTest {
     }
 
     private void matchExcludePattern(final String urlToMatch, final Boolean mustMatch) {
-        doReturn(Pattern.compile(excludeCacheResourcesPattern)).when(cacheFilter).getExcludePattern();
+        doReturn(Pattern.compile(CacheFilter.CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN)).when(cacheFilter).getExcludePattern();
         if (cacheFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
             Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);
         }
