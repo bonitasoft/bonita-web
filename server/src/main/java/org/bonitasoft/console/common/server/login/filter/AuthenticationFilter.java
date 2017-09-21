@@ -45,14 +45,14 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
  */
 public class AuthenticationFilter extends ExcludingPatternFilter {
 
+    protected static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)";
+
+    protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
+    
     /**
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());
-
-    private static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)";
-
-    protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
 
     private final LinkedList<AuthenticationRule> rules = new LinkedList<AuthenticationRule>();
 

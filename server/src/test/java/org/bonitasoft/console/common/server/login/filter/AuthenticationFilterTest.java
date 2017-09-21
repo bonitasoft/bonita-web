@@ -53,9 +53,7 @@ import org.mockito.stubbing.Answer;
  * Time: 17:52
  */
 public class AuthenticationFilterTest {
-
-    private static final String excludeAuthenticationPattern = "^/(bonita/)?((mobile/)?login.jsp$)|(images/)|(loginservice)|(serverAPI)|(/mobile/js/)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/themeResource$)|(portal/scripts)|(portal/formsService)|(logoutservice)";
-
+    
     @Mock
     private FilterChain chain;
 
@@ -173,13 +171,14 @@ public class AuthenticationFilterTest {
     @Test
     public void testMatchExcludePatterns() throws Exception {
 
-        matchExcludePattern("/login.jsp", true);
-        matchExcludePattern("http://localhost:8080/login.jsp", true);
-        matchExcludePattern("http://localhost:8080/bonita/mobile/login.jsp", true);
         matchExcludePattern("http://localhost:8080/portal/themeResource", true);
         matchExcludePattern("http://localhost:8080/portal/themeResource/poutpout", false);
-        matchExcludePattern("http://localhost:8080/loginservice", true);
         matchExcludePattern("http://localhost:8080/portal/formsService", true);
+        matchExcludePattern("/bonita/portal/resource/page/API/system/session/unusedId", true);
+        matchExcludePattern("/bonita/apps/app/API/system/session/unusedId", true);
+        matchExcludePattern("/bonita/portal/resource/page/content/", false);
+        matchExcludePattern("/bonita/apps/app/page/", false);
+        matchExcludePattern("/bonita/portal/homepage", false);
     }
 
     @Test
@@ -235,7 +234,7 @@ public class AuthenticationFilterTest {
     }
 
     private void matchExcludePattern(final String urlToMatch, final Boolean mustMatch) {
-        doReturn(Pattern.compile(excludeAuthenticationPattern)).when(authenticationFilter).getExcludePattern();
+        doReturn(Pattern.compile(AuthenticationFilter.AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN)).when(authenticationFilter).getExcludePattern();
         if (authenticationFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
             Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);
         }
