@@ -358,12 +358,19 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (BDMImportWarningPopUp.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new BDMImportWarningPopUp();
 
-        } else if (AngularIFrameView.supportsToken(token) && isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights())) {
+        } else if (isPortalJSAuthorizedToken(token)) {
             // No action is necessary as an unauthorized request will result in a page reload.
             return prepareAngularPage(token);
         } else {
             return new BlankPage();
         }
+    }
+
+    private boolean isPortalJSAuthorizedToken(String token) {
+        // whenever a token ends with -labs, it is authorized by default.
+        // this is done to ensure feature flipping and embed in development portal-js pages
+        return AngularIFrameView.supportsToken(token) &&
+                (isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights()) || token.endsWith("-labs"));
     }
 
     public native void print(String content) /*-{
