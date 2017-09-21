@@ -57,6 +57,9 @@ public class AngularIFrameView extends RawView {
 
     public static final String TASK_LISTING_TOKEN = "tasklistinguser";
 
+    // Labs - in developpement page. token should be switched when dev ends
+    public static final String USER_MORE_DETAILS_ADMIN = "usermoredetailsadmin-labs";
+
     protected final IFrameView iframe;
 
     protected final static Map<String, List<String>> acceptedToken = initAcceptedTokens();
@@ -121,6 +124,7 @@ public class AngularIFrameView extends RawView {
     private static Map<String, List<String>> initAcceptedTokens() {
         final Map<String, List<String>> results = new HashMap<String, List<String>>();
         results.put(PROCESS_MORE_DETAILS_ADMIN_TOKEN, Arrays.asList("id", "tab"));
+        results.put(USER_MORE_DETAILS_ADMIN, Arrays.asList("id"));
         return results;
     }
 
