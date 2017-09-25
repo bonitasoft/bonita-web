@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-06-11 18:08-0400\n"
+"PO-Revision-Date: 2017-09-24 18:11-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -435,6 +435,9 @@ msgstr "マッピングなし"
 
 msgid "No profile mapped to this application"
 msgstr "このアプリケーションにマップされているプロファイルはありません。"
+
+msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
+msgstr "カテゴリは更新されていません。カテゴリを選択後、「Enter」キーを押すことを忘れないでください。"
 
 msgid "Normal"
 msgstr "普通"
