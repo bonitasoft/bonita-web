@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-08-03 18:09-0400\n"
+"PO-Revision-Date: 2017-09-24 18:18-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -435,6 +435,9 @@ msgstr "Ningún mapeo"
 
 msgid "No profile mapped to this application"
 msgstr "Sin perfil asignado a esta aplicación"
+
+msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
+msgstr ""
 
 msgid "Normal"
 msgstr "Normal"
