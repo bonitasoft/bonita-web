@@ -52,6 +52,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("monitoringadmin", _("For administrator-type of profiles. To monitor all processes"), _("For administrator-type of profiles. To monitor all processes"), _("Monitoring")));
         pages.add(new BonitaPageItem("monitoringpm", _("For process manager-type of profiles. To monitor processes under her responsibility"), _("For process manager-type of profiles. To monitor processes under her responsibility"), _("Monitoring")));
         pages.add(new BonitaPageItem("licensemonitoringadmin", _("License"), _("License"), _("License")));
+        pages.add(new BonitaPageItem("bdmaccesscontrol", _("BDM access control"), _("Import/export BDM access control"), _("BDM")));
     }
 
     public List<BonitaPageItem> getPages() {
