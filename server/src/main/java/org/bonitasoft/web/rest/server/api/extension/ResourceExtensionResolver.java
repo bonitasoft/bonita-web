@@ -101,6 +101,6 @@ public class ResourceExtensionResolver {
 
     private boolean extensionMatches(String method, String pathTemplate) {
         return request.getMethod().getName().equals(method)
-                && getHttpServletRequest().getRequestURI().contains(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
+                && getHttpServletRequest().getRequestURI().endsWith(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
     }
 }
