@@ -105,6 +105,19 @@ public class ResourceExtensionResolverTest {
     }
 
     @Test
+    public void should_resolve_class_file_name_when_name_begins_the_same_than_another() throws Exception {
+        // two api extensions with names that begins the same are installed (myPostResource and myPostResourceB)
+        // see https://bonitasoft.atlassian.net/browse/BS-16791
+        final Request request = new Request(Method.POST, "/bonita/API/extension/myPostResourceB");
+        final ResourceExtensionResolver resourceExtensionResolver = createSpy(request, "/bonita/API/extension/myPostResourceB");
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
+
+        final File file = resourceExtensionResolver.resolveRestApiControllerFile(pageResourceProvider);
+
+        assertThat(file.getName()).isEqualTo("PostResourceB.groovy");
+    }
+
+    @Test
     public void should_not_resolve_class_file_name() throws Exception {
         expectedException.expect(NotFoundException.class);
         expectedException.expectMessage("error while getting resource:apiExtension|POST|notResource");
