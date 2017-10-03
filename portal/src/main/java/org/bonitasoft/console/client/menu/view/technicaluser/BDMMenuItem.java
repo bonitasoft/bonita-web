@@ -16,6 +16,7 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportPage;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 
@@ -23,8 +24,7 @@ public class BDMMenuItem extends MenuLink {
 
 	public BDMMenuItem() {
 		
-        super(new JsId("businessdatamodelimport"), _("Business Data Model"), _("Business Data Model"),
-                "businessdatamodelimport");
+        super(new JsId(BDMImportPage.TOKEN), _("Business Data Model"), _("Business Data Model"), BDMImportPage.TOKEN);
     }
 
 }
