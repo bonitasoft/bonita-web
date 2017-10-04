@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-28 12:59+0200\n"
-"PO-Revision-Date: 2017-08-12 18:15-0400\n"
+"PO-Revision-Date: 2017-10-03 18:49-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1423,10 +1423,10 @@ msgid "Manage users"
 msgstr "Gérer les utilisateurs"
 
 msgid "Manager"
-msgstr "Supérieur "
+msgstr "Responsable"
 
 msgid "Manager of the specified user"
-msgstr "Suppérieur de l'utilisateur"
+msgstr "Responsable hiérarchique de l'utilisateur"
 
 msgid "Mapping"
 msgstr "Mapping"
@@ -1901,7 +1901,7 @@ msgid "Select the entities (users, groups, roles, memberships) to map to the act
 msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" du processus."
 
 msgid "Select the manager of this user"
-msgstr "Sélectionner le supérieur de cet utilisateur"
+msgstr "Sélectionner le responsable hiérarchique de cet utilisateur"
 
 msgid "Select the parent group"
 msgstr "Sélectionne le groupe parent"
