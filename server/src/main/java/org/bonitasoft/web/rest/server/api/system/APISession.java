@@ -68,7 +68,8 @@ public class APISession extends ConsoleAPI<SessionItem> {
                     "profilelisting",
                     "tenantMaintenance",
                     "pagelisting",
-                    "businessdatamodelimport"))).build());
+                    "businessdatamodelimport",
+                    "bdmaccesscontrol"))).build());
         } else {
             return getUserRightsForProfiles(profiles, apiSession);
         }
