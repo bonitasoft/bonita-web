@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 05:07+0200\n"
-"PO-Revision-Date: 2017-09-17 18:52-0400\n"
+"POT-Creation-Date: 2017-09-30 05:07+0200\n"
+"PO-Revision-Date: 2017-10-03 18:51-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -457,6 +457,12 @@ msgstr "応受援タスク"
 
 msgid "Avatar"
 msgstr "アバター"
+
+msgid "BDM"
+msgstr "BDM"
+
+msgid "BDM access control"
+msgstr "BDM のアクセス制御"
 
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "BPM サービスは一時停止します。それらを再開する必要があります。"
@@ -1257,6 +1263,9 @@ msgstr "インポートまたはエクスポートするデータ"
 
 msgid "Import/Export"
 msgstr "インポート/エクスポート"
+
+msgid "Import/export BDM access control"
+msgstr " BDM のアクセス制御をインポート/エクスポート"
 
 msgid "Import/export organization"
 msgstr "組織をインポート/エクスポート"
