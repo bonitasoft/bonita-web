@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 05:07+0200\n"
-"PO-Revision-Date: 2017-09-17 18:45-0400\n"
+"POT-Creation-Date: 2017-09-30 05:07+0200\n"
+"PO-Revision-Date: 2017-10-03 18:49-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -455,6 +455,12 @@ msgstr "Available tasks"
 
 msgid "Avatar"
 msgstr "Avatar"
+
+msgid "BDM"
+msgstr "BDM"
+
+msgid "BDM access control"
+msgstr "BDM access control"
 
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "BPM Services are paused. You may need to resume them."
@@ -1255,6 +1261,9 @@ msgstr "Import or export data"
 
 msgid "Import/Export"
 msgstr "Import/Export"
+
+msgid "Import/export BDM access control"
+msgstr "Import/export BDM access control"
 
 msgid "Import/export organization"
 msgstr "Import/export organization"
