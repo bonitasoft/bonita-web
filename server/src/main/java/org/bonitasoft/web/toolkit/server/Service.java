@@ -19,6 +19,7 @@ package org.bonitasoft.web.toolkit.server;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
@@ -50,8 +51,15 @@ public abstract class Service {
     /**
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getHttpSession()
      */
-    protected final HttpSession getHttpSession() {
+    protected HttpSession getHttpSession() {
         return caller.getHttpSession();
+    }
+    
+    /**
+     * @see org.bonitasoft.web.toolkit.server.ServletCall#getResponse()
+     */
+    public HttpServletResponse getHttpResponse() {
+        return caller.getResponse();
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +88,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getRequestURL()
      */
-    public final String getRequestURL() {
+    public String getRequestURL() {
         return caller.getRequestURL();
     }
 
@@ -88,7 +96,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getInputStream()
      */
-    public final String getInputStream() {
+    public String getInputStream() {
         return caller.getInputStream();
     }
 
@@ -96,7 +104,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#countParameters()
      */
-    public final int countParameters() {
+    public int countParameters() {
         return caller.countParameters();
     }
 
@@ -105,7 +113,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String)
      */
-    public final List<String> getParameterAsList(final String name) {
+    public List<String> getParameterAsList(final String name) {
         return caller.getParameterAsList(name);
     }
 
@@ -115,7 +123,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String, java.lang.String)
      */
-    public final List<String> getParameterAsList(final String name, final String defaultValue) {
+    public List<String> getParameterAsList(final String name, final String defaultValue) {
         return caller.getParameterAsList(name, defaultValue);
     }
 
@@ -124,7 +132,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String)
      */
-    public final String getParameter(final String name) {
+    public String getParameter(final String name) {
         return caller.getParameter(name);
     }
 
@@ -134,7 +142,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String, java.lang.String)
      */
-    public final String getParameter(final String name, final String defaultValue) {
+    public String getParameter(final String name, final String defaultValue) {
         return caller.getParameter(name, defaultValue);
     }
 
@@ -142,7 +150,7 @@ public abstract class Service {
      * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameters()
      */
-    public final Map<String, String[]> getParameters() {
+    public Map<String, String[]> getParameters() {
         return caller.getParameters();
     }
 
