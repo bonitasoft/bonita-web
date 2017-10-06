@@ -16,6 +16,7 @@ package org.bonitasoft.console.server.servlet;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -27,23 +28,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.ExportException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 
 /**
- * Export REST Resources as XML file
+ * Export Resources as XML file
  *
  * @author Cuisha Gai, Anthony Birembaut
  */
 abstract class BonitaExportServlet extends HttpServlet {
-
-    private static final String RESOURCES_PARAM_KEY = "id";
 
     /**
      * UID
@@ -53,11 +50,9 @@ abstract class BonitaExportServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
-        final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         OutputStream out = null;
         try {
-            final long[] resourcesIDs = getResourcesAsList(request);
-            final byte[] resourceBytes = exportResources(resourcesIDs, apiSession);
+            final byte[] resourceBytes = exportResources(request);
 
             // Set response headers
             setResponseHeaders(request, response);
@@ -68,6 +63,12 @@ abstract class BonitaExportServlet extends HttpServlet {
         } catch (final InvalidSessionException e) {
             if (getLogger().isLoggable(Level.INFO)) {
                 getLogger().log(Level.INFO, _("Session expired. Please log in again."), e);
+            }
+            throw new ServletException(e.getMessage(), e);
+        } catch (final FileNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            if (getLogger().isLoggable(Level.WARNING)) {
+                getLogger().log(Level.WARNING, "Resource not found");
             }
             throw new ServletException(e.getMessage(), e);
         } catch (final Exception e) {
@@ -99,29 +100,9 @@ abstract class BonitaExportServlet extends HttpServlet {
         }
     }
 
-    protected final long[] getResourcesAsList(final HttpServletRequest request) throws Exception {
-        final String resourceIDParamValue = request.getParameter(RESOURCES_PARAM_KEY);
-        final String[] resourcesIDAsStrings = parseIdsParamValue(resourceIDParamValue);
-        final long[] resourceIDs = new long[resourcesIDAsStrings.length];
-        if (resourcesIDAsStrings != null) {
-            for (int i = 0; i < resourcesIDAsStrings.length; i++) {
-                resourceIDs[i] = Long.valueOf(resourcesIDAsStrings[i]);
-            }
-        }
-        return resourceIDs;
-    }
-
-    private String[] parseIdsParamValue(final String resourceIDParamValue) throws Exception {
-        if(resourceIDParamValue!=null){
-            return resourceIDParamValue.split(",");
-        } else{
-            throw new Exception(_("Request parameter \"id\" must be set."));
-        }
-    }
-
     protected abstract String getFileExportName();
 
-    protected abstract byte[] exportResources(final long[] ids, final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ExecutionException, ExportException;
+    protected abstract byte[] exportResources(final HttpServletRequest request) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, ExportException, FileNotFoundException, ExecutionException;
 
     protected abstract Logger getLogger();
 
