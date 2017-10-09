@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-09-24 18:07-0400\n"
+"PO-Revision-Date: 2017-10-08 18:59-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -208,6 +208,9 @@ msgstr "Créé par"
 msgid "Creation"
 msgstr "Création"
 
+msgid "Creation date"
+msgstr ""
+
 msgid "Creation on"
 msgstr "Créée le"
 
@@ -307,6 +310,9 @@ msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caract
 msgid "Filters"
 msgstr "Filtres"
 
+msgid "First name"
+msgstr ""
+
 msgid "Form"
 msgstr "Formulaire"
 
@@ -315,6 +321,12 @@ msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant s
 
 msgid "General"
 msgstr "Général"
+
+msgid "General information successfully updated"
+msgstr ""
+
+msgid "General information where not updated. Please retry later or contact an administrator"
+msgstr ""
 
 msgid "Groups"
 msgstr "Groupes"
@@ -351,6 +363,15 @@ msgstr "Dans la colonne \"Tâche\""
 
 msgid "Items per page"
 msgstr "Eléments par page"
+
+msgid "Job title"
+msgstr ""
+
+msgid "Last login"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
 
 msgid "Last update"
 msgstr "Dernière mise à jour"
@@ -736,6 +757,9 @@ msgstr "Cette tâche n'est plus disponible. La liste est maintenant à jour."
 msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
 msgstr "Cette tâche est en retard. Elle aurait dû être faite pour le {{dueDate}}"
 
+msgid "Title"
+msgstr ""
+
 msgid "To create an application, click New or Import."
 msgstr "Pour créer une application, cliquez sur Nouveau ou Importer."
 
@@ -781,6 +805,9 @@ msgstr "Basse priorité"
 msgid "Update"
 msgstr "Mise à jour"
 
+msgid "Update general information"
+msgstr ""
+
 msgid "Updated by"
 msgstr "Mise à jour par"
 
@@ -789,6 +816,9 @@ msgstr "Mise à jour le"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
+
+msgid "Username"
+msgstr ""
 
 msgid "Users"
 msgstr "Utilisateurs"

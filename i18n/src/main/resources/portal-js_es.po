@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-09-24 18:18-0400\n"
+"PO-Revision-Date: 2017-10-08 19:06-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -208,6 +208,9 @@ msgstr "Creado por"
 msgid "Creation"
 msgstr "Creación"
 
+msgid "Creation date"
+msgstr ""
+
 msgid "Creation on"
 msgstr "Creado el"
 
@@ -307,6 +310,9 @@ msgstr "Nombre de archivo demasiado largo. El nombre del archivo zip debe ser no
 msgid "Filters"
 msgstr "Filtros"
 
+msgid "First name"
+msgstr ""
+
 msgid "Form"
 msgstr "Formulario"
 
@@ -315,6 +321,12 @@ msgstr "Formulario enviado. <br/> La siguiente tarea en la lista está ahora sel
 
 msgid "General"
 msgstr "General"
+
+msgid "General information successfully updated"
+msgstr ""
+
+msgid "General information where not updated. Please retry later or contact an administrator"
+msgstr ""
 
 msgid "Groups"
 msgstr "Grupos"
@@ -351,6 +363,15 @@ msgstr "En la columna Nombre de tarea"
 
 msgid "Items per page"
 msgstr "Elementos por página"
+
+msgid "Job title"
+msgstr ""
+
+msgid "Last login"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
 
 msgid "Last update"
 msgstr "Última actualización"
@@ -736,6 +757,9 @@ msgstr "Esta tarea ya no está disponible. La lista ahora está actualizada."
 msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
 msgstr "Esta tarea ha vencido. Debía ser completada el {{dueDate}}"
 
+msgid "Title"
+msgstr ""
+
 msgid "To create an application, click New or Import."
 msgstr "Para crear una aplicación, haga clic en nuevo o importar."
 
@@ -781,6 +805,9 @@ msgstr "Bajo normal"
 msgid "Update"
 msgstr "Actualizar"
 
+msgid "Update general information"
+msgstr ""
+
 msgid "Updated by"
 msgstr "Actualizado por"
 
@@ -789,6 +816,9 @@ msgstr "Actualizada"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Use la tecla de flecha arriba y flecha abajo para navegar entre las categorías existentes."
+
+msgid "Username"
+msgstr ""
 
 msgid "Users"
 msgstr "Usuarios"
