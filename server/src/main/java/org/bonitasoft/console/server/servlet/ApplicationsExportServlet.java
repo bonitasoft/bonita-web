@@ -28,7 +28,7 @@ import org.bonitasoft.engine.session.APISession;
 /**
  * @author Julien MEGE
  */
-public class ApplicationsExportServlet extends BonitaExportServlet {
+public class ApplicationsExportServlet extends ExportByIdsServlet {
 
     /**
      * export file name
