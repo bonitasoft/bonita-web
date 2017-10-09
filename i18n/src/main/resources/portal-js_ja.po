@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-09-24 18:11-0400\n"
+"PO-Revision-Date: 2017-10-08 19:01-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -208,6 +208,9 @@ msgstr "作成者"
 msgid "Creation"
 msgstr "作成"
 
+msgid "Creation date"
+msgstr "作成日時"
+
 msgid "Creation on"
 msgstr "作成対象："
 
@@ -307,6 +310,9 @@ msgstr "ファイル名が長すぎます。Zip ファイル名は 50 文字以�
 msgid "Filters"
 msgstr "フィルター"
 
+msgid "First name"
+msgstr "姓（英語の場合：First name）"
+
 msgid "Form"
 msgstr "フォーム"
 
@@ -315,6 +321,12 @@ msgstr "フォームを送信しました。 <br/>リスト中の次のタスク
 
 msgid "General"
 msgstr "全般"
+
+msgid "General information successfully updated"
+msgstr "全般的な情報が正常に更新されました"
+
+msgid "General information where not updated. Please retry later or contact an administrator"
+msgstr "全般的な情報が更新されませんでした。後で再試行するかシステム管理者に問い合わせてください。"
 
 msgid "Groups"
 msgstr "グループ"
@@ -351,6 +363,15 @@ msgstr "[タスク名] 列"
 
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
+
+msgid "Job title"
+msgstr "役職名"
+
+msgid "Last login"
+msgstr "最終ログイン日時"
+
+msgid "Last name"
+msgstr "名（英語の場合：Last name）"
 
 msgid "Last update"
 msgstr "最新更新日時"
@@ -736,6 +757,9 @@ msgstr "1 つまたは複数のタスクは、もうご使用いただけませ�
 msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
 msgstr "このタスクは期限切れです。 {{dueDate}} までに完了する予定でした。"
 
+msgid "Title"
+msgstr "タイトル（性別）"
+
 msgid "To create an application, click New or Import."
 msgstr "アプリケーションを作成するには、新規またはインポート をクリックします。"
 
@@ -781,6 +805,9 @@ msgstr "平均以下"
 msgid "Update"
 msgstr "更新"
 
+msgid "Update general information"
+msgstr "全般な情報を更新"
+
 msgid "Updated by"
 msgstr "更新者"
 
@@ -789,6 +816,9 @@ msgstr "更新日時"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
+
+msgid "Username"
+msgstr "ユーザー名"
 
 msgid "Users"
 msgstr "ユーザー"
