@@ -17,6 +17,7 @@
 package org.bonitasoft.web.toolkit.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -63,29 +64,30 @@ public class ServiceServletCall extends ServletCall {
     }
 
     @Override
-    public final void doGet() {
+    public final void doGet() throws IOException {
         run();
     }
 
     @Override
-    public final void doPost() {
+    public final void doPost() throws IOException {
         run();
     }
 
     @Override
-    public final void doPut() {
+    public final void doPut() throws IOException {
         run();
     }
 
     @Override
-    public final void doDelete() {
+    public final void doDelete() throws IOException {
         run();
     }
 
     /**
      * Instantiate and run the service.
+     * @throws IOException 
      */
-    private void run() {
+    private void run() throws IOException {
         final Service service = serviceFactory.getService(this.calledToolToken);
         service.setCaller(this);
 

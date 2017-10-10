@@ -14,9 +14,8 @@
  */
 package org.bonitasoft.console.server.servlet;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -48,7 +47,7 @@ abstract class BonitaExportServlet extends HttpServlet {
     private static final long serialVersionUID = 1800666571090128789L;
 
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
         OutputStream out = null;
         try {
@@ -61,16 +60,17 @@ abstract class BonitaExportServlet extends HttpServlet {
             out.flush();
 
         } catch (final InvalidSessionException e) {
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, _("Session expired. Please log in again."), e);
+            String message = "Session expired. Please log in again.";
+            if (getLogger().isLoggable(Level.FINE)) {
+                getLogger().log(Level.FINE, message, e);
             }
-            throw new ServletException(e.getMessage(), e);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         } catch (final FileNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            if (getLogger().isLoggable(Level.WARNING)) {
-                getLogger().log(Level.WARNING, "Resource not found");
+            String message = "There is no BDM Access control installed.";
+            if (getLogger().isLoggable(Level.INFO)) {
+                getLogger().log(Level.INFO, message);
             }
-            throw new ServletException(e.getMessage(), e);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, message);
         } catch (final Exception e) {
             if (getLogger().isLoggable(Level.SEVERE)) {
                 getLogger().log(Level.SEVERE, e.getMessage(), e);
@@ -81,7 +81,7 @@ abstract class BonitaExportServlet extends HttpServlet {
                 if (out != null) {
                     out.close();
                 }
-            } catch (final Exception e) {
+            } catch (final IOException e) {
                 getLogger().log(Level.SEVERE, e.getMessage(), e);
             }
         }
