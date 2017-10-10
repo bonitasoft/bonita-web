@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.server;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -77,8 +78,9 @@ public abstract class Service {
      * </ul>
      *
      * @return This method returns the output to respond.
+     * @throws IOException 
      */
-    public abstract Object run();
+    public abstract Object run() throws IOException;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DELEGATIONS FOR PARAMETERS ACCESS

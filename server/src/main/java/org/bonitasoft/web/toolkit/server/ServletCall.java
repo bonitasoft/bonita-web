@@ -386,22 +386,26 @@ public abstract class ServletCall {
 
     /**
      * Entry point for GET and SEARCH
+     * @throws IOException 
      */
-    public abstract void doGet();
+    public abstract void doGet() throws IOException;
 
     /**
      * Entry point for CREATE
+     * @throws IOException 
      */
-    public abstract void doPost();
+    public abstract void doPost() throws IOException;
 
     /**
      * Entry point for UPDATE
+     * @throws IOException 
      */
-    public abstract void doPut();
+    public abstract void doPut() throws IOException;
 
     /**
      * Entry point for DELETE
+     * @throws IOException 
      */
-    public abstract void doDelete();
+    public abstract void doDelete() throws IOException;
 
 }
