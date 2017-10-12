@@ -67,7 +67,7 @@ public class BDMImportPage extends Page {
 
     @Override
     public void defineTitle() {
-        setTitle(_("Business Data Model"));
+        setTitle(_("Business Data Model definition"));
     }
 
     @Override
