@@ -194,10 +194,9 @@
         <url-pattern>/APIToolkit/*</url-pattern>
         <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/*</url-pattern>
-        <!-- Uncomment those lines to apply security checks also on portal servlets -->
-        <!-- <url-pattern>/portal/formsDocumentDownload</url-pattern> -->
-        <!-- <url-pattern>/portal/documentDownload</url-pattern> -->
-        <!-- <url-pattern>/portal/downloadDocument</url-pattern> -->
+        <url-pattern>/portal/formsDocumentDownload</url-pattern>
+        <url-pattern>/portal/documentDownload</url-pattern>
+        <url-pattern>/portal/downloadDocument</url-pattern>
         <!--  Add more servlet mappings here -->
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
