@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-10-08 19:06-0400\n"
+"PO-Revision-Date: 2017-10-15 18:59-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -57,6 +57,9 @@ msgstr "Agregar páginas en Navegación"
 
 msgid "Add top-level menu"
 msgstr "Agregar menú superior"
+
+msgid "Address"
+msgstr ""
 
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "Agrupa tareas en estado ready, waiting,<br>executing, completing, y initializing"
@@ -112,6 +115,15 @@ msgstr "Atrás"
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
+msgid "Business card"
+msgstr ""
+
+msgid "Business card successfully updated"
+msgstr ""
+
+msgid "Business card were not updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "Can't import page or form to the process"
 msgstr "No se puede importar una página o formulario al proceso"
 
@@ -160,6 +172,9 @@ msgstr "Categorías"
 msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
 msgstr "Verifique que cada entidad está mapeada a un perfil, ya sea para el Bonita Portal o para las aplicaciones que ha creado."
 
+msgid "City"
+msgstr ""
+
 msgid "Class name"
 msgstr "Nombre de la clase"
 
@@ -190,11 +205,17 @@ msgstr "Estado de la configuración"
 msgid "Confirm delete?"
 msgstr "¿Confirmar borrado?"
 
+msgid "Confirm new Password"
+msgstr ""
+
 msgid "Connectors"
 msgstr "Conectores"
 
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "Los conectores deben resolverse antes de activar el proceso."
+
+msgid "Country"
+msgstr ""
 
 msgid "Create a new membership"
 msgstr "Crear una nueva membresía"
@@ -213,6 +234,15 @@ msgstr ""
 
 msgid "Creation on"
 msgstr "Creado el"
+
+msgid "Custom information"
+msgstr ""
+
+msgid "Custom information successfully updated"
+msgstr ""
+
+msgid "Custom information were not updated. Please retry later or contact an administrator"
+msgstr ""
 
 msgid "Delete"
 msgstr "Eliminar"
@@ -249,6 +279,9 @@ msgstr "Editar menú"
 
 msgid "Edit menu item"
 msgstr "Editar elemento de menú"
+
+msgid "Email"
+msgstr ""
 
 msgid "Enable all"
 msgstr "Activar todo"
@@ -412,6 +445,9 @@ msgstr "Membresías"
 msgid "Memberships mapped to {}"
 msgstr "Membresias asignadas a {}"
 
+msgid "Mobile"
+msgstr ""
+
 msgid "Multi-page menu"
 msgstr "Menú multi-página"
 
@@ -427,6 +463,9 @@ msgstr "Navegación"
 msgid "New"
 msgstr "Nuevo"
 
+msgid "New Password"
+msgstr ""
+
 msgid "New comment"
 msgstr "Nuevo comentario"
 
@@ -438,6 +477,9 @@ msgstr "No hay casos para mostrar"
 
 msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
 msgstr "Ningún comentario sobre este caso todavía. Para agregar uno, utilice el campo de entrada en la parte inferior de este panel"
+
+msgid "No custom information defined."
+msgstr ""
 
 msgid "No data"
 msgstr "No hay datos"
@@ -502,8 +544,32 @@ msgstr "Parámetros"
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "Los parámetros deben resolverse antes de activar el proceso."
 
+msgid "Password"
+msgstr ""
+
+msgid "Password successfully updated"
+msgstr ""
+
+msgid "Password was not updated. Please retry later or contact an administrator"
+msgstr ""
+
+msgid "Passwords don't match"
+msgstr ""
+
 msgid "Pending Flow Nodes"
 msgstr "Flow Nodes pendientes"
+
+msgid "Personal information"
+msgstr ""
+
+msgid "Personal information successfully updated"
+msgstr ""
+
+msgid "Personal information were not updated. Please retry later or contact an administrator"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
 
 msgid "Priority"
 msgstr "Prioridad"
@@ -805,7 +871,19 @@ msgstr "Bajo normal"
 msgid "Update"
 msgstr "Actualizar"
 
+msgid "Update business card"
+msgstr ""
+
+msgid "Update custom information"
+msgstr ""
+
 msgid "Update general information"
+msgstr ""
+
+msgid "Update password"
+msgstr ""
+
+msgid "Update personal information"
 msgstr ""
 
 msgid "Updated by"
@@ -861,6 +939,9 @@ msgstr "Debe agregar una página antes de que poder hacer referencia en un menú
 
 msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
 msgstr "Tu lista personal de tareas está vacía. Puedes realizar una tarea de la lista <a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\"> Por hacer</a>."
+
+msgid "Zip code"
+msgstr ""
 
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Error de estructura del archivo Zip. Verifica que el archivo .zip contiene un page.properties bien formado así como el index.html o el archivo Index.groovy. Para obtener más información, consulta la documentación o el ejemplo en la página readme (disponible en la lista de páginas personalizadas)"

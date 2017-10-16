@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-30 05:07+0200\n"
-"PO-Revision-Date: 2017-10-03 18:56-0400\n"
+"POT-Creation-Date: 2017-10-13 05:07+0200\n"
+"PO-Revision-Date: 2017-10-15 18:59-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -485,6 +485,9 @@ msgstr "Examine su equipo y seleccione el business archive (.bar) que contiene l
 
 msgid "Business Data Model"
 msgstr "Modelo de Datos de Negocio"
+
+msgid "Business Data Model definition"
+msgstr ""
 
 msgid "Business archive"
 msgstr "Business Archive (*.bar)"
