@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-10-08 19:01-0400\n"
+"PO-Revision-Date: 2017-10-15 18:53-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -57,6 +57,9 @@ msgstr "ナビゲーションにページを追加します"
 
 msgid "Add top-level menu"
 msgstr "最上位のメニューを追加します"
+
+msgid "Address"
+msgstr "住所"
 
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "レディ、待機、実行、完了および初期化状態のタスクを集約"
@@ -112,6 +115,15 @@ msgstr "戻る"
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
 
+msgid "Business card"
+msgstr "業務上の連絡先"
+
+msgid "Business card successfully updated"
+msgstr "業務上の連絡先が正常に更新されました。"
+
+msgid "Business card were not updated. Please retry later or contact an administrator"
+msgstr "業務上の連絡先が、更新されませんでした。後で再試行するか管理者に問い合わせてください。 "
+
 msgid "Can't import page or form to the process"
 msgstr "プロセスにページまたはフォームをインポートできません"
 
@@ -160,6 +172,9 @@ msgstr "カテゴリ"
 msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
 msgstr "各エンティティが Bonita ポータル、またはあなたが作成したアプリケーションのいずれかのプロファイルにマップされていることを確認します。"
 
+msgid "City"
+msgstr "市区町村"
+
 msgid "Class name"
 msgstr "クラス名"
 
@@ -190,11 +205,17 @@ msgstr "構成設定の状態"
 msgid "Confirm delete?"
 msgstr "削除していいですか？"
 
+msgid "Confirm new Password"
+msgstr "新しいパスワードを確認"
+
 msgid "Connectors"
 msgstr "コネクタ"
 
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
+
+msgid "Country"
+msgstr "国"
 
 msgid "Create a new membership"
 msgstr "新しいメンバーシップを作成します"
@@ -213,6 +234,15 @@ msgstr "作成日時"
 
 msgid "Creation on"
 msgstr "作成対象："
+
+msgid "Custom information"
+msgstr "カスタム情報"
+
+msgid "Custom information successfully updated"
+msgstr "カスタム情報が正常に更新されました"
+
+msgid "Custom information were not updated. Please retry later or contact an administrator"
+msgstr "カスタム情報が更新されませんでした。後で再試行するか管理者に問い合わせてください。"
 
 msgid "Delete"
 msgstr "削除"
@@ -249,6 +279,9 @@ msgstr "メニューを編集します"
 
 msgid "Edit menu item"
 msgstr "メニュー項目を編集"
+
+msgid "Email"
+msgstr "Eメール"
 
 msgid "Enable all"
 msgstr "すべて有効にする"
@@ -412,6 +445,9 @@ msgstr "所属"
 msgid "Memberships mapped to {}"
 msgstr "{} にマップされたメンバーシップ"
 
+msgid "Mobile"
+msgstr "携帯番号"
+
 msgid "Multi-page menu"
 msgstr "複数ページ メニュー"
 
@@ -427,6 +463,9 @@ msgstr "ナビゲーション"
 msgid "New"
 msgstr "新規"
 
+msgid "New Password"
+msgstr "新規パスワード"
+
 msgid "New comment"
 msgstr "新しいコメント"
 
@@ -438,6 +477,9 @@ msgstr "表示する案件はありません"
 
 msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
 msgstr "まだこの案件に対するコメントがありません。追加するには、このパネルの下部にあるコメント入力フィールドを使用します。"
+
+msgid "No custom information defined."
+msgstr "カスタムの情報が定義されていません。"
 
 msgid "No data"
 msgstr "データがありません。"
@@ -502,8 +544,32 @@ msgstr "パラメータ"
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
 
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Password successfully updated"
+msgstr "パスワードが正常に更新されました"
+
+msgid "Password was not updated. Please retry later or contact an administrator"
+msgstr "パスワードが更新されませんでした。後で再試行するか管理者に問い合わせてください。"
+
+msgid "Passwords don't match"
+msgstr "パスワードが一致しません"
+
 msgid "Pending Flow Nodes"
 msgstr "作業実行を待機中"
+
+msgid "Personal information"
+msgstr "個人情報"
+
+msgid "Personal information successfully updated"
+msgstr "個人情報が正常に更新されました"
+
+msgid "Personal information were not updated. Please retry later or contact an administrator"
+msgstr "個人情報は更新されませんでした。後で再試行するか管理者に問い合わせてください。"
+
+msgid "Phone"
+msgstr "電話番号"
 
 msgid "Priority"
 msgstr "優先度"
@@ -805,8 +871,20 @@ msgstr "平均以下"
 msgid "Update"
 msgstr "更新"
 
+msgid "Update business card"
+msgstr "業務上の連絡先を更新"
+
+msgid "Update custom information"
+msgstr "カスタム情報を更新"
+
 msgid "Update general information"
 msgstr "全般な情報を更新"
+
+msgid "Update password"
+msgstr "パスワードを更新"
+
+msgid "Update personal information"
+msgstr "個人情報を更新"
 
 msgid "Updated by"
 msgstr "更新者"
@@ -861,6 +939,9 @@ msgstr "それをメニューで参照する前に、ページを追加する必
 
 msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
 msgstr "マイタスク リストは空です。​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> リストからタスクを選ぶことができます。"
+
+msgid "Zip code"
+msgstr "郵便番号"
 
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Zip ファイル構造にエラーがあります。.zip に適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、ドキュメント、またはサンプル ページの readme （カスタム ページのリストで利用可能） を参照してください。"
