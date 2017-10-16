@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-30 05:07+0200\n"
-"PO-Revision-Date: 2017-10-03 18:51-0400\n"
+"POT-Creation-Date: 2017-10-13 05:07+0200\n"
+"PO-Revision-Date: 2017-10-15 18:53-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -487,6 +487,9 @@ msgstr "お使いのコンピューターを閲覧し、インストールする
 
 msgid "Business Data Model"
 msgstr "ビジネス データ モデル"
+
+msgid "Business Data Model definition"
+msgstr "ビジネス データ モデル定義"
 
 msgid "Business archive"
 msgstr "ビジネス アーカイブ"
