@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2017-10-15 18:59-0400\n"
+"PO-Revision-Date: 2017-10-16 20:59-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -59,7 +59,7 @@ msgid "Add top-level menu"
 msgstr "Agregar menú superior"
 
 msgid "Address"
-msgstr ""
+msgstr "Dirección"
 
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "Agrupa tareas en estado ready, waiting,<br>executing, completing, y initializing"
@@ -116,10 +116,10 @@ msgid "Before you import the application descriptor, the pages and the profile m
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
 msgid "Business card"
-msgstr ""
+msgstr "Datos profesionales"
 
 msgid "Business card successfully updated"
-msgstr ""
+msgstr "Datos profesionales actualizadas correctamente"
 
 msgid "Business card were not updated. Please retry later or contact an administrator"
 msgstr ""
@@ -173,7 +173,7 @@ msgid "Check that each entity is mapped to a profile, for either Bonita Portal o
 msgstr "Verifique que cada entidad está mapeada a un perfil, ya sea para el Bonita Portal o para las aplicaciones que ha creado."
 
 msgid "City"
-msgstr ""
+msgstr "Ciudad"
 
 msgid "Class name"
 msgstr "Nombre de la clase"
@@ -206,7 +206,7 @@ msgid "Confirm delete?"
 msgstr "¿Confirmar borrado?"
 
 msgid "Confirm new Password"
-msgstr ""
+msgstr "Confirmar nueva Contraseña"
 
 msgid "Connectors"
 msgstr "Conectores"
@@ -215,7 +215,7 @@ msgid "Connectors must be resolved before enabling the Process."
 msgstr "Los conectores deben resolverse antes de activar el proceso."
 
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 msgid "Create a new membership"
 msgstr "Crear una nueva membresía"
@@ -230,16 +230,16 @@ msgid "Creation"
 msgstr "Creación"
 
 msgid "Creation date"
-msgstr ""
+msgstr "Fecha de creación"
 
 msgid "Creation on"
 msgstr "Creado el"
 
 msgid "Custom information"
-msgstr ""
+msgstr "Información personalizada"
 
 msgid "Custom information successfully updated"
-msgstr ""
+msgstr "Información personalizada actualizada correctamente"
 
 msgid "Custom information were not updated. Please retry later or contact an administrator"
 msgstr ""
@@ -281,7 +281,7 @@ msgid "Edit menu item"
 msgstr "Editar elemento de menú"
 
 msgid "Email"
-msgstr ""
+msgstr "Correo Electrónico"
 
 msgid "Enable all"
 msgstr "Activar todo"
@@ -344,7 +344,7 @@ msgid "Filters"
 msgstr "Filtros"
 
 msgid "First name"
-msgstr ""
+msgstr "Primer Nombre"
 
 msgid "Form"
 msgstr "Formulario"
@@ -398,13 +398,13 @@ msgid "Items per page"
 msgstr "Elementos por página"
 
 msgid "Job title"
-msgstr ""
+msgstr "Profesión"
 
 msgid "Last login"
-msgstr ""
+msgstr "Última sesión"
 
 msgid "Last name"
-msgstr ""
+msgstr "Apellido"
 
 msgid "Last update"
 msgstr "Última actualización"
@@ -446,7 +446,7 @@ msgid "Memberships mapped to {}"
 msgstr "Membresias asignadas a {}"
 
 msgid "Mobile"
-msgstr ""
+msgstr "Móvil"
 
 msgid "Multi-page menu"
 msgstr "Menú multi-página"
@@ -464,7 +464,7 @@ msgid "New"
 msgstr "Nuevo"
 
 msgid "New Password"
-msgstr ""
+msgstr "Nueva contraseña"
 
 msgid "New comment"
 msgstr "Nuevo comentario"
@@ -545,22 +545,22 @@ msgid "Parameters must be resolved before enabling the Process."
 msgstr "Los parámetros deben resolverse antes de activar el proceso."
 
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 msgid "Password successfully updated"
-msgstr ""
+msgstr "Contraseña modificada correctamente"
 
 msgid "Password was not updated. Please retry later or contact an administrator"
 msgstr ""
 
 msgid "Passwords don't match"
-msgstr ""
+msgstr "Las contraseñas no coinciden"
 
 msgid "Pending Flow Nodes"
 msgstr "Flow Nodes pendientes"
 
 msgid "Personal information"
-msgstr ""
+msgstr "Información personal"
 
 msgid "Personal information successfully updated"
 msgstr ""
@@ -569,7 +569,7 @@ msgid "Personal information were not updated. Please retry later or contact an a
 msgstr ""
 
 msgid "Phone"
-msgstr ""
+msgstr "Teléfono"
 
 msgid "Priority"
 msgstr "Prioridad"
@@ -881,7 +881,7 @@ msgid "Update general information"
 msgstr ""
 
 msgid "Update password"
-msgstr ""
+msgstr "Actualizar contraseña"
 
 msgid "Update personal information"
 msgstr ""
