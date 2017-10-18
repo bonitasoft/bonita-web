@@ -147,8 +147,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UserQuickDetailsAdminPage();
         } else if (UserQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(UserQuickDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new UserQuickDetailsPage();
-        } else if (UserMoreDetailsAdminPage.TOKEN.equals(token) && isUserAuthorized(UserMoreDetailsAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new UserMoreDetailsAdminPage();
         } else if (PopupAddUserPage.TOKEN.equals(token) && isUserAuthorized(PopupAddUserPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new PopupAddUserPage();
         } else if (AddMembershipPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipPage.PRIVILEGES, getCurrentUserAccessRights())) {
