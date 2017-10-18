@@ -1,7 +1,8 @@
 package org.bonitasoft.console.client;
 
+import static org.bonitasoft.console.client.angular.AngularIFrameView.USER_MORE_DETAILS_ADMIN;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.core.shared.GWT;
@@ -22,44 +23,16 @@ import org.bonitasoft.console.client.admin.organization.role.AddRolePage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleQuickDetailsPage;
 import org.bonitasoft.console.client.admin.organization.role.UpdateRolePage;
-import org.bonitasoft.console.client.admin.organization.users.view.AddMembershipPage;
-import org.bonitasoft.console.client.admin.organization.users.view.DeactivateUserWarningPopUp;
-import org.bonitasoft.console.client.admin.organization.users.view.DeleteMembershipPage;
-import org.bonitasoft.console.client.admin.organization.users.view.ListMembershipPage;
-import org.bonitasoft.console.client.admin.organization.users.view.PopupAddUserPage;
-import org.bonitasoft.console.client.admin.organization.users.view.UpdateUserPage;
-import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
-import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
-import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.organization.users.view.UserQuickDetailsPage;
-import org.bonitasoft.console.client.admin.page.view.AddCustomPage;
-import org.bonitasoft.console.client.admin.page.view.CustomPagePermissionsValidationPopupPage;
-import org.bonitasoft.console.client.admin.page.view.EditCustomPage;
-import org.bonitasoft.console.client.admin.page.view.PageListingPage;
-import org.bonitasoft.console.client.admin.page.view.PageQuickDetailsPage;
+import org.bonitasoft.console.client.admin.organization.users.view.*;
+import org.bonitasoft.console.client.admin.page.view.*;
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.ProcessQuickDetailsAdminPage;
 import org.bonitasoft.console.client.admin.process.view.UploadProcessPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.AddProcessCategoryPage;
 import org.bonitasoft.console.client.admin.process.view.section.category.CreateCategoryAndAddToProcessPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.DeleteActorMemberPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.ListProcessActorGroupPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.ListProcessActorMembershipPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.ListProcessActorRolePage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.ListProcessActorUserPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.SelectGroupForActorPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.SelectMembershipForActorPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.SelectRoleForActorPage;
-import org.bonitasoft.console.client.admin.process.view.section.entitymapping.SelectUserForActorPage;
-import org.bonitasoft.console.client.admin.profile.view.AddGroupToProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.AddMembershipToProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.AddRoleToProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.AddUserToProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.DeleteProfileMemberPage;
-import org.bonitasoft.console.client.admin.profile.view.ProfileListingPage;
-import org.bonitasoft.console.client.admin.profile.view.ProfileMoreDetailsPage;
-import org.bonitasoft.console.client.admin.profile.view.ProfileQuickDetailsPage;
+import org.bonitasoft.console.client.admin.process.view.section.entitymapping.*;
+import org.bonitasoft.console.client.admin.profile.view.*;
 import org.bonitasoft.console.client.admin.tenant.view.TenantMaintenancePage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
@@ -68,11 +41,7 @@ import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
 import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportPage;
 import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportWarningPopUp;
-import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.ArchivedCaseQuickDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.CaseQuickDetailsPage;
-import org.bonitasoft.console.client.user.cases.view.DisplayCaseFormPage;
+import org.bonitasoft.console.client.user.cases.view.*;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.process.view.ProcessQuickDetailsPage;
 import org.bonitasoft.console.client.user.process.view.StartProcessFormPage;
@@ -113,7 +82,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
         AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
-        AngularIFrameView.addTokenSupport(AngularIFrameView.USER_MORE_DETAILS_ADMIN, "/admin/organisation/users");
+        AngularIFrameView.addTokenSupport(USER_MORE_DETAILS_ADMIN, "/admin/organisation/users",
+                UserListingAdminPage.TOKEN, GroupListingAdminPage.TOKEN, RoleListingPage.TOKEN);
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -359,7 +329,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         } else if (BDMImportWarningPopUp.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new BDMImportWarningPopUp();
 
-        } else if (isPortalJSAuthorizedToken(token)) {
+        } else if (AngularIFrameView.supportsToken(token) && isPortalJSAuthorizedToken(token)) {
             // No action is necessary as an unauthorized request will result in a page reload.
             return prepareAngularPage(token);
         } else {
@@ -370,8 +340,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     private boolean isPortalJSAuthorizedToken(String token) {
         // whenever a token ends with -labs, it is authorized by default.
         // this is done to ensure feature flipping and embed in development portal-js pages
-        return AngularIFrameView.supportsToken(token) &&
-                (isUserAuthorized(Arrays.asList(token), getCurrentUserAccessRights()) || token.endsWith("-labs"));
+        List<String> privileges = AngularIFrameView.getPrivileges(token);
+        return isUserAuthorized(privileges, getCurrentUserAccessRights()) || token.endsWith("-labs");
     }
 
     public native void print(String content) /*-{

@@ -15,10 +15,7 @@ package org.bonitasoft.console.client.angular;
 
 import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
@@ -70,6 +67,8 @@ public class AngularIFrameView extends RawView {
 
     public static Map<String, String> angularViewsMap = new HashMap<String, String>();
 
+    private static Map<String, List<String>> privilegesMap = new HashMap<String, List<String>>();
+
     /**
      * add a route support to angular
      *
@@ -78,6 +77,30 @@ public class AngularIFrameView extends RawView {
      */
     public static void addTokenSupport(final String token, final String route) {
         angularViewsMap.put(token, route);
+    }
+
+    /**
+     * add a route support to angular and associated privileges
+     *
+     * @param token the gwt token to match
+     * @param route the matching angular route
+     */
+    public static void addTokenSupport(final String token, final String route, String... privileges) {
+        angularViewsMap.put(token, route);
+        privilegesMap.put(token, Arrays.asList(privileges));
+    }
+
+    /**
+     * Get privileges associated to this token
+     */
+    public static List<String> getPrivileges(String token) {
+        List<String> result = new ArrayList<String>();
+        result.add(token);
+        List<String> all = privilegesMap.get(token);
+        if (all != null) {
+            result.addAll(all);
+        }
+        return result;
     }
 
     /**
