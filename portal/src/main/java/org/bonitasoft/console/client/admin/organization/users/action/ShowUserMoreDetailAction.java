@@ -16,16 +16,20 @@
  */
 package org.bonitasoft.console.client.admin.organization.users.action;
 
-import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.toolkit.client.ViewController;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemId;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 
 public class ShowUserMoreDetailAction extends ActionOnItemId {
 
     @Override
     protected void execute(APIID userId) {
-        ViewController.showView(new UserMoreDetailsAdminPage(userId));
+        final TreeIndexed<String> tree = new TreeIndexed<String>();
+        tree.addValue(PageOnItem.PARAMETER_ITEM_ID, userId.toString());
+        ViewController.showView(AngularIFrameView.USER_MORE_DETAILS_ADMIN, tree);
     }
 
 }

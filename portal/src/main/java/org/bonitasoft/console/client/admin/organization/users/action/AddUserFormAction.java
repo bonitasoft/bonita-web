@@ -20,7 +20,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 import java.util.Map;
 
-import org.bonitasoft.console.client.admin.organization.users.view.UserMoreDetailsAdminPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
@@ -30,8 +30,6 @@ import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.RedirectionAction;
 import org.bonitasoft.web.toolkit.client.ui.action.form.AddItemFormAction;
-
-import com.google.gwt.user.client.Window;
 
 /**
  * @author Yongtao Guo
@@ -94,7 +92,7 @@ public class AddUserFormAction extends AddItemFormAction<UserItem> {
 
     private void redirectToUsersMoreDetailsPage(final APIID userId) {
         if (userId != null) {
-            final RedirectionAction redirectionAction = new RedirectionAction(UserMoreDetailsAdminPage.TOKEN);
+            final RedirectionAction redirectionAction = new RedirectionAction(AngularIFrameView.USER_MORE_DETAILS_ADMIN);
             redirectionAction.addParameter("id", userId.toString());
             redirectionAction.execute();
         }

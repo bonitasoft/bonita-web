@@ -25,15 +25,18 @@ import java.util.List;
 
 import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction;
 import org.bonitasoft.console.client.admin.organization.users.action.ChangeUsersStateAction.STATE;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.button.MoreButton;
 import org.bonitasoft.console.client.common.metadata.UserMetadataBuilder;
 import org.bonitasoft.web.rest.model.identity.UserItem;
+import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowView;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
 import org.bonitasoft.web.toolkit.client.ui.component.button.ButtonAction;
 import org.bonitasoft.web.toolkit.client.ui.page.ItemQuickDetailsPage.ItemDetailsMetadata;
+import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.FORMAT;
 
 /**
@@ -76,7 +79,9 @@ public class UserQuickDetailsAdminPage extends UserQuickDetailsPage {
     }
 
     protected Action createMoreAction(final UserItem item) {
-        return new CheckValidSessionBeforeAction(new ActionShowView(new UserMoreDetailsAdminPage(item.getId())));
+        final TreeIndexed<String> tree = new TreeIndexed<String>();
+        tree.addValue(PageOnItem.PARAMETER_ITEM_ID, item.getId().toString());
+        return new CheckValidSessionBeforeAction(new ActionShowView(AngularIFrameView.USER_MORE_DETAILS_ADMIN, tree));
     }
 
     @Override
