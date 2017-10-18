@@ -54,8 +54,7 @@ public class AngularIFrameView extends RawView {
 
     public static final String TASK_LISTING_TOKEN = "tasklistinguser";
 
-    // Labs - in developpement page. token should be switched when dev ends
-    public static final String USER_MORE_DETAILS_ADMIN = "usermoredetailsadmin-labs";
+    public static final String USER_MORE_DETAILS_ADMIN = "usermoredetailsadmin";
 
     protected final IFrameView iframe;
 
