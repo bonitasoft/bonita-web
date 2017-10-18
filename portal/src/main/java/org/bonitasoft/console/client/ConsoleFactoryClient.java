@@ -149,14 +149,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new UserQuickDetailsPage();
         } else if (PopupAddUserPage.TOKEN.equals(token) && isUserAuthorized(PopupAddUserPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new PopupAddUserPage();
-        } else if (AddMembershipPage.TOKEN.equals(token) && isUserAuthorized(AddMembershipPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new AddMembershipPage();
-        } else if (DeleteMembershipPage.TOKEN.equals(token) && isUserAuthorized(DeleteMembershipPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new DeleteMembershipPage();
-        } else if (ListMembershipPage.TOKEN.equals(token) && isUserAuthorized(ListMembershipPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new ListMembershipPage();
-        } else if (UpdateUserPage.TOKEN.equals(token) && isUserAuthorized(UpdateUserPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new UpdateUserPage();
 
             // Manage processes pages For Admin
         } else if (ProcessListingAdminPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
