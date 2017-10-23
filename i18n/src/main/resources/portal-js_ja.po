@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2017-10-15 18:53-0400\n"
+"PO-Revision-Date: 2017-10-22 18:24-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -42,6 +42,9 @@ msgstr "追加"
 
 msgid "Add from custom pages"
 msgstr "カスタム ページを追加します"
+
+msgid "Add membership"
+msgstr ""
 
 msgid "Add menu"
 msgstr "メニューを追加します"
@@ -97,6 +100,9 @@ msgstr "適用"
 msgid "Archived cases"
 msgstr "完了済み案件"
 
+msgid "Are you sure you want to delete this membership ?"
+msgstr ""
+
 msgid "Assign to me. Only I will be able to do it"
 msgstr "自分にアサイン。それを実行できるのは、自分だけになります。"
 
@@ -118,11 +124,11 @@ msgstr "アプリケーション記述子をインポートする前に、ペー
 msgid "Business card"
 msgstr "業務上の連絡先"
 
+msgid "Business card has not been updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "Business card successfully updated"
 msgstr "業務上の連絡先が正常に更新されました。"
-
-msgid "Business card were not updated. Please retry later or contact an administrator"
-msgstr "業務上の連絡先が、更新されませんでした。後で再試行するか管理者に問い合わせてください。 "
 
 msgid "Can't import page or form to the process"
 msgstr "プロセスにページまたはフォームをインポートできません"
@@ -238,17 +244,20 @@ msgstr "作成対象："
 msgid "Custom information"
 msgstr "カスタム情報"
 
+msgid "Custom information has not been updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "Custom information successfully updated"
 msgstr "カスタム情報が正常に更新されました"
-
-msgid "Custom information were not updated. Please retry later or contact an administrator"
-msgstr "カスタム情報が更新されませんでした。後で再試行するか管理者に問い合わせてください。"
 
 msgid "Delete"
 msgstr "削除"
 
 msgid "Delete application"
 msgstr "アプリケーションを削除"
+
+msgid "Delete membership"
+msgstr ""
 
 msgid "Delete process"
 msgstr "プロセスを削除"
@@ -355,11 +364,14 @@ msgstr "フォームを送信しました。 <br/>リスト中の次のタスク
 msgid "General"
 msgstr "全般"
 
+msgid "General information"
+msgstr ""
+
+msgid "General information has not been updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "General information successfully updated"
 msgstr "全般的な情報が正常に更新されました"
-
-msgid "General information where not updated. Please retry later or contact an administrator"
-msgstr "全般的な情報が更新されませんでした。後で再試行するかシステム管理者に問い合わせてください。"
 
 msgid "Groups"
 msgstr "グループ"
@@ -393,6 +405,9 @@ msgstr "アプリケーション記述子をインポート"
 
 msgid "In task name column"
 msgstr "[タスク名] 列"
+
+msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of the wizard"
+msgstr ""
 
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
@@ -433,11 +448,26 @@ msgstr "このタスクは自分だけが行えるようにする"
 msgid "Manage Categories"
 msgstr "カテゴリを管理"
 
+msgid "Manager"
+msgstr ""
+
 msgid "Maximum size 255 characters"
 msgstr "最大 255 文字"
 
 msgid "Me"
 msgstr "自分"
+
+msgid "Membership has not been added. Please retry later or contact an administrator"
+msgstr ""
+
+msgid "Membership has not been removed. Please retry later or contact an administrator"
+msgstr ""
+
+msgid "Membership successfully added"
+msgstr ""
+
+msgid "Membership successfully removed"
+msgstr ""
 
 msgid "Memberships"
 msgstr "所属"
@@ -547,11 +577,11 @@ msgstr "プロセスを有効にする前にパラメータを解決する必要
 msgid "Password"
 msgstr "パスワード"
 
+msgid "Password has not been updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "Password successfully updated"
 msgstr "パスワードが正常に更新されました"
-
-msgid "Password was not updated. Please retry later or contact an administrator"
-msgstr "パスワードが更新されませんでした。後で再試行するか管理者に問い合わせてください。"
 
 msgid "Passwords don't match"
 msgstr "パスワードが一致しません"
@@ -562,11 +592,11 @@ msgstr "作業実行を待機中"
 msgid "Personal information"
 msgstr "個人情報"
 
+msgid "Personal information has not been updated. Please retry later or contact an administrator"
+msgstr ""
+
 msgid "Personal information successfully updated"
 msgstr "個人情報が正常に更新されました"
-
-msgid "Personal information were not updated. Please retry later or contact an administrator"
-msgstr "個人情報は更新されませんでした。後で再試行するか管理者に問い合わせてください。"
 
 msgid "Phone"
 msgstr "電話番号"
@@ -591,6 +621,9 @@ msgstr "プロファイル"
 
 msgid "Profiles"
 msgstr "プロファイル"
+
+msgid "Profiles / Memberships"
+msgstr ""
 
 msgid "Ready, waiting instances"
 msgstr "作業開始を待機中"
@@ -654,6 +687,9 @@ msgstr "選択を解除"
 
 msgid "Select roles..."
 msgstr "役割を選択..."
+
+msgid "Select the <i>User information management</i> tab to add <i>Custom information</i> on the right"
+msgstr ""
 
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "アクターにアサインするエンティティ（ユーザー、グループ、役割、所属など）を選択します。これらのエンティティは、プロセスにヒューマン タスクを実行します。"
@@ -796,6 +832,9 @@ msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約
 msgid "Theme"
 msgstr "テーマ"
 
+msgid "Then for each user, fill out the custom information value, in the Studio (<i>List of users</i> tab of the organization), or right on this Portal page."
+msgstr ""
+
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
 msgstr "これらの削除された案件は完全に削除され、アーカイブには格納されません。"
 
@@ -892,6 +931,9 @@ msgstr "更新者"
 msgid "Updated on"
 msgstr "更新日時"
 
+msgid "Upload new picture"
+msgstr ""
+
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
 
@@ -933,6 +975,9 @@ msgstr "エラー発生"
 
 msgid "You are about to export the descriptor of the application"
 msgstr "アプリケーションの記述子をエクスポートしようとしています"
+
+msgid "You can create custom information in Bonita Studio:"
+msgstr ""
 
 msgid "You must add a page before you can reference it in a menu."
 msgstr "それをメニューで参照する前に、ページを追加する必要があります。"
@@ -990,6 +1035,12 @@ msgstr "ユーザー名:"
 
 msgid "will be permanently deleted."
 msgstr "恒久的に削除されます。"
+
+msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
+msgstr ""
+
+msgid "{{membership.role_id.displayName}} of {{membership.group_id.displayName}}"
+msgstr ""
 
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "マッピングの更新で {{nbErrors}} のエラーが発生しました"
