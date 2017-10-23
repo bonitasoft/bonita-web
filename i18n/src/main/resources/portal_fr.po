@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-13 05:07+0200\n"
-"PO-Revision-Date: 2017-10-15 18:51-0400\n"
+"PO-Revision-Date: 2017-10-22 18:21-0400\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -191,7 +191,7 @@ msgid "A form is a page mapped to case start or a human task."
 msgstr "Un formulaire est une page associée au démarrage d'un cas ou à une tâche humaine."
 
 msgid "A group with the name %groupName% already exists"
-msgstr ""
+msgstr "Il existe déjà un groupe portant le nom %groupName%"
 
 msgid "A page archive has a .zip extension"
 msgstr "Une archive de page possède une extension .zip"
@@ -392,7 +392,8 @@ msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'i
 
 msgid "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
-msgstr ""
+msgstr "Une erreur s’est produite lors de l'importation de l'organisation.\n"
+" Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -458,10 +459,10 @@ msgid "Avatar"
 msgstr "Avatar"
 
 msgid "BDM"
-msgstr ""
+msgstr "BDM"
 
 msgid "BDM access control"
-msgstr ""
+msgstr "Contrôle d’accès au BDM"
 
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "Les services BPM sont suspendus. Vous devriez peut-être les relancer."
@@ -488,7 +489,7 @@ msgid "Business Data Model"
 msgstr "Modèle de Données Métier"
 
 msgid "Business Data Model definition"
-msgstr ""
+msgstr "Définition du Modèle de Données Métier (BDM)"
 
 msgid "Business archive"
 msgstr "Archive"
@@ -1267,7 +1268,7 @@ msgid "Import/Export"
 msgstr "Importer/Exporter"
 
 msgid "Import/export BDM access control"
-msgstr ""
+msgstr "Importation/exportation du fichier de contrôle d’accès au BDM"
 
 msgid "Import/export organization"
 msgstr "Importer/exporter une organisation"
