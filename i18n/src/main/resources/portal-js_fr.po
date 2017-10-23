@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2017-10-15 18:51-0400\n"
+"PO-Revision-Date: 2017-10-22 18:21-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -43,6 +43,9 @@ msgstr "Ajouter"
 msgid "Add from custom pages"
 msgstr "Ajouter une page parmi les pages personalisées"
 
+msgid "Add membership"
+msgstr "Ajouter une adhésion"
+
 msgid "Add menu"
 msgstr "Ajouter un menu"
 
@@ -59,7 +62,7 @@ msgid "Add top-level menu"
 msgstr "Ajouter un menu "
 
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
 msgstr "Regroupe les tâches en états ready, waiting,<br>executing, completing, et initializing"
@@ -97,6 +100,9 @@ msgstr "Appliquer"
 msgid "Archived cases"
 msgstr "Cas archivés"
 
+msgid "Are you sure you want to delete this membership ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer cette adhésion ?"
+
 msgid "Assign to me. Only I will be able to do it"
 msgstr "Me l'assigner. Je serai le seul en mesure de la faire"
 
@@ -116,13 +122,13 @@ msgid "Before you import the application descriptor, the pages and the profile m
 msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
 
 msgid "Business card"
-msgstr ""
+msgstr "Carte de visite"
+
+msgid "Business card has not been updated. Please retry later or contact an administrator"
+msgstr "La carte de visite n’a pas été mise à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Business card successfully updated"
-msgstr ""
-
-msgid "Business card were not updated. Please retry later or contact an administrator"
-msgstr ""
+msgstr "La carte de visite a été mise à jour"
 
 msgid "Can't import page or form to the process"
 msgstr "Impossible d'importer la page ou le formulaire dans le processus"
@@ -173,7 +179,7 @@ msgid "Check that each entity is mapped to a profile, for either Bonita Portal o
 msgstr "Vérifiez que chaque entité est mappée à un profil, pour le Bonita Portal ou pour les applications que vous avez créées."
 
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 msgid "Class name"
 msgstr "Nom de la classe"
@@ -206,7 +212,7 @@ msgid "Confirm delete?"
 msgstr "Confirmer la suppression ?"
 
 msgid "Confirm new Password"
-msgstr ""
+msgstr "Confirmez le nouveau mot de passe"
 
 msgid "Connectors"
 msgstr "Connecteurs"
@@ -215,7 +221,7 @@ msgid "Connectors must be resolved before enabling the Process."
 msgstr "Tous les connecteurs doivent avoir une implémentation pour que le processus puisse être activé."
 
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 msgid "Create a new membership"
 msgstr "Créer une nouvelle adhésion"
@@ -230,25 +236,28 @@ msgid "Creation"
 msgstr "Création"
 
 msgid "Creation date"
-msgstr ""
+msgstr "Créé le"
 
 msgid "Creation on"
 msgstr "Créée le"
 
 msgid "Custom information"
-msgstr ""
+msgstr "Informations spécifiques"
+
+msgid "Custom information has not been updated. Please retry later or contact an administrator"
+msgstr "Les informations spécifiques n’ont pas été mises à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Custom information successfully updated"
-msgstr ""
-
-msgid "Custom information were not updated. Please retry later or contact an administrator"
-msgstr ""
+msgstr "Les informations spécifiques ont été mises à jour avec succès"
 
 msgid "Delete"
 msgstr "Supprimer"
 
 msgid "Delete application"
 msgstr "Supprimer l'application"
+
+msgid "Delete membership"
+msgstr "Supprimer l'adhésion"
 
 msgid "Delete process"
 msgstr "Supprimer un processus"
@@ -281,7 +290,7 @@ msgid "Edit menu item"
 msgstr "Editer l'option de menu"
 
 msgid "Email"
-msgstr ""
+msgstr "Courriel"
 
 msgid "Enable all"
 msgstr "Tout associer"
@@ -344,7 +353,7 @@ msgid "Filters"
 msgstr "Filtres"
 
 msgid "First name"
-msgstr ""
+msgstr "Prénom"
 
 msgid "Form"
 msgstr "Formulaire"
@@ -355,11 +364,14 @@ msgstr "Formulaire soumis.<br/>La tâche suivante dans la liste est maintenant s
 msgid "General"
 msgstr "Général"
 
-msgid "General information successfully updated"
-msgstr ""
+msgid "General information"
+msgstr "Informations générales"
 
-msgid "General information where not updated. Please retry later or contact an administrator"
-msgstr ""
+msgid "General information has not been updated. Please retry later or contact an administrator"
+msgstr "Les informations générales n’ont pas été mises à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
+
+msgid "General information successfully updated"
+msgstr "Les informations générales ont été mises à jour avec succès"
 
 msgid "Groups"
 msgstr "Groupes"
@@ -394,17 +406,20 @@ msgstr "Importer un descripteur d’application"
 msgid "In task name column"
 msgstr "Dans la colonne \"Tâche\""
 
+msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of the wizard"
+msgstr "Dans le menu <i>Organisation > Gérer</i>, allez à la page <i>Utilisateurs</i> de l’assistant graphique"
+
 msgid "Items per page"
 msgstr "Eléments par page"
 
 msgid "Job title"
-msgstr ""
+msgstr "Intitulé du poste"
 
 msgid "Last login"
-msgstr ""
+msgstr "Dernière connexion"
 
 msgid "Last name"
-msgstr ""
+msgstr "Nom"
 
 msgid "Last update"
 msgstr "Dernière mise à jour"
@@ -433,11 +448,26 @@ msgstr "Rendre cette tâche personnelle : je serai le(la) seul(e) à pouvoir la 
 msgid "Manage Categories"
 msgstr "Gérer les catégories"
 
+msgid "Manager"
+msgstr "Responsable"
+
 msgid "Maximum size 255 characters"
 msgstr "Taille maximum de 255 caractères"
 
 msgid "Me"
 msgstr "Moi"
+
+msgid "Membership has not been added. Please retry later or contact an administrator"
+msgstr "L'adhésion n’a pas été mise à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
+
+msgid "Membership has not been removed. Please retry later or contact an administrator"
+msgstr "L'adhésion n'a pas été supprimée. Veuillez réessayer ultérieurement ou contacter un administrateur"
+
+msgid "Membership successfully added"
+msgstr "Adhésion ajoutée avec succès"
+
+msgid "Membership successfully removed"
+msgstr "Adhésion supprimée avec succès"
 
 msgid "Memberships"
 msgstr "Adhésions"
@@ -446,7 +476,7 @@ msgid "Memberships mapped to {}"
 msgstr "Adhésions associées à {}"
 
 msgid "Mobile"
-msgstr ""
+msgstr "Portable"
 
 msgid "Multi-page menu"
 msgstr "Menu"
@@ -464,7 +494,7 @@ msgid "New"
 msgstr "Nouveau"
 
 msgid "New Password"
-msgstr ""
+msgstr "Nouveau mot de passe"
 
 msgid "New comment"
 msgstr "Nouveau commentaire"
@@ -479,7 +509,7 @@ msgid "No comment on this case yet. To add one, use the input field at the botto
 msgstr "Aucun commentaire sur ce cas pour l'instant. Le champ de saisie se trouve en bas de ce panneau"
 
 msgid "No custom information defined."
-msgstr ""
+msgstr "Aucune information personnalisée n'a été définie."
 
 msgid "No data"
 msgstr "Pas de donnée disponible"
@@ -500,7 +530,7 @@ msgid "No profile mapped to this application"
 msgstr "Cette application n'a pas de profil associé"
 
 msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
-msgstr ""
+msgstr "Aucune mise à jour n’a été faite sur les catégories. Appuyez bien sur « Entrée » après avoir sélectionné une catégorie."
 
 msgid "Normal"
 msgstr "Normale"
@@ -545,31 +575,31 @@ msgid "Parameters must be resolved before enabling the Process."
 msgstr "Tous les paramètres doivent avoir une valeur pour pouvoir activer le processus."
 
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
+
+msgid "Password has not been updated. Please retry later or contact an administrator"
+msgstr "Le mot de passe n’a pas été mis à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Password successfully updated"
-msgstr ""
-
-msgid "Password was not updated. Please retry later or contact an administrator"
-msgstr ""
+msgstr "Mot de passe mis à jour avec succès"
 
 msgid "Passwords don't match"
-msgstr ""
+msgstr "Les mots de passe ne correspondent pas"
 
 msgid "Pending Flow Nodes"
 msgstr "Flow nodes en attente"
 
 msgid "Personal information"
-msgstr ""
+msgstr "Informations personnelles"
+
+msgid "Personal information has not been updated. Please retry later or contact an administrator"
+msgstr "Les informations personnelles n’ont pas été mises à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Personal information successfully updated"
-msgstr ""
-
-msgid "Personal information were not updated. Please retry later or contact an administrator"
-msgstr ""
+msgstr "Les informations personnelles ont été mises à jour avec succès"
 
 msgid "Phone"
-msgstr ""
+msgstr "Téléphone"
 
 msgid "Priority"
 msgstr "Priorité"
@@ -591,6 +621,9 @@ msgstr "Profils"
 
 msgid "Profiles"
 msgstr "Profils"
+
+msgid "Profiles / Memberships"
+msgstr "Profils / Adhésions"
 
 msgid "Ready, waiting instances"
 msgstr "Instances en état ready, waiting (en attente)"
@@ -654,6 +687,9 @@ msgstr "Tout désélectionner"
 
 msgid "Select roles..."
 msgstr "Sélectionnez des rôles ..."
+
+msgid "Select the <i>User information management</i> tab to add <i>Custom information</i> on the right"
+msgstr "Sélectionnez l’onglet <i>Gestion des informations utilisateur</i> pour ajouter des <i>informations spécifiques</i> sur la droite"
 
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" du processus."
@@ -796,6 +832,9 @@ msgstr "Les mots 'content', 'API' et 'theme' sont réservés pour un usage inter
 msgid "Theme"
 msgstr " Thème"
 
+msgid "Then for each user, fill out the custom information value, in the Studio (<i>List of users</i> tab of the organization), or right on this Portal page."
+msgstr "Puis pour chaque utilisateur, remplissez la valeur des informations spécifiques, soit dans le studio (onglet <i>Liste des utilisateurs</i> de l’organisation), ou directement sur cette page du portail."
+
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
 msgstr "Ces cas supprimés le seront définitivement et ne seront pas stockés dans les archives."
 
@@ -824,7 +863,7 @@ msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
 msgstr "Cette tâche est en retard. Elle aurait dû être faite pour le {{dueDate}}"
 
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 msgid "To create an application, click New or Import."
 msgstr "Pour créer une application, cliquez sur Nouveau ou Importer."
@@ -872,19 +911,19 @@ msgid "Update"
 msgstr "Mise à jour"
 
 msgid "Update business card"
-msgstr ""
+msgstr "Mettre à jour la carte de visite"
 
 msgid "Update custom information"
-msgstr ""
+msgstr "Mettre à jour les informations spécifiques"
 
 msgid "Update general information"
-msgstr ""
+msgstr "Mettre à jour les informations générales"
 
 msgid "Update password"
-msgstr ""
+msgstr "Mettre à jour le mot de passe"
 
 msgid "Update personal information"
-msgstr ""
+msgstr "Mettre à jour les informations personnelles"
 
 msgid "Updated by"
 msgstr "Mise à jour par"
@@ -892,11 +931,14 @@ msgstr "Mise à jour par"
 msgid "Updated on"
 msgstr "Mise à jour le"
 
+msgid "Upload new picture"
+msgstr "Modifier l'image"
+
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
 
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 msgid "Users"
 msgstr "Utilisateurs"
@@ -934,6 +976,9 @@ msgstr "Avec erreurs"
 msgid "You are about to export the descriptor of the application"
 msgstr "Vous êtes sur le point d'exporter le descripteur de l'application"
 
+msgid "You can create custom information in Bonita Studio:"
+msgstr "Vous pouvez créer des informations spécifiques dans Bonita Studio :"
+
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Vous devez ajouter une page avant de pouvoir la référencer dans un menu."
 
@@ -941,7 +986,7 @@ msgid "Your personal task list is empty. You can take a task from the ​<a href
 msgstr "Votre liste de tâches personnelles est vide. Vous pouvez prendre une tâche dans la liste <a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">A faire</a>."
 
 msgid "Zip code"
-msgstr ""
+msgstr "Code postal"
 
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
 msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)"
@@ -990,6 +1035,12 @@ msgstr "nom d'utilisateur :"
 
 msgid "will be permanently deleted."
 msgstr "va être supprimée définitivement"
+
+msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
+msgstr "{{firstname}} {{lastname}} a déjà l'adhésion <b>{{role}} de {{group}}</b>"
+
+msgid "{{membership.role_id.displayName}} of {{membership.group_id.displayName}}"
+msgstr "{{membership.role_id.displayName}} de {{membership.group_id.displayName}}"
 
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "La mise à jour des mappings a généré {{nbErrors}} erreurs"
