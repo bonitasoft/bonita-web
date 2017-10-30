@@ -17,9 +17,11 @@ package org.bonitasoft.console.common.server.page;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -123,6 +125,19 @@ public class CustomPageChildFirstClassLoaderTest {
 
         assertThat(classLoader.getURLs()).isEmpty();
         assertThat(classLoader.getResourceAsStream("util.properties")).isNotNull();
+    }
+    
+    @Test
+    public void should_get_resources_contained_in_jars_of_classloader() throws Exception {
+        classLoader = spy(newClassloader());
+        when(customPageDependenciesResolver.resolveCustomPageDependencies()).thenReturn(loadedResources("util.jar"));
+        classLoader.addCustomPageResources();
+
+        InputStream resourceNotExistingButShouldBeSoughtInJars = classLoader.getResourceAsStream("util.properties");
+        
+        assertThat(resourceNotExistingButShouldBeSoughtInJars).isNull();
+        verify(classLoader).getResourceAsStreamRegular("util.properties");
+
     }
 
     private Map<String, byte[]> loadedResources(String... resourceNames) {
