@@ -97,27 +97,27 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
          * throw new RuntimeException(this.toString() + " is not active anymore. Don't use it.");
          * }
          */
-        InputStream is = getInternalInputstream(name);
+        InputStream is = getResourceAsStreamInternal(name);
         if (is == null && name.length() > 0 && name.charAt(0) == '/') {
-            is = getInternalInputstream(name.substring(1));
+            is = getResourceAsStreamInternal(name.substring(1));
         }
         return is;
     }
 
-    private InputStream getInternalInputstream(final String name) {
+    protected InputStream getResourceAsStreamInternal(final String name) {
         final byte[] classData = loadProcessResource(name);
         if (classData != null) {
             return new ByteArrayInputStream(classData);
         }
-        final InputStream is = super.getResourceAsStream(name);
-        if (is != null) {
-            return is;
-        }
-        return null;
+        return getResourceAsStreamRegular(name);
+    }
+
+    protected InputStream getResourceAsStreamRegular(final String name) {
+        return super.getResourceAsStream(name);
     }
 
     private byte[] loadProcessResource(final String resourceName) {
-        return nonJarResources.containsKey(resourceName) ? nonJarResources.get(resourceName) : new byte[0];
+        return nonJarResources.containsKey(resourceName) ? nonJarResources.get(resourceName) : null;
     }
 
     @Override
