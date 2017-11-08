@@ -139,6 +139,37 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- specify this jackson dependencies to override the ones pulled by Restlet -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-csv</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-smile</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jsonSchema</artifactId>
+            <version>${jackson-ext-modules-version}</version>
+        </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -230,7 +261,7 @@
                 <version>1.0.1</version>
             </dependency>
         </dependencies>
-    </dependencyManagement>    
+    </dependencyManagement>
     <build>
         <resources>
             <resource>
@@ -419,11 +450,11 @@
                                 <configuration>
                                     <target>
                                         <copy todir="${project.build.directory}/tomcat-deployable">
-                                        <fileset dir="${project.build.directory}/${project.build.finalName}" >
-                                          <exclude name="**/console-server-*.jar"/>
-                                          <exclude name="**/console-common-*.jar"/>
-                                          <exclude name="**/console-client-*.jar"/>
-                                        </fileset>
+                                            <fileset dir="${project.build.directory}/${project.build.finalName}">
+                                                <exclude name="**/console-server-*.jar" />
+                                                <exclude name="**/console-common-*.jar" />
+                                                <exclude name="**/console-client-*.jar" />
+                                            </fileset>
                                         </copy>
                                     </target>
                                 </configuration>
@@ -471,7 +502,7 @@
                                     <bitronix.tm.configuration>${tomcat.home}/conf/btm-config.properties
                                     </bitronix.tm.configuration>
                                 </systemProperties>
-                                
+
                             </container>
                             <configuration>
                                 <type>standalone</type>
