@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 05:07+0200\n"
-"PO-Revision-Date: 2017-10-22 18:21-0400\n"
+"POT-Creation-Date: 2017-10-27 05:07+0200\n"
+"PO-Revision-Date: 2017-11-15 05:08-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -268,9 +268,6 @@ msgstr "Ajouter une adhésion"
 msgid "Add a membership to %actor_name%"
 msgstr "Ajouter une adhésion à %actor_name%"
 
-msgid "Add a membership to %user%"
-msgstr "Ajouter une adhésion à %user%"
-
 msgid "Add a membership to profile %%"
 msgstr "Ajouter une adhésion au profil %%"
 
@@ -282,9 +279,6 @@ msgstr "Ajouter une nouvelle catégorie à %%"
 
 msgid "Add a new custom page"
 msgstr "Ajouter une nouvelle page personnalisée"
-
-msgid "Add a new membership to this user"
-msgstr "Ajouter une adhésion à cet utilisateur"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension des API REST). <br/> Cette ressource sera installée au niveau global (ni processus, ni application). <br/> Cette archive (fichier .zip) doit contenir un fichier page.properties à la racine et un dossier nommé « resources ». <br/> Le fichier properties doit définir au moins name, displayName et contentType (qui, par défaut, est « page »). <br/> Le dossier « resources » doit contenir soit le fichier index.html, soit le fichier Index.groovy, et les ressources nécessaires à la page."
@@ -309,9 +303,6 @@ msgstr "Ajouter un utilisateur à %actor_name%"
 
 msgid "Add a user to profile %%"
 msgstr "Ajouter un utilisateur au profil %%"
-
-msgid "Add new memberships for %user%"
-msgstr "Ajouter une nouvelle adhésion pour l'utilisateur %user%"
 
 msgid "Add resource"
 msgstr "Ajouter une ressource"
@@ -342,9 +333,6 @@ msgstr "Ajouter cet utilisateur à %actor_name%"
 
 msgid "Add your comment"
 msgstr "Ajoutez votre commentaire"
-
-msgid "Address"
-msgstr "Adresse"
 
 msgid "Administrator"
 msgstr "Administrateur"
@@ -393,7 +381,7 @@ msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'i
 msgid "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
 msgstr "Une erreur s’est produite lors de l'importation de l'organisation.\n"
-" Pour plus d’informations, consultez les logs."
+"Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -418,9 +406,6 @@ msgstr "Archives"
 
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer de cet acteur les entités sélectionnées ?"
-
-msgid "Are you sure you want to delete this membership ?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette adhésion ?"
 
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "Êtes-vous sûr(e) de vouloir retirer la catégorie %categoryName% du processus '%appName%' ?"
@@ -493,9 +478,6 @@ msgstr "Définition du Modèle de Données Métier (BDM)"
 
 msgid "Business archive"
 msgstr "Archive"
-
-msgid "Business card"
-msgstr "Carte de visite"
 
 msgid "By default, forms are included in the process bar file for deployment."
 msgstr "Par défaut, les formulaires sont inclus dans le fichier .bar du processus pour déploiement."
@@ -589,9 +571,6 @@ msgstr "Changez la langue sélectionnée"
 
 msgid "Choose a language"
 msgstr "Choisissez votre langue"
-
-msgid "City"
-msgstr "Ville"
 
 msgid "Class name"
 msgstr "Nom de la classe"
@@ -710,9 +689,6 @@ msgstr "Le type de contenu (contentType) est « page »."
 msgid "Content type is 'theme'."
 msgstr "Le type de contenu (contentType) est « theme »."
 
-msgid "Country"
-msgstr "Pays"
-
 msgid "Create"
 msgstr "Créer"
 
@@ -809,9 +785,6 @@ msgstr "Supprimer le processus %app_name%?"
 msgid "Delete this member"
 msgstr "Supprimer ce membre"
 
-msgid "Delete this membership"
-msgstr "Supprimer cette adhésion"
-
 msgid "Delete this process"
 msgstr "Supprimer ce processus"
 
@@ -820,9 +793,6 @@ msgstr "Description"
 
 msgid "Description:"
 msgstr "Description:"
-
-msgid "Details"
-msgstr "Détails"
 
 msgid "Direct users"
 msgstr "Utilisateurs directement liés"
@@ -863,9 +833,6 @@ msgstr "Afficher la page de synthèse"
 msgid "Do it"
 msgstr "Faire"
 
-msgid "Do not delete this membership"
-msgstr "Ne pas supprimer cette adhésion"
-
 msgid "Do you still want to delete the selected pages?"
 msgstr "Voulez-vous vraiment supprimer les pages sélectionnées ?"
 
@@ -899,9 +866,6 @@ msgstr "Modifier %pageName%"
 msgid "Edit a role"
 msgstr "Modifier ce rôle"
 
-msgid "Edit a user"
-msgstr "Mise à jour de l'utilisateur"
-
 msgid "Edit case variable"
 msgstr "Modifier la variable du cas"
 
@@ -922,9 +886,6 @@ msgstr "Editer ce groupe"
 
 msgid "Edit this value"
 msgstr "Modifier cette valeur"
-
-msgid "Edit user"
-msgstr "Mise à jour de l'utilisateur"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "Modifier les utilisateurs de l'acteur %actor_name%"
@@ -953,15 +914,6 @@ msgstr "Processus activés"
 msgid "Enter a category name"
 msgstr "Entrez un nom de catégorie"
 
-msgid "Enter the address of this user"
-msgstr "Entrer l'adresse de cet utilisateur"
-
-msgid "Enter the city of this user"
-msgstr "Entrez la ville de cet utilisateur"
-
-msgid "Enter the country of this user"
-msgstr "Entrez le pays de cet utilisateur"
-
 msgid "Enter the description for this category"
 msgstr "Entrez la description de cette catégorie"
 
@@ -977,20 +929,11 @@ msgstr "Entrez le nom d'affichage du groupe"
 msgid "Enter the display name of this role"
 msgstr "Entrez le nom d'affichage du rôle"
 
-msgid "Enter the email of this user"
-msgstr "Entrez l'email de cet utilisateur"
-
 msgid "Enter the first name of this user"
 msgstr "Entrez le prénom de cet utilisateur"
 
-msgid "Enter the job title of this user"
-msgstr "Entrez la description du poste de cet utilisateur"
-
 msgid "Enter the last name of this user"
 msgstr "Entrez le nom de cet utilisateur"
-
-msgid "Enter the mobile phone of this user"
-msgstr "Entrez le portable de cet utilisateur"
 
 msgid "Enter the name of this group"
 msgstr "Entrez le nom du groupe"
@@ -1001,23 +944,11 @@ msgstr "Entrez le nom du rôle"
 msgid "Enter the password for this user"
 msgstr "Entrer un mot de passe pour cet utilisateur"
 
-msgid "Enter the phone of this user"
-msgstr "Entrez le téléphone de cet utilisateur"
-
-msgid "Enter the state of this user"
-msgstr "Entrez la ville de cet utilisateur"
-
 msgid "Enter the text to search for"
 msgstr "Entrez le texte que vous cherchez"
 
-msgid "Enter the title of this user"
-msgstr "Entrez le titre de cet utilisateur"
-
 msgid "Enter the username for this user"
 msgstr "Entrez le nom d'utilisateur pour cet utilisateur"
-
-msgid "Enter the zip code of this user"
-msgstr "Entrez le code postal de cet utilisateur"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "Toutes les entités doivent être configurées pour pouvoir activer le processus."
@@ -1243,8 +1174,7 @@ msgstr "Si vous créez une ressource avec le UI Designer, le fichier zip est aut
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "Si vous supprimez une page ou un formulaire qui est utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \n"
-"Avant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
+msgstr "Si vous supprimez une page ou formulaire utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \\nAvant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Fichier image"
@@ -1281,9 +1211,6 @@ msgstr "Désactivés"
 
 msgid "Inactive Users"
 msgstr "Utilisateurs désactivés"
-
-msgid "Inactive user"
-msgstr "Utilisateur inactif"
 
 msgid "Install"
 msgstr "Installer"
@@ -1371,9 +1298,6 @@ msgstr "Licence"
 
 msgid "Link to the tasks"
 msgstr "Lien vers les tâches"
-
-msgid "List memberships of %user%"
-msgstr "Liste d'adhésion de %user%"
 
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "Échec de la connexion. Aucun permission n'a été mise en place pour cet utilisateur. Contactez votre administrateur."
@@ -1473,9 +1397,6 @@ msgstr "Nom du menu"
 
 msgid "Mo"
 msgstr "Lun"
-
-msgid "Mobile"
-msgstr "Portable"
 
 msgid "Monitoring"
 msgstr "Monitoring"
@@ -1621,13 +1542,9 @@ msgstr "Organisation importée avec succès."
 msgid "Original name"
 msgstr "Nom originel"
 
-msgid "Other"
-msgstr "Autre"
-
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "Oups... Cet item n'est plus disponible. \n"
-" Vous allez être redirigé."
+msgstr "Oups... Cet item n'est plus disponible. \\n Vous allez être redirigé."
 
 msgid "Overview"
 msgstr "Synthèse"
@@ -1709,12 +1626,6 @@ msgstr "Autorisation refusée : vous n'avez pas les droits pour effectuer cette 
 
 msgid "Permission denied: you do not have the rights to view this item."
 msgstr "Autorisation refusée : vous n'avez pas l'autorisation d'afficher cet élément."
-
-msgid "Personal information"
-msgstr "Renseignements personnels"
-
-msgid "Phone"
-msgstr "Téléphone"
 
 msgid "Please choose a file to import"
 msgstr "Veuillez choisir un fichier à importer"
@@ -1854,9 +1765,6 @@ msgstr "Sauver cet élément"
 msgid "Save this group changes"
 msgstr "Enregistrer les changements pour ce groupe"
 
-msgid "Save this user modifications"
-msgstr "Enregistrez ces modifications"
-
 msgid "Saving a page will change it immediately for all users who can view it."
 msgstr "Enregistrer cette page la modifiera immédiatement pour tous les utilisateurs qui peuvent la consulter."
 
@@ -1877,9 +1785,6 @@ msgstr "Sélectionnez un groupe en tapant une partie de son nom."
 
 msgid "Select a group to set to this profile"
 msgstr "Sélectionnez un groupe pour ce profil"
-
-msgid "Select a group to set to this user"
-msgstr "Sélectionner un groupe pour cet utilisateur"
 
 msgid "Select a process in the list below to display the available tasks"
 msgstr "Sélectionnez un processus dans la liste ci-dessous pour en afficher les tâches disponibles"
@@ -1905,9 +1810,6 @@ msgstr "Sélectionner un avatar pour ce groupe"
 msgid "Select an avatar for this role"
 msgstr "Sélectionner un avatar pour ce rôle"
 
-msgid "Select an avatar for this user"
-msgstr "Sélectionnez un avatar pour cet utilisateur"
-
 msgid "Select profile"
 msgstr "Sélectionner le profile"
 
@@ -1917,17 +1819,11 @@ msgstr "Sélectionner la catégorie à associer au processus"
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Sélectionnez les entités (utilisateurs, groupes, rôles, adhésions) à associer aux acteurs. Ces entités exécuteront les tâches \"humaines\" du processus."
 
-msgid "Select the manager of this user"
-msgstr "Sélectionner le responsable hiérarchique de cet utilisateur"
-
 msgid "Select the parent group"
 msgstr "Sélectionne le groupe parent"
 
 msgid "Select the role of this profile in the selected group"
 msgstr "Sélectionnez le rôle de ce profil dans le groupe sélectionné"
-
-msgid "Select the role of this user in the selected group"
-msgstr "Sélectionner le rôle de cet utilisateur pour le groupe sélectionné"
 
 msgid "Select user to assign task"
 msgstr "Saisir l'utilisateur qui effectuera la (les) tâche(s)"
@@ -1942,10 +1838,10 @@ msgid "Service task (performed automatically)"
 msgstr "Tâche automatique (exécutée automatiquement)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "Les services vont être suspendus pour des raisons de maintenance."
+msgstr "Les services vont être suspendus pour raison de maintenance.\n"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\n"
+msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\\n.\n"
 
 msgid "Session expired. Please log in again."
 msgstr "La session a expiré. Connectez-vous à nouveau."
@@ -2111,8 +2007,7 @@ msgstr "Le Modèle de Données Métier a été installé avec succès."
 
 msgid "The Business Data Model will now be installed.\n"
 "Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "Le Modèle de Données Métier va maintenant être installé. \n"
-"Les tables existantes dans la base de données métier seront définitivement modifiées. Cette action n'est pas réversible. Il est fortement recommandé de sauvegarder la base de données avant l'installation."
+msgstr "Le Modèle de Données Métier (ou BDM) va maintenant être installé. \\nLes tables existantes dans la base de données métier seront définitivement modifiées. Cette action n'est pas réversible. Il est fortement recommandé de sauvegarder la base de données avant l'installation."
 
 msgid "The Process cannot be enabled"
 msgstr "Le processus ne peut être activé"
@@ -2131,8 +2026,7 @@ msgstr "L'application a rencontré une erreur."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau. \n"
-" Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
+msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau. \\n Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "Le cas %caseId% a été démarré avec succès."
@@ -2349,8 +2243,7 @@ msgstr "Cette adhésion est déjà présente pour cet utilisateur"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "Aucune autorisation n'est définit pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \n"
-" mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
+msgstr "Aucune autorisation n'est définie pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \\n mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Les utilisateurs qui viennent d'être associés à ce profil pourront l'utiliser lors de leur prochaine connexion. Si vous vous êtes attribué ce profil, rafraîchissez la page de votre navigateur pour pouvoir l'utiliser."
@@ -2369,9 +2262,6 @@ msgstr "Cela va exporter un fichier contenant les données de l'organisation. "
 
 msgid "This will import a file containing your whole organization data."
 msgstr "Cela va importer un fichier contenant les données de l'organisation."
-
-msgid "Title"
-msgstr "Titre"
 
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "Pour modifier le contenu de cette page personnalisée, spécifiez un nouveau fichier zip dans le champ ci-dessous."
@@ -2471,9 +2361,6 @@ msgstr "Date de mise à jour"
 
 msgid "Update the page"
 msgstr "Mettre à jour la page"
-
-msgid "Update the user"
-msgstr "Mise à jour de l'utilisateur"
 
 msgid "Update this page using the defined search query"
 msgstr "Mettre à jour cette page en utilisant le terme cherché"
@@ -2578,10 +2465,7 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "Cette action pourrait interrompre un ou plusieurs processus.\n\n"
-"Désactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'un(des) processus.\n\n"
-"Il est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\n"
-"Confirmez-vous la désactivation de cet utilisateur?"
+msgstr "Cette action pourrait interrompre un ou plusieurs processus.\\n\\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s) entraînera l'interruption d'un(des) processus.\\n\\nVérifiez l'acteur mapping sur la page « Détails » du processus avant de procéder.\\n\\nConfirmez-vous la désactivation de cet utilisateur?"
 
 msgid "You will be rediected"
 msgstr "Vous allez être redirigé."
@@ -2591,9 +2475,6 @@ msgstr "Votre session a expirée, Loguez vous de nouveau s'il vous plait."
 
 msgid "Zip Archive"
 msgstr "Archive zip"
-
-msgid "Zip code"
-msgstr "Code postal"
 
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
 msgstr "Erreur dans la structure du fichier .zip. Vérifiez que dans votre .zip, le fichier page.properties est bien formé et qu'un fichier index.html ou un fichier Index.groovy est présent. Pour plus d'information, consultez la documentation ou le fichier readme des pages d'exemple (disponibles dans la liste des pages personnalisées)."
@@ -2678,51 +2559,6 @@ msgstr "sec"
 
 msgid "system"
 msgstr "Système"
-
-msgid "the address of the user"
-msgstr "l'adresse de l'utilisateur"
-
-msgid "the city"
-msgstr "la ville"
-
-msgid "the company address of the user"
-msgstr "Adresse de l'entreprise de l'utilisateur"
-
-msgid "the country of the user"
-msgstr "le pays de l'utilisateur"
-
-msgid "the country of the user company"
-msgstr "le pays de l'entreprise de l'utilisateur"
-
-msgid "the personnal email the user"
-msgstr "l'email personnel de l'utilisateur"
-
-msgid "the personnal mobile phone number of the user"
-msgstr "le numéro de téléphone mobile personnel de l'utilisateur"
-
-msgid "the personnal phone number of the user"
-msgstr "le numéro de téléphone personnel de l'utilisateur"
-
-msgid "the professional email the user"
-msgstr "l'email professionnel de l'utilisateur"
-
-msgid "the professional mobile phone number of the user"
-msgstr "le numéro de téléphone mobile professionnel de l'utilisateur"
-
-msgid "the professional phone number of the user"
-msgstr "le numéro de téléphone professionnel de l'utilisateur"
-
-msgid "the state of the user"
-msgstr "l'état de l'utilisateur"
-
-msgid "the state of the user company"
-msgstr "l'état de l'entreprise de l'utilisateur"
-
-msgid "the zip code of the user"
-msgstr "le code postal de l'utilisateur"
-
-msgid "the zip code of the user company"
-msgstr "le code postal de l'entreprise de l'utilisateur"
 
 msgid "this field"
 msgstr "Ce champ"
