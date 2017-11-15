@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 05:07+0200\n"
-"PO-Revision-Date: 2017-10-22 18:21-0400\n"
+"POT-Creation-Date: 2017-10-27 05:07+0200\n"
+"PO-Revision-Date: 2017-11-15 05:08-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita-bpm\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " To do so, go to %entitymappingprofilelink%."
@@ -268,9 +268,6 @@ msgstr "Add a membership"
 msgid "Add a membership to %actor_name%"
 msgstr "Add a membership to %actor_name%"
 
-msgid "Add a membership to %user%"
-msgstr "Add a membership to %user%"
-
 msgid "Add a membership to profile %%"
 msgstr "Add a membership to profile %%"
 
@@ -282,9 +279,6 @@ msgstr "Add a new category to %%"
 
 msgid "Add a new custom page"
 msgstr "Add a new custom page"
-
-msgid "Add a new membership to this user"
-msgstr "Add a new membership to this user"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
@@ -309,9 +303,6 @@ msgstr "Add a user to %actor_name%"
 
 msgid "Add a user to profile %%"
 msgstr "Add a user to profile %%"
-
-msgid "Add new memberships for %user%"
-msgstr "Add new memberships for %user%"
 
 msgid "Add resource"
 msgstr "Add resource"
@@ -342,9 +333,6 @@ msgstr "Add this user to %actor_name%"
 
 msgid "Add your comment"
 msgstr "Add your comment"
-
-msgid "Address"
-msgstr "Address"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -393,7 +381,7 @@ msgstr "An error occurred while deleting an item with the id %id%"
 msgid "An error occurred while importing the organization.\n"
 msgstr "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
-" Pour plus d’informations, consultez les logs."
+"Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Analytics"
@@ -418,9 +406,6 @@ msgstr "Archives"
 
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "Are you sur you want to remove selected actor members from the process ?"
-
-msgid "Are you sure you want to delete this membership ?"
-msgstr "Are you sure you want to delete this membership ?"
 
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
@@ -493,9 +478,6 @@ msgstr "Business Data Model definition"
 
 msgid "Business archive"
 msgstr "Business archive"
-
-msgid "Business card"
-msgstr "Business card"
 
 msgid "By default, forms are included in the process bar file for deployment."
 msgstr "By default, forms are included in the process bar file for deployment."
@@ -589,9 +571,6 @@ msgstr "Change to selected language"
 
 msgid "Choose a language"
 msgstr "Choose a language"
-
-msgid "City"
-msgstr "City"
 
 msgid "Class name"
 msgstr "Class name"
@@ -710,9 +689,6 @@ msgstr "Content type is 'page'."
 msgid "Content type is 'theme'."
 msgstr "Content type is 'theme'."
 
-msgid "Country"
-msgstr "Country"
-
 msgid "Create"
 msgstr "Create"
 
@@ -809,9 +785,6 @@ msgstr "Delete the process %app_name%?"
 msgid "Delete this member"
 msgstr "Delete this member"
 
-msgid "Delete this membership"
-msgstr "Delete this membership"
-
 msgid "Delete this process"
 msgstr "Delete this process"
 
@@ -820,9 +793,6 @@ msgstr "Description"
 
 msgid "Description:"
 msgstr "Description:"
-
-msgid "Details"
-msgstr "Details"
 
 msgid "Direct users"
 msgstr "Direct users"
@@ -863,9 +833,6 @@ msgstr "Display the case overview"
 msgid "Do it"
 msgstr "Do it"
 
-msgid "Do not delete this membership"
-msgstr "Do not delete this membership"
-
 msgid "Do you still want to delete the selected pages?"
 msgstr "Do you still want to delete the selected pages?"
 
@@ -899,9 +866,6 @@ msgstr "Edit %pageName%"
 msgid "Edit a role"
 msgstr "Edit a role"
 
-msgid "Edit a user"
-msgstr "Edit a user"
-
 msgid "Edit case variable"
 msgstr "Edit case variable"
 
@@ -922,9 +886,6 @@ msgstr "Edit this group"
 
 msgid "Edit this value"
 msgstr "Edit this value"
-
-msgid "Edit user"
-msgstr "Edit user"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "Edit users of actor %actor_name%"
@@ -953,15 +914,6 @@ msgstr "Enabled processes"
 msgid "Enter a category name"
 msgstr "Enter a category name"
 
-msgid "Enter the address of this user"
-msgstr "Enter the address of this user"
-
-msgid "Enter the city of this user"
-msgstr "Enter the city of this user"
-
-msgid "Enter the country of this user"
-msgstr "Enter the country of this user"
-
 msgid "Enter the description for this category"
 msgstr "Enter the description for this category"
 
@@ -977,20 +929,11 @@ msgstr "Enter the display name of this group"
 msgid "Enter the display name of this role"
 msgstr "Enter the display name of this role"
 
-msgid "Enter the email of this user"
-msgstr "Enter the email of this user"
-
 msgid "Enter the first name of this user"
 msgstr "Enter the first name of this user"
 
-msgid "Enter the job title of this user"
-msgstr "Enter the job title of this user"
-
 msgid "Enter the last name of this user"
 msgstr "Enter the last name of this user"
-
-msgid "Enter the mobile phone of this user"
-msgstr "Enter the mobile phone of this user"
 
 msgid "Enter the name of this group"
 msgstr "Enter the name of this group"
@@ -1001,23 +944,11 @@ msgstr "Enter the name of this role"
 msgid "Enter the password for this user"
 msgstr "Enter the password for this user"
 
-msgid "Enter the phone of this user"
-msgstr "Enter the phone of this user"
-
-msgid "Enter the state of this user"
-msgstr "Enter the state of this user"
-
 msgid "Enter the text to search for"
 msgstr "Enter the text to search for"
 
-msgid "Enter the title of this user"
-msgstr "Enter the title of this user"
-
 msgid "Enter the username for this user"
 msgstr "Enter the username for this user"
-
-msgid "Enter the zip code of this user"
-msgstr "Enter the zip code of this user"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "Entity Mapping must be resolved before enabling the Process."
@@ -1244,7 +1175,6 @@ msgstr "If you create a resource with the UI designer, the exported zip automati
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 msgstr "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-"Avant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Image files"
@@ -1281,9 +1211,6 @@ msgstr "Inactive"
 
 msgid "Inactive Users"
 msgstr "Inactive Users"
-
-msgid "Inactive user"
-msgstr "Inactive user"
 
 msgid "Install"
 msgstr "Install"
@@ -1371,9 +1298,6 @@ msgstr "License"
 
 msgid "Link to the tasks"
 msgstr "Link to the tasks"
-
-msgid "List memberships of %user%"
-msgstr "List memberships of %user%"
 
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "Login failed. No profile has been set up for this user. Contact your administrator."
@@ -1473,9 +1397,6 @@ msgstr "Menu name"
 
 msgid "Mo"
 msgstr "Mo"
-
-msgid "Mobile"
-msgstr "Mobile"
 
 msgid "Monitoring"
 msgstr "Monitoring"
@@ -1621,13 +1542,9 @@ msgstr "Organization successfully imported."
 msgid "Original name"
 msgstr "Original name"
 
-msgid "Other"
-msgstr "Other"
-
 msgid "Oups... This item is not available anymore.\n"
 msgstr "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-" Vous allez être redirigé."
 
 msgid "Overview"
 msgstr "Overview"
@@ -1709,12 +1626,6 @@ msgstr "Permission denied: you do not have the rights to perform this action."
 
 msgid "Permission denied: you do not have the rights to view this item."
 msgstr "Permission denied: you do not have the rights to view this item."
-
-msgid "Personal information"
-msgstr "Personal information"
-
-msgid "Phone"
-msgstr "Phone"
 
 msgid "Please choose a file to import"
 msgstr "Please choose a file to import"
@@ -1854,9 +1765,6 @@ msgstr "Save this element"
 msgid "Save this group changes"
 msgstr "Save this group changes"
 
-msgid "Save this user modifications"
-msgstr "Save this user modifications"
-
 msgid "Saving a page will change it immediately for all users who can view it."
 msgstr "Saving a page will change it immediately for all users who can view it."
 
@@ -1877,9 +1785,6 @@ msgstr "Select a group by typing a part of its name."
 
 msgid "Select a group to set to this profile"
 msgstr "Select a group to set to this profile"
-
-msgid "Select a group to set to this user"
-msgstr "Select a group to set to this user"
 
 msgid "Select a process in the list below to display the available tasks"
 msgstr "Select a process in the list below to display the available tasks"
@@ -1905,9 +1810,6 @@ msgstr "Select an avatar for this group"
 msgid "Select an avatar for this role"
 msgstr "Select an avatar for this role"
 
-msgid "Select an avatar for this user"
-msgstr "Select an avatar for this user"
-
 msgid "Select profile"
 msgstr "Select profile"
 
@@ -1917,17 +1819,11 @@ msgstr "Select the category which the process will be linked to"
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 
-msgid "Select the manager of this user"
-msgstr "Select the manager of this user"
-
 msgid "Select the parent group"
 msgstr "Select the parent group"
 
 msgid "Select the role of this profile in the selected group"
 msgstr "Select the role of this profile in the selected group"
-
-msgid "Select the role of this user in the selected group"
-msgstr "Select the role of this user in the selected group"
 
 msgid "Select user to assign task"
 msgstr "Select user to assign task"
@@ -2112,7 +2008,6 @@ msgstr "The Business Data Model was successfully installed."
 msgid "The Business Data Model will now be installed.\n"
 msgstr "The Business Data Model will now be installed.\n"
 "Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-"Les tables existantes dans la base de données métier seront définitivement modifiées. Cette action n'est pas réversible. Il est fortement recommandé de sauvegarder la base de données avant l'installation."
 
 msgid "The Process cannot be enabled"
 msgstr "The Process cannot be enabled"
@@ -2132,7 +2027,6 @@ msgstr "The application encountered an error."
 msgid "The application encountered an unexpected error. Please try again.\n"
 msgstr "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-" Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "The case %caseId% has been started successfully."
@@ -2350,7 +2244,6 @@ msgstr "This membership is already added to user"
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 msgstr "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-" mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
@@ -2369,9 +2262,6 @@ msgstr "This will export a file containing your whole organization data. "
 
 msgid "This will import a file containing your whole organization data."
 msgstr "This will import a file containing your whole organization data."
-
-msgid "Title"
-msgstr "Title"
 
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "To change the content of this custom page, specify a new zip file in the field below."
@@ -2471,9 +2361,6 @@ msgstr "Update date"
 
 msgid "Update the page"
 msgstr "Update the page"
-
-msgid "Update the user"
-msgstr "Update the user"
 
 msgid "Update this page using the defined search query"
 msgstr "Update this page using the defined search query"
@@ -2579,9 +2466,6 @@ msgstr "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-"Désactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'un(des) processus.\n\n"
-"Il est possible au préalable de  vérifier l'acteur mapping à la page « Détails » de l'app.\n\n"
-"Confirmez-vous la désactivation de cet utilisateur?"
 
 msgid "You will be rediected"
 msgstr "You will be rediected"
@@ -2591,9 +2475,6 @@ msgstr "Your session has expired. Please log in again and retry."
 
 msgid "Zip Archive"
 msgstr "Zip Archive"
-
-msgid "Zip code"
-msgstr "Zip code"
 
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
 msgstr "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
@@ -2678,51 +2559,6 @@ msgstr "sec"
 
 msgid "system"
 msgstr "system"
-
-msgid "the address of the user"
-msgstr "the address of the user"
-
-msgid "the city"
-msgstr "the city"
-
-msgid "the company address of the user"
-msgstr "the company address of the user"
-
-msgid "the country of the user"
-msgstr "the country of the user"
-
-msgid "the country of the user company"
-msgstr "the country of the user company"
-
-msgid "the personnal email the user"
-msgstr "the personnal email the user"
-
-msgid "the personnal mobile phone number of the user"
-msgstr "the personnal mobile phone number of the user"
-
-msgid "the personnal phone number of the user"
-msgstr "the personnal phone number of the user"
-
-msgid "the professional email the user"
-msgstr "the professional email the user"
-
-msgid "the professional mobile phone number of the user"
-msgstr "the professional mobile phone number of the user"
-
-msgid "the professional phone number of the user"
-msgstr "the professional phone number of the user"
-
-msgid "the state of the user"
-msgstr "the state of the user"
-
-msgid "the state of the user company"
-msgstr "the state of the user company"
-
-msgid "the zip code of the user"
-msgstr "the zip code of the user"
-
-msgid "the zip code of the user company"
-msgstr "the zip code of the user company"
 
 msgid "this field"
 msgstr "this field"
