@@ -31,7 +31,7 @@ public class ProfileSearchDescriptorConverter implements AttributeConverter {
     static {
         mapping.put(ProfileItem.ATTRIBUTE_ID, ProfileSearchDescriptor.ID);
         mapping.put(ProfileItem.ATTRIBUTE_NAME, ProfileSearchDescriptor.NAME);
-        mapping.put(ProfileFilterCreator.HAS_NAVIGATION_FILTER, ProfileSearchDescriptor.PROFILE_ENTRY_NAME);
+        mapping.put(ProfileItem.FILTER_HAS_NAVIGATION, ProfileSearchDescriptor.PROFILE_ENTRY_NAME);
     }
 
     @Override
