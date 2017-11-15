@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 05:07+0200\n"
-"PO-Revision-Date: 2017-10-15 18:53-0400\n"
+"POT-Creation-Date: 2017-10-27 05:08+0200\n"
+"PO-Revision-Date: 2017-11-15 05:22-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -268,9 +268,6 @@ msgstr "所属を追加"
 msgid "Add a membership to %actor_name%"
 msgstr "%actor_name% に所属を追加します"
 
-msgid "Add a membership to %user%"
-msgstr "%user% さんに所属を追加します"
-
 msgid "Add a membership to profile %%"
 msgstr "所属をプロファイル %%に追加します"
 
@@ -282,9 +279,6 @@ msgstr "新しいカテゴリを %%に追加します。"
 
 msgid "Add a new custom page"
 msgstr "新しいカスタム ページを追加"
-
-msgid "Add a new membership to this user"
-msgstr "この利用者に新しい所属を追加します"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr "新しいリソース（ページ、フォーム、レイアウト、テーマ、または REST API 拡張） を追加します。 <br/>このリソースは、（プロセスまたはアプリケーション レベル）ではなくグローバル スコープでインストールされます。 <br/>このアーカイブ （.zip ファイル）は、ルート レベルに resources という名前のフォルダと page.properties ファイルを含める必要があります。<br/> この page.properties 内には少なくとも 、name、displayName および contentType（デフォルトの contentType は page）を定義する必要があります。 <br/>resources フォルダには、index.html または index.groovy ファイルのいずれかと、必要なリソースを含める必要があります。"
@@ -309,9 +303,6 @@ msgstr "ユーザーを  %actor_name% に追加します。"
 
 msgid "Add a user to profile %%"
 msgstr "ユーザーをプロファイル %%に追加します"
-
-msgid "Add new memberships for %user%"
-msgstr "%user% さんの新しい所属を追加します"
 
 msgid "Add resource"
 msgstr "リソースを追加"
@@ -342,9 +333,6 @@ msgstr "このユーザーを %actor_name% に追加します。"
 
 msgid "Add your comment"
 msgstr "あなたのコメントを追加します。"
-
-msgid "Address"
-msgstr "アドレス"
 
 msgid "Administrator"
 msgstr "システム管理者"
@@ -419,9 +407,6 @@ msgstr "アーカイブ"
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "選択したアクターをプロセスの実行メンバーから削除してもいいですか？"
 
-msgid "Are you sure you want to delete this membership ?"
-msgstr "この所属を削除してもよろしいですか？"
-
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "プロセス： '%appName%' からカテゴリ： '%categoryName%' を削除してもいいですか？"
 
@@ -493,9 +478,6 @@ msgstr "ビジネス データ モデル定義"
 
 msgid "Business archive"
 msgstr "ビジネス アーカイブ"
-
-msgid "Business card"
-msgstr "仕事上の連絡先"
 
 msgid "By default, forms are included in the process bar file for deployment."
 msgstr "デフォルトでは、フォームはデプロイ用のプロセス bar ファイル内に含まれます。"
@@ -589,9 +571,6 @@ msgstr "選択した言語に変更します。"
 
 msgid "Choose a language"
 msgstr "言語を選択します。"
-
-msgid "City"
-msgstr "市区町村"
 
 msgid "Class name"
 msgstr "クラス名"
@@ -710,9 +689,6 @@ msgstr " contentType は 'page' です。"
 msgid "Content type is 'theme'."
 msgstr " contentType は 'theme' です。"
 
-msgid "Country"
-msgstr "国"
-
 msgid "Create"
 msgstr "新規作成"
 
@@ -809,9 +785,6 @@ msgstr "プロセス %app_name% を削除しますか？"
 msgid "Delete this member"
 msgstr "このメンバーを削除します。"
 
-msgid "Delete this membership"
-msgstr "この所属を削除します。"
-
 msgid "Delete this process"
 msgstr "このプロセスを削除します"
 
@@ -820,9 +793,6 @@ msgstr "説明"
 
 msgid "Description:"
 msgstr "説明："
-
-msgid "Details"
-msgstr "詳細情報"
 
 msgid "Direct users"
 msgstr "直接の利用者"
@@ -863,9 +833,6 @@ msgstr "案件概況を表示"
 msgid "Do it"
 msgstr "実行する"
 
-msgid "Do not delete this membership"
-msgstr "この所属は削除しないでください。"
-
 msgid "Do you still want to delete the selected pages?"
 msgstr "選択したページを削除してもよろしいですか？"
 
@@ -899,9 +866,6 @@ msgstr "%pageName% を編集"
 msgid "Edit a role"
 msgstr "役割を編集"
 
-msgid "Edit a user"
-msgstr "利用者情報の変更"
-
 msgid "Edit case variable"
 msgstr "案件変数を編集します"
 
@@ -922,9 +886,6 @@ msgstr "このグループを編集"
 
 msgid "Edit this value"
 msgstr "この値を編集します。"
-
-msgid "Edit user"
-msgstr "利用者情報の変更"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "アクター %actor_name% のユーザーを編集します。"
@@ -953,15 +914,6 @@ msgstr "有効なプロセス"
 msgid "Enter a category name"
 msgstr "カテゴリ名を入力してください。"
 
-msgid "Enter the address of this user"
-msgstr "この利用者の住所を入力してください。"
-
-msgid "Enter the city of this user"
-msgstr "この利用者の市区町村を入力してください。"
-
-msgid "Enter the country of this user"
-msgstr "この利用者の国を入力してください。"
-
 msgid "Enter the description for this category"
 msgstr "このカテゴリの説明を入力します"
 
@@ -977,20 +929,11 @@ msgstr "この役割の表示名を入力してください。"
 msgid "Enter the display name of this role"
 msgstr "この役割の表示名を入力します。"
 
-msgid "Enter the email of this user"
-msgstr "この利用者のメール アドレスを入力します。"
-
 msgid "Enter the first name of this user"
 msgstr "この利用者の姓（本名の上の名前）を入力してください。"
 
-msgid "Enter the job title of this user"
-msgstr "この利用者の職種名を入力してください。"
-
 msgid "Enter the last name of this user"
 msgstr "この利用者の名（本名の下の名前）を入力してください。"
-
-msgid "Enter the mobile phone of this user"
-msgstr "この利用者の携帯番号を入力してください。"
 
 msgid "Enter the name of this group"
 msgstr "このグループの名前を入力してください。"
@@ -1001,23 +944,11 @@ msgstr "この役割の名前を入力します"
 msgid "Enter the password for this user"
 msgstr "この利用者のパスワードを入力します"
 
-msgid "Enter the phone of this user"
-msgstr "この利用者の電話番号を入力します。"
-
-msgid "Enter the state of this user"
-msgstr "この利用者の都道府県を入力してください。"
-
 msgid "Enter the text to search for"
 msgstr "検索するテキストを入力します"
 
-msgid "Enter the title of this user"
-msgstr "この利用者の役職名（本部長、部長、課長など）を入力します"
-
 msgid "Enter the username for this user"
 msgstr "このユーザーの利用者名を入力してください"
-
-msgid "Enter the zip code of this user"
-msgstr "この利用者の郵便番号を入力してください。"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にエンティティへの マッピングを解決する必要があります。"
@@ -1282,9 +1213,6 @@ msgstr "利用停止"
 msgid "Inactive Users"
 msgstr "使用していない利用者"
 
-msgid "Inactive user"
-msgstr "使用していない利用者"
-
 msgid "Install"
 msgstr "インストール"
 
@@ -1371,9 +1299,6 @@ msgstr "ライセンス"
 
 msgid "Link to the tasks"
 msgstr "タスクへリンクします。"
-
-msgid "List memberships of %user%"
-msgstr "%user% さんの所属一覧"
 
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "ログインに失敗しました。この利用者のプロファイルが設定されていません。BPMのシステム管理者に問い合わせてください。"
@@ -1473,9 +1398,6 @@ msgstr "メニュー名"
 
 msgid "Mo"
 msgstr "月"
-
-msgid "Mobile"
-msgstr "携帯番号"
 
 msgid "Monitoring"
 msgstr "モニタリング"
@@ -1621,9 +1543,6 @@ msgstr "組織は、正常にインポートされました。"
 msgid "Original name"
 msgstr "元の名前"
 
-msgid "Other"
-msgstr "その他"
-
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
 msgstr "このタスクは既に着手済みです。 \n"
@@ -1709,12 +1628,6 @@ msgstr "アクセスが拒否されました: このアクションを実行す�
 
 msgid "Permission denied: you do not have the rights to view this item."
 msgstr "アクセスが拒否されました: このアイテムを表示する権限がありません。"
-
-msgid "Personal information"
-msgstr "個人的連絡先"
-
-msgid "Phone"
-msgstr "電話番号"
 
 msgid "Please choose a file to import"
 msgstr "インポートするファイルを選択してください。"
@@ -1854,9 +1767,6 @@ msgstr "この要素を保存します。"
 msgid "Save this group changes"
 msgstr "このグループの変更を保存"
 
-msgid "Save this user modifications"
-msgstr "この利用者の変更を保存します。"
-
 msgid "Saving a page will change it immediately for all users who can view it."
 msgstr "全ユーザーがページを見ることができるように、直ちにページを変更し保存します。"
 
@@ -1877,9 +1787,6 @@ msgstr "その名前の一部を入力して、グループを選択します。
 
 msgid "Select a group to set to this profile"
 msgstr "このプロファイルを設定するグループを選択します。"
-
-msgid "Select a group to set to this user"
-msgstr "この利用者に設定するグループを選択します。"
 
 msgid "Select a process in the list below to display the available tasks"
 msgstr "下のリストから応受援タスクを表示するプロセスを選択します"
@@ -1905,9 +1812,6 @@ msgstr "この役割のアバターを選択します。"
 msgid "Select an avatar for this role"
 msgstr "この役割のアバターを選択します。"
 
-msgid "Select an avatar for this user"
-msgstr "この利用者のアバターを選択します。"
-
 msgid "Select profile"
 msgstr "プロファイルを選択します"
 
@@ -1917,17 +1821,11 @@ msgstr "プロセスにリンクされるカテゴリを選択します"
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "アクターにアサインするエンティティ（ユーザー、グループ、役割、所属など）を選択します。これらのエンティティは、プロセスにヒューマン タスクを実行します。"
 
-msgid "Select the manager of this user"
-msgstr "この利用者のマネージャを選択します"
-
 msgid "Select the parent group"
 msgstr "親グループを選択します"
 
 msgid "Select the role of this profile in the selected group"
 msgstr "選択したグループ内のこのプロファイルの役割を選択します。"
-
-msgid "Select the role of this user in the selected group"
-msgstr "選択したグループ内でのこの利用者の役割を選択します"
 
 msgid "Select user to assign task"
 msgstr "タスクにアサインする担当者を選択します"
@@ -2371,9 +2269,6 @@ msgstr "これは、組織全体のデータを含むファイルをエクスポ
 msgid "This will import a file containing your whole organization data."
 msgstr "これは、組織全体のデータを含むファイルをインポートします。"
 
-msgid "Title"
-msgstr "タイトル"
-
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "このカスタム ページのコンテンツを変更するには、下のフィールドに新しい zip ファイルを指定します。"
 
@@ -2472,9 +2367,6 @@ msgstr "更新日時"
 
 msgid "Update the page"
 msgstr "ページを更新"
-
-msgid "Update the user"
-msgstr "利用者の情報を更新します。"
 
 msgid "Update this page using the defined search query"
 msgstr "定義した検索クエリを使用してこのページを更新します"
@@ -2593,9 +2485,6 @@ msgstr "あなたのセッションが期限切れです。再度ログインし
 msgid "Zip Archive"
 msgstr "Zip アーカイブ"
 
-msgid "Zip code"
-msgstr "郵便番号"
-
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
 msgstr "Zip ファイル構造にエラーがあります。.zipに適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、マニュアルまたはサンプル ページ readme （カスタム ページのリストで利用可能） を参照してください。"
 
@@ -2679,51 +2568,6 @@ msgstr "秒"
 
 msgid "system"
 msgstr "システム"
-
-msgid "the address of the user"
-msgstr "利用者個人の居住住所"
-
-msgid "the city"
-msgstr "市区町村"
-
-msgid "the company address of the user"
-msgstr "利用者が勤務する職場の住所"
-
-msgid "the country of the user"
-msgstr "利用者個人の居住国"
-
-msgid "the country of the user company"
-msgstr "利用者が勤務する会社名"
-
-msgid "the personnal email the user"
-msgstr "利用者の個人的なメールアドレス "
-
-msgid "the personnal mobile phone number of the user"
-msgstr "ユーザーの個人的な携帯電話番号"
-
-msgid "the personnal phone number of the user"
-msgstr "ユーザーの個人的な電話番号"
-
-msgid "the professional email the user"
-msgstr "利用者の個人的なメールアドレス "
-
-msgid "the professional mobile phone number of the user"
-msgstr "利用者の個人的な携帯番号"
-
-msgid "the professional phone number of the user"
-msgstr "利用者の個人的な電話番号"
-
-msgid "the state of the user"
-msgstr "利用者個人の居住都道府県"
-
-msgid "the state of the user company"
-msgstr "利用者が勤務する職場の都道府県"
-
-msgid "the zip code of the user"
-msgstr "利用者個人の居住郵便番号"
-
-msgid "the zip code of the user company"
-msgstr "利用者が勤務する職場の郵便番号"
 
 msgid "this field"
 msgstr "このフィールド"

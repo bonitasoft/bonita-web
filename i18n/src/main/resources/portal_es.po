@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita-bpm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 05:07+0200\n"
-"PO-Revision-Date: 2017-10-22 18:29-0400\n"
+"POT-Creation-Date: 2017-10-27 05:08+0200\n"
+"PO-Revision-Date: 2017-11-15 05:53-0500\n"
 "Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -268,9 +268,6 @@ msgstr "Añadir una membresía"
 msgid "Add a membership to %actor_name%"
 msgstr "Añadir una membresía a %actor_name%"
 
-msgid "Add a membership to %user%"
-msgstr "Añadir una membresía para %user%"
-
 msgid "Add a membership to profile %%"
 msgstr "Añadir una membresía al perfil %%"
 
@@ -282,9 +279,6 @@ msgstr "Añadir una nueva categoría a %%"
 
 msgid "Add a new custom page"
 msgstr "Añadir una nueva página personalizada"
-
-msgid "Add a new membership to this user"
-msgstr "Añadir una nueva membresía a este usuario"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
 msgstr "Añadir un nuevo recurso (página, formulario, maqueta, tema o extensión API REST).</0>Este recurso será instalado a nivel global (no a nivel de proceso o aplicación).</0>El fichero.zip debe contener un fichero page.properties en el directorio raíz y un subdirectorio 'resources'.<br/>El fichero de propiedades debe al menos contener 'name', 'displayName' y 'contentType' (el contentType por defecto es 'page').<br/>El directorio de 'resources' debe contener un fichero index.html o Index.groovy y los recursos necesarios."
@@ -309,9 +303,6 @@ msgstr "Agregar un usuario a %actor_name%"
 
 msgid "Add a user to profile %%"
 msgstr "Agregar un usuario al perfil %%"
-
-msgid "Add new memberships for %user%"
-msgstr "Añadir nuevas membresías para %user%"
 
 msgid "Add resource"
 msgstr "Agregar recurso"
@@ -342,9 +333,6 @@ msgstr "Añadir este usuario a %actor_name%"
 
 msgid "Add your comment"
 msgstr "Agregar tu comentario"
-
-msgid "Address"
-msgstr "Dirección"
 
 msgid "Administrator"
 msgstr "Administrador"
@@ -418,9 +406,6 @@ msgstr "Archivos"
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "¿Está seguro que desea quitar a los miembros seleccionados del actor del proceso?"
 
-msgid "Are you sure you want to delete this membership ?"
-msgstr "¿Está seguro que desea eliminar esta membresía?"
-
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "¿Está seguro que desea eliminar la categoría '%categoryName%' del proceso '%appName%' ?"
 
@@ -492,9 +477,6 @@ msgstr "Definición del modelo de datos de negocio (BDM)"
 
 msgid "Business archive"
 msgstr "Business Archive (*.bar)"
-
-msgid "Business card"
-msgstr "Tarjeta de visita"
 
 msgid "By default, forms are included in the process bar file for deployment."
 msgstr "Por defecto, los formularios se incluyen en el archivo del proceso bar para la implementación."
@@ -588,9 +570,6 @@ msgstr "Cambie al idioma seleccionado"
 
 msgid "Choose a language"
 msgstr "Elija un idioma"
-
-msgid "City"
-msgstr "Ciudad"
 
 msgid "Class name"
 msgstr "Nombre de la clase"
@@ -709,9 +688,6 @@ msgstr "El tipo de contenido es 'page'."
 msgid "Content type is 'theme'."
 msgstr "El tipo de contenido es 'theme'."
 
-msgid "Country"
-msgstr "País"
-
 msgid "Create"
 msgstr "Crear"
 
@@ -808,9 +784,6 @@ msgstr "¿Borrar el proceso %app_name%?"
 msgid "Delete this member"
 msgstr "Eliminar este miembro"
 
-msgid "Delete this membership"
-msgstr "Eliminar esta membresía"
-
 msgid "Delete this process"
 msgstr "Eliminar este proceso"
 
@@ -819,9 +792,6 @@ msgstr "Descripción"
 
 msgid "Description:"
 msgstr "Descripción:"
-
-msgid "Details"
-msgstr "Detalles"
 
 msgid "Direct users"
 msgstr "Usuarios directos"
@@ -862,9 +832,6 @@ msgstr "Mostrar el Resumen de caso"
 msgid "Do it"
 msgstr "hacer"
 
-msgid "Do not delete this membership"
-msgstr "No elimine esta membresía"
-
 msgid "Do you still want to delete the selected pages?"
 msgstr "¿Quiere eliminar las páginas seleccionadas?"
 
@@ -898,9 +865,6 @@ msgstr "Editar %pageName%"
 msgid "Edit a role"
 msgstr "Edite un rol"
 
-msgid "Edit a user"
-msgstr "Actualizar un usuario"
-
 msgid "Edit case variable"
 msgstr "Editar caso variable"
 
@@ -921,9 +885,6 @@ msgstr "Editar este grupo"
 
 msgid "Edit this value"
 msgstr "Editar este valor"
-
-msgid "Edit user"
-msgstr "Actualizar usuario"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "Editar usuarios del actor %actor_name%"
@@ -952,15 +913,6 @@ msgstr "Procesos habilitados"
 msgid "Enter a category name"
 msgstr "Ingrese un nombre de categoría"
 
-msgid "Enter the address of this user"
-msgstr "Introduzca la dirección de este usuario"
-
-msgid "Enter the city of this user"
-msgstr "Introduce la ciudad de este usuario"
-
-msgid "Enter the country of this user"
-msgstr "Introduzca el país de este usuario"
-
 msgid "Enter the description for this category"
 msgstr "Ingrese la descripción para esta categoría"
 
@@ -976,20 +928,11 @@ msgstr "Introduzca el nombre para mostrar de esta función"
 msgid "Enter the display name of this role"
 msgstr "Introduzca el nombre para mostrar de esta función"
 
-msgid "Enter the email of this user"
-msgstr "Introduzca el correo electrónico de este usuario"
-
 msgid "Enter the first name of this user"
 msgstr "Introduzca el nombre de este usuario"
 
-msgid "Enter the job title of this user"
-msgstr "Escriba el cargo de este usuario"
-
 msgid "Enter the last name of this user"
 msgstr "Introduzca el apellido de este usuario"
-
-msgid "Enter the mobile phone of this user"
-msgstr "Introduzca el teléfono móvil de este usuario"
 
 msgid "Enter the name of this group"
 msgstr "Introduzca el nombre de este grupo"
@@ -1000,23 +943,11 @@ msgstr "Introduzca el nombre de esta función"
 msgid "Enter the password for this user"
 msgstr "Introduzca la contraseña para este usuario"
 
-msgid "Enter the phone of this user"
-msgstr "Introduzca el teléfono de este usuario"
-
-msgid "Enter the state of this user"
-msgstr "Introduzca el estado de este usuario"
-
 msgid "Enter the text to search for"
 msgstr "Introduzca el texto que desea buscar"
 
-msgid "Enter the title of this user"
-msgstr "Introduzca el título de este usuario"
-
 msgid "Enter the username for this user"
 msgstr "Introduzca el username de este usuario"
-
-msgid "Enter the zip code of this user"
-msgstr "Ingrese el código postal de este usuario"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "La asignación de actores debe resolverse antes de activar el proceso."
@@ -1281,9 +1212,6 @@ msgstr "Inactivo"
 msgid "Inactive Users"
 msgstr "Usuarios inactivos"
 
-msgid "Inactive user"
-msgstr "Usuario Inactivo"
-
 msgid "Install"
 msgstr "Instalar"
 
@@ -1370,9 +1298,6 @@ msgstr "Licencia"
 
 msgid "Link to the tasks"
 msgstr "Enlace a las tareas"
-
-msgid "List memberships of %user%"
-msgstr "Lista de miembros de %user%"
 
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "Error de login. Ningún perfil está definido para este usuario. Contacte con tu administrador."
@@ -1472,9 +1397,6 @@ msgstr "Nombre del menú"
 
 msgid "Mo"
 msgstr "Lu"
-
-msgid "Mobile"
-msgstr "Móvil"
 
 msgid "Monitoring"
 msgstr "Monitorización"
@@ -1620,9 +1542,6 @@ msgstr "Organización importada con éxito."
 msgid "Original name"
 msgstr "Nombre original"
 
-msgid "Other"
-msgstr "Otras"
-
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
 msgstr "Oops... Este item no está disponible ya. \n"
@@ -1708,12 +1627,6 @@ msgstr "Permiso denegado: no tienes los derechos para realizar esta acción."
 
 msgid "Permission denied: you do not have the rights to view this item."
 msgstr "Permiso denegado: no tienes los derechos para ver este elemento."
-
-msgid "Personal information"
-msgstr "Información personal"
-
-msgid "Phone"
-msgstr "Teléfono"
 
 msgid "Please choose a file to import"
 msgstr "Seleccione un archivo para importar"
@@ -1853,9 +1766,6 @@ msgstr "Guardar este elemento"
 msgid "Save this group changes"
 msgstr "Guardar los cambios de este grupo"
 
-msgid "Save this user modifications"
-msgstr "Guardar esta modificaciones"
-
 msgid "Saving a page will change it immediately for all users who can view it."
 msgstr "Guardar una página la cambiará inmediatamente para todos los usuarios que puedan verla."
 
@@ -1876,9 +1786,6 @@ msgstr "Seleccione un grupo escribiendo una parte de su nombre."
 
 msgid "Select a group to set to this profile"
 msgstr "Seleccione un grupo para establecer este perfil"
-
-msgid "Select a group to set to this user"
-msgstr "Seleccione un grupo para establecer a este usuario"
 
 msgid "Select a process in the list below to display the available tasks"
 msgstr "Seleccione un proceso en la lista de abajo para mostrar las tareas disponibles"
@@ -1904,9 +1811,6 @@ msgstr "Elige un avatar para este grupo"
 msgid "Select an avatar for this role"
 msgstr "Elige un avatar para este grupo"
 
-msgid "Select an avatar for this user"
-msgstr "Seleccionar un avatar de este usuario"
-
 msgid "Select profile"
 msgstr "Seleccione el perfil"
 
@@ -1916,17 +1820,11 @@ msgstr "Seleccione la categoría a la que el proceso estará vinculado"
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Seleccione las entidades (usuarios, grupos, roles, membresías) para asignar a los actores. Estas entidades harán las tareas humanas en el proceso."
 
-msgid "Select the manager of this user"
-msgstr "Seleccione el gerente de este usuario"
-
 msgid "Select the parent group"
 msgstr "Seleccione el grupo padre"
 
 msgid "Select the role of this profile in the selected group"
 msgstr "Seleccione la función de este perfil en el grupo seleccionado"
-
-msgid "Select the role of this user in the selected group"
-msgstr "Seleccione el rol de este usuario en el grupo seleccionado"
 
 msgid "Select user to assign task"
 msgstr "Seleccione el usuario para asignar tareas"
@@ -2369,9 +2267,6 @@ msgstr "Esto exportará a un archivo que contiene los datos de toda la organizac
 msgid "This will import a file containing your whole organization data."
 msgstr "Esto importará un archivo que contiene los datos de la organización entera."
 
-msgid "Title"
-msgstr "Título"
-
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "Para cambiar el contenido de esta página personalizada, especifique un nuevo archivo zip en el campo de abajo."
 
@@ -2470,9 +2365,6 @@ msgstr "Fecha de actualización"
 
 msgid "Update the page"
 msgstr "Actualizar la página"
-
-msgid "Update the user"
-msgstr "Actualizar el usuario"
 
 msgid "Update this page using the defined search query"
 msgstr "Actualizar esta página utilizando la consulta serach definido"
@@ -2591,9 +2483,6 @@ msgstr "Su sesión ha expirado. Por favor, ingrese de nuevo y vuelva a intentarl
 msgid "Zip Archive"
 msgstr "Archivo zip"
 
-msgid "Zip code"
-msgstr "Código postal"
-
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
 msgstr "Error de estructura del archivo ZIP. Verifica que su .zip contiene un page.properties bien formado y el index.html o el archivo Index.groovy. Para obtener más información, consulte la documentación o el ejemplo página readme (disponible en la lista de páginas personalizadas)."
 
@@ -2677,51 +2566,6 @@ msgstr "segundo"
 
 msgid "system"
 msgstr "sistema"
-
-msgid "the address of the user"
-msgstr "la dirección del usuario"
-
-msgid "the city"
-msgstr "la ciudad"
-
-msgid "the company address of the user"
-msgstr "la dirección de la empresa del usuario"
-
-msgid "the country of the user"
-msgstr "el país del usuario"
-
-msgid "the country of the user company"
-msgstr "el país del usuario de la empresa "
-
-msgid "the personnal email the user"
-msgstr "el personal de correo electrónico al usuario"
-
-msgid "the personnal mobile phone number of the user"
-msgstr "el número de teléfono móvil personal del usuario"
-
-msgid "the personnal phone number of the user"
-msgstr "el número de teléfono personal del usuario"
-
-msgid "the professional email the user"
-msgstr "el profesional de correo electrónico del usuario"
-
-msgid "the professional mobile phone number of the user"
-msgstr "el número de profesional del teléfono móvil del usuario"
-
-msgid "the professional phone number of the user"
-msgstr "el número de teléfono profesional del usuario"
-
-msgid "the state of the user"
-msgstr "el estado del usuario"
-
-msgid "the state of the user company"
-msgstr "el estado de la empresa usuaria"
-
-msgid "the zip code of the user"
-msgstr "el código postal del usuario"
-
-msgid "the zip code of the user company"
-msgstr "el código postal de la empresa usuaria"
 
 msgid "this field"
 msgstr "este campo"
