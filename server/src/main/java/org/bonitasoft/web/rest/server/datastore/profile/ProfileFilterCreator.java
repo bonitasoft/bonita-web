@@ -14,6 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
+import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Field;
 import org.bonitasoft.web.rest.server.datastore.filter.Filter;
@@ -21,8 +22,6 @@ import org.bonitasoft.web.rest.server.datastore.filter.Filter.Operator;
 import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
 public class ProfileFilterCreator extends GenericFilterCreator {
-
-    public static final String HAS_NAVIGATION_FILTER = "hasNavigation";
 
     public ProfileFilterCreator(AttributeConverter fieldConverter) {
         super(fieldConverter);
@@ -34,7 +33,7 @@ public class ProfileFilterCreator extends GenericFilterCreator {
      */
     @Override
     public Filter<String> create(String attribute, String value) {
-        if (HAS_NAVIGATION_FILTER.equals(attribute)) {
+        if (ProfileItem.FILTER_HAS_NAVIGATION.equals(attribute)) {
             return Boolean.valueOf(value)
                     ? new Filter<String>(new Field(attribute, fieldConverter), null, Operator.DIFFERENT_FROM)
                     : new Filter<String>(new Field(attribute, fieldConverter), null);
