@@ -16,7 +16,7 @@ package org.bonitasoft.console.client.menu.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -176,7 +176,9 @@ public class LoginBox extends RawView {
     }
 
     private void getProfiles(final APIID userId, final APICallback callback) {
-        final Map<String, String> filter = Collections.singletonMap(ProfileItem.FILTER_USER_ID, userId.toString());
+        final Map<String, String> filter = new HashMap<String, String>();
+        filter.put(ProfileItem.FILTER_USER_ID, userId.toString());
+        filter.put(ProfileItem.FILTER_HAS_NAVIGATION, Boolean.TRUE.toString());
         new APICaller(ProfileDefinition.get()).search(0, 100, null, null, filter, callback);
     }
 

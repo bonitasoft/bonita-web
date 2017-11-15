@@ -41,7 +41,7 @@ public class ProfileSearchDescriptorConverterTest {
 
     @Test
     public void testWeCanConvertHasNavigation() throws Exception {
-        String descriptor = new ProfileSearchDescriptorConverter().convert(ProfileFilterCreator.HAS_NAVIGATION_FILTER);
+        String descriptor = new ProfileSearchDescriptorConverter().convert(ProfileItem.FILTER_HAS_NAVIGATION);
 
         assertEquals(ProfileSearchDescriptor.PROFILE_ENTRY_NAME, descriptor);
     }
