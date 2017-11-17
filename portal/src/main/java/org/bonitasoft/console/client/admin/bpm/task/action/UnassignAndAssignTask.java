@@ -30,9 +30,8 @@ public class UnassignAndAssignTask extends ActionOnItemIds {
     @Override
     protected void execute(final List<APIID> taskIds) {
         final AssignTaskAndHistoryBackAction action = new AssignTaskAndHistoryBackAction();
-        TaskAPI.release(taskIds, action);
         action.setParameters(getParameters());
-        action.execute();
+        TaskAPI.release(taskIds, action);
     }
 
 
