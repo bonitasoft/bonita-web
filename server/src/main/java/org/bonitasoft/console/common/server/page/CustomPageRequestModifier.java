@@ -19,6 +19,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
 
 /**
@@ -31,9 +32,11 @@ public class CustomPageRequestModifier {
         taskURLBuilder.append(request.getServletPath())
                 .append(request.getPathInfo())
                 .append("/");
-        final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
-        urlBuilder.appendParameters(request.getParameterMap());
-        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
+
+        if(StringUtils.isNoneBlank(request.getQueryString())){
+            taskURLBuilder.append("?").append(request.getQueryString());
+        }
+        response.sendRedirect(response.encodeRedirectURL(taskURLBuilder.toString()));
     }
 
 }
