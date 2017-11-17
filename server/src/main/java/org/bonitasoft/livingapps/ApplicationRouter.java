@@ -20,6 +20,7 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.livingapps.exception.CreationException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class ApplicationRouter {
 
@@ -69,7 +70,7 @@ public class ApplicationRouter {
 
         //If no page name, redirect to Home page
         if (parsedRequest.getPageToken() == null) {
-            hsResponse.sendRedirect(application.getApplicationHomePage());
+            hsResponse.sendRedirect(buildHomePageRouteWithParams(hsRequest, application.getApplicationHomePage()));
             return;
         }
         if (isApplicationPageRequest(pathSegments)) {
@@ -87,6 +88,14 @@ public class ApplicationRouter {
                     .ensurePageFolderIsPresent(session, pageRenderer.getPageResourceProvider(getPageName(pathSegments, application), session.getTenantId()));
             resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session);
         }
+    }
+
+    private String buildHomePageRouteWithParams(final HttpServletRequest hsRequest, final String applicationHomePage) {
+        final StringBuilder routeWithParamsBuilder = new StringBuilder(applicationHomePage);
+        if(!StringUtil.isBlank(hsRequest.getQueryString())){
+            routeWithParamsBuilder.append("?").append(hsRequest.getQueryString());
+        }
+        return routeWithParamsBuilder.toString();
     }
 
     private boolean isApplicationPageRequest(final List<String> pathSegments) {

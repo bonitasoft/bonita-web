@@ -73,7 +73,6 @@ public class ApplicationRouterTest {
 
     @Test
     public void should_redirect_to_home_page_when_accessing_living_application_root() throws Exception {
-
         given(applicationModel.getApplicationHomePage()).willReturn("home/");
         given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
         given(applicationModel.hasProfileMapped()).willReturn(true);
@@ -85,6 +84,22 @@ public class ApplicationRouterTest {
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
         verify(hsResponse).sendRedirect("home/");
     }
+
+    @Test
+    public void should_redirect_to_home_page_with_query_parameters() throws Exception {
+        given(applicationModel.getApplicationHomePage()).willReturn("home/");
+        given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
+        given(applicationModel.hasProfileMapped()).willReturn(true);
+        given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
+        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
+        given(hsRequest.getQueryString()).willReturn("time=12:00");
+        given(hsRequest.getPathInfo()).willReturn("HumanResources");
+        given(resourceRenderer.getPathSegments("HumanResources")).willReturn(Arrays.asList("HumanResources"));
+
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
+        verify(hsResponse).sendRedirect("home/?time=12:00");
+    }
+
 
     @Test(expected = RuntimeException.class)
     public void should_throw_an_error_when_the_uri_is_malformed() throws Exception {
