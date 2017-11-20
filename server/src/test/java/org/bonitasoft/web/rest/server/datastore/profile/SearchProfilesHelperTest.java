@@ -16,16 +16,19 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
-import static junit.framework.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.model.builder.profile.EngineProfileBuilder.anEngineProfile;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.HashMap;
 import java.util.List;
 
+import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
@@ -44,41 +47,57 @@ import org.mockito.Mock;
 public class SearchProfilesHelperTest extends APITestWithMock {
 
     @Mock
-    ProfileEngineClient profileClient;
+    ProfileAPI profileAPI;
 
     SearchProfilesHelper searchProfilesHelper;
 
     @Before
     public void setUp() {
         initMocks(this);
-        searchProfilesHelper = new SearchProfilesHelper(profileClient);
+        searchProfilesHelper = new SearchProfilesHelper(new ProfileEngineClient(profileAPI));
     }
 
     @Test
     public void testWeCanSearchProfiles() throws Exception {
         final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
         final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
-        when(profileClient.searchProfiles(any(SearchOptions.class))).thenReturn(aKnownSearchResult);
+        when(profileAPI.searchProfiles(any(SearchOptions.class))).thenReturn(aKnownSearchResult);
 
         final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, null);
 
-        assertTrue(SearchUtils.areEquals(expectedProfiles, searchResult.getResults()));
+        assertThat(SearchUtils.areEquals(expectedProfiles, searchResult.getResults())).isTrue();
     }
 
     @Test
     public void testWeCanListUserProfiles() throws Exception {
         final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
         final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
-        when(profileClient.listProfilesForUser(2L)).thenReturn(aKnownSearchResult.getResult());
+        when(profileAPI.getProfilesForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC)).thenReturn(aKnownSearchResult.getResult());
 
-        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L));
+        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L, false));
 
-        assertTrue(SearchUtils.areEquals(expectedProfiles, searchResult.getResults()));
+        verify(profileAPI).getProfilesForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
+        assertThat(SearchUtils.areEquals(expectedProfiles, searchResult.getResults())).isTrue();
+    }
+    
+    @Test
+    public void testWeCanListUserProfilesWithNavigation() throws Exception {
+        final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
+        final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
+        when(profileAPI.getProfilesWithNavigationForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC)).thenReturn(aKnownSearchResult.getResult());
+
+        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L, true));
+
+        verify(profileAPI).getProfilesWithNavigationForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
+        assertThat(SearchUtils.areEquals(expectedProfiles, searchResult.getResults())).isTrue();
     }
 
-    private HashMap<String, String> filterOnUserId(final long id) {
+    private HashMap<String, String> filterOnUserId(final long id, boolean hasNavigation) {
         final HashMap<String, String> filters = new HashMap<String, String>();
         filters.put(ProfileItem.FILTER_USER_ID, String.valueOf(id));
+        if(hasNavigation) {
+            filters.put(ProfileItem.FILTER_HAS_NAVIGATION, Boolean.TRUE.toString());
+        }
         return filters;
     }
 
