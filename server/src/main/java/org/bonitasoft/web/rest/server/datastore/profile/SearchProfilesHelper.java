@@ -42,14 +42,14 @@ public class SearchProfilesHelper implements DatastoreHasSearch<ProfileItem> {
 
     @Override
     public ItemSearchResult<ProfileItem> search(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
-        if (isFilteredByUserId(filters)) {
+        if (isFilteredBy(filters, ProfileItem.FILTER_USER_ID)) {
             return searchProfilesForUser(page, filters);
         }
         return searchProfiles(page, resultsByPage, search, orders, filters);
     }
-
-    private boolean isFilteredByUserId(Map<String, String> filters) {
-        return filters != null && !MapUtil.isBlank(filters, ProfileItem.FILTER_USER_ID);
+    
+    private boolean isFilteredBy(Map<String, String> filters, String filterName) {
+        return filters != null && !MapUtil.isBlank(filters, filterName);
     }
 
     private ItemSearchResult<ProfileItem> searchProfiles(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
@@ -60,7 +60,7 @@ public class SearchProfilesHelper implements DatastoreHasSearch<ProfileItem> {
 
     private ItemSearchResult<ProfileItem> searchProfilesForUser(int page, Map<String, String> filters) {
         long userId = Long.parseLong(filters.get(ProfileItem.FILTER_USER_ID));
-        List<Profile> profiles = profileClient.listProfilesForUser(userId);
+        List<Profile> profiles = profileClient.listProfilesForUser(userId, isFilteredBy(filters, ProfileItem.FILTER_HAS_NAVIGATION));
         return new ItemSearchResult<ProfileItem>(page, profiles.size(), profiles.size(), new ProfileItemConverter().convert(profiles));
     }
 
