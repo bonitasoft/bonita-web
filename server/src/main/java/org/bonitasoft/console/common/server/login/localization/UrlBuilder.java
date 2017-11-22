@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.http.Consts;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -43,15 +44,11 @@ public class UrlBuilder {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        uriBuilder = new URIBuilder()
-                .setScheme(uri.getScheme())
-                .setHost(uri.getHost())
-                .setPort(uri.getPort())
-                .setPath(uri.getPath())
-                .setFragment(uri.getFragment());
-        if (uri.getQuery() != null) {
+        uriBuilder = new URIBuilder(uri);
+        uriBuilder.setCharset(Consts.UTF_8);
+        if (uri.getRawQuery() != null) {
             //avoid NPE thrown by httpClient 4.5.2 regression
-            parameters.addAll(URLEncodedUtils.parse(uri.getQuery(), Charset.forName("UTF8")));
+            parameters.addAll(URLEncodedUtils.parse(uri.getRawQuery(), Charset.forName("UTF8")));
         }
     }
 
@@ -78,8 +75,9 @@ public class UrlBuilder {
     }
 
     public String build() {
-        return uriBuilder
-                .setQuery(URLEncodedUtils.format(parameters, "UTF-8"))
-                .toString();
+        if (!parameters.isEmpty()) {
+            uriBuilder.setParameters(parameters);
+        }
+        return uriBuilder.toString();
     }
 }
