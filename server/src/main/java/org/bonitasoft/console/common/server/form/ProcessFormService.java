@@ -72,7 +72,10 @@ public class ProcessFormService {
     }
 
     public String encodePathSegment(final String stringToEncode) throws UnsupportedEncodingException {
-        return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/");
+        //URLEncoder#encode encodes spaces to '+' but we want '%20' instead in the path part of the URL
+        // '/' gets encoded to %2F whereas is should be left as it is since it in perfectly safe in the path part of the URL
+        // '+' gets encoded to %2B whereas is should be left as it is since it in perfectly safe in the path part of the URL
+        return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/").replaceAll("%2B", "+");
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
