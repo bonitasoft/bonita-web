@@ -37,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundExcepti
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.server.ServiceException;
 import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
@@ -100,7 +101,9 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
      */
     protected final void outputException(final Throwable e, final HttpServletRequest req, final HttpServletResponse resp, final int httpStatusCode) {
 
-        resp.setStatus(httpStatusCode);
+        if (httpStatusCode >=0) {
+            resp.setStatus(httpStatusCode);
+        }
         resp.setContentType("application/json;charset=UTF-8");
 
         try {
@@ -114,6 +117,19 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
         } catch (final Exception e2) {
             throw new APIException(e2);
         }
+    }
+    
+    /**
+     * Output an exception in JSon. Expect the status code to be already set
+     * 
+     * @param e
+     *            The exception to output
+     * @param resp
+     *            The response to fill
+     */
+    protected final void outputException(final Throwable e, final HttpServletRequest req, final HttpServletResponse resp) {
+
+        outputException(e, req, resp, -1);
     }
 
     private void setLocalization(APIException localizable, String locale) {
@@ -161,6 +177,14 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
             outputException(null, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIForbiddenException) {
             outputException(exception, req, resp, HttpServletResponse.SC_FORBIDDEN);
+        } else if (exception instanceof ServiceException) {
+            if (resp.getStatus() < HttpServletResponse.SC_BAD_REQUEST) {
+                // Response status is not yet set with an error code
+                outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } else {
+                // Response status is already set with an error code
+                outputException(exception, req, resp);
+            }
         } else {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, exception.getMessage(), exception);
