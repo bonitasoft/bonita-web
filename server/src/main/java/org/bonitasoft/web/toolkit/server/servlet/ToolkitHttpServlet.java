@@ -101,7 +101,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
      */
     protected final void outputException(final Throwable e, final HttpServletRequest req, final HttpServletResponse resp, final int httpStatusCode) {
 
-        if (httpStatusCode >=0) {
+        if (httpStatusCode >= 0) {
             resp.setStatus(httpStatusCode);
         }
         resp.setContentType("application/json;charset=UTF-8");
