@@ -24,8 +24,8 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
@@ -72,6 +72,8 @@ public class RestAPIAuthorizationFilterTest {
     private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter(false);
 
     private final String username = "john";
+    
+    private final long userId = 9l;
 
     @Before
     public void before() {
@@ -79,8 +81,9 @@ public class RestAPIAuthorizationFilterTest {
         doReturn("").when(request).getQueryString();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(1l).when(apiSession).getTenantId();
+        doReturn(userId).when(apiSession).getUserId();
         doReturn(false).when(apiSession).isTechnicalUser();
-        doReturn("john").when(apiSession).getUserName();
+        doReturn(username).when(apiSession).getUserName();
     }
 
     private Set<String> initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy) throws ServletException {
@@ -114,7 +117,7 @@ public class RestAPIAuthorizationFilterTest {
         assertThat(isAuthorized).isTrue();
         verify(restAPIAuthorizationFilterSpy).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions, dynamicAuthorizations,
                 apiSession);
-        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(any(APICallContext.class),
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class),
                 anySetOf(String.class), anySetOf(String.class), anyString());
     }
 
@@ -134,8 +137,67 @@ public class RestAPIAuthorizationFilterTest {
         //then
         assertThat(isAuthorized).isTrue();
         verify(restAPIAuthorizationFilterSpy).staticCheck(new APICallContext("GET", "bpm", "case", null), permissions, new HashSet<String>(), username);
-        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions,
-                emptyDynamicAuthorizations, apiSession);
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), any(APISession.class));
+    }
+    
+    @Test
+    public void should_not_call_static_check_if_secu_is_enabled_but_session_call_is_always_authorized() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
+        doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDeclaredPermissions(anyString(), anyString(),
+                anyString(), any(APIID.class), isA(ResourcesPermissionsMapping.class));
+        //when
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "system", "session", null);
+
+        //then
+        assertThat(isAuthorized).isTrue();
+        verify(restAPIAuthorizationFilterSpy).isAllwaysAuthorizedResource(eq(request), eq(apiSession), any(APICallContext.class));
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), anyString());
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), any(APISession.class));
+    }
+    
+    @Test
+    public void should_not_call_static_check_if_secu_is_enabled_but_my_profiles_call_is_always_authorized() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        String queryString = "?p=0&c=200&f=user_id%3D" + userId;
+        doReturn(queryString).when(request).getQueryString();
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
+        doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDeclaredPermissions(anyString(), anyString(),
+                anyString(), any(APIID.class), isA(ResourcesPermissionsMapping.class));
+        //when
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "portal", "profile", null);
+
+        //then
+        assertThat(isAuthorized).isTrue();
+        verify(restAPIAuthorizationFilterSpy).isAllwaysAuthorizedResource(eq(request), eq(apiSession), any(APICallContext.class));
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), anyString());
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), any(APISession.class));
+    }
+    
+    @Test
+    public void should_not_call_static_check_if_secu_is_enabled_but_my_user_call_is_always_authorized() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
+        final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
+        doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDeclaredPermissions(anyString(), anyString(),
+                anyString(), any(APIID.class), isA(ResourcesPermissionsMapping.class));
+        //when
+        final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "identity", "user", APIID.makeAPIID(userId));
+
+        //then
+        assertThat(isAuthorized).isTrue();
+        verify(restAPIAuthorizationFilterSpy).isAllwaysAuthorizedResource(eq(request), eq(apiSession), any(APICallContext.class));
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), anyString());
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class), anySetOf(String.class),
+                anySetOf(String.class), any(APISession.class));
     }
 
     @Test
@@ -150,9 +212,9 @@ public class RestAPIAuthorizationFilterTest {
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(any(APICallContext.class),
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class),
                 anySetOf(String.class), anySetOf(String.class), anyString());
-        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(any(APICallContext.class),
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class),
                 anySetOf(String.class), anySetOf(String.class), any(APISession.class));
     }
 
@@ -172,9 +234,9 @@ public class RestAPIAuthorizationFilterTest {
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).staticCheck(any(APICallContext.class),
+        verify(restAPIAuthorizationFilterSpy, never()).staticCheck(any(APICallContext.class),
                 anySetOf(String.class), anySetOf(String.class), anyString());
-        verify(restAPIAuthorizationFilterSpy, times(0)).dynamicCheck(any(APICallContext.class),
+        verify(restAPIAuthorizationFilterSpy, never()).dynamicCheck(any(APICallContext.class),
                 anySetOf(String.class), anySetOf(String.class), any(APISession.class));
     }
 
@@ -310,7 +372,7 @@ public class RestAPIAuthorizationFilterTest {
                 dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).executeScript(apiSession, "className", apiCallContext);
+        verify(restAPIAuthorizationFilterSpy, never()).executeScript(apiSession, "className", apiCallContext);
     }
 
     @Test
@@ -324,7 +386,7 @@ public class RestAPIAuthorizationFilterTest {
                 dynamicAuthorizations, apiSession);
 
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy, times(0)).executeScript(apiSession, "className", apiCallContext);
+        verify(restAPIAuthorizationFilterSpy, never()).executeScript(apiSession, "className", apiCallContext);
     }
 
     @Test
