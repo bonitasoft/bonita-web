@@ -22,7 +22,6 @@ import java.util.logging.Level;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,7 +43,10 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.PlatformSession;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.server.framework.utils.RestRequestParser;
+import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -140,8 +142,37 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
             final Set<String> resourcePermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, resourcesPermissionsMapping);
             final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString);
+            if (isAllwaysAuthorizedResource(request, apiSession, apiCallContext)) {
+                return true;
+            }
             return staticCheck(apiCallContext, userPermissions, resourcePermissions, apiSession.getUserName());
         }
+    }
+
+    protected boolean isAllwaysAuthorizedResource(final HttpServletRequest request, final APISession apiSession, final APICallContext apiCallContext) {
+        return isSessionCall(apiCallContext) || isMyProfilesListCall(request, apiSession, apiCallContext) || isMyUserCall(apiSession, apiCallContext);
+    }
+
+    private boolean isSessionCall(final APICallContext apiCallContext) {
+        return SessionDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "system".equals(apiCallContext.getApiName());
+    }
+    
+    private boolean isMyUserCall(final APISession apiSession, final APICallContext apiCallContext) {
+        return UserDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "identity".equals(apiCallContext.getApiName()) 
+                && Long.toString(apiSession.getUserId()).equals(apiCallContext.getResourceId());
+    }
+
+    private boolean isMyProfilesListCall(final HttpServletRequest request, final APISession apiSession, final APICallContext apiCallContext) {
+        if (ProfileDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "portal".equals(apiCallContext.getApiName())) {
+            //only process the query string if the above condition is true for performances reasons
+            apiCallContext.setQueryString(request.getQueryString());
+            return hasUserIDFilter(apiSession, apiCallContext);
+        }
+        return false;
+    }
+
+    private boolean hasUserIDFilter(APISession apiSession, APICallContext apiCallContext) {
+        return Long.toString(apiSession.getUserId()).equals(apiCallContext.getFilters().get("user_id"));
     }
 
     protected Set<String> getDeclaredPermissions(final String apiName, final String resourceName, final String method, final APIID resourceQualifiers,
