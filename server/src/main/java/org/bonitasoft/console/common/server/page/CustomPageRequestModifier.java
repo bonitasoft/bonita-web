@@ -14,12 +14,11 @@
 
 package org.bonitasoft.console.common.server.page;
 
-import java.io.IOException;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.console.common.server.login.localization.UrlBuilder;
+import java.io.IOException;
 
 /**
  * @author Julien Mege
@@ -31,9 +30,11 @@ public class CustomPageRequestModifier {
         taskURLBuilder.append(request.getServletPath())
                 .append(request.getPathInfo())
                 .append("/");
-        final UrlBuilder urlBuilder = new UrlBuilder(taskURLBuilder.toString());
-        urlBuilder.appendParameters(request.getParameterMap());
-        response.sendRedirect(response.encodeRedirectURL(urlBuilder.build()));
+
+        if(!StringUtil.isBlank(request.getQueryString())){
+            taskURLBuilder.append("?").append(request.getQueryString());
+        }
+        response.sendRedirect(response.encodeRedirectURL(taskURLBuilder.toString()));
     }
 
 }

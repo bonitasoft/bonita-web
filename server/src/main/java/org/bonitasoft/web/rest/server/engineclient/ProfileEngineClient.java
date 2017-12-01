@@ -42,7 +42,7 @@ public class ProfileEngineClient {
 
     private ProfileAPI profileApi;
 
-    protected ProfileEngineClient(ProfileAPI profileApi) {
+    public ProfileEngineClient(ProfileAPI profileApi) {
         this.profileApi = profileApi;
     }
 
@@ -68,9 +68,13 @@ public class ProfileEngineClient {
         }
     }
 
-    public List<Profile> listProfilesForUser(long userId) {
+    public List<Profile> listProfilesForUser(long userId, boolean withNavigationOnly) {
         try {
-            return profileApi.getProfilesForUser(userId, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
+            if (withNavigationOnly) {
+                return profileApi.getProfilesWithNavigationForUser(userId, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
+            } else {
+                return profileApi.getProfilesForUser(userId, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
+            }
         } catch (InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (RetrieveException e) {
