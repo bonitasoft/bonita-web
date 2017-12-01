@@ -78,7 +78,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
     private List<Profile> getProfilesForUser(final org.bonitasoft.engine.session.APISession apiSession) {
         final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
         final ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient();
-        return profileApi.listProfilesForUser(apiSession.getUserId());
+        return profileApi.listProfilesForUser(apiSession.getUserId(), false);
     }
 
     private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession session) {

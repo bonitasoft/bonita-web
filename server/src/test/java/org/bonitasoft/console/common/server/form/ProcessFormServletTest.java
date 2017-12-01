@@ -134,7 +134,7 @@ public class ProcessFormServletTest {
         formServlet.doGet(hsRequest, hsResponse);
 
         verify(formServlet, times(1)).redirectToPageServlet(hsRequest, hsResponse, apiSession, 1L, -1L, -1L, null);
-        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/resource/process/processus+%C3%A9+%C3%B8/%C3%B8/content/?id=1");
+        verify(hsResponse, times(1)).encodeRedirectURL("/bonita/portal/resource/process/processus+%C3%A9%2B%C3%B8/%C3%B8/content/?id=1");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
 
