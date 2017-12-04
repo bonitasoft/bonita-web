@@ -41,4 +41,12 @@ public class RequestBuilder {
         request.setEntity(value, MediaType.APPLICATION_JSON);
         return client.handle(request);
     }
+
+    public Response delete() {
+        final Client client = new Client(Protocol.HTTP);
+        final Request request = new Request(Method.DELETE, uri);
+        return client.handle(request);
+    }
+
+
 }
