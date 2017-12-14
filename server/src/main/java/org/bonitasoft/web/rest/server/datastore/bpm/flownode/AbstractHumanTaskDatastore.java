@@ -160,6 +160,12 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
                 }
             }
 
+            if (HumanTaskItem.VALUE_STATE_READY.equals(filters.get(HumanTaskItem.ATTRIBUTE_STATE))) {
+                @SuppressWarnings("unchecked")
+                SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchAssignedAndPendingHumanTasks(builder.done());
+                return searchHumanTaskInstances;
+            }
+
             // Custom search
             @SuppressWarnings("unchecked")
             final SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchHumanTaskInstances(builder.done());
