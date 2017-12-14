@@ -144,6 +144,7 @@ public class RestAPIAuthorizationFilterTest {
     @Test
     public void should_not_call_static_check_if_secu_is_enabled_but_session_call_is_always_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn("GET").when(request).getMethod();
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
         final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
         doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDeclaredPermissions(anyString(), anyString(),
@@ -163,6 +164,7 @@ public class RestAPIAuthorizationFilterTest {
     @Test
     public void should_not_call_static_check_if_secu_is_enabled_but_my_profiles_call_is_always_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn("GET").when(request).getMethod();
         String queryString = "?p=0&c=200&f=user_id%3D" + userId;
         doReturn(queryString).when(request).getQueryString();
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
@@ -184,6 +186,7 @@ public class RestAPIAuthorizationFilterTest {
     @Test
     public void should_not_call_static_check_if_secu_is_enabled_but_my_user_call_is_always_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn("GET").when(request).getMethod();
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1l);
         final Set<String> emptyDynamicAuthorizations = new HashSet<String>();
         doReturn(emptyDynamicAuthorizations).when(restAPIAuthorizationFilterSpy).getDeclaredPermissions(anyString(), anyString(),
