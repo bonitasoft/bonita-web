@@ -46,6 +46,7 @@ import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.server.framework.utils.RestRequestParser;
+import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -150,11 +151,16 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected boolean isAllwaysAuthorizedResource(final HttpServletRequest request, final APISession apiSession, final APICallContext apiCallContext) {
-        return isSessionCall(apiCallContext) || isMyProfilesListCall(request, apiSession, apiCallContext) || isMyUserCall(apiSession, apiCallContext);
+        return apiCallContext.isGET()  
+                && (isSingleResourceCall(apiCallContext, "system", SessionDefinition.TOKEN) 
+                        ||isSingleResourceCall(apiCallContext, "system", I18nLocaleDefinition.TOKEN) 
+                        ||isSingleResourceCall(apiCallContext, "system", "license")
+                        || isMyProfilesListCall(request, apiSession, apiCallContext) 
+                        || isMyUserCall(apiSession, apiCallContext));
     }
 
-    private boolean isSessionCall(final APICallContext apiCallContext) {
-        return SessionDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "system".equals(apiCallContext.getApiName());
+    private boolean isSingleResourceCall(final APICallContext apiCallContext, final String authorizedAPIName, final String authorizedResourceName) {
+        return authorizedResourceName.equals(apiCallContext.getResourceName()) && authorizedAPIName.equals(apiCallContext.getApiName());
     }
     
     private boolean isMyUserCall(final APISession apiSession, final APICallContext apiCallContext) {
