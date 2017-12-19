@@ -1,6 +1,8 @@
 package org.bonitasoft.web.rest.server.api.extension;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,8 +10,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.HttpHeaders;
-import org.bonitasoft.console.common.server.page.CustomPageDependenciesResolver;
 import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.console.common.server.page.RestApiResponse;
@@ -21,6 +21,8 @@ import org.restlet.data.Header;
 import org.restlet.data.MediaType;
 import org.restlet.data.Range;
 import org.restlet.data.Status;
+import org.restlet.engine.header.HeaderConstants;
+import org.restlet.engine.header.HeaderUtils;
 import org.restlet.engine.header.RangeReader;
 import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
@@ -78,15 +80,20 @@ public class ApiExtensionResource extends ServerResource {
         }
     }
 
-    private void fillHeaders(StringRepresentation stringRepresentation, RestApiResponse restApiResponse) {
+    private void fillHeaders(StringRepresentation representation, RestApiResponse restApiResponse) {
+        List<Header> headers = new ArrayList<>();
         for (final Map.Entry<String, String> entry : restApiResponse.getAdditionalHeaders().entrySet()) {
             //RESTLET do not support content range header, use RESTLET Ranges instead
-            if (HttpHeaders.CONTENT_RANGE.equals(entry.getKey())) {
-                updateRepresentationRange(entry.getValue(), stringRepresentation);
+            if (HeaderConstants.HEADER_CONTENT_RANGE.equals(entry.getKey())) {
+                updateRepresentationRange(entry.getValue(), representation);
             } else {
-                getResponse().getHeaders().add(new Header(entry.getKey(), entry.getValue()));
+                Header header = new Header(entry.getKey(), entry.getValue());
+                getResponse().getHeaders().add(header);
+                headers.add(header);
             }
         }
+        //Convert all standard header into RESTLET data model
+        HeaderUtils.extractEntityHeaders(headers, representation);
     }
 
     /**
