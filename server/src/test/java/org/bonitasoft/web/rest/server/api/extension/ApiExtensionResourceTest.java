@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.HttpHeaders;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
 import org.bonitasoft.console.common.server.page.RestApiResponse;
 import org.bonitasoft.console.common.server.page.RestApiResponseBuilder;
@@ -23,11 +22,15 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Disposition;
+import org.restlet.data.Header;
 import org.restlet.data.Method;
 import org.restlet.data.Range;
 import org.restlet.data.Status;
+import org.restlet.engine.header.HeaderConstants;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
+import org.restlet.util.Series;
 
 /**
  * @author Laurent Leseigneur
@@ -60,6 +63,7 @@ public class ApiExtensionResourceTest {
     public void before() throws Exception {
         doReturn(request).when(apiExtensionResource).getRequest();
         doReturn(response).when(apiExtensionResource).getResponse();
+        doReturn(new Series<>(Header.class)).when(response).getHeaders();
     }
 
     @Test
@@ -133,7 +137,7 @@ public class ApiExtensionResourceTest {
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
         final RestApiResponse restApiResponse = new RestApiResponseBuilder()
-                .withAdditionalHeader(HttpHeaders.CONTENT_RANGE, "1-10/100").build();
+                .withAdditionalHeader(HeaderConstants.HEADER_CONTENT_RANGE, "1-10/100").build();
         doReturn(restApiResponse).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
                 any(ResourceExtensionResolver.class));
         when(response.getEntity()).thenReturn(new StringRepresentation(""));
@@ -147,6 +151,27 @@ public class ApiExtensionResourceTest {
         assertThat(range.getSize()).isEqualTo(10);
         assertThat(range.getUnitName()).isNullOrEmpty();
         assertThat(range.getInstanceSize()).isEqualTo(100);
+    }
+
+    @Test
+    public void should_handle_content_disposition_with_restlet_range() throws Exception {
+        //given
+        method = new Method(GET);
+        doReturn(method).when(request).getMethod();
+        final RestApiResponse restApiResponse = new RestApiResponseBuilder()
+                .withAdditionalHeader(HeaderConstants.HEADER_CONTENT_DISPOSITION, "attachment; filename=\"Mon Fichier.png\"")
+                .build();
+        doReturn(restApiResponse).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
+                any(ResourceExtensionResolver.class));
+        when(response.getEntity()).thenReturn(new StringRepresentation(""));
+
+        //when
+        final Representation representation = apiExtensionResource.doHandle();
+
+        //then
+        final Disposition disposition = representation.getDisposition();
+        assertThat(disposition.getType()).isEqualTo("attachment");
+        assertThat(disposition.getFilename()).isEqualTo("Mon Fichier.png");
     }
 
 }
