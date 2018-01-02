@@ -70,7 +70,7 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
 
     @Override
     protected void defineTitle(final CaseItem item) {
-        setTitle(_("Case id") + ": " + item.getId() + " - Process: "
+        setTitle(_("Case id") + ": " + item.getId() + " - " + _("Process") + ": "
                 + item.getDeploy(CaseItem.ATTRIBUTE_PROCESS_ID).getAttributeValue(ProcessItem.ATTRIBUTE_DISPLAY_NAME));
     }
 
