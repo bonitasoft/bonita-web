@@ -20,6 +20,9 @@ import org.bonitasoft.engine.command.CommandExecutionException;
 import org.bonitasoft.engine.command.CommandNotFoundException;
 import org.bonitasoft.engine.command.CommandParameterizationException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
+import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 
 /**
@@ -50,7 +53,9 @@ public class BusinessDataQueryResource extends CommonResource {
 
         BusinessDataQueryResult businessDataQueryResult = (BusinessDataQueryResult) commandAPI.execute(COMMAND_NAME, parameters);
 
-        getResponse().setEntity(getConverterService().toRepresentation(businessDataQueryResult.getJsonResults()));
+        Representation representation = getConverterService().toRepresentation(businessDataQueryResult.getJsonResults(), MediaType.APPLICATION_JSON);
+        representation.setCharacterSet(CharacterSet.UTF_8);
+        getResponse().setEntity(representation);
         final BusinessDataQueryMetadata businessDataQueryMetadata = businessDataQueryResult.getBusinessDataQueryMetadata();
         if (businessDataQueryMetadata != null) {
             setContentRange(searchPageNumber, searchPageSize, businessDataQueryMetadata.getCount());

@@ -21,6 +21,9 @@ import org.bonitasoft.engine.bpm.flownode.TimerEventTriggerInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
@@ -44,7 +47,9 @@ public class TimerEventTriggerResource extends CommonResource {
         try {
             final Long caseId = getLongParameter("caseId", true);
             final SearchResult<TimerEventTriggerInstance> searchResult = processAPI.searchTimerEventTriggerInstances(caseId, buildSearchOptions());
-            getResponse().setEntity(getConverterService().toRepresentation(searchResult.getResult()));
+            Representation representation = getConverterService().toRepresentation(searchResult.getResult(), MediaType.APPLICATION_JSON);
+            representation.setCharacterSet(CharacterSet.UTF_8);
+            getResponse().setEntity(representation);
             setContentRange(searchResult);
         } catch (final Exception e) {
             throw new APIException(e);
