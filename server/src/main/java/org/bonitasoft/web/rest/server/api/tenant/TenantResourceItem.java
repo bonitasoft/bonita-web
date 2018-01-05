@@ -1,11 +1,11 @@
 package org.bonitasoft.web.rest.server.api.tenant;
 
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-
 import org.bonitasoft.engine.tenant.TenantResource;
 import org.bonitasoft.engine.tenant.TenantResourceState;
 import org.bonitasoft.engine.tenant.TenantResourceType;
+
+import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Anthony Birembaut
@@ -22,14 +22,14 @@ public class TenantResourceItem implements Serializable {
     private TenantResourceType type;
     private TenantResourceState state;
     private String lastUpdatedBy;
-    private OffsetDateTime lastUpdateDate;
+    private String lastUpdateDate;
 
     public TenantResourceItem(final TenantResource tenantResource) {
         id = String.valueOf(tenantResource.getId());
         name = tenantResource.getName();
         type = tenantResource.getType();
         lastUpdatedBy = String.valueOf(tenantResource.getLastUpdatedBy());
-        lastUpdateDate = tenantResource.getLastUpdatedDate();
+        lastUpdateDate = tenantResource.getLastUpdateDate().format(DateTimeFormatter.ISO_DATE_TIME);
         state = tenantResource.getState();
     }
 
@@ -73,12 +73,8 @@ public class TenantResourceItem implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public OffsetDateTime getLastUpdateDate() {
+    public String getLastUpdateDate() {
         return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(final OffsetDateTime lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
     }
 
 }
