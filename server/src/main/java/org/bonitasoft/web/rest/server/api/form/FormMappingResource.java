@@ -24,6 +24,9 @@ import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.filter.FormMappingTypeCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 
@@ -46,7 +49,9 @@ public class FormMappingResource extends CommonResource {
             final SearchResult<FormMapping> searchResult = processAPI.searchFormMappings(buildSearchOptions());
             List<FormMapping> result = searchResult.getResult();
             List<FormMappingItem> resultConverted = convertMapping(result);
-            getResponse().setEntity(getConverterService().toRepresentation(resultConverted));
+            Representation representation = getConverterService().toRepresentation(resultConverted, MediaType.APPLICATION_JSON);
+            representation.setCharacterSet(CharacterSet.UTF_8);
+            getResponse().setEntity(representation);
             setContentRange(searchResult);
         } catch (final Exception e) {
             throw new APIException(e);
