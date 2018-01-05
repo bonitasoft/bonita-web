@@ -78,11 +78,13 @@ public class BusinessDataQueryResourceTest extends RestletTest {
 
         //then
         final Response response = request(VALID_BDM_REQUEST).get();
-        Header expectedHeader=new Header("Content-range", "3-5/4");
+        Header expectedContentRangeHeader=new Header("Content-range", "3-5/4");
+        Header expectedContentTypeHeader=new Header("Content-type", "application/json; charset=UTF-8");
         ResponseAssert.assertThat(response)
                 .hasJsonEntityEqualTo(JSON_RESPONSE)
                 .hasStatus(Status.SUCCESS_OK)
-                .hasHeader(expectedHeader);
+                .hasHeader(expectedContentRangeHeader)
+                .hasHeader(expectedContentTypeHeader);
     }
 
     @Test
