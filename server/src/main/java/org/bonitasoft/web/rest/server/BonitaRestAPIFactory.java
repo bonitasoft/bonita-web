@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.server;
 
 import java.util.logging.Logger;
 
-import org.bonitasoft.web.rest.model.tenant.BusinessDataModelDefinition;
 import org.bonitasoft.web.rest.server.api.application.APIApplication;
 import org.bonitasoft.web.rest.server.api.applicationmenu.APIApplicationMenu;
 import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
@@ -70,7 +69,6 @@ import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APISession;
-import org.bonitasoft.web.rest.server.api.tenant.APIBusinessDataModel;
 import org.bonitasoft.web.rest.server.api.tenant.APITenantAdmin;
 import org.bonitasoft.web.rest.server.datastore.application.ApplicationDataStoreCreator;
 import org.bonitasoft.web.rest.server.datastore.applicationmenu.ApplicationMenuDataStoreCreator;
@@ -229,10 +227,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIApplicationPage(new APIApplicationDataStoreFactory());
             } else if ("application-menu".equals(resourceToken)) {
                 return new APIApplicationMenu(new ApplicationMenuDataStoreCreator());
-            }
-        } else if ("tenant".equals(apiToken)) {
-            if (BusinessDataModelDefinition.TOKEN.equals(resourceToken)) {
-                return new APIBusinessDataModel();
             }
 
         } else if ("platform".equals(apiToken)) {
