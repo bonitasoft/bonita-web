@@ -234,10 +234,6 @@
         <to>/APIToolkit/system/tenant$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/tenant/bdm([\?/]|$)</from>
-        <to>/APIToolkit/tenant/bdm$2</to>
-    </rule>
-    <rule>
         <from>^(/portal/custom-page)?/API/userXP/profile([\?/]|$)</from>
         <to>/APIToolkit/userXP/profile$2</to>
     </rule>
