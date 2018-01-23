@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.login.PortalCookies;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,6 +31,9 @@ public class TokenGeneratorTest {
 
     @Spy
     TokenGenerator tokenGenerator = new TokenGenerator();
+    
+    @Spy
+    PortalCookies portalCookies = new PortalCookies();
 
     @Rule
     public final RestoreSystemProperties restoreSystemProperties = new RestoreSystemProperties();
@@ -71,7 +75,7 @@ public class TokenGeneratorTest {
 
     @Test
     public void testSetTokenToResponseCookie() throws Exception {
-        tokenGenerator.setTokenToResponseCookie(request, response, BONITA_TOKEN_VALUE);
+        portalCookies.addCSRFTokenCookieToResponse(request, response, BONITA_TOKEN_VALUE);
 
         final Cookie csrfCookie = response.getCookie(BONITA_TOKEN_NAME);
 
@@ -86,7 +90,7 @@ public class TokenGeneratorTest {
         System.setProperty("bonita.csrf.cookie.path", "/");
         request.setContextPath("somepath");
 
-        tokenGenerator.setTokenToResponseCookie(request, response, "sdfsdfjhvèzv");
+        portalCookies.addCSRFTokenCookieToResponse(request, response, "sdfsdfjhvèzv");
 
         Cookie csrfCookie = response.getCookie(BONITA_TOKEN_NAME);
         assertThat(csrfCookie.getPath()).isEqualTo("/");
@@ -94,9 +98,9 @@ public class TokenGeneratorTest {
     
     @Test
     public void should_set_secure_csrf_token_cookie_when_specified() throws Exception {
-        doReturn(true).when(tokenGenerator).isCSRFTokenCookieSecure();
+        doReturn(true).when(portalCookies).isCSRFTokenCookieSecure();
 
-        tokenGenerator.setTokenToResponseCookie(request, response, BONITA_TOKEN_VALUE);
+        portalCookies.addCSRFTokenCookieToResponse(request, response, BONITA_TOKEN_VALUE);
 
         Cookie csrfCookie = response.getCookie(BONITA_TOKEN_NAME);
         assertThat(csrfCookie.getName()).isEqualTo(BONITA_TOKEN_NAME);
@@ -117,7 +121,7 @@ public class TokenGeneratorTest {
         System.setProperty("bonita.csrf.cookie.path", "/");
         request.setCookies(aCookie(BONITA_TOKEN_NAME, "aValue", "aPath"));
 
-        tokenGenerator.setTokenToResponseCookie(request, response, "whatever");
+        portalCookies.addCSRFTokenCookieToResponse(request, response, "whatever");
 
         Cookie cookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, "aPath");
         assertThat(cookie.getMaxAge()).isEqualTo(0);
@@ -128,7 +132,7 @@ public class TokenGeneratorTest {
     public void should_invalidate_csrf_cookie_already_existing_on_root_path() throws Exception {
         request.setCookies(aCookie(BONITA_TOKEN_NAME, "aValue", "aPath"));
 
-        tokenGenerator.setTokenToResponseCookie(request, response, "whatever");
+        portalCookies.addCSRFTokenCookieToResponse(request, response, "whatever");
 
         Cookie cookie = getCookieByNameAndPath(response, BONITA_TOKEN_NAME, CONTEXT_PATH);
         assertThat(cookie.getValue()).isEqualTo("whatever");

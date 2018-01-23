@@ -26,6 +26,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.login.PortalCookies;
+
 /**
  * @author Paul AMAR
  */
@@ -34,6 +36,7 @@ public class TokenGeneratorFilter implements Filter {
     protected static final Logger LOGGER = Logger.getLogger(TokenGeneratorFilter.class.getName());
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();
+    protected PortalCookies portalCookies = new PortalCookies();
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
@@ -43,7 +46,7 @@ public class TokenGeneratorFilter implements Filter {
         // Create
         final String apiTokenFromClient = tokenGenerator.createOrLoadToken(req.getSession());
         tokenGenerator.setTokenToResponseHeader(res, apiTokenFromClient);
-        tokenGenerator.setTokenToResponseCookie(req, res, apiTokenFromClient);
+        portalCookies.addCSRFTokenCookieToResponse(req, res, apiTokenFromClient);
         chain.doFilter(req, res);
     }
 
