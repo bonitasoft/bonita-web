@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.PortalCookies;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.engine.api.PlatformAPIAccessor;
 import org.bonitasoft.engine.api.PlatformLoginAPI;
@@ -67,6 +68,7 @@ public class PlatformLoginServlet extends HttpServlet {
     public static final String ERROR_MESSAGE = "Error while logging in to the platform";
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();
+    protected PortalCookies portalCookies = new PortalCookies();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -90,7 +92,8 @@ public class PlatformLoginServlet extends HttpServlet {
             platformLoginAPI = getPlatformLoginAPI();
             platformSession = platformLoginAPI.login(username, password);
             request.getSession().setAttribute(PLATFORMSESSION, platformSession);
-            tokenGenerator.setTokenToResponseCookie(request, response, tokenGenerator.createOrLoadToken(request.getSession()));
+            String csrfToken = tokenGenerator.createOrLoadToken(request.getSession());
+            portalCookies.addCSRFTokenCookieToResponse(request, response, csrfToken);
 
             if (redirectAfterLogin) {
                 response.sendRedirect(PLATFORM_PAGE);

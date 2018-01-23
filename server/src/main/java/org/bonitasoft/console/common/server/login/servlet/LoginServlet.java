@@ -32,7 +32,6 @@ import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
-import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
@@ -70,8 +69,6 @@ public class LoginServlet extends HttpServlet {
      */
     protected static final String LOGIN_URL_PARAM_NAME = "loginUrl";
 
-    protected TokenGenerator tokenGenerator = new TokenGenerator();
-
     /**
      * Necessary studio integration (username and password are passed in the URL in development mode)
      */
@@ -99,8 +96,6 @@ public class LoginServlet extends HttpServlet {
         try {
             doLogin(request, response);
             final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-
-            tokenGenerator.setTokenToResponseCookie(request, response, tokenGenerator.createOrLoadToken(request.getSession()));
 
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {

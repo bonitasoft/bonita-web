@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.common.server.login;
 
-import static org.bonitasoft.console.common.server.login.PortalCookies.addTenantCookieToResponse;
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +30,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -48,14 +47,18 @@ public class LoginManager {
     private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
     private static final String DEFAULT_LOCALE = "en";
     public static final String TENANT_COOKIE_NAME = "bonita.tenant";
+    
+    protected TokenGenerator tokenGenerator = new TokenGenerator();
+    protected PortalCookies portalCookies = new PortalCookies();
 
     public void login(HttpServletRequestAccessor request, HttpServletResponse response, UserLogger userLoger, Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
         AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
         APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
-        addTenantCookieToResponse(response, apiSession.getTenantId());
+        portalCookies.addTenantCookieToResponse(response, apiSession.getTenantId());
         storeCredentials(request, apiSession);
+        portalCookies.addCSRFTokenCookieToResponse(request.asHttpServletRequest(), response, tokenGenerator.createOrLoadToken(request.getHttpSession()));
     }
 
     protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {

@@ -1,11 +1,8 @@
 package org.bonitasoft.console.common.server.login;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -14,12 +11,14 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class PortalCookiesTest {
 
     private MockHttpServletRequest request = new MockHttpServletRequest();
+    
+    private PortalCookies portalCookies = new PortalCookies();
 
     @Test
     public void should_add_tenant_cookie_to_response() throws Exception {
         MockHttpServletResponse response = new MockHttpServletResponse();
 
-        PortalCookies.addTenantCookieToResponse(response, 123L);
+        portalCookies.addTenantCookieToResponse(response, 123L);
 
         assertThat(response.getCookie("bonita.tenant").getValue()).isEqualTo("123");
     }
@@ -28,7 +27,7 @@ public class PortalCookiesTest {
     public void should_get_tenant_cookie_from_request() throws Exception {
         request.setCookies(new Cookie("bonita.tenant", "123"));
 
-        String tenant = PortalCookies.getTenantCookieFromRequest(request);
+        String tenant = portalCookies.getTenantCookieFromRequest(request);
 
         assertThat(tenant).isEqualTo("123");
     }
@@ -38,7 +37,7 @@ public class PortalCookiesTest {
         Cookie cookie = new Cookie("bonita.tenant", "123");
         request.setCookies(cookie);
 
-        Cookie fetchedCookie = PortalCookies.getCookie(request, "bonita.tenant");
+        Cookie fetchedCookie = portalCookies.getCookie(request, "bonita.tenant");
 
         assertThat(fetchedCookie).isEqualTo(cookie);
     }
