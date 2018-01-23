@@ -3,9 +3,11 @@ package org.bonitasoft.console.common.server.login;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySetOf;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
@@ -21,12 +24,14 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -34,9 +39,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginManagerTest {
-
-    @Spy
-    LoginManager loginManager = new LoginManager();
 
     @Mock
     UserLogger userLogger;
@@ -57,6 +59,13 @@ public class LoginManagerTest {
 
     @Mock
     PermissionsBuilder permissionsBuilder;
+    
+    @Mock
+    TokenGenerator tokenGenerator;
+    
+    @Spy
+    @InjectMocks
+    LoginManager loginManager = new LoginManager();
 
     HttpServletRequestAccessor requestAccessor;
 
@@ -65,6 +74,8 @@ public class LoginManagerTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter("tenant")).thenReturn("1");
         requestAccessor = new HttpServletRequestAccessor(request);
+        
+        doReturn("123").when(tokenGenerator).createOrLoadToken(session);
     }
 
     @Test
@@ -136,5 +147,20 @@ public class LoginManagerTest {
         loginManager.login(requestAccessor, response, userLogger, credentials);
 
         assertThat(response.getCookie("bonita.tenant").getValue()).isEqualTo("123");
+    }
+    
+    @Test
+    public void should_store_csrf_token_in_cookies() throws Exception {
+        Credentials credentials = new StandardCredentials("name", "password", 123L);
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
+        doReturn(apiSession).when(userLogger).doLogin(credentials);
+        when(apiSession.getTenantId()).thenReturn(123L);
+        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
+
+        loginManager.login(requestAccessor, response, userLogger, credentials);
+
+        verify(tokenGenerator).createOrLoadToken(session);
+        verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());
+        assertThat(response.getCookie(TokenGenerator.X_BONITA_API_TOKEN).getValue()).isEqualTo("123");
     }
 }

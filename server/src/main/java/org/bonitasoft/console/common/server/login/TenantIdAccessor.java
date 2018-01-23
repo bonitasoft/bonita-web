@@ -17,9 +17,9 @@
 
 package org.bonitasoft.console.common.server.login;
 
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
-
 import javax.servlet.ServletException;
+
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**
  * Created by Vincent Elcrin
@@ -29,6 +29,7 @@ import javax.servlet.ServletException;
 public class TenantIdAccessor {
 
     private HttpServletRequestAccessor request;
+    private PortalCookies portalCookies = new PortalCookies();
 
     public TenantIdAccessor(HttpServletRequestAccessor request) throws ServletException {
         this.request = request;
@@ -56,7 +57,7 @@ public class TenantIdAccessor {
     public long getTenantIdFromRequestOrCookie() throws ServletException {
         String tenantId = request.getTenantId();
         if (tenantId == null) {
-            tenantId = PortalCookies.getTenantCookieFromRequest(request.asHttpServletRequest());
+            tenantId = portalCookies.getTenantCookieFromRequest(request.asHttpServletRequest());
         }
         if (tenantId == null) {
             return getDefaultTenantId();
