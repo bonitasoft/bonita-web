@@ -31,7 +31,7 @@ public class TenantIdAccessor {
     private HttpServletRequestAccessor request;
     private PortalCookies portalCookies = new PortalCookies();
 
-    public TenantIdAccessor(HttpServletRequestAccessor request) throws ServletException {
+    public TenantIdAccessor(HttpServletRequestAccessor request) {
         this.request = request;
     }
 
@@ -70,7 +70,7 @@ public class TenantIdAccessor {
             try {
                 return Long.parseLong(tenantId);
             } catch (final NumberFormatException e) {
-                throw new ServletException("Invalid tenant id.", e);
+                throw new ServletException("Invalid tenant id: " + tenantId, e);
             }
         } else {
             return -1L;

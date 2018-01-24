@@ -27,15 +27,11 @@ import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
-import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
-import org.bonitasoft.console.common.server.login.credentials.UserLogger;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
 
@@ -184,14 +180,10 @@ public class LoginServlet extends HttpServlet {
     protected void doLogin(final HttpServletRequest request, final HttpServletResponse response)
         throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException, AuthenticationFailedException {
         try {
-            final long tenantId = getTenantId(request);
-            final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-            final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(requestAccessor, response, createUserLogger(), userCredentials);
+            loginManager.login(request, response);
         } catch (final TenantStatusException e) {
-            final String message = "Tenant with ID " + getTenantId(request)
-                + " is in pause, unable to login with other user than the technical user.";
+            final String message = "Tenant is in pause, unable to log in with other user than the technical user.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, message, e);
             }
@@ -202,31 +194,6 @@ public class LoginServlet extends HttpServlet {
 
     protected LoginManager getLoginManager() {
         return new LoginManager();
-    }
-
-    protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
-        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
-    }
-
-    protected UserLogger createUserLogger() {
-        return new UserLogger();
-    }
-
-    /*
-     * protected for testing
-     */
-    protected long getTenantId(final HttpServletRequest request) throws ServletException {
-        long tenantId = -1L;
-        try {
-            final APISession session = TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(),
-                TenantsManagementUtils.getTechnicalUserPassword());
-            tenantId = session.getTenantId();
-        } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Unable to get the default tenant.", e);
-            }
-        }
-        return tenantId;
     }
 
     public String dropPassword(final String content) {
