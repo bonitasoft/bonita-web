@@ -6,8 +6,10 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.logging.Level;
@@ -22,6 +24,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.TenantStatusException;
@@ -162,11 +165,9 @@ public class LoginServletTest {
     public void testDoPostShouldNotUseQueryString() throws Exception {
         final Logger logger = Logger.getLogger(LoginServlet.class.getName());
         logger.setLevel(Level.FINEST);
-        final long tenantId = 123L;
 
         //given
         final LoginServlet servlet = spy(new LoginServlet());
-        doReturn(tenantId).when(servlet).getTenantId(req);
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(true).when(apiSession).isTechnicalUser();
@@ -225,6 +226,34 @@ public class LoginServletTest {
         doThrow(new AuthenticationManagerNotFoundException("")).when(servlet).doLogin(req, resp);
 
         servlet.doPost(req, resp);
+    }
+
+    @Test(expected = LoginFailedException.class)
+    public void testTenantInMaintenance() throws Exception {
+        final LoginManager loginManager = mock(LoginManager.class);
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn(loginManager).when(servlet).getLoginManager();
+        
+        final TenantStatusException tenantInMaintenanceException = new TenantStatusException("Tenant is in pause, unable to log in with other user than the technical user.");
+        doThrow(tenantInMaintenanceException).when(loginManager).login(req, resp);
+
+        try {
+            servlet.doLogin(req, resp);
+        } finally {
+            verify(req, times(1)).setAttribute(LoginServlet.TENANT_IN_MAINTENACE_MESSAGE, LoginServlet.TENANT_IN_MAINTENACE_MESSAGE);
+        }
+    }
+
+    @Test
+    public void testTenantNotInMaintenance() throws Exception {
+        final LoginManager loginManager = mock(LoginManager.class);
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn(loginManager).when(servlet).getLoginManager();
+        
+        servlet.doLogin(req, resp);
+        
+        verify(req, times(0)).setAttribute(LoginServlet.TENANT_IN_MAINTENACE_MESSAGE, LoginServlet.TENANT_IN_MAINTENACE_MESSAGE);
+        verify(loginManager).login(req, resp);
     }
 
 }

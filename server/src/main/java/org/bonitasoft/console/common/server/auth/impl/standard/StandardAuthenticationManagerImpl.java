@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
@@ -57,7 +57,7 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     }
 
     private long getTenantId(HttpServletRequestAccessor request) throws ServletException {
-        return new TenantIdAccessor(request).getTenantIdFromRequestOrCookie();
+        return TenantIdAccessorFactory.getTenantIdAccessor(request).getTenantIdFromRequestOrCookie();
     }
 
     /**
@@ -78,7 +78,7 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     }
 
     @Override
-    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) {
+    public String getLogoutPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ServletException {
         return null;
     }
 }
