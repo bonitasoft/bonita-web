@@ -85,7 +85,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anySetOf(String.class));
         verify(session).invalidate();
@@ -98,7 +98,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         verify(userLogger).doLogin(credentials);
     }
@@ -113,7 +113,7 @@ public class LoginManagerTest {
         doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         verify(userLogger).doLogin(credentialsMap);
     }
@@ -124,7 +124,7 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doThrow(LoginFailedException.class).when(userLogger).doLogin(credentials);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
     }
 
     @Test(expected = AuthenticationFailedException.class)
@@ -133,7 +133,7 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doThrow(AuthenticationFailedException.class).when(authenticationManager).authenticate(requestAccessor, credentials);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class LoginManagerTest {
         when(apiSession.getTenantId()).thenReturn(123L);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         assertThat(response.getCookie("bonita.tenant").getValue()).isEqualTo("123");
     }
@@ -157,7 +157,7 @@ public class LoginManagerTest {
         when(apiSession.getTenantId()).thenReturn(123L);
         doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
-        loginManager.login(requestAccessor, response, userLogger, credentials);
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         verify(tokenGenerator).createOrLoadToken(session);
         verify(tokenGenerator, never()).setTokenToResponseHeader(any(HttpServletResponse.class), anyString());

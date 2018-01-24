@@ -26,6 +26,7 @@ import org.bonitasoft.console.common.server.login.credentials.AutoLoginCredentia
 import org.bonitasoft.console.common.server.login.credentials.AutoLoginCredentialsFinder;
 import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 import org.bonitasoft.engine.exception.TenantStatusException;
@@ -56,7 +57,7 @@ public class AutoLoginRule extends AuthenticationRule {
                 return false;
             }
             final LoginManager loginManager = getLoginManager();
-            loginManager.login(request, response, createUserLogger(), new StandardCredentials(userCredentials.getUserName(),userCredentials.getPassword(),tenantId));
+            loginManager.loginInternal(request, response, getUserLogger(), new StandardCredentials(userCredentials.getUserName(),userCredentials.getPassword(),tenantId));
             return true;
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -78,8 +79,8 @@ public class AutoLoginRule extends AuthenticationRule {
         return new AutoLoginCredentialsFinder(ConfigurationFilesManager.getInstance());
     }
 
-    protected UserLogger createUserLogger() {
-        return new UserLogger();
+    protected UserLogger getUserLogger() {
+        return UserLoggerFactory.getUserLogger();
     }
 
 }

@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.MapUtils;
@@ -29,16 +30,19 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
+import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 
 /**
- * This class performs the authentication, the login and initialize the HTTP session
+ * This class performs the authentication, the login and initializes the HTTP session
  *
  * @author Anthony Birembaut
  */
@@ -50,8 +54,29 @@ public class LoginManager {
     
     protected TokenGenerator tokenGenerator = new TokenGenerator();
     protected PortalCookies portalCookies = new PortalCookies();
-
+    
+    
+    /**
+     * Performs the login using the appropriate AuthenticationManager implementation for authentication, logging in on the engine, initializing the HTTP session, and creating the cookies (tanat and CSRF)
+     */
+    public void login(final HttpServletRequest request, final HttpServletResponse response)
+        throws AuthenticationManagerNotFoundException, LoginFailedException, TenantStatusException, AuthenticationFailedException, ServletException {
+        final long tenantId = getTenantId(request);
+        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
+        final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
+        loginInternal(requestAccessor, response, getUserLogger(), userCredentials);
+    }
+    
+    /**
+     * @deprecated use {@link LoginManager#login(HttpServletRequest, HttpServletResponse)} instead. It also deals with the cookies creation (CSRF and tenant)
+     */
+    @Deprecated
     public void login(HttpServletRequestAccessor request, HttpServletResponse response, UserLogger userLoger, Credentials credentials)
+            throws AuthenticationFailedException, ServletException, LoginFailedException {
+        loginInternal(request, response, userLoger, credentials);
+    }
+    
+    public void loginInternal(HttpServletRequestAccessor request, HttpServletResponse response, UserLogger userLoger, Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
         AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
@@ -59,6 +84,20 @@ public class LoginManager {
         portalCookies.addTenantCookieToResponse(response, apiSession.getTenantId());
         storeCredentials(request, apiSession);
         portalCookies.addCSRFTokenCookieToResponse(request.asHttpServletRequest(), response, tokenGenerator.createOrLoadToken(request.getHttpSession()));
+    }
+    
+    protected long getTenantId(final HttpServletRequest request) throws ServletException {
+        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
+        TenantIdAccessor tenantIdAccessor = TenantIdAccessorFactory.getTenantIdAccessor(requestAccessor);
+        return tenantIdAccessor.ensureTenantId();
+    }
+    
+    protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
+        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    }
+
+    protected UserLogger getUserLogger() {
+        return UserLoggerFactory.getUserLogger();
     }
 
     protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {

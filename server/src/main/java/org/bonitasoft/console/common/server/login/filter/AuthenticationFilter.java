@@ -33,6 +33,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.localization.LoginUrl;
 import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
@@ -76,11 +77,11 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     @Override
     public void proceedWithFiltering(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException, IOException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor((HttpServletRequest) request);
-        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, createTenantAccessor(requestAccessor), chain);
+        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, getTenantAccessor(requestAccessor), chain);
     }
 
-    protected TenantIdAccessor createTenantAccessor(final HttpServletRequestAccessor requestAccessor) throws ServletException {
-        return new TenantIdAccessor(requestAccessor);
+    protected TenantIdAccessor getTenantAccessor(final HttpServletRequestAccessor requestAccessor) throws ServletException {
+        return TenantIdAccessorFactory.getTenantIdAccessor(requestAccessor);
     }
 
     protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,

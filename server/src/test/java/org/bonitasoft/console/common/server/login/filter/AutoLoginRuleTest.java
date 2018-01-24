@@ -88,7 +88,7 @@ public class AutoLoginRuleTest {
         doReturn(1L).when(tenantAccessor).ensureTenantId();
         // avoid having an exception result into an authorized false
         doReturn(mock(AuthenticationManager.class)).when(rule).getAuthenticationManager(anyLong());
-        doReturn(mock(UserLogger.class)).when(rule).createUserLogger();
+        doReturn(mock(UserLogger.class)).when(rule).getUserLogger();
         doReturn(mock(LoginManager.class)).when(rule).getLoginManager();
 
 
