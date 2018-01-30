@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bonita-bpm\n"
+"Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-27 05:08+0200\n"
-"PO-Revision-Date: 2017-11-15 05:53-0500\n"
-"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2018-01-24 05:07+0100\n"
+"PO-Revision-Date: 2018-01-29 20:58-0500\n"
+"Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: bonita-bpm\n"
+"X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
 
@@ -363,9 +363,6 @@ msgstr "Todos los procesos están automáticamente pausados."
 
 msgid "An archive has a .zip extension"
 msgstr "El archivo tiene la extensión .zip"
-
-msgid "An error has occurred when deploying Business Data Model."
-msgstr "Un error ha ocurrido al desplegar el Modelo de Datos de Negocio."
 
 msgid "An error occurred when deploying the Business Data Model.\n"
 "Consult the logs for more information."
@@ -1226,9 +1223,6 @@ msgstr "Instalado por"
 
 msgid "Installed on"
 msgstr "Instalado en"
-
-msgid "Invalid Business Data Model content"
-msgstr "Contenido invalido en el Modelo de Datos de Negocio"
 
 msgid "It is still assigned to you until you release it."
 msgstr "Todavía está asignada a usted hasta que la libere."
@@ -2329,9 +2323,6 @@ msgstr "Imposible recuperar la definición de los datos de proceso, no se encuen
 
 msgid "Unable to log in. Please check your username and password."
 msgstr "No se puede iniciar la sesión. Por favor comprueba tu nombre de usuario y tu contraseña."
-
-msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
-msgstr "Imposible desinstalar el Modelo de Datos de Negocio. Por favor, pause primero los Servicios BPM. Ve a Configuración > Servicios BPM."
 
 msgid "Unassign"
 msgstr "Sin asignar"
