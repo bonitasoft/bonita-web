@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bonita-bpm\n"
+"Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-27 05:08+0200\n"
-"PO-Revision-Date: 2017-11-15 05:08-0500\n"
-"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2018-01-24 05:07+0100\n"
+"PO-Revision-Date: 2018-01-29 20:43-0500\n"
+"Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: bonita-bpm\n"
+"X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
 
@@ -363,9 +363,6 @@ msgstr "Tous les processus sont automatiquement mis en pause."
 
 msgid "An archive has a .zip extension"
 msgstr "Une archive a une extension .zip"
-
-msgid "An error has occurred when deploying Business Data Model."
-msgstr "Une erreur est survenue au déploiement du Modèle de Données Métier."
 
 msgid "An error occurred when deploying the Business Data Model.\n"
 "Consult the logs for more information."
@@ -1227,9 +1224,6 @@ msgstr "Installé par"
 
 msgid "Installed on"
 msgstr "Installé le"
-
-msgid "Invalid Business Data Model content"
-msgstr "Le contenu du Modèle de Données Métier est invalide"
 
 msgid "It is still assigned to you until you release it."
 msgstr "il vous est toujours attribué jusqu'à ce que vous le libériez."
@@ -2330,9 +2324,6 @@ msgstr "Impossible d'obtenir des définitions de données de processus, car %pro
 
 msgid "Unable to log in. Please check your username and password."
 msgstr "Impossible de se connecter. Veuillez vérifier votre nom d'utilisateur et le mot de passe."
-
-msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
-msgstr "Impossible de désinstaller le Modèle de Données Métier. Pour cela, les Services BPM doivent être suspendus. Consultez la page Configuration > Services BPM."
 
 msgid "Unassign"
 msgstr "De-assigner"
