@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2018-01-29 20:49-0500\n"
+"PO-Revision-Date: 2018-01-31 04:10-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -79,6 +79,9 @@ msgstr "アプリケーションは、特定のユーザー プロファイル�
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
+msgid "An error occurred when deploying the BDM. Consult the logs for more information."
+msgstr ""
+
 msgid "An error occurred while submitting the form."
 msgstr "フォームの送信中にエラーが発生しました。"
 
@@ -115,11 +118,29 @@ msgstr "このマークはあなただけに指名されたタスクを示しま
 msgid "Available tasks"
 msgstr "応受援タスク"
 
+msgid "BDM file"
+msgstr ""
+
+msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
+msgstr ""
+
+msgid "BDM successfully updated."
+msgstr ""
+
+msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
+msgstr ""
+
 msgid "Back"
 msgstr "戻る"
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
+
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
+msgstr ""
+
+msgid "Business Data Model definition"
+msgstr ""
 
 msgid "Business card"
 msgstr "業務上の連絡先"
@@ -186,6 +207,9 @@ msgstr "クラス名"
 
 msgid "Click here to choose the .xml file"
 msgstr ".xml ファイルを選択するにはここをクリック"
+
+msgid "Click here to choose your .zip file"
+msgstr ""
 
 msgid "Close"
 msgstr "閉じる"
@@ -270,6 +294,9 @@ msgstr "説明"
 
 msgid "Display name"
 msgstr "表示名"
+
+msgid "Don't forget to start BPM Services again."
+msgstr ""
 
 msgid "Done tasks"
 msgstr "完了したタスク"
@@ -403,11 +430,26 @@ msgstr "アプリケーションをインポート"
 msgid "Import an application descriptor"
 msgstr "アプリケーション記述子をインポート"
 
+msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
+msgstr ""
+
 msgid "In task name column"
 msgstr "[タスク名] 列"
 
 msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of the wizard"
 msgstr "メニューの <i>組織 > 管理</i>で、 <i>ユーザー</i> のウィザード ページに進む"
+
+msgid "Install"
+msgstr ""
+
+msgid "Install Business Data Model"
+msgstr ""
+
+msgid "Install a BDM file"
+msgstr ""
+
+msgid "Installing Business Data Model"
+msgstr ""
 
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
@@ -438,6 +480,9 @@ msgstr "最低"
 
 msgid "MM/dd/yyyy h:mm a"
 msgstr "yyyy/MM/dd HH:mm"
+
+msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
+msgstr ""
 
 msgid "Make this task available to other team members again"
 msgstr "このタスクは他のチーム メンバーでも行えるようにする"
@@ -535,6 +580,12 @@ msgstr "カテゴリは更新されていません。カテゴリを選択後、
 msgid "Normal"
 msgstr "普通"
 
+msgid "Not installed"
+msgstr ""
+
+msgid "Note that updating the model modifies existing database tables definitively."
+msgstr ""
+
 msgid "One or more connectors on case start or case end failed"
 msgstr "案件の開始または終了時に、1 つ、または複数のコネクタでエラーが発生しました"
 
@@ -549,6 +600,9 @@ msgstr "私だけがこのタスクを実行できる"
 
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
+
+msgid "Only one Business Data Model (BDM) can be active at a time."
+msgstr ""
 
 msgid "Open cases"
 msgstr "進行中案件"
@@ -754,6 +808,9 @@ msgstr "起案者"
 msgid "State"
 msgstr "状態"
 
+msgid "Status"
+msgstr ""
+
 msgid "Status of importation"
 msgstr "インポートの状態"
 
@@ -783,6 +840,9 @@ msgstr "タスク リスト"
 
 msgid "Task name"
 msgstr "タスク名"
+
+msgid "Technical User"
+msgstr ""
 
 msgid "Technical error."
 msgstr "テクニカルなエラーが発生。"
@@ -910,6 +970,9 @@ msgstr "平均以下"
 msgid "Update"
 msgstr "更新"
 
+msgid "Update Business Data Model"
+msgstr ""
+
 msgid "Update business card"
 msgstr "業務上の連絡先を更新"
 
@@ -964,6 +1027,9 @@ msgstr "タスクを見る"
 msgid "View this task"
 msgstr "このタスクを見る"
 
+msgid "Warning:"
+msgstr ""
+
 msgid "We couldn't find what you are looking for."
 msgstr "お探しのものが見つかりませんでした。"
 
@@ -1002,6 +1068,12 @@ msgstr "アプリケーション記述子は、部分的にインポートされ
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
+
+msgid "installed"
+msgstr ""
+
+msgid "installing"
+msgstr ""
 
 msgid "of"
 msgstr "日目/"
