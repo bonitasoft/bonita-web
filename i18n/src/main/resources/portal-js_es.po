@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: bonita-bpm\n"
+"Project-Id-Version: bonita\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: bonita-bpm\n"
+"X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-01-23 21:02-0500\n"
+"PO-Revision-Date: 2018-01-31 04:17-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -79,6 +79,9 @@ msgstr "Una aplicación es un entorno personalizado para un perfil de usuario es
 msgid "An error occured during categories update"
 msgstr "Se produjo un error durante la actualización de las categorías"
 
+msgid "An error occurred when deploying the BDM. Consult the logs for more information."
+msgstr ""
+
 msgid "An error occurred while submitting the form."
 msgstr "Ocurrió un error al enviar el formulario."
 
@@ -115,11 +118,29 @@ msgstr "Disponible o en Mis tareas"
 msgid "Available tasks"
 msgstr "tareas disponibles"
 
+msgid "BDM file"
+msgstr ""
+
+msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
+msgstr ""
+
+msgid "BDM successfully updated."
+msgstr ""
+
+msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
+msgstr ""
+
 msgid "Back"
 msgstr "Atrás"
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
+
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
+msgstr ""
+
+msgid "Business Data Model definition"
+msgstr ""
 
 msgid "Business card"
 msgstr "Tarjeta de visita"
@@ -186,6 +207,9 @@ msgstr "Nombre de la clase"
 
 msgid "Click here to choose the .xml file"
 msgstr "Haga clic para seleccionar el archivo .xml."
+
+msgid "Click here to choose your .zip file"
+msgstr ""
 
 msgid "Close"
 msgstr "Cerrar"
@@ -270,6 +294,9 @@ msgstr "Descripción"
 
 msgid "Display name"
 msgstr "Título dinámico"
+
+msgid "Don't forget to start BPM Services again."
+msgstr ""
 
 msgid "Done tasks"
 msgstr "Tareas realizadas"
@@ -403,11 +430,26 @@ msgstr "Importar una aplicación"
 msgid "Import an application descriptor"
 msgstr "Importar un descriptor de aplicación"
 
+msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
+msgstr ""
+
 msgid "In task name column"
 msgstr "En la columna Nombre de tarea"
 
 msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of the wizard"
 msgstr "En el menú <i>Organización > Administrar</i>, ir a la página <i>Usuarios</i> del asistente"
+
+msgid "Install"
+msgstr ""
+
+msgid "Install Business Data Model"
+msgstr ""
+
+msgid "Install a BDM file"
+msgstr ""
+
+msgid "Installing Business Data Model"
+msgstr ""
 
 msgid "Items per page"
 msgstr "Elementos por página"
@@ -438,6 +480,9 @@ msgstr "Menor"
 
 msgid "MM/dd/yyyy h:mm a"
 msgstr "dd/MM/yyyy HH:mm"
+
+msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
+msgstr ""
 
 msgid "Make this task available to other team members again"
 msgstr "Liberar - hacer esta tarea disponible de nuevo para los otros miembros del equipo"
@@ -535,6 +580,12 @@ msgstr "No se hicieron actualizaciones en las categorías. No olvide presionar l
 msgid "Normal"
 msgstr "Normal"
 
+msgid "Not installed"
+msgstr ""
+
+msgid "Note that updating the model modifies existing database tables definitively."
+msgstr ""
+
 msgid "One or more connectors on case start or case end failed"
 msgstr "Uno o más conectores al inicio o al final del caso han fallado"
 
@@ -549,6 +600,9 @@ msgstr "Sólo yo puedo hacer esta tarea"
 
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
 msgstr "Solo se muestran los casos de los procesos raiz en la siguiente tabla. No hay detalles de los casos iniciados por actividades de llamada."
+
+msgid "Only one Business Data Model (BDM) can be active at a time."
+msgstr ""
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -754,6 +808,9 @@ msgstr "Iniciado por"
 msgid "State"
 msgstr "Estado"
 
+msgid "Status"
+msgstr ""
+
 msgid "Status of importation"
 msgstr "Estado de la importación"
 
@@ -783,6 +840,9 @@ msgstr "Lista de tareas"
 
 msgid "Task name"
 msgstr "Nombre de tarea"
+
+msgid "Technical User"
+msgstr ""
 
 msgid "Technical error."
 msgstr "Error técnico."
@@ -910,6 +970,9 @@ msgstr "Bajo normal"
 msgid "Update"
 msgstr "Actualizar"
 
+msgid "Update Business Data Model"
+msgstr ""
+
 msgid "Update business card"
 msgstr "Actualizar tarjeta de visita"
 
@@ -964,6 +1027,9 @@ msgstr "Ver tarea"
 msgid "View this task"
 msgstr "Ver esta tarea"
 
+msgid "Warning:"
+msgstr ""
+
 msgid "We couldn't find what you are looking for."
 msgstr "No pudimos encontrar lo que estás buscando."
 
@@ -1002,6 +1068,12 @@ msgstr "el descriptor de aplicación ha sido parcialmente importado. Los siguien
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "el descriptor de aplicación ha sido importado con éxito, con un completo mapeo de páginas y de menú."
+
+msgid "installed"
+msgstr ""
+
+msgid "installing"
+msgstr ""
 
 msgid "of"
 msgstr "de"
