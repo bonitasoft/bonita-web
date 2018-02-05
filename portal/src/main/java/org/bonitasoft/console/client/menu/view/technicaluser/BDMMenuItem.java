@@ -16,15 +16,14 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportPage;
+import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 
 public class BDMMenuItem extends MenuLink {
 
 	public BDMMenuItem() {
-		
-        super(new JsId(BDMImportPage.TOKEN), _("Business Data Model"), _("Business Data Model"), BDMImportPage.TOKEN);
+		super(new JsId(AngularIFrameView.BDM_TOKEN), _("Business Data Model"), _("Business Data Model"), AngularIFrameView.BDM_TOKEN);
     }
 
 }
