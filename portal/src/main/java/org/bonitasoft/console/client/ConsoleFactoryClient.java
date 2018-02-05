@@ -39,8 +39,6 @@ import org.bonitasoft.console.client.common.system.view.PopupAboutPage;
 import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
-import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportPage;
-import org.bonitasoft.console.client.technicaluser.businessdata.BDMImportWarningPopUp;
 import org.bonitasoft.console.client.user.cases.view.*;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.process.view.ProcessQuickDetailsPage;
@@ -77,6 +75,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
      * Default Constructor.
      */
     public ConsoleFactoryClient() {
+        AngularIFrameView.addTokenSupport(AngularIFrameView.BDM_TOKEN, "/admin/bdm");
         AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_TOKEN, "/user/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN, "/admin/cases/list");
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
@@ -313,12 +312,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             } else {
                 return new BlankPage();
             }
-            // BDM
-        } else if (BDMImportPage.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new BDMImportPage();
-        } else if (BDMImportWarningPopUp.TOKEN.equals(token) && isUserAuthorized(BDMImportPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new BDMImportWarningPopUp();
-
         } else if (AngularIFrameView.supportsToken(token) && isPortalJSAuthorizedToken(token)) {
             // No action is necessary as an unauthorized request will result in a page reload.
             return prepareAngularPage(token);

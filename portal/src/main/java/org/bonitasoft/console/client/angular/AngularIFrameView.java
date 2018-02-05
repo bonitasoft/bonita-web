@@ -56,6 +56,8 @@ public class AngularIFrameView extends RawView {
 
     public static final String USER_MORE_DETAILS_ADMIN = "usermoredetailsadmin";
 
+    public static final String BDM_TOKEN = "bdm";
+
     // when adding a new token, don't forget to update initAcceptedTokens() method in case you need url parameter
     
     protected final IFrameView iframe;

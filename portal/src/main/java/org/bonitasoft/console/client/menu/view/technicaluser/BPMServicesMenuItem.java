@@ -13,7 +13,7 @@ public class BPMServicesMenuItem extends MenuLink {
                 "tenantMaintenance");
 //      TO DO: super(new JsId(TenantMaintenancePage.TOKEN), _("BPM services"), _("Configure BPM services for maintenance"),
 //        TenantMaintenancePage.TOKEN);
-        
+
 //        addMenuItem(new MenuLink(new JsId(ProfileListingPage.TOKEN), _("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
