@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2018-01-31 04:10-0500\n"
+"PO-Revision-Date: 2018-02-02 20:48-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -117,6 +117,12 @@ msgstr "このマークはあなただけに指名されたタスクを示しま
 
 msgid "Available tasks"
 msgstr "応受援タスク"
+
+msgid "BDM access control file can now be installed."
+msgstr ""
+
+msgid "BDM access control file must be deleted."
+msgstr ""
 
 msgid "BDM file"
 msgstr ""
@@ -449,6 +455,9 @@ msgid "Install a BDM file"
 msgstr ""
 
 msgid "Installing Business Data Model"
+msgstr ""
+
+msgid "Installing or updating the BDM implies to shut down all BPM services."
 msgstr ""
 
 msgid "Items per page"
@@ -933,6 +942,9 @@ msgstr "To do"
 
 msgid "To do so, go to"
 msgstr "これを行うには、次へ進む: "
+
+msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
+msgstr ""
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "フォームに記入するには、このタスクを引き受ける必要があります。つまり、あなただけがこのタスクを実行できることになります。もう一度、チームで実行できるようにする（つまり、応受援タスクにする）には、そのタスクを手放します。"
