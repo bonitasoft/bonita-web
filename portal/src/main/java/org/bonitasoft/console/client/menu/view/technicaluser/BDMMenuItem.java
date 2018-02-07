@@ -23,7 +23,7 @@ import org.bonitasoft.web.toolkit.client.ui.component.menu.MenuLink;
 public class BDMMenuItem extends MenuLink {
 
 	public BDMMenuItem() {
-		super(new JsId(AngularIFrameView.BDM_TOKEN), _("Business Data Model"), _("Business Data Model"), AngularIFrameView.BDM_TOKEN);
+		super(new JsId(AngularIFrameView.BDM_TOKEN), _("BDM"), _("Business Data Model"), AngularIFrameView.BDM_TOKEN);
     }
 
 }
