@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-24 05:07+0100\n"
-"PO-Revision-Date: 2018-01-29 20:43-0500\n"
+"POT-Creation-Date: 2018-02-06 05:07+0100\n"
+"PO-Revision-Date: 2018-02-11 20:41-0500\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -178,9 +178,6 @@ msgstr "'%themeName%' is used as Theme for:"
 msgid "?"
 msgstr "?"
 
-msgid "A Business Data Model has a .%fileExtension% extension"
-msgstr "A Business Data Model has a .%fileExtension% extension"
-
 msgid "A business archive has a .bar extension"
 msgstr "A business archive has a .bar extension"
 
@@ -216,9 +213,6 @@ msgstr "Actions"
 
 msgid "Activate"
 msgstr "Activate"
-
-msgid "Activate a BDM"
-msgstr "Activate a BDM"
 
 msgid "Activate selected users"
 msgstr "Activate selected users"
@@ -364,11 +358,6 @@ msgstr "All processes are automatically paused."
 msgid "An archive has a .zip extension"
 msgstr "An archive has a .zip extension"
 
-msgid "An error occurred when deploying the Business Data Model.\n"
-msgstr "An error occurred when deploying the Business Data Model.\n"
-"Consult the logs for more information."
-"Pour plus d’informations, consultez les logs."
-
 msgid "An error occurred while creating a definition"
 msgstr "An error occurred while creating a definition"
 
@@ -443,9 +432,6 @@ msgstr "Avatar"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "BDM access control"
-msgstr "BDM access control"
-
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "BPM Services are paused. You may need to resume them."
 
@@ -469,9 +455,6 @@ msgstr "Browse your computer and select the business archive containing the proc
 
 msgid "Business Data Model"
 msgstr "Business Data Model"
-
-msgid "Business Data Model definition"
-msgstr "Business Data Model definition"
 
 msgid "Business archive"
 msgstr "Business archive"
@@ -580,9 +563,6 @@ msgstr "Click here to choose your file. "
 
 msgid "Click here to go to Profile listing page"
 msgstr "Click here to go to Profile listing page"
-
-msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
-msgstr "Click on Install to complete the deployment or Cancel to stop the deployment."
 
 msgid "Click to export this page"
 msgstr "Click to export this page"
@@ -1112,12 +1092,6 @@ msgstr "Getting more information about the specified case"
 msgid "Go back to previous view"
 msgstr "Go back to previous view"
 
-msgid "Go to BPM Services"
-msgstr "Go to BPM Services"
-
-msgid "Go to Configuration > BPM Services."
-msgstr "Go to Configuration > BPM Services."
-
 msgid "Go to page %pagenumber%"
 msgstr "Go to page %pagenumber%"
 
@@ -1186,17 +1160,11 @@ msgstr "Import / Export"
 msgid "Import an existing organization"
 msgstr "Import an existing organization"
 
-msgid "Import and activate a new Business Data Model"
-msgstr "Import and activate a new Business Data Model"
-
 msgid "Import or export data"
 msgstr "Import or export data"
 
 msgid "Import/Export"
 msgstr "Import/Export"
-
-msgid "Import/export BDM access control"
-msgstr "Import/export BDM access control"
 
 msgid "Import/export organization"
 msgstr "Import/export organization"
@@ -1215,9 +1183,6 @@ msgstr "Install"
 
 msgid "Install a process"
 msgstr "Install a process"
-
-msgid "Install the Business Data Model"
-msgstr "Install the Business Data Model"
 
 msgid "Installed by"
 msgstr "Installed by"
@@ -1330,8 +1295,8 @@ msgstr "MM/dd/yyyy h:mm:ss a"
 msgid "MMMM dd, yyyy"
 msgstr "MMMM dd, yyyy"
 
-msgid "Make sure all your processes are compatible with the new Business Data Model."
-msgstr "Make sure all your processes are compatible with the new Business Data Model."
+msgid "Manage BDM"
+msgstr "Manage BDM"
 
 msgid "Manage Look and Feel"
 msgstr "Manage Look and Feel"
@@ -1503,9 +1468,6 @@ msgstr "October"
 
 msgid "Ok"
 msgstr "Ok"
-
-msgid "Only one Business Data Model can be active at a time."
-msgstr "Only one Business Data Model can be active at a time."
 
 msgid "Only the technical user can log in to the Portal."
 msgstr "Only the technical user can log in to the Portal."
@@ -1727,9 +1689,6 @@ msgstr "Rest API extension"
 
 msgid "Resume"
 msgstr "Resume"
-
-msgid "Resume BPM Services"
-msgstr "Resume BPM Services"
 
 msgid "Role"
 msgstr "Role"
@@ -1991,20 +1950,6 @@ msgstr "Technical user warning"
 
 msgid "Th"
 msgstr "Th"
-
-msgid "The BPM Services must be paused"
-msgstr "The BPM Services must be paused"
-
-msgid "The BPM Services must be paused before importing a new Business Data Model."
-msgstr "The BPM Services must be paused before importing a new Business Data Model."
-
-msgid "The Business Data Model was successfully installed."
-msgstr "The Business Data Model was successfully installed."
-
-msgid "The Business Data Model will now be installed.\n"
-msgstr "The Business Data Model will now be installed.\n"
-"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-"Les tables existantes dans la base de données métier seront définitivement modifiées. Cette action n'est pas réversible. Il est fortement recommandé de sauvegarder la base de données avant l'installation."
 
 msgid "The Process cannot be enabled"
 msgstr "The Process cannot be enabled"
@@ -2435,9 +2380,6 @@ msgstr "Welcome to"
 
 msgid "Welcome: "
 msgstr "Welcome: "
-
-msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
-msgstr "When you are done, the BPM Services must be resumed to allow users to log in again."
 
 msgid "When you resume the services, tell your users that they can log back in to the Portal."
 msgstr "When you resume the services, tell your users that they can log back in to the Portal."
