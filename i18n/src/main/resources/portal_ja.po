@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-24 05:07+0100\n"
-"PO-Revision-Date: 2018-01-29 20:49-0500\n"
+"POT-Creation-Date: 2018-02-06 05:07+0100\n"
+"PO-Revision-Date: 2018-02-11 20:45-0500\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -178,9 +178,6 @@ msgstr "'%themeName%' テーマの使用先："
 msgid "?"
 msgstr "？"
 
-msgid "A Business Data Model has a .%fileExtension% extension"
-msgstr "ビジネス データ モデルは、.%fileExtension% 拡張子を持ちます"
-
 msgid "A business archive has a .bar extension"
 msgstr "ビジネス アーカイブは、.bar の拡張子持っています。"
 
@@ -216,9 +213,6 @@ msgstr "アクション"
 
 msgid "Activate"
 msgstr "アクティベート"
-
-msgid "Activate a BDM"
-msgstr "BDM をアクティブにします"
 
 msgid "Activate selected users"
 msgstr "選択した利用者を有効にする"
@@ -364,11 +358,6 @@ msgstr "すべてのプロセスが自動的に一時停止します。"
 msgid "An archive has a .zip extension"
 msgstr "アーカイブは .zip 拡張子を持ちます"
 
-msgid "An error occurred when deploying the Business Data Model.\n"
-"Consult the logs for more information."
-msgstr "ビジネス データ モデルをデプロイ中にエラーが発生しました。\n"
-"詳細についてはログを参照してください。"
-
 msgid "An error occurred while creating a definition"
 msgstr "定義の作成中にエラーが発生しました"
 
@@ -443,9 +432,6 @@ msgstr "アバター"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "BDM access control"
-msgstr "BDM のアクセス制御"
-
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "BPM サービスは一時停止します。それらを再開する必要があります。"
 
@@ -469,9 +455,6 @@ msgstr "お使いのコンピューターを閲覧し、インストールする
 
 msgid "Business Data Model"
 msgstr "ビジネス データ モデル"
-
-msgid "Business Data Model definition"
-msgstr "ビジネス データ モデル定義"
 
 msgid "Business archive"
 msgstr "ビジネス アーカイブ"
@@ -580,9 +563,6 @@ msgstr "あなたのファイルを選択するには、ここをクリックし
 
 msgid "Click here to go to Profile listing page"
 msgstr "ページ上のプロファイルに移動するにはここをクリックします"
-
-msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
-msgstr "デプロイを完了するには「インストール」、中止するには「キャンセル」をクリックします。"
 
 msgid "Click to export this page"
 msgstr "このページをエクスポートするためにクリック"
@@ -1112,12 +1092,6 @@ msgstr "指定した案件に関する詳細情報の入手"
 msgid "Go back to previous view"
 msgstr "以前のビューに戻る"
 
-msgid "Go to BPM Services"
-msgstr "BPM サービスに進む"
-
-msgid "Go to Configuration > BPM Services."
-msgstr "構成設定 > BPM サービスに進む"
-
 msgid "Go to page %pagenumber%"
 msgstr "ページ %pagenumber% に進む"
 
@@ -1186,17 +1160,11 @@ msgstr "インポート/エクスポート"
 msgid "Import an existing organization"
 msgstr "既存の組織をインポートします。"
 
-msgid "Import and activate a new Business Data Model"
-msgstr "新しいビジネス データ モデルをインポートし、アクティブにします"
-
 msgid "Import or export data"
 msgstr "インポートまたはエクスポートするデータ"
 
 msgid "Import/Export"
 msgstr "インポート/エクスポート"
-
-msgid "Import/export BDM access control"
-msgstr " BDM のアクセス制御をインポート/エクスポート"
 
 msgid "Import/export organization"
 msgstr "組織をインポート/エクスポート"
@@ -1215,9 +1183,6 @@ msgstr "インストール"
 
 msgid "Install a process"
 msgstr "プロセスをインストール する"
-
-msgid "Install the Business Data Model"
-msgstr "ビジネス データ モデルをインストール"
 
 msgid "Installed by"
 msgstr "インストールした人"
@@ -1330,8 +1295,8 @@ msgstr "yyyy/MM/dd HH:mm:ss"
 msgid "MMMM dd, yyyy"
 msgstr "yyyy年MM月dd日"
 
-msgid "Make sure all your processes are compatible with the new Business Data Model."
-msgstr "すべてのプロセスは、新しいビジネス データ モデルと互換性があることを確認します。"
+msgid "Manage BDM"
+msgstr ""
 
 msgid "Manage Look and Feel"
 msgstr "ルック＆フィールの管理"
@@ -1503,9 +1468,6 @@ msgstr "10月"
 
 msgid "Ok"
 msgstr "OK"
-
-msgid "Only one Business Data Model can be active at a time."
-msgstr "一度にアクティブにできるビジネス データ モデルは1 つだけです。"
 
 msgid "Only the technical user can log in to the Portal."
 msgstr "テクニカル ユーザーのみ、ポータルにログインすることができます。"
@@ -1727,9 +1689,6 @@ msgstr "REST API 拡張"
 
 msgid "Resume"
 msgstr "再開する"
-
-msgid "Resume BPM Services"
-msgstr "BPM サービスの再開"
 
 msgid "Role"
 msgstr "役割"
@@ -1992,20 +1951,6 @@ msgstr "テクニカルなユーザー警告"
 
 msgid "Th"
 msgstr "木"
-
-msgid "The BPM Services must be paused"
-msgstr "BPM サービスを一時停止する必要があります。"
-
-msgid "The BPM Services must be paused before importing a new Business Data Model."
-msgstr "BPM サービスは、新しいビジネス データ モデルをインポートする前に一時停止する必要があります。"
-
-msgid "The Business Data Model was successfully installed."
-msgstr "ビジネス データ モデルが正常にインストールされました。"
-
-msgid "The Business Data Model will now be installed.\n"
-"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "ビジネス データ モデルがインストールされるようになりました。 \n"
-"※注意： 既存のビジネス データベース テーブルが確定し変更されます。このアクションを元に戻すことはできません。続行する前にデータベースをバックアップすることを強くお勧めします。"
 
 msgid "The Process cannot be enabled"
 msgstr "プロセスを有効にすることができません"
@@ -2436,9 +2381,6 @@ msgstr "ようこそ"
 
 msgid "Welcome: "
 msgstr "ようこそ："
-
-msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
-msgstr "終わったら、ユーザーが再度ログインできるように BPM サービスを再開する必要があります。"
 
 msgid "When you resume the services, tell your users that they can log back in to the Portal."
 msgstr "サービスが再開したら、ポータルにログインすることができることを利用者に伝えてください。"

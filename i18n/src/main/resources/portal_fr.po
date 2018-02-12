@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-24 05:07+0100\n"
-"PO-Revision-Date: 2018-01-29 20:43-0500\n"
+"POT-Creation-Date: 2018-02-06 05:07+0100\n"
+"PO-Revision-Date: 2018-02-11 20:41-0500\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -178,9 +178,6 @@ msgstr "«%themeName% » est utilisé comme thème d'application pour :"
 msgid "?"
 msgstr "?"
 
-msgid "A Business Data Model has a .%fileExtension% extension"
-msgstr "Un Modèle de Données Métier a une extension .%fileExtension%"
-
 msgid "A business archive has a .bar extension"
 msgstr "Une archive a .bar comme extension"
 
@@ -216,9 +213,6 @@ msgstr "Actions"
 
 msgid "Activate"
 msgstr "Activer"
-
-msgid "Activate a BDM"
-msgstr "Activer un MDM"
 
 msgid "Activate selected users"
 msgstr "Activer les utilisateurs sélectionnés"
@@ -364,11 +358,6 @@ msgstr "Tous les processus sont automatiquement mis en pause."
 msgid "An archive has a .zip extension"
 msgstr "Une archive a une extension .zip"
 
-msgid "An error occurred when deploying the Business Data Model.\n"
-"Consult the logs for more information."
-msgstr "Une erreur s’est produite lors du déploiement du Modèle de Données Métier (ou BDM).\n"
-"Pour plus d’informations, consultez les logs."
-
 msgid "An error occurred while creating a definition"
 msgstr "Une erreur s'est produite lors de la création d'une définition"
 
@@ -443,9 +432,6 @@ msgstr "Avatar"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "BDM access control"
-msgstr "Contrôle d’accès au BDM"
-
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "Les services BPM sont suspendus. Vous devriez peut-être les relancer."
 
@@ -469,9 +455,6 @@ msgstr "Recherchez et sélectionnez le fichier contenant la définition du proce
 
 msgid "Business Data Model"
 msgstr "Modèle de Données Métier"
-
-msgid "Business Data Model definition"
-msgstr "Définition du Modèle de Données Métier (BDM)"
 
 msgid "Business archive"
 msgstr "Archive"
@@ -580,9 +563,6 @@ msgstr "Cliquez pour choisir votre fichier. "
 
 msgid "Click here to go to Profile listing page"
 msgstr "Cliquez ici pour aller à la page de gestion des profils"
-
-msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
-msgstr "Cliquez sur Installer pour finaliser le déploiement ou sur Annuler pour l'interrompre."
 
 msgid "Click to export this page"
 msgstr "Cliquez pour exporter cette page"
@@ -1112,12 +1092,6 @@ msgstr "Obtenir plus d'informations sur le cas spécifique"
 msgid "Go back to previous view"
 msgstr "Retour à la page précédente"
 
-msgid "Go to BPM Services"
-msgstr "Consultez la page Services BPM"
-
-msgid "Go to Configuration > BPM Services."
-msgstr "Consultez la page Configuration > Services BPM."
-
 msgid "Go to page %pagenumber%"
 msgstr "Allez à la page %pagenumber%"
 
@@ -1186,17 +1160,11 @@ msgstr "Importer / Exporter"
 msgid "Import an existing organization"
 msgstr "Importer une organisation existante"
 
-msgid "Import and activate a new Business Data Model"
-msgstr "Importer et activer un nouveau Modèle de Données Métier"
-
 msgid "Import or export data"
 msgstr "Importer ou exporter des données"
 
 msgid "Import/Export"
 msgstr "Importer/Exporter"
-
-msgid "Import/export BDM access control"
-msgstr "Importation/exportation du fichier de contrôle d’accès au BDM"
 
 msgid "Import/export organization"
 msgstr "Importer/exporter une organisation"
@@ -1215,9 +1183,6 @@ msgstr "Installer"
 
 msgid "Install a process"
 msgstr "Installer un processus"
-
-msgid "Install the Business Data Model"
-msgstr "Installer le Modèle de Données Métier"
 
 msgid "Installed by"
 msgstr "Installé par"
@@ -1330,8 +1295,8 @@ msgstr "dd/mm/yyyy hh:MM:ss"
 msgid "MMMM dd, yyyy"
 msgstr "dd/MM/yyyy"
 
-msgid "Make sure all your processes are compatible with the new Business Data Model."
-msgstr "Vérifiez que tous les processus sont compatibles avec le nouveau Modèle de Données Métier."
+msgid "Manage BDM"
+msgstr ""
 
 msgid "Manage Look and Feel"
 msgstr "Gérer le look and feel"
@@ -1503,9 +1468,6 @@ msgstr "Octobre"
 
 msgid "Ok"
 msgstr "Ok"
-
-msgid "Only one Business Data Model can be active at a time."
-msgstr "Il ne peut y avoir qu'un seul Modèle de Données Métier actif à la fois."
 
 msgid "Only the technical user can log in to the Portal."
 msgstr "Seul l'utilisateur technique peut se connecter au Portal."
@@ -1727,9 +1689,6 @@ msgstr "Extension des API REST"
 
 msgid "Resume"
 msgstr "Reprendre"
-
-msgid "Resume BPM Services"
-msgstr "Relancer les services BPM"
 
 msgid "Role"
 msgstr "Rôle"
@@ -1991,20 +1950,6 @@ msgstr "AVERTISSEMENT: utilisateur technique"
 
 msgid "Th"
 msgstr "Jeu"
-
-msgid "The BPM Services must be paused"
-msgstr "Les Services BPM doivent être suspendus"
-
-msgid "The BPM Services must be paused before importing a new Business Data Model."
-msgstr "Les Services BPM doivent être suspendus avant l'import d'un nouveau Modèle de Données Métier."
-
-msgid "The Business Data Model was successfully installed."
-msgstr "Le Modèle de Données Métier a été installé avec succès."
-
-msgid "The Business Data Model will now be installed.\n"
-"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "Le Modèle de Données Métier va maintenant être installé. \n"
-"Les tables existantes dans la base de données métier seront définitivement modifiées. Cette action n'est pas réversible. Il est fortement recommandé de sauvegarder la base de données avant l'installation."
 
 msgid "The Process cannot be enabled"
 msgstr "Le processus ne peut être activé"
@@ -2435,9 +2380,6 @@ msgstr "Bienvenue sur"
 
 msgid "Welcome: "
 msgstr "Bienvenue : "
-
-msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
-msgstr "Lorsque vous avez terminé, n'oubliez pas de relancer les Services BPM pour permettre aux utilisateurs de se connecter à nouveau."
 
 msgid "When you resume the services, tell your users that they can log back in to the Portal."
 msgstr "Lorsque vous relancez les services, prévenez les utilisateurs qu'ils peuvent se connecter à nouveau."

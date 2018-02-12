@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-02-02 20:43-0500\n"
+"PO-Revision-Date: 2018-02-11 20:41-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -457,7 +457,7 @@ msgstr ""
 msgid "Installing Business Data Model"
 msgstr ""
 
-msgid "Installing or updating the BDM implies to shut down all BPM services."
+msgid "Installing or updating the BDM implies to be logged in as Technical User, and to shut down all BPM services."
 msgstr ""
 
 msgid "Items per page"
