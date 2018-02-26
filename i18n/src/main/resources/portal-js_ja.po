@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2018-02-11 20:45-0500\n"
+"PO-Revision-Date: 2018-02-26 10:33-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -121,9 +121,6 @@ msgstr "応受援タスク"
 msgid "BDM access control file can now be installed."
 msgstr ""
 
-msgid "BDM access control file must be deleted."
-msgstr ""
-
 msgid "BDM file"
 msgstr ""
 
@@ -138,6 +135,9 @@ msgstr ""
 
 msgid "Back"
 msgstr "戻る"
+
+msgid "Before updating the BDM, access control file should be deleted."
+msgstr ""
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
@@ -452,6 +452,12 @@ msgid "Install Business Data Model"
 msgstr ""
 
 msgid "Install a BDM file"
+msgstr ""
+
+msgid "Installed"
+msgstr ""
+
+msgid "Installing"
 msgstr ""
 
 msgid "Installing Business Data Model"
@@ -1080,12 +1086,6 @@ msgstr "アプリケーション記述子は、部分的にインポートされ
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
-
-msgid "installed"
-msgstr ""
-
-msgid "installing"
-msgstr ""
 
 msgid "of"
 msgstr "日目/"

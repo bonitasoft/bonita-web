@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-02-11 20:41-0500\n"
+"PO-Revision-Date: 2018-02-26 10:28-0500\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -121,9 +121,6 @@ msgstr "Tâches disponibles"
 msgid "BDM access control file can now be installed."
 msgstr ""
 
-msgid "BDM access control file must be deleted."
-msgstr ""
-
 msgid "BDM file"
 msgstr ""
 
@@ -138,6 +135,9 @@ msgstr ""
 
 msgid "Back"
 msgstr "Précédent"
+
+msgid "Before updating the BDM, access control file should be deleted."
+msgstr ""
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
@@ -452,6 +452,12 @@ msgid "Install Business Data Model"
 msgstr ""
 
 msgid "Install a BDM file"
+msgstr ""
+
+msgid "Installed"
+msgstr ""
+
+msgid "Installing"
 msgstr ""
 
 msgid "Installing Business Data Model"
@@ -1080,12 +1086,6 @@ msgstr "descripteur d'application a été partiellement importé. Les composants
 
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "descripteur d'application a été importé avec succès, avec son menu de navigation et les liens vers les pages utilisées."
-
-msgid "installed"
-msgstr ""
-
-msgid "installing"
-msgstr ""
 
 msgid "of"
 msgstr "de"
