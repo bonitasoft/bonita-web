@@ -72,6 +72,7 @@ public class CacheFilterTest {
         matchExcludePattern("http://localhost:8080/bonita/portal/resource/page/content/", true);
         matchExcludePattern("http://localhost:8080/bonita/portal/resource/page/content/image/logo.png", false);
         matchExcludePattern("http://localhost:8080/portal/themeResource/resource", false);
+        matchExcludePattern("http://localhost:8080/portal/custom-page/API/identity/user/1", true);
     }
 
     @Test
