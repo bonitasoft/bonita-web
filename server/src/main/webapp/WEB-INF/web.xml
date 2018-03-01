@@ -99,7 +99,7 @@
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)</param-value>
+            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/API/)</param-value>
         </init-param -->
     </filter>
 
@@ -114,6 +114,14 @@
             <param-name>alwaysCaching</param-name>
             <param-value>false</param-value>
         </init-param>
+        <!--
+            We need to let a set of URL not cached (the ones serving the HTML content) in order to handle the sessions timeout
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/API/)</param-value>
+        </init-param -->
     </filter>
     <!-- BPM URLSupport filter -->
     <filter>
@@ -139,24 +147,9 @@
         <url-pattern>/portal/documentDownload</url-pattern>
         <url-pattern>/portal/homepage</url-pattern>
         <url-pattern>/portal/runreport</url-pattern>
-        <url-pattern>/API/documentDownload</url-pattern>
-        <url-pattern>/API/identity/*</url-pattern>
-        <url-pattern>/API/customuserinfo/*</url-pattern>
-        <url-pattern>/API/system/session/*</url-pattern>
-        <url-pattern>/API/system/tenant/*</url-pattern>
-        <url-pattern>/API/userXP/*</url-pattern>
-        <url-pattern>/API/portal/*</url-pattern>
-        <url-pattern>/API/bpm/*</url-pattern>
-        <url-pattern>/API/bdm/*</url-pattern>
-        <url-pattern>/API/living/*</url-pattern>
-        <url-pattern>/API/tenant/*</url-pattern>
-        <url-pattern>/API/platform/*</url-pattern>
-        <url-pattern>/API/monitoring/*</url-pattern>
-        <url-pattern>/API/form/*</url-pattern>
-        <url-pattern>/API/extension/*</url-pattern>
-        <url-pattern>/API/avatars/*</url-pattern>
-        <url-pattern>/API/formsDocumentImage</url-pattern>
+        <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
+        <url-pattern>/portal/custom-page/API/*</url-pattern>
         <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
         <!-- New manage on no cache Filter -->
@@ -267,7 +260,7 @@
     </filter-mapping>
 
     <!-- Cache Filter Mapping End -->
-    <!--  Filter for restlet URLs -->
+    <!--  Filter for Toolkit API URLs -->
     <filter-mapping>
         <filter-name>UrlRewriteFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -299,8 +292,9 @@
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
     </servlet>
+    <!-- Restlet servlet needs its own declaration for each URL pattern otherwise, only the first pattern works -->
     <servlet>
-        <servlet-name>RestletServletCustomPage</servlet-name>
+        <servlet-name>CustomPageRestletServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestletApplicationServlet</servlet-class>
     </servlet>
     <servlet>
@@ -596,8 +590,9 @@
         <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/API/*</url-pattern>
     </servlet-mapping>
+    <!-- Restlet servlet needs its own declaration for each URL pattern otherwise, only the first pattern works -->
     <servlet-mapping>
-        <servlet-name>RestletServletCustomPage</servlet-name>
+        <servlet-name>CustomPageRestletServlet</servlet-name>
         <url-pattern>/portal/custom-page/API/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
