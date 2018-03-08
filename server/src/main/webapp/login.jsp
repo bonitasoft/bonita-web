@@ -81,6 +81,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Bonita Portal</title>
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
@@ -118,14 +119,15 @@
 
 	<div id="floater"></div>
 
-	<div id="LoginFormContainer" >
+	<div class="LoginFormWrapper">
+	    <div id="LoginFormContainer" >
 		<div id="logo">
 			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
 
 		<div class="body">
 			<form id="LoginForm" action="<%=actionUrl%>" method="post" autocomplete="off">
-                
+
 				<div class="header">
 					<h2><%=i18n._("Login form")%></h2>
 				</div>
@@ -178,6 +180,7 @@
 				</div>
 			</form>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
