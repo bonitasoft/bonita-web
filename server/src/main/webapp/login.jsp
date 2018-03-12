@@ -85,14 +85,10 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Bonita Portal</title>
 <link rel="icon" type="image/png" href="images/favicon2.ico" />
-<!-- Load LESS CSS -->
-<script type="text/javascript" src="portal/scripts/includes/array.prototype.js"></script>
 <link rel="stylesheet" type="text/css" href="<%= styleUrl %>&location=css/login.css"/>
 
-
-<script type="text/javascript" src="portal/scripts/jquery/jquery-1.6.4.js"></script>
 <script>
-	$(document).ready(function() {
+  document.addEventListener("DOMContentLoaded", function() {
 		if (window != window.top) {
 			try {
 				if (window.frameElement.id == "bonitaframe") {
@@ -105,8 +101,8 @@
 			}
 		}
 		/* Add url hash to form action url */
-		var form = $('#LoginForm');
-		form.attr('action', form.attr('action') + window.location.hash);
+		var form = document.getElementById('LoginForm');
+		form.setAttribute('action', form.getAttribute('action') + window.location.hash);
 	});
 </script>
 
