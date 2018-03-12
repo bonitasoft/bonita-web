@@ -20,7 +20,7 @@
 <%@page import="org.bonitasoft.console.common.server.jsp.JSPI18n"%>
 <%
     JSPUtils JSP = new JSPUtils(request, session);
-    JSPI18n i18n = new JSPI18n(JSP); 
+    JSPI18n i18n = new JSPI18n(JSP);
 
     // Build Action URL
     final String tenantId = StringEscapeUtils.escapeHtml4(JSP.getParameter("tenant"));
@@ -32,7 +32,7 @@
         actionUrl.append("tenant=").append(tenantId).append("&");
 		styleUrl.append("&tenant=").append(tenantId);
     }
-    
+
     if (redirectUrl != null) {
     	if (tenantId != null) {
     		redirectUrl = redirectUrl.replaceAll("[\\?&]tenant=\\d+$", "").replaceAll("tenant=\\d+&", "");
@@ -111,39 +111,70 @@
 
 </head>
 <body id="LoginPage">
-	<div id="LoginHeader"><h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita Portal") %></h1></div>
+
+	<div id="LoginHeader">
+		<h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita Portal") %></h1>
+	</div>
+
 	<div id="floater"></div>
+
 	<div id="LoginFormContainer" >
 		<div id="logo">
 			<img src="<%= styleUrl %>&location=skin/images/login-logo.png"/>
 		</div>
+
 		<div class="body">
 			<form id="LoginForm" action="<%=actionUrl%>" method="post" autocomplete="off">
+                
 				<div class="header">
 					<h2><%=i18n._("Login form")%></h2>
 				</div>
+
 				<p class="error"><%=errorMessage.length() > 0 ? errorMessage  : ""%></p>
+
 				<div class="formentries">
+
 					<div class="formentry" title="<%=i18n._("Enter your login (username)")%>">
 						<div class="label">
 							<label for="username"><%=i18n._("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Username")%>" id="username" name="username" value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>" placeholder="<%=i18n._("User")%>" type="text" autocomplete="off" tabindex="1" maxlength="255" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Username")%>"
+                                   id="username"
+                                   name="username"
+                                   value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>"
+                                   placeholder="<%=i18n._("User")%>"
+                                   type="text"
+                                   autocomplete="off"
+                                   tabindex="1"
+                                   maxlength="255" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
+                            />
 						</div>
 					</div>
+
 					<div class="formentry" title="<%=i18n._("Enter your password")%>">
 						<div class="label">
 							<label for="password"><%=i18n._("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Password")%>" id="password" name="password" type="password" tabindex="2" autocomplete="off" maxlength="50" placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+							<input title="<%=i18n._("Password")%>"
+                                   id="password"
+                                   name="password"
+                                   type="password"
+                                   tabindex="2"
+                                   autocomplete="off"
+                                   maxlength="50"
+                                   placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
+                            />
 						</div>
 						<input name="_l" type="hidden" value="<%=i18n.getLocale()%>" />
 					</div>
+
 				</div>
 				<div class="formactions">
-					<input type="submit" value="<%=i18n._("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%> />
+					<input type="submit"
+                           value="<%=i18n._("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
+                    />
 				</div>
 			</form>
 		</div>
