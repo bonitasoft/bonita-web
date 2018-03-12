@@ -11,6 +11,7 @@ main.less:                              Used to compile the LESS files into CSS.
 css:                                    Directory containing default CSS files used by the process forms.
 css/bonita_forms.css:                   Default CSS for process forms.
 css/footer.css:                         CSS for footers in process forms.
+css/login.css:                          CSS for Bonita Portal login page.
 images:                                 Directory of images. These images are the size needed for the standard layout. If you change the layout, you might need to adjust the images sizes. If you want to use an image that is a different size, you might need to modify the layout.
 init/reset.less:                        For browser compatibility, do not change.
 scripts:                                Directory of scripts, including JQuery scripts.
