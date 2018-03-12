@@ -1,0 +1,356 @@
+/* CSS file used by login.jsp */
+
+/* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Fonts Signika-Regular and Signika-Semibold */
+@font-face {
+  font-family: 'Signika-Regular';
+  src: url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.eot");
+  src: local('☺'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.woff") format('woff'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.ttf") format('truetype'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.svg") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Signika-Semibold';
+  src: url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.eot");
+  src: local('☺'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.woff") format('woff'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.ttf") format('truetype'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.svg") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #6e6f6b;
+  font-size: 14px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+h7 {
+  font-family: "Signika-Semibold", sans-serif, sans-serif;
+  font-weight: 300;
+  color: #dd0033;
+  margin: 0;
+}
+
+#LoginPage {
+  background: #ffffff;
+}
+#LoginPage #floater {
+  float: left;
+  height: 50%;
+  margin-bottom: -191.5px;
+}
+#LoginPage #LoginHeader {
+  position: relative;
+  background-color: #dd0033;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #dd0033 0%, #dd0033 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dd0033), color-stop(100%, #dd0033));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #dd0033 0%, #dd0033 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #dd0033 0%, #dd0033 100%);
+  /* Opera 11.10+ */
+  background: linear-gradient(to bottom, #dd0033 0%, #dd0033 100%);
+  /* W3C */
+  padding: 10px 0;
+}
+#LoginPage #LoginHeader h1 {
+  margin: 0;
+  color: #ffffff;
+  text-align: center;
+  font-size: 100%;
+}
+#LoginPage #LoginHeader h1 span {
+  font-style: italic;
+  font-weight: normal;
+}
+#LoginPage #LoginFormContainer {
+  -webkit-box-shadow: 0 0 10px #dfdede;
+  -moz-box-shadow: 0 0 10px #dfdede;
+  -o-box-shadow: 0 0 10px #dfdede;
+  box-shadow: 0 0 10px #dfdede;
+  clear: both;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  text-align: left;
+  background: #ffffff;
+  width: 470px;
+  min-height: 215px;
+  padding: 40px 40px 40px 40px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #bab9b9;
+  max-width: 66%;
+  word-wrap: break-word;
+}
+#LoginPage #LoginFormContainer #logo {
+  width: 220px;
+  height: 215px;
+  float: left;
+}
+#LoginPage #LoginFormContainer p.error {
+  padding: 10px 15px;
+  color: #dd0033;
+  font-size: 12px;
+}
+#LoginPage #LoginFormContainer > .body {
+  border-left: 1px solid #e4e4e4;
+  width: 220px;
+  padding: 0 0 0 25px;
+  float: left;
+}
+#LoginPage #LoginFormContainer > .body .header h2 {
+  color: #2c3e50;
+  text-align: right;
+}
+#LoginPage #LoginFormContainer > .body .formentry {
+  padding: 0 0 15px 0;
+}
+#LoginPage #LoginFormContainer > .body .formentry .label {
+  position: relative;
+  color: transparent !important;
+  font-size: 0.0000001% ;
+  font-size: 100%;
+  /* only for ie8 - show labels */
+}
+#LoginPage #LoginFormContainer > .body .formentry .label label {
+  color: transparent !important;
+  font-size: 0.0000001% ;
+  color: #2c3e50;
+}
+#LoginPage #LoginFormContainer > .body .formentry .input {
+  position: relative;
+}
+#LoginPage #LoginFormContainer > .body .formentry .input input[type=text],
+#LoginPage #LoginFormContainer > .body .formentry .input input[type=password] {
+  line-height: 35px;
+  border: 1px solid #dedcdc;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 30px 0 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  position: relative;
+}
+#LoginPage #LoginFormContainer > .body .formentry .input #password {
+  background: url("themeResource?theme=portal&location=skin/images/login-input-password.png") white no-repeat right center ;
+}
+#LoginPage #LoginFormContainer > .body .formentry .input #username {
+  background: url("themeResource?theme=portal&location=skin/images/login-input-username.png") white no-repeat right center ;
+}
+#LoginPage #LoginFormContainer > .body .formactions {
+  margin: 0;
+  text-align: right;
+}
+#LoginPage #LoginFormContainer > .body .formactions button,
+#LoginPage #LoginFormContainer > .body .formactions input[type="submit"],
+#LoginPage #LoginFormContainer > .body .formactions input[type="button"],
+#LoginPage #LoginFormContainer > .body .formactions a.button {
+  position: relative;
+  color: #ffffff;
+  padding: 5px 10px;
+  outline-color: #ff1148;
+  min-width: 90px;
+  border: 1px solid;
+  border-color: #dd0033;
+  text-transform: uppercase;
+  font-family: "Signika-Semibold", sans-serif;
+  font-size: 100%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  height: 18px;
+  line-height: 18px !important;
+  text-decoration: none;
+  vertical-align: middle;
+  text-align: center;
+  display: -moz-inline-stack;
+  display: inline-block;
+  *display: inline;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #dd0033;
+  overflow: hidden;
+  zoom: 1;
+  height: inherit;
+  cursor: pointer;
+}
+
+#LoginPage #LoginFormContainer > .body .formactions button:hover,
+#LoginPage #LoginFormContainer > .body .formactions input[type="submit"]:hover,
+#LoginPage #LoginFormContainer > .body .formactions input[type="button"]:hover,
+#LoginPage #LoginFormContainer > .body .formactions a.button:hover,
+#LoginPage #LoginFormContainer > .body .formactions button:focus,
+#LoginPage #LoginFormContainer > .body .formactions input[type="submit"]:focus,
+#LoginPage #LoginFormContainer > .body .formactions input[type="button"]:focus,
+#LoginPage #LoginFormContainer > .body .formactions a.button:focus,
+#LoginPage #LoginFormContainer > .body .formactions button:active,
+#LoginPage #LoginFormContainer > .body .formactions input[type="submit"]:active,
+#LoginPage #LoginFormContainer > .body .formactions input[type="button"]:active {
+  color: #ffffff;
+  background-color: #aa0027;
+  border-color: #a00025;
+}
+
+form .formentries .formentry .input input {
+  height: 35px;
+  font-size: 114.28571429%;
+}
+
+form .formentries .formentry {
+  width: 100%;
+}
+
+form .formentries .formentry + .formentry {
+  margin: 20px 0 0 0;
+}
+
+form .formentries .formentry .label {
+  margin: 0 0 10px 0;
+}
