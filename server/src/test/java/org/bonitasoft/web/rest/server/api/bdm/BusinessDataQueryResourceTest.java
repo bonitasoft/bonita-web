@@ -22,6 +22,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.CommandAPI;
@@ -38,6 +39,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.restlet.Response;
+import org.restlet.data.Conditions;
 import org.restlet.data.Header;
 import org.restlet.data.Status;
 import org.restlet.resource.ServerResource;
@@ -84,9 +86,11 @@ public class BusinessDataQueryResourceTest extends RestletTest {
         when(commandAPI.execute(anyString(), anyMapOf(String.class, Serializable.class))).then(answer);
 
         //then
-        final Response response = request(VALID_BDM_REQUEST).get();
-        Header expectedContentRangeHeader=new Header("Content-range", "3-5/4");
-        Header expectedContentTypeHeader=new Header("Content-type", "application/json; charset=UTF-8");
+        Conditions modifiedSinceConditions = new Conditions();
+        modifiedSinceConditions.setModifiedSince(new Date());
+        final Response response = request(VALID_BDM_REQUEST).setConditions(modifiedSinceConditions).get();
+        Header expectedContentRangeHeader = new Header("Content-range", "3-5/4");
+        Header expectedContentTypeHeader = new Header("Content-type", "application/json; charset=UTF-8");
         ResponseAssert.assertThat(response)
                 .hasJsonEntityEqualTo(JSON_RESPONSE)
                 .hasStatus(Status.SUCCESS_OK)

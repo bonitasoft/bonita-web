@@ -11,40 +11,48 @@ package org.bonitasoft.web.rest.server.utils;
 import org.restlet.Client;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Conditions;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 
 public class RequestBuilder {
 
-    private final String uri;
+    private Request request;
 
     public RequestBuilder(final String uri) {
-        this.uri = uri;
+        request = new Request();
+        request.setResourceRef(uri);
     }
 
+    public RequestBuilder setConditions(Conditions conditions) {
+        request.setConditions(conditions);
+        return this;
+    }
+    
     public Response get() {
         final Client client = new Client(Protocol.HTTP);
-        return client.handle(new Request(Method.GET, uri));
+        request.setMethod(Method.GET);
+        return client.handle(request);
     }
 
     public Response post(final String value) {
         final Client client = new Client(Protocol.HTTP);
-        final Request request = new Request(Method.POST, uri);
+        request.setMethod(Method.POST);
         request.setEntity(value, MediaType.APPLICATION_JSON);
         return client.handle(request);
     }
 
     public Response put(final String value) {
         final Client client = new Client(Protocol.HTTP);
-        final Request request = new Request(Method.PUT, uri);
+        request.setMethod(Method.PUT);
         request.setEntity(value, MediaType.APPLICATION_JSON);
         return client.handle(request);
     }
 
     public Response delete() {
         final Client client = new Client(Protocol.HTTP);
-        final Request request = new Request(Method.DELETE, uri);
+        request.setMethod(Method.DELETE);
         return client.handle(request);
     }
 
