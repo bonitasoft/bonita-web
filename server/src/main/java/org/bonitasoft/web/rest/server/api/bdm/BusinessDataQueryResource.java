@@ -43,6 +43,9 @@ public class BusinessDataQueryResource extends CommonResource {
 
     public BusinessDataQueryResource(final CommandAPI commandAPI) {
         this.commandAPI = commandAPI;
+        //Prevent Restlet from setting the status to 404
+        //HTTP conditional headers are not supported when setting the entity manually in the response (fix BS-18149)
+        setConditional(false);
     }
 
     @Get("json")
