@@ -41,6 +41,9 @@ public class FormMappingResource extends CommonResource {
 
     public FormMappingResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
+        //Prevent Restlet from setting the status to 404
+        //HTTP conditional headers are not supported when setting the entity manually in the response (fix BS-18149)
+        setConditional(false);
     }
 
     @Get("json")
