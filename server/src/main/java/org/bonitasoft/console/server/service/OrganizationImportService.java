@@ -23,10 +23,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
+import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ServerAPIException;
+import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
@@ -44,23 +50,27 @@ public class OrganizationImportService extends ConsoleService {
     @Override
     public Object run() {
         final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
-        File xmlFile;
         try {
-            xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
-                    getTenantId());
+            final byte[] organizationContent = getOrganizationContent(tenantFolder);
+            getIdentityAPI().importOrganization(new String(organizationContent));
+        } catch (final InvalidSessionException e) {
+            getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new ServiceException(TOKEN, _("Session expired. Please log in again."), e);
         } catch (final IOException e) {
             throw new ServiceException(TOKEN, e);
-        }
-
-        InputStream xmlStream = null;
-        try {
-            xmlStream = new FileInputStream(xmlFile);
-            final byte[] organizationContent = IOUtils.toByteArray(xmlStream);
-            final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getSession());
-            identityAPI.importOrganization(new String(organizationContent));
         } catch (final Exception e) {
             throw new ServiceException(TOKEN, _("Can't import organization. Please check that your file is well-formed",
                     getLocale()), e);
+        }
+        return "";
+    }
+
+    public byte[] getOrganizationContent(final BonitaHomeFolderAccessor tenantFolder) throws IOException {
+        InputStream xmlStream = null;
+        try {
+            File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(), getTenantId());
+            xmlStream = new FileInputStream(xmlFile);
+            return IOUtils.toByteArray(xmlStream);
         } finally {
             if (xmlStream != null) {
                 try {
@@ -70,8 +80,10 @@ public class OrganizationImportService extends ConsoleService {
                 }
             }
         }
-
-        return "";
+    }
+    
+    protected IdentityAPI getIdentityAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
+        return (IdentityAPI) TenantAPIAccessor.getIdentityAPI(getSession());
     }
 
     protected long getTenantId() {
