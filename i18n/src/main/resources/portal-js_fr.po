@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-02-26 10:28-0500\n"
+"PO-Revision-Date: 2018-04-16 08:32-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -80,7 +80,8 @@ msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
 
 msgid "An error occurred when deploying the BDM. Consult the logs for more information."
-msgstr ""
+msgstr "Une erreur s’est produite lors du déploiement du Modèle de Données Métier (ou BDM).\n"
+"Pour plus d’informations, consultez les logs."
 
 msgid "An error occurred while submitting the form."
 msgstr "Une erreur s'est produite lors de la soumission du formulaire."
@@ -119,34 +120,34 @@ msgid "Available tasks"
 msgstr "Tâches disponibles"
 
 msgid "BDM access control file can now be installed."
-msgstr ""
+msgstr "Le fichier de contrôle d’accès au BDM peut maintenant être installé."
 
 msgid "BDM file"
-msgstr ""
+msgstr "Fichier BDM"
 
 msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
-msgstr ""
+msgstr "Le Business Data Model n’a pas été mis à jour. Le système n’était pas en mesure de télécharger le fichier fourni pour des raisons techniques. Vous pouvez réessayer plus tard."
 
 msgid "BDM successfully updated."
-msgstr ""
+msgstr "BDM mis à jour avec succès."
 
 msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
-msgstr ""
+msgstr "Les services BPM doivent être suspendus. Aller dans menu « BPM Services »."
 
 msgid "Back"
 msgstr "Précédent"
 
 msgid "Before updating the BDM, access control file should be deleted."
-msgstr ""
+msgstr "Avant de mettre à jour le BDM, le fichier de contrôle d’accès doit être supprimé."
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
 
 msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
-msgstr ""
+msgstr "Bonita utilise Hibernate pour la persistance des données, c’est pourquoi certaines modifications sont supportées, comme l’ajout de nouveaux objets ou d'attributs, mais d'autres modifications ne sont pas supportées jusqu'à présent, comme changer le type d’un attribut."
 
 msgid "Business Data Model definition"
-msgstr ""
+msgstr "Définition du Modèle de Données Métier (BDM)"
 
 msgid "Business card"
 msgstr "Carte de visite"
@@ -497,7 +498,7 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "dd/MM/yyyy HH:mm"
 
 msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
-msgstr ""
+msgstr "Assurez-vous que tous les artefacts activés sur la plate-forme sont compatibles avec le nouveau BDM."
 
 msgid "Make this task available to other team members again"
 msgstr "Libérer - rendre cette tâche à nouveau disponible pour les autres membres de l’équipe"
@@ -950,7 +951,7 @@ msgid "To do so, go to"
 msgstr "Pour cela, consultez la page"
 
 msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
-msgstr ""
+msgstr "Pour cela, déconnectez-vous puis reconnectez-vous en tant qu’utilisateur technique, dont les informations de connexion sont définies à l’installation de la plate-forme Bonita."
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Pour remplir le formulaire, vous devez \"prendre\" cette tâche. Cela signifie que vous serez le(la) seul(e) à pouvoir la faire. Pour la rendre à nouveau disponible à l'équipe, \"libérez\"-la."
