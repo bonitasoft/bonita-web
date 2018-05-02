@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-02-26 10:41-0500\n"
+"PO-Revision-Date: 2018-05-02 11:53-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -80,7 +80,7 @@ msgid "An error occured during categories update"
 msgstr "Se produjo un error durante la actualización de las categorías"
 
 msgid "An error occurred when deploying the BDM. Consult the logs for more information."
-msgstr ""
+msgstr "Se ha producido un error al desplegar el BDM. Para más información, consulte los registros."
 
 msgid "An error occurred while submitting the form."
 msgstr "Ocurrió un error al enviar el formulario."
@@ -119,34 +119,34 @@ msgid "Available tasks"
 msgstr "tareas disponibles"
 
 msgid "BDM access control file can now be installed."
-msgstr ""
+msgstr "Ahora se puede instalar el archivo de control de acceso BDM."
 
 msgid "BDM file"
-msgstr ""
+msgstr "Archivo BDM"
 
 msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
-msgstr ""
+msgstr "El BDM no ha sido actualizado. El sistema no pudo validar el archivo de BDM proporcionado por razones técnicas. Puede intentarlo más tarde."
 
 msgid "BDM successfully updated."
-msgstr ""
+msgstr "El BDM ha sido actualizado."
 
 msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
-msgstr ""
+msgstr "Se debe poner los servicios de BPM en pausa. Ir a la opción del menú \"Servicios de BPM\"."
 
 msgid "Back"
 msgstr "Atrás"
 
 msgid "Before updating the BDM, access control file should be deleted."
-msgstr ""
+msgstr "Antes de actualizar el BDM, el archivo de control de acceso debe ser suprimido."
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
 msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
-msgstr ""
+msgstr "Bonita utiliza Hibernate para la persistencia de datos, por lo tanto se manejan bien algunos cambios como la adición de nuevos objetos o atributos, pero hay algunos otros que no podemos garantizar hasta ahora, como cambiar el tipo de un atributo."
 
 msgid "Business Data Model definition"
-msgstr ""
+msgstr "Definición del modelo de datos de negocio (BDM)"
 
 msgid "Business card"
 msgstr "Tarjeta de visita"
@@ -215,7 +215,7 @@ msgid "Click here to choose the .xml file"
 msgstr "Haga clic para seleccionar el archivo .xml."
 
 msgid "Click here to choose your .zip file"
-msgstr ""
+msgstr "Haga clic aquí para seleccionar su archivo .zip"
 
 msgid "Close"
 msgstr "Cerrar"
@@ -302,7 +302,7 @@ msgid "Display name"
 msgstr "Título dinámico"
 
 msgid "Don't forget to start BPM Services again."
-msgstr ""
+msgstr "No olvide re-arrancar los servicios de BPM."
 
 msgid "Done tasks"
 msgstr "Tareas realizadas"
@@ -437,7 +437,7 @@ msgid "Import an application descriptor"
 msgstr "Importar un descriptor de aplicación"
 
 msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
-msgstr ""
+msgstr "En tales casos, usted tendrá que escribir un script con los cambios, después de hace un backup de la base de datos, y a través del cuidado de validación en un entorno de staging."
 
 msgid "In task name column"
 msgstr "En la columna Nombre de tarea"
@@ -446,25 +446,25 @@ msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of 
 msgstr "En el menú <i>Organización > Administrar</i>, ir a la página <i>Usuarios</i> del asistente"
 
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 msgid "Install Business Data Model"
-msgstr ""
+msgstr "Instalar el modelo de datos de negocio"
 
 msgid "Install a BDM file"
-msgstr ""
+msgstr "Instalar un archivo BDM"
 
 msgid "Installed"
-msgstr ""
+msgstr "Instalado"
 
 msgid "Installing"
-msgstr ""
+msgstr "Instalando…"
 
 msgid "Installing Business Data Model"
-msgstr ""
+msgstr "Instalando el modelo de datos de negocio"
 
 msgid "Installing or updating the BDM implies to be logged in as Technical User, and to shut down all BPM services."
-msgstr ""
+msgstr "Instalar o actualizar el BDM implica estar logueado como usuario técnico y pausar todos los servicios de BPM."
 
 msgid "Items per page"
 msgstr "Elementos por página"
@@ -497,7 +497,7 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "dd/MM/yyyy HH:mm"
 
 msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
-msgstr ""
+msgstr "Asegúrese de que todos los artefactos instalados en la plataforma son compatibles con el nuevo BDM."
 
 msgid "Make this task available to other team members again"
 msgstr "Liberar - hacer esta tarea disponible de nuevo para los otros miembros del equipo"
@@ -527,7 +527,7 @@ msgid "Membership successfully added"
 msgstr "Membresía agregada con éxito"
 
 msgid "Membership successfully removed"
-msgstr "Membresía eliminada con éxito"
+msgstr "La membresía fue eliminada con éxito"
 
 msgid "Memberships"
 msgstr "Membresías"
@@ -596,10 +596,10 @@ msgid "Normal"
 msgstr "Normal"
 
 msgid "Not installed"
-msgstr ""
+msgstr "No instalado"
 
 msgid "Note that updating the model modifies existing database tables definitively."
-msgstr ""
+msgstr "Tenga en cuenta que actualizar el modelo modifica las tablas existentes de la base de datos de manera definitiva."
 
 msgid "One or more connectors on case start or case end failed"
 msgstr "Uno o más conectores al inicio o al final del caso han fallado"
@@ -617,7 +617,7 @@ msgid "Only cases from root processes are displayed in the table below. No detai
 msgstr "Solo se muestran los casos de los procesos raiz en la siguiente tabla. No hay detalles de los casos iniciados por actividades de llamada."
 
 msgid "Only one Business Data Model (BDM) can be active at a time."
-msgstr ""
+msgstr "Sólo un Modelo de Datos de Negocio (BDM) puede estar activo al mismo tiempo."
 
 msgid "Open cases"
 msgstr "Casos abiertos"
@@ -824,7 +824,7 @@ msgid "State"
 msgstr "Estado"
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Status of importation"
 msgstr "Estado de la importación"
@@ -857,7 +857,7 @@ msgid "Task name"
 msgstr "Nombre de tarea"
 
 msgid "Technical User"
-msgstr ""
+msgstr "Usuario técnico"
 
 msgid "Technical error."
 msgstr "Error técnico."
@@ -950,7 +950,7 @@ msgid "To do so, go to"
 msgstr "Para ello, vaya a"
 
 msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
-msgstr ""
+msgstr "Para ello, cierre la sesión y luego inicie sesión con el Usuario Técnico, cuyas credenciales se han establecido durante la instalación de la plataforma de Bonita."
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Para rellenar el formulario, es necesario tomar esta tarea. Esto significa que serás el único que podrá realizarla. Para que esté disponible de nuevo para el equipo, libérala."
@@ -989,7 +989,7 @@ msgid "Update"
 msgstr "Actualizar"
 
 msgid "Update Business Data Model"
-msgstr ""
+msgstr "Actualizar el Modelo de Datos de Negocio"
 
 msgid "Update business card"
 msgstr "Actualizar tarjeta de visita"
@@ -1046,7 +1046,7 @@ msgid "View this task"
 msgstr "Ver esta tarea"
 
 msgid "Warning:"
-msgstr ""
+msgstr "Advertencia:"
 
 msgid "We couldn't find what you are looking for."
 msgstr "No pudimos encontrar lo que estás buscando."
