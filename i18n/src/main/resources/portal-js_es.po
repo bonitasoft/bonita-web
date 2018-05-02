@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-01-31 04:17-0500\n"
+"PO-Revision-Date: 2018-05-02 11:53-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -467,7 +467,7 @@ msgid "Membership successfully added"
 msgstr "Membresía agregada con éxito"
 
 msgid "Membership successfully removed"
-msgstr "Membresía eliminada con éxito"
+msgstr "La membresía fue eliminada con éxito"
 
 msgid "Memberships"
 msgstr "Membresías"
