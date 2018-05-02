@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-04-16 08:32-0400\n"
+"PO-Revision-Date: 2018-05-02 11:41-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -216,7 +216,7 @@ msgid "Click here to choose the .xml file"
 msgstr "Cliquez ici pour choisir le fichier .xml"
 
 msgid "Click here to choose your .zip file"
-msgstr ""
+msgstr "Cliquez ici pour choisir le fichier .zip"
 
 msgid "Close"
 msgstr "Fermer"
@@ -303,7 +303,7 @@ msgid "Display name"
 msgstr "Nom affiché"
 
 msgid "Don't forget to start BPM Services again."
-msgstr ""
+msgstr "N’oubliez pas de redémarrer les Services BPM."
 
 msgid "Done tasks"
 msgstr "Tâches terminées"
@@ -438,7 +438,7 @@ msgid "Import an application descriptor"
 msgstr "Importer un descripteur d’application"
 
 msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
-msgstr ""
+msgstr "Dans de tels cas, vous devrez scripter les changements après avoir sauvegardé la base de données et les avoir testés par une validation minutieuse, dans un environnement dédié."
 
 msgid "In task name column"
 msgstr "Dans la colonne \"Tâche\""
@@ -447,25 +447,25 @@ msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of 
 msgstr "Dans le menu <i>Organisation > Gérer</i>, allez à la page <i>Utilisateurs</i> de l’assistant graphique"
 
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 msgid "Install Business Data Model"
-msgstr ""
+msgstr "Installer le Modèle de Données Métier (BDM)"
 
 msgid "Install a BDM file"
-msgstr ""
+msgstr "Installer un fichier BDM"
 
 msgid "Installed"
-msgstr ""
+msgstr "Installé"
 
 msgid "Installing"
-msgstr ""
+msgstr "En cours d'installation"
 
 msgid "Installing Business Data Model"
-msgstr ""
+msgstr "Installation du Modèle de Données Métier (BDM)"
 
 msgid "Installing or updating the BDM implies to be logged in as Technical User, and to shut down all BPM services."
-msgstr ""
+msgstr "Installer ou mettre à jour le BDM nécessite d'être authentifié en tant qu'Utilisateur Technique et d'avoir mis en pause les services BPM."
 
 msgid "Items per page"
 msgstr "Eléments par page"
@@ -597,10 +597,10 @@ msgid "Normal"
 msgstr "Normale"
 
 msgid "Not installed"
-msgstr ""
+msgstr "Non installé"
 
 msgid "Note that updating the model modifies existing database tables definitively."
-msgstr ""
+msgstr "Notez que la mise à jour du modèle modifie de manière définitive les tables de la base de données."
 
 msgid "One or more connectors on case start or case end failed"
 msgstr "Un ou plusieurs connecteurs, en démarrage ou en fin de cas, sont en erreur"
@@ -618,7 +618,7 @@ msgid "Only cases from root processes are displayed in the table below. No detai
 msgstr "Le tableau ci-dessous affiche uniquement les cas provenant de processus racines. Le détail des cas démarrés par des activités appelantes n'est pas disponible."
 
 msgid "Only one Business Data Model (BDM) can be active at a time."
-msgstr ""
+msgstr "Il ne peut y avoir qu'un seul Modèle de Données Métier (BDM) actif à la fois."
 
 msgid "Open cases"
 msgstr "Cas démarrés"
@@ -825,7 +825,7 @@ msgid "State"
 msgstr "Etat"
 
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 msgid "Status of importation"
 msgstr "Statut de l'importation"
@@ -858,7 +858,7 @@ msgid "Task name"
 msgstr "Tâche"
 
 msgid "Technical User"
-msgstr ""
+msgstr "Utilisateur Technique"
 
 msgid "Technical error."
 msgstr "Erreur technique."
@@ -951,7 +951,7 @@ msgid "To do so, go to"
 msgstr "Pour cela, consultez la page"
 
 msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
-msgstr "Pour cela, déconnectez-vous puis reconnectez-vous en tant qu’utilisateur technique, dont les informations de connexion sont définies à l’installation de la plate-forme Bonita."
+msgstr "Pour cela, déconnectez-vous puis reconnectez-vous en tant qu’Utilisateur Technique, dont les informations de connexion sont définies à l’installation de la plate-forme Bonita."
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Pour remplir le formulaire, vous devez \"prendre\" cette tâche. Cela signifie que vous serez le(la) seul(e) à pouvoir la faire. Pour la rendre à nouveau disponible à l'équipe, \"libérez\"-la."
@@ -990,7 +990,7 @@ msgid "Update"
 msgstr "Mise à jour"
 
 msgid "Update Business Data Model"
-msgstr ""
+msgstr "Mettre à jour le Modèle de Données Métier (BDM)"
 
 msgid "Update business card"
 msgstr "Mettre à jour la carte de visite"
@@ -1047,7 +1047,7 @@ msgid "View this task"
 msgstr "Voir cette tâche"
 
 msgid "Warning:"
-msgstr ""
+msgstr "Attention :"
 
 msgid "We couldn't find what you are looking for."
 msgstr "Nous n'avons pas trouvé ce que vous recherchez."
