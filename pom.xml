@@ -27,7 +27,7 @@
         <jackson-mapper-asl-version>1.9.13</jackson-mapper-asl-version>
         <jackson-ext-modules-version>2.9.0</jackson-ext-modules-version>
 
-        <tomcat.version>8.5.30</tomcat.version>
+        <tomcat.version>8.5.31</tomcat.version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
