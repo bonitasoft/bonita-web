@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2018-02-26 10:33-0500\n"
+"PO-Revision-Date: 2018-05-16 21:49-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
 
-msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
 msgstr ""
 
 msgid "Business Data Model definition"
@@ -424,6 +424,9 @@ msgstr "最高"
 msgid "ID"
 msgstr "id"
 
+msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
+msgstr ""
+
 msgid "Implementation version"
 msgstr "実装のバージョン"
 
@@ -435,9 +438,6 @@ msgstr "アプリケーションをインポート"
 
 msgid "Import an application descriptor"
 msgstr "アプリケーション記述子をインポート"
-
-msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
-msgstr ""
 
 msgid "In task name column"
 msgstr "[タスク名] 列"
@@ -955,6 +955,9 @@ msgstr ""
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "フォームに記入するには、このタスクを引き受ける必要があります。つまり、あなただけがこのタスクを実行できることになります。もう一度、チームで実行できるようにする（つまり、応受援タスクにする）には、そのタスクを手放します。"
 
+msgid "To know more about this platform configuration option, go to the"
+msgstr ""
+
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
 
@@ -1087,6 +1090,9 @@ msgstr "アプリケーション記述子は、部分的にインポートされ
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
 
+msgid "documentation"
+msgstr ""
+
 msgid "of"
 msgstr "日目/"
 
@@ -1119,6 +1125,9 @@ msgstr "ユーザー名:"
 
 msgid "will be permanently deleted."
 msgstr "恒久的に削除されます。"
+
+msgid "{{error}}"
+msgstr ""
 
 msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
 msgstr "{{firstname}} {{lastname}} さんは、既に <b>{{group}} に {{role}} として</b>に所属しています"

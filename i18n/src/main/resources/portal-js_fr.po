@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-05-02 11:41-0400\n"
+"PO-Revision-Date: 2018-05-16 21:46-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -143,8 +143,8 @@ msgstr "Avant de mettre à jour le BDM, le fichier de contrôle d’accès doit 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
 
-msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
-msgstr "Bonita utilise Hibernate pour la persistance des données, c’est pourquoi certaines modifications sont supportées, comme l’ajout de nouveaux objets ou d'attributs, mais d'autres modifications ne sont pas supportées jusqu'à présent, comme changer le type d’un attribut."
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
+msgstr ""
 
 msgid "Business Data Model definition"
 msgstr "Définition du Modèle de Données Métier (BDM)"
@@ -425,6 +425,9 @@ msgstr "Plus haute"
 msgid "ID"
 msgstr "Id"
 
+msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
+msgstr ""
+
 msgid "Implementation version"
 msgstr "Version de l'implémentation"
 
@@ -436,9 +439,6 @@ msgstr "Importer une application"
 
 msgid "Import an application descriptor"
 msgstr "Importer un descripteur d’application"
-
-msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
-msgstr "Dans de tels cas, vous devrez scripter les changements après avoir sauvegardé la base de données et les avoir testés par une validation minutieuse, dans un environnement dédié."
 
 msgid "In task name column"
 msgstr "Dans la colonne \"Tâche\""
@@ -956,6 +956,9 @@ msgstr "Pour cela, déconnectez-vous puis reconnectez-vous en tant qu’Utilisat
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Pour remplir le formulaire, vous devez \"prendre\" cette tâche. Cela signifie que vous serez le(la) seul(e) à pouvoir la faire. Pour la rendre à nouveau disponible à l'équipe, \"libérez\"-la."
 
+msgid "To know more about this platform configuration option, go to the"
+msgstr ""
+
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
 
@@ -1088,6 +1091,9 @@ msgstr "descripteur d'application a été partiellement importé. Les composants
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "descripteur d'application a été importé avec succès, avec son menu de navigation et les liens vers les pages utilisées."
 
+msgid "documentation"
+msgstr ""
+
 msgid "of"
 msgstr "de"
 
@@ -1120,6 +1126,9 @@ msgstr "nom d'utilisateur :"
 
 msgid "will be permanently deleted."
 msgstr "va être supprimée définitivement"
+
+msgid "{{error}}"
+msgstr ""
 
 msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
 msgstr "{{firstname}} {{lastname}} a déjà l'adhésion <b>{{role}} de {{group}}</b>"

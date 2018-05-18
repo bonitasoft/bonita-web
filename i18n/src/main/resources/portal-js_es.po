@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-05-02 11:53-0400\n"
+"PO-Revision-Date: 2018-05-16 21:57-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -142,8 +142,8 @@ msgstr "Antes de actualizar el BDM, el archivo de control de acceso debe ser sup
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
-msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute."
-msgstr "Bonita utiliza Hibernate para la persistencia de datos, por lo tanto se manejan bien algunos cambios como la adición de nuevos objetos o atributos, pero hay algunos otros que no podemos garantizar hasta ahora, como cambiar el tipo de un atributo."
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
+msgstr "Bonita utiliza Hibernate para la persistencia de datos, por lo tanto se manejan bien algunos cambios como la adición de nuevos objetos y atributos, pero hay algunos otros que no podemos garantizar hasta ahora, como cambiar el tipo de un atributo o suprimir un atributo."
 
 msgid "Business Data Model definition"
 msgstr "Definición del modelo de datos de negocio (BDM)"
@@ -424,6 +424,9 @@ msgstr "Mayor"
 msgid "ID"
 msgstr "ID"
 
+msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
+msgstr "Si el nuevo BDM contiene semejantes cambios, el administrador de base de datos deberá tratar primero la actualización de la base de datos con scripts, y luego necesita usted actualizar únicamente el modelo de datos y probar bien los cambios."
+
 msgid "Implementation version"
 msgstr "Versión de implementación"
 
@@ -435,9 +438,6 @@ msgstr "Importar una aplicación"
 
 msgid "Import an application descriptor"
 msgstr "Importar un descriptor de aplicación"
-
-msgid "In such cases, you will have to script the changes, after backuping the database, and through careful validation in a staging environment."
-msgstr "En tales casos, usted tendrá que escribir un script con los cambios, después de hace un backup de la base de datos, y a través del cuidado de validación en un entorno de staging."
 
 msgid "In task name column"
 msgstr "En la columna Nombre de tarea"
@@ -955,6 +955,9 @@ msgstr "Para ello, cierre la sesión y luego inicie sesión con el Usuario Técn
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Para rellenar el formulario, es necesario tomar esta tarea. Esto significa que serás el único que podrá realizarla. Para que esté disponible de nuevo para el equipo, libérala."
 
+msgid "To know more about this platform configuration option, go to the"
+msgstr "Para saber más sobre esta opción de configuración de la plataforma, vaya a la"
+
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Para personalizar la pantalla de búsqueda de claves (y columnas en general), utilice el botón de configuración de tabla de la derecha. Puede buscar hasta 5 claves de búsqueda."
 
@@ -1087,6 +1090,9 @@ msgstr "el descriptor de aplicación ha sido parcialmente importado. Los siguien
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "el descriptor de aplicación ha sido importado con éxito, con un completo mapeo de páginas y de menú."
 
+msgid "documentation"
+msgstr "documentación"
+
 msgid "of"
 msgstr "de"
 
@@ -1119,6 +1125,9 @@ msgstr "nombre de usuario:"
 
 msgid "will be permanently deleted."
 msgstr "se eliminará permanentemente."
+
+msgid "{{error}}"
+msgstr "{{error}}"
 
 msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
 msgstr "{{firstname}} {{lastname}} ya tiene la membresía <b>{{role}} en {{group}}</b>"
