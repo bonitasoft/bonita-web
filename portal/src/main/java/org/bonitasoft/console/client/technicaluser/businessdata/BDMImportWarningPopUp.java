@@ -13,15 +13,12 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 import java.util.Map;
 
 import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.Response;
 import org.bonitasoft.web.rest.model.tenant.BusinessDataModelDefinition;
 import org.bonitasoft.web.rest.model.tenant.BusinessDataModelItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
-import org.bonitasoft.web.toolkit.client.data.api.request.HttpRequest;
 import org.bonitasoft.web.toolkit.client.ui.Page;
-import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.form.SendFormAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Paragraph;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.ContainerStyled;
@@ -33,10 +30,10 @@ import org.bonitasoft.web.toolkit.client.ui.utils.Loader;
 public class BDMImportWarningPopUp extends Page {
 
     public static final String TOKEN = "bdmimportwarningpopup";
-    
+
     @Override
     public void defineTitle() {
-       setTitle(_("Warning"));
+        setTitle(_("Warning"));
     }
 
     @Override
@@ -96,8 +93,11 @@ public class BDMImportWarningPopUp extends Page {
 
         @Override
         public void onError(final String message, final Integer errorCode) {
-            ViewController.showPopup(new MessagePage(MessagePage.TYPE.ERROR, _("An error occurred when deploying the Business Data Model.\nConsult the logs for more information.")));
+            if (message.isEmpty()) {
+                ViewController.showPopup(new MessagePage(MessagePage.TYPE.ERROR, _("An error occurred when deploying the Business Data Model.\nConsult the logs for more information.")));
+            } else {
+                ViewController.showPopup(new MessagePage(MessagePage.TYPE.ERROR, _(message)));
+            }
         }
     }
-
 }
