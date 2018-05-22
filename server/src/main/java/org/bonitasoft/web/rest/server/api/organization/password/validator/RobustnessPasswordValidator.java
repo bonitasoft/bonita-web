@@ -42,34 +42,34 @@ public class RobustnessPasswordValidator extends AbstractStringValidator {
         regex = "[0-9]";
         int numberMinOccurences = 3;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password must contain at least %number% digits", Locale, new Arg("%number%", numberMinOccurences)));
+            addError(_("Password must contain at least %number% digits", Locale, new Arg("number", numberMinOccurences)));
         }
         
         // Check number of lower case chars
         regex = "[a-z]";
         numberMinOccurences = 2;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password must contain at least %number% lower case characters", Locale, new Arg("%number%", numberMinOccurences)));
+            addError(_("Password must contain at least %number% lower case characters", Locale, new Arg("number", numberMinOccurences)));
         }
         
         // Check number of upper case chars
         regex = "[A-Z]";
         numberMinOccurences = 2;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password must contain at least %number% upper case characters", Locale, new Arg("%number%", numberMinOccurences)));
+            addError(_("Password must contain at least %number% upper case characters", Locale, new Arg("number", numberMinOccurences)));
         }
         
         // Check number of special chars
         regex = "[~@#\\^\\$&\\*\\(\\)-_\\+=\\[\\]\\{\\}\\|\\,\\.\\?]";
         numberMinOccurences = 2;
         if (numberOfOccurenceOfRegex(regex, password) < numberMinOccurences) {
-            addError(_("Password must contain at least %number% special characters", Locale, new Arg("%number%", numberMinOccurences)));
+            addError(_("Password must contain at least %number% special characters", Locale, new Arg("number", numberMinOccurences)));
         }
         
         // Check number of length
         int minimalLength = 10;
         if (password.length() < minimalLength) {
-            addError(_("Password must be at least %number% characters long", Locale, new Arg("%number%", minimalLength)));
+            addError(_("Password must be at least %number% characters long", Locale, new Arg("number", minimalLength)));
         }
     }
     
