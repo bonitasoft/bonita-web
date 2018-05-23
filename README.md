@@ -3,16 +3,16 @@
 ## Compilation ##
 At root level (same location as the parent pom.xml) :
     
-    mvn clean install
+    ./mvnw clean install
     
 For develoment purpose use the *dev* profile (don't compile every gwt permutations)
     
-    mvn clean install -Pdev
+    ./mvnw clean install -Pdev
     
 ## Execution in hosted mode for dev/debug ##
 In server module, to build and launch a tomcat hosting the app :
 
-    mvn clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev
+    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev
 
 H2 database is created (if it does not already exist) in ${user.home}/bonita/community/database
 When you checkout a different branch you need to clean this directory because the database schema may have changed.
@@ -21,7 +21,7 @@ Hot reload is not supported, but when you update a class in portal/, server/ or 
     
 In portal module :
     
-    Super dev mode: mvn -Pdev process-classes gwt:run-codeserver
+    Super dev mode: ./mvnw -Pdev process-classes gwt:run-codeserver
     
 Visit the indicated URL and bookmark the Dev Mode On/Off links
 Then visit http://localhost:8080/bonita, login with install/install and click on the Dev Mode On link
