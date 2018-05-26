@@ -11,28 +11,13 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-01-31 04:17-0500\n"
+"PO-Revision-Date: 2018-05-25 22:02-0400\n"
 
 msgid "Add"
 msgstr "Añadir"
 
 msgid "Attention"
 msgstr "Atención"
-
-msgid "Business data"
-msgstr "Dato de Negocio"
-
-msgid "Case id:{{case.caseIdToDisplay}} - Process: {{case.processDefinitionId.displayName}}"
-msgstr "Id del Caso:{{case.caseIdToDisplay}} - Proceso: {{case.processDefinitionId.displayName}}"
-
-msgid "Case started by: {{case.started_by.firstname}} {{case.started_by.lastname}}"
-msgstr "Caso iniciado por: {{case.started_by.firstname}} {{case.started_by.lastname}}"
-
-msgid "Documents"
-msgstr "Documentos"
-
-msgid "Download"
-msgstr "Descargar"
 
 msgid "Example:"
 msgstr "Ejemplo:"
@@ -43,26 +28,8 @@ msgstr "Ejecutar"
 msgid "Expecting a {} value."
 msgstr "Esperando un valor {}."
 
-msgid "Filename"
-msgstr "Nombre del Archivo"
-
-msgid "List of {{ dataType }}"
-msgstr "Lista de {{ dataType }}"
-
-msgid "Name"
-msgstr "Nombre"
-
-msgid "No business data used in this case."
-msgstr "No hay datos de negocio utilizados en este caso."
-
 msgid "no description defined in contract for this input"
 msgstr "No hay descripción definida en el contrato para esta entrada"
-
-msgid "No Documents used in this case."
-msgstr "No hay documentos en este caso."
-
-msgid "No tasks executed yet."
-msgstr "No hay tareas ejecutadas todavía."
 
 msgid "Not a valid number!"
 msgstr "No es un número válido!"
@@ -76,12 +43,6 @@ msgstr "Seleccionar un archivo"
 msgid "Start"
 msgstr "Inicio"
 
-msgid "Tasks executed by any participant will be displayed here ordered by date. Most recent on the top."
-msgstr "Las tareas ejecutadas por cualquier participante se mostrarán aquí ordenadas por fecha. La más reciente en la parte superior."
-
 msgid "this is a temporary form generated automatically for testing. Before you put your process into production, create and map the necessary forms."
 msgstr "Este es un formulario temporal generado automáticamente para la prueba. Antes de poner el proceso en producción, cree y asigne los formularios necesarios."
-
-msgid "Timeline"
-msgstr "Linea del tiempo"
 
