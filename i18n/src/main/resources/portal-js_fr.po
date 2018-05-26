@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-05-16 21:46-0400\n"
+"PO-Revision-Date: 2018-05-25 21:47-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -144,7 +144,7 @@ msgid "Before you import the application descriptor, the pages and the profile m
 msgstr "Avant d'importer un descripteur d'application, déployez dans le portail les pages utilisées et le profil concerné par l'application."
 
 msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
-msgstr ""
+msgstr "Bonita utilise Hibernate pour la persistance des données, c’est pourquoi certaines modifications sont supportées, comme l’ajout de nouveaux objets ou attributs, mais d'autres modifications ne sont pas supportées pour le moment, comme le changement de type d’un attribut ou la suppression d'un attribut."
 
 msgid "Business Data Model definition"
 msgstr "Définition du Modèle de Données Métier (BDM)"
@@ -426,7 +426,7 @@ msgid "ID"
 msgstr "Id"
 
 msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
-msgstr ""
+msgstr "Si le nouveau BDM contient ce type de changements, l’administrateur de base de données devra tout d’abord gérer la mise à jour de base de données avec des scripts, puis vous devrez mettre à jour uniquement le modèle de données et tester les changements minutieusement."
 
 msgid "Implementation version"
 msgstr "Version de l'implémentation"
@@ -957,7 +957,7 @@ msgid "To fill out the form, you need to take this task. This means you will be 
 msgstr "Pour remplir le formulaire, vous devez \"prendre\" cette tâche. Cela signifie que vous serez le(la) seul(e) à pouvoir la faire. Pour la rendre à nouveau disponible à l'équipe, \"libérez\"-la."
 
 msgid "To know more about this platform configuration option, go to the"
-msgstr ""
+msgstr "Pour en savoir plus sur cette option de configuration de plate-forme, allez à la"
 
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Pour personnaliser l'affichage des clés de recherche (et des colonnes en général), utilisez le bouton Paramètres du tableau sur la droite. Vous pouvez effectuer des recherches sur les valeurs des clés (entre 1 et 5 clés)."
@@ -1092,7 +1092,7 @@ msgid "application descriptor has been successfully imported, with complete page
 msgstr "descripteur d'application a été importé avec succès, avec son menu de navigation et les liens vers les pages utilisées."
 
 msgid "documentation"
-msgstr ""
+msgstr "documentation"
 
 msgid "of"
 msgstr "de"
@@ -1128,7 +1128,7 @@ msgid "will be permanently deleted."
 msgstr "va être supprimée définitivement"
 
 msgid "{{error}}"
-msgstr ""
+msgstr "{{error}}"
 
 msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
 msgstr "{{firstname}} {{lastname}} a déjà l'adhésion <b>{{role}} de {{group}}</b>"
