@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-05-25 21:47-0400\n"
+"PO-Revision-Date: 2018-05-31 03:31-0400\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -1126,9 +1126,6 @@ msgstr "nom d'utilisateur :"
 
 msgid "will be permanently deleted."
 msgstr "va être supprimée définitivement"
-
-msgid "{{error}}"
-msgstr "{{error}}"
 
 msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
 msgstr "{{firstname}} {{lastname}} a déjà l'adhésion <b>{{role}} de {{group}}</b>"
