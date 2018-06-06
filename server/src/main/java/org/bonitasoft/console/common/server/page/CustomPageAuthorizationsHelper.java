@@ -22,6 +22,9 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
  */
 public class CustomPageAuthorizationsHelper {
 
+    //All custom pages with this token suffix are authorized (should be sync with ApplicationFactoryClient)
+    public static final String BONITA_LABS_PAGE_TOKEN_EXTENSION = "BonitaLabs";
+    
     private final GetUserRightsHelper getUserRightsHelper;
     private final ApplicationAPI applicationAPI;
     private final PageAPI pageApi;
@@ -45,7 +48,7 @@ public class CustomPageAuthorizationsHelper {
     }
 
     private boolean isPageAuthorizedInPortal(final String pageName) throws BonitaException {
-        return getUserRightsHelper.getUserRights().contains(pageName);
+        return getUserRightsHelper.getUserRights().contains(pageName) || pageName.endsWith(BONITA_LABS_PAGE_TOKEN_EXTENSION);
     }
 
     private boolean isPageAuthorizedInApplication(final String applicationToken, final String pageToken) throws BonitaException {
