@@ -307,7 +307,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
 
             // Custom pages
         } else if (token != null && token.startsWith(CustomPageWithFrame.TOKEN)) {
-            if (isUserAuthorized(token, getCurrentUserAccessRights())) {
+            if (isCustomPageAuthorizedToken(token)) {
                 return new CustomPageWithFrame(token);
             } else {
                 return new BlankPage();
@@ -319,7 +319,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new BlankPage();
         }
     }
-
+    
     private boolean isPortalJSAuthorizedToken(String token) {
         // whenever a token ends with -labs, it is authorized by default.
         // this is done to ensure feature flipping and embed in development portal-js pages
@@ -327,6 +327,11 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         return isUserAuthorized(privileges, getCurrentUserAccessRights()) || token.endsWith("-labs");
     }
 
+    private boolean isCustomPageAuthorizedToken(String token) {
+        // whenever a token ends with -labs, it is authorized by default.
+        return isUserAuthorized(token, getCurrentUserAccessRights()) || token.endsWith("-labs");
+    }
+    
     public native void print(String content) /*-{
                                              console.log(content);
                                              }-*/;
