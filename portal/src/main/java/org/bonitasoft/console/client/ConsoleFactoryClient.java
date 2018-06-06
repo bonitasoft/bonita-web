@@ -66,6 +66,9 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
  * @author Yongtao Guo, Haojie Yuan, Zhiheng Yang
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
+    
+    //All custom pages with this token suffix are authorized (should be sync with CustomPageAuthorizationsHelper)
+    public static final String BONITA_LABS_PAGE_TOKEN_EXTENSION = "BonitaLabs";
 
     protected AngularIFrameView angularFrame = new AngularIFrameView();
 
@@ -321,15 +324,15 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
     }
     
     private boolean isPortalJSAuthorizedToken(String token) {
-        // whenever a token ends with -labs, it is authorized by default.
+        // whenever a token ends with BonitaLabs, it is authorized by default.
         // this is done to ensure feature flipping and embed in development portal-js pages
         List<String> privileges = AngularIFrameView.getPrivileges(token);
-        return isUserAuthorized(privileges, getCurrentUserAccessRights()) || token.endsWith("-labs");
+        return isUserAuthorized(privileges, getCurrentUserAccessRights()) || token.endsWith(BONITA_LABS_PAGE_TOKEN_EXTENSION);
     }
 
     private boolean isCustomPageAuthorizedToken(String token) {
         // whenever a token ends with -labs, it is authorized by default.
-        return isUserAuthorized(token, getCurrentUserAccessRights()) || token.endsWith("-labs");
+        return isUserAuthorized(token, getCurrentUserAccessRights()) || token.endsWith(BONITA_LABS_PAGE_TOKEN_EXTENSION);
     }
     
     public native void print(String content) /*-{
