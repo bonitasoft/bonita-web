@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 import com.google.gwt.regexp.shared.RegExp;
 
 /**
@@ -78,7 +80,9 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
     protected void _check(final String attributeValue) {
 
         final boolean match = regexp.test(attributeValue);
-        if (exclude && match || !exclude && !match) {
+        if (attributeValue.contains("HTTP Error")) {
+            addError(_("Error uploading the file. Maybe your session expired. You can try to refresh the page."));
+        } else if (exclude && match || !exclude && !match) {
             addError(defineErrorMessage());
         }
     }
