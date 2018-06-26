@@ -91,7 +91,11 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
         if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
             cleanHttpSession(requestAccessor.getHttpSession());
-            response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
+            if (requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
+                response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
         }
     }
 
