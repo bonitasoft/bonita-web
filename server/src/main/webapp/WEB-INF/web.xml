@@ -191,6 +191,7 @@
         <url-pattern>/portal/documentDownload</url-pattern>
         <url-pattern>/portal/downloadDocument</url-pattern>
         <url-pattern>/services/*</url-pattern>
+        <url-pattern>/portal/exportOrganization</url-pattern>
         <!--  Add more servlet mappings here -->
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
