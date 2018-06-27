@@ -86,6 +86,7 @@ public class AuthenticationFilterTest {
         doReturn(new FakeAuthenticationManager(1L)).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(request.getTenantId()).thenReturn("1");
+        when(httpRequest.getMethod()).thenReturn("GET");
     }
 
     @Test
@@ -105,6 +106,7 @@ public class AuthenticationFilterTest {
 
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
+        verify(response, never()).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         verify(response, never()).sendRedirect(anyString());
     }
 
@@ -117,6 +119,19 @@ public class AuthenticationFilterTest {
         authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
 
         verify(response).sendRedirect(anyString());
+    }
+    
+    @Test
+    public void testIfWeAreNotRedirectedIfRequestMethodIsNotGet() throws Exception {
+        when(httpRequest.getMethod()).thenReturn("POST");
+        authenticationFilter.addRule(createFailingRule());
+
+        when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
+        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+
+        verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        verify(response, never()).sendRedirect(anyString());
     }
 
     @Test

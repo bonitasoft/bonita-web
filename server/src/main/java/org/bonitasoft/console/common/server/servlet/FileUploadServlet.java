@@ -36,6 +36,7 @@ import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededExcepti
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.bonitasoft.engine.session.SessionNotFoundException;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
@@ -106,7 +107,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         checkUploadedFileSize = Boolean.parseBoolean(getInitParameter(CHECK_UPLOADED_FILE_SIZE));
     }
 
-    protected abstract void defineUploadDirectoryPath(final HttpServletRequest request);
+    protected abstract void defineUploadDirectoryPath(final HttpServletRequest request) throws SessionNotFoundException;
 
     protected abstract void setUploadSizeMax(ServletFileUpload serviceFileUpload, final HttpServletRequest request);
 
@@ -120,11 +121,11 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
-        defineUploadDirectoryPath(request);
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter responsePW = null;
         try {
+            defineUploadDirectoryPath(request);
             if (!ServletFileUpload.isMultipartContent(request)) {
                 return;
             }
@@ -185,6 +186,10 @@ public abstract class FileUploadServlet extends HttpServlet {
                 responsePW.print(responseString);
                 responsePW.flush();
             }
+        } catch (SessionNotFoundException e) {
+            final String message = "Session expired";
+            LOGGER.log(Level.FINE, message);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         } catch (final SizeLimitExceededException e) {
             LOGGER.log(Level.SEVERE, "File is Too Big", e);
             generateFileTooBigError(response, responsePW, "Uploaded file is too large, server is unable to process it");
@@ -198,6 +203,10 @@ public abstract class FileUploadServlet extends HttpServlet {
                 LOGGER.log(Level.SEVERE, theErrorMessage, e);
             }
             throw new ServletException(theErrorMessage, e);
+        } finally {
+            if (responsePW != null) {
+                responsePW.close();
+            }
         }
     }
 
