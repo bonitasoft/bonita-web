@@ -97,6 +97,10 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
     public long count(final String search, final String orders, final Map<String, String> filters) {
         return search(0, 0, search, orders, filters).getTotal();
     }
+    
+    public long countAssignedAndPendingHumanTasks(final String search, final String orders, final Map<String, String> filters) {
+        return searchAssignedAndPendingHumanTasks(0, 0, search, orders, filters).getTotal();
+    }
 
     @Override
     public CONSOLE_ITEM get(final APIID id) {
@@ -106,6 +110,22 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
             return convertEngineToConsoleItem(flowNodeInstance);
         } catch (final NotFoundException e) {
             throw new APIItemNotFoundException(FlowNodeDefinition.TOKEN, id);
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
+    }
+    
+    public ItemSearchResult<CONSOLE_ITEM> searchAssignedAndPendingHumanTasks(final int page, final int resultsByPage, final String search, final String orders,
+            final Map<String, String> filters) {
+        final SearchOptionsBuilder builder = makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
+        try {
+            @SuppressWarnings("unchecked")
+            final SearchResult<ENGINE_ITEM> results = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchAssignedAndPendingHumanTasks(builder.done());
+            return new ItemSearchResult<CONSOLE_ITEM>(
+                    page,
+                    resultsByPage,
+                    results.getCount(),
+                    convertEngineToConsoleItemsList(results.getResult()));
         } catch (final Exception e) {
             throw new APIException(e);
         }
