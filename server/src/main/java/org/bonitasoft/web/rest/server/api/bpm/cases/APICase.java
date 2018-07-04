@@ -121,7 +121,7 @@ public class APICase extends ConsoleAPI<CaseItem> implements APIHasGet<CaseItem>
             final FlowNodeDatastore flowNodeDatastore = getFlowNodeDatastore();
             final Map<String, String> filters = new HashMap<String, String>();
             filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(item.getId().toLong()));
-            item.setAttribute(CaseItem.COUNTER_ACTIVE_FLOW_NODES, flowNodeDatastore.countAssignedAndPendingHumanTasks(null, null, filters));
+            item.setAttribute(CaseItem.COUNTER_ACTIVE_FLOW_NODES, flowNodeDatastore.count(null, null, filters));
         }
     }
 
