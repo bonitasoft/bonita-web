@@ -16,7 +16,11 @@
  */
 package org.bonitasoft.web.rest.server.datastore.utils;
 
+import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.search.Order;
+import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.Sort;
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,6 +59,20 @@ public class SortTest {
 
         Assert.assertEquals(sort.getField(), "attribute");
         Assert.assertEquals(sort.getOrder(), Sort.DEFAULT_ORDER);
+    }
+
+    @Test
+    public void testToStringForParamWithConvertionValue() {
+        Sort sort = new Sort( ActivityItem.ATTRIBUTE_ROOT_CASE_ID + " " +  Order.DESC,  new ActivityAttributeConverter());
+
+        Assert.assertEquals(sort.toString(), ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID + " " +  Order.DESC);
+    }
+
+    @Test
+    public void testToStringForParamWithoutConvertionValue() {
+        Sort sort = new Sort(  "TestParam " +  Order.DESC,  new ActivityAttributeConverter());
+
+        Assert.assertEquals(sort.toString(), "TestParam " +  Order.DESC);
     }
 
 }

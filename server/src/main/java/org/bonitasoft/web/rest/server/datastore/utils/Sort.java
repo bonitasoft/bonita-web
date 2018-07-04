@@ -58,7 +58,9 @@ public class Sort {
     }
 
     private String getSortedFieldValue(String sortValue) {
-        return converter.convert(sortValue.split(SEPARATOR)[0]);
+        String fieldValue = sortValue.split(SEPARATOR)[0];
+        String convertedFieldValue = converter.convert(fieldValue);
+        return convertedFieldValue != null? convertedFieldValue : fieldValue;
     }
 
     public String getField() {
@@ -67,6 +69,13 @@ public class Sort {
 
     public Order getOrder() {
         return order;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append(getField())
+                                  .append(SEPARATOR)
+                                  .append(getOrder()).toString();
     }
 
     @Override
