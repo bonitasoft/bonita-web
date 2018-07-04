@@ -403,7 +403,7 @@ public class APICaseTest {
         final Map<String, String> filters = new HashMap<String, String>();
         filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(id.toLong()));
         final long numberOfFailedFlowNodes = 2L;
-        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).countAssignedAndPendingHumanTasks(null, null, filters);
+        doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, null, filters);
 
         // When
         apiCase.fillCounters(item, counters);
