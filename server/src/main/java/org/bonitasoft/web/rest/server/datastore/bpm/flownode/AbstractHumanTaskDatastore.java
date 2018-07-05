@@ -29,6 +29,9 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.utils.Sort;
+import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
@@ -75,8 +78,11 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
     @Override
     protected SearchOptionsBuilder makeSearchOptionBuilder(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-
-        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
+        String convertedSort = null;
+        if(orders != null) {
+            convertedSort = new Sort(orders, new ActivityAttributeConverter()).toString();
+        }
+        final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, convertedSort, search);
 
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_CASE_ID, HumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ROOT_CASE_ID, FlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
