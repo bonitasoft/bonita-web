@@ -98,7 +98,8 @@ public class CustomPageService {
 
     public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws BonitaException, IOException {
-        if (!pageResourceProvider.getPageDirectory().exists()) {
+        File pageDirectory = pageResourceProvider.getPageDirectory();
+        if (!pageDirectory.exists() || pageDirectory.list().length == 0) {
             retrievePageZipContent(apiSession, pageResourceProvider);
         }
     }
@@ -185,13 +186,6 @@ public class CustomPageService {
             classloader.clearCache();
             classloader.close();
         }
-    }
-
-    protected void retrievePageZipContent(final APISession apiSession, final String pageName)
-            throws BonitaException, IOException {
-        final PageResourceProviderImpl pageResourceProvider = new PageResourceProviderImpl(pageName,
-                apiSession.getTenantId());
-        retrievePageZipContent(apiSession, pageResourceProvider);
     }
 
     protected GroovyClassLoader buildPageClassloader(final APISession apiSession, final String pageName,
