@@ -66,13 +66,17 @@ public class PageRenderer {
     }
 
     public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProviderImpl pageResourceProvider) throws BonitaException, IOException {
-        customPageService.ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        synchronized (PageRenderer.class) {
+            customPageService.ensurePageFolderIsPresent(apiSession, pageResourceProvider);
+        }
     }
 
     private void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final PageResourceProviderImpl pageResourceProvider) throws BonitaException, IOException, InstantiationException,
             IllegalAccessException {
-        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+        synchronized (PageRenderer.class) {
+            customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+        }
         if (isGroovyPage(pageResourceProvider)) {
             displayGroovyPage(request, response, apiSession, pageResourceProvider);
         } else {
