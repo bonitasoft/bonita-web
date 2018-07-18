@@ -508,6 +508,7 @@
         <servlet-name>themeResource</servlet-name>
         <url-pattern>/portal/themeResource</url-pattern>
         <url-pattern>/theme/*</url-pattern>
+        <url-pattern>/portal/custom-page/theme/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSOService</servlet-name>
