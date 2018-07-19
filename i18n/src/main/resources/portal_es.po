@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 05:07+0200\n"
-"PO-Revision-Date: 2018-06-29 09:12\n"
+"POT-Creation-Date: 2018-06-28 05:07+0200\n"
+"PO-Revision-Date: 2018-07-08 02:00\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -23,7 +23,7 @@ msgid " for "
 msgstr " para "
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
-msgstr "%attribute% formato de archivo no permitido. Sólo se permiten archivos %file_formats%."
+msgstr "%atributo% No se permite formato de archivo. Sólo se permiten% file_formats% archivos."
 
 msgid "%attribute% file format not allowed"
 msgstr "%attribute% formato de archivo no permitido"
@@ -32,34 +32,34 @@ msgid "%attribute% is mandatory"
 msgstr "%attribute% es obligatorio"
 
 msgid "%attribute% is not a valid Color value"
-msgstr "%attribute% no es un Color válido"
+msgstr "%attribute%   no es un Color válido"
 
 msgid "%attribute% is not a valid URL"
-msgstr "%attribute% no es una URL valida"
+msgstr "%attribute% no es un URL valido"
 
 msgid "%attribute% is not a valid email"
-msgstr "%attribute% no es un email válido"
+msgstr "% atributo % no es un email válido"
 
 msgid "%attribute% is not well written"
 msgstr "%attribute% no esta bien escrito"
 
 msgid "%attribute% must be a boolean value"
-msgstr "%attribute% debe ser un valor booleano"
+msgstr "%atributo% debe ser un valor booleano"
 
 msgid "%attribute% must be a negative value"
-msgstr "%attribute% debe ser un valor negativo"
+msgstr "% atributo % debe ser un valor negativo"
 
 msgid "%attribute% must be a negative value diffrent from 0"
-msgstr "%attribute% debe ser un valor positivo diferente de 0"
+msgstr "%  atributo % debe ser un valor positivo diferente de 0"
 
 msgid "%attribute% must be a numeric value"
 msgstr "%attribute% debe ser un valor numérico"
 
 msgid "%attribute% must be a positive value"
-msgstr "%attribute% debe ser un valor positivo"
+msgstr "%atributo% debe ser un valor positivo"
 
 msgid "%attribute% must be a positive value different from 0"
-msgstr "%attribute% debe ser un valor positivo diferente de 0"
+msgstr " %  atributo % debe ser un valor positivo diferente de 0"
 
 msgid "%attribute% must be a valid date"
 msgstr "%attribute% debe ser una fecha válida"
@@ -83,22 +83,22 @@ msgid "%attribute% must be more or equal than %secondAttribute%"
 msgstr "%attribute% debe ser mayor o igual %secondAttribute%"
 
 msgid "%attribute% must be more or equal than %value%"
-msgstr "%attribute% debe ser igual o más que %value%"
+msgstr "% atributo % debe ser igual o más que el % de valor"
 
 msgid "%attribute% must be more than %secondAttribute%"
 msgstr "%attribute% debe ser mayor que %secondAttribute%"
 
 msgid "%attribute% must be more than %value%"
-msgstr "%attribute% debe ser más que %value%"
+msgstr "% atributo % debe ser más que % value %"
 
 msgid "%attribute% must be on a single line"
 msgstr "%attribute% debe estar en una sola línea"
 
 msgid "%attribute% must be one of {%list%}"
-msgstr "%attribute% debe ser uno de {%list%}"
+msgstr "% atributo % debe ser uno de {% lista}"
 
 msgid "%attribute% must contain exactly %length% characters"
-msgstr "%attribute% debe contener exactamente %length% carácteres"
+msgstr "%attribute%  debe contener exactamente  %length% characters"
 
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% no debe ser igual a %secondAttribute%"
@@ -140,16 +140,16 @@ msgid "%pageName% is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "%rolename%"
-msgstr "%rolename%"
+msgstr "%nombre de actor%"
 
 msgid "%rolename% of %groupname%"
-msgstr "%rolename% en %groupname%"
+msgstr "%rolename% of %groupname%"
 
 msgid "%secondAttribute% must be a numeric value"
 msgstr "%secondAttribute% debe ser un valor numérico"
 
 msgid "%start_result% - %end_result% of %total_results%"
-msgstr "%start_result% - %end_result% de %total_results%"
+msgstr "%start_result% - %end_result% of %total_results%"
 
 msgid "%start_result% of %total_results%"
 msgstr "%start_result% de %total_results%"
@@ -173,19 +173,19 @@ msgid "'%pageName%' is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' se utiliza como Tema en:"
+msgstr "'%themeName%' se utiliza como tema para:"
 
 msgid "?"
 msgstr "?"
 
 msgid "A business archive has a .bar extension"
-msgstr "Un archivo de negocio tiene una extensión .bar"
+msgstr "Un archivo de negocios tiene una extensión de .bar"
 
 msgid "A case has been started successfully."
 msgstr "El caso se ha iniciado con éxito."
 
 msgid "A form is a page mapped to case start or a human task."
-msgstr "Un formulario es una página asignada al caso inicial o a una tarea humana."
+msgstr "Un formulario es una página asignada al caso inicial o una tarea humana."
 
 msgid "A group with the name %groupName% already exists"
 msgstr "Ya existe un grupo con el mismo nombre %groupName%"
@@ -203,13 +203,13 @@ msgid "Aborted by:"
 msgstr "Abortado por:"
 
 msgid "Aborted on:"
-msgstr "Abortado el:"
+msgstr "Abortado en:"
 
 msgid "About"
-msgstr "Acerca de"
+msgstr "Acerca"
 
 msgid "Actions"
-msgstr "Acciones"
+msgstr "acciones"
 
 msgid "Activate"
 msgstr "Activar"
@@ -275,7 +275,7 @@ msgid "Add a new custom page"
 msgstr "Añadir una nueva página personalizada"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Añadir un nuevo recurso (página, formulario, layout, tema o extensión API REST).<br/>Este recurso será instalado a nivel global (no a nivel de proceso o aplicación).<br/>El fichero.zip debe contener un fichero page.properties en el directorio raíz y un subdirectorio 'resources'.<br/>El fichero de propiedades debe al menos contener 'name', 'displayName' y 'contentType' (el contentType por defecto es 'page').<br/>El directorio de 'resources' debe contener un fichero index.html o Index.groovy y los recursos necesarios."
+msgstr "Añadir un nuevo recurso (página, formulario, maqueta, tema o extensión API REST).</0>Este recurso será instalado a nivel global (no a nivel de proceso o aplicación).</0>El fichero.zip debe contener un fichero page.properties en el directorio raíz y un subdirectorio 'resources'.<br/>El fichero de propiedades debe al menos contener 'name', 'displayName' y 'contentType' (el contentType por defecto es 'page').<br/>El directorio de 'resources' debe contener un fichero index.html o Index.groovy y los recursos necesarios."
 
 msgid "Add a resource"
 msgstr "Agregar un recurso"
@@ -636,7 +636,7 @@ msgid "Confirm update"
 msgstr "Confirme actualización"
 
 msgid "Connector definitions"
-msgstr "Definiciones de los conectores"
+msgstr "definiciones de los conectores"
 
 msgid "Connector definitions must be resolved before enabling the Process."
 msgstr "Las definiciones de conector deben resolverse antes de activar el proceso."
@@ -1147,7 +1147,8 @@ msgstr "Si creas un recurso con el UI Designer, el zip exportado automáticament
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "Si se elimina una página que se utiliza en un proceso, el proceso se marca sin resolver. \\nAntes de borrar una página, también deberá verificar si se utiliza en el menú de un perfil personalizado."
+msgstr "Si se elimina una página que se utiliza en un proceso, el proceso se marca sin resolver. \n"
+"Antes de borrar una página, también deberá verificar si se utiliza en el menú de un perfil personalizado."
 
 msgid "Image files"
 msgstr "Archivos de imagen"
@@ -1502,7 +1503,8 @@ msgstr "Nombre original"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "¡Vaya!... Este artículo ya no está disponible.\\nSerá redirigido a un lugar más seguro."
+msgstr "Oops... Este item no está disponible ya. \n"
+"You será redirigido a un lugar más seguro."
 
 msgid "Overview"
 msgstr "Vista global"
@@ -1661,7 +1663,7 @@ msgid "Release"
 msgstr "Liberar"
 
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Suprimir"
 
 msgid "Remove this category"
 msgstr "Eliminar esta categoría"
@@ -1793,10 +1795,10 @@ msgid "Service task (performed automatically)"
 msgstr "Tarea de servicio (ejecutada automáticamente)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "Los servicios se pausarán por mantenimiento. \\n.\n"
+msgstr "Los servicios se pausarán por mantenimiento. \n"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "Los servicios se reanudarán. Los usuarios podrán conectarse. \\n.\n"
+msgstr "Los servicios se reanudarán. Los usuarios podrán conectarse. \n"
 
 msgid "Session expired. Please log in again."
 msgstr "La sesión expiró. Por favor inicie sesión de nuevo."
@@ -1968,7 +1970,8 @@ msgstr "The application encountered an error."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "La aplicación ha encontrado un error inesperado. Por favor intentelo nuevamente. \\nSi el error persiste, póngase en contacto con el equipo de soporte de Bonitasoft"
+msgstr "La aplicación ha encontrado un error inesperado. Por favor intentelo nuevamente. \n"
+"Si el error persiste, póngase en contacto con el equipo de soporte de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "El caso %caseId% se ha iniciado con éxito."
@@ -2185,7 +2188,8 @@ msgstr "Este usuario ya posee esta membresia"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "Esta página no tiene permisos de autorización definidos. Si la página utiliza los recursos REST y la verificación de autorización está activada, \\n actualice la definición de página para especificar la lista de recursos utilizados."
+msgstr "Esta página no tiene permisos de autorización definidos. Si la página utiliza los recursos REST y la verificación de autorización está activada, \n"
+" actualice la definición de página para especificar la lista de recursos utilizados."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Este perfil estará disponible en el siguiente inicio de sesión para los usuarios asignados. Si se asigna el perfil a si mismo, estará disponible después de que refresque la página en su navegador."
@@ -2401,7 +2405,10 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "Se arriesga a interrumpir uno o más procesos.\\n\\nDesactivar el único usuario que puede realizar la(s) tarea(s) causará la interrupción del (de los) proceso(s).\\n\\nAntes de proceder, quizá quiera ir al apartado 'Más' del proceso y comprobar el mapeo de actores.\\n\\n¿Esta seguro que quiere desactivar este usuario ahora ?"
+msgstr "Se arriesga a interrumpir uno o más procesos.\n\n"
+"Desactivar el único usuario que puede realizar la(s) tarea(s) causará la interrupción del (de los) proceso(s).\n\n"
+"Antes de proceder, quizá quiera ir al apartado 'Más'  del proceso y comprobar el mapeo de actores.\n\n"
+"¿Esta seguro que quiere desactivar este usuario ahora ?"
 
 msgid "You will be rediected"
 msgstr "Usted será redirigido"
