@@ -30,7 +30,7 @@ import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.engine.exception.BonitaException;
 
 /**
- * @author Baptiste Mesta
+ * @author Baptiste Mesta, Emmanuel Duchastenier, Anthony Birembaut
  */
 public class ConfigurationFilesManager {
 
@@ -43,11 +43,33 @@ public class ConfigurationFilesManager {
     private static Logger LOGGER = Logger.getLogger(ConfigurationFilesManager.class.getName());
 
     /*
-     * Map<tenantId, Map<propertiesFileName, Properties>>
+     * Map<tenantId, Map<realPropertiesFileName, Properties>>
      */
     private Map<Long, Map<String, Properties>> tenantsConfigurations = new HashMap<>();
+    
+    /*
+     * Map<tenantId, Map<agregatedPropertiesFileName, Properties>>
+     * Some Properties files also have: 
+     * - an internal extension (for modifications made using the UI) 
+     * - a custom extension (for modifications made manually using the setup tool)
+     * The default Properties file remains unmodified.
+     * This map merges the default Properties and the extensions in one Properties collection
+     */
+    private Map<Long, Map<String, Properties>> tenantsAggregatedConfigurations = new HashMap<>();
+    
+    /*
+     * Map<tenantId, Map<realConfigurationFileName, File>>
+     */
     private Map<Long, Map<String, File>> tenantsConfigurationFiles = new HashMap<>();
+    
+    /*
+     * Map<propertiesFileName, Properties>
+     */
     private Map<String, Properties> platformConfigurations = new HashMap<>();
+    
+    /*
+     * Map<configurationFileName, File>
+     */
     private Map<String, File> platformConfigurationFiles = new HashMap<>();
 
     public Properties getPlatformProperties(String propertiesFile) {
@@ -78,8 +100,19 @@ public class ConfigurationFilesManager {
         return properties;
     }
 
-    public Properties getTenantProperties(String propertiesFile, long tenantId) {
-        return getAlsoCustomAndInternalPropertiesFromFilename(tenantsConfigurations.get(tenantId), propertiesFile);
+    public Properties getTenantProperties(String propertiesFileName, long tenantId) {
+        Properties aggregatedProperties = null;
+        Map<String, Properties> currentTenantAggregatedConfigurations = tenantsAggregatedConfigurations.get(tenantId);
+        if(currentTenantAggregatedConfigurations == null) {
+            currentTenantAggregatedConfigurations = new HashMap<>();
+            tenantsAggregatedConfigurations.put(tenantId, currentTenantAggregatedConfigurations);
+        }
+        aggregatedProperties = currentTenantAggregatedConfigurations.get(propertiesFileName);
+        if (aggregatedProperties == null) {
+            aggregatedProperties = getAlsoCustomAndInternalPropertiesFromFilename(tenantsConfigurations.get(tenantId), propertiesFileName);
+            currentTenantAggregatedConfigurations.put(propertiesFileName, aggregatedProperties);
+        }
+        return aggregatedProperties;
     }
 
     private Properties getProperties(byte[] content) throws IOException {
@@ -117,6 +150,7 @@ public class ConfigurationFilesManager {
         }
         tenantsConfigurations.put(tenantId, tenantProperties);
         tenantsConfigurationFiles.put(tenantId, tenantFiles);
+        tenantsAggregatedConfigurations.put(tenantId, new HashMap<>());
     }
 
     public void setTenantConfiguration(String fileName, byte[] content, long tenantId) throws IOException {
@@ -143,6 +177,7 @@ public class ConfigurationFilesManager {
         if (properties != null) {
             properties.remove(propertyName);
             update(tenantId, internalFilename, properties);
+            updateAggregatedProperties(propertiesFilename, tenantId, propertyName, null, resources);
         } else {
             if (LOGGER.isLoggable(Level.FINER)) {
                 LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
@@ -185,9 +220,31 @@ public class ConfigurationFilesManager {
         if (properties != null) {
             properties.setProperty(propertyName, propertyValue);
             update(tenantId, internalFilename, properties);
+            updateAggregatedProperties(propertiesFilename, tenantId, propertyName, propertyValue, resources);
         } else {
             if (LOGGER.isLoggable(Level.FINER)) {
                 LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
+            }
+        }
+    }
+
+    public void updateAggregatedProperties(String propertiesFilename, long tenantId, String propertyName, String propertyValue,
+            Map<String, Properties> resources) {
+        Map<String, Properties> aggregatedTenantConfigurations = tenantsAggregatedConfigurations.get(tenantId);
+        if (aggregatedTenantConfigurations == null) {
+            return;
+        }
+        final String customFilename = getSuffixedPropertyFilename(propertiesFilename, "-custom");
+        Properties customResources = resources.get(customFilename);
+        if (customResources == null || !customResources.containsKey(propertyName)) {
+            //only update the aggregated properties if there is not a custom property overriding the internal one
+            Properties aggregatedTenantConfiguration = aggregatedTenantConfigurations.get(propertiesFilename);
+            if (aggregatedTenantConfiguration != null) {
+                if (propertyValue != null) {
+                    aggregatedTenantConfiguration.put(propertyName, propertyValue);
+                } else {
+                    aggregatedTenantConfiguration.remove(propertyName);
+                }
             }
         }
     }
