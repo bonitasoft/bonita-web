@@ -154,7 +154,7 @@ public class ApiExtensionResourceTest {
         assertThat(range.getUnitName()).isNullOrEmpty();
         assertThat(range.getInstanceSize()).isEqualTo(100);
 
-        assertThat(representation.getLocationRef().toString()).isEqualTo(location);
+        assertThat(restApiResponse.getAdditionalHeaders().get(HeaderConstants.HEADER_LOCATION)).isEqualTo(location);
     }
 
     @Test
