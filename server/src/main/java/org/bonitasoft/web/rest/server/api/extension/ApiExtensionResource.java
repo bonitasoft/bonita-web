@@ -102,7 +102,7 @@ public class ApiExtensionResource extends ServerResource {
             if (HeaderConstants.HEADER_CONTENT_RANGE.equals(entry.getKey())) {
                 updateRepresentationRange(entry.getValue(), representation);
             } else if (HeaderConstants.HEADER_LOCATION.equals(entry.getKey())) {
-                representation.setLocationRef(entry.getValue());
+                getResponse().setLocationRef(entry.getValue());
             } else {
                 Header header = new Header(entry.getKey(), entry.getValue());
                 getResponse().getHeaders().add(header);
