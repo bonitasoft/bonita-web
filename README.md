@@ -1,14 +1,34 @@
 # Bonita Web #
 
-## Compilation ##
+
+## Requirements
+
+>     Java JDK 1.8 or higher
+
+This project bundles the [Maven Wrapper](https://github.com/takari/maven-wrapper), so the `mvnw` script is available at the project root.
+
+### Dependencies
+
+The project depends on bonita-engine artifacts so if you want to build a branch in a SNAPSHOT version, you must build the [bonita-engine](https://github.com/bonitasoft/bonita-engine) first (install artifacts in your local repository).
+
+If you build a tag, you don't need to build the bonita-engine as its artifacts are available on Maven Central.
+
+## Contribution
+
+I you want to contribute, ask questions about the project, report bug, see the [contributing guide](https://github.com/bonitasoft/bonita-developer-resources/blob/master/CONTRIBUTING.MD).
+
+
+
+## Build the project ##
+
 At root level (same location as the parent pom.xml) :
     
     ./mvnw clean install
-    
+
 For develoment purpose use the *dev* profile (don't compile every gwt permutations)
     
     ./mvnw clean install -Pdev
-    
+
 ## Execution in hosted mode for dev/debug ##
 In server module, to build and launch a tomcat hosting the app :
 
@@ -22,7 +42,7 @@ Hot reload is not supported, but when you update a class in portal/, server/ or 
 In portal module :
     
     Super dev mode: ./mvnw -Pdev process-classes gwt:run-codeserver
-    
+
 Visit the indicated URL and bookmark the Dev Mode On/Off links
 Then visit http://localhost:8080/bonita, login with install/install and click on the Dev Mode On link
 click on the portal module link to re-generate the portal Javascript
