@@ -34,8 +34,13 @@ import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButto
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.TaskItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.item.Definitions;
+import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
 import org.bonitasoft.web.toolkit.client.ui.CssClass;
@@ -125,17 +130,23 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
         addBody(availableTasks.addClass("tasks"));
     }
 
+    protected ItemDefinition getHumanTasksDefinition() {
+        return Definitions.get(HumanTaskDefinition.TOKEN);
+    }
+    
     protected ItemTable getTaskTable(final CaseItem item) {
-        return new ItemTable(new JsId("tasks"), getHumanTasksDefinition())
-        .addHiddenFilter(HumanTaskItem.ATTRIBUTE_CASE_ID, item.getId())
-                .addHiddenFilter(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_READY)
-        .addColumn(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
+        return new ItemTable(new JsId("tasks"), Definitions.get(TaskDefinition.TOKEN))
+        .addHiddenFilter(TaskItem.ATTRIBUTE_CASE_ID, item.getId())
+        .addHiddenFilter(TaskItem.FILTER_IS_FAILED, Boolean.FALSE.toString())
+        .addColumn(TaskItem.ATTRIBUTE_DISPLAY_NAME, _("Name"))
+        .addColumn(TaskItem.ATTRIBUTE_STATE, _("State"))
         .addColumn(new DateAttributeReader(HumanTaskItem.ATTRIBUTE_DUE_DATE), _("Due date"))
-        .addColumn(new DescriptionAttributeReader(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
+        .addColumn(new DescriptionAttributeReader(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, HumanTaskItem.ATTRIBUTE_DESCRIPTION), _("Description"))
 
-        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
+        .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_NAME, new FlowNodeDisplayNameFormatter())
+        .addCellFormatter(TaskItem.ATTRIBUTE_STATE, new SpanPrepender(_("State:")))
         .addCellFormatter(HumanTaskItem.ATTRIBUTE_DUE_DATE, new SpanPrepender(_("Due in:")))
-        .addCellFormatter(HumanTaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
+        .addCellFormatter(TaskItem.ATTRIBUTE_DISPLAY_DESCRIPTION, new SpanPrepender(_("Description:")));
     }
 
     protected ItemTable getArchivedTaskTable(final CaseItem item) {

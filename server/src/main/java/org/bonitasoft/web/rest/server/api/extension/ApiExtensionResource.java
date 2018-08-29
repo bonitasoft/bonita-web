@@ -101,6 +101,8 @@ public class ApiExtensionResource extends ServerResource {
             //RESTLET do not support content range header, use RESTLET Ranges instead
             if (HeaderConstants.HEADER_CONTENT_RANGE.equals(entry.getKey())) {
                 updateRepresentationRange(entry.getValue(), representation);
+            } else if (HeaderConstants.HEADER_LOCATION.equals(entry.getKey())) {
+                getResponse().setLocationRef(entry.getValue());
             } else {
                 Header header = new Header(entry.getKey(), entry.getValue());
                 getResponse().getHeaders().add(header);

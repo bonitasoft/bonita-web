@@ -132,12 +132,14 @@ public class ApiExtensionResourceTest {
     }
 
     @Test
-    public void should_handle_content_range_with_restlet_range() throws Exception {
+    public void should_handle_content_range_and_location_with_restlet_representation() throws Exception {
         //given
+        String location = "https://documentation.bonitasoft.com/bonita/7.7/";
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
         final RestApiResponse restApiResponse = new RestApiResponseBuilder()
-                .withAdditionalHeader(HeaderConstants.HEADER_CONTENT_RANGE, "1-10/100").build();
+                .withAdditionalHeader(HeaderConstants.HEADER_CONTENT_RANGE, "1-10/100")
+                .withAdditionalHeader(HeaderConstants.HEADER_LOCATION, location).build();
         doReturn(restApiResponse).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
                 any(ResourceExtensionResolver.class));
         when(response.getEntity()).thenReturn(new StringRepresentation(""));
@@ -151,6 +153,8 @@ public class ApiExtensionResourceTest {
         assertThat(range.getSize()).isEqualTo(10);
         assertThat(range.getUnitName()).isNullOrEmpty();
         assertThat(range.getInstanceSize()).isEqualTo(100);
+
+        assertThat(restApiResponse.getAdditionalHeaders().get(HeaderConstants.HEADER_LOCATION)).isEqualTo(location);
     }
 
     @Test
