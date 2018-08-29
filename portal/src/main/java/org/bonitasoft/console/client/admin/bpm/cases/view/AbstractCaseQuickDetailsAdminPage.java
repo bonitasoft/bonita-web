@@ -41,7 +41,6 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
-import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DateAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DeployedAttributeReader;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionAttributeReader;
@@ -188,8 +187,6 @@ public abstract class AbstractCaseQuickDetailsAdminPage<T extends CaseItem> exte
                 .setOrder(TaskItem.ATTRIBUTE_LAST_UPDATE_DATE, false)
                 .setActions(getTaskRedirectionAction());
     }
-
-    protected abstract ItemDefinition getHumanTasksDefinition();
 
     protected void preparetasksTable(final ItemTable tasksTable) {
         tasksTable.setNbLinesByPage(5);
