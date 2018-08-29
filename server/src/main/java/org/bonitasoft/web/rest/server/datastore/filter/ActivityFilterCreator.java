@@ -16,8 +16,11 @@ package org.bonitasoft.web.rest.server.datastore.filter;
 import java.io.Serializable;
 
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeTypeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.converter.StringValueConverter;
+import org.bonitasoft.web.rest.server.datastore.filter.Filter.Operator;
 
 /**
  * @author Florine Boudin
@@ -32,6 +35,10 @@ public class ActivityFilterCreator implements FilterCreator {
     public Filter<? extends Serializable> create(String attribute, String value) {
         if (ActivityItem.ATTRIBUTE_TYPE.equals(attribute)) {
             return new Filter<>(new Field(attribute, new ActivityAttributeConverter()), new Value<>(value, new FlowNodeTypeConverter()));
+        }
+        if (ActivityItem.FILTER_IS_FAILED.equals(attribute)) {
+            Operator operator = Boolean.valueOf(value) ? Operator.EQUAL : Operator.DIFFERENT_FROM;
+            return new Filter<>(new Field(ActivityItem.ATTRIBUTE_STATE, new ActivityAttributeConverter()), new Value<>(FlowNodeItem.VALUE_STATE_FAILED, new StringValueConverter()), operator);
         }
         return new GenericFilterCreator(new ActivityAttributeConverter()).create(attribute, value);
     }

@@ -115,6 +115,8 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
     public static final String VALUE_TYPE_INTERMEDIATE_THROW_EVENT = "";
 
     public static final String VALUE_TYPE_END_EVENT = "END_EVENT";
+    
+    public static final String FILTER_IS_FAILED = "isFailed";
 
     public void setProcessId(final APIID id);
 
