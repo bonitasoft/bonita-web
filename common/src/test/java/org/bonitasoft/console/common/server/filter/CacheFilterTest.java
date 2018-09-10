@@ -7,9 +7,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,6 +44,12 @@ public class CacheFilterTest {
 
     @Mock
     private HttpSession httpSession;
+    
+    @Mock
+    private FilterConfig filterConfig;
+    
+    @Mock
+    private ServletContext servletContext;
 
     @Spy
     CacheFilter cacheFilter;
@@ -51,6 +60,10 @@ public class CacheFilterTest {
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
+        when(servletContext.getContextPath()).thenReturn("");
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
+        when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
+        cacheFilter.init(filterConfig);
     }
 
     @Test
