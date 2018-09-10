@@ -25,9 +25,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -75,6 +78,12 @@ public class AuthenticationFilterTest {
     @Mock
     private HttpSession httpSession;
 
+    @Mock
+    private FilterConfig filterConfig;
+    
+    @Mock
+    private ServletContext servletContext;
+    
     @Spy
     AuthenticationFilter authenticationFilter;
 
@@ -85,6 +94,10 @@ public class AuthenticationFilterTest {
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
         doReturn(new FakeAuthenticationManager(1L)).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
+        when(servletContext.getContextPath()).thenReturn("");
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
+        when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
+        authenticationFilter.init(filterConfig);
         when(request.getTenantId()).thenReturn("1");
         when(httpRequest.getMethod()).thenReturn("GET");
     }
