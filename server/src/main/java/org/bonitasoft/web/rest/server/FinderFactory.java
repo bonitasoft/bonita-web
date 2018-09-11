@@ -36,6 +36,8 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
@@ -87,6 +89,7 @@ public class FinderFactory {
         final Map<Class<? extends ServerResource>, ResourceFinder> finders = new HashMap<>();
         finders.put(ActivityVariableResource.class, new ActivityVariableResourceFinder());
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
+        finders.put(BPMMessageResource.class, new BPMMessageResourceFinder());
         finders.put(CaseInfoResource.class, new CaseInfoResourceFinder());
         finders.put(CaseContextResource.class, new CaseContextResourceFinder());
         finders.put(ArchivedCaseContextResource.class, new ArchivedCaseContextResourceFinder());

@@ -32,6 +32,8 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
@@ -146,6 +148,14 @@ public class FinderFactoryTest {
         doReturn(processAPI).when(timerEventTriggerResourceFinder).getProcessAPI(any(Request.class));
         final ServerResource serverResource = timerEventTriggerResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(TimerEventTriggerResource.class);
+    }
+
+    @Test
+    public void should_return_SendMessageResource_for_SendMessageResourceFinder() {
+        final BPMMessageResourceFinder sendMessageResourceFinder = spy(new BPMMessageResourceFinder());
+        doReturn(processAPI).when(sendMessageResourceFinder).getProcessAPI(any(Request.class));
+        final ServerResource serverResource = sendMessageResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(BPMMessageResource.class);
     }
 
     @Test
