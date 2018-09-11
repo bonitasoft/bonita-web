@@ -18,9 +18,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.flownode.SendEventException;
@@ -39,6 +42,20 @@ import org.restlet.resource.Post;
  */
 public class BPMMessageResource extends CommonResource {
 
+    private static final Set<String> SUPPORTED_TYPES = new HashSet<>();
+    static {
+        SUPPORTED_TYPES.add(String.class.getName());
+        SUPPORTED_TYPES.add(Integer.class.getName());
+        SUPPORTED_TYPES.add(Long.class.getName());
+        SUPPORTED_TYPES.add(Float.class.getName());
+        SUPPORTED_TYPES.add(Double.class.getName());
+        SUPPORTED_TYPES.add(Boolean.class.getName());
+        SUPPORTED_TYPES.add(Date.class.getName());
+        SUPPORTED_TYPES.add(LocalDate.class.getName());
+        SUPPORTED_TYPES.add(LocalDateTime.class.getName());
+        SUPPORTED_TYPES.add(OffsetDateTime.class.getName());
+    }
+
     private final ProcessAPI processAPI;
 
     public BPMMessageResource(final ProcessAPI processAPI) {
@@ -51,7 +68,7 @@ public class BPMMessageResource extends CommonResource {
         try {
             Map<Expression, Expression> msgContent = new HashMap<>();
             if (message.getMessageContent() != null) {
-                for (Map.Entry<String, Object> entry : message.getMessageContent().entrySet()) {
+                for (Map.Entry<String, BPMMessageValue> entry : message.getMessageContent().entrySet()) {
                     msgContent.put(new ExpressionBuilder().createConstantStringExpression(entry.getKey()),
                             getExpressionFromObject(entry));
                 }
@@ -63,7 +80,7 @@ public class BPMMessageResource extends CommonResource {
                     throw new IllegalArgumentException(
                             String.format("A maximum of 5 correlations is supported. %s found.", nbCorrelations));
                 }
-                for (Map.Entry<String, Object> entry : message.getCorrelations().entrySet()) {
+                for (Map.Entry<String, BPMMessageValue> entry : message.getCorrelations().entrySet()) {
                     correlations.put(new ExpressionBuilder().createConstantStringExpression(entry.getKey()),
                             getExpressionFromObject(entry));
                 }
@@ -78,47 +95,64 @@ public class BPMMessageResource extends CommonResource {
         }
     }
 
-    private Expression getExpressionFromObject(Entry<String, Object> entry) throws InvalidExpressionException {
-        Object s = entry.getValue();
-        if (s instanceof String) {
-            try {
-                OffsetDateTime.parse((String) s);
-                return new ExpressionBuilder().createExpression((String) s, (String) s, OffsetDateTime.class.getName(),
-                        ExpressionType.TYPE_CONSTANT);
-            } catch (DateTimeParseException e) {
-                //Ignore
-            }
-            try {
-                LocalDateTime.parse((String) s);
-                return new ExpressionBuilder().createExpression((String) s, (String) s, LocalDateTime.class.getName(),
-                        ExpressionType.TYPE_CONSTANT);
-            } catch (DateTimeParseException e) {
-                //Ignore
-            }
-            try {
-                LocalDate.parse((String) s);
-                return new ExpressionBuilder().createExpression((String) s, (String) s, LocalDate.class.getName(),
-                        ExpressionType.TYPE_CONSTANT);
-            } catch (DateTimeParseException e) {
-                //Ignore
-            }
-            return new ExpressionBuilder().createConstantStringExpression((String) s);
-        } else if (s instanceof Long) {
-            return new ExpressionBuilder().createConstantLongExpression((Long) s);
-        } else if (s instanceof Double) {
-            return new ExpressionBuilder().createConstantDoubleExpression((Double) s);
-        } else if (s instanceof Float) {
-            return new ExpressionBuilder().createConstantFloatExpression((Float) s);
-        } else if (s instanceof Integer) {
-            return new ExpressionBuilder().createConstantIntegerExpression((Integer) s);
-        } else if (s instanceof Boolean) {
-            return new ExpressionBuilder().createConstantBooleanExpression((Boolean) s);
+    private Expression getExpressionFromObject(Entry<String, BPMMessageValue> entry) throws InvalidExpressionException {
+        BPMMessageValue messageValue = entry.getValue();
+        Object value = messageValue.getValue();
+        String type = valueType(messageValue.getType(), value);
+        if (!isSupportedType(type)) {
+            throw new InvalidExpressionException(
+                    String.format(
+                            "BPM send message: unsupported value type '%s' for key '%s'. Only primitive types are supported.",
+                            messageValue.getType(),
+                            entry.getKey()));
         }
-        throw new InvalidExpressionException(
-                String.format(
-                        "BPM send message: unsupported value type '%s' for key '%s'. Only primitive types are supported.",
-                        s.getClass().getCanonicalName(),
-                        entry.getKey()));
+        return new ExpressionBuilder().createExpression(String.valueOf(value),
+                String.valueOf(value), valueType(type, value), ExpressionType.TYPE_CONSTANT);
+    }
+
+    private String valueType(String type, Object value) {
+        if (type != null) {
+            return type;
+        }
+        return guessType(value);
+    }
+
+    private String guessType(Object value) {
+        if (value instanceof String) {
+            try {
+                OffsetDateTime.parse((String) value);
+                return OffsetDateTime.class.getName();
+            } catch (DateTimeParseException e) {
+                //Ignore
+            }
+            try {
+                LocalDateTime.parse((String) value);
+            } catch (DateTimeParseException e) {
+                //Ignore
+            }
+            try {
+                LocalDate.parse((String) value);
+                return LocalDate.class.getName();
+            } catch (DateTimeParseException e) {
+                //Ignore
+            }
+            return String.class.getName();
+        } else if (value instanceof Long) {
+            return Long.class.getName();
+        } else if (value instanceof Double) {
+            return Double.class.getName();
+        } else if (value instanceof Float) {
+            return Float.class.getName();
+        } else if (value instanceof Integer) {
+            return Integer.class.getName();
+        } else if (value instanceof Boolean) {
+            return Boolean.class.getName();
+        }
+        return null;
+    }
+
+    private boolean isSupportedType(String type) {
+        return SUPPORTED_TYPES.contains(type);
     }
 
     private void validateMandatoryAttributes(BPMMessage message) {

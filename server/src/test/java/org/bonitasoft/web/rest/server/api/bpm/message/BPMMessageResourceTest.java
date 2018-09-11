@@ -149,16 +149,17 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setMessageName("msg");
         bpmMessage.setTargetProcess("myProcess");
         bpmMessage.setTargetFlowNode("activity");
-        Map<String, Object> messageContent = new HashMap<>();
-        messageContent.put("id", 123L);
-        messageContent.put("name", "john");
-        messageContent.put("amount", 1243.234d);
-        messageContent.put("nbDay", 34);
-        messageContent.put("validated", true);
-        messageContent.put("rate", 3.0f);
-        messageContent.put("expectedDate", "2018-09-09");
-        messageContent.put("startDate", "2018-08-09T14:30:00");
-        messageContent.put("globalEndDate", "2018-08-09T14:30:00+01:00");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("id", BPMMessageValue.create(123L, Long.class.getName()));
+        messageContent.put("name", BPMMessageValue.create("john",String.class.getName()));
+        messageContent.put("amount", BPMMessageValue.create(1243.234d, Double.class.getName()));
+        messageContent.put("nbDay", BPMMessageValue.create(34, Integer.class.getName()));
+        messageContent.put("validated", BPMMessageValue.create(true, Boolean.class.getName()));
+        messageContent.put("rate", BPMMessageValue.create(3.0f, Float.class.getName()));
+        messageContent.put("expectedDate", BPMMessageValue.create("2018-09-09", LocalDate.class.getName()));
+        messageContent.put("startDate", BPMMessageValue.create("2018-08-09T14:30:00", LocalDateTime.class.getName()));
+        messageContent.put("globalEndDate",
+                BPMMessageValue.create("2018-08-09T14:30:00+01:00", OffsetDateTime.class.getName()));
         bpmMessage.setMessageContent(messageContent);
 
         // when:
@@ -193,9 +194,9 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setMessageName("msg");
         bpmMessage.setTargetProcess("myProcess");
         bpmMessage.setTargetFlowNode("activity");
-        Map<String, Object> messageContent = new HashMap<>();
-        messageContent.put("id", 123L);
-        messageContent.put("name", "john");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("id", BPMMessageValue.create(123L, Long.class.getName()));
+        messageContent.put("name", BPMMessageValue.create("john", String.class.getName()));
         bpmMessage.setCorrelations(messageContent);
 
         // when:
@@ -222,8 +223,9 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setMessageName("msg");
         bpmMessage.setTargetProcess("myProcess");
         bpmMessage.setTargetFlowNode("activity");
-        Map<String, Object> messageContent = new HashMap<>();
-        messageContent.put("array", new String[] { "a", "b" });
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("array",
+                BPMMessageValue.create(new String[] { "a", "b" }, String[].class.getCanonicalName()));
         bpmMessage.setMessageContent(messageContent);
 
         // then:
@@ -242,13 +244,14 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setMessageName("msg");
         bpmMessage.setTargetProcess("myProcess");
         bpmMessage.setTargetFlowNode("activity");
-        Map<String, Object> messageContent = new HashMap<>();
-        messageContent.put("k1", "1");
-        messageContent.put("k2", "1");
-        messageContent.put("k3", "1");
-        messageContent.put("k4", "1");
-        messageContent.put("k5", "1");
-        messageContent.put("k6", "1");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        BPMMessageValue value = BPMMessageValue.create("1", String.class.getName());
+        messageContent.put("k1", value);
+        messageContent.put("k2", value);
+        messageContent.put("k3", value);
+        messageContent.put("k4", value);
+        messageContent.put("k5", value);
+        messageContent.put("k6", value);
         bpmMessage.setCorrelations(messageContent);
 
         // then:
@@ -270,7 +273,7 @@ public class BPMMessageResourceTest extends RestletTest {
     @Test
     public void should_post_request_return_201_status() throws Exception {
         Response response = request(BonitaRestletApplication.BPM_MESSAGE_URL)
-                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"targetFlowNode\": \"wait\", \"messageContent\": { \"id\": 12 } }");
+                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"targetFlowNode\": \"wait\", \"messageContent\": { \"id\": { \"value\" :  12 } } }");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
     }
@@ -278,7 +281,7 @@ public class BPMMessageResourceTest extends RestletTest {
     @Test
     public void should_support_date_type() throws Exception {
         Response response = request(BonitaRestletApplication.BPM_MESSAGE_URL)
-                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"targetFlowNode\": \"wait\", \"messageContent\": { \"updated\": \"2012-04-23T18:25:43.511Z\" } }");
+                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"targetFlowNode\": \"wait\", \"messageContent\": { \"updated\": { \"value\": \"2012-04-23T18:25:43.511Z\", \"type\":\"java.time.OffsetDateTime\" } } }");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
     }
