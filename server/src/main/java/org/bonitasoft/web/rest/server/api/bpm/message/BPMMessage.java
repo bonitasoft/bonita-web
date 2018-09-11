@@ -23,8 +23,8 @@ public class BPMMessage {
     private String messageName;
     private String targetProcess;
     private String targetFlowNode;
-    private Map<String, Object> messageContent;
-    private Map<String, Object> correlations;
+    private Map<String, BPMMessageValue> messageContent;
+    private Map<String, BPMMessageValue> correlations;
 
     public String getMessageName() {
         return messageName;
@@ -50,19 +50,19 @@ public class BPMMessage {
         this.targetFlowNode = targetFlowNode;
     }
 
-    public Map<String, Object> getMessageContent() {
+    public Map<String, BPMMessageValue> getMessageContent() {
         return messageContent;
     }
 
-    public void setMessageContent(Map<String, Object> messageContent) {
+    public void setMessageContent(Map<String, BPMMessageValue> messageContent) {
         this.messageContent = messageContent;
     }
 
-    public Map<String, Object> getCorrelations() {
+    public Map<String, BPMMessageValue> getCorrelations() {
         return correlations;
     }
 
-    public void setCorrelations(Map<String, Object> correlations) {
+    public void setCorrelations(Map<String, BPMMessageValue> correlations) {
         this.correlations = correlations;
     }
 
