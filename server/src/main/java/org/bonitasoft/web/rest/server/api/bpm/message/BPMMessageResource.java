@@ -120,8 +120,8 @@ public class BPMMessageResource extends CommonResource {
     private String guessType(Object value) {
         if (value instanceof String) {
             try {
-                OffsetDateTime.parse((String) value);
-                return OffsetDateTime.class.getName();
+                LocalDate.parse((String) value);
+                return LocalDate.class.getName();
             } catch (DateTimeParseException e) {
                 //Ignore
             }
@@ -131,8 +131,8 @@ public class BPMMessageResource extends CommonResource {
                 //Ignore
             }
             try {
-                LocalDate.parse((String) value);
-                return LocalDate.class.getName();
+                OffsetDateTime.parse((String) value);
+                return OffsetDateTime.class.getName();
             } catch (DateTimeParseException e) {
                 //Ignore
             }
@@ -156,6 +156,9 @@ public class BPMMessageResource extends CommonResource {
     }
 
     private void validateMandatoryAttributes(BPMMessage message) {
+        if (message == null) {
+            throw new IllegalArgumentException("message body is missing");
+        }
         if (message.getMessageName() == null) {
             throw new IllegalArgumentException("messageName is mandatory");
         }
