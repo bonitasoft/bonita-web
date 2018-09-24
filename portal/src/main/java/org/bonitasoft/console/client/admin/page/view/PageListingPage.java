@@ -121,7 +121,9 @@ public class PageListingPage extends ItemListingPage<PageItem> {
 
     private ItemTable itemTable() {
         showSearchBar = false;
-        return new ItemTable(new JsId("profile"), Definitions.get(PageDefinition.TOKEN)).addHiddenFilter("processDefinitionId", "")
+        return new ItemTable(new JsId("profile"), Definitions.get(PageDefinition.TOKEN))
+                .addHiddenFilter(PageItem.ATTRIBUTE_PROCESS_ID, "")
+                .addHiddenFilter(PageItem.ATTRIBUTE_IS_HIDDEN, Boolean.FALSE.toString())
                 .addColumn(PageItem.ATTRIBUTE_DISPLAY_NAME, _("Name"), true, true)
                 .addColumn(PageItem.ATTRIBUTE_DESCRIPTION, _("Description"), false)
                 .addColumn(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Updated on"), true, false)

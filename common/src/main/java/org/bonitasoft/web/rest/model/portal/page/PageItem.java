@@ -52,6 +52,8 @@ public class PageItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_CONTENT_NAME = "contentName";
 
     public static final String ATTRIBUTE_CONTENT_TYPE = "contentType";
+    
+    public static final String ATTRIBUTE_IS_HIDDEN = "isHidden";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FILTERS
@@ -147,6 +149,10 @@ public class PageItem extends Item implements ItemHasUniqueId {
     public void setContentType(final String contentType) {
         setAttribute(ATTRIBUTE_CONTENT_TYPE, contentType);
     }
+    
+    public void setIsHidden(final boolean isHidden) {
+        setAttribute(ATTRIBUTE_IS_HIDDEN, isHidden);
+    }
 
     public String getUrlToken() {
         return getAttributeValue(ATTRIBUTE_URL_TOKEN);
@@ -203,5 +209,9 @@ public class PageItem extends Item implements ItemHasUniqueId {
 
     public UserItem getUpdatedByUser() {
         return (UserItem) getDeploy(ATTRIBUTE_UPDATED_BY_USER_ID);
+    }
+    
+    public boolean isHidden() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_HIDDEN));
     }
 }
