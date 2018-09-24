@@ -45,6 +45,8 @@ public class PageItemBuilder {
     protected String description = "aDescription";
 
     protected boolean isProvided = false;
+    
+    protected boolean isHidden = false;
 
     protected Date creation_date = new Date(1);
 
@@ -84,7 +86,7 @@ public class PageItemBuilder {
     }
 
     public Page toPage() {
-        final PageImpl pageImpl = new PageImpl(id, urlToken, displayName, isProvided, description, createdBy, 1l, 1l, 1l, contentName, ContentType.PAGE,null);
+        final PageImpl pageImpl = new PageImpl(id, urlToken, displayName, isProvided, isHidden, description, createdBy, 1l, 1l, 1l, contentName, ContentType.PAGE,null);
         return pageImpl;
     }
 
