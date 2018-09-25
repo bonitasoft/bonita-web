@@ -9,7 +9,7 @@ public class BPMServicesMenuItem extends MenuLink {
 
 	public BPMServicesMenuItem() {
 		
-        super(new JsId("tenantMaintenance"), _("BPM services"), _("Configure BPM services for maintenance"),
+        super(new JsId("custompage_tenantStatusBonita"), _("BPM services"), _("Configure BPM services for maintenance"),
                 "tenantMaintenance");
 //      TO DO: super(new JsId(TenantMaintenancePage.TOKEN), _("BPM services"), _("Configure BPM services for maintenance"),
 //        TenantMaintenancePage.TOKEN);
