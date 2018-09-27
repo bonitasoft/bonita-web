@@ -14,7 +14,11 @@
  */
 package org.bonitasoft.console.client.common.view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
@@ -36,7 +40,11 @@ public class CustomPageWithFrame extends Page {
 
     public final static String TOKEN = "custompage_";
 
+    public static final String PROCESS_LIST_USER = "custompage_processlistBonita";
+
     private final String pageName;
+
+    private static Map<String, List<String>> privilegesMap = new HashMap<String, List<String>>();
 
     public CustomPageWithFrame(final String pageName) {
         this.pageName = pageName;
@@ -92,6 +100,29 @@ public class CustomPageWithFrame extends Page {
     @Override
     public void defineTitle() {
         setTitle(pageName);
+    }
+
+   /**
+     * add a token support to customPage and associated privileges
+     *
+     * @param token the token to match
+     * @param privileges the privilege to be available
+     */
+    public static void addTokenSupport(final String token, String... privileges) {
+        privilegesMap.put(token, Arrays.asList(privileges));
+    }
+
+    /**
+     * Get privileges associated to this token
+     */
+    public static List<String> getPrivileges(String token) {
+        List<String> result = new ArrayList<String>();
+        result.add(token);
+        List<String> all = privilegesMap.get(token);
+        if (all != null) {
+            result.addAll(all);
+        }
+        return result;
     }
 
 }

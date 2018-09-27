@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
@@ -57,6 +58,7 @@ public class DisplayCaseFormPage extends Page {
         PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("caselistingpm");
         PRIVILEGES.add("reportlistingadminext");

@@ -1,7 +1,5 @@
 package org.bonitasoft.console.client;
 
-import static org.bonitasoft.console.client.angular.AngularIFrameView.USER_MORE_DETAILS_ADMIN;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,6 @@ import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.menu.view.TechnicalUserServicePausedView;
 import org.bonitasoft.console.client.menu.view.TechnicalUserWarningView;
 import org.bonitasoft.console.client.user.cases.view.*;
-import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.console.client.user.process.view.ProcessQuickDetailsPage;
 import org.bonitasoft.console.client.user.process.view.StartProcessFormPage;
 import org.bonitasoft.console.client.user.task.view.ArchivedHumanTaskQuickDetailsPage;
@@ -66,7 +63,7 @@ import org.bonitasoft.web.toolkit.client.ui.page.ItemNotFoundPopup;
  * @author Yongtao Guo, Haojie Yuan, Zhiheng Yang
  */
 public class ConsoleFactoryClient extends ApplicationFactoryClient {
-    
+
     //All custom pages with this token suffix are authorized (should be sync with CustomPageAuthorizationsHelper)
     public static final String BONITA_LABS_PAGE_TOKEN_EXTENSION = "BonitaLabs";
 
@@ -84,8 +81,15 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         AngularIFrameView.addTokenSupport(AngularIFrameView.APPLICATION_LISTING_PAGE, "/admin/applications");
         AngularIFrameView.addTokenSupport(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, "/admin/processes/details");
         AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
-        AngularIFrameView.addTokenSupport(USER_MORE_DETAILS_ADMIN, "/admin/organisation/users",
+        AngularIFrameView.addTokenSupport(AngularIFrameView.TASK_LISTING_TOKEN, "/user/tasks/list");
+        AngularIFrameView.addTokenSupport(AngularIFrameView.USER_MORE_DETAILS_ADMIN, "/admin/organisation/users",
                 UserListingAdminPage.TOKEN, GroupListingAdminPage.TOKEN, RoleListingPage.TOKEN);
+
+        CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.PROCESS_LIST_USER,
+                CaseMoreDetailsPage.TOKEN, DisplayCaseFormPage.TOKEN, ProcessQuickDetailsPage.TOKEN,
+                StartProcessFormPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.TOKEN,
+                PerformTaskPage.TOKEN,TasksListingPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.TOKEN,
+                HumanTaskMoreDetailsPage.TOKEN);
     }
 
     protected List<String> getCurrentUserAccessRights() {
@@ -268,8 +272,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new PerformTaskPage();
 
             // Visualize & Start processes
-        } else if (ProcessListingPage.TOKEN.equals(token) && isUserAuthorized(ProcessListingPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new ProcessListingPage();
         } else if (ProcessQuickDetailsPage.TOKEN.equals(token) && isUserAuthorized(ProcessQuickDetailsPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new ProcessQuickDetailsPage();
         } else if (StartProcessFormPage.TOKEN.equals(token) && isUserAuthorized(StartProcessFormPage.PRIVILEGES, getCurrentUserAccessRights())) {
@@ -322,11 +324,12 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             return new BlankPage();
         }
     }
-    
+
     private boolean isPortalJSAuthorizedToken(String token) {
         // whenever a token ends with BonitaLabs, it is authorized by default.
         // this is done to ensure feature flipping and embed in development portal-js pages
         List<String> privileges = AngularIFrameView.getPrivileges(token);
+        privileges.addAll(CustomPageWithFrame.getPrivileges(token));
         return isUserAuthorized(privileges, getCurrentUserAccessRights()) || token.endsWith(BONITA_LABS_PAGE_TOKEN_EXTENSION);
     }
 
@@ -334,10 +337,10 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
         // whenever a token ends with -labs, it is authorized by default.
         return isUserAuthorized(token, getCurrentUserAccessRights()) || token.endsWith(BONITA_LABS_PAGE_TOKEN_EXTENSION);
     }
-    
+
     public native void print(String content) /*-{
-                                             console.log(content);
-                                             }-*/;
+        console.log(content);
+    }-*/;
 
     protected boolean isUserAuthorized(final String token, final List<String> accessRights) {
 

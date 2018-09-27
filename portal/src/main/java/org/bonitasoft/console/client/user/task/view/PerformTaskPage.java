@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
@@ -56,6 +57,7 @@ public class PerformTaskPage extends PageOnItem<HumanTaskItem> {
         PRIVILEGES.add(TasksListingPage.TOKEN);
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
     }
 
     public static final String PARAMETER_USER_ID = "userId";

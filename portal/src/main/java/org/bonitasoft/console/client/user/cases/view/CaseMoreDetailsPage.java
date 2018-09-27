@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.action.OnCaseDetailsNotFound;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
@@ -51,6 +52,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
     static {
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
     }
 
     public CaseMoreDetailsPage() {
