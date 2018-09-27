@@ -16,6 +16,7 @@ package org.bonitasoft.console.client.user.process.action;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.process.view.ProcessListingPage;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.ViewController;
@@ -40,7 +41,7 @@ public class ProcessInstantiationCallbackBehavior {
     }
 
     protected void redirectToDefaultPage() {
-        History.newItem("?_p=" + ProcessListingPage.TOKEN + "&_pf=" + ClientApplicationURL.getProfileId());
+        History.newItem("?_p=" + CustomPageWithFrame.PROCESS_LIST_USER+ "&_pf=" + ClientApplicationURL.getProfileId());
     }
 
     public void onSuccess(final String responseContent) {
