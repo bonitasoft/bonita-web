@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.console.client.user.process.action.ProcessInstantiationCallbackBehavior;
 import org.bonitasoft.console.client.user.task.action.TaskExecutionCallbackBehavior;
@@ -54,6 +55,7 @@ public class StartProcessFormPage extends Page {
 
     static {
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
     }
 
     @Override

@@ -18,6 +18,7 @@ package org.bonitasoft.console.client.user.process.view;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.view.snippet.ArchivedCaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.CaseWorkedOnSnippet;
 import org.bonitasoft.console.client.user.cases.view.snippet.MyCasesSnippet;
@@ -51,6 +52,7 @@ public class ProcessQuickDetailsPage extends ItemQuickDetailsPage<ProcessItem> i
 
     static {
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
     }
 
     public ProcessQuickDetailsPage() {

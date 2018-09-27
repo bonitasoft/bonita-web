@@ -27,6 +27,7 @@ import org.bonitasoft.console.client.admin.process.view.ProcessListingAdminPage;
 import org.bonitasoft.console.client.angular.AngularIFrameView;
 import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnippet;
 import org.bonitasoft.console.client.common.metadata.MetadataTaskBuilder;
+import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.view.ArchivedCaseMoreDetailsPage;
 import org.bonitasoft.console.client.user.cases.view.CaseListingPage;
 import org.bonitasoft.console.client.user.cases.view.CaseMoreDetailsPage;
@@ -58,6 +59,7 @@ public class ArchivedHumanTaskQuickDetailsPage extends AbstractTaskDetailsPage<A
         PRIVILEGES.add(CaseListingPage.TOKEN);
         PRIVILEGES.add(AngularIFrameView.CASE_LISTING_ADMIN_TOKEN);
         PRIVILEGES.add(ProcessListingPage.TOKEN);
+        PRIVILEGES.add(CustomPageWithFrame.PROCESS_LIST_USER);
         PRIVILEGES.add(ProcessListingAdminPage.TOKEN);
         PRIVILEGES.add("reportlistingadminext");
     }
