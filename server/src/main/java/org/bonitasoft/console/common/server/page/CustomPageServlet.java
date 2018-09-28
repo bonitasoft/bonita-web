@@ -133,7 +133,9 @@ public class CustomPageServlet extends HttpServlet {
     }
 
     private boolean isAuthorized(final APISession apiSession, final String appToken, final String pageName) throws BonitaException {
-        return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
+        //Technical user should be authorized in order for the custom pages to be displayed in his profile
+        return apiSession.isTechnicalUser() 
+                || getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
     }
 
     private void handleException(final String pageName, final Exception e) throws ServletException {
