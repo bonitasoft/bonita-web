@@ -90,6 +90,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
                 StartProcessFormPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.TOKEN,
                 PerformTaskPage.TOKEN,TasksListingPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.TOKEN,
                 HumanTaskMoreDetailsPage.TOKEN);
+        
+        CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.TENANT_STATUS);
     }
 
     protected List<String> getCurrentUserAccessRights() {

@@ -41,6 +41,7 @@ public class CustomPageWithFrame extends Page {
     public final static String TOKEN = "custompage_";
 
     public static final String PROCESS_LIST_USER = "custompage_processlistBonita";
+    public static final String TENANT_STATUS = "custompage_tenantStatusBonita";
 
     private final String pageName;
 
