@@ -66,7 +66,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
                     "grouplistingadmin",
                     "importexportorganization",
                     "profilelisting",
-                    "tenantMaintenance",
+                    "custompage_tenantStatusBonita",
                     "pagelisting",
                     "businessdatamodelimport",
                     "bdm"))).build());
