@@ -36,6 +36,7 @@ public class PageSearchDescriptorConverter implements AttributeConverter {
         mapping.put(PageItem.ATTRIBUTE_URL_TOKEN, PageSearchDescriptor.NAME);
         mapping.put(PageItem.ATTRIBUTE_DISPLAY_NAME, PageSearchDescriptor.DISPLAY_NAME);
         mapping.put(PageItem.ATTRIBUTE_IS_PROVIDED, PageSearchDescriptor.PROVIDED);
+        mapping.put(PageItem.ATTRIBUTE_IS_HIDDEN, PageSearchDescriptor.HIDDEN);
         mapping.put(PageItem.ATTRIBUTE_CREATED_BY_USER_ID, PageSearchDescriptor.INSTALLED_BY);
         mapping.put(PageItem.ATTRIBUTE_CREATION_DATE, PageSearchDescriptor.INSTALLATION_DATE);
         mapping.put(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, PageSearchDescriptor.LAST_MODIFICATION_DATE);
