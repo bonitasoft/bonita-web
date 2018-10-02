@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 05:07+0200\n"
-"PO-Revision-Date: 2018-07-08 02:00\n"
+"POT-Creation-Date: 2018-09-28 03:31+0000\n"
+"PO-Revision-Date: 2018-10-01 02:32\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1075,6 +1075,9 @@ msgstr "Para perfiles de tipo usuario. Permite visualizar casos comenzados por e
 
 msgid "For user-type of profiles. To visualize processes and start cases"
 msgstr "Para perfiles de tipo usuario. Permite visualizar procesos y comenzar casos"
+
+msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
+msgstr ""
 
 msgid "Form"
 msgstr "Formulario"
@@ -2241,6 +2244,9 @@ msgstr "Escriba el nuevo valor para %variableName%"
 
 msgid "Type to search"
 msgstr "Tipo de búsqueda"
+
+msgid "UI Designer page to visualize processes and start cases"
+msgstr ""
 
 msgid "UNRESOLVED"
 msgstr "SIN RESOLVER"
