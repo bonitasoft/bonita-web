@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 05:07+0200\n"
-"PO-Revision-Date: 2018-07-08 01:50\n"
+"POT-Creation-Date: 2018-09-28 03:31+0000\n"
+"PO-Revision-Date: 2018-10-01 02:18\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1076,6 +1076,9 @@ msgstr "利用者プロファイル： 彼または彼女が開始した案件�
 
 msgid "For user-type of profiles. To visualize processes and start cases"
 msgstr "利用者プロファイル： プロセスと起案案件を表示"
+
+msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
+msgstr ""
 
 msgid "Form"
 msgstr "フォーム"
@@ -2243,6 +2246,9 @@ msgstr "%variableName% の新しい値を入力します。"
 
 msgid "Type to search"
 msgstr "検索キーワードを入力"
+
+msgid "UI Designer page to visualize processes and start cases"
+msgstr ""
 
 msgid "UNRESOLVED"
 msgstr "未解決"
