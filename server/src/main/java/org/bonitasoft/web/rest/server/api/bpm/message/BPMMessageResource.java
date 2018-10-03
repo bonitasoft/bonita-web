@@ -85,9 +85,15 @@ public class BPMMessageResource extends CommonResource {
                             getExpressionFromObject(entry));
                 }
             }
+
+            Expression targetFlowNodeExpression = null;
+            if (message.getTargetFlowNode() != null) {
+                targetFlowNodeExpression = new ExpressionBuilder()
+                        .createConstantStringExpression(message.getTargetFlowNode());
+            }
             processAPI.sendMessage(message.getMessageName(),
                     new ExpressionBuilder().createConstantStringExpression(message.getTargetProcess()),
-                    new ExpressionBuilder().createConstantStringExpression(message.getTargetFlowNode()),
+                    targetFlowNodeExpression,
                     msgContent,
                     correlations);
         } catch (final SendEventException | InvalidExpressionException e) {
@@ -164,9 +170,6 @@ public class BPMMessageResource extends CommonResource {
         }
         if (message.getTargetProcess() == null) {
             throw new IllegalArgumentException("targetProcess is mandatory");
-        }
-        if (message.getTargetFlowNode() == null) {
-            throw new IllegalArgumentException("targetFlowNode is mandatory");
         }
     }
 

@@ -127,20 +127,6 @@ public class BPMMessageResourceTest extends RestletTest {
         restResource.sendMessage(bpmMessage);
     }
 
-    @Test
-    public void sendMessage_should_throw_exception_if_targetFlowNode_is_not_set() {
-        // given:
-        final BPMMessage bpmMessage = new BPMMessage();
-        bpmMessage.setMessageName("my msg");
-        bpmMessage.setTargetProcess("myProcess");
-
-        // then:
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("targetFlowNode is mandatory");
-
-        // when:
-        restResource.sendMessage(bpmMessage);
-    }
 
     @Test
     public void sendMessage_should_accept_primitive_types_in_message_content_values() throws Exception {
@@ -265,7 +251,7 @@ public class BPMMessageResourceTest extends RestletTest {
     @Test
     public void should_post_request_return_400_status_when_mandatory_attribute_is_missing() throws Exception {
         Response response = request(BonitaRestletApplication.BPM_MESSAGE_URL)
-                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\" }");
+                .post("{\"messageName\": \"message\" }");
 
         assertThat(response.getStatus()).isEqualTo(Status.CLIENT_ERROR_BAD_REQUEST);
     }
@@ -273,7 +259,7 @@ public class BPMMessageResourceTest extends RestletTest {
     @Test
     public void should_post_request_return_201_status() throws Exception {
         Response response = request(BonitaRestletApplication.BPM_MESSAGE_URL)
-                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"targetFlowNode\": \"wait\", \"messageContent\": { \"id\": { \"value\" :  12 } } }");
+                .post("{\"messageName\": \"message\", \"targetProcess\": \"myProcess\", \"messageContent\": { \"id\": { \"value\" :  12 } } }");
 
         assertThat(response.getStatus()).isEqualTo(Status.SUCCESS_NO_CONTENT);
     }
