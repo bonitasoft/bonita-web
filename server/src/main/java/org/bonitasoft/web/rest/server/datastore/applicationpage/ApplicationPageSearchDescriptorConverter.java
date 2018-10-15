@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.applicationpage;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ import org.bonitasoft.engine.business.application.ApplicationPageSearchDescripto
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Elias Ricken de Medeiros
@@ -32,12 +33,12 @@ public class ApplicationPageSearchDescriptorConverter implements AttributeConver
 
     private final Map<String, String> mapping;
 
-    public ApplicationPageSearchDescriptorConverter() {
+    ApplicationPageSearchDescriptorConverter() {
         mapping = createMapping();
     }
 
     private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<>();
         mapping.put(ApplicationPageItem.ATTRIBUTE_ID, ApplicationPageSearchDescriptor.ID);
         mapping.put(ApplicationPageItem.ATTRIBUTE_TOKEN, ApplicationPageSearchDescriptor.TOKEN);
         mapping.put(ApplicationPageItem.ATTRIBUTE_APPLICATION_ID, ApplicationPageSearchDescriptor.APPLICATION_ID);
@@ -48,6 +49,11 @@ public class ApplicationPageSearchDescriptorConverter implements AttributeConver
     @Override
     public String convert(final String attribute) {
         return MapUtil.getMandatory(mapping, attribute);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 
 }

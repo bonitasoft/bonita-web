@@ -27,23 +27,23 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
  */
 public class ArchivedActivitySearchDescriptorConverter extends ArchivedFlowNodeSearchDescriptorConverter {
 
-    private static Map<String, String> mapping = new HashMap<String, String>();
+    private static Map<String, String> additionalAttributes = new HashMap<>();
 
     static {
-        mapping.put(ArchivedActivityItem.ATTRIBUTE_REACHED_STATE_DATE, ArchivedActivityInstanceSearchDescriptor.REACHED_STATE_DATE);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_PROCESS_ID, ArchivedActivityInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedActivityInstanceSearchDescriptor.STATE_NAME);
-        mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, ArchivedActivityInstanceSearchDescriptor.ASSIGNEE_ID);
-        mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, ArchivedActivityInstanceSearchDescriptor.PRIORITY);
-        mapping.put(ArchivedHumanTaskItem.ATTRIBUTE_TYPE, ArchivedActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
-        mapping.put(ArchivedActivityItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID);
-        mapping.put(ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedActivityInstanceSearchDescriptor.ARCHIVE_DATE);
+        additionalAttributes.put(ArchivedActivityItem.ATTRIBUTE_REACHED_STATE_DATE, ArchivedActivityInstanceSearchDescriptor.REACHED_STATE_DATE);
+        additionalAttributes.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
+        additionalAttributes.put(ArchivedFlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        additionalAttributes.put(ArchivedFlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, ArchivedActivityInstanceSearchDescriptor.PARENT_PROCESS_INSTANCE_ID);
+        additionalAttributes.put(ArchivedFlowNodeItem.ATTRIBUTE_PROCESS_ID, ArchivedActivityInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        additionalAttributes.put(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedActivityInstanceSearchDescriptor.STATE_NAME);
+        additionalAttributes.put(ArchivedHumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, ArchivedActivityInstanceSearchDescriptor.ASSIGNEE_ID);
+        additionalAttributes.put(ArchivedHumanTaskItem.ATTRIBUTE_PRIORITY, ArchivedActivityInstanceSearchDescriptor.PRIORITY);
+        additionalAttributes.put(ArchivedHumanTaskItem.ATTRIBUTE_TYPE, ArchivedActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
+        additionalAttributes.put(ArchivedActivityItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID);
+        additionalAttributes.put(ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedActivityInstanceSearchDescriptor.ARCHIVE_DATE);
     }
 
     public ArchivedActivitySearchDescriptorConverter() {
-        extendsMapping(mapping);
+        extendsMapping(additionalAttributes);
     }
 }

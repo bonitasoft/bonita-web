@@ -16,12 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile.member;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.profile.ProfileMemberSearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Vincent Elcrin
@@ -49,4 +51,8 @@ public class ProfileMemberSearchDescriptorConverter implements AttributeConverte
         return descriptor;
     }
 
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
+    }
 }

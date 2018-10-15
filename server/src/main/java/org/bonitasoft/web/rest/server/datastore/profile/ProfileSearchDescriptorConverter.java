@@ -14,19 +14,21 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.profile.ProfileSearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Vincent Elcrin
  */
 public class ProfileSearchDescriptorConverter implements AttributeConverter {
 
-    private static final Map<String, String> mapping = new HashMap<String, String>();
+    private static final Map<String, String> mapping = new HashMap<>();
 
     static {
         mapping.put(ProfileItem.ATTRIBUTE_ID, ProfileSearchDescriptor.ID);
@@ -41,5 +43,10 @@ public class ProfileSearchDescriptorConverter implements AttributeConverter {
             throw new RuntimeException(attribute + " has no valid search descriptor");
         }
         return descriptor;
+    }
+
+    @Override
+    public Map<String, TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 }

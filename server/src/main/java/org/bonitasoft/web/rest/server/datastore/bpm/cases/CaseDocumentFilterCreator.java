@@ -16,28 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
-import java.io.Serializable;
-
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
 /**
  * @author Fabio Lombardi
  *
  */
 
-public class CaseDocumentFilterCreator implements FilterCreator {
+class CaseDocumentFilterCreator extends GenericFilterCreator {
 
-    private final CaseDocumentSearchAttributeConverter converter;
-
-    public CaseDocumentFilterCreator(final CaseDocumentSearchAttributeConverter converter) {
-        this.converter = converter;
-    }
-    @Override
-    public Filter<? extends Serializable> create(final String attribute, final String value) {
-        return new Filter<String>(new Field(attribute, converter), new StrValue(value));
+    CaseDocumentFilterCreator(final CaseDocumentSearchAttributeConverter converter) {
+        super(converter);
     }
 
 }

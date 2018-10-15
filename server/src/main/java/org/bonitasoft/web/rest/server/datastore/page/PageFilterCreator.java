@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BonitaSoft S.A.
+ * Copyright (C) 2014-2018 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,24 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.page;
 
-import java.io.Serializable;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
+class PageFilterCreator extends GenericFilterCreator {
 
-public class PageFilterCreator implements FilterCreator {
-
-    private final PageSearchDescriptorConverter converter;
-
-    public PageFilterCreator(final PageSearchDescriptorConverter converter) {
-        this.converter = converter;
-    }
-
-    @Override
-    public Filter<? extends Serializable> create(final String attribute, final String value) {
-        return new Filter<String>(new Field(attribute, converter), new StrValue(value));
+    PageFilterCreator(final PageSearchDescriptorConverter converter) {
+        super(converter);
     }
 
 }

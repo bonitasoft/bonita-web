@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.applicationmenu;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.bonitasoft.engine.business.application.ApplicationMenuSearchDescripto
 import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Julien Mege
@@ -31,7 +33,7 @@ public class ApplicationMenuSearchDescriptorConverter implements AttributeConver
 
     private final Map<String, String> mapping;
 
-    public ApplicationMenuSearchDescriptorConverter() {
+    ApplicationMenuSearchDescriptorConverter() {
         mapping = createMapping();
     }
 
@@ -49,6 +51,11 @@ public class ApplicationMenuSearchDescriptorConverter implements AttributeConver
     @Override
     public String convert(final String attribute) {
         return MapUtil.getMandatory(mapping, attribute);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 
 }

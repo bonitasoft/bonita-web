@@ -18,26 +18,22 @@ import java.io.Serializable;
 import org.bonitasoft.engine.form.FormMappingSearchDescriptor;
 import org.bonitasoft.engine.form.FormMappingType;
 import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.ValueConverter;
 
 /**
  * author Emmanuel Duchastenier
  */
-public class FormMappingTypeCreator implements FilterCreator {
+public class FormMappingTypeCreator extends GenericFilterCreator {
+
+    public FormMappingTypeCreator() {
+        super(new EmptyAttributeConverter());
+    }
 
     @Override
     public Filter<? extends Serializable> create(String attribute, String value) {
         if (FormMappingSearchDescriptor.TYPE.equals(attribute)) {
-            return new Filter<>(new Field(attribute), new Value<>(value, new FormMappingTypeValueConverter()));
+            return new Filter<>(new Field(attribute), new Value<>(value, FormMappingType::valueOf));
         }
-        return new GenericFilterCreator(new EmptyAttributeConverter()).create(attribute, value);
+        return super.create(attribute, value);
     }
 
-    class FormMappingTypeValueConverter implements ValueConverter<FormMappingType> {
-
-        @Override
-        public FormMappingType convert(String value) {
-            return FormMappingType.valueOf(value);
-        }
-    }
 }

@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile.entry;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Paul AMAR
@@ -37,14 +39,13 @@ public class ProfileEntrySearchDescriptorConverter implements AttributeConverter
     }
 
     private Map<String, String> createMapping() {
-        Map<String, String> mapping = new HashMap<String, String>();
+        Map<String, String> mapping = new HashMap<>();
         mapping.put(ProfileEntryItem.ATTRIBUTE_ID, ProfileEntrySearchDescriptor.ID);
         mapping.put(ProfileEntryItem.ATTRIBUTE_NAME, ProfileEntrySearchDescriptor.NAME);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PARENT_ID, ProfileEntrySearchDescriptor.PARENT_ID);
         mapping.put(ProfileEntryItem.ATTRIBUTE_INDEX, ProfileEntrySearchDescriptor.INDEX);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PROFILE_ID, ProfileEntrySearchDescriptor.PROFILE_ID);
         mapping.put(ProfileEntryItem.ATTRIBUTE_PAGE, ProfileEntrySearchDescriptor.PAGE);
-
         return mapping;
     }
 
@@ -55,5 +56,10 @@ public class ProfileEntrySearchDescriptorConverter implements AttributeConverter
 
     protected final void extendsMapping(Map<String, String> extension) {
         mapping.putAll(extension);
+    }
+
+    @Override
+    public Map<String, TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 }

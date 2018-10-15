@@ -23,6 +23,7 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceSearchDescript
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Vincent Elcrin
@@ -30,24 +31,37 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
  */
 public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConverter {
 
-    private final Map<String, String> mapping;
+    protected static Map<String, String> mapping = new HashMap<>();
+    private static Map<String, TYPE> valueTypeMapping = new HashMap<>();
 
-    public ArchivedFlowNodeSearchDescriptorConverter() {
-        mapping = createMapping();
+    private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey, TYPE attributeType) {
+        mapping.put(webSearchKey, engineSearchKey);
+        valueTypeMapping.put(webSearchKey, attributeType);
     }
 
-    private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedFlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_NAME, ArchivedFlowNodeInstanceSearchDescriptor.NAME);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_DISPLAY_NAME, ArchivedFlowNodeInstanceSearchDescriptor.DISPLAY_NAME);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_PROCESS_ID, ArchivedFlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedFlowNodeInstanceSearchDescriptor.STATE_NAME);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_TYPE, ArchivedFlowNodeInstanceSearchDescriptor.FLOW_NODE_TYPE);
-        mapping.put(ArchivedFlowNodeItem.FILTER_IS_TERMINAL, ArchivedFlowNodeInstanceSearchDescriptor.TERMINAL);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE);
-        mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID);
-        return mapping;
+    private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey) {
+        addAttributeConverterItem(webSearchKey, engineSearchKey, TYPE.STRING);
+    }
+
+    @Override
+    public Map<String, TYPE> getValueTypeMapping() {
+        return valueTypeMapping;
+    }
+
+    public ArchivedFlowNodeSearchDescriptorConverter() {
+        createMapping();
+    }
+
+    private void createMapping() {
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedFlowNodeInstanceSearchDescriptor.ROOT_PROCESS_INSTANCE_ID);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_NAME, ArchivedFlowNodeInstanceSearchDescriptor.NAME);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_DISPLAY_NAME, ArchivedFlowNodeInstanceSearchDescriptor.DISPLAY_NAME);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_PROCESS_ID, ArchivedFlowNodeInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_STATE, ArchivedFlowNodeInstanceSearchDescriptor.STATE_NAME);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_TYPE, ArchivedFlowNodeInstanceSearchDescriptor.FLOW_NODE_TYPE);
+        addAttributeConverterItem(ArchivedFlowNodeItem.FILTER_IS_TERMINAL, ArchivedFlowNodeInstanceSearchDescriptor.TERMINAL, TYPE.BOOLEAN);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedFlowNodeInstanceSearchDescriptor.ARCHIVE_DATE);
+        addAttributeConverterItem(ArchivedFlowNodeItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedFlowNodeInstanceSearchDescriptor.ORIGINAL_FLOW_NODE_ID);
     }
 
     @Override

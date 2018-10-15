@@ -16,6 +16,11 @@
  */
 package org.bonitasoft.web.rest.server.datastore.converter;
 
+import java.util.Collections;
+import java.util.Map;
+
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
+
 /**
  * @author Colin PUY, Vincent Elcrin
  * 
@@ -27,5 +32,10 @@ public class EmptyAttributeConverter implements AttributeConverter {
     @Override
     public String convert(String attribute) {
         return attribute;
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 }

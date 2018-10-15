@@ -166,13 +166,12 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
 
     }
 
-    private SearchOptionsCreator buildSearchOptionCreator(final int page,
+    protected SearchOptionsCreator buildSearchOptionCreator(final int page,
             final int resultsByPage, final String search,
             final Map<String, String> filters, final String orders) {
-        SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search,
+        return new SearchOptionsCreator(page, resultsByPage, search,
                 new Sorts(orders, new UserSearchAttributeConverter()),
-                new Filters(filters, new UserFilterCreator()));
-        return searchOptionsCreator;
+                new Filters(filters, new UserFilterCreator(new UserSearchAttributeConverter())));
     }
 
     /**
