@@ -16,24 +16,13 @@
  */
 package org.bonitasoft.web.rest.server.datastore.application;
 
-import java.io.Serializable;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
+class ApplicationFilterCreator extends GenericFilterCreator {
 
-public class ApplicationFilterCreator implements FilterCreator {
-
-    private final ApplicationSearchDescriptorConverter converter;
-
-    public ApplicationFilterCreator(final ApplicationSearchDescriptorConverter converter) {
-        this.converter = converter;
+    ApplicationFilterCreator(final ApplicationSearchDescriptorConverter converter) {
+        super(converter);
     }
 
-    @Override
-    public Filter<? extends Serializable> create(final String attribute, final String value) {
-        return new Filter<String>(new Field(attribute, converter), new StrValue(value));
-    }
 
 }

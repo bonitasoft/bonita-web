@@ -16,25 +16,24 @@
  */
 package org.bonitasoft.web.rest.server.datastore.filter;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
+
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 /**
  * @author Vincent Elcrin
- * 
+ * @author Emmanuel Duchastenier
  */
 public class GenericFilterCreatorTest {
-
-    @Mock
-    AttributeConverter converter;
 
     @Before
     public void setUp() {
@@ -42,14 +41,45 @@ public class GenericFilterCreatorTest {
     }
 
     @Test
-    public void testGenericFilterCreator() throws Exception {
-        when(converter.convert("attribute"))
-                .thenReturn("attribute");
-        GenericFilterCreator creator = new GenericFilterCreator(converter);
+    public void method_create_should_handle_value_as_String_by_default() {
+        GenericFilterCreator creator = new GenericFilterCreator(new AttributeConverter() {
 
-        Filter<String> filter = creator.create("attribute", "value");
+            @Override
+            public String convert(String attribute) {
+                return attribute;
+            }
+
+            @Override
+            public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+                return Collections.emptyMap();
+            }
+        });
+
+        Filter<? extends Serializable> filter = creator.create("attribute", "value");
 
         assertEquals("attribute", filter.getField());
         assertEquals("value", filter.getValue());
     }
+
+    @Test
+    public void method_create_should_handle_boolean_values() {
+        AttributeConverter converter = new AttributeConverter() {
+
+            @Override
+            public String convert(String attribute) {
+                return attribute;
+            }
+
+            @Override
+            public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+                return Collections.singletonMap("myAttribute", ItemAttribute.TYPE.BOOLEAN);
+            }
+        };
+        GenericFilterCreator creator = new GenericFilterCreator(converter);
+
+        Filter<? extends Serializable> filter = creator.create("myAttribute", "true");
+
+        assertThat(filter.getValue()).isEqualTo(true);
+    }
+
 }

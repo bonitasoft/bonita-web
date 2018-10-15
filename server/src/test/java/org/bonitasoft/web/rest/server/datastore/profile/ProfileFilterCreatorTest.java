@@ -16,6 +16,8 @@ package org.bonitasoft.web.rest.server.datastore.profile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.Serializable;
+
 import org.bonitasoft.engine.profile.ProfileSearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.filter.Filter;
@@ -25,10 +27,10 @@ import org.junit.Test;
 public class ProfileFilterCreatorTest {
 
     @Test
-    public void should_create_a_filter_for_profiles_with_navigation() throws Exception {
+    public void should_create_a_filter_for_profiles_with_navigation() {
         ProfileFilterCreator profileFilterCreator = new ProfileFilterCreator(new ProfileSearchDescriptorConverter());
 
-        Filter<String> filter = profileFilterCreator.create(ProfileItem.FILTER_HAS_NAVIGATION, "true");
+        Filter<? extends Serializable> filter = profileFilterCreator.create(ProfileItem.FILTER_HAS_NAVIGATION, "true");
 
         assertThat(filter.getField()).isEqualTo(ProfileSearchDescriptor.PROFILE_ENTRY_NAME);
         assertThat(filter.getValue()).isNull();
@@ -36,10 +38,10 @@ public class ProfileFilterCreatorTest {
     }
 
     @Test
-    public void should_create_a_filter_for_profiles_without_navigation() throws Exception {
+    public void should_create_a_filter_for_profiles_without_navigation() {
         ProfileFilterCreator profileFilterCreator = new ProfileFilterCreator(new ProfileSearchDescriptorConverter());
 
-        Filter<String> filter = profileFilterCreator.create(ProfileItem.FILTER_HAS_NAVIGATION, "false");
+        Filter<? extends Serializable> filter = profileFilterCreator.create(ProfileItem.FILTER_HAS_NAVIGATION, "false");
 
         assertThat(filter.getField()).isEqualTo(ProfileSearchDescriptor.PROFILE_ENTRY_NAME);
         assertThat(filter.getValue()).isNull();

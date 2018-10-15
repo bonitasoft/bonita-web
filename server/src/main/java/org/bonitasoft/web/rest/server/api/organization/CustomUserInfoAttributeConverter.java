@@ -16,24 +16,22 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.bonitasoft.engine.identity.CustomUserInfoValueSearchDescriptor.*;
+import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.*;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-
-import static org.bonitasoft.engine.identity.CustomUserInfoValueSearchDescriptor.DEFINITION_ID;
-import static org.bonitasoft.engine.identity.CustomUserInfoValueSearchDescriptor.USER_ID;
-import static org.bonitasoft.engine.identity.CustomUserInfoValueSearchDescriptor.VALUE;
-import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_DEFINITION_ID;
-import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_USER_ID;
-import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Vincent Elcrin
  */
 public class CustomUserInfoAttributeConverter implements AttributeConverter {
 
-    private static Map<String, String> attributes = new HashMap<String, String>();
+    private static Map<String, String> attributes = new HashMap<>();
 
     static {
         attributes.put(ATTRIBUTE_USER_ID, USER_ID);
@@ -44,5 +42,10 @@ public class CustomUserInfoAttributeConverter implements AttributeConverter {
     @Override
     public String convert(String attribute) {
         return attributes.get(attribute);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 }

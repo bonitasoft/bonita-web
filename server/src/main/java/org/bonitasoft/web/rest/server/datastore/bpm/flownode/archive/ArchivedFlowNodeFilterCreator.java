@@ -16,46 +16,17 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
-import java.io.Serializable;
-
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedFlowNodeSearchDescriptorConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.BooleanValueConverter;
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
-import org.bonitasoft.web.rest.server.datastore.filter.Value;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public class ArchivedFlowNodeFilterCreator implements FilterCreator {
+class ArchivedFlowNodeFilterCreator extends GenericFilterCreator {
 
-    private ArchivedFlowNodeSearchDescriptorConverter converter;
-
-    public ArchivedFlowNodeFilterCreator(ArchivedFlowNodeSearchDescriptorConverter converter) {
-        this.converter = converter;
+    ArchivedFlowNodeFilterCreator(ArchivedFlowNodeSearchDescriptorConverter converter) {
+        super(converter);
     }
 
-    @Override
-    public Filter<? extends Serializable> create(String attribute, String value) {
-        if (ArchivedFlowNodeItem.FILTER_IS_TERMINAL.equals(attribute)) {
-            return new Filter<Boolean>(createField(attribute),
-                    createBooleanValue(value));
-
-        } else {
-            return new Filter<String>(createField(attribute),
-                    new StrValue(value));
-        }
-    }
-
-    private Value<Boolean> createBooleanValue(String value) {
-        return new Value<Boolean>(value, new BooleanValueConverter());
-    }
-
-    private Field createField(String attribute) {
-        return new Field(attribute, converter);
-    }
 }

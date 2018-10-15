@@ -35,6 +35,7 @@ import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.identity.impl.UserImpl;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
@@ -175,4 +176,12 @@ public class UserDatastoreTest {
         verify(processAPI, times(1)).searchUsersWhoCanExecutePendingHumanTask(anyLong(), any(SearchOptions.class));
         verify(userItemConverter, times(1)).convert(userList);
     }
+
+    @Test
+    public void buildSearchOptionCreator_should_convert_enabled_attribute_to_boolean() {
+        final List<SearchFilter> filters = datastore.buildSearchOptionCreator(0, 10, "",
+                Collections.singletonMap(UserItem.ATTRIBUTE_ENABLED, "true"), "displayName ASC").create().getFilters();
+        assertThat(filters.get(0).getValue()).isEqualTo(true);
+    }
+
 }

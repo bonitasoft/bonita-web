@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BonitaSoft S.A.
+ * Copyright (C) 2014-2018 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,41 +21,54 @@ import org.bonitasoft.engine.page.PageSearchDescriptor;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
+/**
+ * @author Emmanuel Duchastenier
+ */
 public class PageSearchDescriptorConverter implements AttributeConverter {
 
-    private final Map<String, String> mapping;
+    private static final Map<String, String> attributeNameMapping = new HashMap<>();
+    private static final Map<String, TYPE> valueTypeMapping = new HashMap<>();
 
-    public PageSearchDescriptorConverter() {
-        mapping = createMapping();
+    static {
+        createMappings();
     }
 
-    private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
-        mapping.put(PageItem.ATTRIBUTE_ID, PageSearchDescriptor.ID);
-        mapping.put(PageItem.ATTRIBUTE_URL_TOKEN, PageSearchDescriptor.NAME);
-        mapping.put(PageItem.ATTRIBUTE_DISPLAY_NAME, PageSearchDescriptor.DISPLAY_NAME);
-        mapping.put(PageItem.ATTRIBUTE_IS_PROVIDED, PageSearchDescriptor.PROVIDED);
-        mapping.put(PageItem.ATTRIBUTE_IS_HIDDEN, PageSearchDescriptor.HIDDEN);
-        mapping.put(PageItem.ATTRIBUTE_CREATED_BY_USER_ID, PageSearchDescriptor.INSTALLED_BY);
-        mapping.put(PageItem.ATTRIBUTE_CREATION_DATE, PageSearchDescriptor.INSTALLATION_DATE);
-        mapping.put(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, PageSearchDescriptor.LAST_MODIFICATION_DATE);
+    public Map<String, TYPE> getValueTypeMapping() {
+        return valueTypeMapping;
+    }
+
+    private static void createMappings() {
+        addAttributeConverterItem(PageItem.ATTRIBUTE_ID, PageSearchDescriptor.ID, TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_URL_TOKEN, PageSearchDescriptor.NAME, TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_DISPLAY_NAME, PageSearchDescriptor.DISPLAY_NAME, TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_IS_PROVIDED, PageSearchDescriptor.PROVIDED, TYPE.BOOLEAN);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_IS_HIDDEN, PageSearchDescriptor.HIDDEN, TYPE.BOOLEAN);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_CREATED_BY_USER_ID, PageSearchDescriptor.INSTALLED_BY,
+                TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_CREATION_DATE, PageSearchDescriptor.INSTALLATION_DATE,
+                TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_LAST_UPDATE_DATE, PageSearchDescriptor.LAST_MODIFICATION_DATE,
+                TYPE.STRING);
         //CONTENT_TYPE is managed differently in order to accept a OR with form and page
-        //mapping.put(PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE);
-        mapping.put(PageItem.ATTRIBUTE_PROCESS_ID, PageSearchDescriptor.PROCESS_DEFINITION_ID);
-        return mapping;
+        //addAttributeConverterItem(PageItem.FILTER_CONTENT_TYPE, PageSearchDescriptor.CONTENT_TYPE, TYPE.STRING);
+        addAttributeConverterItem(PageItem.ATTRIBUTE_PROCESS_ID, PageSearchDescriptor.PROCESS_DEFINITION_ID,
+                TYPE.STRING);
     }
 
     @Override
     public String convert(final String attribute) {
         if (PageItem.FILTER_CONTENT_TYPE.equals(attribute)) {
-            return MapUtil.getValue(mapping, attribute, "");
+            return MapUtil.getValue(attributeNameMapping, attribute, "");
         } else {
-            return MapUtil.getMandatory(mapping, attribute);
+            return MapUtil.getMandatory(attributeNameMapping, attribute);
         }
     }
 
-    protected final void extendsMapping(final Map<String, String> extension) {
-        mapping.putAll(extension);
+    private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey, TYPE attributeType) {
+        attributeNameMapping.put(webSearchKey, engineSearchKey);
+        valueTypeMapping.put(webSearchKey, attributeType);
     }
+
 }

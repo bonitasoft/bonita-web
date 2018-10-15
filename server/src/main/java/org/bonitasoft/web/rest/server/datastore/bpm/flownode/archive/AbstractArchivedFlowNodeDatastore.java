@@ -160,8 +160,7 @@ public class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlow
                 resultsByPage,
                 search,
                 new Sorts(orders, getSearchDescriptorConverter()),
-                new Filters(filters, new ArchivedFlowNodeFilterCreator(
-                        getSearchDescriptorConverter())));
+                new Filters(filters, new ArchivedFlowNodeFilterCreator(getSearchDescriptorConverter())));
     }
 
     protected ArchivedFlowNodeSearchDescriptorConverter getSearchDescriptorConverter() {

@@ -16,25 +16,16 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
-import java.io.Serializable;
-
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
 /**
  * @author Vincent Elcrin
  * 
  */
-public class SearchProcessFilterCreator implements FilterCreator {
+class SearchProcessFilterCreator extends GenericFilterCreator {
 
-    @Override
-    public Filter<? extends Serializable> create(String attribute, String value) {
-        return new Filter<String>(createConvertedField(attribute), new StrValue(value));
+    SearchProcessFilterCreator(ProcessSearchDescriptorConverter converter) {
+        super(converter);
     }
 
-    private Field createConvertedField(String attribute) {
-        return new Field(attribute, new ProcessSearchDescriptorConverter());
-    }
 }

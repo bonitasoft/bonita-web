@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.bonitasoft.engine.bpm.document.DocumentsSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Fabio Lombardi
@@ -52,6 +54,11 @@ public class CaseDocumentSearchAttributeConverter implements AttributeConverter 
     @Override
     public String convert(final String attribute) {
         return MapUtil.getMandatory(mapping, attribute);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 
     protected final void extendsMapping(final Map<String, String> extension) {

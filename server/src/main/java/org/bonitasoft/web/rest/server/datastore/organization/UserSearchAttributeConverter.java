@@ -14,13 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_ENABLED;
-import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_FIRSTNAME;
-import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_LASTNAME;
-import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_MANAGER_ID;
-import static org.bonitasoft.web.rest.model.identity.UserItem.ATTRIBUTE_USERNAME;
-import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_GROUP_ID;
-import static org.bonitasoft.web.rest.model.identity.UserItem.FILTER_ROLE_ID;
+import static org.bonitasoft.web.rest.model.identity.UserItem.*;
 import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId.ATTRIBUTE_ID;
 
 import java.util.HashMap;
@@ -28,28 +22,44 @@ import java.util.Map;
 
 import org.bonitasoft.engine.identity.UserSearchDescriptor;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Colin PUY, Anthony Birembaut
  */
 public class UserSearchAttributeConverter implements AttributeConverter {
 
-    static Map<String, String> mapping = new HashMap<String, String>();
+    protected static Map<String, String> mapping = new HashMap<>();
+    private static Map<String, TYPE> valueTypeMapping = new HashMap<>();
 
     static {
-        mapping.put(ATTRIBUTE_ID, UserSearchDescriptor.ID);
-        mapping.put(ATTRIBUTE_FIRSTNAME, UserSearchDescriptor.FIRST_NAME);
-        mapping.put(ATTRIBUTE_LASTNAME, UserSearchDescriptor.LAST_NAME);
-        mapping.put(ATTRIBUTE_USERNAME, UserSearchDescriptor.USER_NAME);
-        mapping.put(ATTRIBUTE_ENABLED, UserSearchDescriptor.ENABLED);
-        mapping.put(ATTRIBUTE_MANAGER_ID, UserSearchDescriptor.MANAGER_USER_ID);
-        mapping.put(FILTER_GROUP_ID, UserSearchDescriptor.GROUP_ID);
-        mapping.put(FILTER_ROLE_ID, UserSearchDescriptor.ROLE_ID);
+        addAttributeConverterItem(ATTRIBUTE_ID, UserSearchDescriptor.ID);
+        addAttributeConverterItem(ATTRIBUTE_FIRSTNAME, UserSearchDescriptor.FIRST_NAME);
+        addAttributeConverterItem(ATTRIBUTE_LASTNAME, UserSearchDescriptor.LAST_NAME);
+        addAttributeConverterItem(ATTRIBUTE_USERNAME, UserSearchDescriptor.USER_NAME);
+        addAttributeConverterItem(ATTRIBUTE_ENABLED, UserSearchDescriptor.ENABLED, TYPE.BOOLEAN);
+        addAttributeConverterItem(ATTRIBUTE_MANAGER_ID, UserSearchDescriptor.MANAGER_USER_ID);
+        addAttributeConverterItem(FILTER_GROUP_ID, UserSearchDescriptor.GROUP_ID);
+        addAttributeConverterItem(FILTER_ROLE_ID, UserSearchDescriptor.ROLE_ID);
     }
 
     @Override
     public String convert(final String attribute) {
-
         return mapping.get(attribute);
     }
+
+    private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey, TYPE attributeType) {
+        mapping.put(webSearchKey, engineSearchKey);
+        valueTypeMapping.put(webSearchKey, attributeType);
+    }
+
+    private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey) {
+        addAttributeConverterItem(webSearchKey, engineSearchKey, TYPE.STRING);
+    }
+
+    @Override
+    public Map<String, TYPE> getValueTypeMapping() {
+        return valueTypeMapping;
+    }
+
 }
