@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.bonitasoft.engine.bpm.document.ArchivedDocumentsSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDocumentItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 /**
  * @author Fabio Lombardi
@@ -37,7 +39,7 @@ public class ArchivedCaseDocumentSearchAttributeConverter implements AttributeCo
     }
 
     private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<>();
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_ID, ArchivedCaseDocumentItem.ATTRIBUTE_ID);
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, ArchivedDocumentsSearchDescriptor.DOCUMENT_AUTHOR);
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_NAME, ArchivedDocumentsSearchDescriptor.DOCUMENT_NAME);
@@ -47,7 +49,6 @@ public class ArchivedCaseDocumentSearchAttributeConverter implements AttributeCo
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_CASE_ID, ArchivedDocumentsSearchDescriptor.PROCESSINSTANCE_ID);
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedDocumentsSearchDescriptor.SOURCEOBJECT_ID);
         mapping.put(ArchivedCaseDocumentItem.ATTRIBUTE_ARCHIVED_DATE, ArchivedDocumentsSearchDescriptor.ARCHIVE_DATE);
-
         return mapping;
     }
 
@@ -58,6 +59,11 @@ public class ArchivedCaseDocumentSearchAttributeConverter implements AttributeCo
 
     protected final void extendsMapping(final Map<String, String> extension) {
         mapping.putAll(extension);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 
 }

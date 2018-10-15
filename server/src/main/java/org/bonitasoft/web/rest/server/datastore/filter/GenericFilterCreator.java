@@ -14,10 +14,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.filter;
 
+import java.io.Serializable;
+
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Vincent Elcrin
+ * @author Emmanuel Duchastenier
  */
 public class GenericFilterCreator implements FilterCreator {
 
@@ -28,8 +32,15 @@ public class GenericFilterCreator implements FilterCreator {
     }
 
     @Override
-    public Filter<String> create(String attribute, String value) {
-        return new Filter<String>(new Field(attribute, fieldConverter), new StrValue(value));
+    public Filter<? extends Serializable> create(String attribute, String value) {
+        return new Filter<>(new Field(attribute, fieldConverter), getTypedValue(attribute, value));
+    }
+
+    private Value<? extends Serializable> getTypedValue(String attributeName, String attributeValue) {
+        if (fieldConverter.getValueTypeMapping().get(attributeName) == TYPE.BOOLEAN) {
+            return new BooleanValue(attributeValue);
+        }
+        return new StrValue(attributeValue);
     }
 
 }

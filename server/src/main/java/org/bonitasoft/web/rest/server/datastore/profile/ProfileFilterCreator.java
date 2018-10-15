@@ -14,6 +14,8 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
+import java.io.Serializable;
+
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Field;
@@ -32,7 +34,7 @@ public class ProfileFilterCreator extends GenericFilterCreator {
      * @see org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator#create(java.lang.String, java.lang.String)
      */
     @Override
-    public Filter<String> create(String attribute, String value) {
+    public Filter<? extends Serializable> create(String attribute, String value) {
         if (ProfileItem.FILTER_HAS_NAVIGATION.equals(attribute)) {
             return Boolean.valueOf(value)
                     ? new Filter<String>(new Field(attribute, fieldConverter), null, Operator.DIFFERENT_FROM)

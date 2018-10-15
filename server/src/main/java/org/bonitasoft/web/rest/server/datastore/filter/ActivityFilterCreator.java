@@ -19,13 +19,18 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeTypeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
+import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.StringValueConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Filter.Operator;
 
 /**
  * @author Florine Boudin
  */
-public class ActivityFilterCreator implements FilterCreator {
+public class ActivityFilterCreator extends GenericFilterCreator {
+
+    public ActivityFilterCreator() {
+        super(new EmptyAttributeConverter());
+    }
 
     /*
      * (non-Javadoc)

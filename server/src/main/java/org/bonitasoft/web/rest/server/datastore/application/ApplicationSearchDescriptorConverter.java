@@ -16,6 +16,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.application;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.bonitasoft.engine.business.application.ApplicationSearchDescriptor;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 public class ApplicationSearchDescriptorConverter implements AttributeConverter {
 
@@ -33,7 +35,7 @@ public class ApplicationSearchDescriptorConverter implements AttributeConverter 
     }
 
     private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<>();
         mapping.put(ApplicationItem.ATTRIBUTE_ID, ApplicationSearchDescriptor.ID);
         mapping.put(ApplicationItem.ATTRIBUTE_TOKEN, ApplicationSearchDescriptor.TOKEN);
         mapping.put(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, ApplicationSearchDescriptor.DISPLAY_NAME);
@@ -54,6 +56,11 @@ public class ApplicationSearchDescriptorConverter implements AttributeConverter 
     @Override
     public String convert(final String attribute) {
         return MapUtil.getMandatory(mapping, attribute);
+    }
+
+    @Override
+    public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
     }
 
 }

@@ -16,12 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
+import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
 
 /**
  * @author Vincent Elcrin
@@ -29,7 +31,12 @@ import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
  */
 public class ProcessSearchDescriptorConverter implements AttributeConverter {
 
-    private static Map<String, String> mapping = new HashMap<String, String>();
+    protected static Map<String, String> mapping = new HashMap<>();
+
+    @Override
+    public Map<String, TYPE> getValueTypeMapping() {
+        return Collections.emptyMap();
+    }
 
     static {
         mapping.put(ProcessItem.ATTRIBUTE_ID, ProcessDeploymentInfoSearchDescriptor.ID);

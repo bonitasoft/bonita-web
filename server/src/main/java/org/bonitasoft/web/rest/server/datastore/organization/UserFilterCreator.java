@@ -17,29 +17,12 @@
  */
 package org.bonitasoft.web.rest.server.datastore.organization;
 
-import java.io.Serializable;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 
-import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.filter.BooleanValue;
-import org.bonitasoft.web.rest.server.datastore.filter.Field;
-import org.bonitasoft.web.rest.server.datastore.filter.Filter;
-import org.bonitasoft.web.rest.server.datastore.filter.FilterCreator;
-import org.bonitasoft.web.rest.server.datastore.filter.StrValue;
+class UserFilterCreator extends GenericFilterCreator {
 
-public class UserFilterCreator implements FilterCreator {
-
-    private AttributeConverter fieldConverter;
-
-    public UserFilterCreator() {
-        this.fieldConverter = new UserSearchAttributeConverter();
+    UserFilterCreator(UserSearchAttributeConverter converter) {
+        super(converter);
     }
 
-    @Override
-    public Filter<? extends Serializable> create(String attribute, String value) {
-        if (UserItem.ATTRIBUTE_ENABLED.equals(attribute)) {
-            return new Filter<Boolean>(new Field(attribute, fieldConverter), new BooleanValue(value));
-        }
-        return new Filter<String>(new Field(attribute, fieldConverter), new StrValue(value));
-    }
 }

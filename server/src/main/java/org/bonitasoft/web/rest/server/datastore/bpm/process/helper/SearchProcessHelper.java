@@ -44,7 +44,7 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
     public ItemSearchResult<ProcessItem> search(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
         SearchOptionsCreator searchOptions = new SearchOptionsCreator(page, resultsByPage, search,
                 new Sorts(orders, new ProcessSearchDescriptorConverter()),
-                new Filters(filters, new SearchProcessFilterCreator()));
+                new Filters(filters, new SearchProcessFilterCreator(new ProcessSearchDescriptorConverter())));
         final SearchResult<ProcessDeploymentInfo> result = runSearch(filters, searchOptions.create());
         return convertResult(page, resultsByPage, result);
     }

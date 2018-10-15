@@ -32,6 +32,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -506,7 +507,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void testBuildPageCreatorFrom() throws Exception {
+    public void testBuildPageCreatorFrom() {
         final String testUrlTokenString = "testUrlTokenString";
         final String testContentNameString = "testContentName";
         final String testDescriptionString = "testDescriptionString";
@@ -530,17 +531,17 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_IsPageTokenValid_returns_true_when_url_token_starts_with_custom_page_prefix() throws Exception {
+    public void should_IsPageTokenValid_returns_true_when_url_token_starts_with_custom_page_prefix() {
         assertThat(pageDatastore.isPageTokenValid(PageDatastore.PAGE_TOKEN_PREFIX + "anySuffix123456")).isTrue();
     }
 
     @Test
-    public void should_IsPageTokenValid_returns_false_when_url_token_contains_non_alphanumeric_values() throws Exception {
+    public void should_IsPageTokenValid_returns_false_when_url_token_contains_non_alphanumeric_values() {
         assertThat(pageDatastore.isPageTokenValid(PageDatastore.PAGE_TOKEN_PREFIX + "suffixxx_dsqds")).isFalse();
     }
 
     @Test
-    public void should_IsPageTokenValid_returns_false_when_url_token_does_not_starts_with_custom_page_prefix() throws Exception {
+    public void should_IsPageTokenValid_returns_false_when_url_token_does_not_starts_with_custom_page_prefix() {
         assertThat(pageDatastore.isPageTokenValid("WrongStartString" + PageDatastore.PAGE_TOKEN_PREFIX + "suffixx")).isFalse();
     }
 
@@ -556,12 +557,12 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_ConvertEngineToConsoleItem_returns_null_if_item_is_null() throws Exception {
+    public void should_ConvertEngineToConsoleItem_returns_null_if_item_is_null() {
         assertThat(pageDatastore.convertEngineToConsoleItem(null)).isNull();
     }
 
     @Test
-    public void testAPIIdsToLong() throws Exception {
+    public void testAPIIdsToLong() {
         final APIID id1 = makeAPIID("1");
         final APIID id2 = makeAPIID("2");
         final List<APIID> listId = Arrays.asList(id1, id2);
@@ -585,7 +586,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_ConvertEngineToConsoleItem_return_null_when_null_page_is_given() throws Exception {
+    public void should_ConvertEngineToConsoleItem_return_null_when_null_page_is_given() {
         //given
         final Page nullPage = null;
         //when
@@ -595,7 +596,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_ConvertEngineToConsoleItem_return_a_page_item_when_page_is_given() throws Exception {
+    public void should_ConvertEngineToConsoleItem_return_a_page_item_when_page_is_given() {
         //when
         final PageItem testPageItem = pageDatastore.convertEngineToConsoleItem(mockedPage);
         //then
@@ -616,14 +617,29 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void makeSearchOptionCreator_with_empty_filter_map_should_return_empty_filter_list() throws Exception {
-        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC", new HashMap<String, String>());
+    public void makeSearchOptionCreator_converts_isHidden_field_to_boolean() {
+        final List<SearchFilter> filters = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC",
+                Collections.singletonMap(PageItem.ATTRIBUTE_IS_HIDDEN, "true")).create().getFilters();
+        assertThat(filters.get(0).getValue()).isEqualTo(true);
+    }
+
+    @Test
+    public void makeSearchOptionCreator_converts_isProvided_field_to_boolean() {
+        final List<SearchFilter> filters = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC",
+                Collections.singletonMap(PageItem.ATTRIBUTE_IS_PROVIDED, "false")).create().getFilters();
+        assertThat(filters.get(0).getValue()).isEqualTo(false);
+    }
+
+    @Test
+    public void makeSearchOptionCreator_with_empty_filter_map_should_return_empty_filter_list() {
+        final SearchOptionsCreator searchOptionsCreator = pageDatastore.makeSearchOptionCreator(0, 10, "",
+                "displayName ASC", new HashMap<>());
         final List<SearchFilter> filters = searchOptionsCreator.create().getFilters();
         assertThat(filters).isEmpty();
     }
 
     @Test
-    public void makeSearchOptionCreator_with_ATTRIBUTE_PROCESS_ID_filter_map_should_return_ATTRIBUTE_PROCESS_ID_in_filter_list() throws Exception {
+    public void makeSearchOptionCreator_with_ATTRIBUTE_PROCESS_ID_filter_map_should_return_ATTRIBUTE_PROCESS_ID_in_filter_list() {
         final Map<String, String> filters = new HashMap<>();
         final String processID = "2124654";
         filters.put(PageItem.ATTRIBUTE_PROCESS_ID, processID);
@@ -633,7 +649,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_form_filter_map_should_return_FILTER_CONTENT_TYPE_in_filter_list() throws Exception {
+    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_form_filter_map_should_return_FILTER_CONTENT_TYPE_in_filter_list() {
         final Map<String, String> filters = new HashMap<>();
         final String form = "form";
         filters.put(PageItem.FILTER_CONTENT_TYPE, form);
@@ -643,8 +659,7 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_processPage_filter_map_should_return_FILTER_CONTENT_TYPE_form_or_page_in_filter_list()
-            throws Exception {
+    public void makeSearchOptionCreator_with_FILTER_CONTENT_TYPE_processPage_filter_map_should_return_FILTER_CONTENT_TYPE_form_or_page_in_filter_list() {
         final Map<String, String> filters = new HashMap<>();
         final String form = "processPage";
         filters.put(PageItem.FILTER_CONTENT_TYPE, form);
