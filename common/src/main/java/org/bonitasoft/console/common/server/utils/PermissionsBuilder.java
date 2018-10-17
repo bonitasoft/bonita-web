@@ -10,13 +10,9 @@ import org.bonitasoft.console.common.server.preferences.properties.CompoundPermi
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.ProfileEntry;
-import org.bonitasoft.engine.profile.ProfileEntrySearchDescriptor;
-import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.engine.search.SearchResult;
+import org.bonitasoft.engine.profile.ProfileNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 
@@ -26,15 +22,14 @@ public class PermissionsBuilder {
 
     public static final String USER_TYPE_AUTHORIZATION_PREFIX = "user";
 
-    protected static final int MAX_ELEMENTS_RETRIEVED = 200;
-
     protected final APISession session;
     private final ProfileAPI profileAPI;
     private final ApplicationAPI applicationAPI;
     private final CustomPermissionsMapping customPermissionsMapping;
     private final CompoundPermissionsMapping compoundPermissionsMapping;
 
-    protected PermissionsBuilder(final APISession session, final ProfileAPI profileAPI,final ApplicationAPI applicationAPI, final CustomPermissionsMapping customPermissionsMapping,
+    PermissionsBuilder(final APISession session, final ProfileAPI profileAPI,
+            final ApplicationAPI applicationAPI, final CustomPermissionsMapping customPermissionsMapping,
             final CompoundPermissionsMapping compoundPermissionsMapping) {
         this.session = session;
         this.profileAPI = profileAPI;
@@ -59,7 +54,7 @@ public class PermissionsBuilder {
         final Set<String> pageTokens;
         try {
             pageTokens = getAllPagesForUser(permissions);
-        } catch (final SearchException e) {
+        } catch (final ProfileNotFoundException e) {
             throw new LoginFailedException(e);
         }
         for (final String pageToken : pageTokens) {
@@ -74,56 +69,43 @@ public class PermissionsBuilder {
      *        the set to complete
      * @return
      *         the page names the user can access
-     * @throws SearchException
      */
-    Set<String> getAllPagesForUser(final Set<String> permissions) throws SearchException {
+    Set<String> getAllPagesForUser(final Set<String> permissions) throws ProfileNotFoundException {
         final Set<String> pageTokens = new HashSet<>();
-        int profilesIndex = 0;
-        int nbOfProfilesRetrieved = MAX_ELEMENTS_RETRIEVED;
-        while (nbOfProfilesRetrieved == MAX_ELEMENTS_RETRIEVED) {
-            final List<Profile> profiles = profileAPI.getProfilesForUser(session.getUserId(), profilesIndex, MAX_ELEMENTS_RETRIEVED, ProfileCriterion.ID_ASC);
-            nbOfProfilesRetrieved = profiles.size();
-            for (final Profile profile : profiles) {
+        for (final String profile : session.getProfiles()) {
                 addPageAndCustomPermissionsOfProfile(permissions, pageTokens, profile);
             }
-            profilesIndex = profilesIndex + nbOfProfilesRetrieved;
-        }
         return pageTokens;
     }
 
-    void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens, final Profile profile) throws SearchException {
+    void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens,
+            final String profile) throws ProfileNotFoundException {
         addPagesOfProfile(profile, pageTokens);
         addPagesOfApplication(profile, pageTokens);
         addCustomProfilePermissions(permissions, profile);
         addProfilesPermissions(permissions, profile);
     }
 
-    void addProfilesPermissions(final Set<String> permissions, final Profile profile) {
-        permissions.add(PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + profile.getName());
+    private void addProfilesPermissions(final Set<String> permissions, final String profile) {
+        permissions.add(PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + profile);
     }
 
-    void addPagesOfProfile(final Profile profile, final Set<String> pageTokens) throws SearchException {
-        int entriesIndex = 0;
-        int nbOfProfileEntriesRetrieved = MAX_ELEMENTS_RETRIEVED;
-        while (nbOfProfileEntriesRetrieved == MAX_ELEMENTS_RETRIEVED) {
-            final List<ProfileEntry> profileEntries = getProfileEntriesForProfile(profile, entriesIndex);
-            nbOfProfileEntriesRetrieved = profileEntries.size();
+    void addPagesOfProfile(final String profile, final Set<String> pageTokens) throws ProfileNotFoundException {
+        final List<ProfileEntry> profileEntries = profileAPI.getProfileEntries(profile);
             for (final ProfileEntry profileEntry : profileEntries) {
                 if (profileEntry.getType().equals(ProfileEntryItem.VALUE_TYPE.link.name())) {
                     pageTokens.add(profileEntry.getPage());
                 }
             }
-            entriesIndex = entriesIndex + nbOfProfileEntriesRetrieved;
-        }
     }
 
-    void addPagesOfApplication(final Profile profile, final Set<String> pageTokens) throws SearchException {
-        final List<String> allPagesForProfile = applicationAPI.getAllPagesForProfile(profile.getId());
+    void addPagesOfApplication(final String profile, final Set<String> pageTokens) {
+        final List<String> allPagesForProfile = applicationAPI.getAllPagesForProfile(profile);
         pageTokens.addAll(allPagesForProfile);
     }
 
-    void addCustomProfilePermissions(final Set<String> permissions, final Profile profile) {
-        permissions.addAll(getCustomPermissions(PROFILE_TYPE_AUTHORIZATION_PREFIX, profile.getName()));
+    private void addCustomProfilePermissions(final Set<String> permissions, final String profile) {
+        permissions.addAll(getCustomPermissions(PROFILE_TYPE_AUTHORIZATION_PREFIX, profile));
     }
 
     void addCustomUserPermissions(final Set<String> permissions) {
@@ -144,7 +126,7 @@ public class PermissionsBuilder {
         return profileSinglePermissions;
     }
 
-    Set<String> getCustomPermissionsRaw(final String type, final String identifier) {
+    private Set<String> getCustomPermissionsRaw(final String type, final String identifier) {
         return customPermissionsMapping.getPropertyAsSet(type + "|" + identifier);
     }
 
@@ -152,10 +134,4 @@ public class PermissionsBuilder {
         return compoundPermissionsMapping.getPropertyAsSet(compoundName);
     }
 
-    List<ProfileEntry> getProfileEntriesForProfile(final Profile profile, final int entriesIndex) throws SearchException {
-        final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(entriesIndex, MAX_ELEMENTS_RETRIEVED);
-        searchOptionsBuilder.filter(ProfileEntrySearchDescriptor.PROFILE_ID, profile.getId());
-        final SearchResult<ProfileEntry> profileEntriesResult = profileAPI.searchProfileEntries(searchOptionsBuilder.done());
-        return profileEntriesResult.getResult();
-    }
 }
