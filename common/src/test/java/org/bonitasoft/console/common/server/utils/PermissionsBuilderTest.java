@@ -1,10 +1,10 @@
 package org.bonitasoft.console.common.server.utils;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -13,10 +13,9 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,11 +29,10 @@ import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.persistence.SBonitaReadException;
 import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.profile.ProfileEntry;
+import org.bonitasoft.engine.profile.ProfileNotFoundException;
 import org.bonitasoft.engine.profile.impl.ProfileEntryImpl;
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
+import org.bonitasoft.engine.session.impl.APISessionImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,31 +45,20 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class PermissionsBuilderTest {
 
+    private APISessionImpl apiSession = new APISessionImpl(1, new Date(), 100000, "myUser", 42L, "default", 1L);
     @Mock
-    APISession apiSession;
-
+    private ProfileAPI profileAPI;
     @Mock
-    ProfileAPI profileAPI;
-
+    private CustomPermissionsMapping customPermissionsMapping;
     @Mock
-    CustomPermissionsMapping customPermissionsMapping;
-
+    private CompoundPermissionsMapping compoundPermissionsMapping;
     @Mock
-    CompoundPermissionsMapping compoundPermissionsMapping;
-
-    @Mock
-    SecurityProperties securityProperties;
-
-    @Mock
-    private Profile profile;
-
+    private SecurityProperties securityProperties;
     @Mock
     private ApplicationAPI applicationAPI;
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    PermissionsBuilder permissionsBuilder;
+    private PermissionsBuilder permissionsBuilder;
 
     @Before
     public void setUp() throws Exception {
@@ -80,9 +67,6 @@ public class PermissionsBuilderTest {
 
     private void init() {
         permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping));
-        doReturn("myUser").when(apiSession).getUserName();
-        doReturn(1l).when(apiSession).getTenantId();
-        doReturn(1l).when(apiSession).getUserId();
     }
 
     @Test
@@ -108,10 +92,10 @@ public class PermissionsBuilderTest {
 
     @Test
     public void should_addProfilesPermissions_add_permissions_to_the_set() throws Exception {
-        final HashSet<String> permissions = new HashSet<String>();
-        doReturn(new HashSet<String>(Arrays.asList("Page1", "Page2"))).when(permissionsBuilder).getAllPagesForUser(permissions);
-        doReturn(new HashSet<String>(Arrays.asList("Perm2", "Perm1"))).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page1"));
-        doReturn(new HashSet<String>(Arrays.asList("Perm1", "Perm3"))).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page2"));
+        final Set<String> permissions = new HashSet<>();
+        doReturn(aSet("Page1", "Page2")).when(permissionsBuilder).getAllPagesForUser(permissions);
+        doReturn(aSet("Perm2", "Perm1")).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page1"));
+        doReturn(aSet("Perm1", "Perm3")).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page2"));
 
         permissionsBuilder.addProfilesPermissions(permissions);
 
@@ -120,75 +104,65 @@ public class PermissionsBuilderTest {
 
     @Test
     public void should_addProfilesPermissions_throw_LoginException_when_issue_on_getAllPages() throws Exception {
-
-        final Set<String> permissions = new HashSet<String>();
-        doThrow(new SearchException("issue", new SBonitaReadException(""))).when(permissionsBuilder).getAllPagesForUser(permissions);
+        doThrow(new ProfileNotFoundException(new Exception())).when(permissionsBuilder).getAllPagesForUser(anySetOf(String.class));
         try {
-            permissionsBuilder.addProfilesPermissions(permissions);
+            permissionsBuilder.addProfilesPermissions(new HashSet<>());
             fail("expecting " + LoginFailedException.class.getName());
         } catch (final LoginFailedException e) {
-            if (!(e.getCause() instanceof SearchException)) {
-                fail("expecting " + SearchException.class.getName() + " as exception cause");
-            }
+            assertThat(e.getCause()).isExactlyInstanceOf(ProfileNotFoundException.class);
         }
     }
 
     @Test
     public void should_getAllPagesForUser_add_page_and_custom_permissions_of_profiles_of_user() throws Exception {
-        final List<Profile> profileList1 = fillInProfilesList(0, PermissionsBuilder.MAX_ELEMENTS_RETRIEVED);
-        doReturn(profileList1).when(profileAPI).getProfilesForUser(anyLong(), anyInt(), anyInt(), any(ProfileCriterion.class));
-        final List<Profile> profileList2 = fillInProfilesList(PermissionsBuilder.MAX_ELEMENTS_RETRIEVED, 10);
-        doReturn(profileList2).when(profileAPI).getProfilesForUser(anyLong(), eq(PermissionsBuilder.MAX_ELEMENTS_RETRIEVED), anyInt(),
-                any(ProfileCriterion.class));
-        final HashSet<String> permissions = new HashSet<String>();
-        doNothing().when(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions), anySetOf(String.class), any(Profile.class));
+        final Set<String> permissions = new HashSet<>();
+        doNothing().when(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions),
+                anySetOf(String.class), any());
+        apiSession.setProfiles(asList("myProfile1", "myProfile2"));
 
         permissionsBuilder.getAllPagesForUser(permissions);
 
-        for (final Profile profile : profileList1) {
-            verify(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions), anySetOf(String.class), eq(profile));
-        }
+        verify(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions), anySetOf(String.class),
+                eq("myProfile1"));
+        verify(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions), anySetOf(String.class),
+                eq("myProfile2"));
     }
 
     @Test
     public void should_addPageAndCustomPermissionsOfProfile_complete_set_of_permission_and_page() throws Exception {
-        final HashSet<String> permissions = new HashSet<String>();
-        final HashSet<String> pages = new HashSet<String>();
-        final Profile profile = mock(Profile.class);
-        doReturn("profileName").when(profile).getName();
-        doReturn(new HashSet<String>(Arrays.asList("Perm1", "Perm2"))).when(permissionsBuilder).getCustomPermissions(eq("profile"), eq("profileName"));
-        doNothing().when(permissionsBuilder).addPagesOfProfile(profile, pages);
+        final Set<String> permissions = new HashSet<>();
+        final Set<String> pages = new HashSet<>();
+        doReturn(aSet("Perm1", "Perm2")).when(permissionsBuilder).getCustomPermissions(eq("profile"), eq("myProfile1"));
+        doReturn(aSet("Perm2", "Perm3")).when(permissionsBuilder).getCustomPermissions(eq("profile"), eq("myProfile2"));
+        doNothing().when(permissionsBuilder).addPagesOfProfile(any(), anySetOf(String.class));
 
-        permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, profile);
+        permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, "myProfile1");
+        permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, "myProfile2");
 
-        verify(permissionsBuilder).addPagesOfProfile(profile, pages);
-        assertThat(permissions).containsOnly("Perm1", "Perm2", "profile|profileName");
+        verify(permissionsBuilder).addPagesOfProfile("myProfile1", pages);
+        verify(permissionsBuilder).addPagesOfProfile("myProfile2", pages);
+        assertThat(permissions).containsOnly("Perm1", "Perm2", "Perm3", "profile|myProfile1", "profile|myProfile2");
     }
 
     @Test
     public void should_addPagesOfProfile_complete_set_of_page() throws Exception {
-        final HashSet<String> pages = new HashSet<String>();
-        final Profile profile = mock(Profile.class);
-        final List<ProfileEntry> profileEntryList = fillInProfileEntriesList(PermissionsBuilder.MAX_ELEMENTS_RETRIEVED + 10);
-        doReturn(profileEntryList.subList(0, PermissionsBuilder.MAX_ELEMENTS_RETRIEVED)).when(permissionsBuilder).getProfileEntriesForProfile(profile, 0);
-        doReturn(profileEntryList.subList(PermissionsBuilder.MAX_ELEMENTS_RETRIEVED, PermissionsBuilder.MAX_ELEMENTS_RETRIEVED + 10)).when(permissionsBuilder)
-                .getProfileEntriesForProfile(profile, PermissionsBuilder.MAX_ELEMENTS_RETRIEVED);
+        final Set<String> pages = new HashSet<>();
+        doReturn(asList(profileEntryWithPage("page1"), profileEntryWithPage("page2"))).when(profileAPI).getProfileEntries("myProfile1");
+        doReturn(asList(profileEntryWithPage("page2"), profileEntryWithPage("page3"))).when(profileAPI).getProfileEntries("myProfile2");
 
-        permissionsBuilder.addPagesOfProfile(profile, pages);
+        permissionsBuilder.addPagesOfProfile("myProfile1", pages);
+        permissionsBuilder.addPagesOfProfile("myProfile2", pages);
 
-        final ArrayList<String> pageNames = new ArrayList<String>();
-        for (int i = 0; i < PermissionsBuilder.MAX_ELEMENTS_RETRIEVED + 10; i++) {
-            pageNames.add("page" + i);
-        }
-        assertThat(pages).containsOnly(pageNames.toArray(new String[] {}));
+        assertThat(pages).containsOnly("page1", "page2", "page3");
     }
 
     @Test
     public void should_getPermissions_retrieve_permisions_even_if_secu_not_active() throws Exception {
         //given
         doReturn(false).when(securityProperties).isAPIAuthorizationsCheckEnabled();
-        doReturn(new HashSet<String>(Arrays.asList("Page1"))).when(permissionsBuilder).getAllPagesForUser(anySetOf(String.class));
-        doReturn(new HashSet<String>(Arrays.asList("Perm2", "Perm1"))).when(compoundPermissionsMapping).getPropertyAsSet(eq("Page1"));
+        doReturn(singleton("Page1")).when(permissionsBuilder).getAllPagesForUser(anySetOf(String.class));
+        doReturn(aSet("Perm2", "Perm1")).when(compoundPermissionsMapping)
+                .getPropertyAsSet(eq("Page1"));
 
         //when
         final Set<String> permissions = permissionsBuilder.getPermissions();
@@ -199,48 +173,35 @@ public class PermissionsBuilderTest {
     }
 
     @Test
-    public void should_getCustomPermissions_work_with_compound_permissions() throws Exception {
-        doReturn(new HashSet<String>(Arrays.asList("Perm1", "Perm2", "taskListing"))).when(customPermissionsMapping).getPropertyAsSet("user|myUser");
-        doReturn(new HashSet<String>(Arrays.asList("Perm3", "Perm4"))).when(compoundPermissionsMapping).getPropertyAsSet("taskListing");
+    public void should_getCustomPermissions_work_with_compound_permissions() {
+        doReturn(aSet("Perm1", "Perm2", "taskListing")).when(customPermissionsMapping).getPropertyAsSet("user|myUser");
+        doReturn(aSet("Perm3", "Perm4")).when(compoundPermissionsMapping).getPropertyAsSet("taskListing");
 
         final Set<String> permissions = permissionsBuilder.getCustomPermissions("user", "myUser");
 
         assertThat(permissions).containsOnly("Perm1","Perm2","Perm3","Perm4");
     }
 
-    protected List<Profile> fillInProfilesList(final int startIndex, final int nbOfItems) {
-        final List<Profile> userProfiles = new ArrayList<Profile>();
-        for (long i = startIndex; i < startIndex + nbOfItems; i++) {
-            final Profile profile = mock(Profile.class);
-            doReturn("profile" + i).when(profile).getName();
-            doReturn(i).when(profile).getId();
-            userProfiles.add(profile);
-        }
-        return userProfiles;
-    }
-
-    protected List<ProfileEntry> fillInProfileEntriesList(final int nbOfItems) {
-        final List<ProfileEntry> profileEntries = new ArrayList<ProfileEntry>();
-        for (int i = 0; i < nbOfItems; i++) {
-            final ProfileEntryImpl page = new ProfileEntryImpl("page" + i);
-            page.setType(ProfileEntryItem.VALUE_TYPE.link.name());
-            page.setPage("page" + i);
-            profileEntries.add(page);
-        }
-        return profileEntries;
-    }
-
     @Test
-    public void testAddPagesOfApplication() throws Exception {
-        //given
-        final Set<String> permissions = new HashSet<String>(Arrays.asList("Perm1", "Perm2"));
-        doReturn(12l).when(profile).getId();
-        when(applicationAPI.getAllPagesForProfile(profile.getId())).thenReturn(Arrays.asList("Perm3", "Perm4"));
+    public void testAddPagesOfApplication() {
+        Set<String> permissions = aSet("Perm1", "Perm2");
+        doReturn(asList("Perm3", "Perm4")).when(applicationAPI).getAllPagesForProfile("myProfile1");
+        doReturn(asList("Perm4", "Perm5")).when(applicationAPI).getAllPagesForProfile("myProfile2");
 
-        //when
-        permissionsBuilder.addPagesOfApplication(profile, permissions);
+        permissionsBuilder.addPagesOfApplication("myProfile1", permissions);
+        permissionsBuilder.addPagesOfApplication("myProfile2", permissions);
 
-        //then
-        assertThat(permissions).containsOnly("Perm1", "Perm2", "Perm3", "Perm4");
+        assertThat(permissions).containsOnly("Perm1", "Perm2", "Perm3", "Perm4", "Perm5");
+    }
+
+    private Set<String> aSet(String... elements) {
+        return new HashSet<>(asList(elements));
+    }
+
+    private ProfileEntry profileEntryWithPage(String page) {
+        ProfileEntryImpl profileEntry = new ProfileEntryImpl("myEntryFor" + page);
+        profileEntry.setType("link");
+        profileEntry.setPage(page);
+        return profileEntry;
     }
 }
