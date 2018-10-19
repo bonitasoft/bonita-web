@@ -27,7 +27,9 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
+import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.api.callback.APICallback;
 import org.bonitasoft.web.toolkit.client.data.api.callback.HttpCallback;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.FileExtensionAllowedValidator;
@@ -39,7 +41,10 @@ import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.form.Form;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.BarUploadFilter;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.FileUpload;
+import org.bonitasoft.web.toolkit.client.ui.html.HTML;
+import org.bonitasoft.web.toolkit.client.ui.page.MessagePage;
 import org.bonitasoft.web.toolkit.client.ui.page.PageOnItem;
+import org.bonitasoft.web.toolkit.client.ui.utils.Message;
 
 import com.google.gwt.core.client.GWT;
 
@@ -111,7 +116,7 @@ public class UploadProcessPage extends Page {
      * Redirect to process more view on installation succ
      * Show an error pop-up on installation failure
      */
-    private final class ProcessInstallCallback extends APICallback {
+    protected final class ProcessInstallCallback extends APICallback {
 
         @Override
         public void onSuccess(final int httpStatusCode, final String response, final Map<String, String> headers) {
@@ -119,6 +124,24 @@ public class UploadProcessPage extends Page {
             final TreeIndexed<String> tree = new TreeIndexed<String>();
             tree.addValue(PageOnItem.PARAMETER_ITEM_ID, process.getId().toString());
             ViewController.showView(AngularIFrameView.PROCESS_MORE_DETAILS_ADMIN_TOKEN, tree);
+        }
+        
+        @Override
+        public void onError(String message, Integer errorCode) {
+            final ServerException ex = parseException(message, errorCode);
+            final String originalException = ex.getOriginalClassName();
+            if (originalException != null && originalException.contains("AlreadyExistsException")) {
+                Message.error(_("A process with the same name and version already exists."));
+            } else if (originalException != null && originalException.contains("V6FormDeployException")) {
+                String errorMessage = _("Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita.");
+                String docLink = _("To know more, check the %link%documentation%_link%.", 
+                        new Arg("link", "<a href=\"http://www.bonitasoft.com/bos_redirect.php?bos_redirect_id=681&bos_redirect_product=bos&bos_redirect_major_version=7.8\" target=\"_blank\">"),
+                        new Arg("_link", "</a>"));
+                MessagePage messagePage = new MessagePage(MessagePage.TYPE.ERROR, "<p>" + errorMessage + "<br/>" + docLink + "</p>", true);
+                ViewController.showPopup(messagePage);
+            } else {
+                super.onError(message, errorCode);
+            }
         }
     }
 }

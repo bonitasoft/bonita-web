@@ -16,19 +16,26 @@ package org.bonitasoft.web.rest.server.engineclient;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.bar.BusinessArchive;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
+import org.bonitasoft.engine.bpm.process.ProcessDeployException;
+import org.bonitasoft.engine.bpm.process.V6FormDeployException;
+import org.bonitasoft.engine.bpm.process.impl.internal.DesignProcessDefinitionImpl;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.web.rest.server.APITestWithMock;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 
 /**
@@ -37,10 +44,10 @@ import org.mockito.Mock;
 public class ProcessEngineClientTest extends APITestWithMock {
 
     private static Integer BUNCH_SIZE = 10;
-
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
     @Mock
     private ProcessAPI processAPI;
-
     private ProcessEngineClient processEngineClient;
 
     @Before
@@ -52,7 +59,7 @@ public class ProcessEngineClientTest extends APITestWithMock {
     @Test
     public void deleteArchivedProcessInstancesByBunch_delete_archived_processes_instances_by_bunch() throws Exception {
         when(processAPI.deleteArchivedProcessInstances(1L, 0, BUNCH_SIZE))
-        .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
+                .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
 
         final List<Long> processList = new ArrayList<Long>();
         processList.add(1L);
@@ -64,7 +71,7 @@ public class ProcessEngineClientTest extends APITestWithMock {
     @Test
     public void deleteProcessInstancesByBunch_delete_archived_processes_instances_by_bunch() throws Exception {
         when(processAPI.deleteProcessInstances(1L, 0, BUNCH_SIZE))
-        .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
+                .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
 
         final List<Long> processList = new ArrayList<Long>();
         processList.add(1L);
@@ -89,7 +96,18 @@ public class ProcessEngineClientTest extends APITestWithMock {
         verify(processAPI).getProcessDataDefinitions(expectedProcessId, 0, Integer.MAX_VALUE);
     }
 
+    @Test
+    public void deploying_a_process_with_v6_forms_fails_with_the_right_message()
+            throws AlreadyExistsException, ProcessDeployException {
 
+        DesignProcessDefinitionImpl designProcessDefinition = new DesignProcessDefinitionImpl("processName", "1.0");
+        BusinessArchive businessArchive = new BusinessArchive();
+        businessArchive.setProcessDefinition(designProcessDefinition);
 
+        when(processAPI.deploy((BusinessArchive) anyObject())).thenThrow(new V6FormDeployException(new Exception("a cause")));
+
+        expectedException.expect(APIException.class);
+        processEngineClient.deploy(businessArchive);
+    }
 
 }
