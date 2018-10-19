@@ -22,11 +22,13 @@ import org.bonitasoft.web.toolkit.client.ui.Page;
 import org.bonitasoft.web.toolkit.client.ui.action.Action;
 import org.bonitasoft.web.toolkit.client.ui.action.popup.PopupCloseAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Button;
+import org.bonitasoft.web.toolkit.client.ui.component.Html;
 import org.bonitasoft.web.toolkit.client.ui.component.Text;
 import org.bonitasoft.web.toolkit.client.ui.component.containers.Container;
 
 /**
  * @author Séverin Moussel
+ * @author Anthony Birembaut
  * 
  */
 public class MessagePage extends Page implements MessageTyped {
@@ -36,6 +38,8 @@ public class MessagePage extends Page implements MessageTyped {
     private final TYPE type;
 
     private final Action callback;
+    
+    private boolean isHTML = false;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -66,6 +70,35 @@ public class MessagePage extends Page implements MessageTyped {
      */
     public MessagePage(final TYPE type, final String message) {
         this(type, message, (Action) null);
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param type
+     *            The type of the message to display. The type will change the design of the message.
+     * @param message
+     *            The message to display. New lines will be kept on display.
+     * @param callback
+     *            The action to call while clicking on Ok (or YES for CONFIRM type)
+     * @param isHTML
+     */
+    public MessagePage(final TYPE type, final String message, final boolean isHTML, final Action callback) {
+        this(type, message, callback);
+        this.isHTML = isHTML;
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param type
+     *            The type of the message to display. The type will change the design of the message.
+     * @param message
+     *            The message to display. New lines will be kept on display.
+     * @param isHTML
+     */
+    public MessagePage(final TYPE type, final String message, final boolean isHTML) {
+        this(type, message, isHTML, (Action) null);
     }
 
     /**
@@ -140,7 +173,11 @@ public class MessagePage extends Page implements MessageTyped {
 
     @Override
     public void buildView() {
-        addBody(new Text(getParameter("message")));
+        if (isHTML) {
+            addBody(new Html(getParameter("message")));
+        } else {
+            addBody(new Text(getParameter("message")));
+        }
 
         final Container<Button> formactions = new Container<Button>();
         addBody(formactions.addClass("formactions"));
