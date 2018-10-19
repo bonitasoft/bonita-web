@@ -27,6 +27,7 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfoUpdater;
+import org.bonitasoft.engine.bpm.process.V6FormDeployException;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.DeletionException;
@@ -80,6 +81,10 @@ public class ProcessEngineClient {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
             throw new APIException(new _("Process %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
                     "version", processDefinition.getVersion())), e);
+        } catch (final V6FormDeployException e) {
+            final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
+            throw new APIException(new _("Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation.",
+                    new Arg("appName", processDefinition.getName()), new Arg("version", processDefinition.getVersion())), e);
         } catch (final Exception e) {
             throw new APIException(new _("Unable to deploy business archive"), e);
         }
@@ -140,7 +145,8 @@ public class ProcessEngineClient {
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
-                    LOGGER.log(Level.WARNING, "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
+                    LOGGER.log(Level.WARNING,
+                            "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
                 }
             }
         } while (numberOfDeletedArchivedProcessInstances >= bunchSize);
@@ -164,7 +170,8 @@ public class ProcessEngineClient {
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
-                    LOGGER.log(Level.WARNING, "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
+                    LOGGER.log(Level.WARNING,
+                            "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
                 }
             }
         } while (numberOfDeletedProcessInstances >= bunchSize);
