@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 03:31+0000\n"
-"PO-Revision-Date: 2018-10-01 02:11\n"
+"POT-Creation-Date: 2018-10-20 03:31+0000\n"
+"PO-Revision-Date: 2018-10-22 01:59\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -195,6 +195,9 @@ msgstr "A page archive has a .zip extension"
 
 msgid "A page with this name already exists."
 msgstr "A page with this name already exists."
+
+msgid "A process with the same name and version already exists."
+msgstr "A process with the same name and version already exists."
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 msgstr "A resource is imported as a zip archive containing a page.properties file and a resources folder."
@@ -1624,6 +1627,9 @@ msgstr "Process"
 msgid "Process %appName% in version %version% already exists"
 msgstr "Process %appName% in version %version% already exists"
 
+msgid "Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation."
+msgstr "Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation."
+
 msgid "Process definition not found for id %processId%"
 msgstr "Process definition not found for id %processId%"
 
@@ -2222,6 +2228,9 @@ msgstr "To do"
 msgid "To do so, contact your administrator"
 msgstr "To do so, contact your administrator"
 
+msgid "To know more, check the %link%documentation%_link%."
+msgstr "To know more, check the %link%documentation%_link%."
+
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 msgstr "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 
@@ -2419,6 +2428,9 @@ msgstr "You risk interrupting one or more processes.\n\n"
 
 msgid "You will be rediected"
 msgstr "You will be rediected"
+
+msgid "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
+msgstr "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
 
 msgid "Your session has expired. Please log in again and retry."
 msgstr "Your session has expired. Please log in again and retry."
