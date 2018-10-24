@@ -182,6 +182,13 @@
         <url-pattern>/apps/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/portal/*</url-pattern>
+        <url-pattern>/portal.js/*</url-pattern>
+        <url-pattern>/apps/*</url-pattern>
+        <url-pattern>/services/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
@@ -215,13 +222,6 @@
         <filter-name>InternalSSOFilter</filter-name>
         <url-pattern>/portal/BonitaConsole.html</url-pattern>
         <url-pattern>/portal/homepage</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern>/portal/*</url-pattern>
-        <url-pattern>/portal.js/*</url-pattern>
-        <url-pattern>/apps/*</url-pattern>
-        <url-pattern>/services/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>BPMURLSupportFilter</filter-name>
