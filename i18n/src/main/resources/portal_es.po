@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-20 03:31+0000\n"
-"PO-Revision-Date: 2018-10-22 02:00\n"
+"PO-Revision-Date: 2018-10-24 02:03\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -197,7 +197,7 @@ msgid "A page with this name already exists."
 msgstr "Ya existe una página con este nombre."
 
 msgid "A process with the same name and version already exists."
-msgstr ""
+msgstr "Ya existe un proceso con el mismo nombre y versión."
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 msgstr "Un recurso es importado como un archivo zip que contiene un archivo page.properties y una carpeta de recursos."
@@ -1080,7 +1080,7 @@ msgid "For user-type of profiles. To visualize processes and start cases"
 msgstr "Para perfiles de tipo usuario. Permite visualizar procesos y comenzar casos"
 
 msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
-msgstr ""
+msgstr "Para perfiles de tipo usuario. Página UI Designer para visualizar procesos e iniciar casos"
 
 msgid "Form"
 msgstr "Formulario"
@@ -1627,7 +1627,7 @@ msgid "Process %appName% in version %version% already exists"
 msgstr "El proceso %appName% en la version %version% ya existe"
 
 msgid "Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation."
-msgstr ""
+msgstr "El proceso %appName% en la versión %version% contiene 6.x artefactos heredados (formularios o página de resumen de casos). Estos se basan en Google Web Toolkit (GWT), una tecnología que ya no está soportada por Bonita. Para saber más, consulte la documentación."
 
 msgid "Process definition not found for id %processId%"
 msgstr "No se encuentra la definición del proceso con identificador %processId%"
@@ -2228,7 +2228,7 @@ msgid "To do so, contact your administrator"
 msgstr "Para hacerlo, póngase en contacto con su administrador"
 
 msgid "To know more, check the %link%documentation%_link%."
-msgstr ""
+msgstr "Para saber más, consulte el %link%documentation%_link%."
 
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 msgstr "Para compartir un formulario entre procesos, sube el zip y mapéalo a las tareas y procesos relevantes."
@@ -2255,7 +2255,7 @@ msgid "Type to search"
 msgstr "Tipo de búsqueda"
 
 msgid "UI Designer page to visualize processes and start cases"
-msgstr ""
+msgstr "Página UI Designer para visualizar procesos e iniciar casos"
 
 msgid "UNRESOLVED"
 msgstr "SIN RESOLVER"
@@ -2429,7 +2429,7 @@ msgid "You will be rediected"
 msgstr "Usted será redirigido"
 
 msgid "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
-msgstr ""
+msgstr "Su proceso contiene 6.x artefactos heredados (formularios o página de información general del caso).<br/>Estos se basan en el Kit de herramientas web de Google, una tecnología que ya no está soportada por Bonita."
 
 msgid "Your session has expired. Please log in again and retry."
 msgstr "Su sesión ha expirado. Por favor, ingrese de nuevo y vuelva a intentarlo."
