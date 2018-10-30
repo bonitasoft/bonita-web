@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -131,25 +132,40 @@ public class PageServlet extends HttpServlet {
 
     protected void renderThemeResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, String resourcePath)
             throws BonitaException, CreationException, IllegalAccessException, IOException, ServletException {
-        String referer =  request.getHeader(HttpHeaders.REFERER);
-        if (referer != null) {
-            String appToken = parseReferer(referer);
-            if(appToken!=null) {
-                // Try to get requested resource from the current Living application theme
-                Long themeId = getThemeId(apiSession, appToken);
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, themeId, resourcePath), apiSession);
+        
+        String appToken = request.getParameter(APPLICATION_PARAM);
+        if (appToken != null) {
+            renderThemeResource(request, response, apiSession, resourcePath, appToken);
+        } else {
+            String appTokenFromReferer = getAppFromReferer(request);
+            if (appTokenFromReferer != null) {
+                if (resourcePath.endsWith(".css")) {
+                    if (LOGGER.isLoggable(Level.FINE)) {
+                        LOGGER.log(Level.FINE, "App parameter retrieved from the referer. Redirecting the request to get it in the URL for resource " + resourcePath);
+                    }
+                    String queryString = StringUtils.isEmpty(request.getQueryString()) ? "" : (request.getQueryString() + "&");
+                    response.sendRedirect("?" + queryString + APPLICATION_PARAM + "=" + appTokenFromReferer);
+                } else {
+                    renderThemeResource(request, response, apiSession, resourcePath, appTokenFromReferer);
+                }
             } else {
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, "Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
+                }
                 // Try to get requested resource from portal theme
                 request.getRequestDispatcher(THEME_PATH_SEPARATOR + "/" + resourcePath).forward(request, response);
-            }
-        } else {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Unable tor retrieve app parameter. Request referer is null.");
             }
         }
     }
 
-    private String getResourcePath(final String[] pathInfoSegments) {
+    protected void renderThemeResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, String resourcePath,
+            String appToken) throws BonitaException, CreationException, IllegalAccessException, IOException {
+        // Try to get requested resource from the current Living application theme
+        Long themeId = getThemeId(apiSession, appToken);
+        resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, themeId, resourcePath), apiSession);
+    }
+
+    protected String getResourcePath(final String[] pathInfoSegments) {
         String resourcePath = null;
         if (pathInfoSegments.length > 1 && !pathInfoSegments[1].isEmpty()) {
             resourcePath = pathInfoSegments[1];
@@ -157,19 +173,24 @@ public class PageServlet extends HttpServlet {
         return resourcePath;
     }
 
-    private String parseReferer(String referer){
-        List<NameValuePair> paramList = null;
-        try {
-            paramList = URLEncodedUtils.parse(new URI(referer), "UTF-8");
-        } catch (URISyntaxException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Unable tor retrieve app parameter. Bad request referer: " + e.getMessage());
+    protected String getAppFromReferer(final HttpServletRequest request) {
+        String referer =  request.getHeader(HttpHeaders.REFERER);
+        if (referer != null) {
+            List<NameValuePair> paramList = null;
+            try {
+                paramList = URLEncodedUtils.parse(new URI(referer), "UTF-8");
+            } catch (URISyntaxException e) {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "Unable tor retrieve app parameter. Bad request referer: " + e.getMessage());
+                }
             }
-        }
-        for (NameValuePair param: paramList) {
-            if(APPLICATION_PARAM.equalsIgnoreCase(param.getName())){
-                return param.getValue();
+            for (NameValuePair param: paramList) {
+                if(APPLICATION_PARAM.equalsIgnoreCase(param.getName())){
+                    return param.getValue();
+                }
             }
+        } else if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, "Unable tor retrieve app parameter. Request referer is null.");
         }
         return null;
     }
