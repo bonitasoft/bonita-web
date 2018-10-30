@@ -236,6 +236,8 @@ public class PageServletTest {
     @Test
     public void should_forward_when_THEME_call_and_no_app_in_refered() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+        when(hsRequest.getParameter("app")).thenReturn(null);
+        when(pageServlet.getAppFromReferer(hsRequest)).thenReturn(null);
 
         pageServlet.service(hsRequest, hsResponse);
 
@@ -243,9 +245,9 @@ public class PageServletTest {
     }
     
     @Test
-    public void should_display_theme_resource() throws Exception {
+    public void should_display_theme_resource_with_app_param() throws Exception {
         when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
-        when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/content/?app=myApp");
+        when(hsRequest.getParameter("app")).thenReturn("myApp");
         doReturn(12L).when(pageServlet).getThemeId(apiSession, "myApp");
         
         final PageResourceProviderImpl pageResourceProvider = mock(PageResourceProviderImpl.class);
@@ -256,6 +258,38 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+    }
+    
+    @Test
+    public void should_redirect_theme_resource_wihout_app_param() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+        when(hsRequest.getParameter("app")).thenReturn(null);
+        when(hsRequest.getQueryString()).thenReturn(null);
+        when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/content/?app=myApp");
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse, times(1)).sendRedirect("?app=myApp");
+    }
+    
+    @Test
+    public void should_not_redirect_theme_resource_wihout_app_param_for_images() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/icon.png");
+        when(hsRequest.getParameter("app")).thenReturn(null);
+        when(hsRequest.getQueryString()).thenReturn(null);
+        when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/theme/theme.css?app=myApp");
+        doReturn(12L).when(pageServlet).getThemeId(apiSession, "myApp");
+        
+        final PageResourceProviderImpl pageResourceProvider = mock(PageResourceProviderImpl.class);
+        final File resourceFile = mock(File.class);
+        when(pageResourceProvider.getResourceAsFile("resources" + File.separator + "icon.png")).thenReturn(resourceFile);
+        when(pageRenderer.getPageResourceProvider(12L, apiSession)).thenReturn(pageResourceProvider);
+        when(bonitaHomeFolderAccessor.isInFolder(resourceFile, null)).thenReturn(true);
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse, never()).sendRedirect("?app=myApp");
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
     }
 
