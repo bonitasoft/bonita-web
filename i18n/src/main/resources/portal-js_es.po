@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2018-10-28 03:01\n"
+"PO-Revision-Date: 2018-10-30 03:03\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -497,7 +497,7 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "dd/MM/yyyy HH:mm"
 
 msgid "MMM DD LT"
-msgstr ""
+msgstr "DD MMM LT"
 
 msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
 msgstr "Asegúrese de que todos los artefactos instalados en la plataforma son compatibles con el nuevo BDM."
