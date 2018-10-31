@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2018-10-28 03:20\n"
+"PO-Revision-Date: 2018-10-30 03:24\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -497,7 +497,7 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "yyyy/MM/dd HH:mm"
 
 msgid "MMM DD LT"
-msgstr ""
+msgstr "MMM Do LT"
 
 msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
 msgstr ""
