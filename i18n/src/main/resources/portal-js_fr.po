@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2018-10-30 03:00\n"
+"PO-Revision-Date: 2018-11-02 02:59\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -120,7 +120,7 @@ msgid "Available tasks"
 msgstr "Tâches disponibles"
 
 msgid "BDM access control file can now be installed."
-msgstr "Le fichier de contrôle d’accès au BDM peut maintenant être installé."
+msgstr "Le fichier de contrôle d’accès aux données métier peut maintenant être installé."
 
 msgid "BDM file"
 msgstr "Fichier BDM"
@@ -129,7 +129,7 @@ msgid "BDM has not been uploaded. System was not able to upload the provided BDM
 msgstr "Le Business Data Model n’a pas été mis à jour. Le système n’était pas en mesure de télécharger le fichier fourni pour des raisons techniques. Vous pouvez réessayer plus tard."
 
 msgid "BDM successfully updated."
-msgstr "BDM mis à jour avec succès."
+msgstr "Le Modèle de Données Métier a été mis à jour avec succès."
 
 msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
 msgstr "Les services BPM doivent être suspendus. Aller dans menu « BPM Services »."
@@ -156,7 +156,7 @@ msgid "Business card has not been updated. Please retry later or contact an admi
 msgstr "La carte de visite n’a pas été mise à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Business card successfully updated"
-msgstr "La carte de visite a été mise à jour"
+msgstr "La carte de visite a été mise à jour avec succès"
 
 msgid "Can't import page or form to the process"
 msgstr "Impossible d'importer la page ou le formulaire dans le processus"
@@ -528,10 +528,10 @@ msgid "Membership has not been removed. Please retry later or contact an adminis
 msgstr "L'adhésion n'a pas été supprimée. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Membership successfully added"
-msgstr "Adhésion ajoutée avec succès"
+msgstr "L'adhésion a été ajoutée avec succès"
 
 msgid "Membership successfully removed"
-msgstr "Adhésion supprimée avec succès"
+msgstr "L'adhésion a été supprimée avec succès"
 
 msgid "Memberships"
 msgstr "Adhésions"
@@ -654,7 +654,7 @@ msgid "Password has not been updated. Please retry later or contact an administr
 msgstr "Le mot de passe n’a pas été mis à jour. Veuillez réessayer ultérieurement ou contacter un administrateur"
 
 msgid "Password successfully updated"
-msgstr "Mot de passe mis à jour avec succès"
+msgstr "Le mot de passe a été mis à jour avec succès"
 
 msgid "Passwords don't match"
 msgstr "Les mots de passe ne correspondent pas"
@@ -1065,7 +1065,7 @@ msgid "With failures"
 msgstr "Avec erreurs"
 
 msgid "You are about to export the descriptor of the application"
-msgstr "Vous êtes sur le point d'exporter le descripteur de l'application"
+msgstr "Vous allez exporter le descripteur de l'application"
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Vous pouvez créer des informations spécifiques dans Bonita Studio :"
