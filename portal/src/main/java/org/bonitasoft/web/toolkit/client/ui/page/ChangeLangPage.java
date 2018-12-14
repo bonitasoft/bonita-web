@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
+import org.bonitasoft.web.toolkit.client.Session;
 import org.bonitasoft.web.toolkit.client.ViewController;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
@@ -39,6 +40,9 @@ import org.bonitasoft.web.toolkit.client.ui.component.form.FormFiller;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Option;
 import org.bonitasoft.web.toolkit.client.ui.component.form.entry.Select;
 import org.bonitasoft.web.toolkit.client.ui.utils.I18n;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 
 /**
  * @author Séverin Moussel
@@ -102,7 +106,16 @@ public class ChangeLangPage extends Page {
         protected void setData(final String json, final Map<String, String> headers) {
             List<I18nLocaleItem> items = new JSonItemReader().getItems(json, new I18nLocaleDefinition());
             List<Option> options = buildSelectOptions(items);
-            ((Select) this.target.getEntry(new JsId("lang"))).refreshOptions(options);
+            Select select = ((Select) this.target.getEntry(new JsId("lang")));
+            select.refreshOptions(options);
+            String lang = Session.getParameter(ClientApplicationURL.ATTRIBUTE_LANG);
+            if (lang != null) {
+                try {
+                   select.setValue(lang);
+                } catch (Exception e) {
+                   GWT.log("No locale " + lang + " among the supported locales.");
+                }
+            }
         }
 
         private List<Option> buildSelectOptions(List<I18nLocaleItem> items) {
