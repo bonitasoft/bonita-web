@@ -253,7 +253,7 @@ public class ClientApplicationURL {
 
         Session.addParameter(ATTRIBUTE_LANG, lang.toString());
         ParametersStorageWithCookie.addParameter(ATTRIBUTE_LANG, lang.toString());
-        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString());
+        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString(), null, null, "/", false);
         AbstractI18n.setDefaultLocale(lang);
 
         if (refresh) {
