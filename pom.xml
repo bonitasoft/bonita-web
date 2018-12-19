@@ -22,7 +22,6 @@
         <gwtVersion>${gwt.version}</gwtVersion>
         <wro4j.version>1.7.0</wro4j.version>
         <assertj.version>1.5.0</assertj.version>
-        <powermock.version>1.6.6</powermock.version>
         <restlet-version>2.3.9</restlet-version>
         <jackson-mapper-asl-version>1.9.13</jackson-mapper-asl-version>
         <jackson-ext-modules-version>2.9.0</jackson-ext-modules-version>
@@ -223,24 +222,6 @@
                 <version>1.3</version>
             </dependency>
             <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <version>${powermock.version}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>junit</artifactId>
-                        <groupId>junit</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito</artifactId>
-                <version>${powermock.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
@@ -250,7 +231,7 @@
             <dependency>
                 <groupId>com.google.gwt.gwtmockito</groupId>
                 <artifactId>gwtmockito</artifactId>
-                <version>1.1.6</version>
+                <version>1.1.8</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
