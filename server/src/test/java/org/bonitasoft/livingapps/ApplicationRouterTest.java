@@ -2,6 +2,7 @@ package org.bonitasoft.livingapps;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -183,6 +184,18 @@ public class ApplicationRouterTest {
         verify(hsResponse).sendError(HttpServletResponse.SC_NOT_FOUND, "No profile mapped to living application");
         verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
+    
+    @Test
+    public void should_not_authorize_API_requests_to_other_paths() throws Exception {
+        accessAuthorizedPage("HumanResources", "API");
+        String unauthorizedPath = "/API/living/../../WEB-INF/web.xml";
+        given(hsRequest.getPathInfo()).willReturn("/HumanResources" + unauthorizedPath);
+
+        applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsRequest, never()).getRequestDispatcher(anyString());
+    }
 
     private void accessAuthorizedPage(final String applicationToken, final String pageToken) throws Exception {
         accessPage(applicationToken, pageToken, true, true);
@@ -204,5 +217,4 @@ public class ApplicationRouterTest {
         given(hsRequest.getRequestURI()).willReturn("/bonita/apps/" + applicationToken + "/" + pageToken + "/");
         given(hsRequest.getPathInfo()).willReturn("/" + applicationToken + "/" + pageToken + "/");
     }
-
 }
