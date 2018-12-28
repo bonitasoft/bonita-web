@@ -87,7 +87,8 @@ public class PageServlet extends HttpServlet {
         if (!pathInfo.contains(RESOURCE_PATH_SEPARATOR + "/") && pathInfo.indexOf(API_PATH_SEPARATOR + "/") > 0) {
             //Support relative calls to the REST API from the forms using ../API/
             final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
-            request.getRequestDispatcher(apiPath).forward(request, response);
+            //security check against directory traversal attack
+            customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, API_PATH_SEPARATOR, apiPath);
         } else{
             super.service(request, response);
         }
@@ -149,11 +150,13 @@ public class PageServlet extends HttpServlet {
                     renderThemeResource(request, response, apiSession, resourcePath, appTokenFromReferer);
                 }
             } else {
+                // Try to get requested resource from portal theme
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, "Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
                 }
-                // Try to get requested resource from portal theme
-                request.getRequestDispatcher(THEME_PATH_SEPARATOR + "/" + resourcePath).forward(request, response);
+                String themePath = THEME_PATH_SEPARATOR + "/" + resourcePath;
+                //security check against directory traversal attack
+                customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, THEME_PATH_SEPARATOR, themePath);
             }
         }
     }

@@ -18,13 +18,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.page.*;
+import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
+import org.bonitasoft.console.common.server.page.CustomPageService;
+import org.bonitasoft.console.common.server.page.GetUserRightsHelper;
+import org.bonitasoft.console.common.server.page.PageRenderer;
+import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -52,6 +58,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(LivingApplicationPageServlet.class.getName());
+    
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -67,7 +74,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
         if (isValidPathForToken(API_PATH_SEPARATOR, pathSegments)) {
             //Support relative calls to the REST API from the forms using ../API/
             final String apiPath = pathInfo.substring(pathInfo.indexOf(API_PATH_SEPARATOR + "/"));
-            request.getRequestDispatcher(apiPath).forward(request, response);
+            //security check against directory traversal attack
+            customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, API_PATH_SEPARATOR, apiPath);
         } else {
             super.service(request, response);
         }
@@ -121,8 +129,9 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 }
             } else if (isValidPathForToken(THEME_PATH_SEPARATOR, pathSegments)) {
                 //Support relative calls to the THEME from the application page using ../theme/
-                final String themePath = pathInfo.substring(pathInfo.indexOf(THEME_PATH_SEPARATOR + "/"));
-                request.getRequestDispatcher("/apps/" + appToken + themePath).forward(request, response);
+                final String themeResourcePath = pathInfo.substring(pathInfo.indexOf(THEME_PATH_SEPARATOR + "/"));
+                String appThemeResourcePrefix = "/apps/" + appToken;
+                customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, appThemeResourcePrefix + THEME_PATH_SEPARATOR + "/", appThemeResourcePrefix + themeResourcePath);
             } else {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");

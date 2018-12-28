@@ -16,15 +16,19 @@ package org.bonitasoft.livingapps;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
-import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
@@ -72,9 +76,6 @@ public class LivingApplicationPageServletTest {
 
     @Mock
     BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
-
-    @Mock
-    CustomPageRequestModifier customPageRequestModifier;
 
     @Mock
     ApplicationAPI applicationAPI;
@@ -131,11 +132,16 @@ public class LivingApplicationPageServletTest {
 
     @Test
     public void should_redirect_to_valide_url_on_missing_slash() throws Exception {
+        String targetURL = "/bonita/apps/AppToken/pageToken/content/";
+        doReturn(targetURL).when(hsResponse).encodeRedirectURL(targetURL);
+        hsRequest.setContextPath("/bonita");
+        hsRequest.setServletPath("/apps");
         hsRequest.setPathInfo("/AppToken/pageToken/content");
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(customPageRequestModifier).redirectToValidPageUrl(hsRequest, hsResponse);
+        verify(hsResponse).encodeRedirectURL(targetURL);
+        verify(hsResponse).sendRedirect(targetURL);
     }
 
     @Test
@@ -212,6 +218,36 @@ public class LivingApplicationPageServletTest {
         servlet.service(hsRequest, hsResponse);
 
         verify(servlet, never()).doGet(hsRequest, hsResponse);
+    }
+    
+    @Test
+    public void should_not_authorize_API_requests_to_other_paths() throws Exception {
+        String unauthorizedPath = "/API/living/../../WEB-INF/web.xml";
+        hsRequest.setPathInfo("/AppToken/htmlexample" + unauthorizedPath);
+        given(resourceRenderer.getPathSegments("/AppToken/htmlexample" + unauthorizedPath)).willReturn(
+                Arrays.asList("AppToken", "htmlexample", "API", "living", "..", "..", "WEB-INF", "web.xml"));
+
+        servlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(servlet, never()).doGet(hsRequest, hsResponse);
+    }
+    
+    @Test
+    public void should_not_authorize_theme_requests_to_other_paths() throws Exception {
+        String unauthorizedPath = "/theme/../WEB-INF/web.xml";
+        hsRequest.setPathInfo("/AppToken/htmlexample" + unauthorizedPath);
+        given(resourceRenderer.getPathSegments("/AppToken/htmlexample" + unauthorizedPath)).willReturn(
+                Arrays.asList("AppToken", "htmlexample", "theme", "..", "WEB-INF", "web.xml"));
+        
+        doReturn(applicationPage).when(applicationAPI).getApplicationPage("AppToken", "htmlexample");
+        doReturn(2L).when(applicationPage).getPageId();
+        doReturn(page).when(pageAPI).getPage(2L);
+        doReturn("customPage_" + "htmlexample").when(page).getName();
+
+        servlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path /apps/AppToken" + unauthorizedPath);
     }
 
 }
