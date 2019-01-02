@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
@@ -27,6 +28,8 @@ public class ApplicationRouter {
     private final ApplicationModelFactory applicationModelFactory;
 
     protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
+
+    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected final String THEME_TOKEN = "theme";
 
@@ -48,8 +51,9 @@ public class ApplicationRouter {
         }
         if ("API".equals(parsedRequest.getPageToken())) {
             //Support relative calls to the REST API from the application page using ../API/
-            hsRequest.getRequestDispatcher("/" + getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(), parsedRequest.getApplicationName())).forward(
-                    hsRequest, hsResponse);
+            String apiPath = "/" + getResourcePathWithoutApplicationToken(hsRequest.getPathInfo(), parsedRequest.getApplicationName());
+            //security check against directory traversal attack
+            customPageRequestModifier.forwardIfRequestIsAuthorized(hsRequest, hsResponse, "/API", apiPath);
         } else if ("GET".equals(hsRequest.getMethod())) {
             displayPageOrResource(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor, parsedRequest, pathSegments);
         } else {

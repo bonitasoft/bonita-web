@@ -235,7 +235,7 @@ public class PageServletTest {
 
     @Test
     public void should_forward_when_THEME_call_and_no_app_in_refered() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+        when(hsRequest.getPathInfo()).thenReturn("/process/Test/1.0/theme/theme.css");
         when(hsRequest.getParameter("app")).thenReturn(null);
         when(pageServlet.getAppFromReferer(hsRequest)).thenReturn(null);
 
@@ -246,7 +246,7 @@ public class PageServletTest {
     
     @Test
     public void should_display_theme_resource_with_app_param() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/theme.css");
+        when(hsRequest.getPathInfo()).thenReturn("/process/Test/1.0/theme/theme.css");
         when(hsRequest.getParameter("app")).thenReturn("myApp");
         doReturn(12L).when(pageServlet).getThemeId(apiSession, "myApp");
         
@@ -275,7 +275,7 @@ public class PageServletTest {
     
     @Test
     public void should_not_redirect_theme_resource_wihout_app_param_for_images() throws Exception {
-        when(hsRequest.getPathInfo()).thenReturn("/resource/process/Test/1.0/theme/icon.png");
+        when(hsRequest.getPathInfo()).thenReturn("/process/Test/1.0/theme/icon.png");
         when(hsRequest.getParameter("app")).thenReturn(null);
         when(hsRequest.getQueryString()).thenReturn(null);
         when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/theme/theme.css?app=myApp");
@@ -291,6 +291,32 @@ public class PageServletTest {
 
         verify(hsResponse, never()).sendRedirect("?app=myApp");
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+    }
+    
+    @Test
+    public void should_not_authorize_API_requests_to_other_paths() throws Exception {
+        String unauthorizedPath = "/API/living/../../WEB-INF/web.xml";
+        when(hsRequest.getPathInfo()).thenReturn("/process/Test/1.0" + unauthorizedPath);
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsRequest, never()).getRequestDispatcher(anyString());
+    }
+    
+    @Test
+    public void should_not_authorize_theme_requests_to_other_paths() throws Exception {
+        when(hsRequest.getParameter("app")).thenReturn(null);
+        when(hsRequest.getQueryString()).thenReturn(null);
+        when(hsRequest.getHeader(HttpHeaders.REFERER)).thenReturn("/bonita/resource/process/Test/1.0/content/");
+        
+        String unauthorizedPath = "/theme/../WEB-INF/web.xml";
+        when(hsRequest.getPathInfo()).thenReturn("/process/Test/1.0" + unauthorizedPath);
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsRequest, never()).getRequestDispatcher(anyString());
     }
 
 }
