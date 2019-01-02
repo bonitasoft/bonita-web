@@ -64,10 +64,10 @@ public class ClientApplicationURL {
     public static final String TOKEN_ADD = "add";
 
     public static final String TOKEN_DELETE = "delete";
+    
+    public static final String ATTRIBUTE_LANG = UrlOption.LANG;
 
     protected static final String ATTRIBUTE_TOKEN = UrlOption.PAGE;
-
-    protected static final String ATTRIBUTE_LANG = UrlOption.LANG;
 
     protected static final String ATTRIBUTE_PROFILE = UrlOption.PROFILE;
 
@@ -253,7 +253,7 @@ public class ClientApplicationURL {
 
         Session.addParameter(ATTRIBUTE_LANG, lang.toString());
         ParametersStorageWithCookie.addParameter(ATTRIBUTE_LANG, lang.toString());
-        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString());
+        Cookies.setCookie(FORM_LOCALE_COOKIE_NAME, lang.toString(), null, null, "/", false);
         AbstractI18n.setDefaultLocale(lang);
 
         if (refresh) {

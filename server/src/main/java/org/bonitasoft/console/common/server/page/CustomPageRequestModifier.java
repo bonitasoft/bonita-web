@@ -14,16 +14,26 @@
 
 package org.bonitasoft.console.common.server.page;
 
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.apache.commons.io.FilenameUtils;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 /**
  * @author Julien Mege
  */
 public class CustomPageRequestModifier {
+    
+    /**
+     * Logger
+     */
+    private static Logger LOGGER = Logger.getLogger(CustomPageRequestModifier.class.getName());
 
     public void redirectToValidPageUrl(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
@@ -37,4 +47,15 @@ public class CustomPageRequestModifier {
         response.sendRedirect(response.encodeRedirectURL(taskURLBuilder.toString()));
     }
 
+    public void forwardIfRequestIsAuthorized(final HttpServletRequest request, final HttpServletResponse response, final String apiPathShouldStartWith, final String apiPath) throws IOException, ServletException {
+        if (!FilenameUtils.normalize(apiPath).startsWith(apiPathShouldStartWith)) {
+            final String message = "attempt to access unauthorized path " + apiPath;
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, message);
+            }
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
+        } else {
+            request.getRequestDispatcher(apiPath).forward(request, response);
+        }
+    }
 }
