@@ -15,6 +15,8 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +24,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FilenameUtils;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 /**
@@ -48,14 +49,22 @@ public class CustomPageRequestModifier {
     }
 
     public void forwardIfRequestIsAuthorized(final HttpServletRequest request, final HttpServletResponse response, final String apiPathShouldStartWith, final String apiPath) throws IOException, ServletException {
-        if (!FilenameUtils.normalize(apiPath).startsWith(apiPathShouldStartWith)) {
-            final String message = "attempt to access unauthorized path " + apiPath;
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, message);
+        try {
+            URI uri = new URI(apiPath);
+            if (!uri.normalize().toString().startsWith(apiPathShouldStartWith)) {
+                final String message = "attempt to access unauthorized path " + apiPath;
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, message);
+                }
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
+            } else {
+                request.getRequestDispatcher(apiPath).forward(request, response);
             }
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
-        } else {
-            request.getRequestDispatcher(apiPath).forward(request, response);
+        }catch (URISyntaxException e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, e.getMessage());
+            }
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 }
