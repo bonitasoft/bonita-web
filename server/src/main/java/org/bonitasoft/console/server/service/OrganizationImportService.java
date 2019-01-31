@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +34,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.identity.InvalidOrganizationFileFormatException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 
@@ -42,6 +45,11 @@ public class OrganizationImportService extends ConsoleService {
 
     public final static String TOKEN = "/organization/import";
 
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(OrganizationImportService.class.getName());
+    
     /**
      * organization data file
      */
@@ -55,12 +63,23 @@ public class OrganizationImportService extends ConsoleService {
             getIdentityAPI().importOrganization(new String(organizationContent));
         } catch (final InvalidSessionException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            throw new ServiceException(TOKEN, _("Session expired. Please log in again."), e);
-        } catch (final IOException e) {
-            throw new ServiceException(TOKEN, e);
+            String message = _("Session expired. Please log in again.");
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, message, e);
+            }
+            throw new ServiceException(TOKEN, message, e);
+        } catch (InvalidOrganizationFileFormatException e) {
+            getHttpResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            String message = _("Can't import organization. Please check that your file is well-formed.");
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, message, e);
+            }
+            throw new ServiceException(TOKEN, message, e);
         } catch (final Exception e) {
-            throw new ServiceException(TOKEN, _("Can't import organization. Please check that your file is well-formed",
-                    getLocale()), e);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            }
+            throw new ServiceException(TOKEN, _("Can't import organization"), e);
         }
         return "";
     }
