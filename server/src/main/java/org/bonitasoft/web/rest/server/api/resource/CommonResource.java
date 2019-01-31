@@ -175,33 +175,28 @@ public class CommonResource extends ServerResource {
     protected void doCatch(final Throwable throwable) {
         final Throwable t = throwable.getCause() != null ? throwable.getCause() : throwable;
         // Don't need to log the wrapping exception, the cause itself is more interesting:
-        super.doCatch(t);
 
-        final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
         final ErrorMessage errorMessage = new ErrorMessage(t);
-
-        getResponse().setStatus(getStatus(), message);
-
+        final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "***" + message);
+        }
+        Status status;
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "***" + message);
-            }
-            getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+            status = Status.CLIENT_ERROR_BAD_REQUEST;
         } else if (t instanceof FileNotFoundException) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "***" + message);
-            }
-            getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+            status = Status.CLIENT_ERROR_NOT_FOUND;
             errorMessage.setMessage("File Not Found");
         } else if (t instanceof NotFoundException) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "***" + message);
-            }
-            getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
+            status = Status.CLIENT_ERROR_NOT_FOUND;
         } else {
-            LOGGER.log(Level.SEVERE, t.getMessage(), t);
+            super.doCatch(t);
+            status = getStatus();
         }
-        getResponse().setEntity(errorMessage.toEntity());
+        if (getResponse() != null) {
+            getResponse().setStatus(status, message);
+            getResponse().setEntity(errorMessage.toEntity());
+        }
     }
 
     @Override
