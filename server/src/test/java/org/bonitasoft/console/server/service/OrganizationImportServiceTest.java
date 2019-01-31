@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
+import org.bonitasoft.engine.identity.InvalidOrganizationFileFormatException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.ServiceException;
@@ -73,4 +74,21 @@ public class OrganizationImportServiceTest {
         }
     }
 
+    @Test(expected=ServiceException.class)
+    public void should_genrate_400_when_file_is_invalid() throws Exception {
+
+        final OrganizationImportService organizationImportService = spy(new OrganizationImportService());
+        
+        doReturn(httpServletResponse).when(organizationImportService).getHttpResponse();
+        doReturn(new byte[0]).when(organizationImportService).getOrganizationContent(any(BonitaHomeFolderAccessor.class));
+        doReturn(1L).when(organizationImportService).getTenantId();
+        doReturn(identityAPI).when(organizationImportService).getIdentityAPI();
+        doThrow(new InvalidOrganizationFileFormatException("invalid format")).when(identityAPI).importOrganization(anyString());
+
+        try {
+            organizationImportService.run();
+        } finally {
+            verify(httpServletResponse).setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
 }
