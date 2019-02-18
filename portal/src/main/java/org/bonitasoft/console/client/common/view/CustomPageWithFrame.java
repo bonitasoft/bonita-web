@@ -45,6 +45,8 @@ public class CustomPageWithFrame extends Page {
     //For Technical user menu, don't forget to modify APISession and ConsoleFactoryClient
     public static final String TENANT_STATUS = "custompage_tenantStatusBonita";
 
+    public static final String IMPORT_EXPORT_ORGANIZATION = "custompage_importExportOrganizationBonita";
+
     private final String pageName;
 
     private static Map<String, List<String>> privilegesMap = new HashMap<String, List<String>>();
