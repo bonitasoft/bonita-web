@@ -43,7 +43,7 @@ public class PageLister {
         pages.add(new BonitaPageItem("userlistingadmin", _("Manage users"), _("Manage users"), _("Users")));
         pages.add(new BonitaPageItem("grouplistingadmin", _("Manage groups"), _("Manage groups"), _("Groups")));
         pages.add(new BonitaPageItem("rolelistingadmin", _("Manage roles"), _("Manage roles"), _("Roles")));
-        pages.add(new BonitaPageItem("importexportorganization", _("Import/export organization"), _("Import/export organization"), _("Import/Export")));
+        pages.add(new BonitaPageItem("custompage_importExportOrganizationBonita", _("Import/export organization"), _("Import/export organization"), _("Install/Export")));
         pages.add(new BonitaPageItem("profilelisting", _("User privilege settings"),  _("User privilege settings"), _("Profiles")));
         pages.add(new BonitaPageItem("reportlistingadminext", _("Analytics"), _("Analytics"), _("Analytics")));
         pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), _("Manage Look and Feel"), _("Look and Feel")));

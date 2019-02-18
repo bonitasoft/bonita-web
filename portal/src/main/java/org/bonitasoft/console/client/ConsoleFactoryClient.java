@@ -90,6 +90,8 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
                 StartProcessFormPage.TOKEN, ArchivedHumanTaskQuickDetailsPage.TOKEN, HumanTaskQuickDetailsPage.TOKEN,
                 PerformTaskPage.TOKEN,TasksListingPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.TOKEN,
                 HumanTaskMoreDetailsPage.TOKEN);
+
+        CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION);
         
         CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.TENANT_STATUS);
     }
@@ -142,11 +144,6 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
             // return new ListGroupPage();
         } else if (DisplayCaseFormPage.TOKEN.equals(token) && isUserAuthorized(DisplayCaseFormPage.PRIVILEGES, getCurrentUserAccessRights())) {
             return new DisplayCaseFormPage();
-
-            // Import export organization page
-        } else if (OrganizationImportAndExportPage.TOKEN.equals(token)
-                && isUserAuthorized(OrganizationImportAndExportPage.PRIVILEGES, getCurrentUserAccessRights())) {
-            return new OrganizationImportAndExportPage();
 
             // Manage Users pages
         } else if (UserListingAdminPage.TOKEN.equals(token) && isUserAuthorized(UserListingAdminPage.PRIVILEGES, getCurrentUserAccessRights())) {
