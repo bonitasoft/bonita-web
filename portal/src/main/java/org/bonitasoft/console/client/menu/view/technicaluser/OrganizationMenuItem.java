@@ -40,7 +40,7 @@ public class OrganizationMenuItem extends MenuFolder {
         addMenuItem(new MenuLink(new JsId(GroupListingAdminPage.TOKEN), _("Groups"), _("Show the group list"), GroupListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(new JsId(RoleListingPage.TOKEN), _("Roles"), _("Show the role list"), RoleListingPage.TOKEN));
         addMenuItem(new MenuLink(new JsId(CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION), _("Install / Export"),
-                _("Install or export data"), OrganizationImportAndExportPage.TOKEN));
+                _("Install or export data"), CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION));
         addMenuItem(new MenuLink(new JsId(ProfileListingPage.TOKEN), _("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
