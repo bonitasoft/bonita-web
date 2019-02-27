@@ -18,7 +18,6 @@ package org.bonitasoft.console.client.menu.view.technicaluser;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.role.RoleListingPage;
 import org.bonitasoft.console.client.admin.organization.users.view.UserListingAdminPage;
@@ -39,8 +38,8 @@ public class OrganizationMenuItem extends MenuFolder {
         addMenuItem(new MenuLink(new JsId(UserListingAdminPage.TOKEN), _("Users"), _("Show the user list"), UserListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(new JsId(GroupListingAdminPage.TOKEN), _("Groups"), _("Show the group list"), GroupListingAdminPage.TOKEN));
         addMenuItem(new MenuLink(new JsId(RoleListingPage.TOKEN), _("Roles"), _("Show the role list"), RoleListingPage.TOKEN));
-        addMenuItem(new MenuLink(new JsId(CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION), _("Install / Export"),
-                _("Install or export data"), CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION));
+        addMenuItem(new MenuLink(new JsId(CustomPageWithFrame.INSTALL_EXPORT_ORGANIZATION), _("Install / Export"),
+                _("Install or export data"), CustomPageWithFrame.INSTALL_EXPORT_ORGANIZATION));
         addMenuItem(new MenuLink(new JsId(ProfileListingPage.TOKEN), _("Profiles"), _("Show all profiles of portal"), ProfileListingPage.TOKEN));
     }
 
