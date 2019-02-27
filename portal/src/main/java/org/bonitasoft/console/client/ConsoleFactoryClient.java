@@ -12,7 +12,6 @@ import org.bonitasoft.console.client.admin.bpm.task.view.SelectUserAndAssignTask
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskListingAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskMoreDetailsAdminPage;
 import org.bonitasoft.console.client.admin.bpm.task.view.TaskQuickDetailsAdminPage;
-import org.bonitasoft.console.client.admin.organization.OrganizationImportAndExportPage;
 import org.bonitasoft.console.client.admin.organization.group.AddGroupPage;
 import org.bonitasoft.console.client.admin.organization.group.GroupListingAdminPage;
 import org.bonitasoft.console.client.admin.organization.group.GroupQuickDetailsAdminPage;
@@ -91,7 +90,7 @@ public class ConsoleFactoryClient extends ApplicationFactoryClient {
                 PerformTaskPage.TOKEN,TasksListingPage.TOKEN, ArchivedHumanTaskMoreDetailsPage.TOKEN,
                 HumanTaskMoreDetailsPage.TOKEN);
 
-        CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.IMPORT_EXPORT_ORGANIZATION);
+        CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.INSTALL_EXPORT_ORGANIZATION);
         
         CustomPageWithFrame.addTokenSupport(CustomPageWithFrame.TENANT_STATUS);
     }
