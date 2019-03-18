@@ -58,7 +58,6 @@ import groovy.lang.GroovyClassLoader;
  */
 public class CustomPageService {
 
-    private static final String PAGE_PROPERTIES = "page.properties";
     public static final String GET_SYSTEM_SESSION = "GET|system/session";
     public static final String GET_PORTAL_PROFILE = "GET|portal/profile";
     public static final String GET_IDENTITY_USER = "GET|identity/user";
@@ -75,7 +74,7 @@ public class CustomPageService {
 
     public static final String PAGE_INDEX_FILENAME = "index.html";
 
-    public static final String LASTUPDATE_FILENAME = ".lastupdate";
+    private static final String LASTUPDATE_FILENAME = ".lastupdate";
 
     private static final Map<String, GroovyClassLoader> PAGES_CLASSLOADERS = new HashMap<>();
 
@@ -357,14 +356,14 @@ public class CustomPageService {
         return permissions;
     }
 
-    Set<String> getCustomPagePermissions(final File file,
+    public Set<String> getCustomPagePermissions(final File file,
             final ResourcesPermissionsMapping resourcesPermissionsMapping,
             final boolean alsoReturnResourcesNotFound) {
         final PropertiesWithSet pageProperties = new PropertiesWithSet(file);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
-    void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
+    public void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
             final CompoundPermissionsMapping compoundPermissionsMapping,
             final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
@@ -393,9 +392,10 @@ public class CustomPageService {
 
     }
 
-    void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
+    public void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
             final PageResourceProvider pageResourceProvider,
             final APISession apiSession) throws IOException, BonitaException {
+        ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (final String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));
@@ -404,7 +404,7 @@ public class CustomPageService {
 
     private Map<String, String> getPermissionMapping(final PageResourceProvider pageResourceProvider) {
         Map<String, String> permissionsMapping;
-        final File pageProperties = pageResourceProvider.getResourceAsFile(PAGE_PROPERTIES);
+        final File pageProperties = pageResourceProvider.getResourceAsFile("page.properties");
         permissionsMapping = getApiExtensionResourcesPermissionsMapping(pageProperties);
         return permissionsMapping;
     }
@@ -436,25 +436,6 @@ public class CustomPageService {
         for (final String page : PAGES_CLASSLOADERS.keySet()) {
             closeClassloader(page);
         }
-    }
 
-    public void writePageToTemp(Page page, 
-            PageResourceProvider pageResourceProvider,
-            File unzipPageTempFolder,
-            ResourcesPermissionsMapping resourcesPermissionsMapping,
-            CompoundPermissionsMapping compoundPermissionsMapping, 
-            APISession session) throws IOException, BonitaException {
-        verifyPageClass(unzipPageTempFolder, session);
-        File pageDirectory = pageResourceProvider.getPageDirectory();
-        FileUtils.copyDirectory(unzipPageTempFolder, pageDirectory);
-        final File timestampFile = new File(pageResourceProvider.getPageDirectory(),LASTUPDATE_FILENAME);
-        long lastUpdateTimestamp = 0L;
-        if (page.getLastModificationDate() != null) {
-            lastUpdateTimestamp = page.getLastModificationDate().getTime();
-        }
-        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
-        Set<String> customPagePermissions = getCustomPagePermissions(new File(pageDirectory,PAGE_PROPERTIES), resourcesPermissionsMapping, false);
-        addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, session);
-        addPermissionsToCompoundPermissions(page.getName(), customPagePermissions, compoundPermissionsMapping, resourcesPermissionsMapping);
     }
 }
