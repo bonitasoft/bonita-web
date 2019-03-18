@@ -207,6 +207,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // Validate
         assertNotNull(addedPage);
+        assertTrue(new File("target/bonita-home/client/tenants/1/work/pages", addedPage.getUrlToken()).listFiles().length > 0);
     }
 
     @Test
@@ -219,7 +220,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(apiExtensionToBeAdded);
 
         //then
-        verify(customPageService).writePageToTemp(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
     }
 
     @Test(expected = APIException.class)
@@ -291,12 +292,17 @@ public class PageDatastoreTest extends APITestWithMock {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
+        final HashSet<String> resourcePermissions = new HashSet<>(Arrays.asList("Case Visualization", "Organization Visualization"));
+        doReturn(resourcePermissions).when(customPageService)
+                .getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
 
         // When
         pageDatastore.add(pageToBeAdded);
 
         // Then
-        verify(customPageService).writePageToTemp(any(Page.class), eq(null), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).getCustomPagePermissions(any(File.class), eq(resourcesPermissionsMapping), eq(false));
+        verify(customPageService).addPermissionsToCompoundPermissions(mockedPage.getName(), resourcePermissions, compoundPermissionsMapping,
+                resourcesPermissionsMapping);
     }
 
     @Test
@@ -354,7 +360,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // then
         verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
-        verify(customPageService).writePageToTemp(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
     }
 
     @Test(expected = APIForbiddenException.class)
