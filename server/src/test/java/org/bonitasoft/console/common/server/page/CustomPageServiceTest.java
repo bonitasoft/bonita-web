@@ -425,6 +425,7 @@ public class CustomPageServiceTest {
         customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
         verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
     }
@@ -443,6 +444,7 @@ public class CustomPageServiceTest {
         customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
 
         //then
+        verify(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
