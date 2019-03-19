@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-01 04:30+0000\n"
-"PO-Revision-Date: 2019-02-13 02:28\n"
+"POT-Creation-Date: 2019-02-28 05:23+0100\n"
+"PO-Revision-Date: 2019-03-19 02:58\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1169,15 +1169,6 @@ msgstr "Importer / Exporter"
 msgid "Import an existing organization"
 msgstr "Importer une organisation existante"
 
-msgid "Import or export data"
-msgstr "Importer ou exporter des données"
-
-msgid "Import/Export"
-msgstr "Importer/Exporter"
-
-msgid "Import/export organization"
-msgstr "Importer/exporter une organisation"
-
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "En cas de conflit, la priorité est donnée au fichier importé"
 
@@ -1190,8 +1181,20 @@ msgstr "Utilisateurs désactivés"
 msgid "Install"
 msgstr "Installer"
 
+msgid "Install / Export"
+msgstr ""
+
 msgid "Install a process"
 msgstr "Installer un processus"
+
+msgid "Install or export data"
+msgstr ""
+
+msgid "Install/Export"
+msgstr ""
+
+msgid "Install/export organization"
+msgstr ""
 
 msgid "Installed by"
 msgstr "Installé par"
