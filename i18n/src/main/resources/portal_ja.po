@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-01 04:30+0000\n"
-"PO-Revision-Date: 2019-02-13 02:32\n"
+"POT-Creation-Date: 2019-02-28 05:23+0100\n"
+"PO-Revision-Date: 2019-03-19 03:11\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1169,15 +1169,6 @@ msgstr "インポート/エクスポート"
 msgid "Import an existing organization"
 msgstr "既存の組織をインポートします。"
 
-msgid "Import or export data"
-msgstr "インポートまたはエクスポートするデータ"
-
-msgid "Import/Export"
-msgstr "インポート/エクスポート"
-
-msgid "Import/export organization"
-msgstr "組織をインポート/エクスポート"
-
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "マージ結合の場合、ファイルを優先します。"
 
@@ -1190,8 +1181,20 @@ msgstr "使用していない利用者"
 msgid "Install"
 msgstr "インストール"
 
+msgid "Install / Export"
+msgstr ""
+
 msgid "Install a process"
 msgstr "プロセスをインストール する"
+
+msgid "Install or export data"
+msgstr ""
+
+msgid "Install/Export"
+msgstr ""
+
+msgid "Install/export organization"
+msgstr ""
 
 msgid "Installed by"
 msgstr "インストールした人"
