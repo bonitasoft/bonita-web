@@ -117,9 +117,7 @@ public class ContractTypeConverter {
             long tenantId) {
         if (inputs != null) {
             deleteTemporaryFilesInternal((Serializable) inputs, tenantId);
-
         }
-
     }
 
     private void deleteTemporaryFilesInternal(Serializable inputValue,
@@ -133,7 +131,7 @@ public class ContractTypeConverter {
             }
         } else if (inputValue instanceof Map) {
             for (Map.Entry<String, Serializable> element : ((Map<String, Serializable>) inputValue).entrySet()) {
-                if (element.getKey().equals(FILE_TEMP_PATH)) {
+                if (element.getKey().equals(FILE_TEMP_PATH) && element.getValue() != null) {
                     String path = (String) element.getValue();
                     try {
                         deleteFile(bonitaHomeFolderAccessor.getTempFile(path, tenantId));
