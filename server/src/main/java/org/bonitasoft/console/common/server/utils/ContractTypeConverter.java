@@ -13,6 +13,8 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
+import static org.bonitasoft.engine.bpm.contract.InputDefinition.FILE_INPUT_ID;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -219,7 +221,8 @@ public class ContractTypeConverter {
                 final FileInputValue fileInputValue = new FileInputValue(
                         filename,
                         (String) mapOfValues.get(CONTENT_TYPE),
-                        retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH)));
+                        retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH)),
+                        (String) mapOfValues.get(FILE_INPUT_ID));
                 return fileInputValue;
             }
         }
