@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-28 05:23+0100\n"
-"PO-Revision-Date: 2019-03-19 02:58\n"
+"PO-Revision-Date: 2019-03-26 02:58\n"
 "Last-Translator: bonitasoft <adoption@bonitasoft.com>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -487,10 +487,10 @@ msgid "Can't import applications. An application '%token%' already exists"
 msgstr "L'application n'a pas pu être importée. L'URL '%token%' est déjà utilisée."
 
 msgid "Can't import organization"
-msgstr ""
+msgstr "Impossible d'importer l'organisation"
 
 msgid "Can't import organization. Please check that your file is well-formed."
-msgstr ""
+msgstr "Impossible d'importer l'organisation. Veuillez vérifier que votre fichier est correct."
 
 msgid "Can't parse json, non-well formed content"
 msgstr "Impossible de lire le json, le contenu n'est pas correctement structuré"
@@ -1182,19 +1182,19 @@ msgid "Install"
 msgstr "Installer"
 
 msgid "Install / Export"
-msgstr ""
+msgstr "Installer / Exporter"
 
 msgid "Install a process"
 msgstr "Installer un processus"
 
 msgid "Install or export data"
-msgstr ""
+msgstr "Installer ou exporter des données"
 
 msgid "Install/Export"
-msgstr ""
+msgstr "Installer / Exporter"
 
 msgid "Install/export organization"
-msgstr ""
+msgstr "Installer/exporter une organisation"
 
 msgid "Installed by"
 msgstr "Installé par"
