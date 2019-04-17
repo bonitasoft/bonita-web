@@ -15,16 +15,12 @@
 package org.bonitasoft.web.rest.server.datastore.page;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Random;
-import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -44,10 +40,8 @@ import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.exception.UpdatingWithInvalidPageTokenException;
 import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentException;
 import org.bonitasoft.engine.io.IOUtil;
-import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
-import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.page.PageSearchDescriptor;
 import org.bonitasoft.engine.page.PageUpdater;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
@@ -78,12 +72,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         implements DatastoreHasAdd<PageItem>, DatastoreHasUpdate<PageItem>,
         DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
-    private static final String INDEX_GROOVY = "Index.groovy";
-
-    private static final String INDEX_HTML = "index.html";
-
-    private static final String PAGE_PROPERTIES = "page.properties";
-
     /**
      * page files
      */
@@ -103,6 +91,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     private final BonitaHomeFolderAccessor tenantFolder;
 
+    private CustomPageContentValidator pageContentValidator;
+
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue,
             final PageAPI pageAPI,
             final CustomPageService customPageService,
@@ -116,6 +106,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         this.compoundPermissionsMapping = compoundPermissionsMapping;
         this.resourcesPermissionsMapping = resourcesPermissionsMapping;
         this.tenantFolder = tenantFolder;
+        this.pageContentValidator = new CustomPageContentValidator();
     }
 
     @Override
@@ -137,7 +128,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             final long tenantId = engineSession.getTenantId();
             final File zipFile = tenantFolder.getTempFile(filename, tenantId);
             final File unzipPageTempFolder = unzipContentFile(zipFile);
-            validateZipContent(unzipPageTempFolder);
+            pageContentValidator.validate(unzipPageTempFolder);
             final Page page = createEnginePage(pageItem, zipFile);
             final PageItem addedPage = convertEngineToConsoleItem(page);
 
@@ -166,51 +157,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         return unzipPageTempFolder;
     }
 
-    protected void validateZipContent(final File unzipPageFolder) throws InvalidPageZipContentException, IOException {
-        if (!areResourcesAvailable(unzipPageFolder)) {
-            throw new InvalidPageZipContentException(
-                    "index file (Index.groovy or index.html) or page.properties is missing.");
-        }
-    }
-
     protected boolean isPageTokenValid(final String urlToken) {
         return urlToken.matches(PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
     }
 
-    protected boolean areResourcesAvailable(final File unzipPageFolder) throws IOException {
-        final File[] pageFiles = unzipPageFolder.listFiles();
-        boolean indexOK = false;
-        boolean propertiesOK = false;
-        Properties pageProperties = null;
-        if (pageFiles != null) {
-            for (final File file : pageFiles) {
-                final String fileName = file.getName();
-                if (fileName.matches(INDEX_HTML) || fileName.matches(INDEX_GROOVY)) {
-                    indexOK = true;
-                }
-                if (fileName.matches(PAGE_PROPERTIES)) {
-                    pageProperties = new java.util.Properties();
-                    try (InputStream is = new FileInputStream(file)) {
-                        pageProperties.load(is);
-                    }
-                    propertiesOK = true;
-                }
-            }
-        }
-        if (!indexOK) {
-            if (pageProperties != null
-                    && Objects.equals(pageProperties.getProperty(CustomPageService.PROPERTY_CONTENT_TYPE),
-                            ContentType.API_EXTENSION)) {
-                indexOK = true;
-            }
-            final File indexInResources = new File(unzipPageFolder.getPath(),
-                    CustomPageService.RESOURCES_PROPERTY + File.separator + INDEX_HTML);
-            if (indexInResources.exists()) {
-                indexOK = true;
-            }
-        }
-        return indexOK && propertiesOK;
-    }
+   
 
     protected void deleteTempDirectory(final File unzipPage) {
         try {
@@ -381,7 +332,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     final long tenantId = engineSession.getTenantId();
                     zipFile = tenantFolder.getTempFile(filename, tenantId);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
-                    validateZipContent(unzipPageTempFolder);
+                    pageContentValidator.validate(unzipPageTempFolder);
                     pageUpdater.setContentName(originalFileName);
                     updatePageContent(id, zipFile, oldURLToken);
                     final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);

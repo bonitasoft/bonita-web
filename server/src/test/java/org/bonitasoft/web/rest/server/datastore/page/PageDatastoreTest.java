@@ -18,12 +18,18 @@ package org.bonitasoft.web.rest.server.datastore.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +41,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +54,6 @@ import org.bonitasoft.console.common.server.preferences.properties.ResourcesPerm
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
-import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.ContentType;
@@ -275,16 +279,6 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.delete(ids);
     }
 
-    @Test
-    public void zip_with_index_in_resources_should_be_valid() throws Exception {
-        final File zipFileResource = new File(getClass().getResource("/pageWithIndexInResources.zip").toURI());
-        UnzipUtil.unzip(zipFileResource, new File("target" + File.separator + "pageWithIndexInResources").getPath(), false);
-        final File unzipFolder = new File("target" + File.separator + "pageWithIndexInResources");
-
-        final boolean isValide = pageDatastore.areResourcesAvailable(unzipFolder);
-
-        assertTrue(isValide);
-    }
 
     @Test
     public void should_call_customPageService_for_custom_page_permissions_when_adding_a_page() throws Exception {
@@ -537,17 +531,6 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void should_IsPageTokenValid_returns_false_when_url_token_does_not_starts_with_custom_page_prefix() {
         assertThat(pageDatastore.isPageTokenValid("WrongStartString" + PageDatastore.PAGE_TOKEN_PREFIX + "suffixx")).isFalse();
-    }
-
-    @Test
-    public void testValidateZipContent() throws Exception {
-        doReturn(false).when(pageDatastore).areResourcesAvailable(any(File.class));
-        try {
-            pageDatastore.validateZipContent(mockedZipFile);
-        } catch (final Exception e) {
-            assertThat(e).isInstanceOf(InvalidPageZipContentException.class);
-            assertThat(e.getMessage()).isEqualTo("index file (Index.groovy or index.html) or page.properties is missing.");
-        }
     }
 
     @Test
