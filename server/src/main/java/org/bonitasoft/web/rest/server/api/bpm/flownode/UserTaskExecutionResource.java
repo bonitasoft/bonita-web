@@ -58,7 +58,7 @@ public class UserTaskExecutionResource extends CommonResource {
     public void executeTask(final Map<String, Serializable> inputs)
             throws UserTaskNotFoundException, FlowNodeExecutionException, FileNotFoundException, UpdateException {
         final String userIdParameter = getRequestParameter(USER_PARAM);
-        final long userId = userIdParameter != null ? Long.parseLong(userIdParameter) : 0;
+        final long userId = userIdParameter != null ? Long.parseLong(userIdParameter) : apiSession.getUserId();
         final long taskId = getTaskIdParameter();
         boolean assign = Boolean.parseBoolean(getRequestParameter(ASSIGN));
         try {
