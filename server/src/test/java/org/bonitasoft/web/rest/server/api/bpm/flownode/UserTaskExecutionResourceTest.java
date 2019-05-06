@@ -126,11 +126,12 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     public void should_assign_and_execute_a_task_with_given_inputs() throws Exception {
         final Map<String, Serializable> expectedComplexInput = aComplexInput();
         when(processAPI.getUserTaskContract(2)).thenReturn(contractDefinition);
-
+        when(apiSession.getUserId()).thenReturn(4L);
+        
         final Response response = request("/bpm/userTask/2/execution?assign=true").post(VALID_COMPLEX_POST_BODY);
 
         assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
-        verify(processAPI).assignAndExecuteUserTask(0, 2L, expectedComplexInput);
+        verify(processAPI).assignAndExecuteUserTask(4, 2L, expectedComplexInput);
     }
 
     @Test
