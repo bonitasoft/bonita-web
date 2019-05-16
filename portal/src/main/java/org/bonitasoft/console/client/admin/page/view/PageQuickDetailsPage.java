@@ -171,7 +171,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
         StringBuilder htmlBuilder = new StringBuilder();
         appendParagraph(htmlBuilder, _("A resource is imported as a zip archive containing a page.properties file and a resources folder."));
         appendParagraph(htmlBuilder,
-                _("The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."));
+                _("The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."));
         appendParagraph(htmlBuilder, _("The content type is defined in page.properties."));
         appendParagraph(htmlBuilder, _("If you create a resource with the UI designer, the exported zip automatically has the correct format."));
 
