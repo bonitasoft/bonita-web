@@ -150,8 +150,7 @@ public class PageQuickDetailsPage extends ItemQuickDetailsPage<PageItem> {
                 contentSection.addBody(
                         contentTypeParagraph(
                                 _("Theme"),
-                                _("Content type is 'theme'."),
-                                _("The index file must be present in the zip but is ignored, so can be empty.")));
+                                _("Content type is 'theme'.")));
 
             }
             if (ContentType.API_EXTENSION.equals(page.getContentType())) {
