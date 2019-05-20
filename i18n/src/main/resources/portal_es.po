@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-28 05:23+0100\n"
-"PO-Revision-Date: 2019-04-17 01:59\n"
+"POT-Creation-Date: 2019-05-17 05:25+0200\n"
+"PO-Revision-Date: 2019-05-20 01:29\n"
 "Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -486,10 +486,10 @@ msgid "Can't import applications. An application '%token%' already exists"
 msgstr "No se puede importar las aplicaciones. Ya existe una aplicación '%token%'"
 
 msgid "Can't import organization"
-msgstr ""
+msgstr "No se puede importar la organización"
 
 msgid "Can't import organization. Please check that your file is well-formed."
-msgstr ""
+msgstr "No se puede importar la organización. Por favor, compruebe que su archivo está bien formateado."
 
 msgid "Can't parse json, non-well formed content"
 msgstr "No se puede convertir json, el contenido no está bien formateado"
@@ -1181,19 +1181,19 @@ msgid "Install"
 msgstr "Instalar"
 
 msgid "Install / Export"
-msgstr ""
+msgstr "Instalar / Exportar"
 
 msgid "Install a process"
 msgstr "Instalar un proceso"
 
 msgid "Install or export data"
-msgstr ""
+msgstr "Instalar o exportar datos"
 
 msgid "Install/Export"
-msgstr ""
+msgstr "Instalar/Exportar"
 
 msgid "Install/export organization"
-msgstr ""
+msgstr "Instalar/exportar organización"
 
 msgid "Installed by"
 msgstr "Instalado por"
@@ -2063,9 +2063,6 @@ msgstr "Ruta al grupo padre"
 msgid "The id of the related case"
 msgstr "El id del caso relacionado"
 
-msgid "The index file must be present in the zip but is ignored, so can be empty."
-msgstr "El archivo de índice debe estar presente en el zip pero ha sido ignorado, así que puede estar vacío."
-
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr "El artículo que usted intenta editar no se puede recuperar debido a un problema de conexión. Por favor, póngase en contacto con su administrador."
 
@@ -2099,8 +2096,8 @@ msgstr "La prioridad de la tarea"
 msgid "The process responsible for the creation of this task"
 msgstr "El proceso responsable para la creación de esta tarea"
 
-msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
-msgstr "La carpeta de recursos debe contener una clase Index.groovy o un archivo index.html y opcionalmente puede contener algunos recursos adicionales."
+msgid "The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."
+msgstr ""
 
 msgid "The server is not available"
 msgstr "El servidor no está disponible"
