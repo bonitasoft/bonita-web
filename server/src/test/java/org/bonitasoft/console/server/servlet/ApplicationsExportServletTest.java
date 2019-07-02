@@ -57,7 +57,7 @@ public class ApplicationsExportServletTest {
 
     @Test
     public void should_getFileExportName_return_a_valide_file_name() throws Exception {
-        assertThat(spiedApplicationsExportServlet.getFileExportName()).isEqualTo("Application_Data.xml");
+        assertThat(spiedApplicationsExportServlet.getFileExportName()).isEqualTo("ApplicationDescriptorFile.xml");
     }
 
 }
