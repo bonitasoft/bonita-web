@@ -1086,10 +1086,12 @@ textarea {
     line-height: inherit;
 }
 a {
+    color: #2c3e50;
     text-decoration: none;
 }
 a:hover,
 a:focus {
+    color: #11181f;
     text-decoration: underline;
 }
 a:focus {
@@ -3382,6 +3384,7 @@ fieldset[disabled] .btn-danger.focus {
     background-color: #ffffff;
 }
 .btn-link {
+    color: #2c3e50;
     font-weight: normal;
     border-radius: 0;
 }
