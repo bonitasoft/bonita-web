@@ -167,12 +167,12 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
         response.setCharacterEncoding("UTF-8");
         if (fileName != null) {
             try {
-                final String encodedfileName = URLEncoder.encode(fileName, "UTF-8");
+                final String encodedfileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
                 final String userAgent = request.getHeader("User-Agent");
                 if (userAgent != null && userAgent.contains("Firefox")) {
                     response.setHeader("Content-Disposition", "inline; filename*=UTF-8''" + encodedfileName);
                 } else {
-                    response.setHeader("Content-Disposition", "inline; filename=\"" + encodedfileName.replaceAll("\\+", " ") + "\"; filename*=UTF-8''"
+                    response.setHeader("Content-Disposition", "inline; filename=\"" + encodedfileName + "\"; filename*=UTF-8''"
                             + encodedfileName);
                 }
                 if (fileContent != null) {
