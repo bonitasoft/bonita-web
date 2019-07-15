@@ -33,7 +33,7 @@ public class ApplicationsExportServlet extends ExportByIdsServlet {
     /**
      * export file name
      */
-    private static final String EXPORT_FILE_NAME = "ApplicationDescriptorFile.xml";
+    private static final String EXPORT_FILE_NAME = "applicationDescriptorFile.xml";
 
     /**
      * UID
