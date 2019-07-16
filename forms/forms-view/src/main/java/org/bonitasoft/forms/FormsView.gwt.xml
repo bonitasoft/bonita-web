@@ -10,9 +10,6 @@
 
 	<!-- Spanish language, independent of country					-->
 	<extend-property name="locale" values="es"/>
-	
-	<!-- German language, independent of country					-->
-	<extend-property name="locale" values="de"/>
 
     <!-- japanese language, independent of country					-->
     <extend-property name="locale" values="ja"/>
@@ -26,9 +23,6 @@
 	<!-- Dutch language, independent of country						-->
 	<!-- <extend-property name="locale" values="nl"/> -->
 
-	<!-- Italian language, independent of country					-->
-	<extend-property name="locale" values="it"/>
-	
 	<!-- Estonian language, independent of country					-->
 	<!-- <extend-property name="locale" values="et"/> -->
 	

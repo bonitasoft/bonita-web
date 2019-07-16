@@ -1,0 +1,991 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: bonita-bpm-new-features\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal-js.pot\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"Language-Team: Portuguese, Brazilian\n"
+"Language: pt_BR\n"
+"PO-Revision-Date: 2016-01-14 12:04-0500\n"
+
+#: main/common/services/i18n.js:58
+msgid "1 case has been deleted"
+msgstr "1 caso foi removido"
+
+#: main/common/services/i18n.js:109
+msgid "A page with this name already exists."
+msgstr "Já existe uma página com este nome."
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/process-connectors.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Actions"
+msgstr "Ações"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Activation state"
+msgstr "Estado de ativação"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actor name"
+msgstr "Nome do ator"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Actors"
+msgstr "Atores"
+
+#: main/common/services/i18n.js:112
+msgid "Actors must be resolved before enabling the Process."
+msgstr ""
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/details/page-list.html:1
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Add"
+msgstr "Adicionar"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Add from custom pages"
+msgstr "Adicionar a partir de páginas personalizadas"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu"
+msgstr "Adionar menu"
+
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu item"
+msgstr "Adicionar item de menu"
+
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Add page"
+msgstr "Adicionar página"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add pages in Navigation"
+msgstr "Adicione as páginas na Navegação"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Add top-level menu"
+msgstr "Adicionar menu de primeiro nível"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
+msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados de negócio e processos de negócios de maneira mais eficaz."
+
+#: main/common/services/i18n.js:60
+msgid "An error occured during categories update"
+msgstr "Ocorreu um erro durante a atualização das categorias"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Application XML file"
+msgstr "Arquivo XML de aplicação"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Application list"
+msgstr "Lista de aplicações"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Apply"
+msgstr "Aplicar"
+
+#: main/common/services/i18n.js:57
+msgid "Archived cases"
+msgstr "Casos arquivados"
+
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Available tasks"
+msgstr "Tarefas disponíveis"
+
+#: dist/features/admin/processes/details/menu.html:1
+msgid "Back"
+msgstr "Voltar"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
+msgstr "Antes de importar a aplicação, as páginas personalizadas e o perfil devem existir no Portal."
+
+#: main/common/services/i18n.js:104
+msgid "Can't import page or form to the process"
+msgstr "Não foi possível importar a página ou formulário no processo"
+
+#: main/common/services/i18n.js:121
+msgid "Can't update expression content"
+msgstr "Não foi possível atualizar o conteúdo da expressão"
+
+#: dist/features/admin/applications/delete-application.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/applications/export-application.html:1
+#: dist/features/admin/applications/import-application.html:1
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: main/common/services/i18n.js:89
+msgid "Cancelled, skipped instances"
+msgstr "Instâncias canceladas, ignoradas"
+
+#: main/common/services/i18n.js:101
+msgid "Cannot upload the file"
+msgstr "Não foi possível carregar o arquivo"
+
+#: main/common/services/i18n.js:94
+msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
+msgstr ""
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Case list"
+msgstr "Lista de casos"
+
+#: main/common/services/i18n.js:118
+msgid "Case overview"
+msgstr "Página de síntese do caso"
+
+#: main/common/services/i18n.js:119
+msgid "Case start"
+msgstr "Iníciar  caso"
+
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Case state"
+msgstr "Estado do caso"
+
+#: dist/features/admin/cases/list/cases.html:1
+#: dist/features/user/cases/list/cases.html:1
+msgid "Cases"
+msgstr "Casos"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Categories"
+msgstr "Categorias"
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Class name"
+msgstr "Nome da classe"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Click here to choose your file. XML file (.xml)"
+msgstr "Clique aqui para escolher o seu arquivo XML (. xml)"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Close"
+msgstr "Fechar"
+
+#: table-settings/tableSettings.tpl.html:25
+msgid "Columns selection"
+msgstr "Seleção de colunas"
+
+#: main/common/services/i18n.js:111
+msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
+msgstr "Erro de compilação. Verifique se a classe Index.groovy implementa a interface PageController."
+
+#: main/common/services/i18n.js:90
+msgid "Completed instances"
+msgstr "Instâncias concluídas"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "Configuration state"
+msgstr "Estado da configuração"
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "Confirm delete?"
+msgstr "Confirmar exclusão?"
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Connectors"
+msgstr "Conectores"
+
+#: main/common/services/i18n.js:113
+msgid "Connectors must be resolved before enabling the Process."
+msgstr ""
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Create a new membership"
+msgstr "Criar uma nova associação"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Create an application"
+msgstr "Criar uma aplicação"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Created by"
+msgstr "Criado por"
+
+#: dist/features/admin/applications/details/application-details-app.html:1
+msgid "Creation"
+msgstr "Criação"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Creation on"
+msgstr "Criada em"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/delete-application.html:1
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+#: dist/features/admin/processes/details/menu.html:1
+msgid "Delete"
+msgstr "Excluir"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "Delete application"
+msgstr "Excluir aplicação"
+
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete process"
+msgstr "Excluir processo"
+
+#: dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete the process"
+msgstr "Excluir o processo"
+
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/processes/details/params.html:1
+msgid "Description"
+msgstr "Descrição"
+
+#: dist/features/admin/applications/edit-application.html:1
+msgid "Display name"
+msgstr "Nome de exibição"
+
+#: main/common/services/i18n.js:96
+msgid "Drawing process..."
+msgstr "Desenhando processo..."
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+msgid "Edit"
+msgstr "Editar"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu"
+msgstr "Editar menu"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Edit menu item"
+msgstr "Editar item de menu"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Enable all"
+msgstr "Ativar Tudo"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "End date"
+msgstr "Data de Fim"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
+msgstr "Insira um novo nome de categoria e pressione a tecla \"Enter\" para criar uma nova categoria e atribuí-la ao processo atual."
+
+#: main/common/services/i18n.js:103
+msgid "Enter the user to start the case for..."
+msgstr "Digite o usuário para o qual o caso será iniciado..."
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Error"
+msgstr "Erro"
+
+#: main/common/services/i18n.js:95
+msgid "Error on drawing process!"
+msgstr "Erro ao desenhar o processo!"
+
+#: main/common/services/i18n.js:124
+msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
+msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
+
+#: main/common/services/i18n.js:98
+msgid "Error!"
+msgstr "Erro!"
+
+#: main/common/services/i18n.js:85
+msgid "Error: value must be a boolean"
+msgstr "Erro: o valor deve ser um booleano"
+
+#: main/common/services/i18n.js:86
+msgid "Error: value must be a double"
+msgstr "Erro: o valor deve ser um double"
+
+#: main/common/services/i18n.js:87
+msgid "Error: value must be an integer"
+msgstr "Erro: o valor deve ser um número inteiro"
+
+#: main/common/services/i18n.js:92
+msgid "Executing, completing, initializing instances"
+msgstr "Instâncias em execução, completando, inicializando"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/export-application.html:1
+msgid "Export"
+msgstr "Exportar"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "Export application"
+msgstr "Exportar aplicação"
+
+#: main/common/services/i18n.js:120
+msgid "Expression content has been updated"
+msgstr "O conteúdo da expressão foi atualizado"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Failed Flow Nodes"
+msgstr "Etapas em erro"
+
+#: main/common/services/i18n.js:91
+msgid "Failed instances"
+msgstr "Instâncias em erro"
+
+#: main/common/services/i18n.js:107
+msgid "Filename too long. The zip filename must be no longer than 50 characters"
+msgstr "O nome do arquivo muito grande. O nome do arquivo zip não deve exceder 50 caracteres"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Filters"
+msgstr "Filtros"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
+msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
+
+#: main/common/services/i18n.js:106
+msgid "Form cannot be empty"
+msgstr "O formulário não pode ser vazio"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "General"
+msgstr "Geral"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/common/services/i18n.js:71 main/common/services/i18n.js:72
+msgid "Groups"
+msgstr "Grupos"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "ID"
+msgstr "ID"
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Implementation version"
+msgstr "Versão de implementação"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "Import"
+msgstr "Importar"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "Import an application"
+msgstr "Importar uma aplicação"
+
+#: table-settings/tableSettings.tpl.html:13
+msgid "Items per page"
+msgstr "Itens por página"
+
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Layout"
+msgstr "Layout"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+#: main/common/services/i18n.js:99
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Look & Feel"
+msgstr "Aparência"
+
+#: main/common/filters/date-parser.js:39
+msgid "MM/dd/yyyy h:mm a"
+msgstr "dd/MM/yyyy 'as' HH:mm"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Manage Categories"
+msgstr "Gerenciar categorias"
+
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Me"
+msgstr "Eu"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/common/services/i18n.js:77
+msgid "Memberships"
+msgstr "Associações"
+
+#: main/common/services/i18n.js:78
+msgid "Memberships mapped to {}"
+msgstr "Associações mapeadas para {}"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Multi-page menu"
+msgstr "Grupo de menus"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/processes/details/params.html:1
+msgid "Name"
+msgstr "Nome"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Navigation"
+msgstr "Navegação"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "New"
+msgstr "Novo"
+
+#: main/common/services/i18n.js:105
+msgid "No Mapping"
+msgstr ""
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "No application available."
+msgstr "Nenhuma aplicação disponível."
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "No cases to display"
+msgstr "Nenhum caso para exibir"
+
+#: main/common/services/i18n.js:97
+msgid "No data"
+msgstr "Não há dados"
+
+#: dist/features/admin/processes/details/information.html:1
+msgid "No description."
+msgstr "Nenhuma descrição."
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "No mapping"
+msgstr "Nenhum mapeamento"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "One or more connectors on case start or case end failed"
+msgstr "Um ou mais conectores de início ou fim de caso falharam"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "One-page menu"
+msgstr "Menu para acessar uma página"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
+msgstr "Apenas casos de processos principais são exibidos na tabela abaixo. Nenhuma informação está disponível para casos iniciados por atividades chamadoras."
+
+#: main/common/services/i18n.js:56
+msgid "Open cases"
+msgstr "Casos abertos"
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Page"
+msgstr "Página"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Pages"
+msgstr "Páginas"
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "Parameters"
+msgstr "Parâmetros"
+
+#: main/common/services/i18n.js:114
+msgid "Parameters must be resolved before enabling the Process."
+msgstr "Os parâmetros devem ser resolvidos antes de ativar o processo."
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Pending Flow Nodes"
+msgstr "Etapas pendentes"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Process name"
+msgstr "Nome do Processo"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "Process version"
+msgstr "Versão do processo"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application.html:1
+msgid "Profile"
+msgstr "Privilégio"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Profiles"
+msgstr "Privilégio"
+
+#: main/common/services/i18n.js:93
+msgid "Ready, waiting instances"
+msgstr "Instâncias prontas, ou em espera"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Remove"
+msgstr "Remover"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Remove all"
+msgstr "Remover tudo"
+
+#: main/common/services/i18n.js:66
+msgid "Reset"
+msgstr "Restaurar"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/common/services/i18n.js:74 main/common/services/i18n.js:75
+msgid "Roles"
+msgstr "Funções"
+
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Save"
+msgstr "Salvar"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 1"
+msgstr "Chave de pesquisa 1"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 2"
+msgstr "Chave de pesquisa 2"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 3"
+msgstr "Chave de pesquisa 3"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 4"
+msgstr "Chave de pesquisa 4"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Search Key 5"
+msgstr "Chave de pesquisa 5"
+
+#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Search..."
+msgstr "Pesquisar..."
+
+#: main/common/services/i18n.js:79
+msgid "Select a group..."
+msgstr "Selecione um grupo..."
+
+#: main/common/services/i18n.js:80
+msgid "Select a role..."
+msgstr "Selecione uma função..."
+
+#: main/common/services/i18n.js:64
+msgid "Select all"
+msgstr "Selecionar todos"
+
+#: main/common/services/i18n.js:73
+msgid "Select groups..."
+msgstr "Selecione grupos..."
+
+#: main/common/services/i18n.js:65
+msgid "Select none"
+msgstr "Desmarcar todos"
+
+#: main/common/services/i18n.js:76
+msgid "Select roles..."
+msgstr "Selecione funções..."
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
+msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas do processo."
+
+#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Select the page"
+msgstr "Selecione uma página"
+
+#: main/common/services/i18n.js:70
+msgid "Select users..."
+msgstr "Selecione usuários..."
+
+#: dist/features/admin/applications/details/page-list.html:1
+msgid "Set as Home page"
+msgstr "Definir como página principal"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by URL"
+msgstr "Ordenar pela URL"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by name"
+msgstr "Ordenar por nome"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by updated on"
+msgstr "Ordenar pela data de atualização"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "Sort by version"
+msgstr "Ordenar por versão"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "Specify the menu structure."
+msgstr "Defina a estrutura do menu."
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Start date"
+msgstr "Data de início"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/archived-cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list-filters.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Started by"
+msgstr "Iniciado por"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+msgid "State"
+msgstr "Estado"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "Status of import"
+msgstr "Estado da importação"
+
+#: main/common/services/i18n.js:61
+msgid "Successfully updated categories"
+msgstr "As categorias foram atualizadas com sucesso"
+
+#: table-settings/tableSettings.tpl.html:5
+#: table-settings/tableSettings.tpl.html:9
+msgid "Table settings"
+msgstr "Parâmetros da tabela"
+
+#: main/common/services/i18n.js:100
+msgid "Technical error."
+msgstr "Erro técnico."
+
+#: dist/features/admin/processes/details/menu.html:1
+#: main/common/services/i18n.js:117
+msgid "The Process cannot be enabled"
+msgstr "O processo não pode ser ativado"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "The application"
+msgstr "A aplicação"
+
+#: main/common/services/i18n.js:115
+msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
+msgstr "O dado de negócio: [ {} ] usa Objetos de Negócio que não estão definidos no modelo de Dados de Negócio atual. Instale um modelo de Dados de Negócio compatível antes de ativar o processo."
+
+#: main/common/services/i18n.js:123
+msgid "The case {{caseId}} has been started successfully."
+msgstr ""
+
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "The current process has no connectors defined."
+msgstr "O processo atual não possui conectores."
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "The current process has no parameters defined."
+msgstr "O processo atual não possui parâmetros."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted and will not be stored in the archives."
+msgstr "O caso será permanentemente excluído e não será armazenado nos arquivos."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "The deleted case will be permanently deleted from the archives."
+msgstr "O caso será excluído dos arquivos permanentemente."
+
+#: main/common/services/i18n.js:116
+msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
+msgstr ""
+
+#: main/common/services/i18n.js:110
+msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
+msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
+
+#: main/common/services/i18n.js:122
+msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
+msgstr ""
+
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Theme"
+msgstr " Tema"
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
+msgstr "Estes casos serão permanentemente excluídos e não serão armazenado nos arquivos."
+
+#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "These deleted cases will be permanently deleted from the archives."
+msgstr "Estes casos serão excluídos dos arquivos permanentemente."
+
+#: main/common/factories/i18nMsg.js:43
+msgid "This URL is already in use"
+msgstr "Este campo é obrigatório"
+
+#: main/common/factories/i18nMsg.js:42
+msgid "This field is mandatory"
+msgstr "Este campo é obrigatório"
+
+#: main/common/factories/i18nMsg.js:44
+msgid "This name is already in use"
+msgstr "Este nome já é utilizado"
+
+#: dist/features/admin/applications/applications-list.html:1
+msgid "To create an application, click New or Import."
+msgstr "Para criar uma aplicação clique em Nova ou Importar."
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "To do so, go to"
+msgstr "Para fazer isso, vá para"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
+msgstr "Para personalizar a exibição de chaves de pesquisa (e colunas em geral), utilize o botão de configuração da tabela, à direita. Você pode pesquisar em até 5 chaves de busca."
+
+#: main/common/services/i18n.js:88
+msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr "Para usar esse recurso, crie uma nova versão do processo no Bonita BPM Studio com versão 6.4 ou superior e crie e instalar o novo arquivo .bar no Portal."
+
+#: dist/features/admin/processes/details/params.html:1
+#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Type"
+msgstr "Tipo"
+
+#: main/common/services/i18n.js:102
+msgid "Type here to search for a user..."
+msgstr "Digite aqui para pesquisar um usuário..."
+
+#: main/common/services/i18n.js:67
+msgid "Type here to search..."
+msgstr "Digite aqui para pesquisar..."
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/applications/import-application.html:1
+msgid "URL"
+msgstr "URL"
+
+#: dist/features/admin/applications/details/application-details-app.html:1
+msgid "Update"
+msgstr "Atualização"
+
+#: dist/features/admin/applications/details/application-details.html:1
+msgid "Updated by"
+msgstr "Atualizado por"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/details/application-details.html:1
+#: dist/features/admin/processes/details/information.html:1
+msgid "Updated on"
+msgstr "Atualizado em"
+
+#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Use Arrow up and Arrow down keys to browse among existing categories."
+msgstr "Uso as teclas seta para cima e seta para baixo para navegar entre as categorias existentes."
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+#: main/common/services/i18n.js:68
+msgid "Users"
+msgstr "Usuários"
+
+#: main/common/services/i18n.js:69
+msgid "Users mapped to {}"
+msgstr "Usuários mapeados a {}"
+
+#: dist/features/admin/processes/details/params.html:1
+msgid "Value"
+msgstr "Valor"
+
+#: dist/features/admin/applications/applications-list.html:1
+#: dist/features/admin/applications/edit-application.html:1
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "Version"
+msgstr "Versão"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "View case details"
+msgstr "Ver detalhes do casos"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "View case overview"
+msgstr "Visão geral do caso"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "When you export an application, pages and profiles are not exported in the file."
+msgstr "Ao exportar uma aplicação, páginas personalizadas e perfis não são exportadas no arquivo."
+
+#: dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "With failures"
+msgstr "Com erros"
+
+#: dist/features/admin/applications/export-application.html:1
+msgid "You are about to export the application"
+msgstr "Você está prestes a exportar a aplicação"
+
+#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "You must add a page before you can reference it in a menu."
+msgstr "Você deve adicionar uma página antes de poder referenciá-la em um menu."
+
+#: main/common/services/i18n.js:108
+msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
+msgstr ""
+
+#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "an Application"
+msgstr "uma Aplicação"
+
+#: dist/features/admin/applications/edit-application.html:1
+msgid "an application"
+msgstr "uma aplicação"
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "application has been partially imported. The following items are not loaded in the Portal."
+msgstr "aplicações foram importadas parcialmente. Os seguintes itens não estão presentes no Portal."
+
+#: dist/features/admin/applications/import-application.html:1
+msgid "application has been successfully imported, with complete page mapping and menu mapping."
+msgstr "aplicações foram importadas com sucesso, com o mapeamento completo de páginas e menus."
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "of"
+msgstr "de"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date ascending"
+msgstr "ordena por data fim, crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by End date descending"
+msgstr "ordena por data fim, decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID ascending"
+msgstr "ordena por Id, crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by ID descending"
+msgstr "ordena por Id, decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name ascending"
+msgstr "ordena por nome, crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Process name descending"
+msgstr "ordena por nome, decrescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date ascending"
+msgstr "ordena por data de início, crescente"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "sort by Start date descending"
+msgstr "ordena por data de início, decrescente"
+
+#: dist/features/admin/applications/delete-application.html:1
+msgid "will be permanently deleted."
+msgstr "será excluída permanentemente."
+
+#: main/common/services/i18n.js:63
+msgid "{{nbErrors}} errors on mapping updates"
+msgstr "Ocorreram {{nbErrors}} erros na atualização das associações"
+
+#: main/common/services/i18n.js:83
+msgid "{{nbMapping}} Process manager mappings could not be updated"
+msgstr "{{nbMapping}} associações do perfil Gerenciador de processo de  não puderam ser atualizadas"
+
+#: main/common/services/i18n.js:84
+msgid "{{nbMapping}} Process manager mappings have been updated"
+msgstr "{{nbMapping}} associações do perfil Gerenciador de processo foram atualizadas"
+
+#: main/common/services/i18n.js:59
+msgid "{{nbOfDeletedCases}} cases have been deleted"
+msgstr "{{nbOfDeletedCases}} casos foram excluídos"
+
+#: main/common/services/i18n.js:62
+msgid "{{nbSucess}} actor mapping updates succeeded"
+msgstr "{{nbSucess}} mapeamento de atores atualizados com sucesso"
+
+#: main/common/services/i18n.js:81
+msgid "{{role}} of {{group}}"
+msgstr "{{role}} de {{group}}"
+
+#: main/common/services/i18n.js:82
+msgid "{{role}} of {{group}} has been created"
+msgstr "{{role}} de {{group}} foi criado"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mapped"
+msgstr "{} mapeado"
+
+#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "{} mappings to delete"
+msgstr "{} mapeamentos a serem excluídos"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} more"
+msgstr "{} mais"
+
+#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "{} of {}"
+msgstr "{} de {}"
+
+#: dist/features/admin/cases/list/cases-list.html:1
+#: dist/features/user/cases/list/cases-list.html:1
+msgid "{}-{} of {}"
+msgstr "{}-{} de {}"
+
