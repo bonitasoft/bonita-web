@@ -2,990 +2,1172 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: bonita-bpm-new-features\n"
+"Project-Id-Version: bonita\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal-js.pot\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2016-01-14 12:04-0500\n"
+"PO-Revision-Date: 2019-07-17 02:25\n"
 
-#: main/common/services/i18n.js:58
 msgid "1 case has been deleted"
-msgstr "1 caso foi removido"
+msgstr "1 caso foi excluído"
 
-#: main/common/services/i18n.js:109
 msgid "A page with this name already exists."
-msgstr "Já existe uma página com este nome."
+msgstr "Já existe uma página com esse nome."
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/admin/processes/details/process-connectors.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Above normal"
+msgstr "Acima do nomal"
+
 msgid "Actions"
 msgstr "Ações"
 
-#: dist/features/admin/processes/details/information.html:1
 msgid "Activation state"
 msgstr "Estado de ativação"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actor name"
 msgstr "Nome do ator"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Actors"
 msgstr "Atores"
 
-#: main/common/services/i18n.js:112
 msgid "Actors must be resolved before enabling the Process."
-msgstr ""
+msgstr "Os atores devem ser resolvidos antes de ativar o processo."
 
-#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
-#: dist/features/admin/applications/details/page-list-addPageModal.html:1
-#: dist/features/admin/applications/details/page-list.html:1
-#: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Add"
 msgstr "Adicionar"
 
-#: dist/features/admin/applications/details/page-list.html:1
 msgid "Add from custom pages"
 msgstr "Adicionar a partir de páginas personalizadas"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
-msgid "Add menu"
-msgstr "Adionar menu"
+msgid "Add membership"
+msgstr "Adicionar membros"
 
-#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Add menu"
+msgstr "Adicionar menu"
+
 msgid "Add menu item"
 msgstr "Adicionar item de menu"
 
-#: dist/features/admin/applications/details/page-list-addPageModal.html:1
 msgid "Add page"
-msgstr "Adicionar página"
+msgstr "Acionar página"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Add pages in Navigation"
-msgstr "Adicione as páginas na Navegação"
+msgstr "Acione as páginas de navegação"
 
-#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Add top-level menu"
-msgstr "Adicionar menu de primeiro nível"
+msgstr "Adicionar menu de nível superior"
 
-#: dist/features/admin/applications/applications-list.html:1
+msgid "Address"
+msgstr "Endereço"
+
+msgid "Aggregates tasks in states ready, waiting,<br>executing, completing, and initializing"
+msgstr "Agrega as tarefas em Estados pronto, esperando,<br>executando, completando e inicializando"
+
+msgid "All"
+msgstr "Todos"
+
+msgid "All done. Good job!"
+msgstr "Tudo feito. Bom trabalho!"
+
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
-msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados de negócio e processos de negócios de maneira mais eficaz."
+msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados e processos de negócios de maneira mais eficaz."
 
-#: main/common/services/i18n.js:60
 msgid "An error occured during categories update"
-msgstr "Ocorreu um erro durante a atualização das categorias"
+msgstr "Ocorreu um erro durante a atualização de categorias"
 
-#: dist/features/admin/applications/import-application.html:1
+msgid "An error occurred when deploying the BDM. Consult the logs for more information."
+msgstr "Ocorreu um erro ao implantar o BDM. Consulte as logs para mais informações."
+
+msgid "An error occurred while submitting the form."
+msgstr "Ocorreu um erro ao enviar o formulário."
+
+msgid "An error occurred while submitting the form.<br/>The task may not be available anymore."
+msgstr "Ocorreu um erro ao enviar o formulário. <br/> A tarefa pode não estar disponível mais."
+
+msgid "Anyone"
+msgstr "Qualquer um"
+
 msgid "Application XML file"
-msgstr "Arquivo XML de aplicação"
+msgstr "Arquivo XML do aplicativo"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "Application list"
-msgstr "Lista de aplicações"
+msgstr "Lista de aplicativos"
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Apply"
 msgstr "Aplicar"
 
-#: main/common/services/i18n.js:57
 msgid "Archived cases"
-msgstr "Casos arquivados"
+msgstr "Instâncias arquivadas"
 
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Are you sure you want to delete this membership ?"
+msgstr "Tem certeza que deseja excluir este membro?"
+
+msgid "Assign to me. Only I will be able to do it"
+msgstr "Atribua a mim. Só eu serei capaz de fazê-lo"
+
+msgid "Assigned on"
+msgstr "Atribuído para"
+
+msgid "Available or My tasks"
+msgstr "Disponível ou minhas tarefas"
+
 msgid "Available tasks"
 msgstr "Tarefas disponíveis"
 
-#: dist/features/admin/processes/details/menu.html:1
+msgid "BDM access control file can now be installed."
+msgstr "Arquivo de controle de acesso BDM agora pode ser instalado."
+
+msgid "BDM file"
+msgstr "Arquivo do BDM"
+
+msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
+msgstr "BDM não foi carregado. Sistema não foi capaz de fazer upload de arquivo BDM fornecido por razões técnicas. Você pode tentar novamente mais tarde."
+
+msgid "BDM successfully updated."
+msgstr "Arquivo BDM atualizado com sucesso."
+
+msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
+msgstr "Serviços de BPM devem ser pausados. Vá para a opção do menu \"Serviços de BPM\"."
+
 msgid "Back"
 msgstr "Voltar"
 
-#: dist/features/admin/applications/import-application.html:1
-msgid "Before you import the application, the pages and the profile must already be loaded in the Portal."
-msgstr "Antes de importar a aplicação, as páginas personalizadas e o perfil devem existir no Portal."
+msgid "Before updating the BDM, access control file should be deleted."
+msgstr "Antes de atualizar o BDM, arquivo de controle de acesso deve ser excluído."
 
-#: main/common/services/i18n.js:104
+msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
+msgstr "Antes de importar o descritor de aplicativos, as páginas e o perfil devem já ser carregados no Portal."
+
+msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
+msgstr "Bonita usa Hibernate para persistência de dados, portanto, algumas mudanças são manipuladas, como adicionar novos objetos ou atributos, mas alguns outros que não podemos garantir até agora, como mudar o tipo de um atributo ou excluindo um atributo."
+
+msgid "Business Data Model definition"
+msgstr "Definição de modelo de dados de negócios"
+
+msgid "Business card"
+msgstr "Cartão de visita"
+
+msgid "Business card has not been updated. Please retry later or contact an administrator"
+msgstr "Cartão de visita não foi atualizado. Por favor, tente novamente mais tarde ou entre em contato com o administrador"
+
+msgid "Business card successfully updated"
+msgstr "Cartão de crédito atualizado com sucesso"
+
 msgid "Can't import page or form to the process"
 msgstr "Não foi possível importar a página ou formulário no processo"
 
-#: main/common/services/i18n.js:121
 msgid "Can't update expression content"
 msgstr "Não foi possível atualizar o conteúdo da expressão"
 
-#: dist/features/admin/applications/delete-application.html:1
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
-#: dist/features/admin/applications/details/page-list-addPageModal.html:1
-#: dist/features/admin/applications/edit-application-look-n-feel.html:1
-#: dist/features/admin/applications/edit-application.html:1
-#: dist/features/admin/applications/export-application.html:1
-#: dist/features/admin/applications/import-application.html:1
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
-#: dist/features/admin/processes/details/delete-process-modal.html:1
-#: dist/features/admin/processes/details/edit-actor-members.html:1
-#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: main/common/services/i18n.js:89
 msgid "Cancelled, skipped instances"
 msgstr "Instâncias canceladas, ignoradas"
 
-#: main/common/services/i18n.js:101
 msgid "Cannot upload the file"
 msgstr "Não foi possível carregar o arquivo"
 
-#: main/common/services/i18n.js:94
-msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
-msgstr ""
+msgid "Case"
+msgstr "Instância de processo"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Case ID"
+msgstr "ID do processo"
+
+msgid "Case comments"
+msgstr "Comentários da instância"
+
+msgid "Case id: {{caseId}} - Process: {{processName}} ({{processVersion}})"
+msgstr "Caso: {{caseId}} - Processo: {{processName}} ({{processVersion}})"
+
 msgid "Case list"
 msgstr "Lista de casos"
 
-#: main/common/services/i18n.js:118
 msgid "Case overview"
-msgstr "Página de síntese do caso"
+msgstr "Visão geral do caso"
 
-#: main/common/services/i18n.js:119
 msgid "Case start"
-msgstr "Iníciar  caso"
+msgstr "Iniciar Instância"
 
-#: dist/features/admin/cases/list/cases-list-filters.html:1
 msgid "Case state"
-msgstr "Estado do caso"
+msgstr "Estado da Instância"
 
-#: dist/features/admin/cases/list/cases.html:1
-#: dist/features/user/cases/list/cases.html:1
 msgid "Cases"
-msgstr "Casos"
+msgstr "Instâncias"
 
-#: dist/features/admin/processes/details/information.html:1
 msgid "Categories"
 msgstr "Categorias"
 
-#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Check that each entity is mapped to a profile, for either Bonita Portal or for applications you have created."
+msgstr "Verifique que cada entidade é mapeada para um perfil, para qualquer Portal Bonita ou para aplicativos que você tenha criado."
+
+msgid "City"
+msgstr "Cidade"
+
 msgid "Class name"
 msgstr "Nome da classe"
 
-#: dist/features/admin/applications/import-application.html:1
-msgid "Click here to choose your file. XML file (.xml)"
-msgstr "Clique aqui para escolher o seu arquivo XML (. xml)"
+msgid "Click here to choose the .xml file"
+msgstr "Clique aqui para escolher o arquivo .xml"
 
-#: dist/features/admin/applications/import-application.html:1
+msgid "Click here to choose your .zip file"
+msgstr "Clique aqui para escolher o arquivo .zip"
+
 msgid "Close"
 msgstr "Fechar"
 
-#: table-settings/tableSettings.tpl.html:25
 msgid "Columns selection"
 msgstr "Seleção de colunas"
 
-#: main/common/services/i18n.js:111
+msgid "Comment:"
+msgstr "Comentário:"
+
+msgid "Comments"
+msgstr "Comentários"
+
 msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
 msgstr "Erro de compilação. Verifique se a classe Index.groovy implementa a interface PageController."
 
-#: main/common/services/i18n.js:90
 msgid "Completed instances"
 msgstr "Instâncias concluídas"
 
-#: dist/features/admin/processes/details/information.html:1
 msgid "Configuration state"
 msgstr "Estado da configuração"
 
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "Confirm delete?"
 msgstr "Confirmar exclusão?"
 
-#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "Confirm new Password"
+msgstr "Confirmar nova senha"
+
 msgid "Connectors"
 msgstr "Conectores"
 
-#: main/common/services/i18n.js:113
 msgid "Connectors must be resolved before enabling the Process."
-msgstr ""
+msgstr "Conectores devem ser resolvidos antes de ativar o processo."
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Country"
+msgstr "País"
+
 msgid "Create a new membership"
 msgstr "Criar uma nova associação"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "Create an application"
 msgstr "Criar uma aplicação"
 
-#: dist/features/admin/applications/details/application-details.html:1
 msgid "Created by"
 msgstr "Criado por"
 
-#: dist/features/admin/applications/details/application-details-app.html:1
 msgid "Creation"
 msgstr "Criação"
 
-#: dist/features/admin/applications/details/application-details.html:1
+msgid "Creation date"
+msgstr "Data de criação"
+
 msgid "Creation on"
 msgstr "Criada em"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/delete-application.html:1
-#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/admin/processes/details/delete-process-modal.html:1
-#: dist/features/admin/processes/details/menu.html:1
+msgid "Custom information"
+msgstr "Informação Personalizada"
+
+msgid "Custom information has not been updated. Please retry later or contact an administrator"
+msgstr "Informação personalizada não foi atualizada. Por favor, tente novamente mais tarde ou entre em contato com o administrador"
+
+msgid "Custom information successfully updated"
+msgstr "Informações personalizadas atualizadas com sucesso"
+
 msgid "Delete"
 msgstr "Excluir"
 
-#: dist/features/admin/applications/delete-application.html:1
 msgid "Delete application"
 msgstr "Excluir aplicação"
 
-#: dist/features/admin/processes/details/delete-process-modal.html:1
+msgid "Delete membership"
+msgstr "Apagar membro"
+
 msgid "Delete process"
 msgstr "Excluir processo"
 
-#: dist/features/admin/processes/details/delete-process-modal.html:1
 msgid "Delete the process"
 msgstr "Excluir o processo"
 
-#: dist/features/admin/applications/edit-application.html:1
-#: dist/features/admin/processes/details/params.html:1
 msgid "Description"
 msgstr "Descrição"
 
-#: dist/features/admin/applications/edit-application.html:1
 msgid "Display name"
 msgstr "Nome de exibição"
 
-#: main/common/services/i18n.js:96
-msgid "Drawing process..."
-msgstr "Desenhando processo..."
+msgid "Don't forget to start BPM Services again."
+msgstr "Não se esqueça de iniciar serviços de BPM novamente."
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/applications/details/menubuilder-actionBar.html:1
+msgid "Done tasks"
+msgstr "Tarefas arquivadas"
+
+msgid "Drawing process..."
+msgstr "Desenhando o processo..."
+
+msgid "Due date"
+msgstr "Prazo final"
+
 msgid "Edit"
 msgstr "Editar"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Edit menu"
 msgstr "Editar menu"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Edit menu item"
 msgstr "Editar item de menu"
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "Email"
+msgstr "Email"
+
 msgid "Enable all"
 msgstr "Ativar Tudo"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "End date"
-msgstr "Data de Fim"
+msgstr "Data de término"
 
-#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Enter a new category name and press \"Enter\" key to create a new category and assign it to the current process."
 msgstr "Insira um novo nome de categoria e pressione a tecla \"Enter\" para criar uma nova categoria e atribuí-la ao processo atual."
 
-#: main/common/services/i18n.js:103
 msgid "Enter the user to start the case for..."
 msgstr "Digite o usuário para o qual o caso será iniciado..."
 
-#: dist/features/admin/applications/import-application.html:1
 msgid "Error"
 msgstr "Erro"
 
-#: main/common/services/i18n.js:95
 msgid "Error on drawing process!"
 msgstr "Erro ao desenhar o processo!"
 
-#: main/common/services/i18n.js:124
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
 msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
 
-#: main/common/services/i18n.js:98
 msgid "Error!"
 msgstr "Erro!"
 
-#: main/common/services/i18n.js:85
 msgid "Error: value must be a boolean"
 msgstr "Erro: o valor deve ser um booleano"
 
-#: main/common/services/i18n.js:86
 msgid "Error: value must be a double"
 msgstr "Erro: o valor deve ser um double"
 
-#: main/common/services/i18n.js:87
 msgid "Error: value must be an integer"
 msgstr "Erro: o valor deve ser um número inteiro"
 
-#: main/common/services/i18n.js:92
 msgid "Executing, completing, initializing instances"
-msgstr "Instâncias em execução, completando, inicializando"
+msgstr "Executando, terminando, inicializando instâncias"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/export-application.html:1
 msgid "Export"
 msgstr "Exportar"
 
-#: dist/features/admin/applications/export-application.html:1
-msgid "Export application"
-msgstr "Exportar aplicação"
+msgid "Export application descriptor"
+msgstr "Descritor de aplicativos de exportação"
 
-#: main/common/services/i18n.js:120
 msgid "Expression content has been updated"
 msgstr "O conteúdo da expressão foi atualizado"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-msgid "Failed Flow Nodes"
-msgstr "Etapas em erro"
+msgid "Failed"
+msgstr "Falhou"
 
-#: main/common/services/i18n.js:91
+msgid "Failed Flow Nodes"
+msgstr "Etapas com erro"
+
 msgid "Failed instances"
 msgstr "Instâncias em erro"
 
-#: main/common/services/i18n.js:107
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "O nome do arquivo muito grande. O nome do arquivo zip não deve exceder 50 caracteres"
 
-#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
-#: dist/features/admin/cases/list/cases-list-filters.html:1
-#: dist/features/user/cases/list/archived-cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Filters"
-msgstr "Filtros"
+msgstr "Filtro"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
-msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
+msgid "First name"
+msgstr "Primeiro nome"
 
-#: main/common/services/i18n.js:106
-msgid "Form cannot be empty"
-msgstr "O formulário não pode ser vazio"
+msgid "Form"
+msgstr "Formulário"
 
-#: dist/features/admin/processes/details/information.html:1
+msgid "Form submitted.<br/>The next task in the list is now selected."
+msgstr "Formulário enviado. <br/> A próxima tarefa na lista agora está selecionada."
+
 msgid "General"
 msgstr "Geral"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:71 main/common/services/i18n.js:72
+msgid "General information"
+msgstr "Informações gerais"
+
+msgid "General information has not been updated. Please retry later or contact an administrator"
+msgstr "Informação gerais não foram atualizadas. Por favor, tente novamente mais tarde ou entre em contato com o administrador"
+
+msgid "General information successfully updated"
+msgstr "Informações gerais atualizadas com sucesso"
+
 msgid "Groups"
 msgstr "Grupos"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Hide Menu"
+msgstr "Esconder Menu"
+
+msgid "Hide menu"
+msgstr "Ocultar Menu"
+
+msgid "Hide panel"
+msgstr "Ocultar Painel"
+
+msgid "Highest"
+msgstr "Mais alto"
+
 msgid "ID"
 msgstr "ID"
 
-#: dist/features/admin/processes/details/process-connectors.html:1
+msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
+msgstr "Se a novo BDM contém tais mudanças, o administrador de banco de dados precisará primeiro manipular a atualização do banco de dados com scripts e, em seguida, você precisará atualizar apenas o modelo de dados e testar exaustivamente as alterações."
+
 msgid "Implementation version"
 msgstr "Versão de implementação"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/import-application.html:1
 msgid "Import"
 msgstr "Importar"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/import-application.html:1
 msgid "Import an application"
 msgstr "Importar uma aplicação"
 
-#: table-settings/tableSettings.tpl.html:13
+msgid "Import an application descriptor"
+msgstr "Importar um descritor de aplicação"
+
+msgid "In task name column"
+msgstr "Na coluna nome da tarefa"
+
+msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of the wizard"
+msgstr "No menu <i>Organização > Gerenciar</i>, vá para a página <i>Usuários</i> do assistente"
+
+msgid "Install"
+msgstr "Instalar"
+
+msgid "Install Business Data Model"
+msgstr "Instalar o Modelo de Dados de Negócio"
+
+msgid "Install a BDM file"
+msgstr "Instalar um arquivo BDM"
+
+msgid "Installed"
+msgstr "Instalado"
+
+msgid "Installing"
+msgstr "Instalando"
+
+msgid "Installing Business Data Model"
+msgstr "Instalando o Modelo de Dados de Negócios"
+
+msgid "Installing or updating the BDM implies to be logged in as Technical User, and to shut down all BPM services."
+msgstr "Instalando ou atualizando o BDM implica estar logado como usuário técnico, e encerrar todos os serviços BPM."
+
 msgid "Items per page"
 msgstr "Itens por página"
 
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Job title"
+msgstr "Título do trabalho"
+
+msgid "Last login"
+msgstr "Último Acesso"
+
+msgid "Last name"
+msgstr "Sobrenome"
+
+msgid "Last update"
+msgstr "Última atualização"
+
 msgid "Layout"
 msgstr "Layout"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
-#: main/common/services/i18n.js:99
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: dist/features/admin/applications/details/application-details.html:1
 msgid "Look & Feel"
 msgstr "Aparência"
 
-#: main/common/filters/date-parser.js:39
-msgid "MM/dd/yyyy h:mm a"
-msgstr "dd/MM/yyyy 'as' HH:mm"
+msgid "Lowest"
+msgstr "Mais baixo"
 
-#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "MM/dd/yyyy h:mm a"
+msgstr "MM/dd/yyyy hh:mm a"
+
+msgid "MMM DD LT"
+msgstr "MMM DD LT"
+
+msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
+msgstr "Certifique-se de todos os artefatos habilitados na plataforma são compatíveis com o novo BDM."
+
+msgid "Make this task available to other team members again"
+msgstr "Disponibilizar esta tarefa para outros membros da equipe novamente"
+
+msgid "Make this task personal: only I will be able to do it"
+msgstr "Tornar esta tarefa pessoal: somente você poderá fazer"
+
 msgid "Manage Categories"
 msgstr "Gerenciar categorias"
 
-#: dist/features/user/cases/list/archived-cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list-filters.html:1
+msgid "Manager"
+msgstr "Gerente"
+
+msgid "Maximum size 255 characters"
+msgstr "Tamanho máximo 255 caracteres"
+
 msgid "Me"
 msgstr "Eu"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:77
-msgid "Memberships"
-msgstr "Associações"
+msgid "Membership has not been added. Please retry later or contact an administrator"
+msgstr "Membros não foram atualizados. Por favor, tente novamente mais tarde ou entre em contato com o administrador"
 
-#: main/common/services/i18n.js:78
+msgid "Membership has not been removed. Please retry later or contact an administrator"
+msgstr "Membros não foram removidos. Por favor, tente novamente mais tarde ou entre em contato com o administrador"
+
+msgid "Membership successfully added"
+msgstr "Membros foram adicionados com sucesso"
+
+msgid "Membership successfully removed"
+msgstr "Membro removido com sucesso"
+
+msgid "Memberships"
+msgstr "Associação"
+
 msgid "Memberships mapped to {}"
 msgstr "Associações mapeadas para {}"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "Mobile"
+msgstr "Celular"
+
 msgid "Multi-page menu"
 msgstr "Grupo de menus"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
-#: dist/features/admin/processes/details/params.html:1
+msgid "My tasks"
+msgstr "Minhas tarefas"
+
 msgid "Name"
 msgstr "Nome"
 
-#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Navigation"
 msgstr "Navegação"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "New"
 msgstr "Novo"
 
-#: main/common/services/i18n.js:105
-msgid "No Mapping"
-msgstr ""
+msgid "New Password"
+msgstr "Nova Senha"
 
-#: dist/features/admin/applications/applications-list.html:1
+msgid "New comment"
+msgstr "Novos comentários"
+
 msgid "No application available."
 msgstr "Nenhuma aplicação disponível."
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "No cases to display"
-msgstr "Nenhum caso para exibir"
+msgstr "Nenhum Instância para exibir"
 
-#: main/common/services/i18n.js:97
+msgid "No comment on this case yet. To add one, use the input field at the bottom of this panel"
+msgstr "Nenhum comentário sobre este caso ainda. Para adicionar um, use o campo de entrada na parte inferior deste painel"
+
+msgid "No custom information defined."
+msgstr "Sem informação customizada definida."
+
 msgid "No data"
 msgstr "Não há dados"
 
-#: dist/features/admin/processes/details/information.html:1
 msgid "No description."
 msgstr "Nenhuma descrição."
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "No done task yet."
+msgstr "Ainda não acabou a tarefa."
+
+msgid "No form is needed. You can enter a comment and confirm."
+msgstr "Nenhum formulário é necessário. Você pode inserir um comentário e confirmar."
+
 msgid "No mapping"
 msgstr "Nenhum mapeamento"
 
-#: dist/features/admin/cases/list/cases-list.html:1
+msgid "No profile mapped to this application"
+msgstr "Sem perfil mapeado para esta aplicação"
+
+msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
+msgstr "Nenhuma atualização foi feita nas categorias. Não esqueça de pressionar a tecla \"Enter\" depois de selecionar uma categoria."
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Not installed"
+msgstr "Não Instalado"
+
+msgid "Note that updating the model modifies existing database tables definitively."
+msgstr "Observe que a atualização do modelo modifica as tabelas do banco de dados existente de forma definitiva."
+
 msgid "One or more connectors on case start or case end failed"
 msgstr "Um ou mais conectores de início ou fim de caso falharam"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
+msgid "One or more tasks are not available anymore. The list is now up to date."
+msgstr "Uma ou mais tarefas não estão mais disponíveis. A lista agora esta atualizada."
+
 msgid "One-page menu"
-msgstr "Menu para acessar uma página"
+msgstr "Menu de uma página"
 
-#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Only I can do this task"
+msgstr "Só eu posso fazer essa tarefa"
+
 msgid "Only cases from root processes are displayed in the table below. No details are available for cases started by call activities."
-msgstr "Apenas casos de processos principais são exibidos na tabela abaixo. Nenhuma informação está disponível para casos iniciados por atividades chamadoras."
+msgstr "Somente os casos de processos raiz são exibidos na tabela abaixo. Sem detalhes disponíveis para os casos iniciados por chamada de atividades."
 
-#: main/common/services/i18n.js:56
+msgid "Only one Business Data Model (BDM) can be active at a time."
+msgstr "Somente um Modelo de Dados de Negócios (BDM) pode ser ativado no momento."
+
 msgid "Open cases"
-msgstr "Casos abertos"
+msgstr "Instâncias Abertas"
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
-#: dist/features/admin/applications/details/page-list-addPageModal.html:1
+msgid "Open in a popup"
+msgstr "Aberto em um pop-up"
+
+msgid "Open the task to perform it"
+msgstr "Abra a tarefa para executá-lo"
+
+msgid "Overview"
+msgstr "Visão geral"
+
 msgid "Page"
 msgstr "Página"
 
-#: dist/features/admin/applications/details/page-list.html:1
 msgid "Pages"
 msgstr "Páginas"
 
-#: dist/features/admin/processes/details/params.html:1
 msgid "Parameters"
-msgstr "Parâmetros"
+msgstr "Parâmetro"
 
-#: main/common/services/i18n.js:114
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "Os parâmetros devem ser resolvidos antes de ativar o processo."
 
-#: dist/features/admin/cases/list/cases-list.html:1
+msgid "Password"
+msgstr "Senha"
+
+msgid "Password has not been updated. Please retry later or contact an administrator"
+msgstr "Senha não foi atualizada. Por favor tente mais tarde ou contate um administrador"
+
+msgid "Password successfully updated"
+msgstr "Senha atualizada com sucesso"
+
+msgid "Passwords don't match"
+msgstr "Senhas não coincidem"
+
 msgid "Pending Flow Nodes"
 msgstr "Etapas pendentes"
 
-#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
-#: dist/features/admin/cases/list/cases-list-filters.html:1
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/archived-cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Personal information"
+msgstr "Informações pessoais"
+
+msgid "Personal information has not been updated. Please retry later or contact an administrator"
+msgstr "Informações pessoais não foram atualizadas. Por favor tente mais tarde ou contate um administrador"
+
+msgid "Personal information successfully updated"
+msgstr "Informações pessoais atualizadas com sucesso"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Priority"
+msgstr "Prioridade"
+
+msgid "Process"
+msgstr "Processo"
+
 msgid "Process name"
 msgstr "Nome do Processo"
 
-#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
-#: dist/features/admin/cases/list/cases-list-filters.html:1
 msgid "Process version"
 msgstr "Versão do processo"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/applications/edit-application.html:1
+msgid "Process:"
+msgstr "Processo:"
+
 msgid "Profile"
-msgstr "Privilégio"
+msgstr "Perfil"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "Profiles"
-msgstr "Privilégio"
+msgstr "Perfis"
 
-#: main/common/services/i18n.js:93
+msgid "Profiles / Memberships"
+msgstr "Perfis / Membros"
+
 msgid "Ready, waiting instances"
 msgstr "Instâncias prontas, ou em espera"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: dist/features/admin/applications/details/page-list.html:1
+msgid "Refresh data"
+msgstr "Atualizar dados"
+
+msgid "Release"
+msgstr "Liberar"
+
 msgid "Remove"
 msgstr "Remover"
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "Remove all"
 msgstr "Remover tudo"
 
-#: main/common/services/i18n.js:66
 msgid "Reset"
 msgstr "Restaurar"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:74 main/common/services/i18n.js:75
 msgid "Roles"
 msgstr "Funções"
 
-#: dist/features/admin/applications/edit-application-look-n-feel.html:1
-#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
 msgid "Save"
 msgstr "Salvar"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Search Key 1"
 msgstr "Chave de pesquisa 1"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Search Key 2"
 msgstr "Chave de pesquisa 2"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Search Key 3"
 msgstr "Chave de pesquisa 3"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Search Key 4"
 msgstr "Chave de pesquisa 4"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Search Key 5"
 msgstr "Chave de pesquisa 5"
 
-#: dist/features/admin/cases/list/archived-cases-list-filters.html:1
-#: dist/features/admin/cases/list/cases-list-filters.html:1
-#: dist/features/user/cases/list/archived-cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list-filters.html:1
 msgid "Search..."
 msgstr "Pesquisar..."
 
-#: main/common/services/i18n.js:79
 msgid "Select a group..."
 msgstr "Selecione um grupo..."
 
-#: main/common/services/i18n.js:80
 msgid "Select a role..."
 msgstr "Selecione uma função..."
 
-#: main/common/services/i18n.js:64
 msgid "Select all"
 msgstr "Selecionar todos"
 
-#: main/common/services/i18n.js:73
 msgid "Select groups..."
 msgstr "Selecione grupos..."
 
-#: main/common/services/i18n.js:65
 msgid "Select none"
-msgstr "Desmarcar todos"
+msgstr "Desmarcar tudo"
 
-#: main/common/services/i18n.js:76
 msgid "Select roles..."
 msgstr "Selecione funções..."
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "Select the <i>User information management</i> tab to add <i>Custom information</i> on the right"
+msgstr "Selecione a aba <i>Gerenciamento de Informações de Usuários</i> para adicionar <i>Informações customizadas</i> na direita"
+
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
-msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas do processo."
+msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas da aplicação."
 
-#: dist/features/admin/applications/details/menubuilder-addCustomMenuModal.html:1
 msgid "Select the page"
-msgstr "Selecione uma página"
+msgstr "Selecionar a página"
 
-#: main/common/services/i18n.js:70
 msgid "Select users..."
 msgstr "Selecione usuários..."
 
-#: dist/features/admin/applications/details/page-list.html:1
 msgid "Set as Home page"
 msgstr "Definir como página principal"
 
-#: dist/features/admin/applications/applications-list.html:1
+msgid "Show Menu"
+msgstr "Mostrar Menu"
+
+msgid "Show all the tasks I can do: both personal tasks and tasks available to other team members"
+msgstr "Mostrar todas as tarefas que pode fazer: tanto pessoais, tarefas e tarefas disponíveis para outros membros da equipe"
+
+msgid "Show available tasks in task list for archived case"
+msgstr "Mostrar tarefas disponíveis na lista de tarefas para caso arquivado"
+
+msgid "Show available tasks in task list for case"
+msgstr "Mostrar tarefas disponíveis na lista de tarefas para o caso"
+
+msgid "Show menu"
+msgstr "Mostrar menu"
+
+msgid "Show my personal tasks: the ones I took and the ones assigned to me, automatically or by a process manager"
+msgstr "Mostrar minhas tarefas pessoais: as que eu peguei e as que foram designadas para mim, automaticamente ou por um gerente de processo"
+
+msgid "Show panel"
+msgstr "Mostrar painel"
+
+msgid "Show the tasks that I have done"
+msgstr "Mostrar as tarefas que eu fiz"
+
 msgid "Sort by URL"
 msgstr "Ordenar pela URL"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by name"
 msgstr "Ordenar por nome"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by updated on"
 msgstr "Ordenar pela data de atualização"
 
-#: dist/features/admin/applications/applications-list.html:1
 msgid "Sort by version"
 msgstr "Ordenar por versão"
 
-#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
 msgid "Specify the menu structure."
 msgstr "Defina a estrutura do menu."
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Start date"
 msgstr "Data de início"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/archived-cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list-filters.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "Started"
+msgstr "Iniciado"
+
 msgid "Started by"
 msgstr "Iniciado por"
 
-#: dist/features/admin/cases/list/cases-list.html:1
 msgid "State"
 msgstr "Estado"
 
-#: dist/features/admin/applications/import-application.html:1
-msgid "Status of import"
-msgstr "Estado da importação"
+msgid "Status"
+msgstr "Status"
 
-#: main/common/services/i18n.js:61
+msgid "Status of importation"
+msgstr "Status da importação"
+
+msgid "Submit"
+msgstr "Enviar"
+
 msgid "Successfully updated categories"
 msgstr "As categorias foram atualizadas com sucesso"
 
-#: table-settings/tableSettings.tpl.html:5
-#: table-settings/tableSettings.tpl.html:9
+msgid "System"
+msgstr "Sistema"
+
 msgid "Table settings"
 msgstr "Parâmetros da tabela"
 
-#: main/common/services/i18n.js:100
+msgid "Take"
+msgstr "Pegar"
+
+msgid "Task Id"
+msgstr "Id da tarefa"
+
+msgid "Task form"
+msgstr "Formulário da tarefa"
+
+msgid "Task list"
+msgstr "Lista de tarefas"
+
+msgid "Task name"
+msgstr "Nome da tarefa"
+
+msgid "Technical User"
+msgstr "Usuário Técnico"
+
 msgid "Technical error."
 msgstr "Erro técnico."
 
-#: dist/features/admin/processes/details/menu.html:1
-#: main/common/services/i18n.js:117
 msgid "The Process cannot be enabled"
 msgstr "O processo não pode ser ativado"
 
-#: dist/features/admin/applications/delete-application.html:1
 msgid "The application"
 msgstr "A aplicação"
 
-#: main/common/services/i18n.js:115
+msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
+msgstr "O anexo é muito grande. <br/> Selecione um anexo menor e envie novamente."
+
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
 msgstr "O dado de negócio: [ {} ] usa Objetos de Negócio que não estão definidos no modelo de Dados de Negócio atual. Instale um modelo de Dados de Negócio compatível antes de ativar o processo."
 
-#: main/common/services/i18n.js:123
+msgid "The case is archived. You cannot add comments anymore"
+msgstr "O instância esta arquivada. Não é possível adicionar comentários mais"
+
 msgid "The case {{caseId}} has been started successfully."
-msgstr ""
+msgstr "A instância {{caseId}} foi iniciada com êxito."
 
-#: dist/features/admin/processes/details/process-connectors.html:1
 msgid "The current process has no connectors defined."
-msgstr "O processo atual não possui conectores."
+msgstr "O processo atual tem os conectores não definidos."
 
-#: dist/features/admin/processes/details/params.html:1
 msgid "The current process has no parameters defined."
-msgstr "O processo atual não possui parâmetros."
+msgstr "O processo atual não tem parâmetros definidos."
 
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "The deleted case will be permanently deleted and will not be stored in the archives."
 msgstr "O caso será permanentemente excluído e não será armazenado nos arquivos."
 
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "O caso será excluído dos arquivos permanentemente."
 
-#: main/common/services/i18n.js:116
-msgid "The following form mappings are not resolved: [ {} ]. They must be resolved before enabling the Process."
-msgstr ""
+msgid "The form mappings must be resolved before enabling the Process."
+msgstr "Os mapeamentos de formulário devem ser resolvidos antes de ativar o processo."
 
-#: main/common/services/i18n.js:110
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
 
-#: main/common/services/i18n.js:122
+msgid "The task has been submitted but an error occurred while adding the comment"
+msgstr "A tarefa foi apresentada, mas ocorreu um erro ao adicionar o comentário"
+
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
-msgstr ""
+msgstr "As palavras 'conteúdo', 'API' e 'tema' são reservados para uso interno. Eles não devem ser usados em um aplicativo ou a URL da página."
 
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/applications/edit-application-look-n-feel.html:1
 msgid "Theme"
-msgstr " Tema"
+msgstr "Tema"
 
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
+msgid "Then for each user, fill out the custom information value, in the Studio (<i>List of users</i> tab of the organization), or right on this Portal page."
+msgstr "Então para cada usuário, preencha o valor da informação personalizada, no Studio (<i>Lista de usuários</i> aba da organização), ou na direita da página do Portal."
+
 msgid "These deleted cases will be permanently deleted and will not be stored in the archives."
 msgstr "Estes casos serão permanentemente excluídos e não serão armazenado nos arquivos."
 
-#: dist/features/admin/cases/list/cases-list-deletion-modal.html:1
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "Estes casos serão excluídos dos arquivos permanentemente."
 
-#: main/common/factories/i18nMsg.js:43
 msgid "This URL is already in use"
-msgstr "Este campo é obrigatório"
+msgstr "Essa URL já está em uso"
 
-#: main/common/factories/i18nMsg.js:42
 msgid "This field is mandatory"
 msgstr "Este campo é obrigatório"
 
-#: main/common/factories/i18nMsg.js:44
+msgid "This is the task details panel. No information to display"
+msgstr "Este é o painel de detalhes de tarefa. Nenhuma informação para exibir"
+
 msgid "This name is already in use"
-msgstr "Este nome já é utilizado"
+msgstr "Este nome já está em uso"
 
-#: dist/features/admin/applications/applications-list.html:1
+msgid "This task is completed."
+msgstr "Esta tarefa esta concluída."
+
+msgid "This task is not available anymore. The list is now up to date."
+msgstr "Essa tarefa não está mais disponível. A lista agora esta atualizada."
+
+msgid "This task is overdue. It was supposed to be completed by {{dueDate}}"
+msgstr "Esta tarefa está em atraso. Era para ser concluída em {{dueDate}}"
+
+msgid "Title"
+msgstr "Título"
+
 msgid "To create an application, click New or Import."
-msgstr "Para criar uma aplicação clique em Nova ou Importar."
+msgstr "Para criar uma aplicação clique em Novo ou Importar."
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
+msgid "To do"
+msgstr "Para fazer"
+
 msgid "To do so, go to"
 msgstr "Para fazer isso, vá para"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
+msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
+msgstr "Para fazer isso, efetue logout e, em seguida, efetue login novamente como Usuário Técnico, cujas credenciais são definidas na instalação da plataforma Bonita."
+
+msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
+msgstr "Para preencher o formulário, você precisa assumir esta tarefa. Isto significa que você será o único capaz de fazê-la. Para torná-la disponível para a equipe novamente, clique no botão liberar."
+
+msgid "To know more about this platform configuration option, go to the"
+msgstr "Para saber mais sobre a opção de configuração da plataforma, vá para o"
+
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Para personalizar a exibição de chaves de pesquisa (e colunas em geral), utilize o botão de configuração da tabela, à direita. Você pode pesquisar em até 5 chaves de busca."
 
-#: main/common/services/i18n.js:88
-msgid "To use this feature, create a new version of the process in Bonita BPM Studio version 6.4 and above, then create and install the new .bar file in the Portal."
-msgstr "Para usar esse recurso, crie uma nova versão do processo no Bonita BPM Studio com versão 6.4 ou superior e crie e instalar o novo arquivo .bar no Portal."
+msgid "To use this feature, create a new version of the process in Bonita Studio version 6.4 and above, then create and install the new .bar file in the Portal."
+msgstr "Para usar esse recurso, crie uma nova versão do processo no Bonita Studio com versão 6.4 ou superior , então crie e instale o novo arquivo .bar no Portal."
 
-#: dist/features/admin/processes/details/params.html:1
-#: dist/features/admin/processes/details/process-connectors.html:1
 msgid "Type"
 msgstr "Tipo"
 
-#: main/common/services/i18n.js:102
 msgid "Type here to search for a user..."
 msgstr "Digite aqui para pesquisar um usuário..."
 
-#: main/common/services/i18n.js:67
 msgid "Type here to search..."
 msgstr "Digite aqui para pesquisar..."
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/applications/details/page-list-addPageModal.html:1
-#: dist/features/admin/applications/edit-application.html:1
-#: dist/features/admin/applications/import-application.html:1
+msgid "Type in a case id and <br> press enter to search for <br> human task of a specific case"
+msgstr "Digite um id de instância e <br>e clique enter para procurar <br>tarefa humana de uma instância específica"
+
 msgid "URL"
 msgstr "URL"
 
-#: dist/features/admin/applications/details/application-details-app.html:1
-msgid "Update"
-msgstr "Atualização"
+msgid "Unable to add the comment. Refresh your task list and try again. If the problem persists, contact your administrator"
+msgstr "Não é possível adicionar o comentário. Atualizar sua lista de tarefas e tente novamente. Se o problema persistir, contate o administrador"
 
-#: dist/features/admin/applications/details/application-details.html:1
+msgid "Unassign. This will make it available to team again"
+msgstr "Cancelar a atribuição. Isto tornará disponível a equipe novamente"
+
+msgid "Under normal"
+msgstr "Em condições normais"
+
+msgid "Update"
+msgstr "Atualizar"
+
+msgid "Update Business Data Model"
+msgstr "Atualizar Modelo de Dados de Negócios"
+
+msgid "Update business card"
+msgstr "Atualizar cartão de visitas"
+
+msgid "Update custom information"
+msgstr "Atualizar informações personalizadas"
+
+msgid "Update general information"
+msgstr "Atualizar informações gerais"
+
+msgid "Update password"
+msgstr "Atualizar senha"
+
+msgid "Update personal information"
+msgstr "Atualizar informações pessoais"
+
 msgid "Updated by"
 msgstr "Atualizado por"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/details/application-details.html:1
-#: dist/features/admin/processes/details/information.html:1
 msgid "Updated on"
 msgstr "Atualizado em"
 
-#: dist/features/admin/processes/details/manage-category-mapping-modal.html:1
+msgid "Upload new picture"
+msgstr "Carregar nova imagem"
+
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Uso as teclas seta para cima e seta para baixo para navegar entre as categorias existentes."
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
-#: main/common/services/i18n.js:68
+msgid "Username"
+msgstr "Nome de usuário"
+
 msgid "Users"
 msgstr "Usuários"
 
-#: main/common/services/i18n.js:69
 msgid "Users mapped to {}"
 msgstr "Usuários mapeados a {}"
 
-#: dist/features/admin/processes/details/params.html:1
 msgid "Value"
 msgstr "Valor"
 
-#: dist/features/admin/applications/applications-list.html:1
-#: dist/features/admin/applications/edit-application.html:1
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "Version"
 msgstr "Versão"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "View case details"
 msgstr "Ver detalhes do casos"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "View case overview"
 msgstr "Visão geral do caso"
 
-#: dist/features/admin/applications/export-application.html:1
-msgid "When you export an application, pages and profiles are not exported in the file."
-msgstr "Ao exportar uma aplicação, páginas personalizadas e perfis não são exportadas no arquivo."
+msgid "View task"
+msgstr "Visualizar tarefas"
 
-#: dist/features/admin/cases/list/cases-list-filters.html:1
+msgid "View this task"
+msgstr "Visualizar esta tarefa"
+
+msgid "Warning:"
+msgstr "Aviso:"
+
+msgid "We couldn't find what you are looking for."
+msgstr "Não encontramos o que você está procurando."
+
+msgid "When you export an application descriptor, pages and profiles are not exported in the file."
+msgstr "Quando você exporta um descritor de aplicativo, páginas e perfis não são exportados no arquivo."
+
 msgid "With failures"
 msgstr "Com erros"
 
-#: dist/features/admin/applications/export-application.html:1
-msgid "You are about to export the application"
-msgstr "Você está prestes a exportar a aplicação"
+msgid "You are about to export the descriptor of the application"
+msgstr "Você está prestes a exportar o descritor da aplicação"
 
-#: dist/features/admin/applications/details/menubuilder-menuCreator.html:1
+msgid "You can create custom information in Bonita Studio:"
+msgstr "Você pode criar informações personalizadas no Bonita Studio:"
+
 msgid "You must add a page before you can reference it in a menu."
 msgstr "Você deve adicionar uma página antes de poder referenciá-la em um menu."
 
-#: main/common/services/i18n.js:108
-msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
-msgstr ""
+msgid "Your personal task list is empty. You can take a task from the ​<a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\">To do</a> list."
+msgstr "Sua lista de tarefas pessoais está vazia. Você pode tomar uma tarefa da lista <a href=\"#\" ng-click=\"changeFilter(TASK_FILTERS.TODO)\"> para fazer</a>."
 
-#: dist/features/admin/applications/edit-application-look-n-feel.html:1
+msgid "Zip code"
+msgstr "Cep"
+
+msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)"
+msgstr "Erro de estrutura de arquivo de zip. Verifique que o seu .zip contém um page.properties bem formado e um index.html ou um Index.groovy. Para maiores detalhes, consulte a documentação ou a página de exemplo readme (disponível na lista de páginas personalizadas)"
+
 msgid "an Application"
 msgstr "uma Aplicação"
 
-#: dist/features/admin/applications/edit-application.html:1
 msgid "an application"
 msgstr "uma aplicação"
 
-#: dist/features/admin/applications/import-application.html:1
-msgid "application has been partially imported. The following items are not loaded in the Portal."
-msgstr "aplicações foram importadas parcialmente. Os seguintes itens não estão presentes no Portal."
+msgid "application descriptor has been partially imported. The following items are not loaded in the Portal."
+msgstr "descritor de aplicações foi importado parcialmente. Os seguintes itens não foram carregados no Portal."
 
-#: dist/features/admin/applications/import-application.html:1
-msgid "application has been successfully imported, with complete page mapping and menu mapping."
-msgstr "aplicações foram importadas com sucesso, com o mapeamento completo de páginas e menus."
+msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
+msgstr "descritor de aplicativos foi importado com sucesso, com mapeamento completo de página e mapeamento de menu."
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
+msgid "documentation"
+msgstr "documentação"
+
 msgid "of"
 msgstr "de"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by End date ascending"
 msgstr "ordena por data fim, crescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by End date descending"
 msgstr "ordena por data fim, decrescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by ID ascending"
 msgstr "ordena por Id, crescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by ID descending"
 msgstr "ordena por Id, decrescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name ascending"
 msgstr "ordena por nome, crescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Process name descending"
 msgstr "ordena por nome, decrescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Start date ascending"
 msgstr "ordena por data de início, crescente"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "sort by Start date descending"
 msgstr "ordena por data de início, decrescente"
 
-#: dist/features/admin/applications/delete-application.html:1
+msgid "username:"
+msgstr "nome de usuário:"
+
 msgid "will be permanently deleted."
 msgstr "será excluída permanentemente."
 
-#: main/common/services/i18n.js:63
+msgid "{{firstname}} {{lastname}} already has the membership <b>{{role}} of {{group}}</b>"
+msgstr "{{firstname}}{{lastname}} já tem o membro <b>{{role}} do {{group}}</b>"
+
+msgid "{{membership.role_id.displayName}} of {{membership.group_id.displayName}}"
+msgstr "{{membership.role_id.displayName}} do {{membership.group_id.displayName}}"
+
 msgid "{{nbErrors}} errors on mapping updates"
 msgstr "Ocorreram {{nbErrors}} erros na atualização das associações"
 
-#: main/common/services/i18n.js:83
 msgid "{{nbMapping}} Process manager mappings could not be updated"
-msgstr "{{nbMapping}} associações do perfil Gerenciador de processo de  não puderam ser atualizadas"
+msgstr "{{nbMapping}} associações do perfil Gerenciador de processo de não puderam ser atualizadas"
 
-#: main/common/services/i18n.js:84
 msgid "{{nbMapping}} Process manager mappings have been updated"
 msgstr "{{nbMapping}} associações do perfil Gerenciador de processo foram atualizadas"
 
-#: main/common/services/i18n.js:59
 msgid "{{nbOfDeletedCases}} cases have been deleted"
 msgstr "{{nbOfDeletedCases}} casos foram excluídos"
 
-#: main/common/services/i18n.js:62
 msgid "{{nbSucess}} actor mapping updates succeeded"
 msgstr "{{nbSucess}} mapeamento de atores atualizados com sucesso"
 
-#: main/common/services/i18n.js:81
 msgid "{{role}} of {{group}}"
 msgstr "{{role}} de {{group}}"
 
-#: main/common/services/i18n.js:82
 msgid "{{role}} of {{group}} has been created"
 msgstr "{{role}} de {{group}} foi criado"
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "{} mapped"
 msgstr "{} mapeado"
 
-#: dist/features/admin/processes/details/edit-actor-members.html:1
 msgid "{} mappings to delete"
-msgstr "{} mapeamentos a serem excluídos"
+msgstr "{} mapeamentos para excluir"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "{} more"
 msgstr "{} mais"
 
-#: dist/features/admin/processes/details/actors-mapping.html:1
 msgid "{} of {}"
 msgstr "{} de {}"
 
-#: dist/features/admin/cases/list/cases-list.html:1
-#: dist/features/user/cases/list/cases-list.html:1
 msgid "{}-{} of {}"
 msgstr "{}-{} de {}"
 
