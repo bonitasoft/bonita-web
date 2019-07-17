@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bonita-bpm-new-features\n"
+"Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-12 01:03+0100\n"
-"PO-Revision-Date: 2016-01-14 05:26-0500\n"
-"Last-Translator: charlessouillard <rodrigue.legall@bonitasoft.com>\n"
+"POT-Creation-Date: 2019-05-17 05:25+0200\n"
+"PO-Revision-Date: 2019-07-17 02:25\n"
+"Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -12,9 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: bonita-bpm-new-features\n"
+"X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /release-7.2.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para fazer isso, vá para %entitymappingprofilelink%."
@@ -53,25 +53,25 @@ msgid "%attribute% must be a negative value diffrent from 0"
 msgstr "%attribute% deve ser um valor negativo diferente de 0"
 
 msgid "%attribute% must be a numeric value"
-msgstr "%attribute%  deve ser um valor numérico"
+msgstr "%attribute% deve ser um valor numérico"
 
 msgid "%attribute% must be a positive value"
-msgstr "%attribute% deve ser um  valor positivo"
+msgstr "%attribute% deve ser um valor positivo"
 
 msgid "%attribute% must be a positive value different from 0"
 msgstr "%attribute% deve ser um valor positivo diferente de 0"
 
 msgid "%attribute% must be a valid date"
-msgstr "%attribute %  deve ser um dado válido"
+msgstr "%attribute% deve ser uma data válida"
 
 msgid "%attribute% must be an integer value"
 msgstr "%attribute% deve ser um valor inteiro"
 
 msgid "%attribute% must be equal to %secondAttribute%"
-msgstr "%attribute% dee ser igual a %secondAttribute%"
+msgstr "%attribute% deve ser igual a %secondAttribute%"
 
 msgid "%attribute% must be less or equal than %value%"
-msgstr "%attribute% deve ser menor ou igual a %value%"
+msgstr "%attribute% deve ser menor ou igual do que %value%"
 
 msgid "%attribute% must be less than %secondAttribute%"
 msgstr "%attribute% deve ser menor que %secondAttribute%"
@@ -80,40 +80,43 @@ msgid "%attribute% must be less than %value%"
 msgstr "%attribute% deve ser menor que %value%"
 
 msgid "%attribute% must be more or equal than %secondAttribute%"
-msgstr "%attribute% deve ser maior ou igual a %secondAttribute%"
+msgstr "%attribute% deve ser igual ou mais do que %secondAttribute%"
 
 msgid "%attribute% must be more or equal than %value%"
-msgstr "%attribute% deve ser igual ou maior que %value%"
+msgstr "%attribute% deve ser igual ou mais do que %value%"
 
 msgid "%attribute% must be more than %secondAttribute%"
-msgstr "%attribute% deve ser maior que %secondAttribute%"
+msgstr "%attribute% deve ser mais do que %secondAttribute%"
 
 msgid "%attribute% must be more than %value%"
-msgstr "%attribute% deve ser maior que %value%"
+msgstr "%attribute% deve ser mais do que %value%"
 
 msgid "%attribute% must be on a single line"
-msgstr "%attribute% deve ser uma única linha\n"
+msgstr "%attribute% deve ser uma única linha"
 
 msgid "%attribute% must be one of {%list%}"
-msgstr "%attribute% deve pertencer a {%list%}"
+msgstr "%attribute% deve ser um dos {%list%}"
 
 msgid "%attribute% must contain exactly %length% characters"
 msgstr "%attribute% deve conter exatamente %length% caracteres"
 
 msgid "%attribute% must not be equal to %secondAttribute%"
-msgstr "%attribute% deve ser igual a %secondAttribute%"
+msgstr "%attribute% não deve ser igual a %secondAttribute%"
 
-msgid "%attribute% mustn't contains blank spaces"
+msgid "%attribute% must not contain '/'"
+msgstr "%attribute% não deve conter '/'"
+
+msgid "%attribute% must not contain blank spaces"
 msgstr "%attribute% não deve conter espaços em branco"
 
-msgid "%attribute% mustn't contains spaces"
+msgid "%attribute% must not contain spaces"
 msgstr "%attribute% não deve conter espaços"
 
 msgid "%className% is not Serializable"
-msgstr "%className% não estende Serializable"
+msgstr "%className% não é serializável"
 
 msgid "%className% not found. Only jdk types are supported"
-msgstr "%className% não encontrado. Somente tipos do jdk são suportados"
+msgstr "%className% não encontrado. Somente tipos de jdk são suportados"
 
 msgid "%current_page% of %total_pages%"
 msgstr "%current_page% de %total_pages%"
@@ -128,7 +131,7 @@ msgid "%groupname%"
 msgstr "%groupname%"
 
 msgid "%nb_archived% archived"
-msgstr "%nb_archived% arquivado"
+msgstr "%nb_archived% arquivados"
 
 msgid "%nb_ongoing% ongoing"
 msgstr "%nb_ongoing% em curso"
@@ -140,7 +143,7 @@ msgid "%rolename%"
 msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
-msgstr "%rolename% of %groupname%"
+msgstr "%rolename% de %groupname%"
 
 msgid "%secondAttribute% must be a numeric value"
 msgstr "%secondAttribute% deve ser um valor numérico"
@@ -149,7 +152,7 @@ msgid "%start_result% - %end_result% of %total_results%"
 msgstr "%start_result% - %end_result% de %total_results%"
 
 msgid "%start_result% of %total_results%"
-msgstr "%start_result% of %total_results%"
+msgstr "%start_result% de %total_results%"
 
 msgid "%time% ago"
 msgstr "%time% atrás"
@@ -161,13 +164,13 @@ msgid "%value% is not a valid value for %className%"
 msgstr "%value% não é um valor válido para %className%"
 
 msgid "'%applicationName%' as page '%associationName%'"
-msgstr "'%applicationName%' como página '%associationName%'"
+msgstr "'%applicationName%' como página de '%associationName%'"
 
 msgid "'%layoutName%' is used as layout for:"
 msgstr "'%layoutName%' é usado como layout para:"
 
 msgid "'%pageName%' is used by:"
-msgstr "%pageName% é utilizada por:"
+msgstr "'%pageName%' é usada por:"
 
 msgid "'%themeName%' is used as Theme for:"
 msgstr "'%themeName%' é utilizado como tema para:"
@@ -175,20 +178,26 @@ msgstr "'%themeName%' é utilizado como tema para:"
 msgid "?"
 msgstr "?"
 
-msgid "A Business Data Model has a .%fileExtension% extension"
-msgstr "Um Modelo de Dados de Negócio tem a extensão  .%fileExtension%"
-
 msgid "A business archive has a .bar extension"
 msgstr "Um arquivo de negócios tem uma extensão .bar"
 
+msgid "A case has been started successfully."
+msgstr "Um caso foi iniciado com êxito."
+
 msgid "A form is a page mapped to case start or a human task."
 msgstr "Um formulário é uma página associada à um início de caso ou a uma tarefa humana."
+
+msgid "A group with the name %groupName% already exists"
+msgstr "Um grupo com o nome %groupName% já existe"
 
 msgid "A page archive has a .zip extension"
 msgstr "Um arquivo de página a extensão .zip"
 
 msgid "A page with this name already exists."
 msgstr "Já existe uma página com este nome."
+
+msgid "A process with the same name and version already exists."
+msgstr "Um processo com o mesmo nome e versão já existe."
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 msgstr "Um recurso é importado na forma de um arquivo zip que contém um arquivo page.properties e uma pasta de recursos."
@@ -207,9 +216,6 @@ msgstr "Ações"
 
 msgid "Activate"
 msgstr "Ativar"
-
-msgid "Activate a BDM"
-msgstr "Ativar um MDN"
 
 msgid "Activate selected users"
 msgstr "Ativar usuários selecionados"
@@ -236,7 +242,7 @@ msgid "Add"
 msgstr "Adicionar"
 
 msgid "Add Comment"
-msgstr "Adicionar comentário"
+msgstr "Adicionar um comentário"
 
 msgid "Add a category"
 msgstr "Adicionar uma categoria"
@@ -245,7 +251,7 @@ msgid "Add a comment"
 msgstr "Adicionar um comentário"
 
 msgid "Add a group"
-msgstr "Adicionar um grupo"
+msgstr "Adicionar grupo"
 
 msgid "Add a group to %actor_name%"
 msgstr "Adicionar um grupo ao %actor_name%"
@@ -259,9 +265,6 @@ msgstr "Adicionar uma associação"
 msgid "Add a membership to %actor_name%"
 msgstr "Adicionar uma associação para %actor_name%"
 
-msgid "Add a membership to %user%"
-msgstr "Adicionar associação ao %user%"
-
 msgid "Add a membership to profile %%"
 msgstr "Adicionar uma associação ao perfil %%"
 
@@ -274,11 +277,8 @@ msgstr "Adicionar uma nova categoria para %%"
 msgid "Add a new custom page"
 msgstr "Adicionar uma nova página personalizada"
 
-msgid "Add a new membership to this user"
-msgstr "Adicionar uma nova associação para este usuário"
-
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Adicione um novo recurso (página, formulário, layout, tema ou extensão de API REST). <br/> Este recurso será instalado no escopo global (não está associado a um processo ou uma aplicação). <br/> Este arquivo (arquivo. zip) deve conter um arquivo de propriedades (page.properties) na raiz, e uma pasta chamada 'resources'. <br/> O arquivo de propriedades deve definir pelo menos o nome (name), o nome de visualização (displayName) e tipo de conteúdo (contentType - o tipo padrão é 'page'). <br/> A pasta 'resources' deve conter um arquivo index.html ou um arquivo Index.groovy, assim que todos os recursos necessários."
+msgstr "Adicionar um novo recurso (página, formulário, layout, tema ou extensão API REST). <br/> Este recurso será instalado no escopo global (não no nível de processo ou aplicativo). <br/> Este arquivo (arquivo. zip) deve conter um arquivo de page.properties no nível da raiz, e uma pasta chamada 'recursos'. <br/> Este arquivo de propriedades deve pelo menos definir o nome, displayName e contentType (contentType padrão é 'página'). <br/> A pasta 'recursos' deve conter tanto a index. html ou o arquivo Index.groovy e os recursos necessários."
 
 msgid "Add a resource"
 msgstr "Adicionar um recurso"
@@ -290,22 +290,19 @@ msgid "Add a role to %actor_name%"
 msgstr "Adicionar uma função para %actor_name%"
 
 msgid "Add a role to profile %%"
-msgstr "Adicionar uma função ao perfil %%"
+msgstr "Adicionar uma função para o perfil de %%"
 
 msgid "Add a user"
 msgstr "Adicionar um usuário"
 
 msgid "Add a user to %actor_name%"
-msgstr "Adicionar um usuário ao %actor_name%"
+msgstr "Adicionar um usuário para %actor_name%"
 
 msgid "Add a user to profile %%"
-msgstr "Adicionar um usuário au perfil %%"
-
-msgid "Add new memberships for %user%"
-msgstr "Adicionar novas associações para %user%"
+msgstr "Adicionar um usuário para o perfil de %%"
 
 msgid "Add resource"
-msgstr "Adicionar recurso"
+msgstr "Adicionar recursos"
 
 msgid "Add selected group(s) to this profile"
 msgstr "Adicionar o(s) grupo(s) selecionado(s) neste perfil"
@@ -329,13 +326,10 @@ msgid "Add this role to %actor_name%"
 msgstr "Adicionar esta função para %actor_name%"
 
 msgid "Add this user to %actor_name%"
-msgstr "Adicionar este usuário a %actor_name%"
+msgstr "Adicionar esse usuário para %actor_name%"
 
 msgid "Add your comment"
 msgstr "Adicione seu comentário"
-
-msgid "Address"
-msgstr "Endereço"
 
 msgid "Administrator"
 msgstr "Administrador"
@@ -344,7 +338,7 @@ msgid "Alert"
 msgstr "Alerta"
 
 msgid "All"
-msgstr "Todos "
+msgstr "Todos"
 
 msgid "All Groups"
 msgstr "Todos os grupos"
@@ -365,10 +359,7 @@ msgid "All processes are automatically paused."
 msgstr "Todos os processos são automaticamente suspensos."
 
 msgid "An archive has a .zip extension"
-msgstr "Um arquivo tem uma extensão .zip"
-
-msgid "An error has occurred when deploying Business Data Model."
-msgstr "Ocorreu um erro ao implantar o modelo de dados de negócio."
+msgstr "Um arquivo tem uma extensão. zip"
 
 msgid "An error occurred while creating a definition"
 msgstr "Ocorreu um erro ao criar uma definição"
@@ -376,8 +367,13 @@ msgstr "Ocorreu um erro ao criar uma definição"
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Ocorreu um erro ao excluir um item com o id %id%"
 
+msgid "An error occurred while importing the organization.\n"
+"Consult the logs for more information."
+msgstr "Ocorreu um erro ao importar a organização. \n"
+"Consulte as logs para mais informações."
+
 msgid "Analytics"
-msgstr "Analítica"
+msgstr "Métricas"
 
 msgid "Applications"
 msgstr "Aplicações"
@@ -389,7 +385,7 @@ msgid "Archive"
 msgstr "Arquivo"
 
 msgid "Archived"
-msgstr "Arquivados"
+msgstr "Arquivado"
 
 msgid "Archived date"
 msgstr "Data de arquivamento"
@@ -399,9 +395,6 @@ msgstr "Arquivos"
 
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "Tem certeza que deseja remover os atores selecionados do processo?"
-
-msgid "Are you sure you want to delete this membership ?"
-msgstr "Tem certeza que deseja excluir esta associação?"
 
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "Tem certeza que deseja remover a categoria '%categoryName%' do processo '%appName%' ?"
@@ -422,7 +415,7 @@ msgid "Assigned date"
 msgstr "Data atribuída"
 
 msgid "Assigned to"
-msgstr "Atribuido a"
+msgstr "Atribuído a"
 
 msgid "Assigned to me"
 msgstr "Atribuído a mim"
@@ -439,6 +432,9 @@ msgstr "Tarefas disponíveis"
 msgid "Avatar"
 msgstr "Avatar"
 
+msgid "BDM"
+msgstr "BDM"
+
 msgid "BPM Services are paused. You may need to resume them."
 msgstr "Os serviços bpm estão em pausa. Você precisa retomà-los."
 
@@ -454,23 +450,20 @@ msgstr "Cuidado, sua organização será mesclada com os dados existentes."
 msgid "Bonita Archive"
 msgstr "Arquivo Bonita"
 
-msgid "Bonita BPM Portal"
-msgstr ""
+msgid "Bonita Portal"
+msgstr "Bonita BPM Portal"
 
 msgid "Browse your computer and select the business archive containing the process definition to install."
-msgstr "Procure no seu computador e selecione o arquivo de negócios (.bar) que contém a definição de processo a ser instalada."
+msgstr "Procure em seu computador e selecione o arquivo que contém a definição de processo de negócios para instalar."
 
 msgid "Business Data Model"
-msgstr "Modelo de Dados de Negócio"
+msgstr "Modelo de dados de negócio"
 
 msgid "Business archive"
-msgstr "Business archive"
-
-msgid "Business card"
-msgstr "Cartão de visita"
+msgstr "Arquivo de negócios"
 
 msgid "By default, forms are included in the process bar file for deployment."
-msgstr "Por padrão, os formulários são incluídos no arquivo de processo (.bar) para a instalação."
+msgstr "Por padrão, os formulários são incluídos no arquivo de processo (. bar) para a instalação."
 
 msgid "Call activity"
 msgstr "Atividade de Chamada"
@@ -491,28 +484,31 @@ msgid "Can't import Applications."
 msgstr "Não foi possível importar aplicações."
 
 msgid "Can't import applications. An application '%token%' already exists"
-msgstr "Não é possível importar as aplicações. Uma aplicação 'token %' já existe."
+msgstr "Não é possível importar as aplicações. Uma aplicação 'token %' já existe"
 
-msgid "Can't import organization. Please check that your file is well-formed"
-msgstr "Não é possível importar a organização. Por favor, verifique se o arquivo está bem formatado"
+msgid "Can't import organization"
+msgstr "Não é possível importar organização"
+
+msgid "Can't import organization. Please check that your file is well-formed."
+msgstr "Não é possível importar a organização. Por favor, verifique se o arquivo está bem formatado."
 
 msgid "Can't parse json, non-well formed content"
-msgstr "Não é possível analisar o json, o conteúdo não é bem formado"
+msgstr "Impossível analisar json, o conteúdo não é bem formado"
 
 msgid "Can't start process %processId%, user %userId% not found"
 msgstr "Impossível iniciar o processo %processId%, usuário %userId% não encontrado"
 
 msgid "Can't start process, process %processId% is not enabled"
-msgstr "Não é possível iniciar o processo, pois o processo %processId% não está ativado"
+msgstr "Não pode iniciar o processo, o processo %processId% não está ativado"
 
 msgid "Can't start process, process %processId% not found"
-msgstr "Não é possível iniciar o processo, pois o processo %processId% não encontrado"
+msgstr "Não pode iniciar processo, o processo %processId% não foi encontrado"
 
 msgid "Can't update group. Group not found"
 msgstr "Não é possível atualizar o grupo. Grupo não encontrado"
 
 msgid "Can't update user. User not found"
-msgstr "Não é possível atualizar o usuário. Usuário não encontrado"
+msgstr "Impossível atualizar usuário. Usuário não foi encontrado"
 
 msgid "Cancel"
 msgstr "Cancelar"
@@ -527,7 +523,7 @@ msgid "Case"
 msgstr "Instância de processo"
 
 msgid "Case id"
-msgstr "Id da instância de processo"
+msgstr "Número da instância de processo"
 
 msgid "Case id: "
 msgstr "Id da instância de processo: "
@@ -536,16 +532,16 @@ msgid "Case variables"
 msgstr "Variável de processo"
 
 msgid "Cases"
-msgstr "Casos"
+msgstr "Instâncias"
 
 msgid "Cases I have started"
-msgstr "Casos que eu iniciei"
+msgstr "Instâncias que eu iniciei"
 
 msgid "Cases I have started or I have worked on"
-msgstr "Casos que eu iniciei ou já trabalhei"
+msgstr "Instâncias que eu iniciei ou já trabalhei"
 
 msgid "Cases I worked on"
-msgstr "Casos nos quais eu trabalhei"
+msgstr "Instâncias de processo nas quais eu trabalhei"
 
 msgid "Categories"
 msgstr "Categorias"
@@ -562,9 +558,6 @@ msgstr "Alterar para o idioma selecionado"
 msgid "Choose a language"
 msgstr "Escolha um idioma"
 
-msgid "City"
-msgstr "Cidade"
-
 msgid "Class name"
 msgstr "Nome da classe"
 
@@ -576,9 +569,6 @@ msgstr "Clique aqui para escolher o arquivo. "
 
 msgid "Click here to go to Profile listing page"
 msgstr "Clique aqui para ir para a página de perfis"
-
-msgid "Click on Install to complete the deployment or Cancel to stop the deployment."
-msgstr "Clique em instalar para concluir a implantação ou em cancelar para interromper a implantação."
 
 msgid "Click to export this page"
 msgstr "Clique para exportar esta página"
@@ -611,7 +601,7 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 msgid "Confirm Delete?"
-msgstr "Confirmar a exclusão?"
+msgstr "Confirmar exclusão?"
 
 msgid "Confirm delete ?"
 msgstr "Confirmar exclusão?"
@@ -623,7 +613,7 @@ msgid "Confirm deletion ?"
 msgstr "Confirmar exclusão?"
 
 msgid "Confirm password"
-msgstr "Confirmar senha"
+msgstr "Confirme a senha"
 
 msgid "Confirm removing"
 msgstr "Confirme a remoção"
@@ -680,15 +670,12 @@ msgid "Content type is 'page'."
 msgstr "O tipo de conteúdo é 'page'."
 
 msgid "Content type is 'theme'."
-msgstr "O tipo de conteúdo é 'theme'."
-
-msgid "Country"
-msgstr "País"
+msgstr "Tipo de conteúdo é 'tema'."
 
 msgid "Create"
 msgstr "Criar"
 
-msgid "Create a form from the contract in Bonita BPM Studio."
+msgid "Create a form from the contract in Bonita Studio."
 msgstr "Crie um formulário a partir do contrato no Bonita BPM Studio."
 
 msgid "Create a group"
@@ -728,10 +715,10 @@ msgid "Custom Pages"
 msgstr "Páginas personalizadas"
 
 msgid "Dactivate selected user"
-msgstr "Dactivate usuário selecionado"
+msgstr "Desativar usuários selecionados"
 
 msgid "Data definition %dataName% doesn't exists for process %processId%"
-msgstr "A definição de variável %dataName% não existe para o processo %processId%"
+msgstr "Definição do dado %dataName% não existe para o processo %processId%"
 
 msgid "Data included are : Users, groups and roles"
 msgstr "Dados incluídos são: usuários, grupos e funções"
@@ -740,7 +727,7 @@ msgid "Deactivate"
 msgstr "Desativar"
 
 msgid "Deactivate selected users"
-msgstr "Desativar usuários selecionados"
+msgstr "Desactivar a usuários selecionados"
 
 msgid "Deactivated user"
 msgstr "Usuário desativado"
@@ -752,10 +739,10 @@ msgid "Deletable"
 msgstr "Passível de exclusão"
 
 msgid "Delete"
-msgstr "Excluir"
+msgstr "Deletar"
 
 msgid "Delete %resource_name%"
-msgstr "Excluir % resource_name %"
+msgstr "Excluir %resource_name%"
 
 msgid "Delete pages"
 msgstr "Excluir páginas"
@@ -781,9 +768,6 @@ msgstr "Excluir o processo %app_name%?"
 msgid "Delete this member"
 msgstr "Excluir este membro"
 
-msgid "Delete this membership"
-msgstr "Excluir esta associação"
-
 msgid "Delete this process"
 msgstr "Excluir este processo"
 
@@ -793,11 +777,8 @@ msgstr "Descrição"
 msgid "Description:"
 msgstr "Descrição:"
 
-msgid "Details"
-msgstr "Detalhes"
-
 msgid "Direct users"
-msgstr "Usuários diretos"
+msgstr "Direct users"
 
 msgid "Disable"
 msgstr "Desativar"
@@ -830,19 +811,16 @@ msgid "Display tasks I have done"
 msgstr "Exibir tarefas nas quais eu atuei"
 
 msgid "Display the case overview"
-msgstr ""
+msgstr "Exibir o resumo do caso"
 
 msgid "Do it"
 msgstr "Fazer"
-
-msgid "Do not delete this membership"
-msgstr "Não excluir esta associação"
 
 msgid "Do you still want to delete the selected pages?"
 msgstr "Ainda deseja excluir as páginas selecionadas?"
 
 msgid "Done"
-msgstr "Feito"
+msgstr "Realizada"
 
 msgid "Done %task_last_update% by %executed_by%"
 msgstr "Concluído em %task_last_update% por %executed_by%"
@@ -854,7 +832,7 @@ msgid "Done on"
 msgstr "Realizado em"
 
 msgid "Done tasks"
-msgstr "Tarefas executadas"
+msgstr "Tarefas feitas"
 
 msgid "Due date"
 msgstr "Prazo final"
@@ -870,9 +848,6 @@ msgstr "Editar %pageName%"
 
 msgid "Edit a role"
 msgstr "Editar uma função"
-
-msgid "Edit a user"
-msgstr "Atualizar um usuário"
 
 msgid "Edit case variable"
 msgstr "Editar variável de caso"
@@ -890,13 +865,10 @@ msgid "Edit selected page"
 msgstr "Editar a página selecionada"
 
 msgid "Edit this group"
-msgstr "Editar este grupo"
+msgstr "Edit this group"
 
 msgid "Edit this value"
 msgstr "Editar este valor"
-
-msgid "Edit user"
-msgstr "Atualizar usuário"
 
 msgid "Edit users of actor %actor_name%"
 msgstr "Editar usuários do ator %actor_name%"
@@ -925,15 +897,6 @@ msgstr "Processos ativados"
 msgid "Enter a category name"
 msgstr "Digite um nome de categoria"
 
-msgid "Enter the address of this user"
-msgstr "Digite o endereço do usuário"
-
-msgid "Enter the city of this user"
-msgstr "Entre a cidade deste usuário"
-
-msgid "Enter the country of this user"
-msgstr "Digite o país deste usuário"
-
 msgid "Enter the description for this category"
 msgstr "Digite a descrição para esta categoria"
 
@@ -941,55 +904,34 @@ msgid "Enter the description of this group"
 msgstr "Digite a descrição deste grupo"
 
 msgid "Enter the description of this role"
-msgstr "Digite a descrição dessa função"
+msgstr "Digite a descrição desse papel"
 
 msgid "Enter the display name of this group"
 msgstr "Digite o nome de exibição deste grupo"
 
 msgid "Enter the display name of this role"
-msgstr "Digite o nome de exibição dessa função"
-
-msgid "Enter the email of this user"
-msgstr "Digite o e-mail deste usuário"
+msgstr "Digite o nome de exibição desse papel"
 
 msgid "Enter the first name of this user"
-msgstr "Digite o nome de usuário"
-
-msgid "Enter the job title of this user"
-msgstr "Digite o título da função deste usuário"
+msgstr "Digite o primeiro nome deste usuário"
 
 msgid "Enter the last name of this user"
-msgstr "Digite o sobrenome deste usuário"
-
-msgid "Enter the mobile phone of this user"
-msgstr "Digite o telefone celular deste usuário"
+msgstr "Digite o sobrenome do usuário"
 
 msgid "Enter the name of this group"
 msgstr "Digite o nome deste grupo"
 
 msgid "Enter the name of this role"
-msgstr "Digite o nome desta função"
+msgstr "Digite o nome desse papel"
 
 msgid "Enter the password for this user"
 msgstr "Digite a senha para este usuário"
 
-msgid "Enter the phone of this user"
-msgstr "Digite o telefone deste usuário"
-
-msgid "Enter the state of this user"
-msgstr "Digite o estado deste usuário"
-
 msgid "Enter the text to search for"
 msgstr "Digite o texto para Pesquisar"
 
-msgid "Enter the title of this user"
-msgstr "Digite o título deste usuário"
-
 msgid "Enter the username for this user"
 msgstr "Digite o nome de usuário para este usuário"
-
-msgid "Enter the zip code of this user"
-msgstr "Digite o CEP deste usuário"
 
 msgid "Entity Mapping must be resolved before enabling the Process."
 msgstr "O mapeamento de entidades deve ser resolvido antes de ativar o processo."
@@ -1003,11 +945,14 @@ msgstr "Erro na leitura do arquivo de importação de aplicações."
 msgid "Error occured when starting process %processId%"
 msgstr "Ocorreu um erro ao iniciar o processo %processId%"
 
+msgid "Error uploading the file. Maybe your session expired. You can try to refresh the page."
+msgstr "Erro ao carregar o arquivo. Talvez sua sessão tenha expirado. Você pode tentar atualizar a página."
+
 msgid "Error when adding group to actor member"
 msgstr "Erro ao adicionar grupo como membro do ator"
 
 msgid "Error when creating group"
-msgstr "Error when creating group"
+msgstr "Erro ao criar grupo"
 
 msgid "Error when creating user"
 msgstr "Erro ao criar o usuário"
@@ -1016,7 +961,7 @@ msgid "Error when deleting groups"
 msgstr "Error when deleting groups"
 
 msgid "Error when deleting users"
-msgstr "Erro ao excluir usuários"
+msgstr "Erro ao remover usuários"
 
 msgid "Error when pausing BPM services"
 msgstr "Erro ao suspender os serviços BPM"
@@ -1028,10 +973,10 @@ msgid "Error when searching users"
 msgstr "Erro ao pesquisar usuários"
 
 msgid "Error when updating %activityId% activity variables"
-msgstr "Erro ao atualizar variáveis de atividade para a atividade %activityId%"
+msgstr "Erro ao atualizar as variáveis de atividade %activityId%"
 
 msgid "Error when updating group"
-msgstr "Error when updating group"
+msgstr "Erro ao atualizar o grupo"
 
 msgid "Error when updating process deployment informations"
 msgstr "Erro ao atualizar informações de implantação do processo"
@@ -1040,16 +985,16 @@ msgid "Error when updating user"
 msgstr "Erro ao atualizar usuário"
 
 msgid "Error while trying to execute the task."
-msgstr ""
+msgstr "Erro ao tentar executar a tarefa."
 
 msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
-msgstr "Erro ao tentar executar a tarefa. Algumas informações necessárias estão faltando (contrato não cumprido)."
+msgstr "Erro ao tentar executar a tarefa. Alguns necessária informação está faltando (contrato não cumprido)."
 
 msgid "Error while trying to start the case."
-msgstr ""
+msgstr "Erro ao tentar iniciar o caso."
 
 msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "Erro ao tentar iniciar o caso. Algumas informações necessárias estão faltando (contrato não cumprido)."
+msgstr "Erro ao tentar iniciar o caso. Alguns necessária informação está faltando (contrato não cumprido)."
 
 msgid "Executed by"
 msgstr "Executado por"
@@ -1061,10 +1006,10 @@ msgid "Export"
 msgstr "Exportar"
 
 msgid "Export the installed organization"
-msgstr "Exportar a organização instalada"
+msgstr "Exportação a organização instalada"
 
 msgid "Failed"
-msgstr "Em erro"
+msgstr "Falhou"
 
 msgid "Failed on"
 msgstr "Falha em"
@@ -1076,7 +1021,7 @@ msgid "Failed on:"
 msgstr "Falha em:"
 
 msgid "Failed tasks"
-msgstr "Tarefas em erro"
+msgstr "Tarefas que falharam"
 
 msgid "February"
 msgstr "Fevereiro"
@@ -1102,8 +1047,41 @@ msgstr "Nome do usuário"
 msgid "Firstname"
 msgstr "Nome"
 
+msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
+msgstr "Para administrador-tipo de perfis. Para gerenciar processos: instalar, excluir e configurar, para todos os processos"
+
+msgid "For administrator-type of profiles. To monitor all processes"
+msgstr "Para administrador-tipo de perfis. Para monitorar todos os processos"
+
+msgid "For administrator-type of profiles. To monitor cases of all processes"
+msgstr "Para administrador-tipo de perfis. Para monitorar casos de todos os processos"
+
+msgid "For administrator-type of profiles. To monitor task completion for all processes"
+msgstr "Para administrador-tipo de perfis. Para monitorar a conclusão de tarefas para todos os processos"
+
 msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
 msgstr "Para cada ator, verifique que cada entidade (usuário, grupo, função e associação) tem o perfil de usuário relevante no Portal."
+
+msgid "For process manager-type of profiles. To manage processes under her responsibility"
+msgstr "Para processo-tipo de Gerenciador de perfis. Para gerenciar os processos sob sua responsabilidade"
+
+msgid "For process manager-type of profiles. To monitor cases of processes under her responsibility"
+msgstr "Para processo-tipo de Gerenciador de perfis. Para monitorar casos de processos sob sua responsabilidade"
+
+msgid "For process manager-type of profiles. To monitor processes under her responsibility"
+msgstr "Para processo-tipo de Gerenciador de perfis. Para gerenciar os processos sob sua responsabilidade"
+
+msgid "For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"
+msgstr "Para processo-tipo de Gerenciador de perfis. Para monitorar a conclusão da tarefa, somente para processos sob sua responsabilidade"
+
+msgid "For user-type of profiles. To view and do tasks  if he is a candidate"
+msgstr "Para usuário-tipo de perfis. Para ver e fazer as tarefas, se ele é um candidato"
+
+msgid "For user-type of profiles. To visualize cases started by the user or cases he has worked on"
+msgstr "Para usuário-tipo de perfis. Para visualizar os casos iniciados pelo usuário ou casos que ele trabalhou em"
+
+msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
+msgstr "Para usuário-tipo de perfis. Página do UI Designer para visualizar processos e iniciar casos"
 
 msgid "Form"
 msgstr "Formulário"
@@ -1122,12 +1100,6 @@ msgstr "Obter mais informações sobre o caso especificado"
 
 msgid "Go back to previous view"
 msgstr "Voltar à vista anterior"
-
-msgid "Go to BPM Services"
-msgstr "Ir para serviços BPM"
-
-msgid "Go to Configuration > BPM Services."
-msgstr "Vá para a página Configuração > Serviços BPM."
 
 msgid "Go to page %pagenumber%"
 msgstr "Ir para a página %pagenumber%"
@@ -1160,13 +1132,13 @@ msgid "Human Task"
 msgstr "Tarefa humana"
 
 msgid "Human task"
-msgstr ""
+msgstr "Tarefa humana"
 
 msgid "ID"
 msgstr "ID"
 
 msgid "Icon"
-msgstr "Ícone"
+msgstr "Símbolo"
 
 msgid "Id:"
 msgstr "Id:"
@@ -1197,15 +1169,6 @@ msgstr "Importar / Exportar"
 msgid "Import an existing organization"
 msgstr "Importar uma organização existente"
 
-msgid "Import and activate a new Business Data Model"
-msgstr "Importar e ativar um novo Modelo de Dados de Negócio"
-
-msgid "Import or export data"
-msgstr "Importar ou exportar dados"
-
-msgid "Import/Export"
-msgstr "Importar/Exportar"
-
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "Em caso de conflito, a prioridade é dada ao arquivo importado"
 
@@ -1215,26 +1178,29 @@ msgstr "Inativo"
 msgid "Inactive Users"
 msgstr "Usuários inativos"
 
-msgid "Inactive user"
-msgstr "Usuário inativo"
-
 msgid "Install"
 msgstr "Instalar"
+
+msgid "Install / Export"
+msgstr "Instalar / Exportar"
 
 msgid "Install a process"
 msgstr "Instalar um processo"
 
-msgid "Install the Business Data Model"
-msgstr "Instalar o Modelo de Dados de Negócio"
+msgid "Install or export data"
+msgstr "Importar ou exportar dados"
+
+msgid "Install/Export"
+msgstr "Instalar/Exportar"
+
+msgid "Install/export organization"
+msgstr "Instalar/exportar organização"
 
 msgid "Installed by"
 msgstr "Instalado por"
 
 msgid "Installed on"
 msgstr "Instalado em"
-
-msgid "Invalid Business Data Model content"
-msgstr "Conteúdo de modelo de dados de negócio inválido"
 
 msgid "It is still assigned to you until you release it."
 msgstr "Esta tarefa lhe será atribuída até você a libere."
@@ -1255,7 +1221,7 @@ msgid "Job title of the user"
 msgstr "Cargo do usuário"
 
 msgid "Json can't be mapped to "
-msgstr "JSON não pode ser mapeado para "
+msgstr "Json não pode ser mapeado para "
 
 msgid "July"
 msgstr "Julho"
@@ -1285,7 +1251,7 @@ msgid "Last update date"
 msgstr "Data da última atualização"
 
 msgid "Last updated"
-msgstr "Ultima atualização"
+msgstr "Última atualização"
 
 msgid "Last updated on"
 msgstr "Última atualização em"
@@ -1305,9 +1271,6 @@ msgstr "Licença"
 msgid "Link to the tasks"
 msgstr "Link para as tarefas"
 
-msgid "List memberships of %user%"
-msgstr "Listar associações de %user%"
-
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "O seu login falhou. Nenhum perfil foi criado para este usuário. Contate o administrador."
 
@@ -1318,13 +1281,13 @@ msgid "Logout"
 msgstr "Desconectar"
 
 msgid "Look and Feel"
-msgstr ""
+msgstr "Aparência"
 
 msgid "Loop activity"
-msgstr "Atividade de iteração"
+msgstr "Atividade de loop"
 
 msgid "Loop activity (launches and controls loop execution)"
-msgstr "Atividade de iteração (inicia e controla a execução das iterações)"
+msgstr "Atividade de loop (inicia e controla a execução do loop)"
 
 msgid "Low"
 msgstr "Baixa"
@@ -1336,16 +1299,16 @@ msgid "MM/dd/yyyy"
 msgstr "dd/MM/yyyy"
 
 msgid "MM/dd/yyyy h:mm a"
-msgstr "dd/MM/yyyy 'as' HH:mm"
+msgstr "MM/dd/yyyy hh:mm a"
 
 msgid "MM/dd/yyyy h:mm:ss a"
-msgstr "dd/mm/yyyy hh:MM:ss"
+msgstr "dd/MM/yyyy hh:MM:ss a"
 
 msgid "MMMM dd, yyyy"
-msgstr "dd/MM/yyyy"
+msgstr "MMMM dd, yyyy"
 
-msgid "Make sure all your processes are compatible with the new Business Data Model."
-msgstr "Certifique-se de que todos os processos são compatíveis com o novo modelo de Dados de negócio."
+msgid "Manage BDM"
+msgstr "Gerenciar o BDM"
 
 msgid "Manage Look and Feel"
 msgstr "Gerenciar aparência"
@@ -1353,14 +1316,11 @@ msgstr "Gerenciar aparência"
 msgid "Manage applications"
 msgstr "Gerenciar aplicações"
 
-msgid "Manage cases of processes that an entity with this profile can supervise as PM."
-msgstr "Gerencie casos de processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
-
 msgid "Manage custom pages"
 msgstr "Gerenciar páginas personalizadas"
 
-msgid "Manage processes that an entity with this profile can supervise as PM."
-msgstr "Gerencie processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
+msgid "Manage groups"
+msgstr "Gerenciar grupos"
 
 msgid "Manage profiles"
 msgstr "Gerenciar perfis"
@@ -1368,8 +1328,11 @@ msgstr "Gerenciar perfis"
 msgid "Manage resources"
 msgstr "Gerenciar Recursos"
 
-msgid "Manage tasks of processes that an entity with this profile can supervise as PM."
-msgstr "Gerencie tarefas de processos que uma entidade com esse perfil pode supervisionar como Gerente de Processo."
+msgid "Manage roles"
+msgstr "Gerenciar funções"
+
+msgid "Manage users"
+msgstr "Gerenciar usuários"
 
 msgid "Manager"
 msgstr "Gerente"
@@ -1407,9 +1370,6 @@ msgstr "Nome do menu"
 msgid "Mo"
 msgstr "Seg"
 
-msgid "Mobile"
-msgstr "Celular"
-
 msgid "Monitoring"
 msgstr "Monitoramento"
 
@@ -1432,7 +1392,7 @@ msgid "Multi-instanciation activity (launches and controls instances execution)"
 msgstr "Atividade de multi instanciação (lança e controla a execução de instâncias)"
 
 msgid "My cases"
-msgstr "Meus casos"
+msgstr "Meus cases"
 
 msgid "My tasks"
 msgstr "Minhas tarefas"
@@ -1480,10 +1440,10 @@ msgid "No opened task"
 msgstr "Nenhuma tarefa aberta"
 
 msgid "No overview page has been defined for this process"
-msgstr ""
+msgstr "Nenhuma página de visão geral foi definida para este processo"
 
 msgid "No overview page has been defined for this process."
-msgstr ""
+msgstr "Nenhuma página de visão geral foi definida para este processo."
 
 msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
 msgstr "Nenhuma resposta foi recebida até o momento, mas a operação ainda pode estar em andamento. Aguarde alguns segundos antes de recarregar a página."
@@ -1513,16 +1473,13 @@ msgid "Number of open tasks : %nb_openTask%"
 msgstr "Número de tarefas abertas: %nb_openTask%"
 
 msgid "OK"
-msgstr "OK"
+msgstr "Ok"
 
 msgid "October"
 msgstr "Outubro"
 
 msgid "Ok"
 msgstr "Ok"
-
-msgid "Only one Business Data Model can be active at a time."
-msgstr "Apenas um Modelo de Dados de Negócio pode estar ativo."
 
 msgid "Only the technical user can log in to the Portal."
 msgstr "Somente o usuário técnico pode fazer login no Portal."
@@ -1549,13 +1506,10 @@ msgid "Organization"
 msgstr "Organização"
 
 msgid "Organization successfully imported."
-msgstr "Organization successfully imported."
+msgstr "Organização importada com êxito."
 
 msgid "Original name"
 msgstr "Nome original"
-
-msgid "Other"
-msgstr "Outros"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
@@ -1563,7 +1517,7 @@ msgstr "Oups... Este item não está mais disponível. \n"
 " Você será redirecionado para um lugar mais seguro."
 
 msgid "Overview"
-msgstr "Síntese"
+msgstr "Visão geral"
 
 msgid "Page"
 msgstr "Página"
@@ -1575,7 +1529,7 @@ msgid "Pages"
 msgstr "Páginas"
 
 msgid "Parameters"
-msgstr "Parâmetros"
+msgstr "Parâmetro"
 
 msgid "Parameters must be resolved before enabling the Process."
 msgstr "Os parâmetros devem ser resolvidos antes de ativar o processo."
@@ -1584,19 +1538,19 @@ msgid "Parent Group"
 msgstr "Grupo Pai"
 
 msgid "Parent group"
-msgstr ""
+msgstr "Grupo Pai"
 
 msgid "Password"
-msgstr "Senha"
+msgstr "Senha "
 
 msgid "Password must be at least %number% characters long"
 msgstr "Senha deve ter pelo menos %number% caracteres"
 
 msgid "Password must contain at least %number% digits"
-msgstr "Senha deve conter pelo menos %number% dígitos"
+msgstr "Senha deve conter pelo menos dígitos %number%"
 
 msgid "Password must contain at least %number% lower case characters"
-msgstr "A senha deve conter pelo menos %number% letras minúsculas"
+msgstr "Senha deve conter pelo menos %number% minúsculas caracteres"
 
 msgid "Password must contain at least %number% special characters"
 msgstr "A senha deve conter pelo menos %number% caracteres especiais"
@@ -1605,13 +1559,13 @@ msgid "Password must contain at least %number% upper case characters"
 msgstr "A senha deve conter pelo menos %number% letras maiúsculas"
 
 msgid "Passwords don't match"
-msgstr "As senhas não combinam"
+msgstr "As senhas não coincidem"
 
 msgid "Pause"
-msgstr "Suspender"
+msgstr "Pausar"
 
 msgid "Paused"
-msgstr "Suspenso"
+msgstr "Pausado"
 
 msgid "Pending"
 msgstr "Pendente"
@@ -1638,16 +1592,10 @@ msgid "Performed on:"
 msgstr "Realizado em:"
 
 msgid "Permission denied: you do not have the rights to perform this action."
-msgstr ""
+msgstr "Permissão negada: você não tem os direitos para executar esta ação."
 
 msgid "Permission denied: you do not have the rights to view this item."
-msgstr ""
-
-msgid "Personal information"
-msgstr "Informações pessoais"
-
-msgid "Phone"
-msgstr "Telefone"
+msgstr "Permissão negada: você não tem os direitos para exibir este item."
 
 msgid "Please choose a file to import"
 msgstr "Por favor, escolha um arquivo para importar"
@@ -1659,10 +1607,13 @@ msgid "Please select a file first"
 msgstr "Por favor, selecione um arquivo primeiro"
 
 msgid "Please wait for your files to be uploaded."
-msgstr "Aguarde  seus  arquivos serem carregados."
+msgstr "Aguarde seus arquivos serem carregados."
 
 msgid "Please, contact your administrator."
 msgstr "Por favor, contate o administrador."
+
+msgid "Portal"
+msgstr "Portal"
 
 msgid "Post time"
 msgstr "Hora do envio"
@@ -1678,6 +1629,9 @@ msgstr "Processo"
 
 msgid "Process %appName% in version %version% already exists"
 msgstr "Processo %appName% na versão %version% já existe"
+
+msgid "Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation."
+msgstr "Processo %appName% na versão %version% contém artefatos de legado 6. x (formulários ou página visão geral do caso). Aqueles são baseados no Google Web Toolkit (GWT), uma tecnologia que não é mais suportada por Bonita. Para saber mais, consulte a documentação."
 
 msgid "Process definition not found for id %processId%"
 msgstr "Definição de processo não encontrada para o id %processId%"
@@ -1700,11 +1654,14 @@ msgstr "Processos"
 msgid "Profile"
 msgstr "Privilégio"
 
+msgid "Profile member already exists"
+msgstr "Membro do perfil já existe"
+
 msgid "Profiles"
 msgstr "Privilégio"
 
 msgid "RESOLVED"
-msgstr "RESOLVED"
+msgstr "RESOLVIDO"
 
 msgid "REST API extensions"
 msgstr "Extensões de API REST"
@@ -1746,10 +1703,7 @@ msgid "Rest API extension"
 msgstr "Extensão de API REST"
 
 msgid "Resume"
-msgstr "Relançar"
-
-msgid "Resume BPM Services"
-msgstr "Retomar Serviços BPM"
+msgstr "Resumir"
 
 msgid "Role"
 msgstr "Função"
@@ -1779,10 +1733,7 @@ msgid "Save this element"
 msgstr "Salvar este elemento"
 
 msgid "Save this group changes"
-msgstr "Salvar alterações neste grupo"
-
-msgid "Save this user modifications"
-msgstr "Salvar as modificações do usuário"
+msgstr "Save this group changes"
 
 msgid "Saving a page will change it immediately for all users who can view it."
 msgstr "Salvar uma página a modificará imediatamente para todos os usuários que podem visualizá-la."
@@ -1804,9 +1755,6 @@ msgstr "Selecione a função digitando parte do nome."
 
 msgid "Select a group to set to this profile"
 msgstr "Selecione um grupo para definir este perfil"
-
-msgid "Select a group to set to this user"
-msgstr "Selecione um grupo para este usuário"
 
 msgid "Select a process in the list below to display the available tasks"
 msgstr "Selecione um processo na lista abaixo para exibir as tarefas disponíveis"
@@ -1832,9 +1780,6 @@ msgstr "Selecione um avatar para este grupo"
 msgid "Select an avatar for this role"
 msgstr "Selecione um avatar para esta função"
 
-msgid "Select an avatar for this user"
-msgstr "Selecione um avatar para este usuário"
-
 msgid "Select profile"
 msgstr "Selecione o perfil"
 
@@ -1844,23 +1789,17 @@ msgstr "Selecione a categoria à qual o processo será vinculado"
 msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
 msgstr "Selecione as entidades (usuários, grupos, funções, associações) a serem mapeadas aos atores. Estas entidades realizarão as tarefas humanas do processo."
 
-msgid "Select the manager of this user"
-msgstr "Selecione o gerente deste usuário"
-
 msgid "Select the parent group"
 msgstr "Selecione o grupo pai"
 
 msgid "Select the role of this profile in the selected group"
 msgstr "Selecione a função desse perfil no grupo selecionado"
 
-msgid "Select the role of this user in the selected group"
-msgstr "Selecione a função deste usuário no grupo selecionado"
-
 msgid "Select user to assign task"
 msgstr "Selecione o usuário para atribuir tarefa"
 
 msgid "September"
-msgstr "Septembro"
+msgstr "Setembro"
 
 msgid "Service task"
 msgstr "Tarefa de serviço"
@@ -1935,7 +1874,7 @@ msgid "Start an instance of process %app_name%"
 msgstr "Iniciar uma instância do processo %app_name%"
 
 msgid "Start date"
-msgstr "Data de início"
+msgstr "Iniciar dia"
 
 msgid "Start this process"
 msgstr "Iniciar esse processo"
@@ -1962,7 +1901,7 @@ msgid "Statistics"
 msgstr "Estatísticas"
 
 msgid "Status"
-msgstr "Status"
+msgstr "Estado"
 
 msgid "Status: "
 msgstr "Estado: "
@@ -1974,13 +1913,13 @@ msgid "Sub groups"
 msgstr "Sub groups"
 
 msgid "Submit"
-msgstr "Enviar"
+msgstr "Submit"
 
 msgid "Submit a comment"
 msgstr "Enviar um comentário"
 
 msgid "Subprocess"
-msgstr "Sub-processo"
+msgstr "Subprocesso"
 
 msgid "Subprocess version"
 msgstr "Versão do subprocesso"
@@ -2026,20 +1965,6 @@ msgstr "Aviso de usuário técnico"
 
 msgid "Th"
 msgstr "Qui"
-
-msgid "The BPM Services must be paused"
-msgstr "Os serviços BPM devem ser suspensos"
-
-msgid "The BPM Services must be paused before importing a new Business Data Model."
-msgstr "Os serviços de BPM devem ser suspensos antes de importar um novo Modelo de Dados de Negócio."
-
-msgid "The Business Data Model was successfully installed."
-msgstr "O Modelo de Dados de Negócio foi instalado com sucesso."
-
-msgid "The Business Data Model will now be installed.\n"
-"Please note that existing business database tables will be modified definitively. This action cannot be reversed. It is highly recommended to backup the database before proceeding."
-msgstr "O Modelo de Dados de Negócio será instalado agora. \n"
-"Saiba que as tabelas do banco de dados de negócio existente serão modificadas definitivamente. Esta ação não pode ser revertida. É altamente recomendável fazer uma cópia de segurança do banco de dados antes de prosseguir."
 
 msgid "The Process cannot be enabled"
 msgstr "O processo não pode ser ativado"
@@ -2134,13 +2059,10 @@ msgid "The elements you try to display can't be retrieved due to a server proble
 msgstr "Os elementos que você está tentando exibir não poderam ser recuperados devido a um problema no servidor."
 
 msgid "The group parent path"
-msgstr "O caminho de acesso do grupo pai"
+msgstr "O caminho do grupo pai"
 
 msgid "The id of the related case"
 msgstr "A identificação da instância de processo relacionada"
-
-msgid "The index file must be present in the zip but is ignored, so can be empty."
-msgstr "O arquivo de índice deve estar presente no  arquivo zip mas é ignorado, portanto, ele pode ser vazio."
 
 msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
 msgstr "O item que você está tentando editar não pôde ser recuperado devido a um problema de conexão. Por favor, contate o administrador."
@@ -2175,8 +2097,8 @@ msgstr "Prioridade da tarefa"
 msgid "The process responsible for the creation of this task"
 msgstr "O processo responsável pela criação desta tarefa"
 
-msgid "The resources folder must contain an Index.groovy class or an index.html file and  optionally can contain some additional resources."
-msgstr "A pasta de recursos deve conter um arquivo Index.groovy ou um arquivo index.html e opcionalmente pode conter alguns recursos adicionais."
+msgid "The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."
+msgstr "A pasta de recursos deve conter pelo menos uma classe Index.groovy ou um index.html ou um tema.css para temas."
 
 msgid "The server is not available"
 msgstr "O servidor não está disponível"
@@ -2198,6 +2120,9 @@ msgstr "A tarefa %taskName% foi executada executada. A lista de tarefas está se
 
 msgid "The task %taskName% has not been executed. "
 msgstr "A tarefa %taskName% não foi executada. "
+
+msgid "The task has been executed. The task list is being refreshed."
+msgstr "A tarefa foi executada. A lista de tarefas está sendo atualizada."
 
 msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
 msgstr "A tarefa vai ser executada. Nenhum formulário é necessário. É possível inserir um comentário e confirmar ou cancelar."
@@ -2224,7 +2149,7 @@ msgid "The user who did the task."
 msgstr "O usuário que fez a tarefa."
 
 msgid "The username to which the task is assigned."
-msgstr "O nome de usuário para quem a tarefa é atribuída"
+msgstr "O nome de usuário para quem a tarefa é atribuída."
 
 msgid "The version of the process"
 msgstr "A versão do processo"
@@ -2251,7 +2176,7 @@ msgid "This %item_name% and related profile entries will be permanently deleted.
 msgstr "Este %item_name% e as entradas do perfil relacionadas serão excluídas permanentemente."
 
 msgid "This %item_name% will be definitively deleted."
-msgstr "Este %item_name% será definitivamente excluído."
+msgstr "Esse %item_name% será definitivamente excluído."
 
 msgid "This category has already been added to this process"
 msgstr "Esta categoria já foi adicionada a este processo"
@@ -2294,9 +2219,6 @@ msgstr "Esta ação exportará um arquivo que contém todos os dados da organiza
 msgid "This will import a file containing your whole organization data."
 msgstr "Esta ação importará um arquivo que contém os dados de toda a organização."
 
-msgid "Title"
-msgstr "Título"
-
 msgid "To change the content of this custom page, specify a new zip file in the field below."
 msgstr "Para alterar o conteúdo desta página personalizada, especifique um novo arquivo zip no campo abaixo."
 
@@ -2305,6 +2227,9 @@ msgstr "Para fazer"
 
 msgid "To do so, contact your administrator"
 msgstr "Para fazer isso, contate o administrador"
+
+msgid "To know more, check the %link%documentation%_link%."
+msgstr "Para saber mais, verifique o %link%documentation%_link%."
 
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 msgstr "Para compartilhar um formulário entre processos, carregue o arquivo zip e mapeie-o às tarefas e aos processos relevantes."
@@ -2330,8 +2255,11 @@ msgstr "Digite o novo valor para %variableName%"
 msgid "Type to search"
 msgstr "Digite para pesquisar"
 
+msgid "UI Designer page to visualize processes and start cases"
+msgstr "Página do UI Designer para visualizar processos e iniciar casos"
+
 msgid "UNRESOLVED"
-msgstr "UNRESOLVED"
+msgstr "NÃO RESOLVIDO"
 
 msgid "URL token"
 msgstr "Token da URL"
@@ -2343,25 +2271,22 @@ msgid "Unable to disable process"
 msgstr "Impossível desativar processo"
 
 msgid "Unable to enable process"
-msgstr "Impossível ativar processo "
+msgstr "Impossível ativar processo"
 
 msgid "Unable to find data instance %dataName% for activity %activityId%"
-msgstr "Não é possível localizar variável %dataName% para atividade %activityId%"
+msgstr "Impossível encontrar dados de instância %dataName% da atividade %activityId%"
 
 msgid "Unable to find group %groupId%"
-msgstr "Unable to find group %groupId%"
+msgstr "Não é possível localizar o grupo %groupId%"
 
 msgid "Unable to get group path, group not found"
-msgstr "Unable to get group path, group not found"
+msgstr "Não é possível obter o caminho do grupo, grupo não encontrado"
 
 msgid "Unable to get process data definitions, process %processId% not found"
-msgstr "Não foi possível obter as definições de dados de processo, pois o processo %processId% não foi encontrado"
+msgstr "Impossível obter definições de dados do processo, processo %processId% não foi encontrado"
 
 msgid "Unable to log in. Please check your username and password."
 msgstr "Não foi possível logar. Por favor, verifique seu nome de usuário e senha."
-
-msgid "Unable to uninstall the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."
-msgstr "Não é possível desinstalar o modelo de dados de negócio. Por favor, suspenda os serviços BPM primeiro . Vá para Configuração > Serviços BPM."
 
 msgid "Unassign"
 msgstr "Cancelar a atribuição"
@@ -2385,7 +2310,7 @@ msgid "Unsupported file."
 msgstr "Arquivo não suportado."
 
 msgid "Update a group"
-msgstr "Atualizar um grupo"
+msgstr "Update a group"
 
 msgid "Update a role"
 msgstr "Atualizar uma função"
@@ -2395,9 +2320,6 @@ msgstr "Data de atualização"
 
 msgid "Update the page"
 msgstr "Atualizar a página"
-
-msgid "Update the user"
-msgstr "Atualizar o usuário"
 
 msgid "Update this page using the defined search query"
 msgstr "Atualizar esta página usando a consulta definida"
@@ -2421,7 +2343,10 @@ msgid "User name"
 msgstr "Nome de usuário"
 
 msgid "User not found"
-msgstr "Usuário não encontrado"
+msgstr "Usuário não foi encontrado"
+
+msgid "User privilege settings"
+msgstr "Configurações de privilégio do usuário"
 
 msgid "Username"
 msgstr "Nome de usuário"
@@ -2436,10 +2361,10 @@ msgid "Users mapping"
 msgstr "Mapeamento de usuários"
 
 msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
-msgstr "Os usuários que estão atualmente conectados, incluindo administradores, são desconectados automaticamente."
+msgstr "Os usuários que estão atualmente conectados, incluindo administradores, serão desconectados automaticamente."
 
 msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
-msgstr "Os usuários que estiverem preenchendo formulários quando o serviço for suspenso perderão toda informação que não tenha sido submetida."
+msgstr "Os usuários que estiverem preenchendo formulários quando o serviço for suspenso perderão toda informação que não tenham sido submetidas."
 
 msgid "Users with the app above can see this page."
 msgstr "Usuários com acesso à aplicação acima podem ver esta página."
@@ -2466,16 +2391,13 @@ msgid "Warning:"
 msgstr "Aviso:"
 
 msgid "We"
-msgstr "Qua"
+msgstr "Nós"
 
 msgid "Welcome to"
 msgstr "Bem-vindo ao"
 
 msgid "Welcome: "
 msgstr "Bem-vindo: "
-
-msgid "When you are done, the BPM Services must be resumed to allow users to log in again."
-msgstr "Quando tiver terminado, os serviços de BPM deve ser retomados para permitir aos usuários fazer login novamente."
 
 msgid "When you resume the services, tell your users that they can log back in to the Portal."
 msgstr "Ao reativar o serviço, avise os usuários que eles podem conectar-se novamente ao Portal."
@@ -2499,13 +2421,16 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "Existe o risco de interromper um ou mais processos.\n\n"
-"Desativar o único usuário capaz de executar uma tarefa causará a interrupção do processo.\n\n"
-"Antes de continuar, talvez deseje ir para a página 'Mais' do processo e verificar o mapeamento de atores.\n\n"
-"Tem certeza que deseja desativar este usuário agora ?"
+msgstr "Você arrisca a interromper um ou mais processes.\n\n"
+"Deactivating o único usuário capaz de executar uma tarefa (s), fará com que a interrupção de um processo de Process.\n\n"
+"Before, você pode querer ir para a página 'Mais' do processo e verificar o ator mapping.\n\n"
+"Are tem certeza que você deseja desativar este usuário agora?"
 
 msgid "You will be rediected"
 msgstr "Você será redirecionado"
+
+msgid "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
+msgstr "Seu processo contém artefatos de legado 6. x (formulários ou páginas visão geral do caso).<br/>Aqueles são baseados em Google Web Toolkit, uma tecnologia que não é mais suportada pela Bonita."
 
 msgid "Your session has expired. Please log in again and retry."
 msgstr "Sua sessão expirou. Por favor, faça o login e tente novamente."
@@ -2513,14 +2438,11 @@ msgstr "Sua sessão expirou. Por favor, faça o login e tente novamente."
 msgid "Zip Archive"
 msgstr "Arquivo Zip"
 
-msgid "Zip code"
-msgstr "Código Postal"
-
 msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
 msgstr "Erro de estrutura de arquivo de zip. Verifique que o seu .zip contém um page.properties bem formado e um index.html ou um Index.groovy. Para maiores detalhes, consulte a documentação ou a página de exemplo readme (disponível na lista de páginas personalizadas)."
 
 msgid "add"
-msgstr "Adicionar"
+msgstr "adicionar"
 
 msgid "ascending"
 msgstr "crescente"
@@ -2529,7 +2451,7 @@ msgid "by"
 msgstr "por"
 
 msgid "cancel"
-msgstr "Cancelar"
+msgstr "cancelar"
 
 msgid "create"
 msgstr "criar"
@@ -2553,34 +2475,13 @@ msgid "hr"
 msgstr "hr"
 
 msgid "human task"
-msgstr ""
-
-msgid "import/export organization"
-msgstr "importação/exportação de organização"
+msgstr "tarefa humana"
 
 msgid "in %time%"
 msgstr "em %time%"
 
 msgid "in menu "
 msgstr "no menu "
-
-msgid "manage cases"
-msgstr "gerenciar casos"
-
-msgid "manage groups"
-msgstr "Gerenciar grupos"
-
-msgid "manage processes"
-msgstr "gerenciar processos"
-
-msgid "manage roles"
-msgstr "gerenciar funções"
-
-msgid "manage tasks"
-msgstr "gerenciar tarefas"
-
-msgid "manage users"
-msgstr "gerenciar usuários"
 
 msgid "message"
 msgstr "mensagem"
@@ -2589,7 +2490,7 @@ msgid "min"
 msgstr "min"
 
 msgid "mm/dd/yy"
-msgstr "dd/mm/yy"
+msgstr "dd/mm/yyyy"
 
 msgid "mm/dd/yyyy"
 msgstr "dd/mm/yyyy"
@@ -2616,73 +2517,16 @@ msgid "remove"
 msgstr "remover"
 
 msgid "sec"
-msgstr "sec"
+msgstr "segundo"
 
 msgid "system"
 msgstr "sistema"
 
-msgid "the address of the user"
-msgstr "o endereço do usuário"
-
-msgid "the city"
-msgstr "a cidade"
-
-msgid "the company address of the user"
-msgstr "endereço da empresa do usuário"
-
-msgid "the country of the user"
-msgstr "o país do usuário"
-
-msgid "the country of the user company"
-msgstr "país da empresa do usuário"
-
-msgid "the personnal email the user"
-msgstr "o e-mail pessoal do usuário"
-
-msgid "the personnal mobile phone number of the user"
-msgstr "o número do celular pessoal do usuário"
-
-msgid "the personnal phone number of the user"
-msgstr "o telefone pessoal do usuário"
-
-msgid "the professional email the user"
-msgstr "e-mail profissional do usuário"
-
-msgid "the professional mobile phone number of the user"
-msgstr "o celular profissional do usuário"
-
-msgid "the professional phone number of the user"
-msgstr "telefone profissional do usuário"
-
-msgid "the state of the user"
-msgstr "o estado do usuário"
-
-msgid "the state of the user company"
-msgstr "o estado da empresa do usuário"
-
-msgid "the zip code of the user"
-msgstr "o código postal do usuário"
-
-msgid "the zip code of the user company"
-msgstr "código postal da empresa do usuário"
-
 msgid "this field"
-msgstr "Este campo"
+msgstr "este campo"
 
 msgid "true"
 msgstr "verdadeiro"
-
-msgid "user privilege settings"
-msgstr "user privilege settings"
-
-msgid "visualize & do tasks"
-msgstr "Visualizar & executar tarefas"
-
-msgid "visualize & start processes"
-msgstr "Visualizar & iniciar processos"
-
-msgid "visualize cases"
-msgstr "Visualizar os casos"
 
 msgid "yr"
 msgstr "yr"
