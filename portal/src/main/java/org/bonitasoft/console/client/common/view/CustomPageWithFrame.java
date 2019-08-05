@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import org.bonitasoft.console.client.user.cases.view.IFrameView;
 import org.bonitasoft.web.toolkit.client.ClientApplicationURL;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
@@ -76,8 +77,18 @@ public class CustomPageWithFrame extends Page {
 
     protected String buildCustomPageURL(final String pageName) {
         final StringBuilder servletURL = new StringBuilder().append(GWT.getModuleBaseURL()).append("custom-page/").append(pageName).append("/?locale=")
-                .append(AbstractI18n.getDefaultLocale().toString()).append("&profile=").append(ClientApplicationURL.getProfileId());
+                .append(AbstractI18n.getDefaultLocale().toString()).append("&profile=").append(ClientApplicationURL.getProfileId()).append(getHashQueryString());
         return servletURL.toString();
+    }
+
+    private String getHashQueryString() {
+        int qmIndex = Window.Location.getHash().indexOf("?");
+        if (qmIndex > -1) {
+            String hashQueryString = "&" + Window.Location.getHash().substring(qmIndex + 1);
+            // Clean unused parameters '_pf' and '_p'
+            return hashQueryString.replaceAll("&_pf?=[^&\\?#]*", "");
+        }
+        return "";
     }
 
     /**
