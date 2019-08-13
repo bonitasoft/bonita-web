@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2019-07-16 01:59\n"
+"PO-Revision-Date: 2019-08-13 09:43\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -876,7 +876,7 @@ msgid "The attachment is too big.<br/>Select a smaller attachment and submit the
 msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
 
 msgid "The business data: [ {} ] uses Business Objects which are not defined in the current Business Data model. Deploy a compatible Business Data model before enabling the process."
-msgstr "Les données métier  [ %refs% ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
+msgstr "Les données métier [ {} ] font référence à des objets qui ne sont pas définis dans le Modèle de Données Métier actuel. Déployez un Modèle de Données Métier compatible pour pouvoir activer le processus."
 
 msgid "The case is archived. You cannot add comments anymore"
 msgstr "Le cas est archivé. Il n'est plus possible d'ajouter de nouveaux commentaires"
