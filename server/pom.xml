@@ -269,7 +269,18 @@
                 </includes>
             </resource>
         </resources>
-
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <!-- Always create the test-jar as it's required by console-server-sp. See: https://issues.apache.org/jira/browse/MJAR-138 -->
+                        <skip>false</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <!-- War configuration -->
             <plugin>
