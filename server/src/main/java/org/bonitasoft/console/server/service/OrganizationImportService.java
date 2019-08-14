@@ -65,14 +65,14 @@ public class OrganizationImportService extends ConsoleService {
             getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             String message = _("Session expired. Please log in again.");
             if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+                LOGGER.log(Level.INFO, message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
         } catch (InvalidOrganizationFileFormatException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String message = _("Can't import organization. Please check that your file is well-formed.");
             if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+                LOGGER.log(Level.INFO, message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
         } catch (final Exception e) {
