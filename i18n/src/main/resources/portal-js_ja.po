@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2019-08-13 02:13\n"
+"PO-Revision-Date: 2019-08-27 02:09\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -682,9 +682,6 @@ msgstr "プロセス"
 msgid "Process name"
 msgstr "プロセス名"
 
-msgid "Process version"
-msgstr "プロセスのバージョン"
-
 msgid "Process:"
 msgstr "プロセス:"
 
@@ -738,6 +735,9 @@ msgstr "検索キー 4"
 
 msgid "Search Key 5"
 msgstr "検索キー 5"
+
+msgid "Search by process name or search keys"
+msgstr ""
 
 msgid "Search..."
 msgstr "検索..."
@@ -924,6 +924,9 @@ msgstr "この URL は、既に使用中"
 
 msgid "This field is mandatory"
 msgstr "このフィールドは必須です"
+
+msgid "This filters the case list only by process name. The display name is shown for information purposes."
+msgstr ""
 
 msgid "This is the task details panel. No information to display"
 msgstr "これは、タスクの詳細パネルです。表示する情報がありません。"
