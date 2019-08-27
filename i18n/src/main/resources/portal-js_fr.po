@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2019-08-13 09:43\n"
+"PO-Revision-Date: 2019-08-27 01:59\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -683,9 +683,6 @@ msgstr "Processus"
 msgid "Process name"
 msgstr "Nom du processus"
 
-msgid "Process version"
-msgstr "Version du processus"
-
 msgid "Process:"
 msgstr "Processus :"
 
@@ -739,6 +736,9 @@ msgstr "Clé de recherche 4"
 
 msgid "Search Key 5"
 msgstr "Clé de recherche 5"
+
+msgid "Search by process name or search keys"
+msgstr ""
 
 msgid "Search..."
 msgstr "Chercher..."
@@ -925,6 +925,9 @@ msgstr "Cette URL est déjà utilisée"
 
 msgid "This field is mandatory"
 msgstr "Ce champ est obligatoire"
+
+msgid "This filters the case list only by process name. The display name is shown for information purposes."
+msgstr ""
 
 msgid "This is the task details panel. No information to display"
 msgstr "Cette zone est dédiée aux détails d'une tâche. Aucune information à afficher pour l'instant"
