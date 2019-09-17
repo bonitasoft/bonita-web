@@ -10,6 +10,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.junit.Ignore;
@@ -42,13 +43,13 @@ public class ArchivedCaseDatastoreIntegrationTest extends AbstractConsoleTest {
     }
 
     @Test
-    @Ignore("fail but i don't know what's the cause. Anyway functionnality is ok. Test is wrong")
     public void twoPoolsWithOneWithACallActivityArchivedCaseTest() throws Exception {
         TestProcess process1 = TestProcessFactory.getDefaultHumanTaskProcess();
-        
+        process1.addActor(getInitiator()).enable().startCase();
+
         // start process1 case via call activity
         TestProcess process2 = TestProcessFactory.getCallActivityProcess(process1.getProcessDefinition()); 
-        process2.addActor(getInitiator()).startCase();
+        process2.addActor(getInitiator()).enable().startCase();
         Thread.sleep(1000); // asynchronous, wait process1 to start
         
         // archive process 1 case
@@ -60,5 +61,10 @@ public class ArchivedCaseDatastoreIntegrationTest extends AbstractConsoleTest {
         ItemSearchResult<ArchivedCaseItem> itemSearchResult = archivedCaseDatastore.search(0, 100, null, null, new HashMap<String, String>());
 
         assertEquals("2 cases started but one via call activity so only 1 should be archived", 1, itemSearchResult.getResults().size());
+
+        TestProcessFactory.getInstance().delete(process2);
+        TestProcessFactory.getInstance().delete(process1);
+
     }
+
 }

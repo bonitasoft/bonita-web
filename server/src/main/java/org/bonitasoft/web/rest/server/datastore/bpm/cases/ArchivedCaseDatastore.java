@@ -128,11 +128,18 @@ DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
         try {
             return convertEngineToConsoleItem(getProcessApi()
                     .getArchivedProcessInstance(id.toLong()));
-            // .getFinalArchivedProcessInstance(id.toLong()));
         } catch (final Exception e) {
             throw new APIException(e);
         }
+    }
 
+    public ArchivedCaseItem getUsingSourceObjectId(final APIID id) {
+        try {
+            return convertEngineToConsoleItem(getProcessApi()
+                    .getFinalArchivedProcessInstance(id.toLong()));
+        } catch (final Exception e) {
+            throw new APIException(e);
+        }
     }
 
     @Override
