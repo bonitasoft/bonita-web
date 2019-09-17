@@ -117,14 +117,27 @@ APIHasSearch<ITEM> {
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
-            final CaseItem item2 = getCaseDatastore().get(item.getCaseId());
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, item2);
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, item2);
+            final CaseItem openedCaseItem = getCaseDatastore().get(item.getCaseId());
+            if ( openedCaseItem != null) {
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, openedCaseItem);
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, openedCaseItem);
+            } else {
+                final ArchivedCaseItem archivedCaseItem = getArchivedCaseDatastore().getUsingSourceObjectId(item.getCaseId());
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, archivedCaseItem);
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, archivedCaseItem);
+            }
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
-            item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
-                    getCaseDatastore().get(item.getParentCaseId()));
+            final CaseItem openedParentCaseItem = getCaseDatastore().get(item.getParentCaseId());
+            if ( openedParentCaseItem != null) {
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
+                        openedParentCaseItem);
+            } else {
+                final ArchivedCaseItem archivedParentCaseItem = getArchivedCaseDatastore().getUsingSourceObjectId(item.getParentCaseId());
+                item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
+                        archivedParentCaseItem);
+            }
         }
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CONTAINER_ID, deploys, item)) {
