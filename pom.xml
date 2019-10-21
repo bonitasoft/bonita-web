@@ -25,7 +25,7 @@
         <restlet-version>2.3.12</restlet-version>
         <jackson-ext-modules-version>2.9.8</jackson-ext-modules-version>
 
-        <tomcat.version>8.5.40</tomcat.version>
+        <tomcat.version>8.5.47</tomcat.version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
