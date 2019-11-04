@@ -47,10 +47,10 @@ import org.mockito.Spy;
  * Date: 30/08/13
  * Time: 15:54
  */
-public class AutoLoginRuleTest {
+public class V6FormsAutoLoginRuleTest {
 
     @Spy
-    AutoLoginRule rule;
+    V6FormsAutoLoginRule rule;
 
     @Mock
     private HttpServletRequestAccessor request;
