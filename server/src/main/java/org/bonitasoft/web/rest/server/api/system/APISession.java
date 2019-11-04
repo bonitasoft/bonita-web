@@ -50,11 +50,20 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
+            session.setAttribute(SessionItem.ATTRIBUTE_IS_GUEST_USER, String.valueOf(isGuestUser(apiSession.getTenantId(), apiSession.getUserName())));
             session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_COPYRIGHT, getCopyright());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
         return session;
+    }
+
+    protected boolean isGuestUser(final long tenantId, final String loggedInUsername) {
+        return false;
+    }
+
+    protected AuthenticationManagerProperties getAuthenticationManagerProperties(final long tenantId) {
+        return AuthenticationManagerProperties.getProperties(tenantId);
     }
 
     public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
@@ -103,7 +112,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
      *        the current user tenant id
      */
     protected boolean isLogoutDisabled(final long tenantId) {
-        return AuthenticationManagerProperties.getProperties(tenantId).isLogoutDisabled();
+        return getAuthenticationManagerProperties(tenantId).isLogoutDisabled();
     }
 
     public String getVersion() {

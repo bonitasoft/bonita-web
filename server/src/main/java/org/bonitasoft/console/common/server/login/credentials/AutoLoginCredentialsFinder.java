@@ -1,15 +1,13 @@
 package org.bonitasoft.console.common.server.login.credentials;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.login.filter.AutoLoginRule;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Created by julien.mege on 22/06/2016.
