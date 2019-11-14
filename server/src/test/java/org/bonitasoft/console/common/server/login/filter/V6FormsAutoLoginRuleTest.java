@@ -20,7 +20,6 @@ package org.bonitasoft.console.common.server.login.filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -29,7 +28,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
@@ -87,7 +85,6 @@ public class V6FormsAutoLoginRuleTest {
         when(autoLoginCredentialsFinder.getCredential(any(ProcessIdentifier.class), eq(1L))).thenReturn(new AutoLoginCredentials());
         doReturn(1L).when(tenantAccessor).ensureTenantId();
         // avoid having an exception result into an authorized false
-        doReturn(mock(AuthenticationManager.class)).when(rule).getAuthenticationManager(anyLong());
         doReturn(mock(UserLogger.class)).when(rule).getUserLogger();
         doReturn(mock(LoginManager.class)).when(rule).getLoginManager();
 
