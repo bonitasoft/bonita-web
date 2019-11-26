@@ -256,7 +256,6 @@
         <url-pattern>/portal/resource/*</url-pattern>
         <url-pattern>/portal/resource/app/*</url-pattern>
         <url-pattern>/apps/*</url-pattern>
-        <url-pattern>/portal/form/*</url-pattern>
         <url-pattern>/portal/custom-page/*</url-pattern>
     </filter-mapping>
 
