@@ -262,29 +262,11 @@
 
     <repositories>
         <repository>
-            <id>oauth</id>
-            <url>http://oauth.googlecode.com/svn/code/maven/</url>
-        </repository>
-        <repository>
             <id>maven-restlet</id>
             <name>Public online Restlet repository</name>
             <url>http://maven.restlet.com</url>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <!-- include pluginRepository for GWT-Maven -->
-        <pluginRepository>
-            <id>gwt-maven-plugins-nexus</id>
-            <url>https://nexus.codehaus.org/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <pluginManagement>

@@ -41,7 +41,7 @@ public class ApplicationRouter {
             final ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor)
             throws CreationException, BonitaException, IOException, ServletException, IllegalAccessException, InstantiationException {
 
-        final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getRequestURI());
+        final ParsedRequest parsedRequest = parse(hsRequest.getContextPath(), hsRequest.getServletPath(), hsRequest.getPathInfo());
         //Test if url contain at least application name
         final List<String> pathSegments = resourceRenderer.getPathSegments(hsRequest.getPathInfo());
         if (pathSegments.isEmpty()) {
@@ -148,9 +148,9 @@ public class ApplicationRouter {
         return resourcePath.substring(pageToken.length() + 1);
     }
 
-    private ParsedRequest parse(final String context, final String uri) {
+    private ParsedRequest parse(final String context, final String servletPath, final String pathInfo) {
         final Pattern pattern = Pattern.compile("^" + context + "/apps/(.*)$");
-        final Matcher matcher = pattern.matcher(uri);
+        final Matcher matcher = pattern.matcher(context + servletPath + pathInfo);
         if (!matcher.find()) {
             throw new RuntimeException("URI badly formed.");
         }

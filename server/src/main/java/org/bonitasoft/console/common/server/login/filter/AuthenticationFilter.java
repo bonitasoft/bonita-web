@@ -63,7 +63,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
     protected void addRules() {
         addRule(new AlreadyLoggedInRule());
-        addRule(new AutoLoginRule());
+        addRule(new V6FormsAutoLoginRule());
     }
 
     protected void addRule(final AuthenticationRule rule) {

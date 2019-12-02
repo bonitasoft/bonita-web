@@ -46,6 +46,8 @@ public class SessionItem extends Item {
 
     public static final String ATTRIBUTE_COPYRIGHT = "copyright";
 
+    public static final String ATTRIBUTE_IS_GUEST_USER = "is_guest_user";
+
     @Override
     public ItemDefinition getItemDefinition() {
         return new SessionDefinition();

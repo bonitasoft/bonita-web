@@ -31,8 +31,8 @@
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
-  <Listener className="org.bonitasoft.tomcat.H2Listener" tcpPort="1234" baseDir="${user.home}/.bonita/community/database" start="true" />
-
+  <Listener className="org.jboss.narayana.tomcat.jta.TransactionLifecycleListener" />
+  
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html
   -->
