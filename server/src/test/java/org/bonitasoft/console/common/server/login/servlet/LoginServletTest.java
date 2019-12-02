@@ -29,6 +29,7 @@ import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -58,6 +59,11 @@ public class LoginServletTest {
     @Mock
     TokenGenerator tokenGenerator;
 
+    @Before
+    public void setup() {
+        doReturn("application/x-www-form-urlencoded").when(req).getContentType();
+    }
+    
     @Test
     public void testPasswordIsDroppedWhenParameterIsLast() throws Exception {
         final LoginServlet servlet = new LoginServlet();
@@ -191,6 +197,33 @@ public class LoginServletTest {
 
         verify(resp).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
+    
+    @Test
+    public void should_send_error_415_when_login_with_wrong_content_type() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("application/json").when(req).getContentType();
+
+        servlet.doPost(req, resp);
+
+        verify(resp).setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    }
+    
+    @Test
+    public void should_login_with_no_content_type() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        doReturn(null).when(req).getContentType();
+        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
+
+        servlet.doPost(req, resp);
+
+        verify(loginManager).login(req, resp);
+        verify(resp, never()).setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    }
 
     @Test(expected = ServletException.class)
     public void should_send_servlet_exception_when_login_with_wrong_credentials_and_redirect() throws Exception {
@@ -248,7 +281,11 @@ public class LoginServletTest {
     public void testTenantNotInMaintenance() throws Exception {
         final LoginManager loginManager = mock(LoginManager.class);
         final LoginServlet servlet = spy(new LoginServlet());
+        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
         
         servlet.doLogin(req, resp);
         

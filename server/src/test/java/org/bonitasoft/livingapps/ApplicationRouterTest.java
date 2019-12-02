@@ -70,6 +70,7 @@ public class ApplicationRouterTest {
         given(apiSession.getTenantId()).willReturn(1L);
         given(hsRequest.getMethod()).willReturn("GET");
         given(hsRequest.getContextPath()).willReturn("/bonita");
+        given(hsRequest.getServletPath()).willReturn("/apps");
     }
 
     @Test
@@ -78,8 +79,7 @@ public class ApplicationRouterTest {
         given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
         given(applicationModel.hasProfileMapped()).willReturn(true);
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
-        given(hsRequest.getPathInfo()).willReturn("HumanResources");
+        given(hsRequest.getPathInfo()).willReturn("/HumanResources");
         given(resourceRenderer.getPathSegments("HumanResources")).willReturn(Arrays.asList("HumanResources"));
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
@@ -92,9 +92,8 @@ public class ApplicationRouterTest {
         given(applicationModel.getApplicationLayoutName()).willReturn(LAYOUT_PAGE_NAME);
         given(applicationModel.hasProfileMapped()).willReturn(true);
         given(applicationModelFactory.createApplicationModel("HumanResources")).willReturn(applicationModel);
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/HumanResources");
         given(hsRequest.getQueryString()).willReturn("time=12:00");
-        given(hsRequest.getPathInfo()).willReturn("HumanResources");
+        given(hsRequest.getPathInfo()).willReturn("/HumanResources");
         given(resourceRenderer.getPathSegments("HumanResources")).willReturn(Arrays.asList("HumanResources"));
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
@@ -104,7 +103,6 @@ public class ApplicationRouterTest {
 
     @Test(expected = RuntimeException.class)
     public void should_throw_an_error_when_the_uri_is_malformed() throws Exception {
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps");
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
     }
@@ -214,7 +212,6 @@ public class ApplicationRouterTest {
         given(applicationModel.authorize(apiSession)).willReturn(isAuthorized);
         given(applicationModel.hasProfileMapped()).willReturn(true);
         given(applicationModelFactory.createApplicationModel(applicationToken)).willReturn(applicationModel);
-        given(hsRequest.getRequestURI()).willReturn("/bonita/apps/" + applicationToken + "/" + pageToken + "/");
         given(hsRequest.getPathInfo()).willReturn("/" + applicationToken + "/" + pageToken + "/");
     }
 }
