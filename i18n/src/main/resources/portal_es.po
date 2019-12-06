@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 10:07+0200\n"
-"PO-Revision-Date: 2019-11-14 03:03\n"
+"POT-Creation-Date: 2019-05-28 05:21+0200\n"
+"PO-Revision-Date: 2019-11-28 09:05\n"
 "Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /release-7.10.0/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Para hacerlo, vaya a %entitymappingprofilelink%."
@@ -23,7 +23,7 @@ msgid " for "
 msgstr " para "
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
-msgstr "%atributo% No se permite formato de archivo. Sólo se permiten% file_formats% archivos."
+msgstr "%attribute% formato de archivo no permitido. Sólo se permiten archivos %file_formats%."
 
 msgid "%attribute% file format not allowed"
 msgstr "%attribute% formato de archivo no permitido"
@@ -32,34 +32,34 @@ msgid "%attribute% is mandatory"
 msgstr "%attribute% es obligatorio"
 
 msgid "%attribute% is not a valid Color value"
-msgstr "%attribute%   no es un Color válido"
+msgstr "%attribute% no es un Color válido"
 
 msgid "%attribute% is not a valid URL"
-msgstr "%attribute% no es un URL valido"
+msgstr "%attribute% no es una URL valida"
 
 msgid "%attribute% is not a valid email"
-msgstr "% atributo % no es un email válido"
+msgstr "%attribute% no es un email válido"
 
 msgid "%attribute% is not well written"
 msgstr "%attribute% no esta bien escrito"
 
 msgid "%attribute% must be a boolean value"
-msgstr "%atributo% debe ser un valor booleano"
+msgstr "%attribute% debe ser un valor booleano"
 
 msgid "%attribute% must be a negative value"
-msgstr "% atributo % debe ser un valor negativo"
+msgstr "%attribute% debe ser un valor negativo"
 
 msgid "%attribute% must be a negative value diffrent from 0"
-msgstr "%  atributo % debe ser un valor positivo diferente de 0"
+msgstr "%attribute% debe ser un valor positivo diferente de 0"
 
 msgid "%attribute% must be a numeric value"
 msgstr "%attribute% debe ser un valor numérico"
 
 msgid "%attribute% must be a positive value"
-msgstr "%atributo% debe ser un valor positivo"
+msgstr "%attribute% debe ser un valor positivo"
 
 msgid "%attribute% must be a positive value different from 0"
-msgstr " %  atributo % debe ser un valor positivo diferente de 0"
+msgstr "%attribute% debe ser un valor positivo diferente de 0"
 
 msgid "%attribute% must be a valid date"
 msgstr "%attribute% debe ser una fecha válida"
@@ -83,22 +83,22 @@ msgid "%attribute% must be more or equal than %secondAttribute%"
 msgstr "%attribute% debe ser mayor o igual %secondAttribute%"
 
 msgid "%attribute% must be more or equal than %value%"
-msgstr "% atributo % debe ser igual o más que el % de valor"
+msgstr "%attribute% debe ser igual o más que %value%"
 
 msgid "%attribute% must be more than %secondAttribute%"
 msgstr "%attribute% debe ser mayor que %secondAttribute%"
 
 msgid "%attribute% must be more than %value%"
-msgstr "% atributo % debe ser más que % value %"
+msgstr "%attribute% debe ser más que %value%"
 
 msgid "%attribute% must be on a single line"
 msgstr "%attribute% debe estar en una sola línea"
 
 msgid "%attribute% must be one of {%list%}"
-msgstr "% atributo % debe ser uno de {% lista}"
+msgstr "%attribute% debe ser uno de {%list%}"
 
 msgid "%attribute% must contain exactly %length% characters"
-msgstr "%attribute%  debe contener exactamente  %length% characters"
+msgstr "%attribute% debe contener exactamente %length% carácteres"
 
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% no debe ser igual a %secondAttribute%"
@@ -140,16 +140,16 @@ msgid "%pageName% is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "%rolename%"
-msgstr "%nombre de actor%"
+msgstr "%rolename%"
 
 msgid "%rolename% of %groupname%"
-msgstr "%rolename% of %groupname%"
+msgstr "%rolename% en %groupname%"
 
 msgid "%secondAttribute% must be a numeric value"
 msgstr "%secondAttribute% debe ser un valor numérico"
 
 msgid "%start_result% - %end_result% of %total_results%"
-msgstr "%start_result% - %end_result% of %total_results%"
+msgstr "%start_result% - %end_result% de %total_results%"
 
 msgid "%start_result% of %total_results%"
 msgstr "%start_result% de %total_results%"
@@ -173,19 +173,19 @@ msgid "'%pageName%' is used by:"
 msgstr "%pageName% es utilizada por:"
 
 msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' se utiliza como tema para:"
+msgstr "'%themeName%' se utiliza como Tema en:"
 
 msgid "?"
 msgstr "?"
 
 msgid "A business archive has a .bar extension"
-msgstr "Un archivo de negocios tiene una extensión de .bar"
+msgstr "Un archivo de negocio tiene una extensión .bar"
 
 msgid "A case has been started successfully."
 msgstr "El caso se ha iniciado con éxito."
 
 msgid "A form is a page mapped to case start or a human task."
-msgstr "Un formulario es una página asignada al caso inicial o una tarea humana."
+msgstr "Un formulario es una página asignada al caso inicial o a una tarea humana."
 
 msgid "A group with the name %groupName% already exists"
 msgstr "Ya existe un grupo con el mismo nombre %groupName%"
@@ -206,13 +206,13 @@ msgid "Aborted by:"
 msgstr "Abortado por:"
 
 msgid "Aborted on:"
-msgstr "Abortado en:"
+msgstr "Abortado el:"
 
 msgid "About"
-msgstr "Acerca"
+msgstr "Acerca de"
 
 msgid "Actions"
-msgstr "acciones"
+msgstr "Acciones"
 
 msgid "Activate"
 msgstr "Activar"
@@ -278,7 +278,7 @@ msgid "Add a new custom page"
 msgstr "Añadir una nueva página personalizada"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Añadir un nuevo recurso (página, formulario, maqueta, tema o extensión API REST).</0>Este recurso será instalado a nivel global (no a nivel de proceso o aplicación).</0>El fichero.zip debe contener un fichero page.properties en el directorio raíz y un subdirectorio 'resources'.<br/>El fichero de propiedades debe al menos contener 'name', 'displayName' y 'contentType' (el contentType por defecto es 'page').<br/>El directorio de 'resources' debe contener un fichero index.html o Index.groovy y los recursos necesarios."
+msgstr "Añadir un nuevo recurso (página, formulario, layout, tema o extensión API REST).<br/>Este recurso será instalado a nivel global (no a nivel de proceso o aplicación).<br/>El fichero.zip debe contener un fichero page.properties en el directorio raíz y un subdirectorio 'resources'.<br/>El fichero de propiedades debe al menos contener 'name', 'displayName' y 'contentType' (el contentType por defecto es 'page').<br/>El directorio de 'resources' debe contener un fichero index.html o Index.groovy y los recursos necesarios."
 
 msgid "Add a resource"
 msgstr "Agregar un recurso"
