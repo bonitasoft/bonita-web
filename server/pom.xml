@@ -245,15 +245,6 @@
 
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.bonitasoft.tomcat</groupId>
-                <artifactId>bonita-tomcat-h2-listener</artifactId>
-                <version>1.0.1</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <build>
         <resources>
             <resource>
@@ -501,11 +492,9 @@
                                     <javax.xml.parsers.DocumentBuilderFactory>
                                         com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
                                     </javax.xml.parsers.DocumentBuilderFactory>
+                                    
+                                    <com.arjuna.ats.arjuna.common.propertiesFile>${tomcat.home}/conf/jbossts-properties.xml</com.arjuna.ats.arjuna.common.propertiesFile>
 
-                                    <!-- Bitronix properties -->
-                                    <btm.root>${tomcat.home}</btm.root>
-                                    <bitronix.tm.configuration>${tomcat.home}/conf/btm-config.properties
-                                    </bitronix.tm.configuration>
                                 </systemProperties>
 
                             </container>
@@ -582,20 +571,17 @@
                                             <artifactId>slf4j-api</artifactId>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>org.codehaus.btm</groupId>
-                                            <artifactId>btm</artifactId>
+                                            <groupId>org.jboss.narayana.jta</groupId>
+                                            <artifactId>narayana-jta</artifactId>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>org.codehaus.btm</groupId>
-                                            <artifactId>btm-tomcat55-lifecycle</artifactId>
+                                            <groupId>org.bonitasoft.distrib</groupId>
+                                            <artifactId>tomcat-jta</artifactId>
+                                            <version>${project.version}</version>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>com.h2database</groupId>
                                             <artifactId>h2</artifactId>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>org.bonitasoft.tomcat</groupId>
-                                            <artifactId>bonita-tomcat-h2-listener</artifactId>
                                         </artifactItem>
                                     </artifactItems>
                                     <outputDirectory>${project.build.directory}/tomcat-libs</outputDirectory>

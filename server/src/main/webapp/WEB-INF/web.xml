@@ -256,7 +256,6 @@
         <url-pattern>/portal/resource/*</url-pattern>
         <url-pattern>/portal/resource/app/*</url-pattern>
         <url-pattern>/apps/*</url-pattern>
-        <url-pattern>/portal/form/*</url-pattern>
         <url-pattern>/portal/custom-page/*</url-pattern>
     </filter-mapping>
 
@@ -666,12 +665,22 @@
 
     <!-- Container Resources -->
     <resource-ref>
+        <res-ref-name>java:comp/env/RawBonitaDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <resource-ref>
         <res-ref-name>java:comp/env/bonitaDS</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
     <resource-ref>
         <res-ref-name>java:comp/env/bonitaSequenceManagerDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <resource-ref>
+        <res-ref-name>java:comp/env/RawBusinessDataDS</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
