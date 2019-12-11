@@ -86,13 +86,24 @@ public class LoginServlet extends HttpServlet {
             // should never appear
             throw new ServletException(e);
         }
+        if (request.getContentType() != null  
+                && !"application/x-www-form-urlencoded".equalsIgnoreCase(request.getContentType().toLowerCase())) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "The only content type supported by this service is application/x-www-form-urlencoded. The content-type request header needs to be set accordingly.");
+            }
+            response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+        } else {
+            handleLogin(request, response);
+        }
+    }
 
+    protected void handleLogin(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         final boolean redirectAfterLogin = hasRedirection(request);
         final String redirectURL = getRedirectUrl(request, redirectAfterLogin);
         try {
             doLogin(request, response);
             final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-
+   
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
                 if (apiSession.isTechnicalUser() || TenantsManagementUtils.hasProfileForUser(apiSession)) {

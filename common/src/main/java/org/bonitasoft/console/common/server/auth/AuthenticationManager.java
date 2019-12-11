@@ -76,7 +76,7 @@ public interface AuthenticationManager {
      *        HTTP request accessor object
      * @param credentials
      *        credentials extracted from the request or from the auto-login config
-     * @return a map of credententials which if not null or empty will be used to login on the engine. Otherwise, the username and password contained in the
+     * @return a map of credentials which if not null or empty will be used to login on the engine. Otherwise, the username and password contained in the
      *         credentials will be used
      * @throws AuthenticationFailedException
      * @throws ServletException

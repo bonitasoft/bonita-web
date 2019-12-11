@@ -36,12 +36,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AutoLoginRule extends AuthenticationRule {
+public class V6FormsAutoLoginRule extends AuthenticationRule {
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(AutoLoginRule.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(V6FormsAutoLoginRule.class.getName());
 
     @Override
     public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
