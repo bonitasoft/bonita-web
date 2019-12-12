@@ -453,6 +453,22 @@
             <param-value>true</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>apiPageUploadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.PageUploadServlet</servlet-class>
+        <init-param>
+            <param-name>SupportedExtensions</param-name>
+            <param-value>zip</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>json</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ReturnOriginalFilename</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
     <!-- End Pages -->
     <!-- Forms -->
     <servlet>
@@ -638,6 +654,10 @@
     <servlet-mapping>
         <servlet-name>pageUploadServlet</servlet-name>
         <url-pattern>/portal/pageUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>apiPageUploadServlet</servlet-name>
+        <url-pattern>/API/pageUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProcessFormServlet</servlet-name>
