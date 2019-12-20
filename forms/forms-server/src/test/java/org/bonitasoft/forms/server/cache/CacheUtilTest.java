@@ -39,7 +39,7 @@ public class CacheUtilTest {
     @After
     public void tearDown() {
         if (cacheManager != null) {
-            CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
+            CacheUtil.clear(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName());
         }
     }
 
@@ -48,29 +48,29 @@ public class CacheUtilTest {
         try {
             assertNotNull("Cannot create caches", CacheUtil.createCache(cacheManager, cacheManager.getName()));
         } finally {
-            CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
+            CacheUtil.clear(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName());
         }
     }
 
     @Test
     public void testStore() {
-        CacheUtil.store(cacheManager.getDiskStorePath(), cacheManager.getName(),
+        CacheUtil.store(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName(),
                 new String("testStoreKey"), new String("testStoreValue"));
         assertNotNull("Cannot store", cacheManager.getCache(cacheManager.getName()));
     }
 
     @Test
     public void testGet() {
-        CacheUtil.store(cacheManager.getDiskStorePath(), cacheManager.getName(),
+        CacheUtil.store(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName(),
                 new String("testStoreKey"), new String("testStoreValue"));
-        assertNotNull("Cannot get the element in the cache", CacheUtil.get(cacheManager.getDiskStorePath(), cacheManager.getName(),
+        assertNotNull("Cannot get the element in the cache", CacheUtil.get(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName(),
                 "testStoreKey"));
     }
 
     @Test
     public void testClear() {
-        CacheUtil.clear(cacheManager.getDiskStorePath(), cacheManager.getName());
-        assertNull("Cannot clear the cache", CacheUtil.get(cacheManager.getName(), cacheManager.getDiskStorePath(),
+        CacheUtil.clear(cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(), cacheManager.getName());
+        assertNull("Cannot clear the cache", CacheUtil.get(cacheManager.getName(), cacheManager.getConfiguration().getDiskStoreConfiguration().getPath(),
                 "testStoreKey"));
     }
 
