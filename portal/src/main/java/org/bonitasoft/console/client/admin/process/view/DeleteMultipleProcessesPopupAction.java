@@ -37,26 +37,25 @@ public class DeleteMultipleProcessesPopupAction extends DeleteMultipleItemsPopup
     public String getWarningMessage(String question) {
 
         StringBuilder warningMessage = new StringBuilder();
-        warningMessage.append("<div class=\"callout callout-warning\">");
+        warningMessage.append("<div class=\"callout callout-warning\">\n");
         warningMessage.append("<h4>");
         warningMessage.append(_("Warning:"));
-        warningMessage.append("</h4>");
+        warningMessage.append("</h4>\n");
         warningMessage.append("<p>");
         warningMessage.append(_("Deleting a process definition will also delete all open and archived cases of this process."));
-        warningMessage.append("<br/>");
+        warningMessage.append("\n");
         warningMessage.append(_("They will be removed from the database permanently."));
-        warningMessage.append("<br/>");
+        warningMessage.append("\n");
         warningMessage.append(_("In a production environment, this should be used with caution."));
-        warningMessage.append("<br/>");
-        warningMessage.append("</p>");
-        warningMessage.append("</div>");
-        warningMessage.append("<div>");
+        warningMessage.append("</p>\n");
+        warningMessage.append("</div>\n");
+        warningMessage.append("<div>\n");
         warningMessage.append("<p>");
         warningMessage.append("<strong>");
         warningMessage.append(question);
         warningMessage.append("</strong>");
-        warningMessage.append("</p>");
-        warningMessage.append("</div>");
+        warningMessage.append("</p>\n");
+        warningMessage.append("</div>\n");
         return warningMessage.toString();
     }
 
