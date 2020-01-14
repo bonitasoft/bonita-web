@@ -33,11 +33,11 @@ import org.bonitasoft.web.toolkit.client.ui.action.ActionOnItemIds;
  */
 public class DeleteMultipleItemsPopupAction extends ActionOnItemIds {
 
-    private final String itemName;
+    protected final String itemName;
 
-    private final String itemNamePlural;
+    protected final String itemNamePlural;
 
-    private final String definitionToken;
+    protected final String definitionToken;
 
     /**
      * Default Constructor.
@@ -53,11 +53,19 @@ public class DeleteMultipleItemsPopupAction extends ActionOnItemIds {
         this.addParameter("itemDef", this.definitionToken);
         if (itemIds.size() > 1) {
             // multiple selection
-            this.addParameter("message", _("These %item_name_plural% will be definitively deleted.", new Arg("item_name_plural", this.itemNamePlural)));
+            this.addParameter("message", getItemsDeleteMessage());
         } else {
-            this.addParameter("message", _("This %item_name% will be definitively deleted.", new Arg("item_name", this.itemName)));
+            this.addParameter("message", getItemDeleteMessage());
         }
         ViewController.showPopup(ClientApplicationURL.TOKEN_DELETE, getParameters());
+    }
+
+    protected String getItemDeleteMessage() {
+        return _("This %item_name% will be definitively deleted.", new Arg("item_name", this.itemName));
+    }
+
+    protected String getItemsDeleteMessage() {
+        return _("These %item_name_plural% will be definitively deleted.", new Arg("item_name_plural", this.itemNamePlural));
     }
 
 }
