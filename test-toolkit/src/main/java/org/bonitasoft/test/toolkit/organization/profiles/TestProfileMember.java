@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.bonitasoft.test.toolkit.utils.CommandCaller;
 
 /**
@@ -32,21 +32,19 @@ import org.bonitasoft.test.toolkit.utils.CommandCaller;
  */
 public class TestProfileMember {
 
-    public static final String COMMAND_SEARCH_OPTIONS = "searchOptions";
+    private static final String COMMAND_ADD = "addProfileMember";
 
-    public static final String COMMAND_ADD = "addProfileMember";
-
-    public static final String COMMAND_DELETE = "deleteProfileMember";
+    private static final String COMMAND_DELETE = "deleteProfileMember";
 
     public static final String PROFILE_ID = "profileId";
 
-    public static final String ROLE_ID = "roleId";
+    private static final String ROLE_ID = "roleId";
 
-    public static final String GROUP_ID = "groupId";
+    private static final String GROUP_ID = "groupId";
 
     public static final String USER_ID = "userId";
 
-    public static final String PROFILE_MEMBER_ID = "profileMemberId";
+    private static final String PROFILE_MEMBER_ID = "profileMemberId";
 
     private final TestProfile profile;
 
@@ -60,7 +58,7 @@ public class TestProfileMember {
 
     private CommandCaller commandCaller;
 
-    public TestProfileMember(CommandCaller commandCaller, TestProfile profile) {
+    TestProfileMember(CommandCaller commandCaller, TestProfile profile) {
         this.commandCaller = commandCaller;
         this.profile = profile;
     }
@@ -76,7 +74,7 @@ public class TestProfileMember {
     }
 
     private Map<String, Serializable> makeCreateParameters() {
-        Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+        Map<String, Serializable> parameters = new HashMap<>();
         parameters.put(PROFILE_ID, profile.getId());
         parameters.put(USER_ID, userId);
         parameters.put(ROLE_ID, roleId);
@@ -85,7 +83,7 @@ public class TestProfileMember {
     }
 
     public void delete() {
-        commandCaller.run(COMMAND_DELETE, Collections.<String, Serializable> singletonMap(PROFILE_MEMBER_ID, membershipId));
+        commandCaller.run(COMMAND_DELETE, Collections.singletonMap(PROFILE_MEMBER_ID, membershipId));
     }
 
     /*
