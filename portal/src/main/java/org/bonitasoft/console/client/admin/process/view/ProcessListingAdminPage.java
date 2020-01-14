@@ -37,6 +37,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.DescriptionA
 import org.bonitasoft.web.toolkit.client.ui.JsId;
 import org.bonitasoft.web.toolkit.client.ui.action.ActionShowPopup;
 import org.bonitasoft.web.toolkit.client.ui.action.CheckValidSessionBeforeAction;
+import org.bonitasoft.web.toolkit.client.ui.action.popup.DeleteMultipleItemsPopupAction;
 import org.bonitasoft.web.toolkit.client.ui.component.Clickable;
 import org.bonitasoft.web.toolkit.client.ui.component.Link;
 import org.bonitasoft.web.toolkit.client.ui.component.Title;
@@ -161,7 +162,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
                 createItemTable()
                         .addGroupedAction(
                                 new JsId("enable"), _("Enable"), _("Enable selected processes"), new EnableProcessAction())
-                        .addGroupedMultipleDeleteAction(_("Delete selected processes"), ProcessDefinition.get(), _("process"), _("processes")),
+                        .addGroupedAction(new JsId("delete"), _("Delete"), _("Delete selected processes"), new DeleteMultipleProcessesPopupAction()),
                 getQuickDetailsTargetPage());
     }
 
@@ -173,7 +174,7 @@ public class ProcessListingAdminPage extends ItemListingPage<ProcessItem> {
         return new ItemListingTable(new JsId(TABLE_ACTION_DELETE),
                 _("Deletable"),
                 createItemTable()
-                        .addGroupedMultipleDeleteAction(_("Delete selected processes"), ProcessDefinition.get(), _("process"), _("processes")),
+                        .addGroupedAction(new JsId("delete"), _("Delete"), _("Delete selected processes"), new DeleteMultipleProcessesPopupAction()),
                 getQuickDetailsTargetPage());
     }
 
