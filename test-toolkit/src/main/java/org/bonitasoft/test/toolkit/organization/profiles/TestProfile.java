@@ -21,9 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.bonitasoft.test.toolkit.organization.TestGroup;
-import org.bonitasoft.test.toolkit.organization.TestRole;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.utils.CommandCaller;
 
@@ -38,11 +37,11 @@ public class TestProfile {
      */
     public static final String PROFILE_ID = "id";
 
-    public static final String PROFILE_NAME = "name";
+    private static final String PROFILE_NAME = "name";
 
-    public static final String PROFILE_DESCRITION = "description";
+    private static final String PROFILE_DESCRITION = "description";
 
-    public static final String PROFILE_ICON = "iconPath";
+    private static final String PROFILE_ICON = "iconPath";
 
     /**
      * Commands
@@ -57,7 +56,7 @@ public class TestProfile {
 
     private CommandCaller commandCaller;
 
-    public TestProfile(CommandCaller commandCaller) {
+    TestProfile(CommandCaller commandCaller) {
         this.commandCaller = commandCaller;
     }
 
@@ -71,8 +70,9 @@ public class TestProfile {
         return (Map<String, Serializable>) commandCaller.run(COMMAND_ADD, createAddCommandParameters(name, description, icon));
     }
 
+    @SuppressWarnings("unchecked")
     private Map<String, Serializable> createAddCommandParameters(String name, String description, String icon) {
-        Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+        Map parameters = new HashMap<>();
         MapUtils.safeAddToMap(parameters, PROFILE_NAME, name);
         MapUtils.safeAddToMap(parameters, PROFILE_DESCRITION, description);
         MapUtils.safeAddToMap(parameters, PROFILE_ICON, icon);
@@ -80,12 +80,12 @@ public class TestProfile {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Serializable> fetchItem() {
+    private Map<String, Serializable> fetchItem() {
         return (Map<String, Serializable>) commandCaller.run(COMMAND_GET, createGetCommandParameters());
     }
 
     private Map<String, Serializable> createGetCommandParameters() {
-        return Collections.<String, Serializable> singletonMap(PROFILE_ID, profileId);
+        return Collections.singletonMap(PROFILE_ID, profileId);
     }
 
     public long getId() {
@@ -120,9 +120,4 @@ public class TestProfile {
                 .create();
     }
 
-    public TestProfileMember addMember(TestRole role) {
-        return new TestProfileMember(commandCaller, this)
-                .setRoleId(role.getId())
-                .create();
-    }
 }
