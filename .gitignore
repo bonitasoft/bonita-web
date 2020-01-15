@@ -21,3 +21,9 @@ node
 node_modules
 
 .java-version
+
+# h2 database
+*.h2.db
+*.lock.db
+*.mv.db
+*.trace.db
