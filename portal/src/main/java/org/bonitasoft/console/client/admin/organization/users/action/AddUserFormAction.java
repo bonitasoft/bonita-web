@@ -71,23 +71,22 @@ public class AddUserFormAction extends AddItemFormAction<UserItem> {
     }
 
     private String getMessageFromErrorMessage(String message) {
+        String escapedMessage;
         int indexStartMessage = message.indexOf("\"message\"");
         if (indexStartMessage >= 0) {
             indexStartMessage = indexStartMessage + 11;
 
-            message = message.substring(indexStartMessage);
-            int endOfMessage = message.indexOf("\"");
+            escapedMessage = message.substring(indexStartMessage);
+            int endOfMessage = escapedMessage.indexOf("\"");
             if (endOfMessage >= 0) {
-                message =  message.substring(0, endOfMessage);
-                message = message.replace("\\r\\n", ", ");
-                message = message.substring(0, message.length() - 2);
-                return message;
-            } else {
-                return message;
+                escapedMessage =  escapedMessage.substring(0, endOfMessage);
+                escapedMessage = escapedMessage.replace("\\r\\n", ", ");
             }
         } else {
-            return message;
+            escapedMessage = message;
         }
+        escapedMessage = escapedMessage.replace("\\u0027", "'");
+        return escapedMessage;
     }
 
     private void redirectToUsersMoreDetailsPage(final APIID userId) {
