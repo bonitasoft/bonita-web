@@ -4,17 +4,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2019-12-06 02:58\n"
+"PO-Revision-Date: 2020-01-20 02:28\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
+
+msgid "<strong>Are you sure you want to delete it?</strong>"
+msgstr ""
 
 msgid "A page with this name already exists."
 msgstr "Ya existe una página con este nombre."
@@ -292,8 +293,8 @@ msgstr "Eliminar membresía"
 msgid "Delete process"
 msgstr "Eliminar proceso"
 
-msgid "Delete the process"
-msgstr "Eliminar el proceso"
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
 
 msgid "Description"
 msgstr "Descripción"
@@ -438,6 +439,9 @@ msgstr "Importar una aplicación"
 
 msgid "Import an application descriptor"
 msgstr "Importar un descriptor de aplicación"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In task name column"
 msgstr "En la columna Nombre de tarea"
@@ -707,7 +711,7 @@ msgid "Release"
 msgstr "Liberar"
 
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Suprimir"
 
 msgid "Remove all"
 msgstr "Eliminar todo"
@@ -918,6 +922,9 @@ msgstr "Estos casos eliminados se eliminarán permanentemente y no se archivará
 
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "Estos casos eliminados se eliminarán permanentemente del histórico."
+
+msgid "They will be removed from the database permanently."
+msgstr ""
 
 msgid "This URL is already in use"
 msgstr "Esta URL ya está en uso"
