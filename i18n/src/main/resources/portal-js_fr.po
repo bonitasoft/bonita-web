@@ -4,17 +4,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2019-12-06 02:58\n"
+"PO-Revision-Date: 2020-01-20 02:28\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
+
+msgid "<strong>Are you sure you want to delete it?</strong>"
+msgstr ""
 
 msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
@@ -293,8 +294,8 @@ msgstr "Supprimer l'adhésion"
 msgid "Delete process"
 msgstr "Supprimer un processus"
 
-msgid "Delete the process"
-msgstr "Supprimer le processus"
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
 
 msgid "Description"
 msgstr "Description"
@@ -380,6 +381,9 @@ msgstr "Flow nodes en erreur"
 msgid "Failed instances"
 msgstr "Instances en état failed (en échec)"
 
+msgid "File format may be invalid. For more information, check the log file."
+msgstr ""
+
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "Le nom du fichier .zip est trop long. Il ne doit pas dépasser 50 caractères"
 
@@ -439,6 +443,9 @@ msgstr "Importer une application"
 
 msgid "Import an application descriptor"
 msgstr "Importer un descripteur d’application"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In task name column"
 msgstr "Dans la colonne \"Tâche\""
@@ -920,6 +927,9 @@ msgstr "Ces cas supprimés le seront définitivement et ne seront pas stockés d
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "Ces cas supprimés disparaîtront définitivement des archives."
 
+msgid "They will be removed from the database permanently."
+msgstr ""
+
 msgid "This URL is already in use"
 msgstr "Cette URL est déjà utilisée"
 
@@ -934,6 +944,9 @@ msgstr "Cette zone est dédiée aux détails d'une tâche. Aucune information à
 
 msgid "This name is already in use"
 msgstr "Ce nom est déjà utilisé"
+
+msgid "This task cannot be executed from here."
+msgstr ""
 
 msgid "This task is completed."
 msgstr "Cette tâche est terminée."
