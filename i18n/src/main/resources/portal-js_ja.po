@@ -4,17 +4,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: bonita\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"Last-Translator: Bonitasoft adoption team (bonitasoft)\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2019-12-06 03:01\n"
+"PO-Revision-Date: 2020-01-20 02:30\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
+
+msgid "<strong>Are you sure you want to delete it?</strong>"
+msgstr ""
 
 msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
@@ -292,8 +293,8 @@ msgstr "所属を削除しますか？"
 msgid "Delete process"
 msgstr "プロセスを削除"
 
-msgid "Delete the process"
-msgstr "このプロセスを削除します"
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
 
 msgid "Description"
 msgstr "説明"
@@ -438,6 +439,9 @@ msgstr "アプリケーションをインポート"
 
 msgid "Import an application descriptor"
 msgstr "アプリケーション記述子をインポート"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In task name column"
 msgstr "[タスク名] 列"
@@ -632,7 +636,7 @@ msgid "Open the task to perform it"
 msgstr "実行するタスクを開く"
 
 msgid "Overview"
-msgstr "オーバービュー"
+msgstr "案件概況"
 
 msgid "Page"
 msgstr "ページ"
@@ -918,6 +922,9 @@ msgstr "これらの削除された案件は完全に削除され、アーカイ
 
 msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "これらの削除された案件は、アーカイブから完全に削除されます。"
+
+msgid "They will be removed from the database permanently."
+msgstr ""
 
 msgid "This URL is already in use"
 msgstr "この URL は、既に使用中"
