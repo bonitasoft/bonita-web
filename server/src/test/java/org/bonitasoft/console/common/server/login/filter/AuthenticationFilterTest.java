@@ -17,6 +17,7 @@ package org.bonitasoft.console.common.server.login.filter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
@@ -40,6 +41,7 @@ import javax.servlet.http.HttpSession;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
@@ -86,13 +88,16 @@ public class AuthenticationFilterTest {
     
     @Spy
     AuthenticationFilter authenticationFilter;
+    
+    @Spy
+    AuthenticationManager authenticationManager = new FakeAuthenticationManager(1L);
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
         doReturn(httpSession).when(request).getHttpSession();
         when(request.asHttpServletRequest()).thenReturn(httpRequest);
-        doReturn(new FakeAuthenticationManager(1L)).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
+        doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
@@ -184,6 +189,44 @@ public class AuthenticationFilterTest {
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
         verify(authenticationFilter, times(1)).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
                 any(TenantIdAccessor.class), any(FilterChain.class));
+    }
+    
+    @Test
+    public void testFailedLoginOnDoFiltering() throws Exception {
+        EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed", 1L);
+        authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
+        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
+        
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+
+        verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
+        verify(chain, never()).doFilter(httpRequest, httpResponse);
+        verify(authenticationFilter).handleUserNotFoundOrInactiveException(request, httpResponse, engineUserNotFoundOrInactive);
+        verify(authenticationFilter).redirectTo(request, httpResponse, 1L, AuthenticationFilter.USER_NOT_FOUND_JSP);
+    }
+    
+    @Test
+    public void testTenantIsPausedOnDoFiltering() throws Exception {
+        TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed", 1L);
+        authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
+        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
+        
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+
+        verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
+        verify(chain, never()).doFilter(httpRequest, httpResponse);
+        verify(authenticationFilter).handleTenantPausedException(request, httpResponse, tenantIsPausedException);
+        verify(authenticationFilter).redirectTo(request, httpResponse, 1L, AuthenticationFilter.MAINTENANCE_JSP);
+    }
+
+    @Test
+    public void testRedirectTo() throws Exception {
+        final String context = "/bonita";
+        when(httpRequest.getContextPath()).thenReturn(context);
+        final long tenantId = 0L;
+        authenticationFilter.redirectTo(request, httpResponse, tenantId, AuthenticationFilter.MAINTENANCE_JSP);
+        verify(httpResponse, times(1)).sendRedirect(context + AuthenticationFilter.MAINTENANCE_JSP);
+        verify(httpRequest, times(1)).getContextPath();
     }
 
     @Test
@@ -284,6 +327,16 @@ public class AuthenticationFilterTest {
             @Override
             public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
                 return false;
+            }
+        };
+    }
+
+    private AuthenticationRule createThrowingExceptionRule(RuntimeException e) {
+        return new AuthenticationRule() {
+
+            @Override
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+                throw e;
             }
         };
     }
