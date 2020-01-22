@@ -12,6 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,6 +136,16 @@ public class LoginManagerTest {
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
     }
+    
+    @Test(expected = AuthenticationFailedException.class)
+    public void login_should_throw_exception_when_no_credentials_are_passed() throws Exception {
+        final Credentials credentials = new StandardCredentials(null, null, 1L);
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        doReturn(Collections.emptyMap()).when(authenticationManager).authenticate(requestAccessor, credentials);
+
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
+    }
+
 
     @Test
     public void should_store_tenant_id_in_cookies() throws Exception {
