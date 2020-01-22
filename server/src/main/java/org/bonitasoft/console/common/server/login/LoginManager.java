@@ -100,7 +100,7 @@ public class LoginManager {
         return UserLoggerFactory.getUserLogger();
     }
 
-    protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
+    public AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
         try {
             final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
             if (LOGGER.isLoggable(Level.FINE)) {

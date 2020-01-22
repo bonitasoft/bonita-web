@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -72,9 +73,6 @@ public class AuthenticationFilterTest {
     private HttpServletResponse httpResponse;
 
     @Mock
-    private HttpServletResponse response;
-
-    @Mock
     private TenantIdAccessor tenantIdAccessor;
 
     @Mock
@@ -104,16 +102,19 @@ public class AuthenticationFilterTest {
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
         authenticationFilter.init(filterConfig);
         when(request.getTenantId()).thenReturn("1");
+        when(tenantIdAccessor.ensureTenantId()).thenReturn(1L);
         when(httpRequest.getMethod()).thenReturn("GET");
     }
 
     @Test
     public void testIfWeGoThroughFilterWhenAtLeastOneRulePass() throws Exception {
-        authenticationFilter.addRule(createPassingRule());
+        AuthenticationRule passingRule = spy(createPassingRule());
+        authenticationFilter.addRule(passingRule);
         authenticationFilter.addRule(createFailingRule());
 
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
+        verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
 
@@ -122,21 +123,25 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createPassingRule());
 
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
-        verify(response, never()).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        verify(response, never()).sendRedirect(anyString());
+        verify(httpResponse, never()).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        verify(httpResponse, never()).sendRedirect(anyString());
     }
 
     @Test
     public void testIfWeAreRedirectedIfAllRulesFail() throws Exception {
-        authenticationFilter.addRule(createFailingRule());
-        authenticationFilter.addRule(createFailingRule());
+        AuthenticationRule firstFailingRule = spy(createFailingRule());
+        authenticationFilter.addRule(firstFailingRule);
+        AuthenticationRule secondFailingRule = spy(createFailingRule());
+        authenticationFilter.addRule(secondFailingRule);
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
-        verify(response).sendRedirect(anyString());
+        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(httpResponse).sendRedirect(anyString());
     }
     
     @Test
@@ -146,10 +151,10 @@ public class AuthenticationFilterTest {
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
-        verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        verify(response, never()).sendRedirect(anyString());
+        verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        verify(httpResponse, never()).sendRedirect(anyString());
     }
 
     @Test
@@ -158,7 +163,7 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(createFailingRule());
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
@@ -170,9 +175,9 @@ public class AuthenticationFilterTest {
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
-        verify(response).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=");
+        verify(httpResponse).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=");
     }
 
     @Test
@@ -235,7 +240,7 @@ public class AuthenticationFilterTest {
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer(url));
         doReturn(true).when(authenticationFilter).matchExcludePatterns(url);
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
-        verify(authenticationFilter, times(0)).doAuthenticationFiltering(request, response, tenantIdAccessor, chain);
+        verify(authenticationFilter, times(0)).doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
         verify(chain, times(1)).doFilter(httpRequest, httpResponse);
     }
 

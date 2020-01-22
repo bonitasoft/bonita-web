@@ -117,7 +117,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
         for (final AuthenticationRule rule : getRules()) {
             if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
-                chain.doFilter(requestAccessor.asHttpServletRequest(), response);
+                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response, tenantIdAccessor.ensureTenantId());
                 return true;
             }
         }

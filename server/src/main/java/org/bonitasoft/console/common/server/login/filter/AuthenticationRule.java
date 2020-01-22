@@ -17,7 +17,11 @@
 
 package org.bonitasoft.console.common.server.login.filter;
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
@@ -30,6 +34,8 @@ import org.bonitasoft.console.common.server.login.TenantIdAccessor;
  * Time: 10:28
  */
 public abstract class AuthenticationRule {
+    
+    private LoginManager loginManager = null;
 
     /*
      * @return whether the process needs to be aborted or not
@@ -37,7 +43,14 @@ public abstract class AuthenticationRule {
     public abstract boolean doAuthorize(HttpServletRequestAccessor request, HttpServletResponse response, TenantIdAccessor tenantIdAccessor) throws ServletException;
 
     protected LoginManager getLoginManager() {
-        return new LoginManager();
+        if (loginManager == null) {
+            loginManager = new LoginManager();
+        }
+        return loginManager;
+    }
+
+    public void proceedWithRequest(FilterChain chain, HttpServletRequest request, HttpServletResponse response, long tenantId) throws IOException, ServletException {
+        chain.doFilter(request, response);
     }
 
 }

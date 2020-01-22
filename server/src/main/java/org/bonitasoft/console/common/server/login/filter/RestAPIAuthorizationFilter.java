@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -62,6 +63,12 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     private static final String PLATFORM_API_URI_REGEXP = ".*(API|APIToolkit)/platform/.*";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
+    
+    /**
+     * Logger
+     */
+    protected static final Logger LOGGER = Logger.getLogger(RestAPIAuthorizationFilter.class.getName());
+    
     private final Boolean reload;
 
     public RestAPIAuthorizationFilter(final boolean reload) {
