@@ -50,6 +50,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
     protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
     
+    protected static final String USER_NOT_FOUND_JSP = "/usernotfound.jsp";
+    
     /**
      * Logger
      */
@@ -89,13 +91,19 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
 
-        if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
-            cleanHttpSession(requestAccessor.getHttpSession());
-            if (requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
-                response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
-            } else {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        try {
+            if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
+                cleanHttpSession(requestAccessor.getHttpSession());
+                if (requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
+                    response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
+                } else {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                }
             }
+        } catch (TenantIsPausedException e) {
+            handleTenantPausedException(requestAccessor, response, e);
+        } catch (final EngineUserNotFoundOrInactive e) {
+            handleUserNotFoundOrInactiveException(requestAccessor, response, e);
         }
     }
 
@@ -108,41 +116,40 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             final FilterChain chain) throws ServletException, IOException {
 
         for (final AuthenticationRule rule : getRules()) {
-            try {
-                if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
-                    chain.doFilter(requestAccessor.asHttpServletRequest(), response);
-                    return true;
-                }
-            } catch (final ServletException e) {
-                if (e.getCause() instanceof TenantIsPausedRedirectionToMaintenancePageException) {
-                    return handleTenantPausedException(requestAccessor, response, e);
-                } else {
-                    throw e;
-                }
+            if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
+                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response, tenantIdAccessor.ensureTenantId());
+                return true;
             }
         }
         return false;
     }
 
-    protected boolean handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
-            final ServletException e) throws ServletException {
-        final TenantIsPausedRedirectionToMaintenancePageException tenantIsPausedException = (TenantIsPausedRedirectionToMaintenancePageException) e.getCause();
+    protected void handleUserNotFoundOrInactiveException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
+            final EngineUserNotFoundOrInactive e) throws ServletException {
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "redirection to user not found page : " + e.getMessage(), e);
+        }
+        redirectTo(requestAccessor, response, e.getTenantId(), USER_NOT_FOUND_JSP);
+    }
+    
+    protected void handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
+            final TenantIsPausedException e) throws ServletException {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
         }
-        redirectToMaintenance(requestAccessor, response, tenantIsPausedException.getTenantId());
-        return false;
+        redirectTo(requestAccessor, response, e.getTenantId(), MAINTENANCE_JSP);
     }
 
     /**
      * manage redirection to maintenance page
-     *  @param request
+     * @param request
      * @param response
+     * @param pagePath
      */
-    protected void redirectToMaintenance(final HttpServletRequestAccessor request, final HttpServletResponse response, final long tenantId)
+    protected void redirectTo(final HttpServletRequestAccessor request, final HttpServletResponse response, final long tenantId, final String pagePath)
             throws ServletException {
         try {
-            response.sendRedirect(request.asHttpServletRequest().getContextPath() + MAINTENANCE_JSP);
+            response.sendRedirect(request.asHttpServletRequest().getContextPath() + pagePath);
         } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, e.getMessage());

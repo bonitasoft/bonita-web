@@ -108,7 +108,7 @@ public class CustomPageService {
     public void ensurePageFolderIsUpToDate(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws BonitaException, IOException {
         final File pageFolder = pageResourceProvider.getPageDirectory();
-        if (!pageResourceProvider.getPageDirectory().exists()) {
+        if (!pageFolder.exists() || pageFolder.list().length == 0) {
             retrievePageZipContent(apiSession, pageResourceProvider);
         } else {
             final File timestampFile = getPageFile(pageFolder, LASTUPDATE_FILENAME);

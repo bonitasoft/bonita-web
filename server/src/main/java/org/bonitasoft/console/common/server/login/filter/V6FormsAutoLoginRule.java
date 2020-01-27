@@ -66,11 +66,11 @@ public class V6FormsAutoLoginRule extends AuthenticationRule {
             return false;
         } catch (final LoginFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "login exception : " + e.getMessage(), e);
+                LOGGER.log(Level.FINE, "login failed : " + e.getMessage(), e);
             }
-            return false;
+            throw new EngineUserNotFoundOrInactive(e.getMessage(), tenantId);
         } catch (final TenantStatusException e) {
-            throw new TenantIsPausedRedirectionToMaintenancePageException(e.getMessage(), tenantId);
+            throw new TenantIsPausedException(e.getMessage(), tenantId);
         }
     }
 
