@@ -80,6 +80,11 @@ public class LoginManager {
             throws AuthenticationFailedException, ServletException, LoginFailedException {
         AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
+        if(credentialsMap.isEmpty() 
+                && (credentials.getName() == null || credentials.getName().isEmpty())) {
+            LOGGER.log(Level.FINE, "There are no credentials in the request");
+            throw new AuthenticationFailedException("No credentials in request");
+        }
         APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
         portalCookies.addTenantCookieToResponse(response, apiSession.getTenantId());
         storeCredentials(request, apiSession);
@@ -100,7 +105,7 @@ public class LoginManager {
         return UserLoggerFactory.getUserLogger();
     }
 
-    protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
+    public AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
         try {
             final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
             if (LOGGER.isLoggable(Level.FINE)) {

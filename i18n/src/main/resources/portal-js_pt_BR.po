@@ -9,13 +9,10 @@ msgstr ""
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2020-01-20 02:34\n"
+"PO-Revision-Date: 2020-01-27 03:04\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
-
-msgid "<strong>Are you sure you want to delete it?</strong>"
-msgstr ""
 
 msgid "A page with this name already exists."
 msgstr "Já existe uma página com esse nome."
@@ -103,6 +100,9 @@ msgstr "Aplicar"
 
 msgid "Archived cases"
 msgstr "Instâncias arquivadas"
+
+msgid "Are you sure you want to delete it?"
+msgstr ""
 
 msgid "Are you sure you want to delete this membership ?"
 msgstr "Tem certeza que deseja excluir este membro?"
@@ -379,6 +379,9 @@ msgstr "Etapas com erro"
 
 msgid "Failed instances"
 msgstr "Instâncias em erro"
+
+msgid "File format may be invalid. For more information, check the log file."
+msgstr ""
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "O nome do arquivo muito grande. O nome do arquivo zip não deve exceder 50 caracteres"
@@ -940,6 +943,9 @@ msgstr "Este é o painel de detalhes de tarefa. Nenhuma informação para exibir
 
 msgid "This name is already in use"
 msgstr "Este nome já está em uso"
+
+msgid "This task cannot be executed from here."
+msgstr ""
 
 msgid "This task is completed."
 msgstr "Esta tarefa esta concluída."

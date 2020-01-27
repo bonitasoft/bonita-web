@@ -369,7 +369,6 @@ msgstr "An error occurred while deleting an item with the id %id%"
 msgid "An error occurred while importing the organization.\n"
 msgstr "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
-" Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Analytics"
