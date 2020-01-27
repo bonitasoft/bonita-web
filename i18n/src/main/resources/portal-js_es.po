@@ -9,13 +9,10 @@ msgstr ""
 "X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2020-01-20 02:28\n"
+"PO-Revision-Date: 2020-01-27 02:49\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
-
-msgid "<strong>Are you sure you want to delete it?</strong>"
-msgstr ""
 
 msgid "A page with this name already exists."
 msgstr "Ya existe una página con este nombre."
@@ -103,6 +100,9 @@ msgstr "Aplicar"
 
 msgid "Archived cases"
 msgstr "Casos archivados"
+
+msgid "Are you sure you want to delete it?"
+msgstr ""
 
 msgid "Are you sure you want to delete this membership ?"
 msgstr "¿Está seguro que desea eliminar esta membresía?"
