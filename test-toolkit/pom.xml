@@ -75,20 +75,10 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <!-- Datasource JNDI / JTA -->
+        <!-- Junit rule to run engine in integration tests -->
         <dependency>
-            <groupId>org.bonitasoft.engine.test</groupId>
-            <artifactId>bonita-server-test-utils</artifactId>
-            <version>${bonita.engine.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bonitasoft.engine.test</groupId>
-            <artifactId>bonita-client-test-utils</artifactId>
-            <version>${bonita.engine.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bonitasoft.engine.test</groupId>
-            <artifactId>bonita-common-test-utils</artifactId>
+            <groupId>org.bonitasoft.engine</groupId>
+            <artifactId>bonita-test-api</artifactId>
             <version>${bonita.engine.version}</version>
         </dependency>
     </dependencies>
