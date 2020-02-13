@@ -138,6 +138,8 @@ public class I18n extends AbstractI18n {
                 results.put(locale, locales.get(locale));
             }
         }
+        //add english by default since _en.po files have been removed
+        results.put("en", "English");
 
         return results;
     }
