@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +26,7 @@ import org.bonitasoft.console.common.server.page.extension.PageResourceProviderI
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import groovy.lang.GroovyClassLoader;
@@ -45,6 +45,8 @@ public class PageRenderer {
 
     public static final String DEFAULT_LOCALE = "en";
 
+    public static final String LOCALE_COOKIE_NAME = "BOS_Locale";
+
     protected CustomPageService customPageService = new CustomPageService();
 
     protected ResourceRenderer resourceRenderer;
@@ -57,12 +59,24 @@ public class PageRenderer {
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
         final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
-        displayCustomPage(request, response, apiSession, pageResourceProvider);
+        displayCustomPage(request, response, apiSession, pageResourceProvider, getCurrentLocale(request));
+    }
+    
+    public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName, final Locale currentLocale)
+            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+
+        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
+        displayCustomPage(request, response, apiSession, pageResourceProvider, currentLocale);
     }
 
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final long pageId)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
-        displayCustomPage(request, response, apiSession, getPageResourceProvider(pageId, apiSession));
+        displayCustomPage(request, response, apiSession, getPageResourceProvider(pageId, apiSession), getCurrentLocale(request));
+    }
+    
+    public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final long pageId, final Locale currentLocale)
+            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+        displayCustomPage(request, response, apiSession, getPageResourceProvider(pageId, apiSession), currentLocale);
     }
 
     public void ensurePageFolderIsPresent(final APISession apiSession, final PageResourceProviderImpl pageResourceProvider) throws BonitaException, IOException {
@@ -72,13 +86,14 @@ public class PageRenderer {
     }
 
     private void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final PageResourceProviderImpl pageResourceProvider) throws BonitaException, IOException, InstantiationException,
+            final PageResourceProviderImpl pageResourceProvider, final Locale currentLocale) throws BonitaException, IOException, InstantiationException,
             IllegalAccessException {
         synchronized (PageRenderer.class) {
             customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         }
+        enforceLocaleCookieIfPresentInURLOrBrowser(request, response, currentLocale);
         if (isGroovyPage(pageResourceProvider)) {
-            displayGroovyPage(request, response, apiSession, pageResourceProvider);
+            displayGroovyPage(request, response, apiSession, pageResourceProvider, currentLocale);
         } else {
             displaySimpleHtmlPage(request, response, apiSession, pageResourceProvider);
         }
@@ -112,7 +127,7 @@ public class PageRenderer {
     }
 
     private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final PageResourceProviderImpl pageResourceProvider)
+            final PageResourceProviderImpl pageResourceProvider, final Locale currentLocale)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
@@ -125,12 +140,12 @@ public class PageRenderer {
             if (PageController.class.isAssignableFrom(pageClass)) {//LEGACY MODE
                 final PageController pageController = customPageService.loadPage((Class<PageController>) pageClass);
                 pageController.doGet(request, response, pageResourceProvider,
-                        new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
+                        new PageContextImpl(apiSession, currentLocale, getCurrentProfile(request)));
             } else {
                 final org.bonitasoft.web.extension.page.PageController pageController = ((Class<org.bonitasoft.web.extension.page.PageController>) pageClass)
                         .newInstance();
                 pageController.doGet(request, response, pageResourceProvider,
-                        new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
+                        new PageContextImpl(apiSession, currentLocale, getCurrentProfile(request)));
             }
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassloader);
@@ -141,17 +156,16 @@ public class PageRenderer {
         return request.getParameter(PROFILE_PARAM);
     }
 
-    public Locale getCurrentLocale(final HttpServletRequest request) {
-        final String locale = request.getParameter(LOCALE_PARAM);
-        if (locale == null) {
-            for (final Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equals("BOS_Locale")) {
-                    return new Locale(cookie.getValue());
-                }
-            }
-            return new Locale(DEFAULT_LOCALE);
+    private void enforceLocaleCookieIfPresentInURLOrBrowser(final HttpServletRequest request, final HttpServletResponse response, final Locale currentLocale) {
+        final String localeFromCookie = LocaleUtils.getLocaleFromCookie(request);
+        if (currentLocale != null && !currentLocale.toString().equals(localeFromCookie)) {
+            //Set the cookie if the locale is in the URL and different from the existing cookie value or the cookie does not exist yet
+            LocaleUtils.addLocaleCookieToResponse(response, currentLocale.toString());
         }
-        return new Locale(locale);
+    }
+
+    public Locale getCurrentLocale(final HttpServletRequest request) {
+        return LocaleUtils.getUserLocale(request);
     }
 
     public PageResourceProviderImpl getPageResourceProvider(final String pageName, final long tenantId) {

@@ -369,7 +369,7 @@ public abstract class ServletCall {
     }
 
     public String getLocale() {
-        return LocaleUtils.getUserLocale(request);
+        return LocaleUtils.getUserLocaleAsString(request);
     }
 
     public HttpServletRequest getRequest() {

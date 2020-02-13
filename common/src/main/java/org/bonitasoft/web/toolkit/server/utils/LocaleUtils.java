@@ -16,8 +16,13 @@
  */
 package org.bonitasoft.web.toolkit.server.utils;
 
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Anthony Birembaut
@@ -25,33 +30,77 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LocaleUtils {
 
-    public static final String BOS_LOCALE = "BOS_Locale";
+    public static final String LOCALE_PARAM = "locale";
+    
+    public static final String DEFAULT_LOCALE = "en";
 
+    public static final String LOCALE_COOKIE_NAME = "BOS_Locale";
+    
     /**
-     * Return the user locale as set in the BOS_Locale cookie.
-     * If the cookie does not exist, return the locale of the request
+     * Logger
+     */
+    private final static Logger LOGGER = Logger.getLogger(LocaleUtils.class.getName());
+    
+    /**
+     * Return the user locale as set in the the request. If the locale code is invalid, returns the default locale (en).
+     * If the locale is not passed in the request try to get it from the BOS_Locale cookie.
+     * If the cookie is not set returns the default locale (en).
      * This method should be used sparingly for performances reasons (gather in one call when possible)
      * 
      * @param request
      *            the HTTP servlet request
-     * @return the user locale as a string
+     * @return the user locale
      */
-    public static String getUserLocale(final HttpServletRequest request) {
-        String userLocaleStr = getUserLocale(request.getCookies());
-        if (userLocaleStr == null && request.getLocale() != null) {
-            userLocaleStr = request.getLocale().toString();
+    public static String getUserLocaleAsString(final HttpServletRequest request) {
+        String locale = getLocaleFromRequestURL(request);
+        if (locale == null) {
+            locale = getLocaleFromCookie(request);
         }
-        return userLocaleStr;
+        if (locale == null) {
+            String browserLocale = getLocaleFromBrowser(request);
+            locale = browserLocale != null ? browserLocale : DEFAULT_LOCALE;
+        }
+        return locale;
     }
 
-    public static String getUserLocale(Cookie[] cookies) {
-        if (cookies != null) {
-            for(Cookie cookie : cookies) {
-                if(BOS_LOCALE.equals(cookie.getName())) {
-                    return cookie.getValue().toString();
+    public static String getLocaleFromCookie(final HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (final Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals(LOCALE_COOKIE_NAME)) {
+                    return cookie.getValue();
                 }
             }
         }
         return null;
+    }
+    
+    public static String getLocaleFromBrowser(final HttpServletRequest request) {
+        Locale browserLocale = request.getLocale();
+        return browserLocale != null ? browserLocale.toString() : null;
+    }
+    
+    public static Locale getUserLocale(final HttpServletRequest request) {
+        return org.apache.commons.lang3.LocaleUtils.toLocale(getUserLocaleAsString(request));
+    }
+    
+    public static String getLocaleFromRequestURL(final HttpServletRequest request) {
+        String localeAsString = request.getParameter(LOCALE_PARAM);
+        if (localeAsString != null) {
+            try {
+                org.apache.commons.lang3.LocaleUtils.toLocale(localeAsString);
+            } catch (Exception e) {
+                if (LOGGER.isLoggable(Level.WARNING)) {
+                    LOGGER.log(Level.WARNING, "unsupported locale: " + localeAsString);
+                }
+                localeAsString = DEFAULT_LOCALE;
+            }
+        }
+        return localeAsString;
+    }
+
+    public static void addLocaleCookieToResponse(final HttpServletResponse response, final String locale) {
+        Cookie localeCookie = new Cookie(LOCALE_COOKIE_NAME, locale);
+        localeCookie.setPath("/");
+        response.addCookie(localeCookie);
     }
 }

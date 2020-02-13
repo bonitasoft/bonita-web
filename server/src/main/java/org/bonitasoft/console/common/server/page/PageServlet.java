@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -211,12 +212,13 @@ public class PageServlet extends HttpServlet {
             final String mappingKey, final String resourcePath)
                     throws BonitaException, IOException, InstantiationException, IllegalAccessException {
         try {
-            final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, pageRenderer.getCurrentLocale(request),
+            Locale currentLocale = pageRenderer.getCurrentLocale(request);
+            final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, currentLocale,
                     isNotResourcePath(resourcePath));
             if (pageReference.getURL() != null) {
                 displayExternalPage(request, response, pageReference.getURL());
             } else if (pageReference.getPageId() != null) {
-                displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath);
+                displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath, currentLocale);
             } else {
                 if (LOGGER.isLoggable(Level.FINE)) {
                     final String message = "Both URL and pageId are not set in the page mapping for " + mappingKey;
@@ -240,11 +242,11 @@ public class PageServlet extends HttpServlet {
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-            final Long pageId, final String resourcePath)
+            final Long pageId, final String resourcePath, final Locale currentLocale)
                     throws InstantiationException, IllegalAccessException, IOException, BonitaException {
         try {
             if (isNotResourcePath(resourcePath)) {
-                pageRenderer.displayCustomPage(request, response, apiSession, pageId);
+                pageRenderer.displayCustomPage(request, response, apiSession, pageId, currentLocale);
             } else {
                 resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession);
             }

@@ -109,7 +109,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
         try {
             final PrintWriter output = resp.getWriter();
             if(e instanceof APIException) {
-                setLocalization((APIException) e, LocaleUtils.getUserLocale(req));
+                setLocalization((APIException) e, LocaleUtils.getUserLocaleAsString(req));
             }
 
             output.print(e == null ? "" : JSonSerializer.serialize(e));

@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,6 @@ public class PageContextHelperTest {
 
     public static final String MY_PROFILE = "myProfile";
     PageContextHelper pageContextHelper;
-
 
     @Mock
     private HttpServletRequest request;
@@ -60,7 +60,7 @@ public class PageContextHelperTest {
     @Test
     public void should_getCurrentLocale_return_request_parameter() throws Exception {
         //given
-        doReturn(locale.toString()).when(request).getParameter(PageContextHelper.LOCALE_PARAM);
+        doReturn(locale.toString()).when(request).getParameter(LocaleUtils.LOCALE_PARAM);
         pageContextHelper = new PageContextHelper(request);
 
         //when
@@ -74,9 +74,9 @@ public class PageContextHelperTest {
     public void should_getCurrentLocale_return_cookie_locale() throws Exception {
         //given
         Cookie[] cookieList = new Cookie[1];
-        cookieList[0] = new Cookie(PageContextHelper.LOCALE_COOKIE_NAME, locale.toLanguageTag());
+        cookieList[0] = new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, locale.getLanguage());
 
-        doReturn(null).when(request).getParameter(PageContextHelper.LOCALE_PARAM);
+        doReturn(null).when(request).getParameter(LocaleUtils.LOCALE_PARAM);
         doReturn(cookieList).when(request).getCookies();
         pageContextHelper = new PageContextHelper(request);
 
@@ -93,7 +93,7 @@ public class PageContextHelperTest {
         Cookie[] cookieList = new Cookie[1];
         cookieList[0] = new Cookie("otherCookie", "otherValue");
 
-        doReturn(null).when(request).getParameter(PageContextHelper.LOCALE_PARAM);
+        doReturn(null).when(request).getParameter(LocaleUtils.LOCALE_PARAM);
         doReturn(cookieList).when(request).getCookies();
         pageContextHelper = new PageContextHelper(request);
 
@@ -101,7 +101,7 @@ public class PageContextHelperTest {
         final Locale returnedLocale = pageContextHelper.getCurrentLocale();
 
         //then
-        assertThat(returnedLocale.toString()).isEqualTo(PageContextHelper.DEFAULT_LOCALE);
+        assertThat(returnedLocale.toString()).isEqualTo(LocaleUtils.DEFAULT_LOCALE);
     }
 
 

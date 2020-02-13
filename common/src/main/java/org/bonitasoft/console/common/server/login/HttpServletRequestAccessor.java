@@ -116,6 +116,6 @@ public class HttpServletRequestAccessor {
     }
 
     public String getLocale() {
-        return LocaleUtils.getUserLocale(httpServletRequest);
+        return LocaleUtils.getUserLocaleAsString(httpServletRequest);
     }
 }
