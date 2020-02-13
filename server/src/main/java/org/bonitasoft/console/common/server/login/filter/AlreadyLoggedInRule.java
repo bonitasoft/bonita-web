@@ -62,6 +62,6 @@ public class AlreadyLoggedInRule extends AuthenticationRule {
     }
 
     private String getLocale(final HttpServletRequest request) {
-        return LocaleUtils.getUserLocale(request);
+        return LocaleUtils.getUserLocaleAsString(request);
     }
 }

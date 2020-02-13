@@ -123,7 +123,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
+        verify(pageRenderer, times(1)).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID, locale);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class PageServletTest {
         pageServlet.service(hsRequest, hsResponse);
 
         //then
-        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
+        verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, "path/of/resource.css", locale);
         verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
         verify(pageRenderer, times(1)).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
@@ -179,7 +179,7 @@ public class PageServletTest {
         final String key = "process/processName/processVersion";
         when(hsRequest.getPathInfo()).thenReturn("/" + key + "/content/");
         when(pageMappingService.getPage(hsRequest, apiSession, key, locale, true)).thenReturn(new PageReference(PAGE_ID, null));
-        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
+        doThrow(PageNotFoundException.class).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID, locale);
 
         pageServlet.service(hsRequest, hsResponse);
 
@@ -203,7 +203,7 @@ public class PageServletTest {
         when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
         when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(PAGE_ID, null));
         final InstantiationException instantiationException = new InstantiationException("instatiation exception");
-        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID);
+        doThrow(instantiationException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID, locale);
 
         pageServlet.service(hsRequest, hsResponse);
 

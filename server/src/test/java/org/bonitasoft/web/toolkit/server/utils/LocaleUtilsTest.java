@@ -17,17 +17,18 @@
 
 package org.bonitasoft.web.toolkit.server.utils;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.Locale;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
 
 /**
  * Created by Vincent Elcrin
@@ -48,43 +49,86 @@ public class LocaleUtilsTest {
     public void testLocalCanBeRetrieveFromCookie() throws Exception {
         Cookie[] cookies = {
                 new Cookie("aCookie", "value"),
-                new Cookie(LocaleUtils.BOS_LOCALE, "fr"),
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "fr"),
                 new Cookie("aNullCookie", null),
         };
+        doReturn(cookies).when(request).getCookies();
 
-        String locale = LocaleUtils.getUserLocale(cookies);
+        String locale = LocaleUtils.getUserLocaleAsString(request);
 
         assertEquals("fr", locale);
     }
 
     @Test
-    public void testANullCookieResultWithANull() throws Exception {
-        Cookie[] cookies = null;
+    public void testANullCookieResultsWithBrowserLocale() throws Exception {
+        doReturn(Locale.CANADA_FRENCH).when(request).getLocale();
+        
+        String locale = LocaleUtils.getUserLocaleAsString(request);
 
-        String locale = LocaleUtils.getUserLocale(cookies);
+        assertEquals(Locale.CANADA_FRENCH.toString(), locale);
+    }
+    
+    @Test
+    public void testANullCookieAndBrowserLocaleResultsWithDefaultLocale() throws Exception {
+        
+        String locale = LocaleUtils.getUserLocaleAsString(request);
 
-        assertEquals(null, locale);
+        assertEquals("en", locale);
     }
 
     @Test
-    public void testWeCanRetrieveCookiesLocaleFromRequest() throws Exception {
+    public void testWeCanRetrieveLocaleFromCookie() throws Exception {
         Cookie[] cookies = {
-                new Cookie(LocaleUtils.BOS_LOCALE, "en_US"),
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
         };
         doReturn(cookies).when(request).getCookies();
 
-        String locale = LocaleUtils.getUserLocale(request);
+        String locale = LocaleUtils.getUserLocaleAsString(request);
+
+        assertEquals("en_US", locale);
+    }
+    
+    @Test
+    public void testWeCanRetrieveLocaleFromRequest() throws Exception {
+        Cookie[] cookies = {
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
+        };
+        doReturn(cookies).when(request).getCookies();
+
+        String locale = LocaleUtils.getUserLocaleAsString(request);
 
         assertEquals("en_US", locale);
     }
 
     @Test
-    public void testWeGetLocaleFromRequestWhenNotPresentInCookie() throws Exception {
-        doReturn(null).when(request).getCookies();
-        doReturn(Locale.CHINA).when(request).getLocale();
+    public void testWeGetLocaleFromRequestEvenIfCookieIsPresent() throws Exception {
+        Cookie[] cookies = {
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
+        };
+        doReturn(cookies).when(request).getCookies();
+        doReturn(Locale.CHINA.toString()).when(request).getParameter(LocaleUtils.LOCALE_PARAM);
 
-        String locale = LocaleUtils.getUserLocale(request);
+        String locale = LocaleUtils.getUserLocaleAsString(request);
 
         assertEquals(Locale.CHINA.toString(), locale);
+    }
+    
+    @Test
+    public void testAnInvalidCookieResultsWithDefaultLocale() throws Exception {
+        Cookie[] cookies = {
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "weirdvalue"),
+        };
+        String locale = LocaleUtils.getUserLocaleAsString(request);
+
+        assertEquals("en", locale);
+    }
+    
+    @Test
+    public void testAnInvalidLocaleInRequestResultsWithDefaultLocale() throws Exception {
+        doReturn("weirdvalue").when(request).getParameter(LocaleUtils.LOCALE_PARAM);
+        
+        String locale = LocaleUtils.getUserLocaleAsString(request);
+
+        assertEquals("en", locale);
     }
 }

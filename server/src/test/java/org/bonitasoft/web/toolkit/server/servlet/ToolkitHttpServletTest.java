@@ -28,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.Locale;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import static org.mockito.Mockito.*;
@@ -78,7 +79,7 @@ public class ToolkitHttpServletTest {
 
         doReturn(writer).when(resp).getWriter();
         doReturn(new Cookie[] {
-                new Cookie(LocaleUtils.BOS_LOCALE, "fr_FR")
+                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "fr_FR")
         }).when(req).getCookies();
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
@@ -87,15 +88,30 @@ public class ToolkitHttpServletTest {
     }
 
     @Test
-    public void testIfLocaleIsNotInACookieThatNoLocaleIsPassedThrough() throws Exception {
+    public void testIfLocaleIsNotInACookieThatBrowserLocaleIsPassedThrough() throws Exception {
         APIException exception = mock(APIException.class,
                 withSettings().defaultAnswer(RETURNS_MOCKS));
 
         doReturn(writer).when(resp).getWriter();
         doReturn(new Cookie[0]).when(req).getCookies();
+        doReturn(Locale.CANADA_FRENCH).when(req).getLocale();
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
 
-        verify(exception, never()).setLocale(any(LOCALE.class));
+        verify(exception).setLocale(LOCALE.fr_CA);
+    }
+    
+    @Test
+    public void testIfLocaleIsNotInACookieNorBrowserThatDefaultLocaleIsPassedThrough() throws Exception {
+        APIException exception = mock(APIException.class,
+                withSettings().defaultAnswer(RETURNS_MOCKS));
+
+        doReturn(writer).when(resp).getWriter();
+        doReturn(new Cookie[0]).when(req).getCookies();
+        doReturn(null).when(req).getLocale();
+
+        toolkitHttpServlet.outputException(exception, req, resp, 500);
+
+        verify(exception).setLocale(LOCALE.en);
     }
 }
