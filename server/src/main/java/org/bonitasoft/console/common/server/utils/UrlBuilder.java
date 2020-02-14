@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.login.localization;
+package org.bonitasoft.console.common.server.utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -52,9 +52,9 @@ public class UrlBuilder {
         }
     }
 
-    public void appendParameter(final String key, final String value) {
+    public void appendParameter(final String key, final String... values) {
         if (!isParameterAlreadyDefined(parameters, key)) {
-            parameters.add(new BasicNameValuePair(key, value));
+            parameters.add(new BasicNameValuePair(key, new UrlValue(values).toString()));
         }
     }
 

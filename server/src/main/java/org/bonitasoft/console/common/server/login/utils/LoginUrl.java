@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.login.localization;
+package org.bonitasoft.console.common.server.login.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -24,6 +24,9 @@ import javax.servlet.ServletException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.localization.Locator;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
+import org.bonitasoft.console.common.server.utils.UrlBuilder;
 
 /**
  * @author Vincent Elcrin
@@ -40,7 +43,15 @@ public class LoginUrl implements Locator {
      */
     public LoginUrl(final AuthenticationManager loginManager, final String redirectUrl, final HttpServletRequestAccessor request) throws LoginUrlException,
             ServletException {
-        location = getLoginPageUrl(loginManager, redirectUrl, request);
+        String loginPageURL = getLoginPageUrl(loginManager, redirectUrl, request);
+        String localeFromRequestedURL = LocaleUtils.getLocaleFromRequestURL(request.asHttpServletRequest());
+        if (localeFromRequestedURL != null) {
+            UrlBuilder urlBuilder = new UrlBuilder(loginPageURL);
+            urlBuilder.appendParameter(LocaleUtils.PORTAL_LOCALE_PARAM, localeFromRequestedURL);
+            location = urlBuilder.build();
+        } else {
+            location = loginPageURL;
+        }
     }
 
     @Override
