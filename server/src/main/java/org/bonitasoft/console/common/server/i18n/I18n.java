@@ -133,13 +133,13 @@ public class I18n extends AbstractI18n {
         final Map<String, String> results = new LinkedHashMap<>();
         final Map<String, String> locales = getLocales();
 
+      //add English by default since _en.po files have been removed
+        results.put("en", "English");
         for (final String locale : locales.keySet()) {
             if (localeExists(locale, application)) {
                 results.put(locale, locales.get(locale));
             }
         }
-        //add english by default since _en.po files have been removed
-        results.put("en", "English");
 
         return results;
     }
