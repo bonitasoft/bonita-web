@@ -8,7 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;

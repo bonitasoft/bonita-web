@@ -24,10 +24,10 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 public class AlreadyLoggedInRule extends AuthenticationRule {
 

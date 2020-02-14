@@ -26,6 +26,7 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

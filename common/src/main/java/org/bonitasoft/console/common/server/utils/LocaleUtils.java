@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.server.utils;
+package org.bonitasoft.console.common.server.utils;
 
 import java.util.Locale;
 import java.util.logging.Level;
@@ -31,6 +31,12 @@ import javax.servlet.http.HttpServletResponse;
 public class LocaleUtils {
 
     public static final String LOCALE_PARAM = "locale";
+    
+    /**
+     * portal user's locale URL parameter (remove once GWT portal has been removed)
+     */
+    @Deprecated
+    public static final String PORTAL_LOCALE_PARAM = "_l";
     
     public static final String DEFAULT_LOCALE = "en";
 
@@ -85,6 +91,9 @@ public class LocaleUtils {
     
     public static String getLocaleFromRequestURL(final HttpServletRequest request) {
         String localeAsString = request.getParameter(LOCALE_PARAM);
+        if (localeAsString == null) {
+            localeAsString = request.getParameter(PORTAL_LOCALE_PARAM);
+        }
         if (localeAsString != null) {
             try {
                 org.apache.commons.lang3.LocaleUtils.toLocale(localeAsString);

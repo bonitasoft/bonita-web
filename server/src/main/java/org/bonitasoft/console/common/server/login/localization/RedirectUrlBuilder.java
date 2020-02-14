@@ -46,10 +46,14 @@ public class RedirectUrlBuilder {
 
     public void appendParameters(final Map<String, String[]> parameters) {
         for (final Entry<String, String[]> next : parameters.entrySet()) {
-            if (!isBlackListed(next.getKey())) {
-                for (String value : next.getValue()) {
-                    urlBuilder.appendParameter(next.getKey(), value);
-                }
+            appendParameter(next.getKey(), next.getValue());
+        }
+    }
+    
+    public void appendParameter(String name, String... values) {
+        if (!isBlackListed(name)) {
+            for (String value : values) {
+                urlBuilder.appendParameter(name, value);
             }
         }
     }

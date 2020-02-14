@@ -23,10 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import groovy.lang.GroovyClassLoader;

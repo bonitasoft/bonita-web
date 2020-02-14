@@ -79,6 +79,10 @@ public class JSPUtils {
     public String getParameter(final String name) {
         return this.getParameter(name, (String) null);
     }
+    
+    public HttpServletRequest getRequest() {
+        return this.request;
+    }
 
     public boolean getParameter(final String name, final boolean defaultValue) {
         final String result = this.request.getParameter(name);

@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 
 /**
  * @author Séverin Moussel

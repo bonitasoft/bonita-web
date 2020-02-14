@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
@@ -40,7 +41,6 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 import org.bonitasoft.web.toolkit.server.ServiceNotFoundException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
 /**
