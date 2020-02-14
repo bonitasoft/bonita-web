@@ -1,10 +1,12 @@
-package org.bonitasoft.console.common.server.login.localization;
+package org.bonitasoft.console.common.server.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URISyntaxException;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.UrlBuilder;
+import org.bonitasoft.console.common.server.utils.UrlValue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

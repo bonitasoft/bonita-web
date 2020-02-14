@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.login.localization;
+package org.bonitasoft.console.common.server.login.utils;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.junit.Test;
 
 /**

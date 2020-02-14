@@ -45,7 +45,7 @@ import org.assertj.core.api.Condition;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

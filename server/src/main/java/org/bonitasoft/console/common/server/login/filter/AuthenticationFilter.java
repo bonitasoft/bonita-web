@@ -34,10 +34,10 @@ import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
-import org.bonitasoft.console.common.server.login.localization.LoginUrl;
-import org.bonitasoft.console.common.server.login.localization.LoginUrlException;
-import org.bonitasoft.console.common.server.login.localization.RedirectUrl;
-import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.login.utils.LoginUrl;
+import org.bonitasoft.console.common.server.login.utils.LoginUrlException;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 
 /**

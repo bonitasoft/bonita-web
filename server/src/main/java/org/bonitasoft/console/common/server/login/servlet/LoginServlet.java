@@ -29,7 +29,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;

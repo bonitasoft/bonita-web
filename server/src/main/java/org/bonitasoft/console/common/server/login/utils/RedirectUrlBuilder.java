@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.console.common.server.login.localization;
+package org.bonitasoft.console.common.server.login.utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.utils.UrlBuilder;
 
 /**
  * @author Vincent Elcrin
@@ -52,9 +53,7 @@ public class RedirectUrlBuilder {
     
     public void appendParameter(String name, String... values) {
         if (!isBlackListed(name)) {
-            for (String value : values) {
-                urlBuilder.appendParameter(name, value);
-            }
+            urlBuilder.appendParameter(name, values);
         }
     }
 
