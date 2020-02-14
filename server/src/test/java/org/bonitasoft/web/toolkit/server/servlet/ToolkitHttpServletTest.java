@@ -17,9 +17,9 @@
 
 package org.bonitasoft.web.toolkit.server.servlet;
 
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
-import org.bonitasoft.web.toolkit.server.utils.LocaleUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

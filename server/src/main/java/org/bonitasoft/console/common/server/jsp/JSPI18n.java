@@ -17,6 +17,7 @@
 package org.bonitasoft.console.common.server.jsp;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 public class JSPI18n {
@@ -41,11 +42,7 @@ public class JSPI18n {
 	}
     
     private LOCALE loadLocale() {
-    	String locale = jspUtils.getParameter("_l", "");
-    	if (locale.isEmpty()) {
-    		locale = jspUtils.getSessionOrCookie("BOS_Locale", "en_US");
-    	}
-        locale = "default".equals(locale) ? "en_US" : locale;
-        return LOCALE.valueOf(locale);
+    	String localeAsString = LocaleUtils.getUserLocaleAsString(jspUtils.getRequest());
+        return LOCALE.valueOf(localeAsString);
     }
 }

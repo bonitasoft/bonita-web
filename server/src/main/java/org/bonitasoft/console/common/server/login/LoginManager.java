@@ -34,6 +34,7 @@ import org.bonitasoft.console.common.server.login.credentials.StandardCredential
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
 import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -49,7 +50,6 @@ import org.bonitasoft.web.rest.model.user.User;
 public class LoginManager {
 
     private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
-    private static final String DEFAULT_LOCALE = "en";
     public static final String TENANT_COOKIE_NAME = "bonita.tenant";
     
     protected TokenGenerator tokenGenerator = new TokenGenerator();
@@ -128,11 +128,7 @@ public class LoginManager {
         }
     }
     protected void storeCredentials(final HttpServletRequestAccessor request, final APISession session) throws LoginFailedException {
-        String local = DEFAULT_LOCALE;
-        if (request.getParameterMap().get("_l") != null
-                && request.getParameterMap().get("_l").length >= 0) {
-            local = request.getParameterMap().get("_l")[0];
-        }
+        String local = LocaleUtils.getUserLocaleAsString(request.asHttpServletRequest());
         final User user = new User(request.getUsername(), local);
         final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
         final Set<String> permissions = permissionsBuilder.getPermissions();

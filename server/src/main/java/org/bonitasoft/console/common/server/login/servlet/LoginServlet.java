@@ -30,6 +30,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
 import org.bonitasoft.console.common.server.login.localization.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.exception.TenantStatusException;
@@ -100,18 +101,20 @@ public class LoginServlet extends HttpServlet {
     protected void handleLogin(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         final boolean redirectAfterLogin = hasRedirection(request);
         final String redirectURL = getRedirectUrl(request, redirectAfterLogin);
+        String locale = LocaleUtils.getUserLocaleAsString(request);
         try {
             doLogin(request, response);
             final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-   
             // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
                 if (apiSession.isTechnicalUser() || TenantsManagementUtils.hasProfileForUser(apiSession)) {
-                    response.sendRedirect(createRedirectUrl(request, redirectURL));
+                    response.sendRedirect(createRedirectUrl(request, redirectURL, locale));
                 } else {
                     request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
                     getServletContext().getRequestDispatcher(AuthenticationManager.LOGIN_PAGE).forward(request, response);
                 }
+            } else {
+                LocaleUtils.addLocaleCookieToResponse(response, locale);
             }
         } catch (final AuthenticationManagerNotFoundException e) {
             final String message = "Can't get login manager";
@@ -120,12 +123,12 @@ public class LoginServlet extends HttpServlet {
             }
             throw new ServletException(e);
         } catch (final LoginFailedException e) {
-            handleException(request, response, redirectAfterLogin, e);
+            handleException(request, response, redirectAfterLogin, e, locale);
         } catch (final AuthenticationFailedException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
             }
-            handleException(request, response, redirectAfterLogin, e);
+            handleException(request, response, redirectAfterLogin, e, locale);
         } catch (final Exception e) {
             LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
             throw new ServletException(e);
@@ -133,7 +136,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleException(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin,
-        final Exception e) throws ServletException {
+        final Exception e, final String locale) throws ServletException {
         // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
         if (redirectAfterLogin) {
             try {
@@ -143,7 +146,7 @@ public class LoginServlet extends HttpServlet {
                     loginURL = AuthenticationManager.LOGIN_PAGE;
                     getServletContext().getRequestDispatcher(loginURL).forward(request, response);
                 } else {
-                    getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL)).forward(request, response);
+                    getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL, locale)).forward(request, response);
                 }
             } catch (final Exception e1) {
                 if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -184,8 +187,10 @@ public class LoginServlet extends HttpServlet {
         return redirectAfterLogin;
     }
 
-    private String createRedirectUrl(final HttpServletRequest request, final String redirectURL) {
-        return new RedirectUrlBuilder(redirectURL).build().getUrl();
+    private String createRedirectUrl(final HttpServletRequest request, final String redirectURL, final String locale) {
+        RedirectUrlBuilder redirectUrlBuilder = new RedirectUrlBuilder(redirectURL);
+        redirectUrlBuilder.appendParameter(LocaleUtils.PORTAL_LOCALE_PARAM, locale);
+        return redirectUrlBuilder.build().getUrl();
     }
 
     protected void doLogin(final HttpServletRequest request, final HttpServletResponse response)
