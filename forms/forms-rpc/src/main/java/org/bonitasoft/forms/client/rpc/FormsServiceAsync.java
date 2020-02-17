@@ -213,13 +213,6 @@ public interface FormsServiceAsync {
     void getLoggedInUser(AsyncCallback<User> asyncCallback);
 
     /**
-     * generate a token to change application
-     *
-     * @param asyncCallback
-     */
-    void generateTemporaryToken(AsyncCallback<String> asyncCallback);
-
-    /**
      * Logout from the application
      *
      * @param asyncCallback

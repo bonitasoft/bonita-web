@@ -281,13 +281,6 @@ public interface FormsService extends RemoteService {
     User getLoggedInUser() throws RPCException, SessionTimeoutException;
 
     /**
-     * generate a token to change application
-     *
-     * @return the token
-     */
-    String generateTemporaryToken() throws RPCException, SessionTimeoutException;
-
-    /**
      * Logout from the application
      */
     void logout() throws RPCException, SessionTimeoutException;

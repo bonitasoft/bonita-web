@@ -60,11 +60,6 @@
             <param-value>i18ntranslation,session</param-value>
         </init-param>
     </filter>
-    <!-- SSO filter -->
-    <filter>
-        <filter-name>InternalSSOFilter</filter-name>
-        <filter-class>org.bonitasoft.console.common.server.sso.filter.InternalSSOFilter</filter-class>
-    </filter>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.AuthenticationFilter</filter-class>
@@ -218,11 +213,6 @@
         <!-- see TokenValidatorFilter comment -->
         <url-pattern>/portal/custom-page/API/system/session/*</url-pattern>
         <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>InternalSSOFilter</filter-name>
-        <url-pattern>/portal/BonitaConsole.html</url-pattern>
-        <url-pattern>/portal/homepage</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>BPMURLSupportFilter</filter-name>
@@ -420,12 +410,6 @@
         <servlet-name>exportProcessActorsServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.server.servlet.ProcessActorsExportServlet</servlet-class>
     </servlet>
-    <!-- SSO -->
-    <servlet>
-        <servlet-name>SSOService</servlet-name>
-        <servlet-class>org.bonitasoft.console.common.server.sso.servlet.RedirectServlet</servlet-class>
-    </servlet>
-    <!-- End SSO -->
     <!-- Pages -->
     <servlet>
         <servlet-name>CustomPageServlet</servlet-name>
@@ -527,10 +511,6 @@
         <url-pattern>/portal/themeResource</url-pattern>
         <url-pattern>/theme/*</url-pattern>
         <url-pattern>/portal/custom-page/theme/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SSOService</servlet-name>
-        <url-pattern>/ssoservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>processUploadServlet</servlet-name>
