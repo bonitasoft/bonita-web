@@ -25,8 +25,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.localization.Locator;
-import org.bonitasoft.console.common.server.utils.LocaleUtils;
-import org.bonitasoft.console.common.server.utils.UrlBuilder;
 
 /**
  * @author Vincent Elcrin
@@ -43,15 +41,7 @@ public class LoginUrl implements Locator {
      */
     public LoginUrl(final AuthenticationManager loginManager, final String redirectUrl, final HttpServletRequestAccessor request) throws LoginUrlException,
             ServletException {
-        String loginPageURL = getLoginPageUrl(loginManager, redirectUrl, request);
-        String localeFromRequestedURL = LocaleUtils.getLocaleFromRequestURL(request.asHttpServletRequest());
-        if (localeFromRequestedURL != null) {
-            UrlBuilder urlBuilder = new UrlBuilder(loginPageURL);
-            urlBuilder.appendParameter(LocaleUtils.PORTAL_LOCALE_PARAM, localeFromRequestedURL);
-            location = urlBuilder.build();
-        } else {
-            location = loginPageURL;
-        }
+        location = getLoginPageUrl(loginManager, redirectUrl, request);
     }
 
     @Override

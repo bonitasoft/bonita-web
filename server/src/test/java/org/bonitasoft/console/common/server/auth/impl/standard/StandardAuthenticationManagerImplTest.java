@@ -43,6 +43,16 @@ public class StandardAuthenticationManagerImplTest {
     }
 
     @Test
+    public void testGetLoginpageURLWithLocale() throws Exception {
+        String redirectUrl = "%2Fportal%2Fhomepage";
+        request.setParameter("_l", "es");
+
+        String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
+
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&_l=es&redirectUrl=%2Fportal%2Fhomepage");
+    }
+
+    @Test
     public void testGetLoginpageURLFromPortal() throws Exception {
         String redirectUrl = "%2Fportal%2Fhomepage";
         request.setServletPath("/portal/");
