@@ -19,9 +19,9 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
+import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
@@ -53,7 +53,6 @@ public class AbstractUserTaskDatastore<CONSOLE_ITEM extends UserTaskItem, ENGINE
 
             // FIXME replace by getUserTaskInstance
             final HumanTaskInstance humanTaskInstance = getProcessAPI().getHumanTaskInstance(id.toLong());
-
             if (!(humanTaskInstance instanceof UserTaskInstance)) {
                 throw new APIItemNotFoundException("User task", id);
             }
@@ -72,7 +71,7 @@ public class AbstractUserTaskDatastore<CONSOLE_ITEM extends UserTaskItem, ENGINE
 
         final SearchOptionsBuilder builder = super.makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
 
-        builder.filter(ActivityInstanceSearchDescriptor.ACTIVITY_TYPE, FlowNodeType.USER_TASK);
+        builder.filter(HumanTaskInstanceSearchDescriptor.PARENT_ACTIVITY_INSTANCE_ID, 0);
 
         return builder;
     }
