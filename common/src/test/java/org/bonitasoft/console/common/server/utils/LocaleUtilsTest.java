@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.bonitasoft.web.toolkit.server.utils;
+package org.bonitasoft.console.common.server.utils;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -26,7 +26,6 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

@@ -27,6 +27,7 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**
@@ -51,6 +52,11 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
         long tenantId = getTenantId(request);
         if (tenantId != getDefaultTenantId()) {
             url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
+        }
+        //adds the locale to the login URL if it is set in the requested URL
+        String localeFromRequestedURL = LocaleUtils.getLocaleFromRequestURL(request.asHttpServletRequest());
+        if (localeFromRequestedURL != null) {
+            url.append(LocaleUtils.PORTAL_LOCALE_PARAM).append("=").append(localeFromRequestedURL).append("&");
         }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
