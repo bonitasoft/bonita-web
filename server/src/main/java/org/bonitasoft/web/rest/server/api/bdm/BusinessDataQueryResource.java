@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.bpm.businessdata.BusinessDataQueryMetadata;
@@ -41,6 +43,11 @@ public class BusinessDataQueryResource extends CommonResource {
 
     private final CommandAPI commandAPI;
 
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(BusinessDataQueryResource.class.getName());
+    
     public BusinessDataQueryResource(final CommandAPI commandAPI) {
         this.commandAPI = commandAPI;
         //Prevent Restlet from setting the status to 404
@@ -61,6 +68,14 @@ public class BusinessDataQueryResource extends CommonResource {
         parameters.put("maxResults", searchPageSize);
         parameters.put("businessDataURIPattern", BusinessDataFieldValue.URI_PATTERN);
 
+        if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "Executing business Data Query: " + parameters.get("queryName"));
+            LOGGER.log(Level.FINE, "entityClassName: " + parameters.get("entityClassName"));
+            LOGGER.log(Level.FINE, "queryParameters: " + parameters.get("queryParameters").toString());
+            LOGGER.log(Level.FINE, "startIndex: " + parameters.get("startIndex"));
+            LOGGER.log(Level.FINE, "maxResults: " + parameters.get("maxResults"));
+        }
+        
         BusinessDataQueryResult businessDataQueryResult = (BusinessDataQueryResult) commandAPI.execute(COMMAND_NAME, parameters);
 
         Representation representation = getConverterService().toRepresentation(businessDataQueryResult.getJsonResults(), MediaType.APPLICATION_JSON);
