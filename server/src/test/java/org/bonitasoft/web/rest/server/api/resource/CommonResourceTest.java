@@ -160,6 +160,20 @@ public class CommonResourceTest extends RestletTest {
         assertThat(parseFilters.get("titi")).isEqualTo("'EN_ECHEC'");
         assertThat(parseFilters.get("task")).isEqualTo("task=with=equal=in=name");
     }
+    
+    @Test
+    public void parseFilterWithSpecialCharactersShouldBuildExpectedMap() throws Exception {
+        // given:
+        final List<String> filters = Arrays.asList("a=b", "c=/d/d,e");
+
+        // when:
+        final Map<String, String> parseFilters = new CommonResource().parseFilters(filters);
+
+        // then:
+        assertThat(parseFilters.size()).isEqualTo(2);
+        assertThat(parseFilters.get("a")).isEqualTo("b");
+        assertThat(parseFilters.get("c")).isEqualTo("/d/d,e");
+    }
 
     @Test
     public void parseFilterShouldBuildMapEvenIfNoValueForParam() throws Exception {
@@ -285,6 +299,20 @@ public class CommonResourceTest extends RestletTest {
         assertThat(parametersValues).containsExactly("a=b", "c=d,e");
     }
 
+    @Test
+    public void getParametersAsList_should_support_values_with_slash() throws Exception {
+        //given
+        final CommonResource resource = spy(new CommonResource());
+        final Form form = new Form("f=a%3Db&f=c%3D%2Fd%2Fd%2Ce");
+        given(resource.getQuery()).willReturn(form);
+
+        //when
+        final List<String> parametersValues = resource.getParameterAsList("f");
+
+        //then
+        assertThat(parametersValues).containsExactly("a=b", "c=/d/d,e");
+    }
+    
     @Test
     public void getParametersAsList_should_return_emptyList_when_parameter_does_not_exist() throws Exception {
         //given
