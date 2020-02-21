@@ -515,6 +515,7 @@
     <servlet-mapping>
         <servlet-name>processUploadServlet</servlet-name>
         <url-pattern>/portal/processUpload</url-pattern>
+        <url-pattern>/API/processUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>xmlUploadServlet</servlet-name>
