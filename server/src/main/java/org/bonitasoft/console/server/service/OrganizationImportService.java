@@ -30,10 +30,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
+import org.bonitasoft.engine.api.OrganizationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.identity.InvalidOrganizationFileFormatException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.toolkit.server.ServiceException;
@@ -43,7 +45,7 @@ import org.bonitasoft.web.toolkit.server.ServiceException;
  */
 public class OrganizationImportService extends ConsoleService {
 
-    public final static String TOKEN = "/organization/import";
+    public static final String TOKEN = "/organization/import";
 
     /**
      * Logger
@@ -55,12 +57,17 @@ public class OrganizationImportService extends ConsoleService {
      */
     private static final String FILE_UPLOAD = "organizationDataUpload";
 
+    /**
+     * import policy
+     */
+    private static final String IMPORT_POLICY_PARAM_NAME = "importPolicy";
+
     @Override
     public Object run() {
         final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
         try {
             final byte[] organizationContent = getOrganizationContent(tenantFolder);
-            getIdentityAPI().importOrganization(new String(organizationContent));
+            getIdentityAPI().importOrganizationWithWarnings(new String(organizationContent), getImportPolicy());
         } catch (final InvalidSessionException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             String message = _("Session expired. Please log in again.");
@@ -68,7 +75,7 @@ public class OrganizationImportService extends ConsoleService {
                 LOGGER.log(Level.INFO, message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
-        } catch (InvalidOrganizationFileFormatException e) {
+        } catch (InvalidOrganizationFileFormatException | IllegalArgumentException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String message = _("Can't import organization. Please check that your file is well-formed.");
             if (LOGGER.isLoggable(Level.INFO)) {
@@ -84,25 +91,24 @@ public class OrganizationImportService extends ConsoleService {
         return "";
     }
 
+    private ImportPolicy getImportPolicy() {
+        final String importPolicyAsString = getParameter(IMPORT_POLICY_PARAM_NAME);
+        ImportPolicy importPolicy = ImportPolicy.MERGE_DUPLICATES;
+        if (importPolicyAsString != null) {
+            importPolicy = ImportPolicy.valueOf(importPolicyAsString);
+        }
+        return importPolicy;
+    }
+
     public byte[] getOrganizationContent(final BonitaHomeFolderAccessor tenantFolder) throws IOException {
-        InputStream xmlStream = null;
-        try {
-            File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(), getTenantId());
-            xmlStream = new FileInputStream(xmlFile);
+        try (InputStream xmlStream = new FileInputStream(tenantFolder.getTempFile(getFileUploadParameter(), getTenantId()))) {
             return IOUtils.toByteArray(xmlStream);
-        } finally {
-            if (xmlStream != null) {
-                try {
-                    xmlStream.close();
-                } catch (final IOException e) {
-                    xmlStream = null;
-                }
-            }
         }
     }
-    
+
+
     protected IdentityAPI getIdentityAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        return (IdentityAPI) TenantAPIAccessor.getIdentityAPI(getSession());
+        return TenantAPIAccessor.getIdentityAPI(getSession());
     }
 
     protected long getTenantId() {
