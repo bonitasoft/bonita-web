@@ -322,6 +322,18 @@
         </init-param>
     </servlet>
     <servlet>
+        <servlet-name>apiProcessUploadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
+        <init-param>
+            <param-name>SupportedExtensions</param-name>
+            <param-value>bar</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>json</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
         <servlet-name>xmlUploadServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
         <init-param>
@@ -515,6 +527,9 @@
     <servlet-mapping>
         <servlet-name>processUploadServlet</servlet-name>
         <url-pattern>/portal/processUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>apiProcessUploadServlet</servlet-name>
         <url-pattern>/API/processUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
