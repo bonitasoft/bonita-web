@@ -329,6 +329,10 @@
             <param-value>bar</param-value>
         </init-param>
         <init-param>
+            <param-name>ReturnOriginalFilename</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
             <param-name>ContentType</param-name>
             <param-value>json</param-value>
         </init-param>
