@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.page.PageMappingService;
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
-import org.bonitasoft.console.common.server.page.RestApiResponse;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.web.extension.rest.RestApiResponse;
 import org.restlet.Request;
 import org.restlet.data.CharacterSet;
 import org.restlet.data.CookieSetting;
