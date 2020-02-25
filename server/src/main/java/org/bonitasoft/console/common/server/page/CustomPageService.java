@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -48,10 +49,10 @@ import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.extension.page.PageController;
 import org.bonitasoft.web.extension.page.PageResourceProvider;
+import org.bonitasoft.web.extension.rest.RestApiController;
 import org.codehaus.groovy.control.CompilationFailedException;
-
-import groovy.lang.GroovyClassLoader;
 
 /**
  * @author Anthony Birembaut, Fabio Lombardi
