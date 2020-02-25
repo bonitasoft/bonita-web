@@ -36,7 +36,7 @@ import org.bonitasoft.web.extension.page.PageResourceProvider;
  *
  * @author Anthony Birembaut
  */
-public class PageResourceProviderImpl implements PageResourceProvider,org.bonitasoft.console.common.server.page.PageResourceProvider {
+public class PageResourceProviderImpl implements PageResourceProvider {
 
     /**
      * Logger

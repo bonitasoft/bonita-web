@@ -25,7 +25,7 @@ import org.bonitasoft.engine.session.APISession;
  * @author Anthony Birembaut
  *
  */
-public class PageContextImpl implements org.bonitasoft.web.extension.page.PageContext,org.bonitasoft.console.common.server.page.PageContext{
+public class PageContextImpl implements org.bonitasoft.web.extension.page.PageContext {
 
     protected APISession apiSession;
 

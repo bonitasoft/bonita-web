@@ -17,19 +17,17 @@ package org.bonitasoft.console.common.server.page;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import groovy.lang.GroovyClassLoader;
 import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
-
-import groovy.lang.GroovyClassLoader;
 
 /**
  * Class used by servlets to display a custom page
@@ -122,16 +120,10 @@ public class PageRenderer {
             Thread.currentThread().setContextClassLoader(pageClassloader);
             pageResourceProvider.setResourceClassLoader(pageClassloader);
             final Class<?> pageClass = customPageService.registerPage(pageClassloader, pageResourceProvider);
-            if (PageController.class.isAssignableFrom(pageClass)) {//LEGACY MODE
-                final PageController pageController = customPageService.loadPage((Class<PageController>) pageClass);
-                pageController.doGet(request, response, pageResourceProvider,
-                        new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
-            } else {
-                final org.bonitasoft.web.extension.page.PageController pageController = ((Class<org.bonitasoft.web.extension.page.PageController>) pageClass)
-                        .newInstance();
-                pageController.doGet(request, response, pageResourceProvider,
-                        new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
-            }
+            final org.bonitasoft.web.extension.page.PageController pageController = ((Class<org.bonitasoft.web.extension.page.PageController>) pageClass)
+                    .newInstance();
+            pageController.doGet(request, response, pageResourceProvider,
+                    new PageContextImpl(apiSession, getCurrentLocale(request), getCurrentProfile(request)));
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassloader);
         }
