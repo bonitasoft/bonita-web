@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.sso.InternalSSOManager;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
@@ -924,21 +923,6 @@ public class FormsServlet extends RemoteServiceServlet implements FormsService {
                 features.add(AuthenticationManagerProperties.LOGOUT_ENABLED);
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String generateTemporaryToken() throws RPCException, SessionTimeoutException {
-        final HttpServletRequest request = getThreadLocalRequest();
-        final HttpSession httpSession = request.getSession();
-        final APISession aAPISession = (APISession) httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        String userToken = null;
-        if (aAPISession != null) {
-            userToken = InternalSSOManager.getInstance().add(aAPISession);
-        }
-        return userToken;
     }
 
     /**

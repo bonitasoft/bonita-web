@@ -442,41 +442,4 @@ public class FormApplicationViewController {
             formsServiceAsync.getApplicationErrorTemplate(formId, urlContext, new ErrorPageHandler(applicationHTMLPanel, formId, errorMessage, elementId));
         }
     }
-
-    /**
-     * Handler allowing to get a temporary token to access the user XP
-     */
-    protected class GenerateTemporaryTokenHandler implements AsyncCallback<String> {
-
-        protected String userXPURL;
-
-        /**
-         * Constructor
-         *
-         * @param userXPURL
-         */
-        public GenerateTemporaryTokenHandler(final String userXPURL) {
-            super();
-            this.userXPURL = userXPURL;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void onSuccess(final String temporaryToken) {
-            urlUtils.windowAssign(userXPURL + "?" + URLUtils.USER_CREDENTIALS_PARAM + "=" + temporaryToken + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "="
-                    + urlUtils.getLocale());
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void onFailure(final Throwable t) {
-            urlUtils.windowAssign(userXPURL + "#?" + URLUtils.CONSOLE_LOCALE_PARAM + "=" + urlUtils.getLocale());
-        }
-
-    }
-
 }
