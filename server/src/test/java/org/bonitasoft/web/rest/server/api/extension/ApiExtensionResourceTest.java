@@ -2,17 +2,14 @@ package org.bonitasoft.web.rest.server.api.extension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.page.RestApiRenderer;
-import org.bonitasoft.console.common.server.page.RestApiResponse;
-import org.bonitasoft.console.common.server.page.RestApiResponseBuilder;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.web.extension.rest.RestApiResponse;
+import org.bonitasoft.web.extension.rest.RestApiResponseBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

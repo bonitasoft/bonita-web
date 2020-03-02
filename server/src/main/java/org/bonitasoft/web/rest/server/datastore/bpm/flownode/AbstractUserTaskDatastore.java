@@ -19,11 +19,11 @@ package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 import java.util.Map;
 
 import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceSearchDescriptor;
+import org.bonitasoft.engine.bpm.flownode.FlowNodeType;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
+import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.UserTaskInstance;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.UserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.UserTaskItem;
@@ -53,7 +53,6 @@ public class AbstractUserTaskDatastore<CONSOLE_ITEM extends UserTaskItem, ENGINE
 
             // FIXME replace by getUserTaskInstance
             final HumanTaskInstance humanTaskInstance = getProcessAPI().getHumanTaskInstance(id.toLong());
-
             if (!(humanTaskInstance instanceof UserTaskInstance)) {
                 throw new APIItemNotFoundException("User task", id);
             }
@@ -72,19 +71,8 @@ public class AbstractUserTaskDatastore<CONSOLE_ITEM extends UserTaskItem, ENGINE
 
         final SearchOptionsBuilder builder = super.makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
 
-        builder.filter(ActivityInstanceSearchDescriptor.ACTIVITY_TYPE, UserTaskItem.VALUE_TYPE_USER_TASK);
+        builder.filter(HumanTaskInstanceSearchDescriptor.PARENT_ACTIVITY_INSTANCE_ID, 0);
 
         return builder;
-    }
-
-    @Override
-    protected SearchResult<ENGINE_ITEM> runSearch(final SearchOptionsBuilder builder, final Map<String, String> filters) {
-        try {
-            @SuppressWarnings("unchecked")
-            final SearchResult<ENGINE_ITEM> results = (SearchResult<ENGINE_ITEM>) (SearchResult<?>) getProcessAPI().searchActivities(builder.done());
-            return results;
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
     }
 }

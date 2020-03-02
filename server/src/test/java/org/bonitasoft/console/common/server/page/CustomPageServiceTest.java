@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2015 Bonitasoft S.A.
+/*
+ * Copyright (C) 2015-2019 Bonitasoft S.A.
  * Bonitasoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -33,13 +30,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
-import org.bonitasoft.console.common.server.page.extension.RestApiUtilImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
@@ -49,6 +45,11 @@ import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.extension.page.PageController;
+import org.bonitasoft.web.extension.rest.RestAPIContext;
+import org.bonitasoft.web.extension.rest.RestApiController;
+import org.bonitasoft.web.extension.rest.RestApiResponse;
+import org.bonitasoft.web.extension.rest.RestApiResponseBuilder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,8 +58,6 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import groovy.lang.GroovyClassLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -90,7 +89,7 @@ public class CustomPageServiceTest {
     private HttpServletRequest request;
 
     @Mock
-    private PageContextImpl pageContext;
+    private RestAPIContext restAPIContext;
 
     @Mock
     private Page mockedPage;
@@ -404,9 +403,8 @@ public class CustomPageServiceTest {
                 new File(pageDirectory, "RestResource.groovy"));
 
         // then
-        final RestApiController restApiController = (RestApiController) restApiControllerClass.newInstance();
-        final RestApiResponse restApiResponse = restApiController.doHandle(request, pageResourceProvider, pageContext, new RestApiResponseBuilder(),
-                new RestApiUtilImpl());
+        final org.bonitasoft.web.extension.rest.RestApiController restApiController = (org.bonitasoft.web.extension.rest.RestApiController) restApiControllerClass.newInstance();
+        final RestApiResponse restApiResponse = restApiController.doHandle(request, new RestApiResponseBuilder(), restAPIContext);
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
                 .hasNoAdditionalCookies().hasHttpStatus(200);
     }

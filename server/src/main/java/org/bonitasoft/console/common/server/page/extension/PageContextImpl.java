@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.page.extension;
 
 import java.util.Locale;
 
-import org.bonitasoft.console.common.server.page.PageContext;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.extension.page.PageContext;
 
 /**
  * This class provide access to the data relative to the context in which the custom page is displayed
@@ -25,7 +25,7 @@ import org.bonitasoft.engine.session.APISession;
  * @author Anthony Birembaut
  *
  */
-public class PageContextImpl implements org.bonitasoft.web.extension.page.PageContext,org.bonitasoft.console.common.server.page.PageContext{
+public class PageContextImpl implements PageContext {
 
     protected APISession apiSession;
 
