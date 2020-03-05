@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.themes.ThemeResourceServlet;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
+import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -79,6 +80,7 @@ public class HomepageServlet extends ThemeResourceServlet {
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) {
+        enforceLocaleCookieIfPresentInURLOrBrowser(request, response);
         final boolean isForm = isForm(getUrlPrefix(request), getUiMode(request));
         final String themeName = getThemeName(request);
         if (isForm && themeName != null) {
@@ -86,6 +88,20 @@ public class HomepageServlet extends ThemeResourceServlet {
             showApplicationPage(request, response, themeName);
         } else {
             showDefaultPage(request, response, isForm);
+        }
+    }
+    
+    protected void enforceLocaleCookieIfPresentInURLOrBrowser(final HttpServletRequest request, final HttpServletResponse response) {
+        final String localeFromCookie = LocaleUtils.getLocaleFromCookie(request);
+        final String localeFromURL = LocaleUtils.getLocaleFromRequestURL(request);
+        final String localeFromBrowser = LocaleUtils.getLocaleFromBrowser(request);
+        
+        if (localeFromURL != null && !localeFromURL.equals(localeFromCookie)) {
+            //Set the cookie if the locale is in the URL and different from the existing cookie value or the cookie does not exist yet
+            LocaleUtils.addLocaleCookieToResponse(response, localeFromURL);
+        } else if (localeFromCookie == null && localeFromBrowser != null) {
+            //Set the cookie with the browser locale if there is no cookie
+            LocaleUtils.addLocaleCookieToResponse(response, localeFromBrowser);
         }
     }
 
