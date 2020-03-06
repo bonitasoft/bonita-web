@@ -25,7 +25,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
@@ -55,10 +54,7 @@ public class LoginServletTest {
 
     @Mock
     APISession apiSession;
-
-    @Mock
-    TokenGenerator tokenGenerator;
-
+    
     @Before
     public void setup() {
         doReturn("application/x-www-form-urlencoded").when(req).getContentType();

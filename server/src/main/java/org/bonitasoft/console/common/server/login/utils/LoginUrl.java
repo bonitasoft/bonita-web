@@ -39,9 +39,9 @@ public class LoginUrl implements Locator {
      * @throws LoginUrlException
      *         If the login page Url couldn't be retrieved
      */
-    public LoginUrl(final AuthenticationManager loginManager, final String redirectUrl, final HttpServletRequestAccessor request) throws LoginUrlException,
+    public LoginUrl(final AuthenticationManager authenticationManager, final String redirectUrl, final HttpServletRequestAccessor request) throws LoginUrlException,
             ServletException {
-        location = getLoginPageUrl(loginManager, redirectUrl, request);
+        location = getLoginPageUrl(authenticationManager, redirectUrl, request);
     }
 
     @Override
@@ -49,10 +49,10 @@ public class LoginUrl implements Locator {
         return location;
     }
 
-    private String getLoginPageUrl(final AuthenticationManager loginManager, final String redirectURL, final HttpServletRequestAccessor request)
+    private String getLoginPageUrl(final AuthenticationManager authenticationManager, final String redirectURL, final HttpServletRequestAccessor request)
             throws LoginUrlException, ServletException {
         try {
-            return loginManager.getLoginPageURL(request, URLEncoder.encode(redirectURL, "UTF-8"));
+            return authenticationManager.getLoginPageURL(request, URLEncoder.encode(redirectURL, "UTF-8"));
         } catch (final UnsupportedEncodingException | ConsumerNotFoundException e) {
             throw new LoginUrlException(e);
         }
