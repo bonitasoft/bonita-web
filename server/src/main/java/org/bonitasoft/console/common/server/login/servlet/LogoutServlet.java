@@ -32,8 +32,10 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.LoginAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -42,7 +44,6 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
-import org.bonitasoft.web.toolkit.client.common.url.UrlOption;
 
 /**
  * Servlet used to logout from the applications
@@ -120,66 +121,59 @@ public class LogoutServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
+    
+    // protected for test stubbing
+    protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
+        try {
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+        } catch (final AuthenticationManagerNotFoundException e) {
+            throw new ServletException(e);
+        }
+    }
 
     protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor, final long tenantId)
             throws AuthenticationManagerNotFoundException, UnsupportedEncodingException, ConsumerNotFoundException, ServletException {
-        final AuthenticationManager loginManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+        final AuthenticationManager authenticationManager = getAuthenticationManager(tenantId);
         final HttpServletRequest request = requestAccessor.asHttpServletRequest();
-        final String tenantIdStr = requestAccessor.getTenantId();
-        final String localeStr = request.getParameter(UrlOption.LANG);
 
-        final StringBuffer tempURL = new StringBuffer(LOGIN_PAGE);
-        tempURL.append("?");
+        final String redirectURL = createRedirectUrl(requestAccessor, tenantId);
 
-        if (localeStr != null) {
-            // Append tenant parameter in url parameters
-            tempURL.append(UrlOption.LANG).append("=").append(localeStr).append("&");
-        }
-
-        if (tenantIdStr != null && !tenantIdStr.isEmpty()) {
-            // Append tenant parameter in url parameters
-            tempURL.append(AuthenticationManager.TENANT).append("=").append(tenantIdStr).append("&");
-        }
-        final String encodedRedirectURL = createRedirectUrl(request);
-        tempURL.append(AuthenticationManager.REDIRECT_URL).append("=").append(encodedRedirectURL);
-
-        final String logoutPage = loginManager.getLogoutPageURL(requestAccessor, encodedRedirectURL);
+        final String logoutPage = authenticationManager.getLogoutPageURL(requestAccessor, redirectURL);
         String redirectionPage = null;
         if (logoutPage != null) {
             redirectionPage = logoutPage;
         } else {
-            final String loginURL = request.getParameter(LOGIN_URL_PARAM_NAME);
-            if (loginURL != null) {
-                redirectionPage = buildLoginPageUrl(loginURL);
+            final String loginPageURLFromRequest = request.getParameter(LOGIN_URL_PARAM_NAME);
+            if (loginPageURLFromRequest != null) {
+                redirectionPage = sanitizeLoginPageUrl(loginPageURLFromRequest);
             } else {
-                redirectionPage = tempURL.toString();
+                LoginUrl loginPageURL = new LoginUrl(authenticationManager, redirectURL, requestAccessor);
+                redirectionPage = loginPageURL.getLocation();
             }
         }
         return redirectionPage;
     }
-
-    protected String buildLoginPageUrl(final String loginURL) {
+    
+    protected String sanitizeLoginPageUrl(final String loginURL) {
         return new RedirectUrlBuilder(new URLProtector().protectRedirectUrl(loginURL)).build().getUrl();
     }
 
-    /**
-     * Used in SP
-     */
-    protected String createRedirectUrl(final HttpServletRequest request) {
-        return new RedirectUrlBuilder(getRedirectUrl(request)).build().getUrl();
+    protected String createRedirectUrl(final HttpServletRequestAccessor request, final long tenantId) throws ServletException {
+        final String redirectUrlFromRequest = request.getRedirectUrl();
+        String redirectUrl = redirectUrlFromRequest != null ? redirectUrlFromRequest : getDefaultRedirectUrl(tenantId);
+        return new RedirectUrlBuilder(redirectUrl).build().getUrl();
     }
 
-    private String getRedirectUrl(final HttpServletRequest request) {
-        final HttpServletRequestAccessor accessor = new HttpServletRequestAccessor(request);
-        final String redirectUrl = accessor.getRedirectUrl();
-        return redirectUrl != null ? redirectUrl : getDefaultRedirectUrl();
+    protected String getDefaultRedirectUrl(final long tenantId) throws ServletException {
+        StringBuilder defaultRedirectUrl = new StringBuilder(AuthenticationManager.DEFAULT_DIRECT_URL);
+        if (tenantId != getDefaultTenantId()) {
+            defaultRedirectUrl.append("?").append(AuthenticationManager.TENANT).append("=").append(tenantId);
+        }
+        return defaultRedirectUrl.toString();
     }
 
-    /**
-     * Overridden in SP
-     */
-    protected String getDefaultRedirectUrl() {
-        return AuthenticationManager.DEFAULT_DIRECT_URL;
+    protected long getDefaultTenantId() {
+        return TenantsManagementUtils.getDefaultTenantId();
     }
 
     protected void engineLogout(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,

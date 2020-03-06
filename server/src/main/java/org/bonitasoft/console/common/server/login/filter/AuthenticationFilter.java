@@ -95,7 +95,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
                 cleanHttpSession(requestAccessor.getHttpSession());
                 if (requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
-                    response.sendRedirect(createLoginUrl(requestAccessor, tenantIdAccessor).getLocation());
+                    response.sendRedirect(createLoginPageUrl(requestAccessor, tenantIdAccessor).getLocation());
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 }
@@ -180,7 +180,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         return builder.build();
     }
 
-    protected LoginUrl createLoginUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected LoginUrl createLoginPageUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
             return new LoginUrl(getAuthenticationManager(tenantIdAccessor),
                     makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
