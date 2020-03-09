@@ -9,7 +9,7 @@ msgstr ""
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2020-01-27 02:55\n"
+"PO-Revision-Date: 2020-03-09 03:04\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -200,6 +200,9 @@ msgstr "案件の状態"
 msgid "Cases"
 msgstr "案件"
 
+msgid "Cases with failures"
+msgstr ""
+
 msgid "Categories"
 msgstr "カテゴリ"
 
@@ -299,6 +302,9 @@ msgstr ""
 msgid "Description"
 msgstr "説明"
 
+msgid "Disable"
+msgstr ""
+
 msgid "Display name"
 msgstr "表示名"
 
@@ -325,6 +331,9 @@ msgstr "メニュー項目を編集"
 
 msgid "Email"
 msgstr "Eメール"
+
+msgid "Enable"
+msgstr ""
 
 msgid "Enable all"
 msgstr "すべて有効にする"
@@ -413,6 +422,9 @@ msgstr "全般的な情報が正常に更新されました"
 msgid "Groups"
 msgstr "グループ"
 
+msgid "Healthy cases"
+msgstr ""
+
 msgid "Hide Menu"
 msgstr "メニューを非表示"
 
@@ -462,6 +474,12 @@ msgid "Install a BDM file"
 msgstr ""
 
 msgid "Installed"
+msgstr ""
+
+msgid "Installed by"
+msgstr ""
+
+msgid "Installed on"
 msgstr ""
 
 msgid "Installing"
@@ -547,6 +565,9 @@ msgstr "{} にマップされたメンバーシップ"
 
 msgid "Mobile"
 msgstr "携帯番号"
+
+msgid "Monitoring status"
+msgstr ""
 
 msgid "Multi-page menu"
 msgstr "複数ページ メニュー"
@@ -685,6 +706,9 @@ msgstr "優先度"
 
 msgid "Process"
 msgstr "プロセス"
+
+msgid "Process id"
+msgstr ""
 
 msgid "Process name"
 msgstr "プロセス名"

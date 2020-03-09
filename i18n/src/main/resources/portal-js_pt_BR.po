@@ -9,7 +9,7 @@ msgstr ""
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2020-01-27 03:04\n"
+"PO-Revision-Date: 2020-03-09 03:27\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -200,6 +200,9 @@ msgstr "Estado da Instância"
 msgid "Cases"
 msgstr "Instâncias"
 
+msgid "Cases with failures"
+msgstr ""
+
 msgid "Categories"
 msgstr "Categorias"
 
@@ -299,6 +302,9 @@ msgstr ""
 msgid "Description"
 msgstr "Descrição"
 
+msgid "Disable"
+msgstr ""
+
 msgid "Display name"
 msgstr "Nome de exibição"
 
@@ -325,6 +331,9 @@ msgstr "Editar item de menu"
 
 msgid "Email"
 msgstr "Email"
+
+msgid "Enable"
+msgstr ""
 
 msgid "Enable all"
 msgstr "Ativar Tudo"
@@ -413,6 +422,9 @@ msgstr "Informações gerais atualizadas com sucesso"
 msgid "Groups"
 msgstr "Grupos"
 
+msgid "Healthy cases"
+msgstr ""
+
 msgid "Hide Menu"
 msgstr "Esconder Menu"
 
@@ -463,6 +475,12 @@ msgstr "Instalar um arquivo BDM"
 
 msgid "Installed"
 msgstr "Instalado"
+
+msgid "Installed by"
+msgstr ""
+
+msgid "Installed on"
+msgstr ""
 
 msgid "Installing"
 msgstr "Instalando"
@@ -547,6 +565,9 @@ msgstr "Associações mapeadas para {}"
 
 msgid "Mobile"
 msgstr "Celular"
+
+msgid "Monitoring status"
+msgstr ""
 
 msgid "Multi-page menu"
 msgstr "Grupo de menus"
@@ -685,6 +706,9 @@ msgstr "Prioridade"
 
 msgid "Process"
 msgstr "Processo"
+
+msgid "Process id"
+msgstr ""
 
 msgid "Process name"
 msgstr "Nome do Processo"
