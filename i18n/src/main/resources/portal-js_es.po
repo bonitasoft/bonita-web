@@ -9,7 +9,7 @@ msgstr ""
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2020-03-09 02:50\n"
+"PO-Revision-Date: 2020-03-11 02:49\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -896,9 +896,6 @@ msgstr "Usuario técnico"
 msgid "Technical error."
 msgstr "Error técnico."
 
-msgid "The Process cannot be enabled"
-msgstr "El proceso no se puede habilitar"
-
 msgid "The application"
 msgstr "La aplicación"
 
@@ -967,6 +964,15 @@ msgstr "Este es el panel de detalles de la tarea. No hay información para mostr
 
 msgid "This name is already in use"
 msgstr "Este nombre ya está en uso"
+
+msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
+msgstr ""
+
+msgid "This process is not fully configured."
+msgstr ""
+
+msgid "This process is not fully configured. It cannot be enabled."
+msgstr ""
 
 msgid "This task cannot be executed from here."
 msgstr ""
