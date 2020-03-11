@@ -9,7 +9,7 @@ msgstr ""
 "X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2020-03-09 03:04\n"
+"PO-Revision-Date: 2020-03-11 02:59\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -896,9 +896,6 @@ msgstr ""
 msgid "Technical error."
 msgstr "テクニカルなエラーが発生。"
 
-msgid "The Process cannot be enabled"
-msgstr "プロセスを有効にすることができません"
-
 msgid "The application"
 msgstr "アプリケーション"
 
@@ -967,6 +964,15 @@ msgstr "これは、タスクの詳細パネルです。表示する情報があ
 
 msgid "This name is already in use"
 msgstr "この名前は既に使用中"
+
+msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
+msgstr ""
+
+msgid "This process is not fully configured."
+msgstr ""
+
+msgid "This process is not fully configured. It cannot be enabled."
+msgstr ""
 
 msgid "This task cannot be executed from here."
 msgstr ""
