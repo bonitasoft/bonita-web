@@ -14,8 +14,12 @@
 package org.bonitasoft.web.rest.server.api.bpm.message;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -127,7 +131,6 @@ public class BPMMessageResourceTest extends RestletTest {
         restResource.sendMessage(bpmMessage);
     }
 
-
     @Test
     public void sendMessage_should_accept_primitive_types_in_message_content_values() throws Exception {
         // given:
@@ -137,7 +140,7 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setTargetFlowNode("activity");
         Map<String, BPMMessageValue> messageContent = new HashMap<>();
         messageContent.put("id", BPMMessageValue.create(123L, Long.class.getName()));
-        messageContent.put("name", BPMMessageValue.create("john",String.class.getName()));
+        messageContent.put("name", BPMMessageValue.create("john", String.class.getName()));
         messageContent.put("amount", BPMMessageValue.create(1243.234d, Double.class.getName()));
         messageContent.put("nbDay", BPMMessageValue.create(34, Integer.class.getName()));
         messageContent.put("validated", BPMMessageValue.create(true, Boolean.class.getName()));
@@ -159,7 +162,7 @@ public class BPMMessageResourceTest extends RestletTest {
                 eq(expression("activity", "activity", String.class)),
                 msgContentCaptor.capture(),
                 eq(Collections.emptyMap()));
-        
+
         assertThat(msgContentCaptor.getValue())
                 .containsValue(expression("123", "123", Long.class))
                 .containsValue(expression("john", "john", String.class))
@@ -171,6 +174,63 @@ public class BPMMessageResourceTest extends RestletTest {
                 .containsValue(expression("2018-08-09T14:30:00", "2018-08-09T14:30:00", LocalDateTime.class))
                 .containsValue(
                         expression("2018-08-09T14:30:00+01:00", "2018-08-09T14:30:00+01:00", OffsetDateTime.class));
+    }
+
+    @Test
+    public void sendMessage_should_accept_null_in_message_content_values() throws Exception {
+        // given:
+        final BPMMessage bpmMessage = new BPMMessage();
+        bpmMessage.setMessageName("msg");
+        bpmMessage.setTargetProcess("myProcess");
+        bpmMessage.setTargetFlowNode("activity");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("id", null);
+        messageContent.put("name", BPMMessageValue.create(null, String.class.getName()));
+        bpmMessage.setMessageContent(messageContent);
+
+        // when:
+        restResource.sendMessage(bpmMessage);
+
+        // then:
+        ArgumentCaptor<Map> msgContentCaptor = ArgumentCaptor.forClass(Map.class);
+
+        verify(processAPI).sendMessage(eq("msg"),
+                eq(expression("myProcess", "myProcess", String.class)),
+                eq(expression("activity", "activity", String.class)),
+                msgContentCaptor.capture(),
+                eq(Collections.emptyMap()));
+
+        assertThat(msgContentCaptor.getValue().keySet())
+                .contains(expression("id", "id", String.class), expression("name", "name", String.class));
+        assertThat(msgContentCaptor.getValue().values())
+                .contains(BPMMessageValue.NULL_VALUE_EXPRESSION, BPMMessageValue.NULL_VALUE_EXPRESSION);
+    }
+
+    @Test
+    public void sendMessage_should_accept_empty_string_in_message_content_values() throws Exception {
+        // given:
+        final BPMMessage bpmMessage = new BPMMessage();
+        bpmMessage.setMessageName("msg");
+        bpmMessage.setTargetProcess("myProcess");
+        bpmMessage.setTargetFlowNode("activity");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("id", BPMMessageValue.create("", null));
+        bpmMessage.setMessageContent(messageContent);
+
+        // when:
+        restResource.sendMessage(bpmMessage);
+
+        // then:
+        ArgumentCaptor<Map> msgContentCaptor = ArgumentCaptor.forClass(Map.class);
+
+        verify(processAPI).sendMessage(eq("msg"),
+                eq(expression("myProcess", "myProcess", String.class)),
+                eq(expression("activity", "activity", String.class)),
+                msgContentCaptor.capture(),
+                eq(Collections.emptyMap()));
+
+        assertThat(msgContentCaptor.getValue())
+                .containsValue(expression("empty-value", "", String.class));
     }
 
     @Test
@@ -273,7 +333,8 @@ public class BPMMessageResourceTest extends RestletTest {
     }
 
     private Expression expression(String name, String content, Class<?> returnType) throws InvalidExpressionException {
-        return new ExpressionBuilder().createExpression(name, content, returnType.getName(), ExpressionType.TYPE_CONSTANT);
+        return new ExpressionBuilder().createExpression(name, content, returnType.getName(),
+                ExpressionType.TYPE_CONSTANT);
     }
 
 }
