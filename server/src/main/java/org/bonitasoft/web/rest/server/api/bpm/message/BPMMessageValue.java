@@ -14,25 +14,11 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.message;
 
-import org.bonitasoft.engine.expression.Expression;
-import org.bonitasoft.engine.expression.ExpressionBuilder;
-import org.bonitasoft.engine.expression.InvalidExpressionException;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class BPMMessageValue {
 
-    public static Expression NULL_VALUE_EXPRESSION;
-    static {
-        try {
-            NULL_VALUE_EXPRESSION = new ExpressionBuilder().createGroovyScriptExpression("null-value", "null", Object.class.getName());
-        } catch (InvalidExpressionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    
     @JsonInclude(Include.NON_EMPTY)
     private String type;
     private Object value;

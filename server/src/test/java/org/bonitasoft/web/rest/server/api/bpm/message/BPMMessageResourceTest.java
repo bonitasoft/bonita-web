@@ -177,7 +177,7 @@ public class BPMMessageResourceTest extends RestletTest {
     }
 
     @Test
-    public void sendMessage_should_accept_null_in_message_content_values() throws Exception {
+    public void sendMessage_should_throw_exception_when_message_content_value_is_missing() throws Exception {
         // given:
         final BPMMessage bpmMessage = new BPMMessage();
         bpmMessage.setMessageName("msg");
@@ -185,25 +185,33 @@ public class BPMMessageResourceTest extends RestletTest {
         bpmMessage.setTargetFlowNode("activity");
         Map<String, BPMMessageValue> messageContent = new HashMap<>();
         messageContent.put("id", null);
-        messageContent.put("name", BPMMessageValue.create(null, String.class.getName()));
         bpmMessage.setMessageContent(messageContent);
 
+        // expect:
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("id value cannot be null.");
+        
         // when:
         restResource.sendMessage(bpmMessage);
+    }
+    
+    @Test
+    public void sendMessage_should_throw_exception_when_message_content_value_is_null() throws Exception {
+        // given:
+        final BPMMessage bpmMessage = new BPMMessage();
+        bpmMessage.setMessageName("msg");
+        bpmMessage.setTargetProcess("myProcess");
+        bpmMessage.setTargetFlowNode("activity");
+        Map<String, BPMMessageValue> messageContent = new HashMap<>();
+        messageContent.put("id", BPMMessageValue.create(null, null));
+        bpmMessage.setMessageContent(messageContent);
 
-        // then:
-        ArgumentCaptor<Map> msgContentCaptor = ArgumentCaptor.forClass(Map.class);
-
-        verify(processAPI).sendMessage(eq("msg"),
-                eq(expression("myProcess", "myProcess", String.class)),
-                eq(expression("activity", "activity", String.class)),
-                msgContentCaptor.capture(),
-                eq(Collections.emptyMap()));
-
-        assertThat(msgContentCaptor.getValue().keySet())
-                .contains(expression("id", "id", String.class), expression("name", "name", String.class));
-        assertThat(msgContentCaptor.getValue().values())
-                .contains(BPMMessageValue.NULL_VALUE_EXPRESSION, BPMMessageValue.NULL_VALUE_EXPRESSION);
+        // expect:
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("id value cannot be null.");
+        
+        // when:
+        restResource.sendMessage(bpmMessage);
     }
 
     @Test
