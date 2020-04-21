@@ -103,7 +103,13 @@ public class BPMMessageResource extends CommonResource {
 
     private Expression getExpressionFromObject(Entry<String, BPMMessageValue> entry) throws InvalidExpressionException {
         BPMMessageValue messageValue = entry.getValue();
+        if(messageValue == null) {
+            throw new IllegalArgumentException(String.format("%s value cannot be null.", entry.getKey()));
+        }
         Object value = messageValue.getValue();
+        if(value == null) {
+            throw new IllegalArgumentException(String.format("%s value cannot be null.", entry.getKey()));
+        }
         String type = valueType(messageValue.getType(), value);
         if (!isSupportedType(type)) {
             throw new InvalidExpressionException(
@@ -112,8 +118,11 @@ public class BPMMessageResource extends CommonResource {
                             messageValue.getType(),
                             entry.getKey()));
         }
-        return new ExpressionBuilder().createExpression(String.valueOf(value),
-                String.valueOf(value), valueType(type, value), ExpressionType.TYPE_CONSTANT);
+        String stringValue = String.valueOf(value);
+        String expressionName = stringValue.trim().isEmpty() ? "empty-value" : stringValue ;
+        String expressionContent = stringValue;
+        return new ExpressionBuilder().createExpression(expressionName,
+                expressionContent, valueType(type, value), ExpressionType.TYPE_CONSTANT);
     }
 
     private String valueType(String type, Object value) {
