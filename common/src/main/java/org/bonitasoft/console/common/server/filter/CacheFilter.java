@@ -40,7 +40,7 @@ public class CacheFilter extends ExcludingPatternFilter {
     
     public static final String NO_CUSTOMPAGE_CACHE = "noCacheCustomPage";
     
-    protected static final String CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN = "^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/API/)";
+    protected static final String CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN = "^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/.+/$)|(portal/custom-page/API/)";
     
     protected Map<String, String> paramMap = new HashMap<String, String>();
 
