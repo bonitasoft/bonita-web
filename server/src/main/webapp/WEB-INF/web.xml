@@ -94,7 +94,7 @@
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/API/)</param-value>
+            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/.+/$)|(portal/custom-page/API/)</param-value>
         </init-param -->
     </filter>
 
@@ -115,7 +115,7 @@
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/API/)</param-value>
+            <param-value>^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/.+/$)|(portal/custom-page/API/)</param-value>
         </init-param -->
     </filter>
     <!-- BPM URLSupport filter -->

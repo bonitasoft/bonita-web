@@ -86,6 +86,7 @@ public class CacheFilterTest {
         matchExcludePattern("http://localhost:8080/bonita/portal/resource/page/content/image/logo.png", false);
         matchExcludePattern("http://localhost:8080/portal/themeResource/resource", false);
         matchExcludePattern("http://localhost:8080/portal/custom-page/API/identity/user/1", true);
+        matchExcludePattern("http://localhost:8080/bonita/portal/custom-page/custompage_cacheBustingBug1/?locale=en&profile=101&_f=allpagesfilter&_id=22", true);
     }
 
     @Test
