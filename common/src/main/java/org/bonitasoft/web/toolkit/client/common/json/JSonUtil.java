@@ -27,12 +27,20 @@ import java.util.HashMap;
 public class JSonUtil {
 
     public static String quote(final String value) {
-        return "\"" + escape(value) + "\"";
+        return quoteInternal(value).toString();
+    }
+
+    public static StringBuilder quoteInternal(final String value) {
+        return new StringBuilder("\"").append(escape(value)).append("\"");
     }
 
     public static String escape(final String string) {
+        return escapeInternal(string).toString();
+    }
+
+    private static StringBuilder escapeInternal(String string) {
         if (string == null || string.length() == 0) {
-            return "";
+            return new StringBuilder("");
         }
 
         char b;
@@ -50,7 +58,7 @@ public class JSonUtil {
                 case '\'':
                 case '\\':
                 case '"':
-                    sb.append(convertToUnicode(c));
+                    sb.append(convertToUnicodeInternal(c));
                     break;
                 case '/':
                     if (b == '<') {
@@ -75,19 +83,23 @@ public class JSonUtil {
                     break;
                 default:
                     if (c < ' ' || c >= '\u0080' && c < '\u00a0' || c >= '\u2000' && c < '\u2100') {
-                        sb.append(convertToUnicode(c));
+                        sb.append(convertToUnicodeInternal(c));
                     } else {
                         sb.append(c);
                     }
             }
         }
 
-        return sb.toString();
+        return new StringBuilder(sb);
     }
 
     private static String convertToUnicode(char character) {
-        String hexString = "000" + toHexString(character);
-        return "\\u" + hexString.substring(hexString.length() - 4);
+        return convertToUnicodeInternal(character).toString();
+    }
+
+    private static StringBuffer convertToUnicodeInternal(char character) {
+        StringBuffer hexString = new StringBuffer("000").append(toHexString(character));
+        return new StringBuffer("\\u").append(hexString.substring(hexString.length() - 4));
     }
 
     private static Character next(final String string, int currentPos) {
