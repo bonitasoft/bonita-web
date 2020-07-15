@@ -14,13 +14,12 @@
  */
 package org.bonitasoft.web.toolkit.client.common.json;
 
-import java.util.Arrays;
+import com.google.gwt.i18n.shared.DateTimeFormat;
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-
-import com.google.gwt.i18n.shared.DateTimeFormat;
-import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 
 /**
  * @author Séverin Moussel
@@ -28,65 +27,85 @@ import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSeri
 public class JSonSerializer extends JSonUtil {
 
     public static String serialize(final JsonSerializable object) {
+        return serializeInternal(object).toString();
+    }
+
+    private static StringBuilder serializeInternal(JsonSerializable object) {
         if (object == null) {
-            return "null";
+            return new StringBuilder("null");
         }
-        return object.toJson();
+        return new StringBuilder(object.toJson());
     }
 
     public static String serialize(final Object object) {
+        return serializeInternal(object).toString();
+    }
+
+    private static StringBuilder serializeInternal(Object object) {
         if (object == null) {
-            return "null";
+            return new StringBuilder("null");
         } else if (object instanceof JsonSerializable) {
-            return ((JsonSerializable) object).toJson();
+            return serializeInternal((JsonSerializable) object);
         } else if (object instanceof Collection<?>) {
-            return serializeCollection((Collection<?>) object);
+            return serializeCollectionInternal((Collection<?>) object);
         } else if (object instanceof Map<?, ?>) {
-            return serializeMap((Map<?, ?>) object);
+            return serializeMapInternal((Map<?, ?>) object);
         } else if (object instanceof Number) {
-            return object.toString();
+            return new StringBuilder(object.toString());
         } else if (object instanceof Boolean) {
-            return (Boolean) object ? "true" : "false";
+            return new StringBuilder((Boolean) object ? "true" : "false");
         } else if (object instanceof Date) {
             final DateTimeFormat sdf = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            return quote(sdf.format((Date) object));
+            return quoteInternal(sdf.format((Date) object));
         } else if (object instanceof Throwable) {
-            return serializeException((Throwable) object);
+            return new StringBuilder(serializeException((Throwable) object));
         }
 
-        return quote(object.toString());
+        return quoteInternal(object.toString());
     }
 
     public static String serialize(final Object key, final Object value) {
-        return quote(key.toString()) + ":" + serialize(value);
+        return serializeInternal(key, value).toString();
+    }
+
+    private static StringBuilder serializeInternal(Object key, Object value) {
+        return quoteInternal(key.toString()).append(":").append(serialize(value));
     }
 
     public static String serializeCollection(final Collection<? extends Object> list) {
-        String json = "[";
+        return serializeCollectionInternal(list).toString();
+    }
+
+    private static StringBuilder serializeCollectionInternal(Collection<?> list) {
+        final StringBuilder json = new StringBuilder("[");
 
         boolean first = true;
         for (final Object item : list) {
-            json += (!first ? "," : "") + serialize(item);
+            json.append(!first ? "," : "").append(serializeInternal(item));
             first = false;
         }
 
-        json += "]";
+        json.append("]");
 
         return json;
     }
 
     public static String serializeMap(final Map<? extends Object, ? extends Object> map) {
+        return serializeMapInternal(map).toString();
+    }
+
+    private static StringBuilder serializeMapInternal(Map<?, ?> map) {
         final StringBuilder json = new StringBuilder().append("{");
 
         boolean first = true;
         for (final Object key : map.keySet()) {
-            json.append(!first ? "," : "").append(quote(key.toString())).append(":").append(serialize(map.get(key)));
+            json.append(!first ? "," : "").append(quoteInternal(key.toString())).append(":").append(serializeInternal(map.get(key)));
             first = false;
         }
 
         json.append("}");
 
-        return json.toString();
+        return json;
     }
 
     public static String serializeException(final Throwable e) {
@@ -94,15 +113,19 @@ public class JSonSerializer extends JSonUtil {
     }
 
     public static String serializeStringMap(final Map<? extends Object, String> map) {
-        String json = "{";
+        return serializeStringMapInternal(map).toString();
+    }
+
+    private static StringBuilder serializeStringMapInternal(Map<?, String> map) {
+        final StringBuilder json = new StringBuilder("{");
 
         boolean first = true;
         for (final Object key : map.keySet()) {
-            json += (!first ? "," : "") + quote(key.toString()) + ":" + quote(map.get(key));
+            json.append(!first ? "," : "").append(quoteInternal(key.toString())).append(":").append(quoteInternal(map.get(key)));
             first = false;
         }
 
-        json += "}";
+        json.append("}");
 
         return json;
     }
