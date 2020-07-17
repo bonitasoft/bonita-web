@@ -353,6 +353,22 @@
             <param-value>png,jpg,gif,jpeg,bmp,wbmp,tga</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>apiImageUploadServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.TenantFileUploadServlet</servlet-class>
+        <init-param>
+            <param-name>SupportedExtensions</param-name>
+            <param-value>png,jpg,gif,jpeg,bmp,wbmp,tga</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>json</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ReturnOriginalFilename</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
 
     <servlet>
         <servlet-name>iconServlet</servlet-name>
@@ -551,6 +567,10 @@
     <servlet-mapping>
         <servlet-name>imageUploadServlet</servlet-name>
         <url-pattern>/portal/imageUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>apiImageUploadServlet</servlet-name>
+        <url-pattern>/API/imageUpload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>fileUploadServlet</servlet-name>
