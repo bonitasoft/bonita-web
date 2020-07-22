@@ -85,10 +85,12 @@ public class ResourceExtensionResolverTest {
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
 
         //when
-        final String fileName = resourceExtensionResolver.resolveRestApiControllerClassName(pageResourceProvider);
+        final ControllerClassName controllerClassName = resourceExtensionResolver
+                .resolveRestApiControllerClassName(pageResourceProvider);
 
         //then
-        assertThat(fileName).isEqualTo("PostResource.groovy");
+        assertThat(controllerClassName.isSource()).isTrue();
+        assertThat(controllerClassName.getName()).isEqualTo("PostResource.groovy");
     }
 
     @Test
@@ -99,11 +101,46 @@ public class ResourceExtensionResolverTest {
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
 
         //when
-        final String restApiControllerClassName = resourceExtensionResolver
+        final ControllerClassName restApiControllerClassName = resourceExtensionResolver
                 .resolveRestApiControllerClassName(pageResourceProvider);
 
         //then
-        assertThat(restApiControllerClassName).isEqualTo("Index.groovy");
+        assertThat(restApiControllerClassName.isSource()).isTrue();
+        assertThat(restApiControllerClassName.getName()).isEqualTo("Index.groovy");
+    }
+
+    @Test
+    public void should_get_resolve_class_name() throws Exception {
+        //given
+        final Request request = new Request(Method.GET, "/bonita/API/extension/myCompiledRestApi");
+        final ResourceExtensionResolver resourceExtensionResolver = createSpy(request,
+                "/bonita/API/extension/myCompiledRestApi");
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
+
+        //when
+        final ControllerClassName restApiControllerClassName = resourceExtensionResolver
+                .resolveRestApiControllerClassName(pageResourceProvider);
+
+        //then
+        assertThat(restApiControllerClassName.isSource()).isFalse();
+        assertThat(restApiControllerClassName.getName()).isEqualTo("com.company.MyController");
+    }
+
+    @Test
+    public void should_get_resolve_class_name_over_class_file_name_when_both_are_present() throws Exception {
+        //given
+        final Request request = new Request(Method.GET, "/bonita/API/extension/myCompiledRestApi2");
+        final ResourceExtensionResolver resourceExtensionResolver = createSpy(request,
+                "/bonita/API/extension/myCompiledRestApi2");
+        when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
+
+        //when
+        final ControllerClassName restApiControllerClassName = resourceExtensionResolver
+                .resolveRestApiControllerClassName(pageResourceProvider);
+
+        //then
+        assertThat(restApiControllerClassName.isSource()).isFalse();
+        assertThat(restApiControllerClassName.getName()).isEqualTo("com.company.MyController");
     }
 
     @Test
@@ -115,9 +152,11 @@ public class ResourceExtensionResolverTest {
                 "/bonita/API/extension/myPostResourceB");
         when(pageResourceProvider.getPageDirectory()).thenReturn(new File(""));
 
-        final String fileName = resourceExtensionResolver.resolveRestApiControllerClassName(pageResourceProvider);
+        final ControllerClassName controllerClassName = resourceExtensionResolver
+                .resolveRestApiControllerClassName(pageResourceProvider);
 
-        assertThat(fileName).isEqualTo("PostResourceB.groovy");
+        assertThat(controllerClassName.isSource()).isTrue();
+        assertThat(controllerClassName.getName()).isEqualTo("PostResourceB.groovy");
     }
 
     @Test

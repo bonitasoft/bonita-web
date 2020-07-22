@@ -72,7 +72,8 @@ public class ResourceExtensionResolver {
         return builder.toString();
     }
 
-    public String resolveRestApiControllerClassName(PageResourceProviderImpl pageResourceProvider) throws NotFoundException {
+    public ControllerClassName resolveRestApiControllerClassName(PageResourceProviderImpl pageResourceProvider)
+            throws NotFoundException {
         final Properties properties = new Properties();
 
         try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");) {
@@ -87,14 +88,27 @@ public class ResourceExtensionResolver {
         return findMatchingControllerClassName(properties, apiExtensions);
     }
 
-    private String findMatchingControllerClassName(Properties properties, String[] apiExtensions) throws NotFoundException {
+    /**
+     * return the content of the property 'className' or 'classFileName' (if className isn't present).
+     * - 'className' refers to the qualified name of the main class. If 'className' is present then it indicates that the jar
+     * file
+     * containing the extension is present.
+     * - 'classFileName' is the path to the groovy source file (lagacy mode), it indicates that the rest api needs to be
+     * compiled
+     * at runtime with a groovy compiler.
+     */
+    private ControllerClassName findMatchingControllerClassName(Properties properties, String[] apiExtensions)
+            throws NotFoundException {
         for (final String apiExtension : apiExtensions) {
             final String method = (String) properties.get(String.format("%s.method", apiExtension.trim()));
             final String pathTemplate = (String) properties.get(String.format("%s.pathTemplate", apiExtension.trim()));
+            final String className = (String) properties.get(String.format("%s.className", apiExtension.trim()));
             final String classFileName = (String) properties.get(String.format("%s.classFileName", apiExtension.trim()));
 
             if (extensionMatches(method, pathTemplate)) {
-                return classFileName;
+                return className != null
+                        ? new ControllerClassName(className, false)
+                        : new ControllerClassName(classFileName, true);
             }
         }
         throw new NotFoundException("error while getting resource:" + generateMappingKey());

@@ -27,6 +27,7 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.extension.rest.RestApiResponse;
+import org.bonitasoft.web.rest.server.api.extension.ControllerClassName;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionResolver;
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -55,7 +56,7 @@ public class RestApiRenderer {
         synchronized (RestApiRenderer.class) {
             customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         }
-        final String restApiControllerClassName = resourceExtensionResolver
+        final ControllerClassName restApiControllerClassName = resourceExtensionResolver
                 .resolveRestApiControllerClassName(pageResourceProvider);
         final String mappingKey = resourceExtensionResolver.generateMappingKey();
         return renderResponse(request, apiSession, pageContextHelper, pageResourceProvider, restApiControllerClassName,
@@ -66,7 +67,8 @@ public class RestApiRenderer {
     private org.bonitasoft.web.extension.rest.RestApiResponse renderResponse(final HttpServletRequest request,
             final APISession apiSession,
             final PageContextHelper pageContextHelper,
-            final PageResourceProviderImpl pageResourceProvider, String restApiControllerClassName, String mappingKey)
+            final PageResourceProviderImpl pageResourceProvider, ControllerClassName restApiControllerClassName,
+            String mappingKey)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
