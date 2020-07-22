@@ -54,6 +54,7 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.extension.page.PageController;
 import org.bonitasoft.web.extension.page.PageResourceProvider;
 import org.bonitasoft.web.extension.rest.RestApiController;
+import org.bonitasoft.web.rest.server.api.extension.ControllerClassName;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import groovy.lang.GroovyClassLoader;
@@ -139,18 +140,18 @@ public class CustomPageService {
     }
 
     public Class<?> registerRestApiPage(final GroovyClassLoader pageClassLoader,
-            PageResourceProviderImpl pageResourceProvider, final String restApiControllerClassName, String mappingKey)
+            PageResourceProviderImpl pageResourceProvider, ControllerClassName restApiControllerClassName, String mappingKey)
             throws BonitaException {
         try {
-            if (restApiControllerClassName.endsWith(".groovy")) {
-                File groovyFile = toFile(pageResourceProvider, restApiControllerClassName);
+            if (restApiControllerClassName.isSource()) {
+                File groovyFile = toFile(pageResourceProvider, restApiControllerClassName.getName());
                 if (groovyFile.exists()) {
                     return pageClassLoader.parseClass(groovyFile);
                 }
                 LOGGER.log(Level.SEVERE, "resource does not exists:" + mappingKey);
                 throw new BonitaException("unable to handle rest api call to " + mappingKey);
             }
-            return pageClassLoader.loadClass(restApiControllerClassName);
+            return pageClassLoader.loadClass(restApiControllerClassName.getName());
         } catch (CompilationFailedException | IOException | ClassNotFoundException e) {
             throw new BonitaException(e.getMessage(), e);
         }

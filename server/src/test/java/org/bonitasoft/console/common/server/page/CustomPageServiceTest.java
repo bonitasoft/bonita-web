@@ -60,6 +60,7 @@ import org.bonitasoft.web.extension.rest.RestAPIContext;
 import org.bonitasoft.web.extension.rest.RestApiController;
 import org.bonitasoft.web.extension.rest.RestApiResponse;
 import org.bonitasoft.web.extension.rest.RestApiResponseBuilder;
+import org.bonitasoft.web.rest.server.api.extension.ControllerClassName;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -166,11 +167,12 @@ public class CustomPageServiceTest {
         when(mockedPage.getLastModificationDate()).thenReturn(new Date(0L));
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         when(pageAPI.getPageByName("")).thenReturn(mockedPage);
+        ControllerClassName controllerClassName = new ControllerClassName("IndexRestApi.groovy", true);
 
         // When
         final GroovyClassLoader classloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
         final Class<?> restApiControllerClass = customPageService.registerRestApiPage(classloader, pageResourceProvider,
-                "IndexRestApi.groovy", "IndexRestApi.groovy");
+                controllerClassName, controllerClassName.getName());
         final RestApiController restApiController = customPageService
                 .loadRestApiPage((Class<RestApiController>) restApiControllerClass);
 
@@ -426,11 +428,12 @@ public class CustomPageServiceTest {
         when(consoleProperties.isPageInDebugMode()).thenReturn(true);
 
         final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
+        ControllerClassName controllerClassName = new ControllerClassName("RestResource.groovy", true);
 
         // When
         customPageService.retrievePageZipContent(apiSession, pageResourceProvider);
         final Class<?> restApiControllerClass = customPageService.registerRestApiPage(pageClassloader, pageResourceProvider,
-                "RestResource.groovy", "RestResource.groovy");
+                controllerClassName, controllerClassName.getName());
 
         // then
         final org.bonitasoft.web.extension.rest.RestApiController restApiController = (org.bonitasoft.web.extension.rest.RestApiController) restApiControllerClass
@@ -525,28 +528,28 @@ public class CustomPageServiceTest {
                 getClass().getResource("/myRestAPI-1.0.0-SNAPSHOT/").getFile());
         final GroovyClassLoader classloader = customPageService.buildPageClassloader(apiSession, "custompage_myRestAPI",
                 restAPIDir);
-        assertThat(classloader.loadClass("myRestAPI.MyRestAPIController")).isNotNull();
+        assertThat(classloader.loadClass("com.compagny.rest.api.MyController")).isNotNull();
     }
 
     @Test
-    public void should_parse_class_when_input_is_groovy() throws Exception {
-        String groovyFileName = "Index.groovy";
-        String className = "com.company.Index";
+    public void should_parse_class_when_input_is_source() throws Exception {
+        ControllerClassName sourceController = new ControllerClassName("Index.groovy", true);
+        ControllerClassName compiledController = new ControllerClassName("com.company.Index", false);
         File file = mock(File.class);
         GroovyClassLoader loader = spy(new GroovyClassLoader());
 
         when(file.exists()).thenReturn(true);
-        doReturn(file).when(customPageService).toFile(pageResourceProvider, groovyFileName);
+        doReturn(file).when(customPageService).toFile(pageResourceProvider, sourceController.getName());
         doReturn(null).when(loader).parseClass(file);
         doReturn(null).when(loader).loadClass(anyString());
 
-        customPageService.registerRestApiPage(loader, pageResourceProvider, groovyFileName, "");
+        customPageService.registerRestApiPage(loader, pageResourceProvider, sourceController, "");
         verify(loader).parseClass(file);
-        verify(loader, times(0)).loadClass(className);
+        verify(loader, times(0)).loadClass(compiledController.getName());
 
-        customPageService.registerRestApiPage(loader, pageResourceProvider, className, "");
+        customPageService.registerRestApiPage(loader, pageResourceProvider, compiledController, "");
         verify(loader).parseClass(file);
-        verify(loader).loadClass(className);
+        verify(loader).loadClass(compiledController.getName());
     }
 
 }
