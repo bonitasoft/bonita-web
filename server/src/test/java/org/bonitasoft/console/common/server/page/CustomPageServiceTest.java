@@ -528,4 +528,25 @@ public class CustomPageServiceTest {
         assertThat(classloader.loadClass("myRestAPI.MyRestAPIController")).isNotNull();
     }
 
+    @Test
+    public void should_parse_class_when_input_is_groovy() throws Exception {
+        String groovyFileName = "Index.groovy";
+        String className = "com.company.Index";
+        File file = mock(File.class);
+        GroovyClassLoader loader = spy(new GroovyClassLoader());
+
+        when(file.exists()).thenReturn(true);
+        doReturn(file).when(customPageService).toFile(pageResourceProvider, groovyFileName);
+        doReturn(null).when(loader).parseClass(file);
+        doReturn(null).when(loader).loadClass(anyString());
+
+        customPageService.registerRestApiPage(loader, pageResourceProvider, groovyFileName, "");
+        verify(loader).parseClass(file);
+        verify(loader, times(0)).loadClass(className);
+
+        customPageService.registerRestApiPage(loader, pageResourceProvider, className, "");
+        verify(loader).parseClass(file);
+        verify(loader).loadClass(className);
+    }
+
 }
