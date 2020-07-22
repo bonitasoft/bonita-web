@@ -16,6 +16,9 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +29,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -53,6 +55,8 @@ import org.bonitasoft.web.extension.page.PageController;
 import org.bonitasoft.web.extension.page.PageResourceProvider;
 import org.bonitasoft.web.extension.rest.RestApiController;
 import org.codehaus.groovy.control.CompilationFailedException;
+
+import groovy.lang.GroovyClassLoader;
 
 /**
  * @author Anthony Birembaut, Fabio Lombardi
@@ -134,9 +138,32 @@ public class CustomPageService {
         return pageClassLoader.parseClass(pageControllerFile);
     }
 
-    public Class<?> registerRestApiPage(final GroovyClassLoader pageClassLoader, final File restApiControllerFile)
-            throws CompilationFailedException, IOException {
-        return pageClassLoader.parseClass(restApiControllerFile);
+    public Class<?> registerRestApiPage(final GroovyClassLoader pageClassLoader,
+            PageResourceProviderImpl pageResourceProvider, final String restApiControllerClassName, String mappingKey)
+            throws BonitaException {
+        try {
+            if (restApiControllerClassName.endsWith(".groovy")) {
+                File groovyFile = toFile(pageResourceProvider, restApiControllerClassName);
+                if (groovyFile.exists()) {
+                    return pageClassLoader.parseClass(groovyFile);
+                }
+                LOGGER.log(Level.SEVERE, "resource does not exists:" + mappingKey);
+                throw new BonitaException("unable to handle rest api call to " + mappingKey);
+            }
+            return pageClassLoader.loadClass(restApiControllerClassName);
+        } catch (CompilationFailedException | IOException | ClassNotFoundException e) {
+            throw new BonitaException(e.getMessage(), e);
+        }
+    }
+
+    protected File toFile(PageResourceProviderImpl pageResourceProvider, String classFileName) {
+        if (classFileName.startsWith("/")) {
+            classFileName = classFileName.substring(1);
+        }
+        final String[] paths = classFileName.split("/");
+        final Path restApiControllerPath = paths.length == 1 ? Paths.get(paths[0])
+                : Paths.get(paths[0], Arrays.copyOfRange(paths, 1, paths.length));
+        return pageResourceProvider.getPageDirectory().toPath().resolve(restApiControllerPath).toFile();
     }
 
     public void verifyPageClass(final File tempPageDirectory, APISession session) throws IOException {
@@ -439,23 +466,25 @@ public class CustomPageService {
         }
     }
 
-    public void writePageToTemp(Page page, 
+    public void writePageToTemp(Page page,
             PageResourceProvider pageResourceProvider,
             File unzipPageTempFolder,
             ResourcesPermissionsMapping resourcesPermissionsMapping,
-            CompoundPermissionsMapping compoundPermissionsMapping, 
+            CompoundPermissionsMapping compoundPermissionsMapping,
             APISession session) throws IOException, BonitaException {
         verifyPageClass(unzipPageTempFolder, session);
         File pageDirectory = pageResourceProvider.getPageDirectory();
         FileUtils.copyDirectory(unzipPageTempFolder, pageDirectory);
-        final File timestampFile = new File(pageResourceProvider.getPageDirectory(),LASTUPDATE_FILENAME);
+        final File timestampFile = new File(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
         long lastUpdateTimestamp = 0L;
         if (page.getLastModificationDate() != null) {
             lastUpdateTimestamp = page.getLastModificationDate().getTime();
         }
         FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
-        Set<String> customPagePermissions = getCustomPagePermissions(new File(pageDirectory,PAGE_PROPERTIES), resourcesPermissionsMapping, false);
+        Set<String> customPagePermissions = getCustomPagePermissions(new File(pageDirectory, PAGE_PROPERTIES),
+                resourcesPermissionsMapping, false);
         addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, session);
-        addPermissionsToCompoundPermissions(page.getName(), customPagePermissions, compoundPermissionsMapping, resourcesPermissionsMapping);
+        addPermissionsToCompoundPermissions(page.getName(), customPagePermissions, compoundPermissionsMapping,
+                resourcesPermissionsMapping);
     }
 }

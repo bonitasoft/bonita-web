@@ -1,26 +1,21 @@
-/** Copyright (C) 2015 Bonitasoft S.A.
+/**
+ * Copyright (C) 2015 Bonitasoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.api.extension;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +49,8 @@ public class ResourceExtensionResolver {
     public Long resolvePageId(APISession apiSession) throws BonitaException {
         final HttpServletRequest httpServletRequest = getHttpServletRequest();
         final PageReference pageReference;
-        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(), httpServletRequest.getLocale(), false);
+        pageReference = pageMappingService.getPage(httpServletRequest, apiSession, generateMappingKey(),
+                httpServletRequest.getLocale(), false);
         return pageReference.getPageId();
     }
 
@@ -76,7 +72,7 @@ public class ResourceExtensionResolver {
         return builder.toString();
     }
 
-    public File resolveRestApiControllerFile(PageResourceProviderImpl pageResourceProvider) throws NotFoundException {
+    public String resolveRestApiControllerClassName(PageResourceProviderImpl pageResourceProvider) throws NotFoundException {
         final Properties properties = new Properties();
 
         try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");) {
@@ -88,11 +84,10 @@ public class ResourceExtensionResolver {
         final String apiExtensionList = (String) properties.get("apiExtensions");
         final String[] apiExtensions = apiExtensionList.split(",");
 
-        return toFile(pageResourceProvider, findMatchingExtension(properties, apiExtensions));
-
+        return findMatchingControllerClassName(properties, apiExtensions);
     }
 
-    private String findMatchingExtension(Properties properties, String[] apiExtensions) throws NotFoundException {
+    private String findMatchingControllerClassName(Properties properties, String[] apiExtensions) throws NotFoundException {
         for (final String apiExtension : apiExtensions) {
             final String method = (String) properties.get(String.format("%s.method", apiExtension.trim()));
             final String pathTemplate = (String) properties.get(String.format("%s.pathTemplate", apiExtension.trim()));
@@ -105,17 +100,9 @@ public class ResourceExtensionResolver {
         throw new NotFoundException("error while getting resource:" + generateMappingKey());
     }
 
-    private File toFile(PageResourceProviderImpl pageResourceProvider, String classFileName) {
-        if (classFileName.startsWith("/")) {
-            classFileName = classFileName.substring(1);
-        }
-        final String[] paths = classFileName.split("/");
-        final Path restApiControllerPath = paths.length == 1 ? Paths.get(paths[0]) : Paths.get(paths[0], Arrays.copyOfRange(paths, 1, paths.length));
-        return pageResourceProvider.getPageDirectory().toPath().resolve(restApiControllerPath).toFile();
-    }
-
     private boolean extensionMatches(String method, String pathTemplate) {
         return request.getMethod().getName().equals(method)
-                && getHttpServletRequest().getRequestURI().endsWith(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
+                && getHttpServletRequest().getRequestURI()
+                        .endsWith(String.format("%s%s", API_EXTENSION_TEMPLATE_PREFIX, pathTemplate));
     }
 }
