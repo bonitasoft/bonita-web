@@ -525,7 +525,7 @@ public class CustomPageServiceTest {
                 getClass().getResource("/myRestAPI-1.0.0-SNAPSHOT/").getFile());
         final GroovyClassLoader classloader = customPageService.buildPageClassloader(apiSession, "custompage_myRestAPI",
                 restAPIDir);
-        assertThat(classloader.loadClass("Index")).isNotNull();
+        assertThat(classloader.loadClass("myRestAPI.MyRestAPIController")).isNotNull();
     }
 
 }
