@@ -106,7 +106,7 @@ public class ResourceExtensionResolver {
             final String classFileName = (String) properties.get(String.format("%s.classFileName", apiExtension.trim()));
 
             if (extensionMatches(method, pathTemplate)) {
-                return className != null
+                return className != null && !className.isEmpty()
                         ? new ControllerClassName(className, false)
                         : new ControllerClassName(classFileName, true);
             }
