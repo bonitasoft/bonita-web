@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-17 05:25+0200\n"
-"PO-Revision-Date: 2020-01-29 02:49\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-06-16 05:55+0200\n"
+"PO-Revision-Date: 2020-08-18 01:28\n"
+"Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-Project: bonita\n"
+"X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 60581\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -395,6 +397,12 @@ msgstr "Archives"
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer de cet acteur les entités sélectionnées ?"
 
+msgid "Are you sure you want to delete it?"
+msgstr ""
+
+msgid "Are you sure you want to delete them?"
+msgstr ""
+
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "Êtes-vous sûr(e) de vouloir retirer la catégorie %categoryName% du processus '%appName%' ?"
 
@@ -769,6 +777,9 @@ msgstr "Supprimer ce membre"
 
 msgid "Delete this process"
 msgstr "Supprimer ce processus"
+
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
 
 msgid "Description"
 msgstr "Description"
@@ -1167,6 +1178,9 @@ msgstr "Importer / Exporter"
 
 msgid "Import an existing organization"
 msgstr "Importer une organisation existante"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "En cas de conflit, la priorité est donnée au fichier importé"
@@ -2170,6 +2184,9 @@ msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
 msgstr "Ces pages ne peuvent pas être supprimées car l'une d'entre elles au moins est utilisée par une application. Supprimez les pages des applications avant de les supprimer des ressources."
+
+msgid "They will be removed from the database permanently."
+msgstr ""
 
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Cette %item_name% et les entrées relatives aux profils seront supprimées définitivement."
