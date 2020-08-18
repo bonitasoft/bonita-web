@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-17 05:25+0200\n"
-"PO-Revision-Date: 2020-01-29 02:49\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-06-11 05:56+0200\n"
+"PO-Revision-Date: 2020-08-18 01:28\n"
+"Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-Project: bonita\n"
+"X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 61797\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -115,7 +117,7 @@ msgid "%className% is not Serializable"
 msgstr "%className% n'est pas serializable"
 
 msgid "%className% not found. Only jdk types are supported"
-msgstr "%className% est introuvable. Seuls les éléments de types jdk sont supportés"
+msgstr "%className% introuvable. Seuls les éléments de types jdk sont supportés."
 
 msgid "%current_page% of %total_pages%"
 msgstr "%current_page% de %total_pages%"
@@ -369,7 +371,7 @@ msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'i
 msgid "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
 msgstr "Une erreur s’est produite lors de l'importation de l'organisation.\n"
-" Pour plus d’informations, consultez les logs."
+"Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -394,6 +396,12 @@ msgstr "Archives"
 
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer de cet acteur les entités sélectionnées ?"
+
+msgid "Are you sure you want to delete it?"
+msgstr ""
+
+msgid "Are you sure you want to delete them?"
+msgstr ""
 
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "Êtes-vous sûr(e) de vouloir retirer la catégorie %categoryName% du processus '%appName%' ?"
@@ -474,10 +482,10 @@ msgid "Can't create group. Group '%groupName%' already exists"
 msgstr "Impossible de créer le groupe. Le groupe '%groupName%' existe"
 
 msgid "Can't create role. Role '%roleName%' already exists"
-msgstr "Impossible de créer ce rôle, car '%roleName%' est déjà présent"
+msgstr "Il n'est pas possible de créer ce rôle, car '%roleName%' est déjà présent"
 
 msgid "Can't create user. User '%userName%' already exists"
-msgstr "Impossible de créer cet utilisateur, car '%userName%' est déjà présent"
+msgstr "Il n'est pas possible de créer cet utilisateur, car '%userName%' est déjà présent"
 
 msgid "Can't import Applications."
 msgstr "Impossible d'importer l'application."
@@ -770,6 +778,9 @@ msgstr "Supprimer ce membre"
 msgid "Delete this process"
 msgstr "Supprimer ce processus"
 
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
+
 msgid "Description"
 msgstr "Description"
 
@@ -945,7 +956,7 @@ msgid "Error occured when starting process %processId%"
 msgstr "Une erreur s'est produite au démarrage du processus %processId%"
 
 msgid "Error uploading the file. Maybe your session expired. You can try to refresh the page."
-msgstr "Erreur au téléchargement du fichier. Votre session a peut-être expiré. Essayez de rafraîchir la page."
+msgstr "Erreur au téléversement du fichier. Votre session a peut-être expiré. Essayez de rafraîchir la page."
 
 msgid "Error when adding group to actor member"
 msgstr "Erreur lors de l'ajout du groupe aux membres de l'acteur"
@@ -1153,8 +1164,7 @@ msgstr "Si vous créez une ressource avec le UI Designer, le fichier zip est aut
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "Si vous supprimez une page ou un formulaire qui est utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé).\n"
-"Avant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
+msgstr "Si vous supprimez une page ou formulaire utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \\nAvant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Fichier image"
@@ -1167,6 +1177,9 @@ msgstr "Importer / Exporter"
 
 msgid "Import an existing organization"
 msgstr "Importer une organisation existante"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "En cas de conflit, la priorité est donnée au fichier importé"
@@ -1512,8 +1525,7 @@ msgstr "Nom originel"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "Oups... Cet item n'est plus disponible. \n"
-" Vous allez être redirigé."
+msgstr "Oups... Cet item n'est plus disponible. \\n Vous allez être redirigé."
 
 msgid "Overview"
 msgstr "Synthèse"
@@ -1807,10 +1819,10 @@ msgid "Service task (performed automatically)"
 msgstr "Tâche automatique (exécutée automatiquement)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "Les services vont être suspendus pour des raisons de maintenance."
+msgstr "Les services vont être suspendus pour raison de maintenance.\n"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\n"
+msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\\n.\n"
 
 msgid "Session expired. Please log in again."
 msgstr "La session a expiré. Connectez-vous à nouveau."
@@ -1982,8 +1994,7 @@ msgstr "L'application a rencontré une erreur."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau.\n"
-"Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
+msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau. \\n Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "Le cas %caseId% a été démarré avec succès."
@@ -2171,6 +2182,9 @@ msgstr "Les éléments %item_name_plural% seront définitivement supprimés."
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
 msgstr "Ces pages ne peuvent pas être supprimées car l'une d'entre elles au moins est utilisée par une application. Supprimez les pages des applications avant de les supprimer des ressources."
 
+msgid "They will be removed from the database permanently."
+msgstr ""
+
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "Cette %item_name% et les entrées relatives aux profils seront supprimées définitivement."
 
@@ -2197,8 +2211,7 @@ msgstr "Cette adhésion est déjà présente pour cet utilisateur"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "Aucune autorisation n'est définit pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée,\n"
-" mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
+msgstr "Aucune autorisation n'est définie pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \\n mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Les utilisateurs qui viennent d'être associés à ce profil pourront l'utiliser lors de leur prochaine connexion. Si vous vous êtes attribué ce profil, rafraîchissez la page de votre navigateur pour pouvoir l'utiliser."
@@ -2420,10 +2433,7 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "Cette action pourrait interrompre un ou plusieurs processus.\n\n"
-"Désactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'un(des) processus.\n\n"
-"Il est possible au préalable de vérifier l'acteur mapping à la page « Détails » de l'app.\n\n"
-"Confirmez-vous la désactivation de cet utilisateur?"
+msgstr "Cette action pourrait interrompre un ou plusieurs processus.\\n\\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s) entraînera l'interruption d'un(des) processus.\\n\\nVérifiez l'acteur mapping sur la page « Détails » du processus avant de procéder.\\n\\nConfirmez-vous la désactivation de cet utilisateur?"
 
 msgid "You will be rediected"
 msgstr "Vous allez être redirigé."

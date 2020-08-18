@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-17 05:25+0200\n"
-"PO-Revision-Date: 2020-02-06 03:01\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-06-11 05:56+0200\n"
+"PO-Revision-Date: 2020-08-18 01:29\n"
+"Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: bonita\n"
+"X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 61797\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " そのためには、%entitymappingprofilelink% へ進みます。"
@@ -395,6 +397,12 @@ msgstr "アーカイブ"
 msgid "Are you sur you want to remove selected actor members from the process ?"
 msgstr "選択したアクターをプロセスの実行メンバーから削除してもいいですか？"
 
+msgid "Are you sure you want to delete it?"
+msgstr ""
+
+msgid "Are you sure you want to delete them?"
+msgstr ""
+
 msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
 msgstr "プロセス： '%appName%' からカテゴリ： '%categoryName%' を削除してもいいですか？"
 
@@ -770,6 +778,9 @@ msgstr "このメンバーを削除します。"
 msgid "Delete this process"
 msgstr "このプロセスを削除します"
 
+msgid "Deleting a process definition will also delete all open and archived cases of this process."
+msgstr ""
+
 msgid "Description"
 msgstr "説明"
 
@@ -1110,7 +1121,7 @@ msgid "Group"
 msgstr "グループ"
 
 msgid "Group (%nb_group%)"
-msgstr "グループ（%nb_group%）\n"
+msgstr "グループ（%nb_group%）\\n"
 
 msgid "Groups"
 msgstr "グループ"
@@ -1153,7 +1164,7 @@ msgstr "UI デザイナーを使用してリソースを作成した場合は、
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "プロセスで使用されるページを削除した場合、そのプロセスは不完全な状態になります。 \n"
+msgstr "プロセスで使用されるページを削除した場合、そのプロセスは未解決になります。\n"
 "ページを削除する前に、カスタム プロファイル ナビゲーションでそれが使用されているかどうかを確認してください。"
 
 msgid "Image files"
@@ -1167,6 +1178,9 @@ msgstr "インポート/エクスポート"
 
 msgid "Import an existing organization"
 msgstr "既存の組織をインポートします。"
+
+msgid "In a production environment, this should be used with caution."
+msgstr ""
 
 msgid "In case of conflict, priority is given to the imported file"
 msgstr "マージ結合の場合、ファイルを優先します。"
@@ -1512,11 +1526,11 @@ msgstr "元の名前"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "このタスクは既に着手済みです。 \n"
-"その他の着手可能なタスクに移動します。"
+msgstr "おっと！この項目はもう利用できません。\n"
+"あなたは、安全な場所にリダイレクトされます。"
 
 msgid "Overview"
-msgstr "オーバービュー"
+msgstr "案件概況"
 
 msgid "Page"
 msgstr "ページ"
@@ -1807,11 +1821,10 @@ msgid "Service task (performed automatically)"
 msgstr "サービス タスク（自動的に実行されます）"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "メンテナンスためサービスは一時停止されます。\n"
-" "
+msgstr "サービスは、メンテナンスのため一時停止されます。"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "サービスを再開します。ユーザーはログインできるようになります。\n"
+msgstr "サービスを再開します。ユーザーはログインできるようになります。"
 
 msgid "Session expired. Please log in again."
 msgstr "セッションが切れました。再度ログインしてください。"
@@ -1983,7 +1996,7 @@ msgstr "アプリケーション エラーが発生しました。"
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "アプリケーションに予期しないエラーが発生しました。もう一度やり直してください。\n"
+msgstr "アプリケーションに予期しないエラーに遭遇しました。もう一度やり直してください。\n"
 "エラーを解決できない場合は、Bonitasoft のサポートに問い合わせてください。"
 
 msgid "The case %caseId% has been started successfully."
@@ -2172,6 +2185,9 @@ msgstr "これらの%item_name_plural% は、間違いなく削除されます�
 msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
 msgstr "少なくとも 1 つがアプリケーションで使用されるため、これらのページは削除できません。それを削除する前に、アプリケーションからページを削除する必要があります。"
 
+msgid "They will be removed from the database permanently."
+msgstr ""
+
 msgid "This %item_name% and related profile entries will be permanently deleted."
 msgstr "この %item_name% と関連プロファイル エントリは恒久的に削除されます。"
 
@@ -2198,8 +2214,7 @@ msgstr "この所属は既にユーザーに追加されています。"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "このページのアクセス権限が定義されていません。このページが REST リソースを使用し、承認チェックが有効になっている場合、\n"
-"使用しているリソースのリストを指定するためにページ定義を更新します。"
+msgstr "このページのアクセス権限が定義されていません。このページが REST リソースを使用し、アクセス承認チェックが有効になっている場合は、使用しているリソースのリストを指定するためにページ定義を更新します。"
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "このプロファイルにアサインされたユーザーは、次のログインで、そのプロファイル権限が利用可能になります。自分自身にプロファイルをアサインした場合は、お使いのブラウザでページをリフレッシ後、利用可能になります。"
@@ -2421,10 +2436,10 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "あなたは１つ以上のプロセスを中断する恐れがあります。\n\n"
-"タスクを遂行できる利用者を無効にすると、プロセスの中断を引き起こします。\n\n"
-"先へ進む前に、「詳細」ページに進んで、この利用者がどのプロセスのアクターにマッピングされているか確認することができます。\n\n"
-"この利用者を今から本当に無効にしますか？"
+msgstr "あなたは１つ以上のアプリを中断する恐れがあります。\n\n"
+"タスクを遂行できる唯一のユーザーを無効にすると、プロセスの中断が発生します。\n\n"
+"先へ進む前に、プロセスの「詳細」ページに移動し、アクター マッピングを確認することができます。\n\n"
+"今から本当にこの利用者を無効にしますか？"
 
 msgid "You will be rediected"
 msgstr "リダイレクトになります。"
