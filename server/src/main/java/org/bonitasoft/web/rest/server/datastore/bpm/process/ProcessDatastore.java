@@ -241,13 +241,13 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
     public ItemSearchResult<ProcessItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
         final ProcessEngineClient engineClient = getProcessEngineClient();
-        return new SearchProcessHelper(engineClient).search(page, resultsByPage, search, orders, filters);
+        return new SearchProcessHelper(engineClient, getEngineSession().getTenantId()).search(page, resultsByPage, search, orders, filters);
     }
 
     @Override
     protected ProcessItem convertEngineToConsoleItem(final ProcessDeploymentInfo item) {
         if (item != null) {
-            return new ProcessItemConverter(getProcessEngineClient().getProcessApi()).convert(item);
+            return new ProcessItemConverter(getProcessEngineClient().getProcessApi(), getEngineSession().getTenantId()).convert(item);
         }
         return null;
     }
