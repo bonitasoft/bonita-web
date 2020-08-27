@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
+import org.bonitasoft.console.common.server.utils.TenantCacheUtil;
+import org.bonitasoft.console.common.server.utils.TenantCacheUtilFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
@@ -25,15 +25,19 @@ import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+
 /**
  * @author Vincent Elcrin
  */
 public class ProcessItemConverter extends ItemConverter<ProcessItem, ProcessDeploymentInfo> {
 
     private final ProcessAPI processApi;
+    private final Long tenantId;
 
-    public ProcessItemConverter(final ProcessAPI processApi) {
+    public ProcessItemConverter(final ProcessAPI processApi, final Long tenantId) {
         this.processApi = processApi;
+        this.tenantId = tenantId;
     }
 
     @Override
@@ -51,16 +55,30 @@ public class ProcessItemConverter extends ItemConverter<ProcessItem, ProcessDepl
         item.setDisplayName(engineItem.getDisplayName());
         item.setDisplayDescription(engineItem.getDisplayDescription());
         item.setLastUpdateDate(engineItem.getLastUpdateDate());
+        item.setActorInitiatorId(getActorInitiator(engineItem));
 
+        return item;
+    }
+
+    private Long getActorInitiator(ProcessDeploymentInfo engineItem) {
+        TenantCacheUtil tenantCacheUtil = TenantCacheUtilFactory.getTenantCacheUtil(tenantId);
+        Long actorInitiatorId = tenantCacheUtil.getProcessActorInitiatorId(engineItem.getProcessId());
+        if (actorInitiatorId == null) {
+            actorInitiatorId = tenantCacheUtil.storeProcessActorInitiatorId(engineItem.getProcessId(), getActorInitiatorFromEngine(engineItem));
+        }
+        return actorInitiatorId;
+    }
+
+    private Long getActorInitiatorFromEngine(ProcessDeploymentInfo engineItem) {
+        Long actorInitiatorId;
         try {
-            item.setActorInitiatorId(processApi.getActorInitiator(engineItem.getProcessId()).getId());
+            actorInitiatorId = processApi.getActorInitiator(engineItem.getProcessId()).getId();
         } catch (ActorNotFoundException e) {
-            item.setActorInitiatorId(-1L);
+            actorInitiatorId = -1L;
         } catch (ProcessDefinitionNotFoundException e) {
             throw new APIException(_("Process definition not found for id %processId%", new Arg("processId", String.valueOf(engineItem.getProcessId()))), e);
         }
-
-        return item;
+        return actorInitiatorId;
     }
 
 }
