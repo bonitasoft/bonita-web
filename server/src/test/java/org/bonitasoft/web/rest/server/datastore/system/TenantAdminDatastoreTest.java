@@ -9,6 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.system.TenantAdminItem;
@@ -16,8 +19,6 @@ import org.bonitasoft.web.rest.server.engineclient.TenantManagementEngineClient;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 public class TenantAdminDatastoreTest {
 
@@ -38,7 +39,7 @@ public class TenantAdminDatastoreTest {
         final APIID apiid = APIID.makeAPIID(1L);
 
         final TenantAdminItem tenantAdminItem = tenantAdminDatastore.update(apiid,
-                ImmutableMap.<String, String> of(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.TRUE.toString()));
+                mapOf(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.TRUE.toString()));
 
         verify(tenantAdministrationAPI, times(1)).isPaused();
         verify(tenantAdministrationAPI, times(0)).resume();
@@ -52,7 +53,7 @@ public class TenantAdminDatastoreTest {
         final APIID apiid = APIID.makeAPIID(1L);
 
         final TenantAdminItem tenantAdminItem = tenantAdminDatastore.update(apiid,
-                ImmutableMap.<String, String> of(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.FALSE.toString()));
+                mapOf(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.FALSE.toString()));
 
         verify(tenantAdministrationAPI, times(1)).isPaused();
         verify(tenantAdministrationAPI, times(0)).resume();
@@ -66,7 +67,7 @@ public class TenantAdminDatastoreTest {
         final APIID apiid = APIID.makeAPIID(1L);
 
         final TenantAdminItem tenantAdminItem = tenantAdminDatastore.update(apiid,
-                ImmutableMap.<String, String> of(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.TRUE.toString()));
+                mapOf(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.TRUE.toString()));
 
         verify(tenantAdministrationAPI, times(1)).isPaused();
         verify(tenantAdministrationAPI, times(1)).pause();
@@ -78,8 +79,9 @@ public class TenantAdminDatastoreTest {
         when(tenantAdministrationAPI.isPaused()).thenReturn(true);
         final APIID apiid = APIID.makeAPIID(1L);
 
+        
         final TenantAdminItem tenantAdminItem = tenantAdminDatastore.update(apiid,
-                ImmutableMap.<String, String> of(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.FALSE.toString()));
+               mapOf(TenantAdminItem.ATTRIBUTE_IS_PAUSED, Boolean.FALSE.toString()));
 
         verify(tenantAdministrationAPI, times(1)).isPaused();
         verify(tenantAdministrationAPI, times(1)).resume();
@@ -110,5 +112,11 @@ public class TenantAdminDatastoreTest {
         verify(tenantAdministrationAPI, times(0)).resume();
         verify(tenantAdministrationAPI, times(0)).pause();
         assertTrue(tenantAdminItem.isPaused());
+    }
+    
+    private static Map <String,String> mapOf(String key, String value){
+        Map<String, String> result = new HashMap<>();
+        result.put(key, value);
+        return result;
     }
 }
