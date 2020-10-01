@@ -15,6 +15,7 @@ package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +24,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.CharEncoding;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
@@ -35,6 +35,8 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
+import org.restlet.data.MediaType;
+import org.restlet.engine.header.ContentType;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
@@ -82,13 +84,13 @@ public class LoginServlet extends HttpServlet {
 
         // force post request body to UTF-8
         try {
-            request.setCharacterEncoding(CharEncoding.UTF_8);
+            request.setCharacterEncoding(StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingException e) {
             // should never appear
             throw new ServletException(e);
         }
-        if (request.getContentType() != null  
-                && !"application/x-www-form-urlencoded".equalsIgnoreCase(request.getContentType().toLowerCase())) {
+        if (request.getContentType() != null 
+                && !MediaType.APPLICATION_WWW_FORM.equals(ContentType.readMediaType(request.getContentType()))) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "The only content type supported by this service is application/x-www-form-urlencoded. The content-type request header needs to be set accordingly.");
             }
@@ -115,6 +117,7 @@ public class LoginServlet extends HttpServlet {
                 }
             } else {
                 LocaleUtils.addLocaleCookieToResponse(response, locale);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
         } catch (final AuthenticationManagerNotFoundException e) {
             final String message = "Can't get login manager";

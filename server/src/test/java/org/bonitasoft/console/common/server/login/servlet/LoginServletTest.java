@@ -218,6 +218,23 @@ public class LoginServletTest {
         servlet.doPost(req, resp);
 
         verify(loginManager).login(req, resp);
+        verify(resp).setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+    
+    @Test
+    public void should_login_with_content_type_containing_charset() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        doReturn("application/x-www-form-urlencoded; charset=UTF-8").when(req).getContentType();
+        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
+
+        servlet.doPost(req, resp);
+
+        verify(loginManager).login(req, resp);
         verify(resp, never()).setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
     }
 
