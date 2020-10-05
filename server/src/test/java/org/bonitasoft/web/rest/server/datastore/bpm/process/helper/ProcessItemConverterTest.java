@@ -1,6 +1,5 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
 import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
@@ -13,6 +12,7 @@ import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 import org.junit.Before;
 import org.junit.Test;

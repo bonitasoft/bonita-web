@@ -13,7 +13,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.bonitasoft.console.common.server.i18n;
+package org.bonitasoft.web.toolkit.client.common.i18n;
+
+import org.fedorahosted.tennera.jgettext.Catalog;
+import org.fedorahosted.tennera.jgettext.Message;
+import org.fedorahosted.tennera.jgettext.PoParser;
+import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,11 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.fedorahosted.tennera.jgettext.Catalog;
-import org.fedorahosted.tennera.jgettext.Message;
-import org.fedorahosted.tennera.jgettext.PoParser;
-import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
 
 /**
  * @author Séverin Moussel

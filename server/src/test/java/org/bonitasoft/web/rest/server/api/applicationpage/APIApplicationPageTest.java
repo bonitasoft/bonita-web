@@ -9,7 +9,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
@@ -22,6 +21,7 @@ import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.junit.Before;

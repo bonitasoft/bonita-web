@@ -5,13 +5,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -1,9 +1,12 @@
 package org.bonitasoft.console.common.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ImportError;
@@ -15,9 +18,8 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
 import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 
@@ -26,7 +28,22 @@ public class ImportStatusMessagesTest {
 
     @BeforeClass
     public static void initEnvironnement() {
-        I18n.getInstance();
+        HashMap<String, String> availableLocales;
+        availableLocales = new HashMap<>();
+        availableLocales.put("en", "English");
+        availableLocales.put("fr", "Français");
+        availableLocales.put("es", "Español");
+        availableLocales.put("pt_BR", "Português (Brasil)");
+        availableLocales.put("ja", "日本語");
+
+        I18n i18n = mock(I18n.class);
+        I18n.setInstance(i18n);
+        Mockito.when(i18n.getAvailableLocalesFor(anyString())).thenReturn(availableLocales);
+    }
+
+    @AfterClass
+    public static void cleanUp() throws Exception {
+        I18n.setInstance(null);
     }
 
     @Before
