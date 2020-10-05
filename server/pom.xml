@@ -79,10 +79,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.fedorahosted.tennera</groupId>
-            <artifactId>jgettext</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.scribe</groupId>
             <artifactId>scribe</artifactId>
         </dependency>

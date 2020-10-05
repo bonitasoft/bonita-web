@@ -20,7 +20,7 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.identity.InvalidOrganizationFileFormatException;
 import org.bonitasoft.engine.session.InvalidSessionException;
-import org.bonitasoft.console.common.server.i18n.I18n;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 import org.junit.Before;
 import org.junit.BeforeClass;

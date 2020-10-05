@@ -5,12 +5,12 @@ import static org.mockito.Mockito.*;
 import java.util.Collections;
 import java.util.HashMap;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException;
 import org.junit.Before;

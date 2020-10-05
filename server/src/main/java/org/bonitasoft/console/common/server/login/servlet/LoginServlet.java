@@ -89,7 +89,7 @@ public class LoginServlet extends HttpServlet {
             // should never appear
             throw new ServletException(e);
         }
-        if (request.getContentType() != null 
+        if (request.getContentType() != null
                 && !MediaType.APPLICATION_WWW_FORM.equals(ContentType.readMediaType(request.getContentType()))) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "The only content type supported by this service is application/x-www-form-urlencoded. The content-type request header needs to be set accordingly.");
@@ -116,7 +116,7 @@ public class LoginServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher(AuthenticationManager.LOGIN_PAGE).forward(request, response);
                 }
             } else {
-                LocaleUtils.addLocaleCookieToResponse(response, locale);
+                LocaleUtils.addOrReplaceLocaleCookieResponse(response, locale);
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
         } catch (final AuthenticationManagerNotFoundException e) {
@@ -139,7 +139,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleException(final HttpServletRequest request, final HttpServletResponse response, final boolean redirectAfterLogin,
-        final Exception e, final String locale) throws ServletException {
+                                 final Exception e, final String locale) throws ServletException {
         // if there a redirect=false attribute in the request do nothing (API login), otherwise, redirect (Portal login)
         if (redirectAfterLogin) {
             try {
@@ -197,7 +197,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doLogin(final HttpServletRequest request, final HttpServletResponse response)
-        throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException, AuthenticationFailedException {
+            throws AuthenticationManagerNotFoundException, LoginFailedException, ServletException, AuthenticationFailedException {
         try {
             final LoginManager loginManager = getLoginManager();
             loginManager.login(request, response);

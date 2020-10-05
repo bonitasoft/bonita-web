@@ -22,7 +22,6 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
 import org.bonitasoft.engine.bpm.connector.ConnectorInstance;
@@ -35,6 +34,7 @@ import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.bpm.connector.ConnectorInstanceItem;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.junit.Before;
 import org.junit.BeforeClass;
