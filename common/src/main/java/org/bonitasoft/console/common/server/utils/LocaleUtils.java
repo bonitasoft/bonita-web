@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
-
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +23,8 @@ import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.bonitasoft.console.common.server.i18n.I18n;
 
 /**
  * @author Anthony Birembaut

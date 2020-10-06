@@ -27,7 +27,7 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

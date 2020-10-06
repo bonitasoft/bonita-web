@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.toolkit.client.common.i18n;
+package org.bonitasoft.console.common.server.i18n;
 
 import static junit.framework.Assert.assertEquals;
 
 import java.io.File;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.i18n.POParser;
 import org.junit.Before;
 import org.junit.Test;
 

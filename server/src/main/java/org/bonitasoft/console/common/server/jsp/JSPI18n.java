@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.console.common.server.jsp;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 
 public class JSPI18n {
 

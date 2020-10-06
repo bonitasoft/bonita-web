@@ -2,7 +2,7 @@ package org.bonitasoft.web.rest.server.api.organization.password.validator;
 
 import static org.junit.Assert.*;
 
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.junit.Test;
 
 

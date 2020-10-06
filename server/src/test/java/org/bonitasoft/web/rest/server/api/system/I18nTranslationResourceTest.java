@@ -24,9 +24,9 @@ import java.util.Map;
 import net.javacrumbs.jsonunit.JsonAssert;
 import net.javacrumbs.jsonunit.core.Option;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
