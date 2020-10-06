@@ -17,9 +17,9 @@
 
 package org.bonitasoft.web.toolkit.server.servlet;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.ServletCall;
 import org.junit.After;
 import org.junit.Before;

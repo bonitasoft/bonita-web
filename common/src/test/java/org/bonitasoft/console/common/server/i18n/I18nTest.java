@@ -1,4 +1,4 @@
-package org.bonitasoft.web.toolkit.client.common.i18n;
+package org.bonitasoft.console.common.server.i18n;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.junit.Test;
 
 /**

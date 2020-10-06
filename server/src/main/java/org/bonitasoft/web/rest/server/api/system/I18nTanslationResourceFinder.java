@@ -14,8 +14,8 @@
 
 package org.bonitasoft.web.rest.server.api.system;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.ResourceFinder;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.resource.ServerResource;

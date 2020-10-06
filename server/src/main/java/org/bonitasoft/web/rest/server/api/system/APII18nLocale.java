@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;

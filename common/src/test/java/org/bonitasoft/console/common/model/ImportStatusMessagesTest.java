@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ImportError;
 import org.bonitasoft.engine.api.ImportError.Type;
 import org.bonitasoft.engine.api.ImportStatus;
@@ -17,7 +18,6 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.junit.*;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;

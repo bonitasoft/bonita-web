@@ -16,8 +16,8 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.tests;
 
-import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
+import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.DateToDisplayModifier;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 import org.junit.Before;

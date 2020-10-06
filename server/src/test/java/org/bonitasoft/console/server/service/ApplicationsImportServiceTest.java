@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ApplicationAPI;
@@ -22,7 +23,6 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
 import org.bonitasoft.web.rest.server.BonitaRestAPIServlet;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 import org.junit.Before;
 import org.junit.BeforeClass;

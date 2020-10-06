@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
@@ -30,7 +31,6 @@ import org.bonitasoft.engine.bpm.process.impl.internal.ProcessInstanceImpl;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

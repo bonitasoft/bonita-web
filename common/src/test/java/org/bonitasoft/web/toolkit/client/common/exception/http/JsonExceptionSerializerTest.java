@@ -22,9 +22,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.bonitasoft.console.common.FakeI18n;
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.junit.After;
 import org.junit.Before;

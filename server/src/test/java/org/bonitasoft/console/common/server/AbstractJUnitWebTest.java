@@ -14,10 +14,10 @@
  */
 package org.bonitasoft.console.common.server;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.test.toolkit.AbstractJUnitTest;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 
 /**

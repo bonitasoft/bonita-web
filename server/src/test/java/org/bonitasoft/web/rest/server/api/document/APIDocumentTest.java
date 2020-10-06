@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.session.APISession;
@@ -22,7 +23,6 @@ import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.i18n.I18n;
 import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 import org.junit.Before;
 import org.junit.Test;
