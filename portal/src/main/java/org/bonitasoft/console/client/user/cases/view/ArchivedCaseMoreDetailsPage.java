@@ -88,6 +88,7 @@ public class ArchivedCaseMoreDetailsPage extends ItemQuickDetailsPage<ArchivedCa
         metadatas.addStartedBy(item);
         metadatas.addLastUpdateDate();
         metadatas.addState();
+        metadatas.addSearchIndexes(item);
         return metadatas.build();
     }
 

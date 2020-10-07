@@ -18,6 +18,9 @@ package org.bonitasoft.console.client.common.metadata;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bonitasoft.console.client.common.view.StartedByDelegateAttributeReder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
@@ -95,5 +98,22 @@ public class MetadataCaseBuilder extends MetadataBuilder {
     private ItemDetailsMetadata createLastUpdateDate() {
         return new ItemDetailsMetadata(ArchivedCaseItem.ATTRIBUTE_LAST_UPDATE_DATE, _("Last updated"),
                 _("The date when the case was updated"));
+    }
+
+    public MetadataCaseBuilder addSearchIndexes(CaseItem item) {
+        for (ItemDetailsMetadata searchIndexesMetadatum : createSearchIndexesMetadata(item)) {
+            add(searchIndexesMetadatum);
+        }
+        return this;
+    }
+
+    public static List<ItemDetailsMetadata> createSearchIndexesMetadata(CaseItem item) {
+        java.util.List<ItemDetailsMetadata> searchIndexes = new ArrayList<ItemDetailsMetadata>();
+        searchIndexes.add(new ItemDetailsMetadata(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_VALUE, item.getAttributeValue(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_LABEL), CaseItem.ATTRIBUTE_SEARCH_INDEX_1_LABEL));
+        searchIndexes.add(new ItemDetailsMetadata(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_VALUE, item.getAttributeValue(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_LABEL), CaseItem.ATTRIBUTE_SEARCH_INDEX_2_LABEL));
+        searchIndexes.add(new ItemDetailsMetadata(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_VALUE, item.getAttributeValue(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_LABEL), CaseItem.ATTRIBUTE_SEARCH_INDEX_3_LABEL));
+        searchIndexes.add(new ItemDetailsMetadata(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_VALUE, item.getAttributeValue(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_LABEL), CaseItem.ATTRIBUTE_SEARCH_INDEX_4_LABEL));
+        searchIndexes.add(new ItemDetailsMetadata(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_VALUE, item.getAttributeValue(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_LABEL), CaseItem.ATTRIBUTE_SEARCH_INDEX_5_LABEL));
+        return searchIndexes;
     }
 }
