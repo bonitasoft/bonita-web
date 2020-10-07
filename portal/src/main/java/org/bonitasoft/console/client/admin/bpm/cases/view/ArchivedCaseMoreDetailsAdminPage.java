@@ -87,6 +87,7 @@ public class ArchivedCaseMoreDetailsAdminPage extends ItemQuickDetailsPage<Archi
         metadatas.addStartedBy(item);
         metadatas.addLastUpdateDate();
         metadatas.addState();
+        metadatas.addSearchIndexes(item);
         return metadatas.build();
     }
 

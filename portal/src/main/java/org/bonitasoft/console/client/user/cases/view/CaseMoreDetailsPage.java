@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.console.client.common.view.CustomPageWithFrame;
 import org.bonitasoft.console.client.user.cases.action.OnCaseDetailsNotFound;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
@@ -74,6 +75,7 @@ public class CaseMoreDetailsPage extends CaseQuickDetailsPage implements PluginC
         final LinkedList<ItemDetailsMetadata> metadatas = super.defineMetadatas(item);
         metadatas.add(lastUpdateDate());
         metadatas.add(state());
+        metadatas.addAll(MetadataCaseBuilder.createSearchIndexesMetadata(item));
         return metadatas;
     }
 

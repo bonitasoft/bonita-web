@@ -28,6 +28,7 @@ import org.bonitasoft.console.client.common.component.snippet.CommentSectionSnip
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeDateFormatter;
 import org.bonitasoft.console.client.common.formatter.ArchivedFlowNodeExecutedByFormatter;
 import org.bonitasoft.console.client.common.formatter.FlowNodeDisplayNameFormatter;
+import org.bonitasoft.console.client.common.metadata.MetadataCaseBuilder;
 import org.bonitasoft.console.client.data.item.attribute.reader.DeployedUserReader;
 import org.bonitasoft.console.client.user.cases.action.OnCaseDetailsNotFound;
 import org.bonitasoft.console.client.user.cases.view.component.CaseOverviewButton;
@@ -101,6 +102,7 @@ public class CaseMoreDetailsAdminPage extends CaseQuickDetailsAdminPage {
         final LinkedList<ItemDetailsMetadata> metadatas = super.defineMetadatas(item);
         metadatas.add(lastUpdateDate());
         metadatas.add(state());
+        metadatas.addAll(MetadataCaseBuilder.createSearchIndexesMetadata(item));
         return metadatas;
     }
 
