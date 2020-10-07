@@ -70,6 +70,16 @@ DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
         result.setRootCaseId(item.getRootProcessInstanceId());
         result.setStartedByUserId(item.getStartedBy());
         result.setStartedBySubstituteUserId(item.getStartedBySubstitute());
+        result.setSearchIndex1Label(item.getStringIndexLabel(1));
+        result.setSearchIndex2Label(item.getStringIndexLabel(2));
+        result.setSearchIndex3Label(item.getStringIndexLabel(3));
+        result.setSearchIndex4Label(item.getStringIndexLabel(4));
+        result.setSearchIndex5Label(item.getStringIndexLabel(5));
+        result.setSearchIndex1Value(item.getStringIndexValue(1));
+        result.setSearchIndex2Value(item.getStringIndexValue(2));
+        result.setSearchIndex3Value(item.getStringIndexValue(3));
+        result.setSearchIndex4Value(item.getStringIndexValue(4));
+        result.setSearchIndex5Value(item.getStringIndexValue(5));
         return result;
     }
 

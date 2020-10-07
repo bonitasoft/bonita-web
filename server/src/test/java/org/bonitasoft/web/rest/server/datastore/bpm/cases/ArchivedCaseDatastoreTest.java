@@ -1,9 +1,11 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,10 +19,12 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
+import org.bonitasoft.engine.bpm.process.impl.internal.ArchivedProcessInstanceImpl;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -123,6 +127,56 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
 
         //when
         datastore.delete(idList);
+
+    }
+
+    @Test
+    public void testConvertEngineToConsoleItem() throws Exception {
+        //given
+        ArchivedProcessInstance archivedProcessInstance = mock(ArchivedProcessInstance.class);
+        doReturn("labelOne").when(archivedProcessInstance).getStringIndexLabel(1);
+        doReturn("labelTwo").when(archivedProcessInstance).getStringIndexLabel(2);
+        doReturn("labelThree").when(archivedProcessInstance).getStringIndexLabel(3);
+        doReturn("labelFour").when(archivedProcessInstance).getStringIndexLabel(4);
+        doReturn("labelFive").when(archivedProcessInstance).getStringIndexLabel(5);
+        doReturn("valueOne").when(archivedProcessInstance).getStringIndexValue(1);
+        doReturn("valueTwo").when(archivedProcessInstance).getStringIndexValue(2);
+        doReturn("valueThree").when(archivedProcessInstance).getStringIndexValue(3);
+        doReturn("valueFour").when(archivedProcessInstance).getStringIndexValue(4);
+        doReturn("valueFive").when(archivedProcessInstance).getStringIndexValue(5);
+
+        // when
+        final ArchivedCaseItem archivedCaseItem = datastore.convertEngineToConsoleItem(archivedProcessInstance);
+
+        // then
+        //check labels
+        assertThat(archivedCaseItem.getSearchIndex1Label()).isEqualTo("labelOne");
+        assertThat(archivedCaseItem.getSearchIndex2Label()).isEqualTo("labelTwo");
+        assertThat(archivedCaseItem.getSearchIndex3Label()).isEqualTo("labelThree");
+        assertThat(archivedCaseItem.getSearchIndex4Label()).isEqualTo("labelFour");
+        assertThat(archivedCaseItem.getSearchIndex5Label()).isEqualTo("labelFive");
+        //check values
+        assertThat(archivedCaseItem.getSearchIndex1Value()).isEqualTo("valueOne");
+        assertThat(archivedCaseItem.getSearchIndex2Value()).isEqualTo("valueTwo");
+        assertThat(archivedCaseItem.getSearchIndex3Value()).isEqualTo("valueThree");
+        assertThat(archivedCaseItem.getSearchIndex4Value()).isEqualTo("valueFour");
+        assertThat(archivedCaseItem.getSearchIndex5Value()).isEqualTo("valueFive");
+    }
+
+    @Test
+    public void testConvertEngineToConsoleItemWithNullValues() throws Exception {
+        //given
+        ArchivedProcessInstance archivedProcessInstance = mock(ArchivedProcessInstance.class);
+        doReturn(null).when(archivedProcessInstance).getStringIndexLabel(1);
+        doReturn(null).when(archivedProcessInstance).getStringIndexValue(1);
+
+        // when
+        final ArchivedCaseItem archivedCaseItem = datastore.convertEngineToConsoleItem(archivedProcessInstance);
+
+        // then
+        //check labels
+        assertThat(archivedCaseItem.getSearchIndex1Label()).isNull();
+        assertThat(archivedCaseItem.getSearchIndex1Value()).isNull();
 
     }
 

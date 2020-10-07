@@ -32,6 +32,16 @@ public class CaseItemConverter extends ItemConverter<CaseItem, ProcessInstance> 
         item.setRootCaseId(process.getRootProcessInstanceId());
         item.setStartedByUserId(process.getStartedBy());
         item.setStartedBySubstituteUserId(process.getStartedBySubstitute());
+        item.setSearchIndex1Label(process.getStringIndexLabel(1));
+        item.setSearchIndex2Label(process.getStringIndexLabel(2));
+        item.setSearchIndex3Label(process.getStringIndexLabel(3));
+        item.setSearchIndex4Label(process.getStringIndexLabel(4));
+        item.setSearchIndex5Label(process.getStringIndexLabel(5));
+        item.setSearchIndex1Value(process.getStringIndex1());
+        item.setSearchIndex2Value(process.getStringIndex2());
+        item.setSearchIndex3Value(process.getStringIndex3());
+        item.setSearchIndex4Value(process.getStringIndex4());
+        item.setSearchIndex5Value(process.getStringIndex5());
         return item;
     }
 
