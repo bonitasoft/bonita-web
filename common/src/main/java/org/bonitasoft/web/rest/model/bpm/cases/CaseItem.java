@@ -55,6 +55,17 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
 
     public static final String COUNTER_ACTIVE_FLOW_NODES = "activeFlowNodes";
 
+    public static final String ATTRIBUTE_SEARCH_INDEX_1_LABEL = "searchIndex1Label";
+    public static final String ATTRIBUTE_SEARCH_INDEX_1_VALUE = "searchIndex1Value";
+    public static final String ATTRIBUTE_SEARCH_INDEX_2_LABEL = "searchIndex2Label";
+    public static final String ATTRIBUTE_SEARCH_INDEX_2_VALUE = "searchIndex2Value";
+    public static final String ATTRIBUTE_SEARCH_INDEX_3_LABEL = "searchIndex3Label";
+    public static final String ATTRIBUTE_SEARCH_INDEX_3_VALUE = "searchIndex3Value";
+    public static final String ATTRIBUTE_SEARCH_INDEX_4_LABEL = "searchIndex4Label";
+    public static final String ATTRIBUTE_SEARCH_INDEX_4_VALUE = "searchIndex4Value";
+    public static final String ATTRIBUTE_SEARCH_INDEX_5_LABEL = "searchIndex5Label";
+    public static final String ATTRIBUTE_SEARCH_INDEX_5_VALUE = "searchIndex5Value";
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +168,46 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         return getAttributeValueAsAPIID(ATTRIBUTE_ROOT_CASE_ID);
     }
 
+    public String getSearchIndex1Label() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_1_LABEL);
+    }
+
+    public String getSearchIndex1Value() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_1_VALUE);
+    }
+
+    public String getSearchIndex2Label() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_2_LABEL);
+    }
+
+    public String getSearchIndex2Value() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_2_VALUE);
+    }
+
+    public String getSearchIndex3Label() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_3_LABEL);
+    }
+
+    public String getSearchIndex3Value() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_3_VALUE);
+    }
+
+    public String getSearchIndex4Label() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_4_LABEL);
+    }
+
+    public String getSearchIndex4Value() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_4_VALUE);
+    }
+
+    public String getSearchIndex5Label() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_5_LABEL);
+    }
+
+    public String getSearchIndex5Value() {
+        return getAttributeValue(ATTRIBUTE_SEARCH_INDEX_5_VALUE);
+    }
+
     // SETTERS
 
     @Override
@@ -242,10 +293,50 @@ public class CaseItem extends Item implements ItemHasLastUpdateDate, ItemHasUniq
         setAttribute(ATTRIBUTE_ROOT_CASE_ID, rootCaseId);
     }
 
+    public void setSearchIndex1Label(final String attributeSearchIndex1Label) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_1_LABEL, attributeSearchIndex1Label);
+    }
 
+    public void setSearchIndex1Value(final String attributeSearchIndex1Value) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_1_VALUE, attributeSearchIndex1Value);
+    }
+
+    public void setSearchIndex2Label(final String attributeSearchIndex2Label) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_2_LABEL, attributeSearchIndex2Label);
+    }
+
+    public void setSearchIndex2Value(final String attributeSearchIndex2Value) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_2_VALUE, attributeSearchIndex2Value);
+    }
+
+    public void setSearchIndex3Label(final String attributeSearchIndex3Label) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_3_LABEL, attributeSearchIndex3Label);
+    }
+
+    public void setSearchIndex3Value(final String attributeSearchIndex3Value) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_3_VALUE, attributeSearchIndex3Value);
+    }
+
+    public void setSearchIndex4Label(final String attributeSearchIndex4Label) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_4_LABEL, attributeSearchIndex4Label);
+    }
+
+    public void setSearchIndex4Value(final String attributeSearchIndex4Value) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_4_VALUE, attributeSearchIndex4Value);
+    }
+
+    public void setSearchIndex5Label(final String attributeSearchIndex5Label) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_5_LABEL, attributeSearchIndex5Label);
+    }
+
+    public void setSearchIndex5Value(final String attributeSearchIndex5Value) {
+        setAttribute(ATTRIBUTE_SEARCH_INDEX_5_VALUE, attributeSearchIndex5Value);
+    }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // UTILS
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override

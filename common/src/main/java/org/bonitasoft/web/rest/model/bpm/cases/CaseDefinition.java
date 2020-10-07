@@ -65,6 +65,16 @@ public class CaseDefinition extends ItemDefinition {
         createAttribute(CaseItem.ATTRIBUTE_START_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(CaseItem.ATTRIBUTE_END_DATE, ItemAttribute.TYPE.DATETIME);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_VALUE, ItemAttribute.TYPE.STRING);
     }
 
     @Override

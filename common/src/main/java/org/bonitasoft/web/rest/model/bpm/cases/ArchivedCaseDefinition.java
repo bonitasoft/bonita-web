@@ -67,6 +67,16 @@ public class ArchivedCaseDefinition extends ItemDefinition<ArchivedCaseItem> {
         createAttribute(ArchivedCaseItem.ATTRIBUTE_ARCHIVED_DATE, ItemAttribute.TYPE.DATETIME);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_LABEL, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_1_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_2_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_3_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_4_VALUE, ItemAttribute.TYPE.STRING);
+        createAttribute(CaseItem.ATTRIBUTE_SEARCH_INDEX_5_VALUE, ItemAttribute.TYPE.STRING);
     }
 
     @Override
