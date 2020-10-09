@@ -74,7 +74,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
                     "rolelistingadmin",
                     "grouplistingadmin",
                     "profilelisting",
-                    "custompage_installExportOrganizationBonita",
+                    "custompage_adminInstallExportOrganizationBonita",
                     "custompage_tenantStatusBonita",
                     "pagelisting",
                     "businessdatamodelimport",

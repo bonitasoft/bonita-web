@@ -46,7 +46,7 @@ public class CustomPageWithFrame extends Page {
     //For Technical user menu, don't forget to modify APISession and ConsoleFactoryClient
     public static final String TENANT_STATUS = "custompage_tenantStatusBonita";
 
-    public static final String INSTALL_EXPORT_ORGANIZATION = "custompage_installExportOrganizationBonita";
+    public static final String INSTALL_EXPORT_ORGANIZATION = "custompage_adminInstallExportOrganizationBonita";
 
     private final String pageName;
 
