@@ -15,7 +15,8 @@
         <bonita.engine.version>${project.version}</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
         <gwt.version>2.5.1</gwt.version>
         <!-- The following property is used by the gwt-maven plugin. As it does not follow the same naming convention as others, we decided to have both gwt.version
             and gwtVersion properties. Of course the two properties refer to the same value. -->

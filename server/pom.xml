@@ -79,10 +79,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.fedorahosted.tennera</groupId>
-            <artifactId>jgettext</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.scribe</groupId>
             <artifactId>scribe</artifactId>
         </dependency>
@@ -234,12 +230,6 @@
             <groupId>com.github.stefanbirkner</groupId>
             <artifactId>system-rules</artifactId>
             <version>1.16.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>21.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

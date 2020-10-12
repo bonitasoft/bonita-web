@@ -17,6 +17,7 @@
 
 package org.bonitasoft.console.common;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 

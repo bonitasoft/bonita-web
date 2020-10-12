@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.session.APISession;
@@ -61,7 +62,7 @@ public class APIProcessTest {
     @Before
     public void consoleTestSetUp() throws IOException {
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
-        org.bonitasoft.console.common.server.i18n.I18n.getInstance();
+        I18n.getInstance();
         given(caller.getHttpSession()).willReturn(session);
         given(session.getAttribute("apiSession")).willReturn(engineSession);
         given(engineSession.getTenantId()).willReturn(1L);
