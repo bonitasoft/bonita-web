@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertEquals;
 import java.io.File;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.i18n.POParser;
 import org.junit.Before;
 import org.junit.Test;
 

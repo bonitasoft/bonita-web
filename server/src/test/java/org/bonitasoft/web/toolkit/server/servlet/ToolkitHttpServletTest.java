@@ -17,17 +17,21 @@
 
 package org.bonitasoft.web.toolkit.server.servlet;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.server.ServletCall;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
@@ -60,6 +64,23 @@ public class ToolkitHttpServletTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
+
+        HashMap<String, String> availableLocales;
+        availableLocales = new HashMap<>();
+        availableLocales.put("en", "English");
+        availableLocales.put("fr", "Français");
+        availableLocales.put("es", "Español");
+        availableLocales.put("pt_BR", "Português (Brasil)");
+        availableLocales.put("ja", "日本語");
+
+        I18n i18n = mock(I18n.class);
+        I18n.setInstance(i18n);
+        Mockito.when(i18n.getAvailableLocalesFor(anyString())).thenReturn(availableLocales);
+    }
+
+    @After
+    public void cleanUp() throws Exception {
+        I18n.setInstance(null);
     }
 
     @Test
@@ -84,7 +105,7 @@ public class ToolkitHttpServletTest {
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
 
-        verify(exception).setLocale(LOCALE.fr_FR);
+        verify(exception).setLocale(LOCALE.fr);
     }
 
     @Test
@@ -98,7 +119,7 @@ public class ToolkitHttpServletTest {
 
         toolkitHttpServlet.outputException(exception, req, resp, 500);
 
-        verify(exception).setLocale(LOCALE.fr_CA);
+        verify(exception).setLocale(LOCALE.fr);
     }
     
     @Test

@@ -64,7 +64,7 @@ public class ClientApplicationURL {
     public static final String TOKEN_ADD = "add";
 
     public static final String TOKEN_DELETE = "delete";
-    
+
     public static final String ATTRIBUTE_LANG = UrlOption.LANG;
 
     protected static final String ATTRIBUTE_TOKEN = UrlOption.PAGE;

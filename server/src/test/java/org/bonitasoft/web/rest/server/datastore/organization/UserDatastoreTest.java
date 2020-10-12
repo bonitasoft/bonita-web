@@ -19,7 +19,11 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,8 +59,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author Vincent Elcrin
@@ -158,13 +160,13 @@ public class UserDatastoreTest {
         when(user.getFirstName()).thenReturn(firstname);
         String lastname = "Norris";
         when(user.getLastName()).thenReturn(lastname);
-        List<User> userList = Lists.newArrayList(user);
+        List<User> userList = Collections.singletonList(user);
         when(engineSearchResults.getResult()).thenReturn(userList);
         when(processAPI.searchUsersWhoCanExecutePendingHumanTask(eq(18L), any(SearchOptions.class))).thenReturn(engineSearchResults);
         UserItem userItem = mock(UserItem.class);
         // when(userItem.getAttributeValue("firstname")).thenReturn(firstname);
         // when(userItem.getAttributeValue("lastname")).thenReturn(lastname);
-        List<UserItem> userItemList = Lists.newArrayList(userItem);
+        List<UserItem> userItemList = Collections.singletonList(userItem);
         when(userItemConverter.convert(userList)).thenReturn(userItemList);
         int page = 1;
         int resultsByPage = 8;

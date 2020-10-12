@@ -90,18 +90,22 @@ public class HomepageServlet extends ThemeResourceServlet {
             showDefaultPage(request, response, isForm);
         }
     }
-    
+
     protected void enforceLocaleCookieIfPresentInURLOrBrowser(final HttpServletRequest request, final HttpServletResponse response) {
-        final String localeFromCookie = LocaleUtils.getLocaleFromCookie(request);
+        final String localeFromCookie = LocaleUtils.getLocaleFromCookies(request);
         final String localeFromURL = LocaleUtils.getLocaleFromRequestURL(request);
         final String localeFromBrowser = LocaleUtils.getLocaleFromBrowser(request);
-        
+
+        if (localeFromCookie != null && !LocaleUtils.isLocaleSupportedInPortal(localeFromCookie)) {
+            LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromCookie);
+        }
+
         if (localeFromURL != null && !localeFromURL.equals(localeFromCookie)) {
             //Set the cookie if the locale is in the URL and different from the existing cookie value or the cookie does not exist yet
-            LocaleUtils.addLocaleCookieToResponse(response, localeFromURL);
+            LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromURL);
         } else if (localeFromCookie == null && localeFromBrowser != null) {
             //Set the cookie with the browser locale if there is no cookie
-            LocaleUtils.addLocaleCookieToResponse(response, localeFromBrowser);
+            LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromBrowser);
         }
     }
 
@@ -201,10 +205,10 @@ public class HomepageServlet extends ThemeResourceServlet {
         return myApplicationsFolder;
     }
 
-    protected static void ensureApplicationFolderExists(final APISession apiSession, final long applicationID, final Date deployemenDate)
+    protected static void ensureApplicationFolderExists(final APISession apiSession, final long applicationID, final Date deployementDate)
             throws ProcessDefinitionNotFoundException, IOException, InvalidFormDefinitionException, BPMEngineException {
         try {
-            FormDocumentBuilderFactory.getFormDocumentBuilder(apiSession, applicationID, Locale.ENGLISH.getLanguage(), deployemenDate);
+            FormDocumentBuilderFactory.getFormDocumentBuilder(apiSession, applicationID, Locale.ENGLISH.getLanguage(), deployementDate);
         } catch (final FileNotFoundException e) {
             //Do nothing: there might be no forms.xml in the business archive
             if (LOGGER.isLoggable(Level.FINE)) {

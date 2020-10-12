@@ -18,17 +18,21 @@
 package org.bonitasoft.console.common.server.utils;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.bonitasoft.console.common.server.i18n.I18n;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 /**
  * Created by Vincent Elcrin
@@ -43,6 +47,23 @@ public class LocaleUtilsTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
+
+        HashMap<String, String> availableLocales;
+        availableLocales = new HashMap<>();
+        availableLocales.put("en", "English");
+        availableLocales.put("fr", "Français");
+        availableLocales.put("es", "Español");
+        availableLocales.put("pt_BR", "Português (Brasil)");
+        availableLocales.put("ja", "日本語");
+
+        I18n i18n = mock(I18n.class);
+        I18n.setInstance(i18n);
+        Mockito.when(i18n.getAvailableLocalesFor(anyString())).thenReturn(availableLocales);
+    }
+
+    @After
+    public void cleanUp() throws Exception {
+        I18n.setInstance(null);
     }
 
     @Test
@@ -62,15 +83,15 @@ public class LocaleUtilsTest {
     @Test
     public void testANullCookieResultsWithBrowserLocale() throws Exception {
         doReturn(Locale.CANADA_FRENCH).when(request).getLocale();
-        
+
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
-        assertEquals(Locale.CANADA_FRENCH.toString(), locale);
+        assertEquals(Locale.FRENCH.toString(), locale);
     }
-    
+
     @Test
     public void testANullCookieAndBrowserLocaleResultsWithDefaultLocale() throws Exception {
-        
+
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
         assertEquals("en", locale);
@@ -85,9 +106,9 @@ public class LocaleUtilsTest {
 
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
-        assertEquals("en_US", locale);
+        assertEquals("en", locale);
     }
-    
+
     @Test
     public void testWeCanRetrieveLocaleFromRequest() throws Exception {
         Cookie[] cookies = {
@@ -97,22 +118,9 @@ public class LocaleUtilsTest {
 
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
-        assertEquals("en_US", locale);
+        assertEquals("en", locale);
     }
 
-    @Test
-    public void testWeGetLocaleFromRequestEvenIfCookieIsPresent() throws Exception {
-        Cookie[] cookies = {
-                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
-        };
-        doReturn(cookies).when(request).getCookies();
-        doReturn(Locale.CHINA.toString()).when(request).getParameter(LocaleUtils.LOCALE_PARAM);
-
-        String locale = LocaleUtils.getUserLocaleAsString(request);
-
-        assertEquals(Locale.CHINA.toString(), locale);
-    }
-    
     @Test
     public void testAnInvalidCookieResultsWithDefaultLocale() throws Exception {
         Cookie[] cookies = {
@@ -122,11 +130,11 @@ public class LocaleUtilsTest {
 
         assertEquals("en", locale);
     }
-    
+
     @Test
     public void testAnInvalidLocaleInRequestResultsWithDefaultLocale() throws Exception {
         doReturn("weirdvalue").when(request).getParameter(LocaleUtils.LOCALE_PARAM);
-        
+
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
         assertEquals("en", locale);
