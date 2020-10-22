@@ -58,7 +58,8 @@ public class LocaleUtils {
     /**
      * Return the user locale as set in the the request. If the locale code is invalid, returns the default locale (en).
      * If the locale is not passed in the request try to get it from the BOS_Locale cookie.
-     * If the cookie is not set returns the default locale (en).
+     * If the cookie is not set returns the Browser locale
+     * If the browser locale is not set returns the default locale (en).
      * This method should be used sparingly for performances reasons (gather in one call when possible)
      *
      * @param request
@@ -77,7 +78,7 @@ public class LocaleUtils {
         return locale;
     }
 
-    private static void logUnsupportedLocale(String unsupportedLocale, String usedLocale) {
+    public static void logUnsupportedLocale(String unsupportedLocale, String usedLocale) {
         if (!unsupportedLocale.equals(usedLocale) && LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, "Unsupported locale: \"" + unsupportedLocale + "\", using locale \"" + usedLocale + "\"");
         }
