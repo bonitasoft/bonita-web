@@ -22,27 +22,34 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 public class JSPI18n {
 
-	private LOCALE locale;
-	private JSPUtils jspUtils;
-
-	public JSPI18n(JSPUtils jspUtils) {
-		this.jspUtils = jspUtils;
-		this.locale = loadLocale();
-
-		// initialize I18n instance
-		I18n.getInstance();
-	}
+    private LOCALE locale;
+    private JSPUtils jspUtils;
 	
-	public String _(String message) {
-    	return I18n._(message, locale);
+    public JSPI18n(JSPUtils jspUtils) {
+        this.jspUtils = jspUtils;
+        this.locale = loadLocale();
+
+        // initialize I18n instance
+        I18n.getInstance();
     }
-    
+
+    public String _(String message) {
+        return I18n._(message, locale);
+    }
+
     public LOCALE getLocale() {
-		return locale;
-	}
+        return locale;
+    }
     
     private LOCALE loadLocale() {
     	String localeAsString = LocaleUtils.getUserLocaleAsString(jspUtils.getRequest());
-        return LOCALE.valueOf(localeAsString);
+    	LOCALE locale = null;
+    	try {
+            locale = LOCALE.valueOf(localeAsString);
+    	} catch (IllegalArgumentException e) {
+            //this should not happen as the LOCALE enum is supposed to contain all locales
+            LocaleUtils.logUnsupportedLocale(localeAsString, LocaleUtils.DEFAULT_LOCALE);
+        }
+    	return locale;
     }
 }
