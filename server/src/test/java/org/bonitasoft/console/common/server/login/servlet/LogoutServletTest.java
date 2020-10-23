@@ -98,7 +98,7 @@ public class LogoutServletTest {
     @Test
     public void testGetURLToRedirectToFromRequest() throws Exception {
         doReturn(null).when(authenticationManager).getLoginPageURL(eq(requestAccessor), anyString());
-        doReturn("redirectURLFromRequest").when(request).getParameter(LogoutServlet.LOGIN_URL_PARAM_NAME);
+        doReturn("redirectURLFromRequest").when(request).getParameter(AuthenticationManager.LOGIN_URL_PARAM_NAME);
         
         String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor, 1L);
         

@@ -26,10 +26,10 @@
     final String tenantId = StringEscapeUtils.escapeHtml4(JSP.getParameter("tenant"));
     String redirectUrl = JSP.getParameter("redirectUrl");
 
-    StringBuffer actionUrl = new StringBuffer("loginservice?");
+    StringBuffer actionUrl = new StringBuffer("loginservice?redirect=true");
     StringBuffer styleUrl = new StringBuffer("portal/themeResource?theme=portal");
     if (tenantId != null) {
-        actionUrl.append("tenant=").append(tenantId).append("&");
+        actionUrl.append("&tenant=").append(tenantId).append("&");
 		styleUrl.append("&tenant=").append(tenantId);
     }
 
@@ -43,7 +43,7 @@
     		}
     		redirectUrl += "tenant=" + tenantId;
     	}
-        actionUrl.append("redirectUrl=" + URLEncoder.encode(redirectUrl, "UTF-8"));
+        actionUrl.append("&redirectUrl=" + URLEncoder.encode(redirectUrl, "UTF-8"));
     }
 
     // Error messages

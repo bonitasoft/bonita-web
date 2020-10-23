@@ -34,6 +34,7 @@ import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrlHandler;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.LoginAPI;
@@ -62,11 +63,6 @@ public class LogoutServlet extends HttpServlet {
      * the URL of the login page
      */
     protected static final String LOGIN_PAGE = "login.jsp";
-
-    /**
-     * the URL param for the login page
-     */
-    protected static final String LOGIN_URL_PARAM_NAME = "loginUrl";
 
     /**
      * Logger
@@ -104,13 +100,7 @@ public class LogoutServlet extends HttpServlet {
             engineLogout(apiSession);
             SessionUtil.sessionLogout(session);
 
-            boolean redirectAfterLogin = true;
-            final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-            // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
-            if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
-                redirectAfterLogin = false;
-            }
-            if (redirectAfterLogin) {
+            if (RedirectUrlHandler.shouldRedirectAfterLogout(request)) {
                 final String loginPage = getURLToRedirectTo(requestAccessor, tenantId);
                 response.sendRedirect(loginPage);
             }
@@ -143,7 +133,7 @@ public class LogoutServlet extends HttpServlet {
         if (logoutPage != null) {
             redirectionPage = logoutPage;
         } else {
-            final String loginPageURLFromRequest = request.getParameter(LOGIN_URL_PARAM_NAME);
+            final String loginPageURLFromRequest = request.getParameter(AuthenticationManager.LOGIN_URL_PARAM_NAME);
             if (loginPageURLFromRequest != null) {
                 redirectionPage = sanitizeLoginPageUrl(loginPageURLFromRequest);
             } else {
