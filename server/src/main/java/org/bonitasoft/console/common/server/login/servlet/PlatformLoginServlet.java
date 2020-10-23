@@ -51,6 +51,10 @@ public class PlatformLoginServlet extends HttpServlet {
      * login fail message
      */
     protected static final String LOGIN_FAIL_MESSAGE = "loginFailMessage";
+    
+    /**
+     * engine PlatformSession atribute name in HTTP session
+     */
     protected static final String PLATFORMSESSION = "platformSession";
     /**
      * serialVersionUID
@@ -63,8 +67,10 @@ public class PlatformLoginServlet extends HttpServlet {
     /**
      * the URL of the login page
      */
-    protected String LOGIN_PAGE = "/platformLogin.jsp";
-    protected String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
+    protected static String LOGIN_PAGE = "/platformLogin.jsp";
+    
+    protected static String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
+    
     public static final String ERROR_MESSAGE = "Error while logging in to the platform";
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();
@@ -77,17 +83,14 @@ public class PlatformLoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        boolean redirectAfterLogin = true;
-        final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
-        if (Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
-            redirectAfterLogin = false;
-        }
         PlatformSession platformSession;
         PlatformLoginAPI platformLoginAPI;
         final String username = request.getParameter(USERNAME_PARAM);
         final String password = request.getParameter(PASSWORD_PARAM);
 
+        String redirectStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        boolean redirectAfterLogin = Boolean.parseBoolean(redirectStr);
+        
         try {
             platformLoginAPI = getPlatformLoginAPI();
             platformSession = platformLoginAPI.login(username, password);

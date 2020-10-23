@@ -3,6 +3,7 @@ package org.bonitasoft.console.common.server.login.servlet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.startsWith;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -15,6 +16,8 @@ import static org.mockito.Mockito.verify;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -186,7 +189,6 @@ public class LoginServletTest {
     @Test
     public void should_send_error_401_when_login_with_wrong_credentials_and_no_redirect() throws Exception {
         final LoginServlet servlet = spy(new LoginServlet());
-        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doThrow(new LoginFailedException("")).when(servlet).doLogin(req, resp);
 
         servlet.doPost(req, resp);
@@ -209,7 +211,6 @@ public class LoginServletTest {
         final LoginServlet servlet = spy(new LoginServlet());
         final LoginManager loginManager = mock(LoginManager.class);
         doReturn(null).when(req).getContentType();
-        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(loginManager).when(servlet).getLoginManager();
@@ -226,7 +227,6 @@ public class LoginServletTest {
         final LoginServlet servlet = spy(new LoginServlet());
         final LoginManager loginManager = mock(LoginManager.class);
         doReturn("application/x-www-form-urlencoded; charset=UTF-8").when(req).getContentType();
-        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(loginManager).when(servlet).getLoginManager();
@@ -236,6 +236,77 @@ public class LoginServletTest {
 
         verify(loginManager).login(req, resp);
         verify(resp, never()).setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    }
+    
+    @Test
+    public void should_not_redirect_after_login_when_redirect_parameter_is_set_to_false_in_request() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn("anyurl").when(req).getParameter(AuthenticationManager.REDIRECT_URL);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
+
+        servlet.doPost(req, resp);
+        
+        verify(resp, never()).sendRedirect(anyString());
+    }
+    
+    @Test
+    public void should_not_redirect_after_login_when_user_has_no_profile() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        final ServletContext servletContext = mock(ServletContext.class);
+        RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn("anyurl").when(req).getParameter(AuthenticationManager.REDIRECT_URL);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doReturn(servletContext).when(servlet).getServletContext();
+        doReturn(requestDispatcher).when(servletContext).getRequestDispatcher(anyString());
+        doNothing().when(loginManager).login(req, resp);
+        doReturn(false).when(servlet).hasProfile(apiSession);
+
+        servlet.doPost(req, resp);
+        
+        verify(resp, never()).sendRedirect(anyString());
+        verify(servletContext).getRequestDispatcher(AuthenticationManager.LOGIN_PAGE);
+        verify(requestDispatcher).forward(req, resp);
+    }
+    
+    @Test
+    public void should_redirect_after_login_when_redirect_url_is_set_in_request() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        doReturn("anyurl").when(req).getParameter(AuthenticationManager.REDIRECT_URL);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
+        doReturn(true).when(servlet).hasProfile(apiSession);
+        
+        servlet.doPost(req, resp);
+
+        verify(resp).sendRedirect(startsWith("anyurl"));
+    }
+    
+    @Test
+    public void should_redirect_after_login_when_redirect_parameter_is_set_to_true_in_request() throws Exception {
+        final LoginServlet servlet = spy(new LoginServlet());
+        final LoginManager loginManager = mock(LoginManager.class);
+        doReturn("true").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        doReturn(httpSession).when(req).getSession();
+        doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn(loginManager).when(servlet).getLoginManager();
+        doNothing().when(loginManager).login(req, resp);
+        doReturn(true).when(servlet).hasProfile(apiSession);
+
+        servlet.doPost(req, resp);
+
+        verify(resp).sendRedirect(startsWith(AuthenticationManager.DEFAULT_DIRECT_URL));
     }
 
     @Test(expected = ServletException.class)
@@ -294,7 +365,6 @@ public class LoginServletTest {
     public void testTenantNotInMaintenance() throws Exception {
         final LoginManager loginManager = mock(LoginManager.class);
         final LoginServlet servlet = spy(new LoginServlet());
-        doReturn("false").when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn(loginManager).when(servlet).getLoginManager();

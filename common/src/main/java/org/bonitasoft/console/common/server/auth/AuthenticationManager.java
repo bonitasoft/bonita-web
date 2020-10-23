@@ -40,6 +40,11 @@ public interface AuthenticationManager {
      * Redirection URL parameter name
      */
     static final String REDIRECT_URL = "redirectUrl";
+    
+    /**
+     * the URL param for the login page after logout
+     */
+    public static final String LOGIN_URL_PARAM_NAME = "loginUrl";
 
     /**
      * the URL param to indicate if we should redirect after login/logout (true by default)

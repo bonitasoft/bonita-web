@@ -91,9 +91,8 @@ public class PlatformLogoutServlet extends HttpServlet {
         session.removeAttribute(PlatformLoginServlet.PLATFORMSESSION);
         session.invalidate();
 
-        final String redirectAfterLoginStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
-        // Do not modify this condition: the redirection should happen unless there is redirect=false in the URL
-        if (!Boolean.FALSE.toString().equals(redirectAfterLoginStr)) {
+        String redirectStr = request.getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        if (Boolean.parseBoolean(redirectStr)) {
             response.sendRedirect(PLATFORM_LOGIN_PAGE);
         }
     }

@@ -25,13 +25,16 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
  */
 public class LogoutUrl {
 
-    public static final String LOGOUT_URL = "../logoutservice";
+	public static final String LOGOUT_URL = "../logoutservice";
+
+    private static final String REDIRECT_PARAMETER = "redirect";
 
     private final UrlBuilder builder;
 
     public LogoutUrl(UrlBuilder builder, String locale) {
         this.builder = builder;
         this.builder.setRootUrl(LOGOUT_URL);
+        this.builder.addParameter(REDIRECT_PARAMETER, "true");
         if (!StringUtil.isBlank(locale)) {
             this.builder.addParameter("_l", locale);
         }

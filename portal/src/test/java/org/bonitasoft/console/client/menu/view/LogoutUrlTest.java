@@ -40,6 +40,7 @@ public class LogoutUrlTest {
 
         verify(builder).setRootUrl("../logoutservice");
         verify(builder).addParameter("_l", "fr");
+        verify(builder).addParameter("redirect", "true");
     }
 
     @Test

@@ -69,8 +69,6 @@ public class LoginBox extends RawView {
 
     protected static final String NAVIGATION_MENU = "menu";
 
-    public static final String LOGOUT_URL = "../logoutservice";
-
     protected MenuFolder userNameMenu = new MenuFolder(new JsId("userName"), "initializing");
 
     private final Image userNameAvatar = new EmptyImage(0, 0);
