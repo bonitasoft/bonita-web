@@ -54,6 +54,7 @@ public abstract class AbstractI18n {
         ak,
         am_ET,
         am,
+        ar_001,
         ar_AE,
         ar_BH,
         ar_DZ,
@@ -117,6 +118,9 @@ public abstract class AbstractI18n {
         el_GR,
         el_POLYTON,
         el,
+        en_001,
+        en_150,
+        en_AE,
         en_AS,
         en_AU,
         en_BE,
@@ -147,6 +151,8 @@ public abstract class AbstractI18n {
         en_ZA,
         en_ZW,
         eo,
+        eo_001,
+        es_419,
         es_AR,
         es_BO,
         es_CL,
@@ -226,6 +232,7 @@ public abstract class AbstractI18n {
         hy_AM,
         hy,
         ia,
+        ia_001,
         id_ID,
         id,
         ig_NG,
@@ -317,6 +324,7 @@ public abstract class AbstractI18n {
         nn_NO,
         nn,
         no,
+        no_NO_NY,
         nr,
         nr_ZA,
         nso,
@@ -461,6 +469,9 @@ public abstract class AbstractI18n {
         wo,
         xh,
         xh_ZA,
+        yi,
+        yi_001,
+        yo_BJ,
         yo_NG,
         yo,
         zh_CN,
@@ -527,6 +538,7 @@ public abstract class AbstractI18n {
         locales.put("ak", "Akan");
         locales.put("am_ET", "አማርኛ (ኢትዮጵያ)");
         locales.put("am", "አማርኛ");
+        locales.put("ar_001", "العربية العالم");
         locales.put("ar_AE", "العربية (الامارات العربية المتحدة)");
         locales.put("ar_BH", "العربية (البحرين)");
         locales.put("ar_DZ", "العربية (الجزائر)");
@@ -590,6 +602,9 @@ public abstract class AbstractI18n {
         locales.put("el_GR", "Ελληνικά (Ελλάδα)");
         locales.put("el_POLYTON", "Ἑλληνικά (Πολυτονικό)");
         locales.put("el", "Ελληνικά");
+        locales.put("en_001", "English World");
+        locales.put("en_150", "English Europe");
+        locales.put("en_AE", "English United Arab Emirates");
         locales.put("en_AS", "English (American Samoa)");
         locales.put("en_AU", "Australian English");
         locales.put("en_BE", "English (Belgium)");
@@ -620,6 +635,8 @@ public abstract class AbstractI18n {
         locales.put("en_ZA", "English (South Africa)");
         locales.put("en_ZW", "English (Zimbabwe)");
         locales.put("eo", "esperanto");
+        locales.put("eo_001", "esperanto world"); 
+        locales.put("es_419", "español (Latinoamérica)");
         locales.put("es_AR", "español (Argentina)");
         locales.put("es_BO", "español (Bolivia)");
         locales.put("es_CL", "español (Chile)");
@@ -699,6 +716,7 @@ public abstract class AbstractI18n {
         locales.put("hy_AM", "Հայերէն (Հայաստանի Հանրապետութիւն)");
         locales.put("hy", "Հայերէն");
         locales.put("ia", "interlingua");
+        locales.put("ia_001", "interlingua world");
         locales.put("id_ID", "Bahasa Indonesia (Indonesia)");
         locales.put("id", "Bahasa Indonesia");
         locales.put("ig_NG", "Igbo (Nigeria)");
@@ -790,6 +808,7 @@ public abstract class AbstractI18n {
         locales.put("nn_NO", "nynorsk (Noreg)");
         locales.put("nn", "nynorsk");
         locales.put("no", "norsk bokmål");
+        locales.put("no_NO_NY", "nynorsk (Noreg)");
         locales.put("nr", "isiNdebele");
         locales.put("nr_ZA", "isiNdebele (South Africa)");
         locales.put("nso", "Sesotho sa Leboa");
@@ -934,6 +953,9 @@ public abstract class AbstractI18n {
         locales.put("wo", "Wolof");
         locales.put("xh", "isiXhosa");
         locales.put("xh_ZA", "isiXhosa (South Africa)");
+        locales.put("yi", "ייִדיש");
+        locales.put("yi_001", "ייִדיש וועלט");
+        locales.put("yo_BJ", "Yorùbá (BJ)");
         locales.put("yo_NG", "Yorùbá (NG)");
         locales.put("yo", "Yorùbá");
         locales.put("zh_CN", "中文（简体） (中国)");
