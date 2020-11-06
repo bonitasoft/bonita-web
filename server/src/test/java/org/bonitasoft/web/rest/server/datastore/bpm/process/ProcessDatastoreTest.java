@@ -147,18 +147,4 @@ public class ProcessDatastoreTest extends APITestWithMock {
         verify(customPageService, times((int) nbOfPages)).removePage(engineSession, page);
         verify(compoundPermissionsMapping, times((int) nbOfPages)).removeProperty("page");
     }
-
-    @Test
-    public void should_retrieve_the_autologin_configuration_when_updating_the_process_state() throws Exception {
-
-        final long tenantId = 1L;
-        doReturn(tenantId).when(engineSession).getTenantId();
-        final APIID id = APIID.makeAPIID(2L);
-        final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, ProcessItem.VALUE_ACTIVATION_STATE_ENABLED);
-
-        processDatastore.update(id, attributes);
-
-        verify(platformManagementUtils).retrieveAutologinConfiguration(tenantId);;
-    }
 }
