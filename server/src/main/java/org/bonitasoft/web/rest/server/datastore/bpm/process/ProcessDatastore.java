@@ -165,16 +165,6 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
         } else if (ProcessItem.VALUE_ACTIVATION_STATE_ENABLED.equals(state)) {
             engineClient.enableProcess(processId);
         }
-        refreshAutologinConfiguration();
-    }
-
-    protected void refreshAutologinConfiguration() {
-        try {
-            final PlatformManagementUtils platformManagementUtils = getPlatformManagementUtils();
-            platformManagementUtils.retrieveAutologinConfiguration(getEngineSession().getTenantId());
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
     }
 
     protected PlatformManagementUtils getPlatformManagementUtils() {
