@@ -79,8 +79,8 @@ public class LocaleUtils {
     }
 
     public static void logUnsupportedLocale(String unsupportedLocale, String usedLocale) {
-        if (!unsupportedLocale.equals(usedLocale) && LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, "Unsupported locale: \"" + unsupportedLocale + "\", using locale \"" + usedLocale + "\"");
+        if (!unsupportedLocale.equals(usedLocale) && LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "Unsupported locale: \"" + unsupportedLocale + "\", using locale \"" + usedLocale + "\"");
         }
     }
 

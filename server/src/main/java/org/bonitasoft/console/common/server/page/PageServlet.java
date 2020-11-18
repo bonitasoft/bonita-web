@@ -152,8 +152,8 @@ public class PageServlet extends HttpServlet {
                 }
             } else {
                 // Try to get requested resource from portal theme
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, "Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
+                if (LOGGER.isLoggable(Level.FINE)) {
+                    LOGGER.log(Level.FINE, "Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
                 }
                 String themePath = THEME_PATH_SEPARATOR + "/" + resourcePath;
                 //security check against directory traversal attack
@@ -193,8 +193,8 @@ public class PageServlet extends HttpServlet {
                     return param.getValue();
                 }
             }
-        } else if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, "Unable tor retrieve app parameter. Request referer is null.");
+        } else if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, "Unable tor retrieve app parameter. Request referer is null.");
         }
         return null;
     }
