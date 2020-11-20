@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 64634\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2020-11-18 02:33\n"
+"PO-Revision-Date: 2020-11-20 16:49\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -93,6 +93,9 @@ msgstr "Qualquer um"
 
 msgid "Application XML file"
 msgstr "Arquivo XML do aplicativo"
+
+msgid "Application id not provided. Unable to retrieve the application details."
+msgstr ""
 
 msgid "Application list"
 msgstr "Lista de aplicativos"
@@ -203,7 +206,7 @@ msgid "Cases"
 msgstr "Instâncias"
 
 msgid "Cases with failures"
-msgstr ""
+msgstr "Casos com erros"
 
 msgid "Categories"
 msgstr "Categorias"
@@ -305,7 +308,7 @@ msgid "Description"
 msgstr "Descrição"
 
 msgid "Disable"
-msgstr ""
+msgstr "Desativar"
 
 msgid "Display name"
 msgstr "Nome de exibição"
@@ -335,7 +338,7 @@ msgid "Email"
 msgstr "Email"
 
 msgid "Enable"
-msgstr ""
+msgstr "Ativar"
 
 msgid "Enable all"
 msgstr "Ativar Tudo"
@@ -425,7 +428,7 @@ msgid "Groups"
 msgstr "Grupos"
 
 msgid "Healthy cases"
-msgstr ""
+msgstr "Casos saudáveis"
 
 msgid "Hide Menu"
 msgstr "Esconder Menu"
@@ -479,10 +482,10 @@ msgid "Installed"
 msgstr "Instalado"
 
 msgid "Installed by"
-msgstr ""
+msgstr "Instalado por"
 
 msgid "Installed on"
-msgstr ""
+msgstr "Instalado em"
 
 msgid "Installing"
 msgstr "Instalando"
@@ -569,7 +572,7 @@ msgid "Mobile"
 msgstr "Celular"
 
 msgid "Monitoring status"
-msgstr ""
+msgstr "Status do monitoramento"
 
 msgid "Multi-page menu"
 msgstr "Grupo de menus"
@@ -595,6 +598,9 @@ msgstr "Novos comentários"
 msgid "No application available."
 msgstr "Nenhuma aplicação disponível."
 
+msgid "No application found with id:"
+msgstr ""
+
 msgid "No cases to display"
 msgstr "Nenhum Instância para exibir"
 
@@ -619,6 +625,9 @@ msgstr "Nenhum formulário é necessário. Você pode inserir um comentário e c
 msgid "No mapping"
 msgstr "Nenhum mapeamento"
 
+msgid "No process found with id:"
+msgstr ""
+
 msgid "No profile mapped to this application"
 msgstr "Sem perfil mapeado para esta aplicação"
 
@@ -626,7 +635,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "Nenhuma atualização foi feita nas categorias. Não esqueça de pressionar a tecla \"Enter\" depois de selecionar uma categoria."
 
 msgid "No value"
-msgstr ""
+msgstr "Nenhum valor"
 
 msgid "Normal"
 msgstr "Normal"
@@ -713,6 +722,9 @@ msgid "Process"
 msgstr "Processo"
 
 msgid "Process id"
+msgstr "Id do processo"
+
+msgid "Process id not provided. Unable to retrieve the process details."
 msgstr ""
 
 msgid "Process name"
@@ -971,13 +983,13 @@ msgid "This name is already in use"
 msgstr "Este nome já está em uso"
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
-msgstr ""
+msgstr "Esse processo não está totalmente configurado, mas ainda está habilitado. Os usuários ainda podem iniciar casos ou realizar tarefas, o que pode levar a erros."
 
 msgid "This process is not fully configured."
-msgstr ""
+msgstr "Este processo não está totalmente configurado."
 
 msgid "This process is not fully configured. It cannot be enabled."
-msgstr ""
+msgstr "Esse processo não está totalmente configurado. Não pode ser habilitado."
 
 msgid "This task cannot be executed from here."
 msgstr ""
