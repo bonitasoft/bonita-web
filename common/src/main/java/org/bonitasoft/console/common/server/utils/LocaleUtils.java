@@ -104,7 +104,9 @@ public class LocaleUtils {
             List<String> supportedLocales = new ArrayList<String>(AVAILABLE_LOCALES.keySet());
             for (String supportedLocale: supportedLocales) {
                 if (canLocaleBeReducedToSupportedLocale(locale, supportedLocale)) {
-                    logUnsupportedLocale(locale, supportedLocale);
+                    if (LOGGER.isLoggable(Level.FINEST)) {
+                        LOGGER.log(Level.FINEST, "Using available locale \"" + supportedLocale + "\" instead of \"" + locale + "\"");
+                    }
                     return supportedLocale;
                 }
             }
