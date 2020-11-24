@@ -80,7 +80,7 @@ public class LocaleUtils {
 
     public static void logUnsupportedLocale(String unsupportedLocale, String usedLocale) {
         if (!unsupportedLocale.equals(usedLocale) && LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "Unsupported locale: \"" + unsupportedLocale + "\", using locale \"" + usedLocale + "\"");
+            LOGGER.log(Level.FINE, "Locale \"" + unsupportedLocale + "\" is not part of the locales available. Using locale \"" + usedLocale + "\"");
         }
     }
 
@@ -144,7 +144,7 @@ public class LocaleUtils {
         if (localeAsString == null) {
             localeAsString = request.getParameter(PORTAL_LOCALE_PARAM);
         }
-        if (localeAsString != null) {
+        if (localeAsString != null && localeAsString.length() > 0) {
             try {
                 org.apache.commons.lang3.LocaleUtils.toLocale(localeAsString);
                 localeAsString = standardizeLocale(localeAsString);
@@ -152,8 +152,9 @@ public class LocaleUtils {
                 logUnsupportedLocale(localeAsString, "en");
                 localeAsString = DEFAULT_LOCALE;
             }
+            return localeAsString;
         }
-        return localeAsString;
+        return  null;
     }
 
     public static void addOrReplaceLocaleCookieResponse(final HttpServletResponse response, final String locale) {
