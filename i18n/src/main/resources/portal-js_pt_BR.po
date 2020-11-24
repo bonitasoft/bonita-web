@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 64634\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2020-11-20 16:49\n"
+"PO-Revision-Date: 2020-11-24 02:35\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -95,7 +95,7 @@ msgid "Application XML file"
 msgstr "Arquivo XML do aplicativo"
 
 msgid "Application id not provided. Unable to retrieve the application details."
-msgstr ""
+msgstr "ID da aplicação não fornecida. Não foi possível recuperar os detalhes do aplicativo."
 
 msgid "Application list"
 msgstr "Lista de aplicativos"
@@ -599,7 +599,7 @@ msgid "No application available."
 msgstr "Nenhuma aplicação disponível."
 
 msgid "No application found with id:"
-msgstr ""
+msgstr "Nenhum aplicativo encontrado com o ID:"
 
 msgid "No cases to display"
 msgstr "Nenhum Instância para exibir"
@@ -626,7 +626,7 @@ msgid "No mapping"
 msgstr "Nenhum mapeamento"
 
 msgid "No process found with id:"
-msgstr ""
+msgstr "Nenhum processo encontrado com o ID:"
 
 msgid "No profile mapped to this application"
 msgstr "Sem perfil mapeado para esta aplicação"
@@ -725,7 +725,7 @@ msgid "Process id"
 msgstr "Id do processo"
 
 msgid "Process id not provided. Unable to retrieve the process details."
-msgstr ""
+msgstr "ID do processo não fornecido. Não foi possível recuperar os detalhes do processo."
 
 msgid "Process name"
 msgstr "Nome do Processo"
