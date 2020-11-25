@@ -330,24 +330,17 @@ public class ClientApplicationURL {
     }
 
     protected void initLang(final Action callback) {
-        // Check if the lang is in the URL
-        String newLang = parseToken().getValue(ATTRIBUTE_LANG);
 
-        // Clean
-        if (newLang != null) {
-            // TODO remove lang from URL and replace last history URL
-        } else {
-            // Check if the lang is in the session
-            newLang = Session.getParameter(FORM_LOCALE_COOKIE_NAME);
+        // Check if the lang is in the session
+        String newLang = Session.getParameter(FORM_LOCALE_COOKIE_NAME);
+
+        if (newLang == null) {
+            // Check if the lang is in the cookie
+            newLang = ParametersStorageWithCookie.getParameter(FORM_LOCALE_COOKIE_NAME);
 
             if (newLang == null) {
-                // Check if the lang is in the cookie
-                newLang = ParametersStorageWithCookie.getParameter(FORM_LOCALE_COOKIE_NAME);
-
-                if (newLang == null) {
-                    // else we set the default lang
-                    newLang = DEFAULT_LANG;
-                }
+                // else we set the default lang
+                newLang = DEFAULT_LANG;
             }
         }
 
