@@ -94,7 +94,6 @@ public class HomepageServlet extends ThemeResourceServlet {
     protected void enforceLocaleCookieIfPresentInURLOrBrowser(final HttpServletRequest request, final HttpServletResponse response) {
         final String localeFromCookie = LocaleUtils.getLocaleFromCookies(request);
         final String localeFromURL = LocaleUtils.getLocaleFromRequestURL(request);
-        final String localeFromBrowser = LocaleUtils.getLocaleFromBrowser(request);
 
         if (localeFromCookie != null && !LocaleUtils.isLocaleSupportedInPortal(localeFromCookie)) {
             LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromCookie);
@@ -103,9 +102,12 @@ public class HomepageServlet extends ThemeResourceServlet {
         if (localeFromURL != null && !localeFromURL.equals(localeFromCookie)) {
             //Set the cookie if the locale is in the URL and different from the existing cookie value or the cookie does not exist yet
             LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromURL);
-        } else if (localeFromCookie == null && localeFromBrowser != null) {
+        } else if (localeFromCookie == null) {
             //Set the cookie with the browser locale if there is no cookie
-            LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromBrowser);
+            final String localeFromBrowser = LocaleUtils.getLocaleFromBrowser(request);
+            if (localeFromBrowser != null) {
+                LocaleUtils.addOrReplaceLocaleCookieResponse(response, localeFromBrowser);
+            }
         }
     }
 
