@@ -19,9 +19,6 @@ package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import javax.activation.FileTypeMap;
-import javax.activation.MimetypesFileTypeMap;
-
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -59,8 +56,6 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
 
     final long maxSizeForTenant;
 
-    final FileTypeMap mimetypesFileTypeMap;
-
     protected SearchOptionsCreator searchOptionsCreator;
 
     /**
@@ -71,7 +66,6 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
         constants = constantsValue;
         this.processAPI = processAPI;
         maxSizeForTenant = PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
-        mimetypesFileTypeMap = new MimetypesFileTypeMap();
     }
 
     // GET Method
