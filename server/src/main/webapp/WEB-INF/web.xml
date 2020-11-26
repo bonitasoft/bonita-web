@@ -159,6 +159,16 @@
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/portal/homepage</url-pattern>
         <url-pattern>/login.jsp</url-pattern>
+        <url-pattern>/portal/downloadDocument</url-pattern>
+        <url-pattern>/portal/documentDownload</url-pattern>
+        <url-pattern>/portal/formsDocumentDownload</url-pattern>
+        <url-pattern>/API/documentDownload</url-pattern>
+        <url-pattern>/portal/custom-page/API/documentDownload</url-pattern>
+        <url-pattern>/portal/formsDocumentImage</url-pattern>
+        <url-pattern>/API/formsDocumentImage</url-pattern>
+        <url-pattern>/portal/custom-page/API/formsDocumentImage</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>TokenValidatorFilter</filter-name>
