@@ -16,13 +16,12 @@ package org.bonitasoft.forms.server;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.activation.FileTypeMap;
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,7 +69,6 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
         final String documentId = request.getParameter(DOCUMENT_ID_PARAM);
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         byte[] fileContent = null;
-        String contentType = null;
         if (filePath != null) {
             final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
             try {
@@ -78,8 +76,6 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
                 if (fileName == null) {
                     fileName = file.getName();
                 }
-                final FileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-                contentType = mimetypesFileTypeMap.getContentType(file);
                 fileContent = getFileContent(file, filePath);
             } catch (final UnauthorizedFolderException e) {
                 throw new ServletException(e.getMessage());
@@ -161,6 +157,7 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
             }
             throw new ServletException(errorMessage);
         }
+        final String contentType = URLConnection.guessContentTypeFromName(fileName);
         if (contentType != null) {
             response.setContentType(contentType);
         }
