@@ -35,8 +35,30 @@ public class ConfigurationFileTest {
     @Test
     public void should_getProperty_return_the_right_custom_permissions_with_special_characters() throws Exception {
         final ConfigurationFile tenantProperties = new ConfigurationFile(CUSTOM_PERMISSIONS_MAPPING_FILE, TENANT_ID);
+        
         final String customValue = tenantProperties.getProperty("profile|HR manager");
+        
         Assert.assertEquals("[ManageProfiles]", customValue);
+    }
+    
+    @Test
+    public void should_getProperty_return_the_right_permissions_with_trailing_spaces() throws Exception {
+        final ConfigurationFile tenantProperties = new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID);
+        
+        final String value = tenantProperties.getProperty("caseListingPage");
+        final Set<String> valueAsList = tenantProperties.getPropertyAsSet("caseListingPage");
+        
+        Assert.assertEquals("caseVisualizationWithTrailingSpace", value);
+        assertThat(valueAsList).containsOnly("caseVisualizationWithTrailingSpace");
+    }
+    
+    @Test
+    public void should_getProperty_return_null_with_unknown_permissions() throws Exception {
+        final ConfigurationFile tenantProperties = new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID);
+        
+        final String value = tenantProperties.getProperty("unknownListingPage");
+        
+        Assert.assertNull(value);
     }
 
     @Test
