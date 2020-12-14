@@ -39,7 +39,8 @@ public class ConfigurationFile {
     }
 
     public String getProperty(final String propertyName) {
-        return getPropertiesOfScope().getProperty(propertyName);
+        final String propertyValue = getPropertiesOfScope().getProperty(propertyName);
+        return propertyValue != null ? propertyValue.trim() : null;
     }
 
     private Properties getPropertiesOfScope() {
