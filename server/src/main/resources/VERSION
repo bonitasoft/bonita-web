@@ -1,2 +1,3 @@
 ${project.version}
+${bonita.platformVersion}
 Bonitasoft © ${build.year}

@@ -72,12 +72,23 @@ public class BonitaVersion {
         }
     }
 
-    public String getCopyright() {
+    public String getPlatformVersion() {
         if (metadata == null) {
             metadata = read(file.getStream());
         }
         if (metadata.size() > 1) {
             return metadata.get(1).trim();
+        } else {
+            return "";
+        }
+    }
+
+    public String getCopyright() {
+        if (metadata == null) {
+            metadata = read(file.getStream());
+        }
+        if (metadata.size() > 2) {
+            return metadata.get(2).trim();
         } else {
             return "";
         }

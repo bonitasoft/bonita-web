@@ -13,6 +13,7 @@
 
     <properties>
         <bonita.engine.version>${project.version}</bonita.engine.version>
+        <bonita.platformVersion>2021.1</bonita.platformVersion>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
