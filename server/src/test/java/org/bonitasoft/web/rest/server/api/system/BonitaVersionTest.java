@@ -39,12 +39,13 @@ public class BonitaVersionTest {
 
     @Test
     public void should_read_version_stream_to_return_its_content() throws Exception {
-        final InputStream stream = IOUtils.toInputStream("1.0.0\nBonitasoft © 2015");
+        final InputStream stream = IOUtils.toInputStream("2020.1\n1.0.0\nBonitasoft © 2015");
         given(file.getStream()).willReturn(stream);
 
         final BonitaVersion version = new BonitaVersion(file);
 
-        assertThat(version.getVersion()).isEqualTo("1.0.0");
+        assertThat(version.getVersion()).isEqualTo("2020.1");
+        assertThat(version.getPlatformVersion()).isEqualTo("1.0.0");
         assertThat(version.getCopyright()).isEqualTo("Bonitasoft © 2015");
         IOUtils.closeQuietly(stream);
     }
