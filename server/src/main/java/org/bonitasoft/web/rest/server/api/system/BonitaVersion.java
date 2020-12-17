@@ -72,7 +72,7 @@ public class BonitaVersion {
         }
     }
 
-    public String getPlatformVersion() {
+    public String getBrandingVersion() {
         if (metadata == null) {
             metadata = read(file.getStream());
         }
