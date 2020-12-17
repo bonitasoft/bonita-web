@@ -42,7 +42,7 @@ public class SessionItem extends Item {
 
     public static final String ATTRIBUTE_VERSION = "version";
 
-    public static final String ATTRIBUTE_PLATFORM_VERSION = "platform_version";
+    public static final String ATTRIBUTE_BRANDING_VERSION = "branding_version";
 
     public static final String ATTRIBUTE_CONF = "conf";
 

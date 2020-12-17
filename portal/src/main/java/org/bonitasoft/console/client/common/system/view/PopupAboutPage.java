@@ -39,7 +39,7 @@ public class PopupAboutPage extends Page {
 
     @Override
     public void buildView() {
-        addBody(new Definition(_("Version") + " : ", getPlatformVersion()));
+        addBody(new Definition(_("Version") + " : ", getBrandingVersion()));
         addBody(new Definition(_("Build") + " : ", getVersion()));
         addBody(new Paragraph(getCopyright()));
     }
@@ -52,10 +52,10 @@ public class PopupAboutPage extends Page {
     }
 
     /**
-     * get platform version from session.
+     * get branding version from session.
      */
-    protected String getPlatformVersion() {
-        return Session.getParameter(SessionItem.ATTRIBUTE_PLATFORM_VERSION);
+    protected String getBrandingVersion() {
+        return Session.getParameter(SessionItem.ATTRIBUTE_BRANDING_VERSION);
     }
 
     /**
