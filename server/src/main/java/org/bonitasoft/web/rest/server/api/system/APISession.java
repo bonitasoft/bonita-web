@@ -35,6 +35,8 @@ import org.bonitasoft.web.toolkit.client.data.item.Definitions;
  */
 public class APISession extends ConsoleAPI<SessionItem> {
 
+    final BonitaVersion bonitaVersion = new BonitaVersion(new VersionFile());
+
     @Override
     protected SessionDefinition defineItemDefinition() {
         return (SessionDefinition) Definitions.get(SessionDefinition.TOKEN);
@@ -52,6 +54,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
             session.setAttribute(SessionItem.ATTRIBUTE_IS_GUEST_USER, String.valueOf(isGuestUser(apiSession.getTenantId(), apiSession.getUserName())));
             session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
+            session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION, getBrandingVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_COPYRIGHT, getCopyright());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
@@ -116,10 +119,14 @@ public class APISession extends ConsoleAPI<SessionItem> {
     }
 
     public String getVersion() {
-        return new BonitaVersion(new VersionFile()).getVersion();
+        return bonitaVersion.getVersion();
+    }
+
+    public String getBrandingVersion() {
+        return bonitaVersion.getBrandingVersion();
     }
 
     public String getCopyright() {
-        return new BonitaVersion(new VersionFile()).getCopyright();
+        return bonitaVersion.getCopyright();
     }
 }
