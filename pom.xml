@@ -12,6 +12,7 @@
     </scm>
 
     <properties>
+        <branding.version>2021.1</branding.version>
         <bonita.engine.version>${project.version}</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
