@@ -55,6 +55,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_IS_GUEST_USER, String.valueOf(isGuestUser(apiSession.getTenantId(), apiSession.getUserName())));
             session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION, getBrandingVersion());
+            session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION_WITH_DATE, getBrandingVersionWithDate());
             session.setAttribute(SessionItem.ATTRIBUTE_COPYRIGHT, getCopyright());
             session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
         }
@@ -124,6 +125,10 @@ public class APISession extends ConsoleAPI<SessionItem> {
 
     public String getBrandingVersion() {
         return bonitaVersion.getBrandingVersion();
+    }
+
+    public String getBrandingVersionWithDate() {
+        return bonitaVersion.getBrandingVersionWithDate();
     }
 
     public String getCopyright() {
