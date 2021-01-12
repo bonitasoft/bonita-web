@@ -73,6 +73,12 @@ public class BonitaVersion {
     }
 
     public String getBrandingVersion() {
+        String brandingVersionWithDate = getBrandingVersionWithDate();
+
+        return brandingVersionWithDate.substring(0, brandingVersionWithDate.indexOf("-"));
+    }
+
+    public String getBrandingVersionWithDate() {
         if (metadata == null) {
             metadata = read(file.getStream());
         }
