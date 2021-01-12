@@ -44,6 +44,8 @@ public class SessionItem extends Item {
 
     public static final String ATTRIBUTE_BRANDING_VERSION = "branding_version";
 
+    public static final String ATTRIBUTE_BRANDING_VERSION_WITH_DATE = "branding_version_with_date";
+
     public static final String ATTRIBUTE_CONF = "conf";
 
     public static final String ATTRIBUTE_COPYRIGHT = "copyright";
