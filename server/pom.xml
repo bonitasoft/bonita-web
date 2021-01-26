@@ -564,7 +564,7 @@
                                             <artifactId>narayana-jta</artifactId>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>org.bonitasoft.distrib</groupId>
+                                            <groupId>org.bonitasoft.distrib.tomcat</groupId>
                                             <artifactId>tomcat-jta</artifactId>
                                             <version>${project.version}</version>
                                         </artifactItem>

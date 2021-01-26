@@ -15,19 +15,22 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
@@ -142,6 +145,31 @@ public class AuthenticationFilterTest {
         verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(httpResponse).sendRedirect(anyString());
+    }
+    
+    @Test
+    public void testIfWeGet401ErrorIfAllRulesFailAndRedirectParamIsFalse() throws Exception {
+    	AuthenticationFilter authenticationFilterWithConfig = spy(new AuthenticationFilter());
+        doReturn(authenticationManager).when(authenticationFilterWithConfig).getAuthenticationManager(any(TenantIdAccessor.class));
+        FilterConfig filterConfig = mock(FilterConfig.class);
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
+        List<String> initParams = new ArrayList<String>();
+        initParams.add(AuthenticationFilter.REDIRECT_PARAM);
+        when(filterConfig.getInitParameterNames()).thenReturn(Collections.enumeration(initParams));
+        when(filterConfig.getInitParameter(AuthenticationFilter.REDIRECT_PARAM)).thenReturn(Boolean.FALSE.toString());
+        authenticationFilterWithConfig.init(filterConfig);
+        AuthenticationRule firstFailingRule = spy(createFailingRule());
+        authenticationFilterWithConfig.addRule(firstFailingRule);
+        AuthenticationRule secondFailingRule = spy(createFailingRule());
+        authenticationFilterWithConfig.addRule(secondFailingRule);
+        when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpRequest.getPathInfo()).thenReturn("/portal");
+        authenticationFilterWithConfig.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+
+        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(httpResponse, never()).sendRedirect(anyString());
+        verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
     
     @Test

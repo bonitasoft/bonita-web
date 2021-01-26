@@ -9,7 +9,7 @@ import org.bonitasoft.console.common.server.preferences.properties.PropertiesFac
 
 public class PortalCookies {
 
-    private static final String TENANT_COOKIE_NAME = "bonita.tenant";
+    public static final String TENANT_COOKIE_NAME = "bonita.tenant";
 
     /**
      * set the CSRF security token to the HTTP response as cookie.
