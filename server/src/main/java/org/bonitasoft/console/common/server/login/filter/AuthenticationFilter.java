@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -48,9 +49,13 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
     protected static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)";
 
+    protected static final String REDIRECT_PARAM = "redirectWhenUnauthorized";
+    
     protected static final String MAINTENANCE_JSP = "/maintenance.jsp";
     
     protected static final String USER_NOT_FOUND_JSP = "/usernotfound.jsp";
+    
+    protected boolean redirectWhenUnauthorized;
     
     /**
      * Logger
@@ -69,6 +74,13 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
     protected void addRule(final AuthenticationRule rule) {
         rules.add(rule);
+    }
+    
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    	String redirectInitParam = filterConfig.getInitParameter(REDIRECT_PARAM);
+		redirectWhenUnauthorized = redirectInitParam != null ? Boolean.parseBoolean(redirectInitParam) : true;
+		super.init(filterConfig);
     }
 
     public String getDefaultExcludedPages() {
@@ -93,7 +105,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         try {
             if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
                 cleanHttpSession(requestAccessor.getHttpSession());
-                if (requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
+                if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
                     response.sendRedirect(createLoginPageUrl(requestAccessor, tenantIdAccessor).getLocation());
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -128,7 +140,11 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "redirection to user not found page : " + e.getMessage(), e);
         }
-        redirectTo(requestAccessor, response, e.getTenantId(), USER_NOT_FOUND_JSP);
+        if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
+        	redirectTo(requestAccessor, response, e.getTenantId(), USER_NOT_FOUND_JSP);
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
     
     protected void handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
@@ -136,7 +152,11 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
         }
-        redirectTo(requestAccessor, response, e.getTenantId(), MAINTENANCE_JSP);
+        if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
+        	redirectTo(requestAccessor, response, e.getTenantId(), MAINTENANCE_JSP);
+        } else {
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**

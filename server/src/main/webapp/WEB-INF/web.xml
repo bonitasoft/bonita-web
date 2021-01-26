@@ -75,6 +75,10 @@
             <param-name>excludePattern</param-name>
             <param-value>^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)</param-value>
         </init-param -->
+        <init-param>
+            <param-name>redirectWhenUnauthorized</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <!-- Cache Filter -->
     <filter>
