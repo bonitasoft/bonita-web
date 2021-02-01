@@ -80,14 +80,20 @@ public class LoginManager {
             throws AuthenticationFailedException, ServletException, LoginFailedException {
         AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
-        if(credentialsMap.isEmpty() 
-                && (credentials.getName() == null || credentials.getName().isEmpty())) {
-            LOGGER.log(Level.FINE, "There are no credentials in the request");
-            throw new AuthenticationFailedException("No credentials in request");
+        boolean invalidateAndRecreateHTTPSession = false;
+        if(credentialsMap.isEmpty()) {
+        	// In case of a login with the login service we invalidate the session and create a new one.
+        	// Otherwise, logging in with the credentials in the request (SSO) it is not necessary 
+        	// as this is the first access to the webapp (this is even not compliant with some SSO mechanisms).
+        	invalidateAndRecreateHTTPSession = true;
+            if (credentials.getName() == null || credentials.getName().isEmpty()) {
+	            LOGGER.log(Level.FINE, "There are no credentials in the request");
+	            throw new AuthenticationFailedException("No credentials in request");
+            }
         }
         APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
         portalCookies.addTenantCookieToResponse(response, apiSession.getTenantId());
-        storeCredentials(request, apiSession);
+        storeCredentials(request, apiSession, invalidateAndRecreateHTTPSession);
         portalCookies.addCSRFTokenCookieToResponse(request.asHttpServletRequest(), response, tokenGenerator.createOrLoadToken(request.getHttpSession()));
     }
     
@@ -127,20 +133,23 @@ public class LoginManager {
             return userLoger.doLogin(credentialsMap);
         }
     }
-    protected void storeCredentials(final HttpServletRequestAccessor request, final APISession session) throws LoginFailedException {
+    
+    protected void storeCredentials(final HttpServletRequestAccessor request, final APISession session, boolean recreateHTTPSession) throws LoginFailedException {
         String local = LocaleUtils.getUserLocaleAsString(request.asHttpServletRequest());
         final User user = new User(request.getUsername(), local);
         final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
         final Set<String> permissions = permissionsBuilder.getPermissions();
-        initSession(request, session, user, permissions);
+        initSession(request, session, user, permissions, recreateHTTPSession);
     }
 
-    protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, final Set<String> permissions) {
+    protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, final Set<String> permissions, boolean recreateHTTPSession) {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "HTTP session initialization");
         }
-        //invalidating session allows to fix session fixation security issue
-        request.getHttpSession().invalidate();
+        if (recreateHTTPSession) {
+	        //invalidating session allows to fix session fixation security issue
+	        request.getHttpSession().invalidate();
+        }
         //calling request.getSession() creates a new Session if no any valid exists
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
     }
