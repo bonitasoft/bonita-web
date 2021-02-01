@@ -32,19 +32,15 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.LoginFailedException;
+import org.bonitasoft.console.common.server.login.credentials.UserLogger;
+import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlHandler;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
-import org.bonitasoft.engine.api.LoginAPI;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.SessionNotFoundException;
 
 /**
  * Servlet used to logout from the applications
@@ -143,34 +139,27 @@ public class LogoutServlet extends HttpServlet {
         }
         return redirectionPage;
     }
+
+    protected String createRedirectUrl(final HttpServletRequestAccessor requestAccessor, final long tenantId)
+			throws ServletException {
+		return RedirectUrlHandler.retrieveRedirectUrl(requestAccessor, tenantId, getDefaultTenantId());
+	}
     
     protected String sanitizeLoginPageUrl(final String loginURL) {
         return new RedirectUrlBuilder(new URLProtector().protectRedirectUrl(loginURL)).build().getUrl();
     }
 
-    protected String createRedirectUrl(final HttpServletRequestAccessor request, final long tenantId) throws ServletException {
-        final String redirectUrlFromRequest = request.getRedirectUrl();
-        String redirectUrl = redirectUrlFromRequest != null ? redirectUrlFromRequest : getDefaultRedirectUrl(tenantId);
-        return new RedirectUrlBuilder(redirectUrl).build().getUrl();
-    }
-
-    protected String getDefaultRedirectUrl(final long tenantId) throws ServletException {
-        StringBuilder defaultRedirectUrl = new StringBuilder(AuthenticationManager.DEFAULT_DIRECT_URL);
-        if (tenantId != getDefaultTenantId()) {
-            defaultRedirectUrl.append("?").append(AuthenticationManager.TENANT).append("=").append(tenantId);
+    protected void engineLogout(final APISession apiSession) throws LoginFailedException {
+        if (apiSession != null) {
+        	getUserLogger().doLogout(apiSession);
         }
-        return defaultRedirectUrl.toString();
     }
-
+    
     protected long getDefaultTenantId() {
         return TenantsManagementUtils.getDefaultTenantId();
     }
-
-    protected void engineLogout(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
-            SessionNotFoundException, LogoutException {
-        if (apiSession != null) {
-            final LoginAPI loginAPI = TenantAPIAccessor.getLoginAPI();
-            loginAPI.logout(apiSession);
-        }
+    
+    protected UserLogger getUserLogger() {
+        return UserLoggerFactory.getUserLogger();
     }
 }

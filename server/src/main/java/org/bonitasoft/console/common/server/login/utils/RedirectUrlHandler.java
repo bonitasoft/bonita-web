@@ -16,9 +16,11 @@
  */
 package org.bonitasoft.console.common.server.login.utils;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 
 public class RedirectUrlHandler {
 	
@@ -35,5 +37,23 @@ public class RedirectUrlHandler {
         final String loginPageURL = request.getParameter(AuthenticationManager.LOGIN_URL_PARAM_NAME);
         // If there is a redirect param in the request use it otherwise check if there is a redirect or login URL
         return redirectAfterLogin != null ? Boolean.parseBoolean(redirectAfterLogin) : (redirectURL != null || loginPageURL != null);
+    }
+    
+    public static String retrieveRedirectUrl(final HttpServletRequestAccessor request, final long currentTenantId, final long defaultTenantId, String... parametersToRemove) throws ServletException {
+        final String redirectUrlFromRequest = request.getRedirectUrl();
+        String redirectUrl = redirectUrlFromRequest != null ? redirectUrlFromRequest : getDefaultRedirectUrl(currentTenantId, defaultTenantId);
+        RedirectUrlBuilder redirectUrlBuilder = new RedirectUrlBuilder(redirectUrl);
+        for (String parameterToRemove : parametersToRemove) {
+            redirectUrlBuilder.removeParameter(parameterToRemove);
+        }
+        return redirectUrlBuilder.build().getUrl();
+    }
+
+    protected static String getDefaultRedirectUrl(final long currentTenantId, final long defaultTenantId) throws ServletException {
+        StringBuilder defaultRedirectUrl = new StringBuilder(AuthenticationManager.DEFAULT_DIRECT_URL);
+        if (currentTenantId != defaultTenantId) {
+            defaultRedirectUrl.append("?").append(AuthenticationManager.TENANT).append("=").append(currentTenantId);
+        }
+        return defaultRedirectUrl.toString();
     }
 }

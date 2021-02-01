@@ -41,9 +41,6 @@ public class UserLogger {
         }
     }
 
-    /**
-     * Overridden in SP
-     */
     public APISession doLogin(Map<String, Serializable> credentials) throws LoginFailedException {
         try {
             return getDatastore().login(credentials);
@@ -51,7 +48,18 @@ public class UserLogger {
             throw new LoginFailedException(e.getMessage(), e);
         }
     }
+    
+    public void doLogout(final APISession apiSession) throws LoginFailedException {
+        try {
+            getDatastore().logout(apiSession);
+        } catch (final BonitaException e) {
+            throw new LoginFailedException(e.getMessage(), e);
+        }
+    }
 
+    /**
+     * Overridden in SP
+     */
     private LoginDatastore getDatastore() {
         return new LoginDatastore();
     }

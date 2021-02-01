@@ -2,6 +2,7 @@ package org.bonitasoft.console.common.server.login;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -88,7 +89,7 @@ public class LoginManagerTest {
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
-        verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anySetOf(String.class));
+        verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anySetOf(String.class), anyBoolean());
         verify(session).invalidate();
     }
 

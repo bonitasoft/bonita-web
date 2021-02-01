@@ -56,6 +56,10 @@ public class RedirectUrlBuilder {
             urlBuilder.appendParameter(name, values);
         }
     }
+    
+    public void removeParameter(String name) {
+            urlBuilder.removeParameter(name);
+    }
 
     private boolean isBlackListed(final String key) {
         return blackList.contains(key);

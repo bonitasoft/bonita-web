@@ -57,6 +57,10 @@ public class UrlBuilder {
             parameters.add(new BasicNameValuePair(key, new UrlValue(values).toString()));
         }
     }
+    
+    public void removeParameter(final String key) {
+    	parameters.removeIf(param -> param.getName().equals(key));
+    }
 
     private boolean isParameterAlreadyDefined(List<NameValuePair> params, String key) {
         for (NameValuePair param : params) {
@@ -77,6 +81,10 @@ public class UrlBuilder {
     public String build() {
         if (!parameters.isEmpty()) {
             uriBuilder.setParameters(parameters);
+        } else {
+            //in case the parameters list is an empty list setParameters does not remove the question mark
+            //removeQuery does remove the question mark in the URL
+        	uriBuilder.removeQuery();
         }
         return uriBuilder.toString();
     }
