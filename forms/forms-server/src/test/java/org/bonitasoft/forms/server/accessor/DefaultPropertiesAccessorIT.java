@@ -42,8 +42,4 @@ public class DefaultPropertiesAccessorIT extends FormsTestCase {
         Assert.assertEquals(5, defaultPropertiesAccessor.getMaxWigdetPerPage());
     }
 
-    @Test
-    public void testGetPortalURL() throws Exception {
-        Assert.assertEquals("/bonita", defaultPropertiesAccessor.getPortalURL());
-    }
 }
