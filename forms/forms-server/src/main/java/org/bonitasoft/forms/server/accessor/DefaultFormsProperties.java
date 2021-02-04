@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.forms.server.accessor;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
@@ -26,11 +25,6 @@ import org.bonitasoft.forms.server.provider.impl.FormServiceProviderImpl;
  * @author Anthony Birembaut
  */
 public class DefaultFormsProperties extends ConfigurationFile {
-
-    /**
-     * Default name of the form definition file
-     */
-    protected static final String FORM_DEFAULT_CONFIG_FILE_NAME = "forms-config.properties";
 
     /**
      * Default mandatory field symbol (replaced client side with i18n)
@@ -84,7 +78,7 @@ public class DefaultFormsProperties extends ConfigurationFile {
      *        the tenant Id
      */
     protected DefaultFormsProperties(final long tenantId) {
-        super(FORM_DEFAULT_CONFIG_FILE_NAME, tenantId);
+        super(null, tenantId);
     }
 
     public String getApplicationLayout() {
@@ -112,67 +106,32 @@ public class DefaultFormsProperties extends ConfigurationFile {
     }
 
     public String getDefaultDateFormat() {
-        String dateFormat = getProperty("forms.default.date.format");
-        if (dateFormat == null) {
-            LOGGER.log(Level.INFO, "the default date format is undefined. Using the default value : " + DEFAULT_DATE_FORMAT);
-            dateFormat = DEFAULT_DATE_FORMAT;
-        }
-        return dateFormat;
+        return DEFAULT_DATE_FORMAT;
+    }
+
+    @Override
+    public String getProperty(String propertyName) {
+        return null; // as V6 forms are not used anymore. All this will disappear in the future.
     }
 
     public int getMaxWigdetPerPage() {
-        final String maxWidgetPerPage = getProperty("forms.default.page.maxwidget");
-        try {
-            return Integer.parseInt(maxWidgetPerPage);
-        } catch (final NumberFormatException nfe) {
-            LOGGER.log(Level.INFO, "the max number of widgets per page is undefined or incorrectly defined. Using the default value : "
-                    + DEFAULT_MAX_WIDGET_PER_PAGE);
-            return DEFAULT_MAX_WIDGET_PER_PAGE;
-        }
+        return DEFAULT_MAX_WIDGET_PER_PAGE;
     }
 
     public int getMaxProcessesInCache() {
-        final String maxProcessesInCache = getProperty("forms.cache.processes.size");
-        try {
-            return Integer.parseInt(maxProcessesInCache);
-        } catch (final NumberFormatException nfe) {
-            LOGGER.log(Level.INFO, "the max number of process form definifion in cache is undefined or incorrectly defined. Using the default value : "
-                    + DEFAULT_CACHE_MAX_PROCESS_ENTRIES);
-            return DEFAULT_CACHE_MAX_PROCESS_ENTRIES;
-        }
+        return DEFAULT_CACHE_MAX_PROCESS_ENTRIES;
     }
 
     public int getMaxLanguagesInCache() {
-        final String maxLanguagesInCache = getProperty("forms.cache.languages.size");
-        try {
-            return Integer.parseInt(maxLanguagesInCache);
-        } catch (final NumberFormatException nfe) {
-            LOGGER.log(Level.INFO,
-                    "the max number of languages of process form definifion in cache is undefined or incorrectly defined. Using the default value : "
-                            + DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES);
-            return DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES;
-        }
+        return DEFAULT_CACHE_MAX_LANGUAGE_ENTRIES;
     }
 
     public long getProcessesTimeToLiveInCache() {
-        final String processesTTLInCache = getProperty("forms.cache.process.ttl");
-        try {
-            return Long.parseLong(processesTTLInCache);
-        } catch (final NumberFormatException nfe) {
-            LOGGER.log(Level.INFO, "the processes form definifion time to live in cache is undefined or incorrectly defined. Using the default value : "
-                    + DEFAULT_CACHE_PROCESS_EXPIRATION_TIME);
-            return DEFAULT_CACHE_PROCESS_EXPIRATION_TIME;
-        }
+        return DEFAULT_CACHE_PROCESS_EXPIRATION_TIME;
     }
 
     public long getAttachmentMaxSize() {
-        final String attachmentMaxSize = getProperty("form.attachment.max.size");
-        try {
-            return Long.parseLong(attachmentMaxSize);
-        } catch (final NumberFormatException nfe) {
-            LOGGER.log(Level.INFO, "the attachment max size is undefined or incorrectly defined. Using the default value : " + DEFAULT_ATTACHMENT_MAX_SIZE);
-            return DEFAULT_ATTACHMENT_MAX_SIZE;
-        }
+        return DEFAULT_ATTACHMENT_MAX_SIZE;
     }
 
     public String getPortalURL() {
@@ -183,34 +142,15 @@ public class DefaultFormsProperties extends ConfigurationFile {
      * @return get form service provider implementation
      */
     public String getFormServiceProviderImpl() {
-        final String formServiceProviderImpl = getProperty("form.service.provider");
-        if (formServiceProviderImpl == null) {
-            final String defaultImpl = FormServiceProviderImpl.class.getName();
-            LOGGER.log(Level.INFO, "the form service provider Implementation is undefined or incorrectly defined. Using the default implementation : "
-                    + defaultImpl);
-            return defaultImpl;
-        }
-        return formServiceProviderImpl;
+        return FormServiceProviderImpl.class.getName();
     }
 
     public boolean autoGenerateForms() {
-        final String autoGenerateForms = getProperty("form.generation.auto");
-        if (!Boolean.FALSE.toString().equals(autoGenerateForms) && !Boolean.TRUE.toString().equals(autoGenerateForms)) {
-            LOGGER.log(Level.INFO,
-                    "the property for automatic form generation using the engine when the form is not defined is undefined or incorrectly defined. using the value : false");
-            return false;
-        }
-        return Boolean.valueOf(autoGenerateForms);
+        return true;
     }
 
     public boolean enableFormsActionConditions() {
-        final String actionConditionEnabled = getProperty("form.action.condition.enabled");
-        if (!Boolean.FALSE.toString().equals(actionConditionEnabled) && !Boolean.TRUE.toString().equals(actionConditionEnabled)) {
-            LOGGER.log(Level.INFO,
-                    "the property for enabling action conditions is not defined or incorrectly defined. using the value : true");
-            return true;
-        }
-        return Boolean.valueOf(actionConditionEnabled);
+        return true;
     }
     
     public boolean isCustomFormIdAuthorized() {
@@ -218,6 +158,6 @@ public class DefaultFormsProperties extends ConfigurationFile {
     }
 
     public boolean isManagerAuthorized() {
-        return Boolean.parseBoolean(getProperty("form.authorizations.manager.allowed"));
+        return false;
     }
 }

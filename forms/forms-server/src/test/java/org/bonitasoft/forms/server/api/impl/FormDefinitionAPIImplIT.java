@@ -16,10 +16,6 @@
  */
 package org.bonitasoft.forms.server.api.impl;
 
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -30,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -44,12 +39,8 @@ import org.bonitasoft.forms.client.model.ActionType;
 import org.bonitasoft.forms.client.model.ApplicationConfig;
 import org.bonitasoft.forms.client.model.Expression;
 import org.bonitasoft.forms.client.model.FormAction;
-import org.bonitasoft.forms.client.model.FormPage;
-import org.bonitasoft.forms.client.model.HtmlTemplate;
 import org.bonitasoft.forms.client.model.TransientData;
 import org.bonitasoft.forms.server.FormsTestCase;
-import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtil;
-import org.bonitasoft.forms.server.accessor.impl.util.FormCacheUtilFactory;
 import org.bonitasoft.forms.server.api.FormAPIFactory;
 import org.bonitasoft.forms.server.api.IFormDefinitionAPI;
 import org.bonitasoft.forms.server.builder.IFormBuilder;
@@ -158,27 +149,6 @@ public class FormDefinitionAPIImplIT extends FormsTestCase {
     }
 
     @Test
-    public void testGetFormPage() throws Exception {
-        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        final FormPage result = api.getFormPage(formID, pageID, context);
-        Assert.assertNotNull(result);
-        Assert.assertEquals("processPage1", result.getPageId());
-    }
-
-    @Test
-    public void testGetFormPageFromCache() throws Exception {
-        final FormCacheUtil formCacheUtil = spy(FormCacheUtilFactory.getTenantFormCacheUtil(getSession().getTenantId()));
-        final IFormDefinitionAPI api = new FormDefinitionAPIImpl(getSession().getTenantId(), document, formCacheUtil, deployementDate,
-                Locale.ENGLISH.toString());
-        final FormPage formPageFirstCall = api.getFormPage(formID, pageID, context);
-        final FormPage formPage = api.getFormPage(formID, pageID, context);
-        Assert.assertNotNull(formPage);
-        verify(formCacheUtil, times(2)).getPage(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
-        verify(formCacheUtil, times(1)).storePage(formID, Locale.ENGLISH.toString(), deployementDate, formPageFirstCall);
-        Assert.assertEquals("processPage1", formPage.getPageId());
-    }
-
-    @Test
     public void testGetApplicationConfig() throws Exception {
         final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
         final ApplicationConfig result = api.getApplicationConfig(context, formID, false);
@@ -206,39 +176,11 @@ public class FormDefinitionAPIImplIT extends FormsTestCase {
     }
 
     @Test
-    public void testGetFormConfirmationLayout() throws Exception {
-        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        final HtmlTemplate result = api.getFormConfirmationLayout(formID, context);
-        Assert.assertNotNull(result);
-    }
-
-    @Test
     public void testGetTransientDataContext() throws Exception {
         final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
         final List<TransientData> transientData = api.getFormTransientData(formID, context);
         final Map<String, Serializable> result = api.getTransientDataContext(transientData, Locale.ENGLISH, context);
         Assert.assertNotNull(result);
-    }
-
-    @Test
-    public void testGetApplicationErrorLayout() throws Exception {
-        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        final HtmlTemplate result = api.getApplicationErrorLayout(context);
-        Assert.assertNotNull(result);
-    }
-
-    @Test
-    public void testCacheForms() throws Exception {
-        final IFormDefinitionAPI api = FormAPIFactory.getFormDefinitionAPI(getSession().getTenantId(), document, deployementDate, Locale.ENGLISH.toString());
-        api.cacheForm(formID, context);
-        final FormCacheUtil formCacheUtil = FormCacheUtilFactory.getTenantFormCacheUtil(getSession().getTenantId());
-        final FormPage formPageFromCache = formCacheUtil.getPage(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
-        Assert.assertNotNull(formPageFromCache);
-        Assert.assertEquals(pageID, formPageFromCache.getPageId());
-        final List<FormAction> pageActions = formCacheUtil.getPageActions(formID, Locale.ENGLISH.toString(), deployementDate, pageID);
-        Assert.assertNotNull(pageActions);
-        Assert.assertFalse(pageActions.isEmpty());
-        Assert.assertEquals("variableName", pageActions.get(0).getVariableName());
     }
 
     @Test

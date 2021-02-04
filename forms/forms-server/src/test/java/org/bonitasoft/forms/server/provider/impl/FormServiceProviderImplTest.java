@@ -534,15 +534,6 @@ public class FormServiceProviderImplTest {
         //then
         assertThat(allowed).as("should allow user").isTrue();
     }
-    
-    @Test(expected = ForbiddenFormAccessException.class)
-    public void should_not_allow_process_form_access_with_wrong_instance_id() throws Exception {
-        //given
-        final String formId = "processDefinitionUUID$entry";
-        
-        //when
-        testAllowProcessFormAccess(formId, 3L, 4L, true);
-    }
 
     @Test
     public void should_allow_process_form_access_with_custom_form_id_allowed() throws Exception {
@@ -565,15 +556,6 @@ public class FormServiceProviderImplTest {
         //when
         testAllowProcessFormAccess(formId, 3L, 3L, true);
     }
-    
-    @Test(expected = ForbiddenFormAccessException.class)
-    public void should_not_allow_process_form_access_with_disabled_process() throws Exception {
-        //given
-        final String formId = "processDefinitionUUID$entry";
-        
-        //when
-        testAllowProcessFormAccess(formId, 3L, 3L, false);
-    }
 
     private boolean testAllowProcessFormAccess(final String formId, final long processDefinitionIDFromUUID, final long processDefinitionIdFromURL, final boolean isProcessEnabled) throws Exception {
         final String processDefinitionUUIDStr = "processDefinitionUUID";
@@ -593,48 +575,6 @@ public class FormServiceProviderImplTest {
         doNothing().when(formServiceProviderImpl).canUserInstantiateProcess(apiSession, user, processDefinitionIdFromURL, userId, context);
 
         return formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
-    }
-
-    @Test
-    public void should_not_allow_process_form_access() throws Exception {
-        //given
-        final String formId = "processDefinitionUUID$entry";
-        final String processDefinitionUUIDStr = "processDefinitionUUID";
-        final String permissions = FormServiceProviderUtil.PROCESS_UUID + "#" + processDefinitionUUIDStr;
-        final String productVersion = "";
-        final String migrationProductVersion = "";
-        final boolean isFormPermissions = true;
-        final long userId = 2L;
-        final long processDefinitionId = 3L;
-
-        urlContext.put(FormServiceProviderUtil.PROCESS_UUID, processDefinitionId);
-        urlContext.put(FormServiceProviderUtil.USER_ID, userId);
-        context.put(FormServiceProviderUtil.API_SESSION, apiSession);
-        context.put(FormServiceProviderUtil.USER, user);
-
-        doReturn(processDefinitionId).when(workflowAPI).getProcessDefinitionIDFromUUID(apiSession, processDefinitionUUIDStr);
-        doReturn(true).when(workflowAPI).isProcessEnabled(apiSession, processDefinitionId);
-
-        addGivenAndExpectedException(InvalidSessionException.class, SessionTimeoutException.class);
-        addGivenAndExpectedException(BPMEngineException.class, FormNotFoundException.class);
-        addGivenAndExpectedException(ForbiddenFormAccessException.class, ForbiddenFormAccessException.class);
-
-        for (int i = 0; i < givenExceptions.size(); i++) {
-            //given
-            doThrow(givenExceptions.get(i)).when(formServiceProviderImpl).canUserInstantiateProcess(apiSession, user, processDefinitionId, userId, context);
-
-            //when
-            try {
-                formServiceProviderImpl.isAllowed(formId, permissions, productVersion, migrationProductVersion, context, isFormPermissions);
-
-            } catch (final Exception e) {
-                assertThat(e.getClass()).as("bad exception with given exception " + givenExceptions.get(i).getClass()).isEqualTo(
-                        expectedExceptions.get(i));
-                if (e.getClass() != expectedExceptions.get(i)) {
-                    fail("bad exception");
-                }
-            }
-        }
     }
 
     @Test
