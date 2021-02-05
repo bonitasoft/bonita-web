@@ -51,7 +51,4 @@ public class PropertiesFactory {
         return new PlatformTenantConfigProperties();
     }
 
-    public static PlatformPreferencesProperties getPlatformPreferencesProperties() {
-        return new PlatformPreferencesProperties();
-    }
 }
