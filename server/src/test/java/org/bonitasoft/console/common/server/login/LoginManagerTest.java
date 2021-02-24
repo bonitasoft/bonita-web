@@ -118,8 +118,26 @@ public class LoginManagerTest {
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
         verify(userLogger).doLogin(credentialsMap);
+        verify(loginManager).storeCredentials(requestAccessor, apiSession, true);
     }
 
+    @Test
+    public void login_should_perform_engine_login_with_credentials_map_without_invalidating_session() throws Exception {
+        final Credentials credentials = new StandardCredentials("name", "password", 1L);
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Map<String, Serializable> credentialsMap = new HashMap<>();
+        credentialsMap.put("principal", "userId");
+        credentialsMap.put(AuthenticationManager.INVALIDATE_SESSION, Boolean.FALSE);
+        doReturn(credentialsMap).when(authenticationManager).authenticate(requestAccessor, credentials);
+        doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
+        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
+
+        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
+
+        verify(userLogger).doLogin(credentialsMap);
+        verify(loginManager).storeCredentials(requestAccessor, apiSession, false);
+    }
+    
     @Test(expected = LoginFailedException.class)
     public void login_should_throw_exception_when_login_fails() throws Exception {
         final Credentials credentials = new StandardCredentials("name", "password", 1L);

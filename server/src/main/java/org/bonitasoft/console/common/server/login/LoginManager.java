@@ -80,12 +80,12 @@ public class LoginManager {
             throws AuthenticationFailedException, ServletException, LoginFailedException {
         AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
-        boolean invalidateAndRecreateHTTPSession = false;
+        // In case of a login with the login service we invalidate the session and create a new one.
+        // Otherwise, logging in with the credentials in the request (SSO) it is not mandatory it depends on the AuthenticationManager implementation used
+        // some SSO mechanisms already handle it (SAML, OIDC).
+        Boolean invalidateAndRecreateHTTPSessionIfSet = (Boolean) credentialsMap.remove(AuthenticationManager.INVALIDATE_SESSION);
+        boolean invalidateAndRecreateHTTPSession = invalidateAndRecreateHTTPSessionIfSet != null ? invalidateAndRecreateHTTPSessionIfSet.booleanValue() : true;
         if(credentialsMap.isEmpty()) {
-        	// In case of a login with the login service we invalidate the session and create a new one.
-        	// Otherwise, logging in with the credentials in the request (SSO) it is not necessary 
-        	// as this is the first access to the webapp (this is even not compliant with some SSO mechanisms).
-        	invalidateAndRecreateHTTPSession = true;
             if (credentials.getName() == null || credentials.getName().isEmpty()) {
 	            LOGGER.log(Level.FINE, "There are no credentials in the request");
 	            throw new AuthenticationFailedException("No credentials in request");

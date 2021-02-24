@@ -60,6 +60,11 @@ public interface AuthenticationManager {
      * The default redirect URL.
      */
     static final String DEFAULT_DIRECT_URL = "portal/homepage";
+    
+    /**
+     * indicate wheather the HTTP session should be invalidated and re created upon login
+     */
+    public static final String INVALIDATE_SESSION = "authentication.session.invalidate";
 
     /**
      * Get Login Page URL
@@ -81,7 +86,7 @@ public interface AuthenticationManager {
      *        HTTP request accessor object
      * @param credentials
      *        credentials extracted from the request or from the auto-login config
-     * @return a map of credentials which if not null or empty will be used to login on the engine. Otherwise, the username and password contained in the
+     * @return a map of credentials which if not empty (and containing more than just the key "authentication.session.invalidate") will be used to login on the engine. Otherwise, the username and password contained in the
      *         credentials will be used
      * @throws AuthenticationFailedException
      * @throws ServletException
