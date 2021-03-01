@@ -24,8 +24,8 @@ public class URLExcludePattern {
         } else {
             webappName = "";
         }
-        excludePattern = compilePattern(StringUtils.isBlank(filterConfig.getInitParameter("excludePattern"))
-                ? defaultExcludePattern.replace("bonita", webappName) : filterConfig.getInitParameter("excludePattern"));
+        final String configExcludePattern = filterConfig.getInitParameter("excludePattern");
+        excludePattern = compilePattern(StringUtils.defaultString(configExcludePattern, defaultExcludePattern.replace("bonita", webappName)));
     }
 
     protected Pattern compilePattern(final String stringPattern) {

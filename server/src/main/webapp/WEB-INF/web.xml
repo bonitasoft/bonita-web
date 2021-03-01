@@ -24,11 +24,39 @@
         <filter-name>NoCacheFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.filter.NoCacheFilter</filter-class>
     </filter>
-    <!-- Security Filter -->
+    
+    <!-- Security Filters -->
     <filter>
-        <filter-name>SecurityFilter</filter-name>
-        <filter-class>org.bonitasoft.console.common.server.login.filter.SecurityFilter</filter-class>
+        <filter-name>FrameSecurityFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.FrameSecurityFilter</filter-class>
+        <init-param>
+            <param-name>X-Frame-Options</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+        <!--
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?(portal/resource/.+/content/$)|(portal/custom-page/.+/$)</param-value>
+        </init-param -->
     </filter>
+    <filter>
+        <filter-name>ContentTypeSecurityFilter</filter-name>
+        <filter-class>org.bonitasoft.console.common.server.login.filter.ContentTypeSecurityFilter</filter-class>
+        <init-param>
+            <param-name>X-Content-Type-Options</param-name>
+            <param-value>nosniff</param-value>
+        </init-param>
+        <!--
+            The there is no default excludePattern for this filter, but you can uncomment it and add one if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value></param-value>
+        </init-param -->
+    </filter>
+    
     <!--Rest filter -->
     <filter>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
@@ -160,17 +188,14 @@
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
-        <url-pattern>/portal/homepage</url-pattern>
-        <url-pattern>/login.jsp</url-pattern>
-        <url-pattern>/portal/downloadDocument</url-pattern>
-        <url-pattern>/portal/documentDownload</url-pattern>
-        <url-pattern>/portal/formsDocumentDownload</url-pattern>
-        <url-pattern>/API/documentDownload</url-pattern>
-        <url-pattern>/portal/custom-page/API/documentDownload</url-pattern>
-        <url-pattern>/portal/formsDocumentImage</url-pattern>
-        <url-pattern>/API/formsDocumentImage</url-pattern>
-        <url-pattern>/portal/custom-page/API/formsDocumentImage</url-pattern>
+        <filter-name>FrameSecurityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ContentTypeSecurityFilter</filter-name>
+        <url-pattern>/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
