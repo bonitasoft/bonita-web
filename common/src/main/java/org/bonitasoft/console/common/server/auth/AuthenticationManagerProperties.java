@@ -75,14 +75,8 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
     protected static final String CAS_BONITA_SERVICE_URL = "Cas.bonitaServiceURL";
 
     /**
-     * Logger
-     */
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationManagerProperties.class.getName());
-
-    /**
      * properties
      */
-
     public AuthenticationManagerProperties(final long tenantId) {
         super(AUTHENTICATION_CONFIG_FILE_NAME, tenantId >= 0 ? tenantId : TenantsManagementUtils.getDefaultTenantId());
     }
