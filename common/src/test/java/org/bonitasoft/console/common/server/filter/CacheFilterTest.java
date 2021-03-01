@@ -5,9 +5,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
@@ -63,7 +67,6 @@ public class CacheFilterTest {
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
-        cacheFilter.init(filterConfig);
     }
 
     @Test
@@ -71,7 +74,10 @@ public class CacheFilterTest {
         final String url = "test";
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer(url));
         doReturn(true).when(cacheFilter).matchExcludePatterns(url);
+        
+        cacheFilter.init(filterConfig);
         cacheFilter.doFilter(httpRequest, httpResponse, chain);
+        
         verify(cacheFilter, times(0)).proceedWithFiltering(httpRequest, httpResponse, chain);
         verify(cacheFilter, times(1)).excludePatternFiltering(httpRequest, httpResponse, chain);
         verify(chain, times(1)).doFilter(httpRequest, httpResponse);
@@ -79,6 +85,8 @@ public class CacheFilterTest {
 
     @Test
     public void testMatchExcludePatterns() throws Exception {
+    	
+        cacheFilter.init(filterConfig);
 
         matchExcludePattern("/apps/home/", true);
         matchExcludePattern("/apps/home/css/style.css", false);
@@ -91,16 +99,25 @@ public class CacheFilterTest {
 
     @Test
     public void testCompileNullPattern() throws Exception {
+    	
+        cacheFilter.init(filterConfig);
+    	
         assertThat(cacheFilter.compilePattern(null)).isNull();
     }
 
     @Test
     public void testCompileWrongPattern() throws Exception {
+    	
+        cacheFilter.init(filterConfig);
+    	
         assertThat(cacheFilter.compilePattern("((((")).isNull();
     }
 
     @Test
     public void testCompileSimplePattern() throws Exception {
+    	
+        cacheFilter.init(filterConfig);
+    	
         final String patternToCompile = "test";
         assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
 
@@ -113,6 +130,9 @@ public class CacheFilterTest {
 
     @Test
     public void testCompileExcludePattern() throws Exception {
+    	
+        cacheFilter.init(filterConfig);
+    	
         final String patternToCompile = "^/(bonita/)?((mobile/)?login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(/mobile/js/)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/themeResource$)|(portal/scripts)|(/bonita/?$)|(logoutservice)";
         assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
 
@@ -122,8 +142,29 @@ public class CacheFilterTest {
             }
         });
     }
+    
+    @Test
+    public void empty_excludePattern_init_param_should_override_default_excludePattern() throws Exception {
+        final String url = "test";
+        List<String> initParamsList = new ArrayList<String>();
+        initParamsList.add("excludePattern");
+        Enumeration<String> initParamsEnum = Collections.enumeration(initParamsList);
+        when(filterConfig.getInitParameterNames()).thenReturn(initParamsEnum);
+        when(filterConfig.getInitParameter("excludePattern")).thenReturn("");
+        when(httpRequest.getRequestURL()).thenReturn(new StringBuffer(url));
+        when(httpRequest.getRequestURI()).thenReturn(url);
+        doNothing().when(cacheFilter).proceedWithFiltering(httpRequest, httpResponse, chain);
+        
+        cacheFilter.init(filterConfig);
+        cacheFilter.doFilter(httpRequest, httpResponse, chain);
+        
+        assertThat(cacheFilter.getExcludePattern()).isNull();
+        verify(cacheFilter, times(1)).proceedWithFiltering(httpRequest, httpResponse, chain);
+        verify(cacheFilter, times(0)).excludePatternFiltering(httpRequest, httpResponse, chain);
+    }
 
     private void matchExcludePattern(final String urlToMatch, final Boolean mustMatch) {
+    	
         doReturn(Pattern.compile(CacheFilter.CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN)).when(cacheFilter).getExcludePattern();
         if (cacheFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
             Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);

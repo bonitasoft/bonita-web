@@ -18,7 +18,6 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -27,35 +26,41 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 
 /**
  * @author Paul AMAR
+ * @author Anthony Birembaut
  *
  */
-public class SecurityFilter implements Filter {
+public class ContentTypeSecurityFilter extends ExcludingPatternFilter {
 
-   
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+	protected static final String X_CONTENT_TYPE_HEADER = "X-Content-Type-Options";
 
-    @Override
-    public void destroy() {}
-    
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // casting to HTTPServlet(Request|Response)
-        final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse res = (HttpServletResponse) response;
+	protected String headerValue;
 
-        // Mitigate/Prevent XSS
-        res.addHeader("X-XSS-Protection", "1; mode=block");
-        
-        // X-frame-options (ClickJacking)
-        res.addHeader("X-Frame-Options", "SAMEORIGIN");
-        
-        // X-Content-Type-Options (Drive-by download attacks)
-        res.addHeader("X-Content-Type-Options", "nosniff");    
-        
-        chain.doFilter(req, res);
-    }
+	@Override
+	public String getDefaultExcludedPages() {
+		return "";
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		headerValue = StringUtils.defaultIfEmpty(filterConfig.getInitParameter(X_CONTENT_TYPE_HEADER), "nosniff");
+		super.init(filterConfig);
+	}
+
+	@Override
+	public void proceedWithFiltering(final ServletRequest request, final ServletResponse response,
+			final FilterChain chain) throws ServletException, IOException {
+		// casting to HTTPServlet(Request|Response)
+		final HttpServletRequest req = (HttpServletRequest) request;
+		final HttpServletResponse res = (HttpServletResponse) response;
+
+		// X-Content-Type-Options (Drive-by download attacks)
+		res.addHeader(X_CONTENT_TYPE_HEADER, headerValue);
+
+		chain.doFilter(req, res);
+	}
 }

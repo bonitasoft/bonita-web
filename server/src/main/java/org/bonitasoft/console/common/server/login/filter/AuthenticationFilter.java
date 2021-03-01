@@ -83,6 +83,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 		super.init(filterConfig);
     }
 
+    @Override
     public String getDefaultExcludedPages() {
         return AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN;
     }
