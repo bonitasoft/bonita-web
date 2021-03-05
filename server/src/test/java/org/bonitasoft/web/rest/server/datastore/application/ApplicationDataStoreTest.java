@@ -2,8 +2,7 @@ package org.bonitasoft.web.rest.server.datastore.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -237,6 +236,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final HashMap<String,String> filters = new HashMap<String,String>();
         filters.put(ApplicationItem.ATTRIBUTE_CREATED_BY, "1");
         filters.put(ApplicationItem.ATTRIBUTE_VERSION, "1.0");
+        filters.put(ApplicationItem.FILTER_USER_ID, "4");
         final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desccription");
         application.setId(1);
         application.setCreationDate(new Date());
@@ -260,9 +260,10 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         assertThat(searchOption.getFilters().get(0).getValue()).isEqualTo("1");
         assertThat(searchOption.getFilters().get(1).getField()).isEqualTo(ApplicationItem.ATTRIBUTE_VERSION);
         assertThat(searchOption.getFilters().get(1).getValue()).isEqualTo("1.0");
+        assertThat(searchOption.getFilters().get(2).getField()).isEqualTo(ApplicationItem.FILTER_USER_ID);
+        assertThat(searchOption.getFilters().get(2).getValue()).isEqualTo("4");
         assertThat(searchOption.getSearchTerm()).isEqualTo(search);
         assertThat(searchOption.getMaxResults()).isEqualTo(1);
-        assertThat(searchOption.getStartIndex()).isEqualTo(0);
         assertThat(searchOption.getStartIndex()).isEqualTo(0);
         assertThat(searchOption.getSorts().get(0).getField()).isEqualTo(ApplicationItem.ATTRIBUTE_TOKEN);
         assertThat(searchOption.getSorts().get(0).getOrder()).isEqualTo(Order.DESC);
