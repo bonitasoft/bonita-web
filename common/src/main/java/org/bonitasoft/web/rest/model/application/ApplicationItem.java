@@ -54,6 +54,8 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_THEME_ID = "themeId";
 
+    public static final String FILTER_USER_ID = "userId";
+
     public ApplicationItem() {
         super();
     }
@@ -187,6 +189,14 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public void setThemeId(final Long themeId) {
         setAttribute(ATTRIBUTE_THEME_ID, themeId);
+    }
+
+    public APIID getUserId() {
+        return getAttributeValueAsAPIID(FILTER_USER_ID);
+    }
+
+    public void setUserId(final String userId) {
+        setAttribute(FILTER_USER_ID, userId);
     }
 
     public PageItem getLayout() {

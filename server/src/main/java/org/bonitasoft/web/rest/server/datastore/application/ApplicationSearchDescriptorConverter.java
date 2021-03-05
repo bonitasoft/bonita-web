@@ -49,6 +49,7 @@ public class ApplicationSearchDescriptorConverter implements AttributeConverter 
         mapping.put(ApplicationItem.ATTRIBUTE_PROFILE_ID, ApplicationSearchDescriptor.PROFILE_ID);
         mapping.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, ApplicationSearchDescriptor.LAYOUT_ID);
         mapping.put(ApplicationItem.ATTRIBUTE_THEME_ID, ApplicationSearchDescriptor.THEME_ID);
+        mapping.put(ApplicationItem.FILTER_USER_ID, ApplicationSearchDescriptor.USER_ID);
 
         return mapping;
     }
