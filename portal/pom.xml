@@ -140,6 +140,7 @@
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                     <port>8080</port>
                     <runTarget>bonita/login.jsp</runTarget>
+                    <jvm>${jvm_gwt}</jvm>
 				</configuration>
                 <executions>
                     <execution>
