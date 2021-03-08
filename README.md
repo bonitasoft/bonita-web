@@ -23,16 +23,18 @@ I you want to contribute, ask questions about the project, report bug, see the [
 
 At root level (same location as the parent pom.xml) :
     
-    ./mvnw clean install
+    ./mvnw clean install -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
 
-For develoment purpose use the *dev* profile (don't compile every gwt permutations)
+This `jvm_gwt` parameter is mandatory for GWT compilation.
+
+For development purpose use the *dev* profile (don't compile every gwt permutations)
     
-    ./mvnw clean install -Pdev
+    ./mvnw clean install -Pdev -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
 
 ## Execution in hosted mode for dev/debug ##
 In server module, to build and launch a tomcat hosting the app :
 
-    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev
+    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
 
 H2 database is created (if it does not already exist) in ${user.home}/bonita/community/database
 When you checkout a different branch you need to clean this directory because the database schema may have changed.
@@ -72,7 +74,7 @@ Contains the server side code of portal
 Module containing 6.x forms implementation
 
 #### forms-design
-Contains customizable theme shared between form's web application & studio.
+Contains a customizable theme shared between form's web application & studio.
 
 #### forms-model
 Contains the source code of the model definition.
