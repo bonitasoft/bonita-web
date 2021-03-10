@@ -24,39 +24,13 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-
-		<!-- Compile dependency -->
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-view</artifactId>
-			<version>${project.version}</version>
+        <dependency>
+            <groupId>org.bonitasoft.console</groupId>
+            <artifactId>console-common</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
-		</dependency>
-
-		<!-- GWT dependency (sources) -->
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-view</artifactId>
-			<classifier>sources</classifier>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-rpc</artifactId>
-			<classifier>sources</classifier>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.bonitasoft.forms</groupId>
-			<artifactId>forms-model</artifactId>
-			<version>${project.version}</version>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- GWT deps -->
+        </dependency>
+        <!-- GWT deps -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -183,67 +157,7 @@
                     <debug>true</debug>
                 </configuration>
             </plugin>
-
-            <!--Unpack & copy forms design where they belong-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack-forms-design</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.bonitasoft.forms</groupId>
-                                    <artifactId>forms-design</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/forms-design</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-html-resources</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_page_default.html"
-                                        file="${project.build.directory}/forms-design/html/page.html" />
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_process_default.html"
-                                        file="${project.build.directory}/forms-design/html/process.html" />
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_error.html"
-                                        file="${project.build.directory}/forms-design/html/error.html" />
-                                <copy
-                                        tofile="${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes/html/bonita_default_confirm.html"
-                                        file="${project.build.directory}/forms-design/html/confirm.html" />
-
-                                <copy todir="${project.build.directory}/${project.artifactId}-${project.version}/portal">
-                                    <fileset dir="${project.build.directory}/forms-design/application/application" includes="**/*" />
-                                </copy>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-		</plugins>
+        </plugins>
 	</build>
     <profiles>
         <profile>

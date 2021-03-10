@@ -35,7 +35,6 @@
         <module>looknfeel</module>
         <module>test-toolkit</module>
         <module>common</module>
-        <module>forms</module>
         <module>server</module>
         <module>i18n</module>
         <module>portal</module>

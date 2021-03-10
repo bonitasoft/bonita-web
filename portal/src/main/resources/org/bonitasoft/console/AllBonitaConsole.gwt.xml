@@ -11,9 +11,6 @@
 	<!-- Common -->
 	<inherits name='org.bonitasoft.web.common' />
 
-	<!-- Other Bonita resources -->
-	<inherits name='org.bonitasoft.forms.FormsView' />
-
 	<!-- GWT xml -->
 	<inherits name='com.google.gwt.xml.XML' />
 

@@ -22,6 +22,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
+import org.bonitasoft.console.common.server.themes.ThemeExtractor;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -33,7 +34,6 @@ import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
 import org.bonitasoft.engine.theme.ThemeType;
-import org.bonitasoft.forms.server.ThemeExtractor;
 
 /**
  * @author Zhiheng Yang, Anthony Birembaut

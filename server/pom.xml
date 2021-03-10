@@ -27,13 +27,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!--forms-->
-        <dependency>
-            <groupId>org.bonitasoft.forms</groupId>
-            <artifactId>forms-server</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!--Engine-->
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>

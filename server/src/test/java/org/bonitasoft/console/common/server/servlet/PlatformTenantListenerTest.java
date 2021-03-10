@@ -4,9 +4,9 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 
+import org.bonitasoft.console.common.server.themes.ThemeExtractor;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.theme.ThemeType;
-import org.bonitasoft.forms.server.ThemeExtractor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

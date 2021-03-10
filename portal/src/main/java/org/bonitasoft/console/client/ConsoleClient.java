@@ -15,9 +15,6 @@
 package org.bonitasoft.console.client;
 
 import org.bonitasoft.console.client.menu.view.LoginBox;
-import org.bonitasoft.forms.client.FormsApplicationLoader;
-import org.bonitasoft.forms.client.view.common.BonitaUrlContext;
-import org.bonitasoft.forms.client.view.common.URLUtilsFactory;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.toolkit.client.ApplicationFactoryClient;
 import org.bonitasoft.web.toolkit.client.ClientApplication;
@@ -33,14 +30,8 @@ public class ConsoleClient extends ClientApplication {
     @Override
     protected void onLoad() {
         registerJSNIMethods();
-    
-        final BonitaUrlContext bonitaUrlContext = BonitaUrlContext.get();
-        if (bonitaUrlContext.isFormApplicationMode()) {
-            new FormsApplicationLoader(URLUtilsFactory.getInstance(), bonitaUrlContext).load();
-        } else {
-            onConsoleLoad();
-        }
 
+        onConsoleLoad();
 
     }
 
@@ -52,7 +43,7 @@ public class ConsoleClient extends ClientApplication {
         if ("true".equals(Session.getParameter("is_technical_user"))) {
             refreshView();
         }
-    
+
         // The login box will initialize the view if the login works well
         ViewController.showView(getLoginBoxView(), "login");
     }
