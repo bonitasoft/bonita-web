@@ -47,7 +47,7 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
  */
 public class AuthenticationFilter extends ExcludingPatternFilter {
 
-    protected static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(portal/formsService)|(apps/.+/API/)|(portal/resource/.+/API/)";
+    protected static final String AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(apps/.+/API/)|(portal/resource/.+/API/)";
 
     protected static final String REDIRECT_PARAM = "redirectWhenUnauthorized";
     

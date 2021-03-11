@@ -277,7 +277,6 @@ public class AuthenticationFilterTest {
 
         matchExcludePattern("http://localhost:8080/portal/themeResource", true);
         matchExcludePattern("http://localhost:8080/portal/themeResource/poutpout", false);
-        matchExcludePattern("http://localhost:8080/portal/formsService", true);
         matchExcludePattern("/bonita/portal/resource/page/API/system/session/unusedId", true);
         matchExcludePattern("/bonita/apps/app/API/system/session/unusedId", true);
         matchExcludePattern("/bonita/portal/resource/page/content/", false);
