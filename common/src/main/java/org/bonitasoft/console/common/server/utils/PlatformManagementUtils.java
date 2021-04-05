@@ -36,8 +36,6 @@ import org.bonitasoft.engine.util.APITypeManager;
  */
 public class PlatformManagementUtils {
 
-    public static final String AUTOLOGIN_V6_JSON = "autologin-v6.json";
-
     private final ConfigurationFilesManager configurationFilesManager = ConfigurationFilesManager.getInstance();
 
     //package local for testing purpose
@@ -102,11 +100,6 @@ public class PlatformManagementUtils {
         configurationFilesManager.setPlatformConfigurations(clientPlatformConfigurations);
     }
 
-    private void retrieveTenantAutologinConfiguration(final PlatformAPI platformAPI, final long tenantId) throws IOException {
-        final byte[] tenantAutologinConfigurationContent = platformAPI.getClientTenantConfiguration(tenantId, AUTOLOGIN_V6_JSON);
-        configurationFilesManager.setTenantConfiguration(AUTOLOGIN_V6_JSON, tenantAutologinConfigurationContent, tenantId);
-    }
-
     public void initializePlatformConfiguration() throws BonitaException, IOException {
         final PlatformSession platformSession = platformLogin();
         final PlatformAPI platformAPI = getPlatformAPI(platformSession);
@@ -129,10 +122,4 @@ public class PlatformManagementUtils {
         platformLogout(platformSession);
     }
 
-    public void retrieveAutologinConfiguration(final long tenantId) throws IOException, BonitaException {
-        final PlatformSession platformSession = platformLogin();
-        final PlatformAPI platformAPI = getPlatformAPI(platformSession);
-        retrieveTenantAutologinConfiguration(platformAPI, tenantId);
-        platformLogout(platformSession);
-    }
 }

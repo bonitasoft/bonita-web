@@ -47,11 +47,6 @@ public class User implements Serializable {
     private long tenantId;
 
     /**
-     * Indicates whether this user correspond to an auto login account
-     */
-    private boolean isAutoLogin;
-
-    /**
      * Indicates whether this user correspond to an anonymous login
      */
     private boolean isAnonymous;
@@ -70,15 +65,6 @@ public class User implements Serializable {
         // Mandatory for serialization.
     }
 
-    /**
-     * Default Constructor.
-     *
-     * @param username
-     * @param aIsAdmin
-     * @param aLocale
-     * @param aUserRights
-     * @param useCredentialTransmission
-     */
     public User(final String username, final String locale) {
         this.username = username;
         this.locale = locale;
@@ -113,14 +99,6 @@ public class User implements Serializable {
 
     public void setTenantId(final long tenantId) {
         this.tenantId = tenantId;
-    }
-
-    public boolean isAutoLogin() {
-        return isAutoLogin;
-    }
-
-    public void setAutoLogin(final boolean isAutoLogin) {
-        this.isAutoLogin = isAutoLogin;
     }
 
     public boolean isAnonymous() {

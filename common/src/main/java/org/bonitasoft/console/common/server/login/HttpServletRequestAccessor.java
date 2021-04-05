@@ -38,8 +38,6 @@ public class HttpServletRequestAccessor {
 
     public static final String PASSWORD_PARAM = "password";
 
-    public static final String AUTO_LOGIN_PARAM = "autologin";
-
     public static final String PROCESS_DEFINITION_ID = "process";
 
     private final static String OAUTH_VERIFIER = "oauth_verifier";
@@ -68,14 +66,6 @@ public class HttpServletRequestAccessor {
 
     public HttpSession getHttpSession() {
         return httpServletRequest.getSession();
-    }
-
-    public String getAutoLoginScope() {
-        return httpServletRequest.getParameter(AUTO_LOGIN_PARAM);
-    }
-
-    public boolean isAutoLoginRequested() {
-        return httpServletRequest.getParameter(AUTO_LOGIN_PARAM) != null;
     }
 
     public String getRedirectUrl() {

@@ -75,18 +75,6 @@ public class PlatformManagementUtilsTest {
     }
 
     @Test
-    public void should_retrieveAutologinConfiguration() throws Exception {
-        //when
-        doReturn(new PlatformSessionImpl(1231, new Date(), 54325423, "testUser", 75463)).when(platformManagementUtils).platformLogin();
-        platformManagementUtils.retrieveAutologinConfiguration(TENANT_ID);
-        //then
-        InOrder inOrder = inOrder(platformManagementUtils, platformAPI);
-        inOrder.verify(platformManagementUtils).platformLogin();
-        inOrder.verify(platformAPI).getClientTenantConfiguration(TENANT_ID, PlatformManagementUtils.AUTOLOGIN_V6_JSON);
-        inOrder.verify(platformManagementUtils).platformLogout(any(PlatformSession.class));
-    }
-
-    @Test
     public void should_login_locally_when_connection_is_local() throws Exception {
         //given
         doReturn(true).when(platformManagementUtils).isLocal();

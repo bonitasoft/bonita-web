@@ -153,22 +153,6 @@ public class ConfigurationFilesManager {
         tenantsAggregatedConfigurations.put(tenantId, new HashMap<>());
     }
 
-    public void setTenantConfiguration(String fileName, byte[] content, long tenantId) throws IOException {
-        if (fileName.endsWith(".properties")) {
-            Map<String, Properties> tenantConfiguration = tenantsConfigurations.get(tenantId);
-            if (tenantConfiguration != null) {
-                tenantConfiguration.put(fileName, getProperties(content));
-            }
-        } else {
-            Map<String, File> tenantConfigurationFiles = tenantsConfigurationFiles.get(tenantId);
-            if (tenantConfigurationFiles != null) {
-                File file = new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), fileName);
-                FileUtils.writeByteArrayToFile(file, content);
-                tenantConfigurationFiles.put(fileName, file);
-            }
-        }
-    }
-
     public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
         Map<String, Properties> resources = getResources(tenantId);
         // Now internal behavior stores and removes from -internal file:
@@ -259,9 +243,5 @@ public class ConfigurationFilesManager {
             return tenantConfigurationFiles.get(fileName);
         }
         return null;
-    }
-
-    public File getTenantAutoLoginConfiguration(long tenantId) {
-        return getTenantConfigurationFile(PlatformManagementUtils.AUTOLOGIN_V6_JSON, tenantId);
     }
 }
