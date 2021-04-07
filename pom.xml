@@ -498,6 +498,9 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
+                            <systemPropertyVariables>
+                                <org.bonitasoft.h2.database.dir>${project.build.directory}/h2_database</org.bonitasoft.h2.database.dir>
+                            </systemPropertyVariables>
                             <argLine>-Xmx1024m</argLine>
                             <includes>
                                 <!--the following are failsafe conventions -->
