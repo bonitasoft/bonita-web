@@ -265,6 +265,8 @@
         <url-pattern>/platformloginservice</url-pattern>
         <url-pattern>/platformlogoutservice</url-pattern>
         <url-pattern>/API/system/i18ntranslation</url-pattern>
+        <url-pattern>/API/avatars/*</url-pattern>
+        <url-pattern>/API/applicationIcon/*</url-pattern>
         <!-- War -->
         <url-pattern>/css</url-pattern>
         <url-pattern>/images</url-pattern>
@@ -277,6 +279,8 @@
         <url-pattern>/portal/deferredjs/*</url-pattern>
         <url-pattern>/portal.js/*</url-pattern>
         <url-pattern>/theme/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <filter-mapping>
@@ -285,6 +289,8 @@
         <url-pattern>/portal/resource/app/*</url-pattern>
         <url-pattern>/apps/*</url-pattern>
         <url-pattern>/portal/custom-page/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <!-- Cache Filter Mapping End -->
