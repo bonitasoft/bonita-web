@@ -2,11 +2,15 @@ package org.bonitasoft.web.rest.server.datastore.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.business.application.ApplicationCreator;
 import org.bonitasoft.engine.business.application.ApplicationField;
 import org.bonitasoft.engine.business.application.ApplicationState;
@@ -23,7 +27,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     private static final String STATE = ApplicationState.DEACTIVATED.name();
     private static final long UPDATED_BY = 12L;
     private static final long CREATED_BY = 11;
-    private static final String ICON_PATH = "/icon.jpg";
+    private static final String ICON = "icon.jpg";
     private static final String DESCRIPTION = "App description";
     private static final String VERSION = "1.0";
     private static final String TOKEN = "app";
@@ -34,6 +38,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     private static final long HOME_PAGE_ID = 2L;
     private static final long LAYOUT_ID = 3L;
     private static final long THEME_ID = 4L;
+    private static final long TENANT_ID = 43L;
 
     private ApplicationItemConverter converter;
 
@@ -48,7 +53,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         final ApplicationImpl application = new ApplicationImpl(TOKEN, VERSION, DESCRIPTION, LAYOUT_ID, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
-        application.setIconPath(ICON_PATH);
+        application.setHasIcon(true);
         application.setCreationDate(CREATION_DATE);
         application.setCreatedBy(CREATED_BY);
         application.setLastUpdateDate(UPDATE_DATE);
@@ -58,7 +63,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         application.setHomePageId(HOME_PAGE_ID);
 
         //when
-        final ApplicationItem item = converter.toApplicationItem(application);
+        ApplicationItem item = converter.toApplicationItem(application);
 
         //then
         assertThat(item).isNotNull();
@@ -67,7 +72,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(item.getDisplayName()).isEqualTo(DISPLAY_NAME);
         assertThat(item.getVersion()).isEqualTo(VERSION);
         assertThat(item.getDescription()).isEqualTo(DESCRIPTION);
-        assertThat(item.getIconPath()).isEqualTo(ICON_PATH);
+        assertThat(item.getIcon()).isEqualTo("../API/applicationIcon/15?t=" + UPDATE_DATE.getTime());
         assertThat(item.getCreationDate()).isEqualTo(String.valueOf(CREATION_DATE.getTime()));
         assertThat(item.getCreatedBy()).isEqualTo(CREATED_BY);
         assertThat(item.getLastUpdateDate()).isEqualTo(String.valueOf(UPDATE_DATE.getTime()));
@@ -77,6 +82,11 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(item.getHomePageId().toLong()).isEqualTo(HOME_PAGE_ID);
         assertThat(item.getLayoutId().toLong()).isEqualTo(LAYOUT_ID);
 
+
+        application.setHasIcon(false);
+
+        item = converter.toApplicationItem(application);
+        assertThat(item.getIcon()).isEmpty();
     }
 
     @Test
@@ -85,7 +95,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, LAYOUT_ID, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
-        application.setIconPath(ICON_PATH);
         application.setCreationDate(CREATION_DATE);
         application.setCreatedBy(CREATED_BY);
         application.setLastUpdateDate(UPDATE_DATE);
@@ -108,7 +117,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, null, THEME_ID);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
-        application.setIconPath(ICON_PATH);
         application.setCreationDate(CREATION_DATE);
         application.setCreatedBy(CREATED_BY);
         application.setLastUpdateDate(UPDATE_DATE);
@@ -131,7 +139,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         final ApplicationImpl application = new ApplicationImpl(DISPLAY_NAME, VERSION, DESCRIPTION, LAYOUT_ID, null);
         application.setId(15);
         application.setDisplayName(DISPLAY_NAME);
-        application.setIconPath(ICON_PATH);
         application.setCreationDate(CREATION_DATE);
         application.setCreatedBy(CREATED_BY);
         application.setLastUpdateDate(UPDATE_DATE);
@@ -156,7 +163,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         item.setDisplayName(DISPLAY_NAME);
         item.setVersion(VERSION);
         item.setDescription(DESCRIPTION);
-        item.setIconPath(ICON_PATH);
         item.setProfileId(PROFILE_ID);
 
         //when
@@ -169,12 +175,11 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(fields.get(ApplicationField.DISPLAY_NAME)).isEqualTo(DISPLAY_NAME);
         assertThat(fields.get(ApplicationField.VERSION)).isEqualTo(VERSION);
         assertThat(fields.get(ApplicationField.DESCRIPTION)).isEqualTo(DESCRIPTION);
-        assertThat(fields.get(ApplicationField.ICON_PATH)).isEqualTo(ICON_PATH);
         assertThat(fields.get(ApplicationField.PROFILE_ID)).isEqualTo(PROFILE_ID);
     }
 
     @Test
-    public void toApplicationUpdater_should_map_all_fields() {
+    public void toApplicationUpdater_should_map_all_fields() throws Exception {
 
         //given
         final HashMap<String, String> fields = new HashMap<String, String>();
@@ -182,14 +187,14 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, DISPLAY_NAME);
         fields.put(ApplicationItem.ATTRIBUTE_DESCRIPTION, DESCRIPTION);
         fields.put(ApplicationItem.ATTRIBUTE_VERSION, VERSION);
-        fields.put(ApplicationItem.ATTRIBUTE_ICON_PATH, ICON_PATH);
+        fields.put(ApplicationItem.ATTRIBUTE_ICON, ICON);
         fields.put(ApplicationItem.ATTRIBUTE_PROFILE_ID, String.valueOf(PROFILE_ID));
         fields.put(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, String.valueOf(HOME_PAGE_ID));
         fields.put(ApplicationItem.ATTRIBUTE_STATE, STATE);
-
+        writeIconInBonitaHome();
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, TENANT_ID);
 
         //then
         assertThat(updater).isNotNull();
@@ -197,10 +202,17 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(updater.getFields().get(ApplicationField.DISPLAY_NAME)).isEqualTo(DISPLAY_NAME);
         assertThat(updater.getFields().get(ApplicationField.DESCRIPTION)).isEqualTo(DESCRIPTION);
         assertThat(updater.getFields().get(ApplicationField.VERSION)).isEqualTo(VERSION);
-        assertThat(updater.getFields().get(ApplicationField.ICON_PATH)).isEqualTo(ICON_PATH);
+        assertThat(updater.getFields().get(ApplicationField.ICON_CONTENT)).isEqualTo("theContent".getBytes());
+        assertThat(updater.getFields().get(ApplicationField.ICON_FILE_NAME)).isEqualTo(ICON);
         assertThat(updater.getFields().get(ApplicationField.PROFILE_ID)).isEqualTo(PROFILE_ID);
         assertThat(updater.getFields().get(ApplicationField.HOME_PAGE_ID)).isEqualTo(HOME_PAGE_ID);
 
+    }
+
+    private void writeIconInBonitaHome() throws IOException {
+        File tempFolder = new BonitaHomeFolderAccessor().getBonitaConstantUtil(TENANT_ID).getTempFolder();
+        File file = new File(tempFolder, ICON);
+        Files.write(file.toPath(), "theContent".getBytes());
     }
 
     @Test
@@ -211,7 +223,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
 
         //then
         assertThat(updater).isNotNull();
@@ -227,7 +239,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
 
         //then
         assertThat(updater).isNotNull();
@@ -243,7 +255,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_THEME_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
 
         //then
         assertThat(updater).isNotNull();

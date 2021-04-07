@@ -42,7 +42,6 @@ public class ApplicationSearchDescriptorConverter implements AttributeConverter 
         mapping.put(ApplicationItem.ATTRIBUTE_STATE, ApplicationSearchDescriptor.STATE);
         mapping.put(ApplicationItem.ATTRIBUTE_CREATED_BY, ApplicationSearchDescriptor.CREATED_BY);
         mapping.put(ApplicationItem.ATTRIBUTE_CREATION_DATE, ApplicationSearchDescriptor.CREATION_DATE);
-        mapping.put(ApplicationItem.ATTRIBUTE_ICON_PATH, ApplicationSearchDescriptor.ICON_PATH);
         mapping.put(ApplicationItem.ATTRIBUTE_LAST_UPDATE_DATE, ApplicationSearchDescriptor.LAST_UPDATE_DATE);
         mapping.put(ApplicationItem.ATTRIBUTE_UPDATED_BY, ApplicationSearchDescriptor.UPDATED_BY);
         mapping.put(ApplicationItem.ATTRIBUTE_VERSION, ApplicationSearchDescriptor.VERSION);

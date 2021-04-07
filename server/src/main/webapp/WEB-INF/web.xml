@@ -408,8 +408,12 @@
     </servlet>
 
     <servlet>
-        <servlet-name>iconServlet</servlet-name>
-        <servlet-class>org.bonitasoft.console.common.server.servlet.IconServlet</servlet-class>
+        <servlet-name>organizationIconServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.OrganizationIconServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>applicationIconServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.ApplicationIconServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>loginService</servlet-name>
@@ -607,9 +611,13 @@
         <url-pattern>/portal/exportActors</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>iconServlet</servlet-name>
+        <servlet-name>organizationIconServlet</servlet-name>
         <url-pattern>/API/avatars/*</url-pattern>
         <url-pattern>/portal/custom-page/API/avatars/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>applicationIconServlet</servlet-name>
+        <url-pattern>/API/applicationIcon/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deprecatedDocumentDownloadServlet</servlet-name>

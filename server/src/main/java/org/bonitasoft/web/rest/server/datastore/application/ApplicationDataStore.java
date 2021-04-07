@@ -105,7 +105,7 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
     @Override
     public ApplicationItem update(final APIID id, final Map<String, String> attributes) {
         try {
-            final ApplicationUpdater applicationUpdater = converter.toApplicationUpdater(attributes);
+            final ApplicationUpdater applicationUpdater = converter.toApplicationUpdater(attributes, getEngineSession().getTenantId());
             final Application application = applicationAPI.updateApplication(id.toLong(), applicationUpdater);
             return converter.toApplicationItem(application);
         } catch (final Exception e) {

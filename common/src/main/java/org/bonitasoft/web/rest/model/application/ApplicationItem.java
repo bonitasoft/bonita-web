@@ -17,6 +17,7 @@ import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasIcon;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
 
 
@@ -24,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  * @author Elias Ricken de Medeiros
  *
  */
-public class ApplicationItem extends Item implements ItemHasUniqueId {
+public class ApplicationItem extends Item implements ItemHasUniqueId, ItemHasIcon {
 
     public static final String ATTRIBUTE_TOKEN = "token";
 
@@ -34,6 +35,7 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
 
     public static final String ATTRIBUTE_DESCRIPTION = "description";
 
+    @Deprecated
     public static final String ATTRIBUTE_ICON_PATH = "iconPath";
 
     public static final String ATTRIBUTE_CREATION_DATE = "creationDate";
@@ -111,12 +113,32 @@ public class ApplicationItem extends Item implements ItemHasUniqueId {
         setAttribute(ATTRIBUTE_DESCRIPTION, description);
     }
 
+    /**
+     *
+     * @deprecated since 7.13, use getIcon instead
+     */
+    @Deprecated
     public String getIconPath() {
         return getAttributeValue(ATTRIBUTE_ICON_PATH);
     }
 
+    /**
+     *
+     * @deprecated since 7.13, use setIcon instead
+     */
+    @Deprecated
     public void setIconPath(final String iconPath) {
         setAttribute(ATTRIBUTE_ICON_PATH, iconPath);
+    }
+
+    @Override
+    public String getIcon() {
+        return getAttributeValue(ATTRIBUTE_ICON);
+    }
+
+    @Override
+    public void setIcon(String icon) {
+        setAttribute(ATTRIBUTE_ICON, icon);
     }
 
     public String getCreationDate() {

@@ -49,15 +49,6 @@ public class ApplicationSearchDescriptorConverterTest {
     }
 
     @Test
-    public void should_return_ApplicationSearchDescriptor_iconPath_on_convert_attribute_iconPath() throws Exception {
-        //when
-        final String value = converter.convert(ApplicationItem.ATTRIBUTE_ICON_PATH);
-
-        //then
-        assertThat(value).isEqualTo(ApplicationSearchDescriptor.ICON_PATH);
-    }
-
-    @Test
     public void should_return_ApplicationSearchDescriptor_creationDate_on_convert_attribute_creationDate() throws Exception {
         //when
         final String value = converter.convert(ApplicationItem.ATTRIBUTE_CREATION_DATE);
