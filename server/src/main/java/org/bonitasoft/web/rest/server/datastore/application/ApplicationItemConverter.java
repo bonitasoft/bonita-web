@@ -18,14 +18,21 @@ package org.bonitasoft.web.rest.server.datastore.application;
 
 import java.util.Map;
 
+import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.IconDescriptor;
 import org.bonitasoft.engine.business.application.Application;
 import org.bonitasoft.engine.business.application.ApplicationCreator;
 import org.bonitasoft.engine.business.application.ApplicationUpdater;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
+import org.bonitasoft.web.rest.server.datastore.organization.Avatars;
+import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
+import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasIcon;
+
+import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 /**
  * @author Elias Ricken de Medeiros
- *
  */
 public class ApplicationItemConverter {
 
@@ -36,7 +43,7 @@ public class ApplicationItemConverter {
         item.setDisplayName(application.getDisplayName());
         item.setVersion(application.getVersion());
         item.setDescription(application.getDescription());
-        item.setIconPath(application.getIconPath());
+        item.setIcon(application.hasIcon() ? "../API/applicationIcon/" + application.getId() + "?t=" + application.getLastUpdateDate().getTime() : "");
         item.setCreationDate(Long.toString(application.getCreationDate().getTime()));
         item.setCreatedBy(application.getCreatedBy());
         item.setLastUpdateDate(Long.toString(application.getLastUpdateDate().getTime()));
@@ -66,11 +73,10 @@ public class ApplicationItemConverter {
         final ApplicationCreator creator = new ApplicationCreator(appItem.getToken(), appItem.getDisplayName(), appItem.getVersion());
         creator.setDescription(appItem.getDescription());
         creator.setProfileId(appItem.getProfileId().toLong());
-        creator.setIconPath(appItem.getIconPath());
         return creator;
     }
 
-    public ApplicationUpdater toApplicationUpdater(final Map<String, String> attributes) {
+    public ApplicationUpdater toApplicationUpdater(final Map<String, String> attributes, long tenantId) {
         final ApplicationUpdater applicationUpdater = getApplicationUpdater();
 
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_TOKEN)) {
@@ -99,8 +105,9 @@ public class ApplicationItemConverter {
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_VERSION)) {
             applicationUpdater.setVersion(attributes.get(ApplicationItem.ATTRIBUTE_VERSION));
         }
-        if (attributes.containsKey(ApplicationItem.ATTRIBUTE_ICON_PATH)) {
-            applicationUpdater.setIconPath(attributes.get(ApplicationItem.ATTRIBUTE_ICON_PATH));
+        if (!MapUtil.isBlank(attributes, ItemHasIcon.ATTRIBUTE_ICON)) {
+            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(ItemHasIcon.ATTRIBUTE_ICON), tenantId);
+            applicationUpdater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
 
         return applicationUpdater;

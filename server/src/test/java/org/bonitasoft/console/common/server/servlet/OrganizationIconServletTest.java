@@ -15,6 +15,7 @@
 package org.bonitasoft.console.common.server.servlet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
@@ -36,11 +37,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Baptiste Mesta
  */
 @RunWith(MockitoJUnitRunner.class)
-public class IconServletTest {
+public class OrganizationIconServletTest {
 
     private static final long ICON_ID = 1238970432L;
     @Spy
-    private IconServlet iconServlet;
+    private OrganizationIconServlet organizationIconServlet;
     private MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
     private MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
     @Mock
@@ -48,7 +49,7 @@ public class IconServletTest {
 
     @Before
     public void before() throws Exception {
-        doReturn(identityAPI).when(iconServlet).getIdentityApi(httpServletRequest);
+        doReturn(identityAPI).when(organizationIconServlet).getIdentityApi(any());
     }
 
     private void havingIcon(long iconId, byte[] content) throws NotFoundException {
@@ -60,7 +61,7 @@ public class IconServletTest {
         havingIcon(ICON_ID, "content".getBytes());
         httpServletRequest.setPathInfo("/" + String.valueOf(ICON_ID));
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getContentAsByteArray()).isEqualTo("content".getBytes());
     }
@@ -71,7 +72,7 @@ public class IconServletTest {
         httpServletRequest.addHeader("User-Agent", "Firefox-1238941");
         httpServletRequest.setPathInfo("/" + String.valueOf(ICON_ID));
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getHeader("Content-Disposition")).isEqualTo("inline; filename*=UTF-8''" + String.valueOf(ICON_ID));
     }
@@ -82,7 +83,7 @@ public class IconServletTest {
         httpServletRequest.addHeader("User-Agent", "Chrome-1238941");
         httpServletRequest.setPathInfo("/" + String.valueOf(ICON_ID));
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getHeader("Content-Disposition")).isEqualTo("inline; filename=\"" + String.valueOf(ICON_ID) + "\"; filename*=UTF-8''"
                 + String.valueOf(ICON_ID));
@@ -92,7 +93,7 @@ public class IconServletTest {
     public void should_status_be_BAD_REQUEST_when_id_is_missing_in_url() throws Exception {
         httpServletRequest.setPathInfo("");
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
     }
@@ -101,14 +102,14 @@ public class IconServletTest {
     public void should_status_be_BAD_REQUEST_when_id_is_not_a_long_in_url() throws Exception {
         httpServletRequest.setPathInfo("notALong");
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
     }
 
     @Test
     public void should_status_be_BAD_REQUEST_when_null_is_set_as_id_in_url() throws Exception {
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
     }
@@ -118,7 +119,7 @@ public class IconServletTest {
         doThrow(NotFoundException.class).when(identityAPI).getIcon(ICON_ID);
         httpServletRequest.setPathInfo("/" + String.valueOf(ICON_ID));
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NOT_FOUND);
     }
@@ -128,7 +129,7 @@ public class IconServletTest {
         doReturn(new IconImpl(ICON_ID, "theMimeTypeOfTheIcon", "content".getBytes())).when(identityAPI).getIcon(ICON_ID);
         httpServletRequest.setPathInfo("/" + String.valueOf(ICON_ID));
 
-        iconServlet.doGet(httpServletRequest, httpServletResponse);
+        organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getContentType()).isEqualTo("theMimeTypeOfTheIcon");
     }
