@@ -14,9 +14,6 @@
  */
 package org.bonitasoft.console.common.server.auth;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
