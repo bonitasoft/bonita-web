@@ -43,7 +43,7 @@ public class ApplicationItemConverter {
         item.setDisplayName(application.getDisplayName());
         item.setVersion(application.getVersion());
         item.setDescription(application.getDescription());
-        item.setIcon(application.hasIcon() ? "../API/applicationIcon/" + application.getId() + "?t=" + application.getLastUpdateDate().getTime() : "");
+        item.setIcon(application.hasIcon() ? ApplicationItem.ICON_PATH_API_PREFIX + application.getId() + "?t=" + application.getLastUpdateDate().getTime() : "");
         item.setCreationDate(Long.toString(application.getCreationDate().getTime()));
         item.setCreatedBy(application.getCreatedBy());
         item.setLastUpdateDate(Long.toString(application.getLastUpdateDate().getTime()));
@@ -105,7 +105,7 @@ public class ApplicationItemConverter {
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_VERSION)) {
             applicationUpdater.setVersion(attributes.get(ApplicationItem.ATTRIBUTE_VERSION));
         }
-        if (!MapUtil.isBlank(attributes, ItemHasIcon.ATTRIBUTE_ICON)) {
+        if (!MapUtil.isBlank(attributes, ItemHasIcon.ATTRIBUTE_ICON) && !attributes.get(ItemHasIcon.ATTRIBUTE_ICON).startsWith(ApplicationItem.ICON_PATH_API_PREFIX)) {
             IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(ItemHasIcon.ATTRIBUTE_ICON), tenantId);
             applicationUpdater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
