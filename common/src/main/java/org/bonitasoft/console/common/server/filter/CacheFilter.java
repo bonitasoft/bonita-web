@@ -66,22 +66,19 @@ public class CacheFilter extends ExcludingPatternFilter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        final String uri = req.getRequestURI();
-        if (!uri.endsWith("nocache.js") || !uri.endsWith("portal.js/index.html")) {
-            setResponseHeader(res);
-        }
-
         chain.doFilter(req, res);
+        
+        setResponseHeader(res);
     }
     
     @Override
     public void excludePatternFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
-
-        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
         
         chain.doFilter(req, res);
+        
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
     }
 
     private void setResponseHeader(final HttpServletResponse response) {

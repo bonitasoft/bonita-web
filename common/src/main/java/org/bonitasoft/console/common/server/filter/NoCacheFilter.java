@@ -45,9 +45,9 @@ public class NoCacheFilter implements Filter {
         // casting to HTTPServlet(Request/Response)
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
+        
+        chain.doFilter(req, res);
 
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-
-        chain.doFilter(req, res);
     }
 }
