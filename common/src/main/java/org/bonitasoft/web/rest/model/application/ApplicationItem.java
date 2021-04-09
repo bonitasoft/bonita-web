@@ -58,6 +58,8 @@ public class ApplicationItem extends Item implements ItemHasUniqueId, ItemHasIco
 
     public static final String FILTER_USER_ID = "userId";
 
+    public static final String ICON_PATH_API_PREFIX = "../API/applicationIcon/";
+
     public ApplicationItem() {
         super();
     }
