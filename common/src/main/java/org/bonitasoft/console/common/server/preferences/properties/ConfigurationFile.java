@@ -14,11 +14,11 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import static org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet.stringToSet;
-
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
+
+import static org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet.stringToSet;
 
 /**
  * @author Ruiheng Fan, Anthony Birembaut
@@ -43,7 +43,7 @@ public class ConfigurationFile {
         return propertyValue != null ? propertyValue.trim() : null;
     }
 
-    private Properties getPropertiesOfScope() {
+    public Properties getPropertiesOfScope() {
         if (tenantId > 0) {
             return ConfigurationFilesManager.getInstance().getTenantProperties(propertiesFilename, tenantId);
         }
@@ -71,7 +71,7 @@ public class ConfigurationFile {
         return stringToSet(propertyAsString);
     }
 
-    public void setPropertyAsSet(final String property, final Set<String> permissions) throws IOException {
+    public void setPropertyAsSet(final String property, final Set<String> permissions) {
         setProperty(property, permissions.toString());
     }
 }

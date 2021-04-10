@@ -59,7 +59,7 @@ public class ResourcesPermissionsMapping extends ConfigurationFile {
                     return permissions;
                 }
             }
-            final List<String> reducedResourceQualifiers = new ArrayList<String>(resourceQualifiers);
+            final List<String> reducedResourceQualifiers = new ArrayList<>(resourceQualifiers);
             reducedResourceQualifiers.remove(resourceQualifiers.size() - 1);
             return getResourcePermissionsWithWildCard(method, apiName, resourceName, reducedResourceQualifiers);
         }

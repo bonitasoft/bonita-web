@@ -15,21 +15,23 @@
 
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
+
+import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager.getProperties;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 public class ResourcesPermissionsMappingTest {
 
+    private static final String TEST_FILE_PROPERTIES = "TEST_FILE.properties";
+
     @Test
-    public void testGetResourcePermission() throws Exception {
+    public void testGetResourcePermission() {
         //given
         final String fileContent = "GET|bpm/process [Process visualization, Process categories, Process actor mapping visualization, Connector visualization]\n"
                 +
@@ -41,21 +43,21 @@ public class ResourcesPermissionsMappingTest {
         //when
         final Set<String> getPermissions = resourcesPermissionsMapping.getResourcePermissions("GET", "bpm", "process");
         final Set<String> postPermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process");
-        final Set<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", Arrays.asList("6"));
+        final Set<String> postOnSinglePermission = resourcesPermissionsMapping.getResourcePermissions("POST", "bpm", "process", singletonList("6"));
         final Set<String> putPermissions = resourcesPermissionsMapping.getResourcePermissions("PUT", "bpm", "process");
-        final Set<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", Arrays.asList("unknown"));
+        final Set<String> unknown = resourcesPermissionsMapping.getResourcePermissions("unknown", "unknown", "unknown", singletonList("unknown"));
 
         //then
-        Assertions.assertThat(getPermissions).containsOnly("Process visualization", "Process categories", "Process actor mapping visualization",
+        assertThat(getPermissions).containsOnly("Process visualization", "Process categories", "Process actor mapping visualization",
                 "Connector visualization");
-        Assertions.assertThat(postPermission).containsOnly("Process Deploy");
-        Assertions.assertThat(postOnSinglePermission).containsOnly("Custom permission");
-        Assertions.assertThat(putPermissions).isEmpty();
-        Assertions.assertThat(unknown).isEmpty();
+        assertThat(postPermission).containsOnly("Process Deploy");
+        assertThat(postOnSinglePermission).containsOnly("Custom permission");
+        assertThat(putPermissions).isEmpty();
+        assertThat(unknown).isEmpty();
     }
 
     @Test
-    public void testGetResourcePermissionWithWildCard() throws Exception {
+    public void testGetResourcePermissionWithWildCard() {
         //given
         final String fileContent = "POST|bpm/process/* [Process Deploy]\n" +
                 "POST|bpm/process/*/instantiation [Custom permission]\n" +
@@ -65,27 +67,24 @@ public class ResourcesPermissionsMappingTest {
 
         //when
         final Set<String> getWithResourcesQualifier = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("GET", "bpm", "process",
-                Arrays.asList("6"));
+                singletonList("6"));
         final Set<String> postWithResourcesQualifier = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("POST", "bpm", "process",
-                Arrays.asList("6"));
+                singletonList("6"));
         final Set<String> postWithResourcesQualifiers = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("POST", "bpm", "process",
                 Arrays.asList("6", "instantiation"));
         final Set<String> putWithResourcesQualifiers = resourcesPermissionsMapping.getResourcePermissionsWithWildCard("PUT", "bpm", "process",
                 Arrays.asList("6", "expression", "10"));
 
         //then
-        Assertions.assertThat(getWithResourcesQualifier).isEmpty();
-        Assertions.assertThat(postWithResourcesQualifier).containsOnly("Process Deploy");
-        Assertions.assertThat(postWithResourcesQualifiers).containsOnly("Custom permission");
-        Assertions.assertThat(putWithResourcesQualifiers).containsOnly("Expression update");
+        assertThat(getWithResourcesQualifier).isEmpty();
+        assertThat(postWithResourcesQualifier).containsOnly("Process Deploy");
+        assertThat(postWithResourcesQualifiers).containsOnly("Custom permission");
+        assertThat(putWithResourcesQualifiers).containsOnly("Expression update");
     }
 
-    public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) throws IOException {
-        ConfigurationFilesManager.getInstance().setTenantConfigurations(Collections.singletonMap("TEST_FILE.properties", fileContent.getBytes()), 423L);
-        final File resourceMappingFile = File.createTempFile("resourceMapping", ".tmp");
-        IOUtils.write(fileContent.getBytes(), new FileOutputStream(resourceMappingFile));
-        final ResourcesPermissionsMapping resourcesPermissionsMapping = new ResourcesPermissionsMapping("TEST_FILE.properties", 423L);
-        resourceMappingFile.delete();
+    public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final String fileContent) {
+        final ResourcesPermissionsMapping resourcesPermissionsMapping = spy(new ResourcesPermissionsMapping(TEST_FILE_PROPERTIES, 423L));
+        doReturn(getProperties(fileContent.getBytes())).when(resourcesPermissionsMapping).getPropertiesOfScope();
         return resourcesPermissionsMapping;
     }
 }

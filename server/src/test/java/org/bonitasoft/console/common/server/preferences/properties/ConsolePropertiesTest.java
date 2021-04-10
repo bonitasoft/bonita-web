@@ -14,14 +14,16 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.io.IOException;
-import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager.getProperties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 /**
  * @author Rohart Bastien
@@ -33,9 +35,8 @@ public class ConsolePropertiesTest {
 
     @Before
     public void setUp() throws IOException {
-        ConfigurationFilesManager.getInstance().setTenantConfigurations(Collections.singletonMap("console-config.properties", ("" +
-                "aProperty=aValue").getBytes()), TENANT_ID);
-        properties = new ConsoleProperties(TENANT_ID);
+        properties = spy(new ConsoleProperties(TENANT_ID));
+        doReturn(getProperties("aProperty=aValue".getBytes())).when(properties).getProperties();
     }
 
     @Test
@@ -52,7 +53,7 @@ public class ConsolePropertiesTest {
 
     @Test
     public void testDefaultIsRetrieveIfPropertyIsEmpty() {
-        String defaultValue = properties.getProperty("notExsitingProperty", "defaultValue");
+        String defaultValue = properties.getProperty("notExistingProperty", "defaultValue");
 
         assertEquals("Cannot return property default value", defaultValue, "defaultValue");
     }
