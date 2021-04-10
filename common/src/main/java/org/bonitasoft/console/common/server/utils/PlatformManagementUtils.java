@@ -16,7 +16,11 @@ package org.bonitasoft.console.common.server.utils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.bonitasoft.engine.api.ApiAccessType;
@@ -90,8 +94,8 @@ public class PlatformManagementUtils {
 
     private void retrieveTenantsConfiguration(final PlatformAPI platformAPI) throws IOException {
         final Map<Long, Map<String, byte[]>> clientTenantConfigurations = platformAPI.getClientTenantConfigurations();
-        for (final Map.Entry<Long, Map<String, byte[]>> tenantConfiguration : clientTenantConfigurations.entrySet()) {
-            configurationFilesManager.setTenantConfigurations(tenantConfiguration.getValue(), tenantConfiguration.getKey());
+        for (final Entry<Long, Map<String, byte[]>> tenantConfiguration : clientTenantConfigurations.entrySet()) {
+            configurationFilesManager.setTenantConfigurationFiles(tenantConfiguration.getValue(), tenantConfiguration.getKey());
         }
     }
 
@@ -122,4 +126,45 @@ public class PlatformManagementUtils {
         platformLogout(platformSession);
     }
 
+    public byte[] getTenantConfiguration(long tenantId, String configurationFileName) {
+        final PlatformSession platformSession;
+        try {
+            platformSession = platformLogin();
+            try {
+                return getPlatformAPI(platformSession).getClientTenantConfiguration(tenantId, configurationFileName);
+            } finally {
+                platformLogout(platformSession);
+            }
+        } catch (BonitaException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Long => tenantId
+     * String => configuration file name
+     * Properties => content of the configuration file
+     */
+    public Map<Long, Map<String, Properties>> getTenantConfigurations() throws IOException {
+        try {
+            final PlatformSession platformSession = platformLogin();
+            try {
+                Map<Long, Map<String, byte[]>> clientTenantConfigurations = getPlatformAPI(platformSession).getClientTenantConfigurations();
+                Map<Long, Map<String, Properties>> clientTenantConfigurationProperties = new HashMap<>();
+                for (Entry<Long, Map<String, byte[]>> entry : clientTenantConfigurations.entrySet()) {
+                    final Map<String, byte[]> map = entry.getValue();
+                    clientTenantConfigurationProperties.put(entry.getKey(),
+                            map.entrySet().stream().collect(Collectors.toMap(
+                                    Entry::getKey,
+                                    v -> ConfigurationFilesManager.getProperties(v.getValue()))));
+                }
+                return clientTenantConfigurationProperties;
+            } finally {
+                platformLogout(platformSession);
+            }
+        } catch (BonitaException e) {
+            throw new IOException(e);
+        }
+    }
 }

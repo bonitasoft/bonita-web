@@ -395,7 +395,7 @@ public class CustomPageService {
 
     void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
             final CompoundPermissionsMapping compoundPermissionsMapping,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping) throws IOException {
+            final ResourcesPermissionsMapping resourcesPermissionsMapping) {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_PORTAL_PROFILE));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_IDENTITY_USER));

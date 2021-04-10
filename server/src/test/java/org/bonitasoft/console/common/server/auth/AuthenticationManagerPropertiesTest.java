@@ -14,15 +14,16 @@
  */
 package org.bonitasoft.console.common.server.auth;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
-import java.util.Collections;
 
-import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager.getProperties;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 /**
  * @author Rohart Bastien
@@ -34,15 +35,12 @@ public class AuthenticationManagerPropertiesTest {
 
     @Before
     public void setUp() throws IOException {
-        ConfigurationFilesManager.getInstance().setTenantConfigurations(
-                Collections.singletonMap("authenticationManager-config.properties",
-                        ("login.LoginManager = org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl\n" +
-                                "OAuth.serviceProvider = LinkedIn\n" +
-                                "OAuth.consumerKey = ove2vcdjptar\n" +
-                                "OAuth.consumerSecret = vdaBrCmHvkgJoYz1\n" +
-                                "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes()),
-                TENANT_ID);
-        loginManagerProperties = new AuthenticationManagerProperties(TENANT_ID);
+        loginManagerProperties = spy(new AuthenticationManagerProperties(TENANT_ID));
+        doReturn(getProperties(("login.LoginManager = org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl\n" +
+                "OAuth.serviceProvider = LinkedIn\n" +
+                "OAuth.consumerKey = ove2vcdjptar\n" +
+                "OAuth.consumerSecret = vdaBrCmHvkgJoYz1\n" +
+                "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes())).when(loginManagerProperties).getPropertiesOfScope();
     }
 
     @After

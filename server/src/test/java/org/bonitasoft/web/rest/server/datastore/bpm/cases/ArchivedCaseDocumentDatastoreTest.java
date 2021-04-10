@@ -62,7 +62,7 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
     @Before
     public void setUp() throws Exception {
         ConfigurationFilesManager.getInstance()
-                .setTenantConfigurations(Collections.singletonMap("console-config.properties", "form.attachment.max.size=30".getBytes()), 1L);
+                .setTenantConfigurationFiles(Collections.singletonMap("console-config.properties", "form.attachment.max.size=30".getBytes()), 1L);
         initMocks(this);
         when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
