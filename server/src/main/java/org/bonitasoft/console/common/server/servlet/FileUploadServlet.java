@@ -67,6 +67,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     protected static final String CHECK_UPLOADED_FILE_SIZE = "CheckUploadedFileSize";
 
+    protected static final String CHECK_UPLOADED_IMAGE_SIZE = "CheckUploadedImageSize";
+
     protected static final String RESPONSE_CONTENT_TYPE_PARAM = "ContentType";
 
     protected static final String TEXT_CONTENT_TYPE = "text";
@@ -81,6 +83,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
     public static final int MEGABYTE = 1048576;
 
+    public static final int KILOBYTE = 1024;
+
     protected String[] supportedExtensionsList = new String[0];
 
     protected boolean returnFullPathInResponse = false;
@@ -88,6 +92,8 @@ public abstract class FileUploadServlet extends HttpServlet {
     protected boolean alsoReturnOriginalFilename = false;
 
     protected boolean checkUploadedFileSize = false;
+
+    protected boolean checkUploadedImageSize = false;
 
     protected String responseContentType = TEXT_CONTENT_TYPE;
 
@@ -105,11 +111,12 @@ public abstract class FileUploadServlet extends HttpServlet {
             responseContentType = responseContentTypeParam;
         }
         checkUploadedFileSize = Boolean.parseBoolean(getInitParameter(CHECK_UPLOADED_FILE_SIZE));
+        checkUploadedImageSize = Boolean.parseBoolean(getInitParameter(CHECK_UPLOADED_IMAGE_SIZE));
     }
 
     protected abstract void defineUploadDirectoryPath(final HttpServletRequest request) throws SessionNotFoundException;
 
-    protected abstract void setUploadSizeMax(ServletFileUpload serviceFileUpload, final HttpServletRequest request);
+    protected abstract void setUploadMaxSize(ServletFileUpload serviceFileUpload, final HttpServletRequest request);
 
     protected void setUploadDirectoryPath(final String uploadDirectoryPath) {
         this.uploadDirectoryPath = uploadDirectoryPath;
@@ -139,9 +146,7 @@ public abstract class FileUploadServlet extends HttpServlet {
 
             final FileItemFactory fileItemFactory = new DiskFileItemFactory();
             final ServletFileUpload serviceFileUpload = createServletFileUpload(fileItemFactory);
-            if (checkUploadedFileSize) {
-                setUploadSizeMax(serviceFileUpload, request);
-            }
+            setUploadMaxSize(serviceFileUpload, request);
             List<FileItem> items;
             try {
                 items = serviceFileUpload.parseRequest(request);

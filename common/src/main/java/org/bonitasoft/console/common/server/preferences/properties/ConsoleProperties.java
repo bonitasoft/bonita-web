@@ -27,6 +27,11 @@ public class ConsoleProperties {
     private static final String ATTACHMENT_MAX_SIZE = "form.attachment.max.size";
 
     /**
+     * Image upload max size
+     */
+    private static final String IMAGE_UPLOAD_MAX_SIZE = "image.upload.max.size";
+
+    /**
      * Custom page debug mode
      */
     private static final String CUSTOM_PAGE_DEBUG = "custom.page.debug";
@@ -57,6 +62,14 @@ public class ConsoleProperties {
             return Long.valueOf(maxSize);
         }
         return 15;
+    }
+
+    public long getImageMaxSizeInKB() {
+        final String maxSize = this.getProperty(IMAGE_UPLOAD_MAX_SIZE);
+        if (maxSize != null) {
+            return Long.valueOf(maxSize);
+        }
+        return 100;
     }
 
     public boolean isPageInDebugMode() {

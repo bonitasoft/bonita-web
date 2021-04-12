@@ -37,7 +37,7 @@ public class PlatformFileUploadServlet extends FileUploadServlet {
     }
 
     @Override
-    protected void setUploadSizeMax(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
+    protected void setUploadMaxSize(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
         //currently no limit check on the platform
     }
 
