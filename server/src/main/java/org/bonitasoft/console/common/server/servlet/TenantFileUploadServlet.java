@@ -46,8 +46,12 @@ public class TenantFileUploadServlet extends FileUploadServlet {
     }
 
     @Override
-    protected void setUploadSizeMax(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
-        serviceFileUpload.setFileSizeMax(getConsoleProperties(getAPISession(request).getTenantId()).getMaxSize() * MEGABYTE);
+    protected void setUploadMaxSize(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
+        if (checkUploadedImageSize) {
+            serviceFileUpload.setFileSizeMax(getConsoleProperties(getAPISession(request).getTenantId()).getImageMaxSizeInKB() * KILOBYTE);
+        } else if (checkUploadedFileSize) {
+            serviceFileUpload.setFileSizeMax(getConsoleProperties(getAPISession(request).getTenantId()).getMaxSize() * MEGABYTE);
+        }
     }
 
     protected ConsoleProperties getConsoleProperties(final long tenantId) {

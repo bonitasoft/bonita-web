@@ -68,16 +68,29 @@ public class TenantFileUploadServletTest {
         when(session.getAttribute("apiSession")).thenReturn(apiSession);
         doReturn(consoleProperties).when(fileUploadServlet).getConsoleProperties(123);
         when(apiSession.getTenantId()).thenReturn(123L);
+        fileUploadServlet.checkUploadedFileSize = false;
+        fileUploadServlet.checkUploadedImageSize = false;
     }
 
     @Test
-    public void should_throw_fileTooBigException_when_file_is_bigger_in_than_conf_file() throws Exception {
+    public void should_set_maxFileSize_with_conf_value() throws Exception {
         final ServletFileUpload serviceFileUpload = mock(ServletFileUpload.class);
+        fileUploadServlet.checkUploadedFileSize = true;
 
         when(consoleProperties.getMaxSize()).thenReturn(1L); // 1Mb
-        fileUploadServlet.setUploadSizeMax(serviceFileUpload, request);
+        fileUploadServlet.setUploadMaxSize(serviceFileUpload, request);
         verify(serviceFileUpload).setFileSizeMax(FileUploadServlet.MEGABYTE);
-        }
+    }
+
+    @Test
+    public void should_set_maxImageSize_with_conf_value() throws Exception {
+        final ServletFileUpload serviceFileUpload = mock(ServletFileUpload.class);
+        fileUploadServlet.checkUploadedImageSize = true;
+
+        when(consoleProperties.getImageMaxSizeInKB()).thenReturn(100L); // 1Mb
+        fileUploadServlet.setUploadMaxSize(serviceFileUpload, request);
+        verify(serviceFileUpload).setFileSizeMax(100 * FileUploadServlet.KILOBYTE);
+    }
 
     @Test
     public void should_set_413_status_code_with_empty_body_when_file_creates_OOMError() throws Exception {
@@ -111,7 +124,6 @@ public class TenantFileUploadServletTest {
 
         //manage spy
         fileUploadServlet.uploadDirectoryPath = tempFolder.getRoot().getAbsolutePath();
-        fileUploadServlet.checkUploadedFileSize = true;
         doNothing().when(fileUploadServlet).defineUploadDirectoryPath(request);
         doReturn(serviceFileUpload).when(fileUploadServlet).createServletFileUpload(any(FileItemFactory.class));
 

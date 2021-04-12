@@ -395,6 +395,10 @@
             <param-name>SupportedExtensions</param-name>
             <param-value>png,jpg,gif,jpeg,bmp,wbmp,tga</param-value>
         </init-param>
+        <init-param>
+            <param-name>CheckUploadedImageSize</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>apiImageUploadServlet</servlet-name>
@@ -409,6 +413,10 @@
         </init-param>
         <init-param>
             <param-name>ReturnOriginalFilename</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>CheckUploadedImageSize</param-name>
             <param-value>true</param-value>
         </init-param>
     </servlet>
