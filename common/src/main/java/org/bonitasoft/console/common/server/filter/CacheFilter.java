@@ -66,9 +66,9 @@ public class CacheFilter extends ExcludingPatternFilter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        chain.doFilter(req, res);
-        
         setResponseHeader(res);
+        
+        chain.doFilter(req, res);
     }
     
     @Override
@@ -76,9 +76,9 @@ public class CacheFilter extends ExcludingPatternFilter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
         
-        chain.doFilter(req, res);
-        
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+        
+        chain.doFilter(req, res);
     }
 
     private void setResponseHeader(final HttpServletResponse response) {

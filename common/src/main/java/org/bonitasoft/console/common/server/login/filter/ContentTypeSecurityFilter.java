@@ -59,9 +59,9 @@ public class ContentTypeSecurityFilter extends ExcludingPatternFilter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        chain.doFilter(req, res);
-
         // X-Content-Type-Options (Drive-by download attacks)
         res.setHeader(X_CONTENT_TYPE_HEADER, headerValue);
+        
+        chain.doFilter(req, res);
     }
 }
