@@ -28,6 +28,7 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
@@ -57,7 +58,7 @@ public class ActivityEngineClient {
         try {
             return processAPI.getActivityDataInstance(dataName, activityId);
         } catch (DataNotFoundException e) {
-            throw new APIException(new _("Unable to find data instance %dataName% for activity %activityId%", 
+            throw new APINotFoundException(new _("Unable to find data instance %dataName% for activity %activityId%",
                     new Arg("dataName", dataName), new Arg("activityId", activityId)), e);
         }
     }

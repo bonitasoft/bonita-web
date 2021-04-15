@@ -22,6 +22,8 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
@@ -39,7 +41,7 @@ public class UserEngineClient {
         try {
             return identityAPI.updateUser(userId, userUpdater);
         } catch (UserNotFoundException e) {
-            throw new APIException(new _("Can't update user. User not found"), e);
+            throw new APINotFoundException(new _("Can't update user. User not found"), e);
         } catch (UpdateException e) {
             throw new APIException(new _("Error when updating user"), e);
         }
@@ -60,7 +62,7 @@ public class UserEngineClient {
         try {
             return identityAPI.getUser(userId);
         } catch (UserNotFoundException e) {
-            throw new APIException(new _("User not found"), e);
+            throw new APINotFoundException(new _("User not found"), e);
         }
     }
     

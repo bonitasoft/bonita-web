@@ -20,6 +20,7 @@ import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 
 
 /**
@@ -46,7 +47,7 @@ public class PageEngineClient {
         try {
             return pageAPI.getPage(pageId);
         } catch (PageNotFoundException e) {
-            throw new APIException(e);
+            throw new APINotFoundException(e);
         }
     }
 
@@ -58,7 +59,7 @@ public class PageEngineClient {
         try {
             return pageAPI.getPageByName(urlToken);
         } catch (PageNotFoundException e) {
-            throw new APIException(e);
+            throw new APINotFoundException(e);
         }
     }
 }

@@ -26,10 +26,7 @@ import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.identity.Role;
-import org.bonitasoft.engine.identity.RoleCreator;
-import org.bonitasoft.engine.identity.RoleSearchDescriptor;
-import org.bonitasoft.engine.identity.RoleUpdater;
+import org.bonitasoft.engine.identity.*;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -45,6 +42,7 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
@@ -101,6 +99,8 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
             }
 
             return convertEngineToConsoleItem(getIdentityAPI().updateRole(id.toLong(), updater));
+        } catch (final RoleNotFoundException e) {
+            throw new APINotFoundException(new _("Unable to find role %roleId%", new Arg("roleId", id)));
         } catch (APIException e) {
             throw e;
         } catch (final Exception e) {
@@ -167,6 +167,8 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
     public RoleItem get(final APIID id) {
         try {
             return convertEngineToConsoleItem(getIdentityAPI().getRole(id.toLong()));
+        } catch (final RoleNotFoundException e) {
+            throw new APINotFoundException(new _("Unable to find role %roleId%", new Arg("roleId", id)));
         } catch (final Exception e) {
             throw new APIException(e);
         }

@@ -36,6 +36,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -74,7 +75,7 @@ public class CaseEngineClient {
                 }
             }
         } catch (final ProcessDefinitionNotFoundException e) {
-            throw new APIException(new _("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
+            throw new APINotFoundException(new _("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
         } catch (final ProcessActivationException e) {
             throw new APIException(new _("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
         } catch (final ProcessExecutionException e) {
