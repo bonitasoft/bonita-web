@@ -60,9 +60,9 @@ public class FrameSecurityFilter extends ExcludingPatternFilter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        chain.doFilter(req, res);
-
         // X-frame-options (ClickJacking)
         res.setHeader(X_FRAME_OPTIONS_HEADER, headerValue);
+        
+        chain.doFilter(req, res);
     }
 }
