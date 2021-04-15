@@ -33,11 +33,14 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.ProcessInstanceHierarchicalDeletionException;
 import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.identity.RoleNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n._;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
@@ -63,8 +66,8 @@ public class ProcessEngineClient {
         try {
             return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final ProcessDefinitionNotFoundException e) {
-            // if not found, return null
-            return null;
+            LOGGER.log(Level.FINE,"Unable to find process with id " + processId);
+            throw new APINotFoundException(new _("Unable to find process with id %processId%", new Arg("processId", processId)), e);
         } catch (final Exception e) {
             throw new APIException("Error when getting process deployment information", e);
         }
@@ -79,7 +82,7 @@ public class ProcessEngineClient {
             return getProcessApi().deploy(businessArchive);
         } catch (final AlreadyExistsException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
-            throw new APIException(new _("Process %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
+            throw new APIForbiddenException(new _("Process %appName% in version %version% already exists", new Arg("appName", processDefinition.getName()), new Arg(
                     "version", processDefinition.getVersion())), e);
         } catch (final V6FormDeployException e) {
             final DesignProcessDefinition processDefinition = businessArchive.getProcessDefinition();
@@ -265,7 +268,7 @@ public class ProcessEngineClient {
         try {
             return processAPI.getProcessDataDefinitions(processId, 0, Integer.MAX_VALUE);
         } catch (final ProcessDefinitionNotFoundException e) {
-            throw new APIException(new _("Unable to get process data definitions, process %processId% not found", new Arg("processId", processId)));
+            throw new APINotFoundException(new _("Unable to get process data definitions, process %processId% not found", new Arg("processId", processId)));
         }
     }
 
