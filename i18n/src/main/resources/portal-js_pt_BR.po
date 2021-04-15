@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2020-11-30 02:31\n"
+"PO-Revision-Date: 2021-04-15 01:30\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -517,6 +517,9 @@ msgstr "Layout"
 msgid "Loading..."
 msgstr "Carregando..."
 
+msgid "Logo"
+msgstr ""
+
 msgid "Look & Feel"
 msgstr "Aparência"
 
@@ -943,8 +946,14 @@ msgstr "O caso será permanentemente excluído e não será armazenado nos arqui
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "O caso será excluído dos arquivos permanentemente."
 
+msgid "The file you are trying to upload has the wrong mime type"
+msgstr ""
+
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "Os mapeamentos de formulário devem ser resolvidos antes de ativar o processo."
+
+msgid "The image you are trying to upload is too big"
+msgstr ""
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
