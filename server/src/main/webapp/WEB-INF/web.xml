@@ -309,11 +309,9 @@
     </listener>
     <!-- Platform and tenant listeners -->
     <!-- For Apps containing the engine server -->
-    ${enable.engine.listener.start}
     <listener>
         <listener-class>org.bonitasoft.engine.api.internal.servlet.EngineInitializerListener</listener-class>
     </listener>
-    ${enable.engine.listener.end}
     <listener>
         <listener-class>org.bonitasoft.console.common.server.servlet.PlatformTenantListener</listener-class>
     </listener>
@@ -558,12 +556,10 @@
     </servlet>
     <!-- End theme -->
     <!-- For engine HTTP API -->
-    ${enable.engine.http.api.start}
     <servlet>
         <servlet-name>HttpAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.engine.api.internal.servlet.HttpAPIServlet</servlet-class>
     </servlet>
-    ${enable.engine.http.api.end}
 
     <servlet-mapping>
         <servlet-name>livingApplicationServlet</servlet-name>
@@ -721,12 +717,10 @@
         <url-pattern>/portal/resource/*</url-pattern>
     </servlet-mapping>
     <!-- For engine HTTP API -->
-    ${enable.engine.http.api.start}
     <servlet-mapping>
         <servlet-name>HttpAPIServlet</servlet-name>
         <url-pattern>/serverAPI/*</url-pattern>
     </servlet-mapping>
-    ${enable.engine.http.api.end}
 
     <!-- Container Resources -->
     <resource-ref>

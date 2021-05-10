@@ -11,10 +11,6 @@
 
     <properties>
         <!-- filtered in web.xml -->
-        <enable.engine.http.api.start>&lt;!--</enable.engine.http.api.start>
-        <enable.engine.http.api.end>--&gt;</enable.engine.http.api.end>
-        <enable.engine.listener.start>&lt;!--</enable.engine.listener.start>
-        <enable.engine.listener.end>--&gt;</enable.engine.listener.end>
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
         <build.year>${maven.build.timestamp}</build.year>
         <tomcat.home>${project.build.directory}/tomcat8x</tomcat.home>
@@ -31,7 +27,20 @@
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-server</artifactId>
-            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
@@ -221,6 +230,19 @@
             <version>1.16.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- need to add JTA here as it is only provided in the bundle -->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.3.2.Final</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -326,21 +348,11 @@
         <profile>
             <id>dev</id>
             <properties>
-                <!-- filtered in web.xml -->
-                <enable.engine.listener.start />
-                <enable.engine.listener.end />
-
                 <proxy-portal-js>&lt;rule&gt;&lt;from&gt;^/portal.js/(.*)$&lt;/from&gt;&lt;to type="proxy"
                     qsappend="true"&gt;http://127.0.0.1:9000/bonita/portaljs/$1&lt;/to&gt;&lt;/rule&gt;</proxy-portal-js>
             </properties>
 
             <dependencies>
-                <dependency>
-                    <groupId>org.bonitasoft.engine</groupId>
-                    <artifactId>bonita-server</artifactId>
-                    <version>${bonita.engine.version}</version>
-                    <scope>runtime</scope>
-                </dependency>
                 <dependency>
                     <groupId>commons-httpclient</groupId>
                     <artifactId>commons-httpclient</artifactId>
