@@ -4,7 +4,7 @@
     <artifactId>bonita-console</artifactId>
     <name>bonita console</name>
     <packaging>pom</packaging>
-    <version>7.12.4-SNAPSHOT</version>
+    <version>7.11.6.W21</version>
 
     <scm>
         <developerConnection>scm:git:git@github.com:bonitasoft/bonita-web.git</developerConnection>
@@ -12,7 +12,7 @@
     </scm>
 
     <properties>
-        <branding.version>2021.1-SNAPSHOT</branding.version>
+        <branding.version>7.11.6</branding.version>
         <bonita.engine.version>${project.version}</bonita.engine.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
