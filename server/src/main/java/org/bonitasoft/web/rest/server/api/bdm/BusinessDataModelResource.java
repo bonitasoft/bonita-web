@@ -54,17 +54,15 @@ public class BusinessDataModelResource extends CommonResource {
     }
     
     @Post("json")
-    public BusinessDataModelItem addBDM(final BusinessDataModelItem businessDataModelItem) {
+    public TenantResourceItem addBDM(final BusinessDataModelItem businessDataModelItem) {
         if (!isTenantPaused()) {
             setStatus(Status.CLIENT_ERROR_FORBIDDEN, new APIException("Unable to install the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."));
             return null;
         }
         try {
             final byte[] businessDataModelContent = getBusinessDataModelContent(businessDataModelItem);
-            tenantAdministrationAPI.uninstallBusinessDataModel();
-            tenantAdministrationAPI.installBusinessDataModel(businessDataModelContent);
-            // return myself because get is not implemented in engine
-            return businessDataModelItem;
+            tenantAdministrationAPI.updateBusinessDataModel(businessDataModelContent);
+            return new TenantResourceItem(tenantAdministrationAPI.getBusinessDataModelResource(), businessDataModelItem.getFileUpload());
         } catch (APIForbiddenException e) {
             setStatus(Status.CLIENT_ERROR_FORBIDDEN, e);
             return null;
