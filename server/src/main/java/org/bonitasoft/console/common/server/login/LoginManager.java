@@ -87,8 +87,8 @@ public class LoginManager {
         boolean invalidateAndRecreateHTTPSession = invalidateAndRecreateHTTPSessionIfSet != null ? invalidateAndRecreateHTTPSessionIfSet.booleanValue() : true;
         if(credentialsMap.isEmpty()) {
             if (credentials.getName() == null || credentials.getName().isEmpty()) {
-	            LOGGER.log(Level.FINE, "There are no credentials in the request");
-	            throw new AuthenticationFailedException("No credentials in request");
+                LOGGER.log(Level.FINE, "There are no credentials in the request");
+                throw new AuthenticationFailedException("No credentials in request");
             }
         }
         APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
@@ -147,8 +147,8 @@ public class LoginManager {
             LOGGER.log(Level.FINE, "HTTP session initialization");
         }
         if (recreateHTTPSession) {
-	        //invalidating session allows to fix session fixation security issue
-	        request.getHttpSession().invalidate();
+            //invalidating session allows to fix session fixation security issue
+            request.getHttpSession().invalidate();
         }
         //calling request.getSession() creates a new Session if no any valid exists
         SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
