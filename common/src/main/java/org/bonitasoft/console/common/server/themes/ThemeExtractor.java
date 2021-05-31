@@ -20,7 +20,6 @@ import java.io.Serializable;
 import javax.servlet.ServletException;
 
 import org.apache.commons.io.FileUtils;
-import org.bonitasoft.console.common.server.servlet.HomepageServlet;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.ThemeAPI;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -34,6 +33,8 @@ import org.bonitasoft.engine.theme.ThemeType;
  * @author Emmanuel Duchastenier
  */
 public class ThemeExtractor implements Serializable {
+    
+    public static final String LASTUPDATE_FILENAME = ".lastupdate";
 
     public ThemeExtractor() {
     }
@@ -41,7 +42,7 @@ public class ThemeExtractor implements Serializable {
     public void retrieveAndExtractCurrentTheme(File themeFolder, APISession apiSession, ThemeType themeType)
             throws ServletException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException, IOException {
         final File specificThemeFolder = new File(themeFolder, themeType.name().toLowerCase());
-        final File timestampFile = new File(specificThemeFolder, HomepageServlet.LASTUPDATE_FILENAME);
+        final File timestampFile = new File(specificThemeFolder, LASTUPDATE_FILENAME);
         final long lastUpdateTimestamp = getThemeLastUpdateDateFromEngine(apiSession, themeType);
         if (specificThemeFolder.exists() && timestampFile.exists()) {
             final String timestampString = FileUtils.readFileToString(timestampFile);

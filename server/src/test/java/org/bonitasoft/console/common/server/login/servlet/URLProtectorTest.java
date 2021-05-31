@@ -22,18 +22,7 @@ public class URLProtectorTest {
     public void testProtectRedirectUrlShouldNotChangeURL() {
         assertEquals("mobile/#home", urlProtecter.protectRedirectUrl("mobile/#home"));
         assertEquals("/bonita/mobile/#login", urlProtecter.protectRedirectUrl("/bonita/mobile/#login"));
-        assertEquals("/bonita/portal", urlProtecter.protectRedirectUrl("/bonita/portal"));
-    }
-
-    @Test
-    public void testProtectRedirectUrlRedirectingtoCaseListingUser() {
-        assertEquals("#?_p=caselistinguser", urlProtecter.protectRedirectUrl("#?_p=caselistinguser"));
-    }
-
-    @Test
-    public void testProtectRedirectUrlIsNotChangedIfStartingWithBonitaPortal() {
-        assertEquals("portal/homepage#?_p=caselistinguser&test=http://www.google.fr",
-                urlProtecter.protectRedirectUrl("portal/homepage#?_p=caselistinguser&test=http://www.google.fr"));
+        assertEquals("/apps/appDirectoryBonita", urlProtecter.protectRedirectUrl("/apps/appDirectoryBonita"));
     }
 
     @Test

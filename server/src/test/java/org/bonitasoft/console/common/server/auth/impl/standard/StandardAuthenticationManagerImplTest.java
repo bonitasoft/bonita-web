@@ -35,31 +35,31 @@ public class StandardAuthenticationManagerImplTest {
 
     @Test
     public void testGetSimpleLoginpageURL() throws Exception {
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        String redirectUrl = "%2Fapps%2FappDirectoryBonita";
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 
     @Test
     public void testGetLoginpageURLWithLocale() throws Exception {
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        String redirectUrl = "%2Fapps%2FappDirectoryBonita";
         request.setParameter("_l", "es");
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&_l=es&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&_l=es&redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 
     @Test
     public void testGetLoginpageURLFromPortal() throws Exception {
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        String redirectUrl = "%2Fapps%2FappDirectoryBonita";
         request.setServletPath("/portal/");
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=1&redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 
     @Test
@@ -76,22 +76,22 @@ public class StandardAuthenticationManagerImplTest {
     public void should_add_tenant_parameter_contained_in_request_params() throws Exception {
         request.setParameter("tenant", "4");
         request.setCookies(new Cookie("bonita.tenant", "123"));
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        String redirectUrl = "%2Fapps%2FappDirectoryBonita";
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=4&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=4&redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 
     @Test
     public void should_add_tenant_parameter_from_cookie_if_not_in_request() throws Exception {
         request.removeAllParameters();
         request.setCookies(new Cookie("bonita.tenant", "123"));
-        String redirectUrl = "%2Fportal%2Fhomepage";
+        String redirectUrl = "%2Fapps%2FappDirectoryBonita";
 
         String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=123&redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?tenant=123&redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 
     @Test
@@ -99,8 +99,8 @@ public class StandardAuthenticationManagerImplTest {
         when(standardLoginManagerImpl.getDefaultTenantId()).thenReturn(123L);
         request.setParameter("tenant", "123");
 
-        String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, "%2Fportal%2Fhomepage");
+        String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, "%2Fapps%2FappDirectoryBonita");
 
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?redirectUrl=%2Fportal%2Fhomepage");
+        assertThat(loginURL).isEqualToIgnoringCase("bonita/login.jsp?redirectUrl=%2Fapps%2FappDirectoryBonita");
     }
 }

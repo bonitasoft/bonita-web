@@ -123,12 +123,12 @@ public class LoginServletTest {
 
         final String cleanUrl = servlet
             .dropPassword(
-                "?username=walter.bates&password=bpm&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n"
+                "?username=walter.bates&password=bpm&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fapps%2FappDirectoryBonita%3Flocale%3Den%23form%3DPool-\n"
                     +
                     "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp");
 
         assertThat(cleanUrl,
-            is("?username=walter.bates&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fportal%2Fhomepage%3Fui%3Dform%26locale%3Den%23form%3DPool-\n" +
+            is("?username=walter.bates&redirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fbonita%2Fapps%2FappDirectoryBonita%3Flocale%3Den%23form%3DPool-\n" +
                 "-1.0%24entry%26process%3D8506394779365952706%26mode%3Dapp"));
     }
 
