@@ -71,9 +71,9 @@ public class LogoutServletTest {
 
     @Test
     public void testSanitizeLoginPageUrlShouldReturnCorrectUrl() throws Exception {
-        String loginPage = logoutServlet.sanitizeLoginPageUrl("portal/homepage?p=test#poutpout");
+        String loginPage = logoutServlet.sanitizeLoginPageUrl("apps/appDirectoryBonita?p=test#poutpout");
         
-        assertThat(loginPage).isEqualToIgnoringCase("portal/homepage?p=test#poutpout");
+        assertThat(loginPage).isEqualToIgnoringCase("apps/appDirectoryBonita?p=test#poutpout");
     }
 
     @Test

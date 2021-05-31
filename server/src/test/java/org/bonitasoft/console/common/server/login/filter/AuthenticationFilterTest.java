@@ -281,25 +281,24 @@ public class AuthenticationFilterTest {
         matchExcludePattern("/bonita/apps/app/API/system/session/unusedId", true);
         matchExcludePattern("/bonita/portal/resource/page/content/", false);
         matchExcludePattern("/bonita/apps/app/page/", false);
-        matchExcludePattern("/bonita/portal/homepage", false);
     }
 
     @Test
     public void testMakeRedirectUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("/portal/homepage");
+        when(request.getRequestedUri()).thenReturn("/apps/appDirectoryBonita");
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(request, times(1)).getRequestedUri();
-        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/portal/homepage");
+        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/apps/appDirectoryBonita");
     }
 
     @Test
     public void testMakeRedirectUrlFromRequestUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("portal/homepage");
-        when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/portal/homepage"));
+        when(request.getRequestedUri()).thenReturn("apps/appDirectoryBonita");
+        when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/apps/appDirectoryBonita"));
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(request, times(1)).getRequestedUri();
         verify(httpRequest, never()).getRequestURI();
-        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("portal/homepage");
+        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("apps/appDirectoryBonita");
     }
 
     @Test

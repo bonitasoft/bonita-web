@@ -59,7 +59,7 @@ public interface AuthenticationManager {
     /**
      * The default redirect URL.
      */
-    static final String DEFAULT_DIRECT_URL = "portal/homepage";
+    static final String DEFAULT_DIRECT_URL = "apps/appDirectoryBonita";
     
     /**
      * indicate wheather the HTTP session should be invalidated and re created upon login
