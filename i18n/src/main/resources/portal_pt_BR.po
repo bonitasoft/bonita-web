@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-10 05:21+0200\n"
-"PO-Revision-Date: 2021-04-15 01:30\n"
+"POT-Creation-Date: 2021-04-16 05:21+0200\n"
+"PO-Revision-Date: 2021-06-14 01:31\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2303,6 +2303,12 @@ msgstr "Impossível encontrar dados de instância %dataName% da atividade %activ
 
 msgid "Unable to find group %groupId%"
 msgstr "Não é possível localizar o grupo %groupId%"
+
+msgid "Unable to find process with id %processId%"
+msgstr ""
+
+msgid "Unable to find role %roleId%"
+msgstr ""
 
 msgid "Unable to get group path, group not found"
 msgstr "Não é possível obter o caminho do grupo, grupo não encontrado"
