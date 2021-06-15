@@ -79,7 +79,6 @@
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
             <artifactId>bonita-test-api</artifactId>
-            <version>${bonita.engine.version}</version>
         </dependency>
     </dependencies>
 </project>
