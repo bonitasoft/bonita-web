@@ -10,11 +10,14 @@
 
     <properties>
         <bonita.engine.version>${project.version}</bonita.engine.version>
-
         <gwt.version>2.5.1</gwt.version>
         <wro4j.version>1.7.0</wro4j.version>
         <restlet-version>2.3.12</restlet-version>
         <jackson-ext-modules-version>2.10.1</jackson-ext-modules-version>
+        <batik.version>1.7</batik.version>
+
+        <keycloak.version>6.0.1</keycloak.version>
+        <spnego.version>r9</spnego.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +56,63 @@
 
             <!-- MISCELLANEOUS -->
             <dependency>
+                <groupId>org.apache.xmlgraphics</groupId>
+                <artifactId>batik-bridge</artifactId>
+                <version>${batik.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>xalan</artifactId>
+                        <groupId>xalan</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>xml-apis</artifactId>
+                        <groupId>xml-apis</groupId>
+                    </exclusion>
+                    <!-- we exclude batik-js since it is already part of console-war-sp WEB-INF/lib as a patched jar to remove classpath entry in manifest.mf (see JIRA
+                        WEB-2729) -->
+                    <exclusion>
+                        <groupId>org.apache.xmlgraphics</groupId>
+                        <artifactId>batik-js</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlgraphics</groupId>
+                <artifactId>batik-dom</artifactId>
+                <version>${batik.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>xalan</artifactId>
+                        <groupId>xalan</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>xml-apis</artifactId>
+                        <groupId>xml-apis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlgraphics</groupId>
+                <artifactId>batik-svggen</artifactId>
+                <version>${batik.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>xml-apis</artifactId>
+                        <groupId>xml-apis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlbeans</groupId>
+                <artifactId>xmlbeans</artifactId>
+                <version>2.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-math3</artifactId>
                 <version>3.2</version>
@@ -61,11 +121,6 @@
                 <groupId>net.htmlparser.jericho</groupId>
                 <artifactId>jericho-html</artifactId>
                 <version>3.1</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.0.1</version>
             </dependency>
             <dependency>
                 <groupId>taglibs</groupId>
@@ -183,17 +238,76 @@
                 <version>${wro4j.version}</version>
             </dependency>
 
-            <!-- BUILD -->
-            <dependency>
-                <groupId>ant-contrib</groupId>
-                <artifactId>ant-contrib</artifactId>
-                <version>1.0b3</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.bonitasoft.engine</groupId>
                 <artifactId>bonita-test-api</artifactId>
                 <version>${bonita.engine.version}</version>
+            </dependency>
+
+
+            <!-- Extensions: -->
+            <!-- ENGINE -->
+            <dependency>
+                <groupId>com.bonitasoft.engine</groupId>
+                <artifactId>bonita-common-sp</artifactId>
+                <version>${bonita.engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bonitasoft.engine</groupId>
+                <artifactId>bonita-server-sp</artifactId>
+                <version>${bonita.engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bonitasoft.engine</groupId>
+                <artifactId>bonita-client-sp</artifactId>
+                <version>${bonita.engine.version}</version>
+            </dependency>
+
+            <!-- Kerberos -->
+            <dependency>
+                <groupId>net.sourceforge.spnego</groupId>
+                <artifactId>spnego</artifactId>
+                <version>${spnego.version}</version>
+            </dependency>
+
+
+            <!-- Keycloak -->
+            <dependency>
+                <groupId>org.keycloak.bom</groupId>
+                <artifactId>keycloak-adapter-bom</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${keycloak.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-saml-servlet-filter-adapter</artifactId>
+                <version>${keycloak.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-servlet-filter-adapter</artifactId>
+                <version>${keycloak.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-databind</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-annotations</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
         </dependencies>
