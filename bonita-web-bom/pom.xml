@@ -54,6 +54,19 @@
                 <version>${bonita.engine.version}</version>
             </dependency>
 
+            <!-- WEB EXTENSIONS -->
+            <dependency>
+                <groupId>org.bonitasoft.web</groupId>
+                <artifactId>bonita-web-extensions</artifactId>
+                <version>${bonita.engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bonitasoft.web</groupId>
+                <artifactId>bonita-web-extensions-sp</artifactId>
+                <version>${bonita.engine.version}</version>
+            </dependency>
+
+
             <!-- MISCELLANEOUS -->
             <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>

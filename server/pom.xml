@@ -55,7 +55,6 @@
         <dependency>
             <groupId>org.bonitasoft.web</groupId>
             <artifactId>bonita-web-extensions</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <!--Vendors-->
