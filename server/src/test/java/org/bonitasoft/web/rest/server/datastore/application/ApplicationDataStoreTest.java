@@ -16,11 +16,7 @@ import java.util.HashMap;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
-import org.bonitasoft.engine.business.application.Application;
-import org.bonitasoft.engine.business.application.ApplicationCreator;
-import org.bonitasoft.engine.business.application.ApplicationNotFoundException;
-import org.bonitasoft.engine.business.application.ApplicationPage;
-import org.bonitasoft.engine.business.application.ApplicationUpdater;
+import org.bonitasoft.engine.business.application.*;
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
@@ -245,6 +241,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         application.setId(1);
         application.setCreationDate(new Date());
         application.setLastUpdateDate(new Date());
+        application.setVisibility(ApplicationVisibility.ALL);
 
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);
@@ -287,6 +284,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         application.setId(1);
         application.setCreationDate(new Date());
         application.setLastUpdateDate(new Date());
+        application.setVisibility(ApplicationVisibility.ALL);
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);
 

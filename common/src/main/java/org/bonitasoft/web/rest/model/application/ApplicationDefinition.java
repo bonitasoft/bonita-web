@@ -53,6 +53,8 @@ public class ApplicationDefinition extends ItemDefinition<ApplicationItem> {
         createAttribute(ApplicationItem.ATTRIBUTE_LAST_UPDATE_DATE, ItemAttribute.TYPE.STRING);
         createAttribute(ApplicationItem.ATTRIBUTE_UPDATED_BY, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ApplicationItem.ATTRIBUTE_STATE, ItemAttribute.TYPE.STRING);
+        createAttribute(ApplicationItem.ATTRIBUTE_VISIBILITY, ItemAttribute.TYPE.STRING);
+        createAttribute(ApplicationItem.ATTRIBUTE_EDITABLE, ItemAttribute.TYPE.BOOLEAN);
     }
 
     @Override
