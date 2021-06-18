@@ -11,10 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
-import org.bonitasoft.engine.business.application.ApplicationCreator;
-import org.bonitasoft.engine.business.application.ApplicationField;
-import org.bonitasoft.engine.business.application.ApplicationState;
-import org.bonitasoft.engine.business.application.ApplicationUpdater;
+import org.bonitasoft.engine.business.application.*;
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -39,6 +36,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     private static final long LAYOUT_ID = 3L;
     private static final long THEME_ID = 4L;
     private static final long TENANT_ID = 43L;
+    private static final ApplicationVisibility APPLICATION_VISIBILITY = ApplicationVisibility.RESTRICTED;
 
     private ApplicationItemConverter converter;
 
@@ -61,6 +59,8 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         application.setState(STATE);
         application.setProfileId(PROFILE_ID);
         application.setHomePageId(HOME_PAGE_ID);
+        application.setVisibility(APPLICATION_VISIBILITY);
+        application.setEditable(true);
 
         //when
         ApplicationItem item = converter.toApplicationItem(application);
@@ -81,6 +81,8 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         assertThat(item.getProfileId().toLong()).isEqualTo(PROFILE_ID);
         assertThat(item.getHomePageId().toLong()).isEqualTo(HOME_PAGE_ID);
         assertThat(item.getLayoutId().toLong()).isEqualTo(LAYOUT_ID);
+        assertThat(item.getVisibility()).isEqualTo(APPLICATION_VISIBILITY.name());
+        assertThat(item.isEditable()).isEqualTo(true);
 
 
         application.setHasIcon(false);
@@ -102,6 +104,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         application.setState(STATE);
         application.setProfileId(PROFILE_ID);
         application.setHomePageId(null);
+        application.setVisibility(APPLICATION_VISIBILITY);
 
         //when
         final ApplicationItem item = converter.toApplicationItem(application);
@@ -124,6 +127,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         application.setState(STATE);
         application.setProfileId(PROFILE_ID);
         application.setHomePageId(null);
+        application.setVisibility(APPLICATION_VISIBILITY);
 
         //when
         final ApplicationItem item = converter.toApplicationItem(application);
@@ -146,6 +150,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         application.setState(STATE);
         application.setProfileId(PROFILE_ID);
         application.setHomePageId(null);
+        application.setVisibility(APPLICATION_VISIBILITY);
 
         //when
         final ApplicationItem item = converter.toApplicationItem(application);

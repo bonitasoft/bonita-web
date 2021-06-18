@@ -24,12 +24,8 @@ import org.bonitasoft.engine.business.application.Application;
 import org.bonitasoft.engine.business.application.ApplicationCreator;
 import org.bonitasoft.engine.business.application.ApplicationUpdater;
 import org.bonitasoft.web.rest.model.application.ApplicationItem;
-import org.bonitasoft.web.rest.model.identity.GroupItem;
-import org.bonitasoft.web.rest.server.datastore.organization.Avatars;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasIcon;
-
-import static org.bonitasoft.web.toolkit.client.common.util.StringUtil.isBlank;
 
 /**
  * @author Elias Ricken de Medeiros
@@ -49,7 +45,13 @@ public class ApplicationItemConverter {
         item.setLastUpdateDate(Long.toString(application.getLastUpdateDate().getTime()));
         item.setUpdatedBy(application.getUpdatedBy());
         item.setState(application.getState());
-        item.setProfileId(application.getProfileId());
+        item.setVisibility(application.getVisibility().name());
+        item.setEditable(application.isEditable());
+        if (application.getProfileId() != null) {
+            item.setProfileId(application.getProfileId());
+        } else {
+            item.setProfileId(-1L);
+        }
         if (application.getHomePageId() != null) {
             item.setHomePageId(application.getHomePageId());
         } else {

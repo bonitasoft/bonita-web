@@ -13,6 +13,7 @@
  **/
 package org.bonitasoft.web.rest.model.application;
 
+import org.bonitasoft.engine.business.application.ApplicationVisibility;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -55,6 +56,10 @@ public class ApplicationItem extends Item implements ItemHasUniqueId, ItemHasIco
     public static final String ATTRIBUTE_LAYOUT_ID = "layoutId";
 
     public static final String ATTRIBUTE_THEME_ID = "themeId";
+
+    public static final String ATTRIBUTE_VISIBILITY = "visibility";
+
+    public static final String ATTRIBUTE_EDITABLE = "editable";
 
     public static final String FILTER_USER_ID = "userId";
 
@@ -221,6 +226,23 @@ public class ApplicationItem extends Item implements ItemHasUniqueId, ItemHasIco
 
     public void setUserId(final String userId) {
         setAttribute(FILTER_USER_ID, userId);
+    }
+
+    public String getVisibility() {
+        return getAttributeValue(ATTRIBUTE_VISIBILITY);
+    }
+
+    /** FIXME Use Enum instead of String after removing GWT permutations */
+    public void setVisibility(final String visibility) {
+        setAttribute(ATTRIBUTE_VISIBILITY, visibility);
+    }
+
+    public boolean isEditable() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_EDITABLE));
+    }
+
+    public void setEditable(final boolean isEditable) {
+        setAttribute(ATTRIBUTE_EDITABLE, String.valueOf(isEditable));
     }
 
     public PageItem getLayout() {
