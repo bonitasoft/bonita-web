@@ -16,6 +16,7 @@ import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.business.application.ApplicationMenu;
 import org.bonitasoft.engine.business.application.ApplicationMenuSearchDescriptor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
+import org.bonitasoft.engine.business.application.ApplicationVisibility;
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationMenuImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
@@ -197,9 +198,16 @@ public class ApplicationModelTest {
     @Test
     public void should_check_that_application_has_a_profile_mapped_to_it() throws Exception {
         application.setProfileId(1L);
+        application.setVisibility(ApplicationVisibility.RESTRICTED);
         assertThat(model.hasProfileMapped()).isEqualTo(true);
         
         application.setProfileId(null);
         assertThat(model.hasProfileMapped()).isEqualTo(false);
+        
+        application.setVisibility(ApplicationVisibility.ALL);
+        assertThat(model.hasProfileMapped()).isEqualTo(true);
+        
+        application.setVisibility(ApplicationVisibility.TECHNICAL_USER);
+        assertThat(model.hasProfileMapped()).isEqualTo(true);
     }
 }

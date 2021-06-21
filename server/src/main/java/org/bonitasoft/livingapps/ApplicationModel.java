@@ -6,6 +6,7 @@ import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.business.application.Application;
 import org.bonitasoft.engine.business.application.ApplicationMenuSearchDescriptor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
+import org.bonitasoft.engine.business.application.ApplicationVisibility;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
@@ -70,16 +71,25 @@ public class ApplicationModel {
     }
 
     public boolean authorize(final APISession session) {
-        for (final Profile userProfile : getUserProfiles(session)) {
-            if (userProfile.getId() == application.getProfileId()) {
-                return true;
+        if (ApplicationVisibility.ALL.equals(application.getVisibility())) {
+            return true;
+        } else if (ApplicationVisibility.TECHNICAL_USER.equals(application.getVisibility())) {
+            return session.isTechnicalUser();
+        } else {
+            for (final Profile userProfile : getUserProfiles(session)) {
+                if (userProfile.getId() == application.getProfileId()) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean hasProfileMapped() {
-        return application.getProfileId() != null;
+        if (ApplicationVisibility.RESTRICTED.equals(application.getVisibility())) {
+            return application.getProfileId() != null;
+        }
+        return true;
     }
 
     private List<Profile> getUserProfiles(final APISession session) {
