@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
@@ -83,6 +84,25 @@ public class MultiReadHttpServletRequestTest {
         public void close() throws IOException {
             inputStream.close();
             super.close();
+        }
+
+        @Override
+        public boolean isFinished() {
+            try {
+                return inputStream.available() == 0;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public boolean isReady() {
+            return !isFinished();
+        }
+
+        @Override
+        public void setReadListener(ReadListener readListener) {
+            throw new RuntimeException("Not implemented");
         }
 
     }
