@@ -5,13 +5,14 @@ import static org.mockito.Mockito.doReturn;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.tools.ant.filters.StringInputStream;
+import org.apache.commons.io.input.CharSequenceInputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,7 +69,7 @@ public class MultiReadHttpServletRequestTest {
 
     class FakeServletInputStream extends ServletInputStream {
 
-        private final StringInputStream inputStream = new StringInputStream("body content");
+        private final CharSequenceInputStream inputStream = new CharSequenceInputStream("body content", StandardCharsets.UTF_8);
 
         @Override
         public int read() throws IOException {

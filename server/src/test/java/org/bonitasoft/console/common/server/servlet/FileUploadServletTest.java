@@ -6,16 +6,18 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,11 +38,14 @@ public class FileUploadServletTest {
         when(fileUploadServlet.getInitParameter(FileUploadServlet.RETURN_FULL_SERVER_PATH_PARAM)).thenReturn("false");
         fileUploadServlet.init();
 
-        final JSONObject jsonResponse = new JSONObject(fileUploadServlet.generateResponseJson(request, "originalFileName", "application/json", uploadedFile));
+        final String jsonResponse = fileUploadServlet.generateResponseJson(request, "originalFileName", "application/json", uploadedFile);
+        ObjectMapper mapper = new ObjectMapper();
+        @SuppressWarnings("unchecked")
+        Map<String, String> jsonResponseMap = mapper.readValue(jsonResponse, Map.class);
 
-        assertThat(jsonResponse.getString(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE)).isEqualTo("originalFileName");
-        assertThat(jsonResponse.getString(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE)).isEqualTo("uploadedFile.txt");
-        assertThat(jsonResponse.getString(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE)).isEqualTo("application/json");
+        assertThat(jsonResponseMap.get(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE)).isEqualTo("originalFileName");
+        assertThat(jsonResponseMap.get(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE)).isEqualTo("uploadedFile.txt");
+        assertThat(jsonResponseMap.get(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE)).isEqualTo("application/json");
     }
 
     @Test

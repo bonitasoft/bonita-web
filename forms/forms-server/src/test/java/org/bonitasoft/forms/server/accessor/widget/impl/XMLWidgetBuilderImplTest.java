@@ -8,7 +8,6 @@ import static org.mockito.Mockito.doReturn;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.xerces.impl.xs.opti.DefaultNode;
 import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.client.model.ReducedFormWidget.ItemPosition;
 import org.bonitasoft.forms.client.model.WidgetType;
@@ -17,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
@@ -29,6 +29,9 @@ public class XMLWidgetBuilderImplTest {
     @Spy
     @InjectMocks
     XMLWidgetBuilderImpl xmlWidgetBuilderImpl;
+    
+    @Mock
+    Node node;
 
     private Document document;
     DocumentBuilderFactory factory;
@@ -51,20 +54,20 @@ public class XMLWidgetBuilderImplTest {
         doReturn("style").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.STYLE));
         doReturn("myId").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq("@" + XMLForms.ID));
         doReturn(WidgetType.FILEDOWNLOAD.toString()).when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq("@" + XMLForms.TYPE));
-        doReturn(new DefaultNode()).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MAX_LENGTH));
-        doReturn(new DefaultNode()).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MAX_HEIGHT));
+        doReturn(node).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MAX_LENGTH));
+        doReturn(node).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MAX_HEIGHT));
         doReturn("labelstyle").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.LABEL_STYLE));
         doReturn("myClass").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.CLASSNAME));
         doReturn("labelStyle").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.LABEL_STYLE));
         doReturn("myClass").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.INPUT_STYLE));
-        doReturn(new DefaultNode()).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.LABEL_POSITION));
+        doReturn(node).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.LABEL_POSITION));
         doReturn(false).when(xmlWidgetBuilderImpl).getBooleanValue(any(Node.class));
         doReturn("myOutputType").when(xmlWidgetBuilderImpl).getStringByXpath(any(Node.class), eq(XMLForms.FIELD_OUTPUT_TYPE));
         doReturn(100).when(xmlWidgetBuilderImpl).getIntValue(any(Node.class));
         doReturn(ItemPosition.TOP).when(xmlWidgetBuilderImpl).getItemPositionValue(any(Node.class));
         doReturn(ItemPosition.TOP).when(xmlWidgetBuilderImpl).getItemPositionValue(any(Node.class));
 
-        doReturn(new DefaultNode()).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MANDATORY));
+        doReturn(node).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.MANDATORY));
         doReturn(null).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.LABEL));
         doReturn(null).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.TITLE));
         doReturn(initialValue).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.INITIAL_VALUE));
@@ -92,7 +95,6 @@ public class XMLWidgetBuilderImplTest {
         doReturn(null).when(xmlWidgetBuilderImpl).getNodeByXpath(any(Node.class), eq(XMLForms.SUB_TITLE));
 
         //when
-        Node node = new DefaultNode();
         FormWidget formWidget = xmlWidgetBuilderImpl.parseWidget(node, false);
 
         //then
