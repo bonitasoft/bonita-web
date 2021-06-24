@@ -36,6 +36,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
 /**
@@ -802,6 +803,27 @@ public class MockHttpServletRequest implements HttpServletRequest {
      */
     public void setPathInfo(final String pathInfo) {
         this.pathInfo = pathInfo;
+    }
+
+    @Override
+    public long getContentLengthLong() {
+        if (this.req != null) {
+            return this.req.getContentLengthLong();
+        }
+        return 0;
+    }
+
+    @Override
+    public String changeSessionId() {
+        if (this.req != null) {
+            return this.req.changeSessionId();
+        }
+        return null;
+    }
+
+    @Override
+    public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+        return null;
     }
 
 }
