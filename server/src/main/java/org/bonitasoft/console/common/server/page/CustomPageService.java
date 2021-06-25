@@ -16,6 +16,7 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -140,7 +141,7 @@ public class CustomPageService {
     }
 
     public Class<?> registerRestApiPage(final GroovyClassLoader pageClassLoader,
-            PageResourceProviderImpl pageResourceProvider, ControllerClassName restApiControllerClassName, String mappingKey)
+                                        PageResourceProviderImpl pageResourceProvider, ControllerClassName restApiControllerClassName, String mappingKey)
             throws BonitaException {
         try {
             if (restApiControllerClassName.isSource()) {
@@ -219,7 +220,7 @@ public class CustomPageService {
     }
 
     protected GroovyClassLoader buildPageClassloader(final APISession apiSession, final String pageName,
-            final File pageDirectory)
+                                                     final File pageDirectory)
             throws CompilationFailedException, IOException {
         GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
         final BDMClientDependenciesResolver bdmDependenciesResolver = new BDMClientDependenciesResolver(apiSession);
@@ -255,8 +256,8 @@ public class CustomPageService {
     }
 
     protected ClassLoader getParentClassloader(final String pageName,
-            final CustomPageDependenciesResolver customPageDependenciesResolver,
-            final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
+                                               final CustomPageDependenciesResolver customPageDependenciesResolver,
+                                               final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
         final CustomPageChildFirstClassLoader classLoader = new CustomPageChildFirstClassLoader(pageName,
                 customPageDependenciesResolver,
                 bdmDependenciesResolver, Thread.currentThread().getContextClassLoader());
@@ -314,7 +315,7 @@ public class CustomPageService {
     }
 
     protected long getPageLastUpdateDateFromEngine(final APISession apiSession,
-            final PageResourceProvider pageResourceProvider) throws BonitaException {
+                                                   final PageResourceProvider pageResourceProvider) throws BonitaException {
         try {
             final PageAPI pageAPI = getPageAPI(apiSession);
             final Date lastUpdateDate = pageResourceProvider.getPage(pageAPI).getLastModificationDate();
@@ -330,8 +331,8 @@ public class CustomPageService {
     }
 
     public Properties getPageProperties(final APISession apiSession, final byte[] zipContent,
-            final boolean checkIfItAlreadyExists,
-            final Long processDefinitionId)
+                                        final boolean checkIfItAlreadyExists,
+                                        final Long processDefinitionId)
             throws InvalidPageZipMissingPropertiesException, InvalidPageZipMissingIndexException,
             InvalidPageZipInconsistentException,
             InvalidPageZipMissingAPropertyException, InvalidPageTokenException, AlreadyExistsException, BonitaException {
@@ -362,8 +363,8 @@ public class CustomPageService {
     }
 
     public Set<String> getCustomPagePermissions(final Properties pageProperties,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                                final ResourcesPermissionsMapping resourcesPermissionsMapping,
+                                                final boolean alsoReturnResourcesNotFound) {
         final PropertiesWithSet pagePropertiesWithSet = new PropertiesWithSet(pageProperties);
         final Set<String> pageRestResources = new HashSet<>(pagePropertiesWithSet.getPropertyAsSet(RESOURCES_PROPERTY));
         // pageRestResources.addAll(Arrays.asList(GET_SYSTEM_SESSION, GET_PORTAL_PROFILE, GET_IDENTITY_USER));
@@ -387,15 +388,15 @@ public class CustomPageService {
     }
 
     Set<String> getCustomPagePermissions(final File file,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final boolean alsoReturnResourcesNotFound) {
+                                         final ResourcesPermissionsMapping resourcesPermissionsMapping,
+                                         final boolean alsoReturnResourcesNotFound) {
         final PropertiesWithSet pageProperties = new PropertiesWithSet(file);
         return getCustomPagePermissions(pageProperties, resourcesPermissionsMapping, alsoReturnResourcesNotFound);
     }
 
     void addPermissionsToCompoundPermissions(final String pageName, final Set<String> customPagePermissions,
-            final CompoundPermissionsMapping compoundPermissionsMapping,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping) {
+                                             final CompoundPermissionsMapping compoundPermissionsMapping,
+                                             final ResourcesPermissionsMapping resourcesPermissionsMapping) {
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_SYSTEM_SESSION));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_PORTAL_PROFILE));
         customPagePermissions.addAll(resourcesPermissionsMapping.getPropertyAsSet(GET_IDENTITY_USER));
@@ -411,10 +412,13 @@ public class CustomPageService {
         return getPageAPI(apiSession).getPage(pageId);
     }
 
+    /**
+     * Rest Api extension permissions will be removed according to the pageResourceProvider given in parameter. The pageResourceProvider
+     * must be updated before the calling of the remove. The refresh could be done with invocation of
+     * customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
+     */
     public void removeRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final PageResourceProvider pageResourceProvider, final APISession apiSession)
-            throws IOException, BonitaException {
-        ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+                                                  final PageResourceProvider pageResourceProvider) {
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (final String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.removeProperty(key);
@@ -423,8 +427,8 @@ public class CustomPageService {
     }
 
     void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final PageResourceProvider pageResourceProvider,
-            final APISession apiSession) throws IOException, BonitaException {
+                                        final PageResourceProvider pageResourceProvider,
+                                        final APISession apiSession) throws IOException, BonitaException {
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
         for (final String key : permissionsMapping.keySet()) {
             resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));
@@ -467,21 +471,24 @@ public class CustomPageService {
         }
     }
 
-    public void writePageToTemp(Page page,
-            PageResourceProvider pageResourceProvider,
-            File unzipPageTempFolder,
-            ResourcesPermissionsMapping resourcesPermissionsMapping,
-            CompoundPermissionsMapping compoundPermissionsMapping,
-            APISession session) throws IOException, BonitaException {
+    public void writePageToPageDirectoryAndAddPermissions(Page page,
+                                                          PageResourceProvider pageResourceProvider,
+                                                          File unzipPageTempFolder,
+                                                          ResourcesPermissionsMapping resourcesPermissionsMapping,
+                                                          CompoundPermissionsMapping compoundPermissionsMapping,
+                                                          APISession session) throws IOException, BonitaException {
         verifyPageClass(unzipPageTempFolder, session);
         File pageDirectory = pageResourceProvider.getPageDirectory();
         FileUtils.copyDirectory(unzipPageTempFolder, pageDirectory);
-        final File timestampFile = new File(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
         long lastUpdateTimestamp = 0L;
         if (page.getLastModificationDate() != null) {
             lastUpdateTimestamp = page.getLastModificationDate().getTime();
         }
-        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+        Files.write(Paths.get(pageDirectory.getPath(),LASTUPDATE_FILENAME), String.valueOf(lastUpdateTimestamp).getBytes());
+        addPermissions(page, pageResourceProvider, resourcesPermissionsMapping, compoundPermissionsMapping, session,pageDirectory);
+    }
+
+    private void addPermissions(Page page, PageResourceProvider pageResourceProvider, ResourcesPermissionsMapping resourcesPermissionsMapping, CompoundPermissionsMapping compoundPermissionsMapping, APISession session, File pageDirectory) throws IOException, BonitaException {
         Set<String> customPagePermissions = getCustomPagePermissions(new File(pageDirectory, PAGE_PROPERTIES),
                 resourcesPermissionsMapping, false);
         addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, session);

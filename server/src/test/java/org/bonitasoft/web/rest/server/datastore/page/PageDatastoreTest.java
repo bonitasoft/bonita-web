@@ -24,19 +24,14 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -55,6 +50,8 @@ import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
@@ -81,6 +78,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mortbay.util.SingletonList;
 
 /**
  * @author Fabio Lombardi
@@ -164,7 +162,6 @@ public class PageDatastoreTest extends APITestWithMock {
         when(mockedApiExtension.getInstallationDate()).thenReturn(mockedDate);
         when(mockedApiExtension.getLastModificationDate()).thenReturn(mockedDate);
         when(mockedApiExtension.getInstalledBy()).thenReturn(1l);
-        when(mockedApiExtension.isProvided()).thenReturn(false);
 
         when(engineSession.getTenantId()).thenReturn(TENANT_ID);
 
@@ -223,7 +220,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(apiExtensionToBeAdded);
 
         //then
-        verify(customPageService).writePageToTemp(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
     }
 
     @Test(expected = APIException.class)
@@ -250,33 +247,21 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.get(makeAPIID(1l));
     }
 
+
     @Test
-    public void should_delete_a_page_removing_it_from_FS() throws Exception {
-        // Given
-        deleteDir(pagesDir);
-        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
-        when(pageAPI.getPage(mockedPage.getId())).thenReturn(mockedPage);
-        final PageItem pageToRemove = pageDatastore.add(pageToBeAdded);
-        final List<APIID> ids = new ArrayList<>();
-        ids.add(pageToRemove.getId());
-
-        // When
-        pageDatastore.delete(ids);
-
-        // Validate
-        verify(customPageService).removePage(engineSession, mockedPage.getName());
-    }
-
-    @Test(expected = APIException.class)
-    public void should_delete_a_not_existing_page_rise_exception() throws Exception {
+    public void should_thrown_ApiException_and_not_remove_contentFile_and_permission_when_delete_a_not_existing() throws Exception {
         // Given
         deleteDir(pagesDir);
         when(pageAPI.getPage(1l)).thenThrow(new PageNotFoundException("newPage"));
-        final List<APIID> ids = new ArrayList<>();
-        ids.add(APIID.makeAPIID(1l));
 
         // When
-        pageDatastore.delete(ids);
+        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(Collections.singletonList(makeAPIID(1L))));
+
+        assertThat(throwable).isInstanceOf(APIException.class);
+        verify(pageAPI, never()).deletePage(1l);
+        verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
+        verify(customPageService, never()).removePage(any(), anyString());
+        verify(compoundPermissionsMapping, never()).removeProperty(anyString());
     }
 
 
@@ -290,51 +275,48 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(pageToBeAdded);
 
         // Then
-        verify(customPageService).writePageToTemp(any(Page.class), eq(null), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(null), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
     }
 
     @Test
-    public void should_delete_compound_permission_when_deleting_page() throws Exception {
+    public void should_thrown_APIException_when_deletePage_thrown_DeletionException() throws Exception {
         // Given
-        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
-        when(pageAPI.getPage(mockedPage.getId())).thenReturn(mockedPage);
-        final PageItem pageToRemove = pageDatastore.add(pageToBeAdded);
-        final List<APIID> ids = new ArrayList<>();
-        ids.add(pageToRemove.getId());
+        when(pageAPI.getPage(PAGE_ID)).thenReturn(mockedPage);
+        doThrow(new DeletionException("")).when(pageAPI).deletePage(PAGE_ID);
 
         // When
-        pageDatastore.delete(ids);
+        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(Collections.singletonList(APIID.makeAPIID(PAGE_ID))));
 
-        // Validate
-        verify(compoundPermissionsMapping).removeProperty(mockedPage.getName());
+        assertThat(throwable).isInstanceOf(APIException.class);
+        verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
+        verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
+        verify(customPageService, never()).removePage(any(), anyString());
+        verify(compoundPermissionsMapping, never()).removeProperty(anyString());
     }
 
     @Test
-    public void should_delete_resource_permission_when_deleting_api_extension() throws Exception {
+    public void should_deletePage_and_remove_all_dependencies_when_deleting_page() throws Exception {
         // Given
-        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
-        when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
-        final PageItem pageToRemove = pageDatastore.add(apiExtensionToBeAdded);
-        final List<APIID> ids = new ArrayList<>();
-        ids.add(pageToRemove.getId());
+        when(pageAPI.getPage(PAGE_ID)).thenReturn(mockedApiExtension);
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
 
         // When
-        pageDatastore.delete(ids);
+        pageDatastore.delete(SingletonList.newSingletonList(makeAPIID(PAGE_ID)));
 
         // then
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
+        verify(pageAPI).deletePage(mockedApiExtension.getId());
+        verify(customPageService).removePage(engineSession, mockedApiExtension.getName());
+        verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
+        verify(compoundPermissionsMapping).removeProperty(mockedApiExtension.getName());
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
     }
 
     @Test
     public void should_update_resource_permission_when_updating_api_extension() throws Exception {
         // Given
-        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
         when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
         when(pageAPI.updatePage(eq(mockedApiExtension.getId()), any(PageUpdater.class))).thenReturn(mockedApiExtension);
 
-        final PageItem pageToRemove = pageDatastore.add(apiExtensionToBeAdded);
-        final APIID id = APIID.makeAPIID(mockedApiExtension.getId());
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
@@ -344,11 +326,39 @@ public class PageDatastoreTest extends APITestWithMock {
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR
                 + apiExtensionZipFile.getName());
-        pageDatastore.update(id, attributes);
+        pageDatastore.update(makeAPIID(mockedApiExtension.getId()), attributes);
 
         // then
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, engineSession);
-        verify(customPageService).writePageToTemp(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(pageAPI).updatePage(eq(PAGE_ID), any());
+        verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService).removePage(any(), eq("custompage_apiExt"));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+    }
+
+
+    @Test
+    public void should_not_update_resource_and_permission_pageContent_when_pageApi_updatePageContent_thown_exception() throws Exception {
+        // Given
+        when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
+        doThrow(new UpdateException("")).when(pageAPI).updatePageContent(eq(PAGE_ID), any());
+
+        final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
+        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
+
+        // When
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, apiExtensionZipFile.getAbsolutePath() + FileUploadServlet.RESPONSE_SEPARATOR
+                + apiExtensionZipFile.getName());
+        Throwable throwable = catchThrowable(() -> pageDatastore.update(makeAPIID(mockedApiExtension.getId()), attributes));
+
+        // then
+        assertThat(throwable).isInstanceOf(APIException.class);
+        verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
+        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+        verify(customPageService, never()).removePage(any(), eq("custompage_apiExt"));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -404,11 +414,10 @@ public class PageDatastoreTest extends APITestWithMock {
         doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", TENANT_ID);
 
         // When
-        try {
-            pageDatastore.update(APIID.makeAPIID(TENANT_ID), attributes);
-        } catch (final APIException e) {
-            assertEquals(e.getMessage(), "java.io.IOException: error");
-        }
+
+        final Throwable throwable = catchThrowable(() -> pageDatastore.update(APIID.makeAPIID(TENANT_ID), attributes));
+
+        assertThat(throwable).isInstanceOf(APIException.class).hasMessage("java.io.IOException: error");
 
     }
 

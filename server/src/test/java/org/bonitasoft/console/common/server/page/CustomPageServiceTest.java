@@ -488,10 +488,9 @@ public class CustomPageServiceTest {
         doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
 
         //then
-        verify(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         verify(resourcesPermissionsMapping).removeProperty("GET|extension/restApiGet");
         verify(resourcesPermissionsMapping).removeProperty("POST|extension/restApiPost");
     }
@@ -505,10 +504,9 @@ public class CustomPageServiceTest {
         doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+        customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
 
         //then
-        verify(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
