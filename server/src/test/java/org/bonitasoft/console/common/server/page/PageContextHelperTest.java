@@ -67,7 +67,8 @@ public class PageContextHelperTest {
         final Locale returnedLocale = pageContextHelper.getCurrentLocale();
 
         //then
-        assertThat(returnedLocale).isEqualToComparingFieldByField(locale);
+        assertThat(returnedLocale.getLanguage()).isEqualTo(locale.getLanguage());
+        assertThat(returnedLocale.getCountry()).isEmpty();
     }
 
     @Test
@@ -84,7 +85,9 @@ public class PageContextHelperTest {
         final Locale returnedLocale = pageContextHelper.getCurrentLocale();
 
         //then
-        assertThat(returnedLocale).isEqualToComparingFieldByField(locale);
+        assertThat(returnedLocale.getLanguage()).isEqualTo(locale.getLanguage());
+        assertThat(returnedLocale.getCountry()).isEmpty();
+
     }
 
     @Test

@@ -94,11 +94,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     private CustomPageContentValidator pageContentValidator;
 
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue,
-            final PageAPI pageAPI,
-            final CustomPageService customPageService,
-            final CompoundPermissionsMapping compoundPermissionsMapping,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final BonitaHomeFolderAccessor tenantFolder) {
+                         final PageAPI pageAPI,
+                         final CustomPageService customPageService,
+                         final CompoundPermissionsMapping compoundPermissionsMapping,
+                         final ResourcesPermissionsMapping resourcesPermissionsMapping,
+                         final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.pageAPI = pageAPI;
@@ -133,7 +133,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             final PageItem addedPage = convertEngineToConsoleItem(page);
 
             PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, tenantId);
-            customPageService.writePageToTemp(page,pageResourceProvider, unzipPageTempFolder,resourcesPermissionsMapping,compoundPermissionsMapping,engineSession);
+            customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, resourcesPermissionsMapping, compoundPermissionsMapping, engineSession);
             deleteTempDirectory(unzipPageTempFolder);
             return addedPage;
         } catch (final UnauthorizedFolderException e) {
@@ -161,7 +161,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         return urlToken.matches(PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
     }
 
-   
 
     protected void deleteTempDirectory(final File unzipPage) {
         try {
@@ -226,15 +225,15 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         try {
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
-                if (!page.isProvided()) {
-                    final APISession engineSession = getEngineSession();
-                    customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
-                            customPageService.getPageResourceProvider(page, engineSession.getTenantId()),
-                            engineSession);
-                    pageAPI.deletePage(id.toLong());
-                    customPageService.removePage(engineSession, page.getName());
-                    compoundPermissionsMapping.removeProperty(page.getName());
-                }
+                final APISession engineSession = getEngineSession();
+                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
+                customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
+                pageAPI.deletePage(id.toLong());
+                customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
+                        pageResourceProvider);
+                customPageService.removePage(engineSession,page.getName());
+                compoundPermissionsMapping.removeProperty(page.getName());
+
             }
         } catch (final Exception e) {
             throw new APIException(e);
@@ -251,8 +250,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     @Override
     public ItemSearchResult<PageItem> search(final int page, final int resultsByPage, final String search,
-            final String orders,
-            final Map<String, String> filters) {
+                                             final String orders,
+                                             final Map<String, String> filters) {
         // Build search
         final SearchOptionsCreator creator = makeSearchOptionCreator(page, resultsByPage, search, orders, filters);
 
@@ -274,8 +273,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     }
 
     protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search,
-            final String orders,
-            final Map<String, String> filters) {
+                                                           final String orders,
+                                                           final Map<String, String> filters) {
 
         final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search,
                 new Sorts(orders,
@@ -309,13 +308,12 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     @Override
     public PageItem update(final APIID id, final Map<String, String> attributes) {
-        PageItem updatedPage = null;
-        final PageUpdater pageUpdater = new PageUpdater();
+
+        File zipFile = null;
         try {
-
-            File zipFile = null;
-            final String oldURLToken = pageAPI.getPage(id.toLong()).getName();
-
+            Long pageId = id.toLong();
+            Page page = pageAPI.getPage(pageId);
+            PageItem updatedPage = null;
             if (attributes.containsKey(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE)) {
                 final String zipFileAttribute = attributes.get(UNMAPPED_ATTRIBUTE_ZIP_FILE);
                 if (zipFileAttribute != null && !zipFileAttribute.isEmpty()) {
@@ -327,43 +325,50 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     } else {
                         originalFileName = filename;
                     }
-
                     final APISession engineSession = getEngineSession();
                     final long tenantId = engineSession.getTenantId();
                     zipFile = tenantFolder.getTempFile(filename, tenantId);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     pageContentValidator.validate(unzipPageTempFolder);
-                    pageUpdater.setContentName(originalFileName);
-                    updatePageContent(id, zipFile, oldURLToken);
-                    final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
-                    updatedPage = convertEngineToConsoleItem(page);
-                    if (!Objects.equals(oldURLToken, updatedPage.getUrlToken())) {
-                        compoundPermissionsMapping.removeProperty(oldURLToken);
+                    try {
+                        updatePageContent(pageId, zipFile, page.getName());
+                        final PageUpdater pageUpdater = new PageUpdater();
+                        pageUpdater.setContentName(originalFileName);
+                        page = pageAPI.updatePage(pageId, pageUpdater);
+                        updatedPage = convertEngineToConsoleItem(page);
+                        if (!Objects.equals(page.getName(), updatedPage.getUrlToken())) {
+                            compoundPermissionsMapping.removeProperty(page.getName());
+                        }
+                    } finally {
+                        PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
+                                tenantId);
+                        customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, resourcesPermissionsMapping, compoundPermissionsMapping, engineSession);
+                        deleteTempDirectory(unzipPageTempFolder);
                     }
-                    PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
-                            tenantId);
-                    customPageService.writePageToTemp(page, pageResourceProvider, unzipPageTempFolder, resourcesPermissionsMapping, compoundPermissionsMapping, engineSession);
-                    deleteTempDirectory(unzipPageTempFolder);
+
                 }
             }
+            return updatedPage;
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
         } catch (final Exception e) {
             throw new APIException(e);
+        } finally {
+            if (zipFile != null) {
+                zipFile.delete();
+            }
         }
-        return updatedPage;
     }
 
-    protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
+    protected void updatePageContent(final Long pageId, final File zipFile, final String oldURLToken) throws IOException,
             CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            final Long pageId = id.toLong();
+            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(pageAPI.getPage(pageId),
+                    getEngineSession().getTenantId());
+            customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
             customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
-                    customPageService.getPageResourceProvider(pageAPI.getPage(pageId),
-                            getEngineSession().getTenantId()),
-                    getEngineSession());
+                    pageResourceProvider);
             pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
-            zipFile.delete();
         }
         customPageService.removePage(getEngineSession(), oldURLToken);
     }
