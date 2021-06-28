@@ -3,16 +3,13 @@ package org.bonitasoft.console.common.server.utils;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.utils.UrlBuilder;
-import org.bonitasoft.console.common.server.utils.UrlValue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.gwt.dev.util.collect.HashMap;
 
 
 @RunWith(MockitoJUnitRunner.class)

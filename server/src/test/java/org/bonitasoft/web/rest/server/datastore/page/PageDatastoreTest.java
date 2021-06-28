@@ -16,16 +16,14 @@
  */
 package org.bonitasoft.web.rest.server.datastore.page;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +76,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mortbay.util.SingletonList;
 
 /**
  * @author Fabio Lombardi
@@ -88,7 +85,7 @@ import org.mortbay.util.SingletonList;
 public class PageDatastoreTest extends APITestWithMock {
 
     public static final long TENANT_ID = 1L;
-    public static final long PAGE_ID = 123l;
+    public static final long PAGE_ID = 123L;
     public static final String PAGE_ZIP = "page.zip";
     public static final String PAGE_REST_API_ZIP = "pageApiExtension.zip";
     private PageDatastore pageDatastore;
@@ -255,7 +252,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.getPage(1l)).thenThrow(new PageNotFoundException("newPage"));
 
         // When
-        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(Collections.singletonList(makeAPIID(1L))));
+        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(singletonList(makeAPIID(1L))));
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(pageAPI, never()).deletePage(1l);
@@ -285,7 +282,7 @@ public class PageDatastoreTest extends APITestWithMock {
         doThrow(new DeletionException("")).when(pageAPI).deletePage(PAGE_ID);
 
         // When
-        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(Collections.singletonList(APIID.makeAPIID(PAGE_ID))));
+        final Throwable throwable = catchThrowable(() -> pageDatastore.delete(singletonList(APIID.makeAPIID(PAGE_ID))));
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
@@ -301,7 +298,7 @@ public class PageDatastoreTest extends APITestWithMock {
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
 
         // When
-        pageDatastore.delete(SingletonList.newSingletonList(makeAPIID(PAGE_ID)));
+        pageDatastore.delete(singletonList(makeAPIID(PAGE_ID)));
 
         // then
         verify(pageAPI).deletePage(mockedApiExtension.getId());
