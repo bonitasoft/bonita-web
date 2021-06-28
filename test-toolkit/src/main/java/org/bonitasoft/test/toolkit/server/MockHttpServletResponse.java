@@ -408,4 +408,11 @@ public class MockHttpServletResponse implements HttpServletResponse {
         return null;
     }
 
+    @Override
+    public void setContentLengthLong(long len) {
+        if (res != null) {
+            res.setContentLengthLong(len);
+        }
+    }
+
 }

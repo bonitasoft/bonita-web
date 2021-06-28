@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -59,24 +60,38 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
     class CachedServletInputStream extends ServletInputStream {
 
         private final ByteArrayInputStream input;
+        private ReadListener readListener;
 
         public CachedServletInputStream() {
             input = new ByteArrayInputStream(readBytes.toByteArray());
+            readListener = null;
         }
 
         @Override
         public int read() throws IOException {
-            return input.read();
+            int nextByte = input.read();
+            if (nextByte == -1) {
+                onAllDataRead();
+            }
+            return nextByte;
         }
 
         @Override
         public int read(final byte[] b) throws IOException {
-            return input.read(b);
+            int numberOfBytesRead = input.read(b);
+            if (numberOfBytesRead == -1) {
+                onAllDataRead();
+            }
+            return numberOfBytesRead;
         }
 
         @Override
         public int read(final byte[] b, final int off, final int len) throws IOException {
-            return input.read(b, off, len);
+            int numberOfBytesRead = input.read(b, off, len);
+            if (numberOfBytesRead == -1) {
+                onAllDataRead();
+            }
+            return numberOfBytesRead;
         }
 
         @Override
@@ -84,5 +99,39 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
             input.close();
             super.close();
         }
+
+        @Override
+        public boolean isFinished() {
+            return input.available() == 0;
+        }
+
+        @Override
+        public boolean isReady() {
+            return !isFinished();
+        }
+
+        @Override
+        public void setReadListener(ReadListener readListener) {
+            this.readListener = readListener;
+            if (!isFinished()) {
+                try {
+                    readListener.onDataAvailable();
+                } catch (IOException e) {
+                    readListener.onError( e );
+                }
+            } else {
+                onAllDataRead();
+            }
+        }
+        
+        private void onAllDataRead() {
+            if (readListener != null) {
+                try {
+                    readListener.onAllDataRead();
+                } catch (IOException e) {
+                    readListener.onError(e);
+                }
+            }
+          }
     }
 }
