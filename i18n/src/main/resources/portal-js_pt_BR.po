@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2021-04-15 01:30\n"
+"PO-Revision-Date: 2021-06-27 01:31\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -147,9 +147,6 @@ msgstr "Antes de atualizar o BDM, arquivo de controle de acesso deve ser excluí
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar o descritor de aplicativos, as páginas e o perfil devem já ser carregados no Portal."
-
-msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
-msgstr "Bonita usa Hibernate para persistência de dados, portanto, algumas mudanças são manipuladas, como adicionar novos objetos ou atributos, mas alguns outros que não podemos garantir até agora, como mudar o tipo de um atributo ou excluindo um atributo."
 
 msgid "Business Data Model definition"
 msgstr "Definição de modelo de dados de negócios"
@@ -442,11 +439,20 @@ msgstr "Ocultar Painel"
 msgid "Highest"
 msgstr "Mais alto"
 
+msgid "However, due to the use of Hibernate for data persistence, some changes on the data may not be well handled. These changes may lead to a corrupted database and CANNOT BE REVERTED."
+msgstr ""
+
+msgid "I have read and understood the previous warning message. I have prepared a database backup so I can rollback this operation."
+msgstr ""
+
 msgid "ID"
 msgstr "ID"
 
-msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
-msgstr "Se a novo BDM contém tais mudanças, o administrador de banco de dados precisará primeiro manipular a atualização do banco de dados com scripts e, em seguida, você precisará atualizar apenas o modelo de dados e testar exaustivamente as alterações."
+msgid "IN ANY CASE, you MUST CREATE A BACKUP of the current BDM database before undergoing a BDM update."
+msgstr ""
+
+msgid "If your changes do not fall into those change types, you can go ahead and proceed with the BDM update now."
+msgstr ""
 
 msgid "Implementation version"
 msgstr "Versão de implementação"
@@ -461,6 +467,9 @@ msgid "Import an application descriptor"
 msgstr "Importar um descritor de aplicação"
 
 msgid "In a production environment, this should be used with caution."
+msgstr ""
+
+msgid "In such cases, you must CANCEL THIS UPDATE and let the database administrator carefully script the changes and apply them to the database. Only then will you be able to update the BDM from this page."
 msgstr ""
 
 msgid "In task name column"
@@ -648,9 +657,6 @@ msgstr "Normal"
 
 msgid "Not installed"
 msgstr "Não Instalado"
-
-msgid "Note that updating the model modifies existing database tables definitively."
-msgstr "Observe que a atualização do modelo modifica as tabelas do banco de dados existente de forma definitiva."
 
 msgid "One or more connectors on case start or case end failed"
 msgstr "Um ou mais conectores de início ou fim de caso falharam"
@@ -919,6 +925,9 @@ msgstr "Usuário Técnico"
 msgid "Technical error."
 msgstr "Erro técnico."
 
+msgid "The BDM schema and data have been rolled-back to what they were before this update attempt."
+msgstr ""
+
 msgid "The application"
 msgstr "A aplicação"
 
@@ -960,6 +969,9 @@ msgstr "O nome da URL deve começar com custompage_ seguido somente por caracter
 
 msgid "The task has been submitted but an error occurred while adding the comment"
 msgstr "A tarefa foi apresentada, mas ocorreu um erro ao adicionar o comentário"
+
+msgid "The whole list of such changes is listed <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>here</a>."
+msgstr ""
 
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "As palavras 'conteúdo', 'API' e 'tema' são reservados para uso interno. Eles não devem ser usados em um aplicativo ou a URL da página."
@@ -1033,9 +1045,6 @@ msgstr "Para fazer isso, efetue logout e, em seguida, efetue login novamente com
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Para preencher o formulário, você precisa assumir esta tarefa. Isto significa que você será o único capaz de fazê-la. Para torná-la disponível para a equipe novamente, clique no botão liberar."
 
-msgid "To know more about this platform configuration option, go to the"
-msgstr "Para saber mais sobre a opção de configuração da plataforma, vá para o"
-
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Para personalizar a exibição de chaves de pesquisa (e colunas em geral), utilize o botão de configuração da tabela, à direita. Você pode pesquisar em até 5 chaves de busca."
 
@@ -1092,6 +1101,9 @@ msgstr "Atualizado por"
 
 msgid "Updated on"
 msgstr "Atualizado em"
+
+msgid "Updating the Business Data Model applies changes to both existing database tables and data."
+msgstr ""
 
 msgid "Upload new picture"
 msgstr "Carregar nova imagem"
@@ -1171,8 +1183,8 @@ msgstr "descritor de aplicações foi importado parcialmente. Os seguintes itens
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "descritor de aplicativos foi importado com sucesso, com mapeamento completo de página e mapeamento de menu."
 
-msgid "documentation"
-msgstr "documentação"
+msgid "here"
+msgstr ""
 
 msgid "of"
 msgstr "de"
