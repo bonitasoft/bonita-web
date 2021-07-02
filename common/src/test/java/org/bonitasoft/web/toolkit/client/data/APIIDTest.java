@@ -77,4 +77,10 @@ public class APIIDTest {
         result = APIID.makeAPIID(ids);
         assertThat(result.getIds()).isEqualTo(resultingAPIIDs);
     }
+
+    @Test(expected = APIException.class)
+    public void toLong_should_throw_APIException_instead_of_NumberFormatException() throws Exception {
+        APIID.makeAPIID("undefined").toLong();
+        APIID.makeAPIID((String) null).toLong();
+    }
 }

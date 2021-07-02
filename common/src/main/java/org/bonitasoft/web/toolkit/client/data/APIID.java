@@ -159,7 +159,7 @@ public class APIID implements JsonSerializable {
 
             return Long.valueOf(this.ids.get(0));
         } catch (final NumberFormatException e) {
-            throw new NumberFormatException("Can't convert non numeric ID to long");
+            throw new APIException("Can't convert non numeric ID to long");
         }
 
     }
