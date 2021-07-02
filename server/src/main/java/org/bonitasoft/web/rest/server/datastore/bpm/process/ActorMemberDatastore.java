@@ -162,7 +162,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
 
     private void filterToUser(final List<ActorMember> unfilteredResults, final List<ActorMember> filteredResults) {
         for (final ActorMember result : unfilteredResults) {
-            if (APIID.makeAPIID(result.getUserId()) != null) {
+            if (APIID.makeAPIID(result.getUserId()) != null && result.getUserId() > 0L) {
                 filteredResults.add(result);
             }
         }
@@ -170,7 +170,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
 
     private void filterToRole(final List<ActorMember> unfilteredResults, final List<ActorMember> filteredResults) {
         for (final ActorMember result : unfilteredResults) {
-            if (APIID.makeAPIID(result.getRoleId()) != null && APIID.makeAPIID(result.getGroupId()) == null) {
+            if (APIID.makeAPIID(result.getRoleId()) != null && result.getRoleId() > 0L && (APIID.makeAPIID(result.getGroupId()) == null || result.getGroupId() <= 0L)) {
                 filteredResults.add(result);
             }
         }
@@ -178,7 +178,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
 
     private void filterToGroup(final List<ActorMember> unfilteredResults, final List<ActorMember> filteredResults) {
         for (final ActorMember result : unfilteredResults) {
-            if (APIID.makeAPIID(result.getGroupId()) != null && APIID.makeAPIID(result.getRoleId()) == null) {
+            if (APIID.makeAPIID(result.getGroupId()) != null && result.getGroupId() > 0L && (APIID.makeAPIID(result.getRoleId()) == null || result.getRoleId() <= 0L)) {
                 filteredResults.add(result);
             }
         }
@@ -186,7 +186,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
 
     private void filterToMembership(final List<ActorMember> unfilteredResults, final List<ActorMember> filteredResults) {
         for (final ActorMember result : unfilteredResults) {
-            if (APIID.makeAPIID(result.getGroupId()) != null && APIID.makeAPIID(result.getRoleId()) != null) {
+            if (APIID.makeAPIID(result.getGroupId()) != null && result.getGroupId() > 0L && APIID.makeAPIID(result.getRoleId()) != null && result.getRoleId() > 0L) {
                 filteredResults.add(result);
             }
         }
