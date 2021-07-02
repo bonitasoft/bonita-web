@@ -78,7 +78,7 @@ public class APIHumanTaskIntegrationTest extends AbstractConsoleTest {
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
         apiHumanTask.update(apiId, attributes);
         final HumanTaskItem updateHumanTaskItem = apiHumanTask.get(apiId);
-        assertNotSame("Attributes are not update", updateHumanTaskItem.getAssignedId(),
+        assertNotSame("Attributes are not updated", updateHumanTaskItem.getAssignedId(),
                 TestUserFactory.getJohnCarpenter().getId());
 
     }
