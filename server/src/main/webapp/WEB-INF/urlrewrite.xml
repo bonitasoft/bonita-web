@@ -291,6 +291,12 @@
         <to qsappend="true">/portal/documentDownload?$3</to>
     </rule>
 
+    <!-- support home URL from versions prior to 7.13 -->
+    <rule>
+        <from>^/portal/homepage</from>
+        <to>/apps/appDirectoryBonita</to>
+    </rule>
+
     <!--  Only used in dev mode  -->
     ${proxy-portal-js}
     
