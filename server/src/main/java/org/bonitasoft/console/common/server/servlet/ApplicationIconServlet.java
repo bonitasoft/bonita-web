@@ -28,7 +28,11 @@ public class ApplicationIconServlet extends IconServlet {
         ApplicationAPI applicationApi = getApplicationApi(apiSession);
         try {
              Icon icon = applicationApi.getIconOfApplication(iconId);
-            return Optional.of(new IconContent(icon.getContent(), icon.getMimeType()));
+             if (icon != null) {
+                 return Optional.of(new IconContent(icon.getContent(), icon.getMimeType()));
+             } else {
+                 return Optional.empty();
+             }
         } catch (NotFoundException e) {
             return Optional.empty();
         }
