@@ -21,11 +21,8 @@ import java.util.List;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
 /**
  * @author Julien Mege
@@ -101,12 +98,13 @@ public class APIID implements JsonSerializable {
             return null;
         }
 
-        // Verify at least one element is not null
+        // If at least one id is not null
         for (final Long id : ids) {
-            if (id != null) {
+            if (id != null && id > 0L) {
                 return new APIID(ids);
             }
         }
+
         return null;
     }
 
@@ -115,10 +113,17 @@ public class APIID implements JsonSerializable {
             return null;
         }
 
-        // If at least one id is not null or empty
+        // If at least one id is not null
         for (final String id : ids) {
             if (id != null && !id.isEmpty()) {
-                return new APIID(ids);
+                try {
+                    final long lid = Long.valueOf(id);
+                    if (lid > 0L) {
+                        return new APIID(ids);
+                    }
+                } catch (final NumberFormatException e) {
+                    return new APIID(ids);
+                }
             }
         }
 

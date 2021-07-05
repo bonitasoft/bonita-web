@@ -62,7 +62,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         TaskDatastore.fillConsoleItem(result, item);
 
         result.setActorId(APIID.makeAPIID(item.getActorId()));
-        result.setAssignedId(item.getAssigneeId() > 0L ? APIID.makeAPIID(item.getAssigneeId()) : null);
+        result.setAssignedId(APIID.makeAPIID(item.getAssigneeId()));
         result.setAssignedDate(item.getClaimedDate());
         result.setPriority(item.getPriority() != null ? item.getPriority().toString().toLowerCase() : null);
         result.setDueDate(item.getExpectedEndDate());

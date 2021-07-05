@@ -41,11 +41,6 @@ public class APIIDTest {
         assertThat(result.toLong()).isEqualTo(1L);
 
         ids = new ArrayList<>();
-        ids.add("-1");
-        result = APIID.makeAPIID(ids);
-        assertThat(result.toLong()).isEqualTo(-1L);
-
-        ids = new ArrayList<>();
         ids.add("1");
         ids.add("6");
         ids.add("-1");
@@ -79,8 +74,9 @@ public class APIIDTest {
     }
 
     @Test(expected = APIException.class)
-    public void toLong_should_throw_APIException_instead_of_NumberFormatException() throws Exception {
+    public void toLong_should_throw_APIException() throws Exception {
         APIID.makeAPIID("undefined").toLong();
         APIID.makeAPIID((String) null).toLong();
+        APIID.makeAPIID(-1L).toLong();
     }
 }
