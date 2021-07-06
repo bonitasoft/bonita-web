@@ -16,10 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.data;
 
-import org.bonitasoft.console.common.FakeI18n;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.junit.Before;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemIdMalformedException;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -73,8 +70,8 @@ public class APIIDTest {
         assertThat(result.getIds()).isEqualTo(resultingAPIIDs);
     }
 
-    @Test(expected = APIException.class)
-    public void toLong_should_throw_APIException() throws Exception {
+    @Test(expected = APIItemIdMalformedException.class)
+    public void toLong_should_throw_APIItemIdMalformedException() throws Exception {
         APIID.makeAPIID("undefined").toLong();
         APIID.makeAPIID((String) null).toLong();
         APIID.makeAPIID(-1L).toLong();

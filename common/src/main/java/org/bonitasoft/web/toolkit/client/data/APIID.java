@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemIdMalformedException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -164,7 +165,7 @@ public class APIID implements JsonSerializable {
 
             return Long.valueOf(this.ids.get(0));
         } catch (final NumberFormatException e) {
-            throw new APIException("Can't convert non numeric ID to long");
+            throw new APIItemIdMalformedException("APIID", "Can't convert non numeric ID to long");
         }
 
     }
