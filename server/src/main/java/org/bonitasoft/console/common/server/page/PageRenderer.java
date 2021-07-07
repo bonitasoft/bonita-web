@@ -109,7 +109,7 @@ public class PageRenderer {
             throws IOException, InstantiationException, BonitaException, IllegalAccessException {
 
         final File resourceFile = getIndexFile(pageResourceProvider, apiSession);
-        resourceRenderer.renderFile(request, response, resourceFile, apiSession);
+        resourceRenderer.renderFile(request, response, resourceFile, apiSession, true);
     }
 
     private File getIndexFile(final PageResourceProviderImpl pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {

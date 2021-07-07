@@ -47,6 +47,11 @@ public class ResourceRenderer {
 
     public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
             throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
+        renderFile(request, response, resourceFile, apiSession, false);
+    }
+    
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession, final boolean isPage)
+            throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
         response.setCharacterEncoding("UTF-8");
@@ -63,13 +68,18 @@ public class ResourceRenderer {
                 out.write(content, 0, content.length);
             }
             response.flushBuffer();
-        }catch (final FileNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-        }catch (final IOException e) {
+        } catch (final FileNotFoundException e) {
+            if (isPage) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.flushBuffer();
+            }
+        } catch (final IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
             }
-            throw new BonitaException(e.getMessage(), e);
+            throw e;
         }
     }
 

@@ -56,15 +56,17 @@ public class CustomPageRequestModifier {
                 if (LOGGER.isLoggable(Level.FINE)) {
                     LOGGER.log(Level.FINE, message);
                 }
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.flushBuffer();
             } else {
                 request.getRequestDispatcher(apiPath).forward(request, response);
             }
-        }catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, e.getMessage());
             }
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.flushBuffer();
         }
     }
 }

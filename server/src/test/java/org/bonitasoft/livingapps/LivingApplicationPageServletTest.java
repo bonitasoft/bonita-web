@@ -127,7 +127,7 @@ public class LivingApplicationPageServletTest {
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(400, "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
+        verify(hsResponse).setStatus(400);
     }
 
     @Test
@@ -206,7 +206,7 @@ public class LivingApplicationPageServletTest {
         doReturn("customPage_" + "htmlexample").when(page).getName();
 
         servlet.service(hsRequest, hsResponse);
-        verify(hsResponse).sendError(403, "User not Authorized");
+        verify(hsResponse).setStatus(403);
     }
 
     @Test
@@ -229,7 +229,7 @@ public class LivingApplicationPageServletTest {
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(servlet, never()).doGet(hsRequest, hsResponse);
     }
     
@@ -247,7 +247,7 @@ public class LivingApplicationPageServletTest {
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path /apps/AppToken" + unauthorizedPath);
+        verify(hsResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 
 }

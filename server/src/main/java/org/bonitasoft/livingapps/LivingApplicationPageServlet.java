@@ -37,13 +37,13 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class LivingApplicationPageServlet extends HttpServlet {
 
@@ -104,16 +104,23 @@ public class LivingApplicationPageServlet extends HttpServlet {
         if (pathSegments.size() >= 3) {
             appToken = pathSegments.get(0);
             pageToken = pathSegments.get(1);
-            customPageName = getCustomPageName(appToken, pageToken, apiSession, response);
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
                 final String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
+                boolean isNotResourcePath = isNotResourcePath(resourcePath);
+                customPageName = getCustomPageName(appToken, pageToken, apiSession, response, isNotResourcePath);
+                if (StringUtil.isBlank(customPageName)) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "Error while trying to retrieve the application page");
+                    }
+                    return;
+                }
                 try {
                     if (isAuthorized(apiSession, appToken, customPageName)) {
-                        if (resourcePath == null || isNotResourcePath(resourcePath)) {
+                        if (isNotResourcePath) {
                             pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                         } else {
                             final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
@@ -121,7 +128,12 @@ public class LivingApplicationPageServlet extends HttpServlet {
                             resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                         }
                     } else {
-                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+                        if (isNotResourcePath) {
+                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
+                        } else {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                            response.flushBuffer();
+                        }
                         return;
                     }
                 } catch (final Exception e) {
@@ -133,42 +145,38 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 String appThemeResourcePrefix = "/apps/" + appToken;
                 customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, appThemeResourcePrefix + THEME_PATH_SEPARATOR + "/", appThemeResourcePrefix + themeResourcePath);
             } else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
+                if (LOGGER.isLoggable(Level.FINEST)) {
+                    LOGGER.log(Level.FINEST, "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
+                }
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.flushBuffer();
             }
 
         } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                    "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
-        }
-
-    }
-
-    private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws IOException, ServletException {
-        try {
-            return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
-        } catch (final ApplicationPageNotFoundException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.log(Level.FINEST, "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
-        } catch (final Exception e) {
-            handleException(appToken + "/" + pageToken, e);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.flushBuffer();
         }
-        return null;
+
     }
 
-    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws ServletException, IOException {
+    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
         try {
-            final Long customPageId = getCustomPageId(appToken, pageToken, apiSession, response);
+            final Long customPageId = getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
             return getPageApi(apiSession).getPage(customPageId).getName();
-        } catch (final PageNotFoundException e) {
+        } catch (final NotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
+                LOGGER.log(Level.WARNING, "The application page " + appToken + "/" + pageToken + " was not found", e);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND,
+                        "Cannot find the page" + pageToken + "for the application" + appToken + ".");
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.flushBuffer();
+            }
         } catch (final Exception e) {
             handleException(appToken + "/" + pageToken, e);
         }

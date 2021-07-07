@@ -17,7 +17,6 @@ package org.bonitasoft.console.common.server.page;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -111,15 +110,6 @@ public class ResourceRendererTest {
     }
 
     @Test(expected = BonitaException.class)
-    public void renderFile_should_throw_bonita_exception_on_ioexception() throws BonitaException, URISyntaxException, IOException, IllegalAccessException,
-            InstantiationException {
-        final File resourceFile = getResourceFile();
-        doThrow(new IOException()).when(outputStream).write(any(byte[].class), any(int.class), any(int.class));
-
-        resourceRenderer.renderFile(req, res, resourceFile, apiSession);
-    }
-
-    @Test(expected = BonitaException.class)
     public void getResourceFile_should_throw_BonitaException_on_passing_null_resources_folder() throws
             Exception {
         resourceRenderer.renderFile(req, res, null, apiSession);
@@ -130,7 +120,7 @@ public class ResourceRendererTest {
             Exception {
         final File noneExistingFile = new File("NoneExistingFile.css");
         resourceRenderer.renderFile(req, res, noneExistingFile, apiSession);
-        verify(res).sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the resource file " + noneExistingFile.getName());
+        verify(res).setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 
     @Test

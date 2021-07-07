@@ -61,7 +61,7 @@ public class CustomPageRequestModifierTest {
         CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
         customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, "/API", apiPath);
 
-        verify(response).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + apiPath);
+        verify(response).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(request, never()).getRequestDispatcher(anyString());
     }
     

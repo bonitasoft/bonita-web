@@ -191,7 +191,7 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(hsRequest, never()).getRequestDispatcher(anyString());
     }
 
