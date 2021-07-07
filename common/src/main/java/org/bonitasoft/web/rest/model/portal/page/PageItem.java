@@ -55,6 +55,10 @@ public class PageItem extends Item implements ItemHasUniqueId {
     
     public static final String ATTRIBUTE_IS_HIDDEN = "isHidden";
 
+    public static final String ATTRIBUTE_IS_EDITABLE = "isEditable";
+
+    public static final String ATTRIBUTE_IS_REMOVABLE = "isRemovable";
+
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FILTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +158,14 @@ public class PageItem extends Item implements ItemHasUniqueId {
         setAttribute(ATTRIBUTE_IS_HIDDEN, isHidden);
     }
 
+    public void setIsEditable(final boolean isEditable) {
+        setAttribute(ATTRIBUTE_IS_EDITABLE, isEditable);
+    }
+
+    public void setIsRemovable(final boolean isRemovable) {
+        setAttribute(ATTRIBUTE_IS_REMOVABLE, isRemovable);
+    }
+
     public String getUrlToken() {
         return getAttributeValue(ATTRIBUTE_URL_TOKEN);
     }
@@ -213,5 +225,13 @@ public class PageItem extends Item implements ItemHasUniqueId {
     
     public boolean isHidden() {
         return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_HIDDEN));
+    }
+
+    public boolean isEditable() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_EDITABLE));
+    }
+
+    public boolean isRemovable() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_REMOVABLE));
     }
 }
