@@ -45,7 +45,7 @@ public class ApplicationRouter {
         //Test if url contain at least application name
         final List<String> pathSegments = resourceRenderer.getPathSegments(hsRequest.getPathInfo());
         if (pathSegments.isEmpty()) {
-            hsResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+            hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND, 
                     "The name of the application is required.");
             return;
         }
@@ -57,7 +57,9 @@ public class ApplicationRouter {
         } else if ("GET".equals(hsRequest.getMethod())) {
             displayPageOrResource(hsRequest, hsResponse, session, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor, parsedRequest, pathSegments);
         } else {
-            hsResponse.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "http.method_" + hsRequest.getMethod().toLowerCase() + "_not_supported");
+            hsResponse.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            hsResponse.flushBuffer();
+            return;
         }
     }
 

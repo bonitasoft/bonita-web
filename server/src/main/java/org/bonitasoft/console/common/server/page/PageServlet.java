@@ -112,7 +112,7 @@ public class PageServlet extends HttpServlet {
             try {
                 resolveAndDisplayPage(request, response, apiSession, mappingKey, resourcePath);
             } catch (final Exception e) {
-                handleException(response, mappingKey, e);
+                handleException(response, mappingKey, isNotResourcePath(resourcePath), e);
             }
         } else if (pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
             final String[] pathInfoSegments = pathInfo.split(THEME_PATH_SEPARATOR + "/", 2);
@@ -121,7 +121,7 @@ public class PageServlet extends HttpServlet {
             try {
                 renderThemeResource(request, response, apiSession, resourcePath);
             } catch (final Exception e) {
-                handleException(response, mappingKey, e);
+                handleException(response, mappingKey, false, e);
             }
         } else {
             final String message = "/content or /theme is expected in the URL after the page mapping key";
@@ -211,10 +211,12 @@ public class PageServlet extends HttpServlet {
     protected void resolveAndDisplayPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final String mappingKey, final String resourcePath)
                     throws BonitaException, IOException, InstantiationException, IllegalAccessException {
+        
+        boolean isNotResourcePath = isNotResourcePath(resourcePath);
         try {
             Locale currentLocale = pageRenderer.getCurrentLocale(request);
             final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, currentLocale,
-                    isNotResourcePath(resourcePath));
+                    isNotResourcePath);
             if (pageReference.getURL() != null) {
                 displayExternalPage(request, response, pageReference.getURL());
             } else if (pageReference.getPageId() != null) {
@@ -231,21 +233,32 @@ public class PageServlet extends HttpServlet {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Forbidden: " + message, e);
             }
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.flushBuffer();
+            }
         } catch (final NotFoundException e) {
-
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Not found: Cannot find the form mapping for key " + mappingKey, e);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.flushBuffer();
+            }
+            
         }
     }
 
     protected void displayPageOrResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final Long pageId, final String resourcePath, final Locale currentLocale)
                     throws InstantiationException, IllegalAccessException, IOException, BonitaException {
+        boolean isNotResourcePath = isNotResourcePath(resourcePath);
         try {
-            if (isNotResourcePath(resourcePath)) {
+            if (isNotResourcePath) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId, currentLocale);
             } else {
                 resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession);
@@ -254,7 +267,12 @@ public class PageServlet extends HttpServlet {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Cannot find the page with ID " + pageId);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.flushBuffer();
+            }
         }
     }
 
@@ -272,7 +290,8 @@ public class PageServlet extends HttpServlet {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "Forbidden: " + message);
             }
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.flushBuffer();
         }
         pageRenderer.ensurePageFolderIsPresent(apiSession, pageResourceProvider);
         return resourceFile;
@@ -283,23 +302,29 @@ public class PageServlet extends HttpServlet {
         response.sendRedirect(response.encodeRedirectURL(url));
     }
 
-    protected void handleException(final HttpServletResponse response, final String mappingKey, final Exception e)
-            throws ServletException {
-        try {
-            if (e instanceof IllegalArgumentException) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
-                }
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            } else {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    final String message = "Error while trying to display a page or resource for key " + mappingKey;
-                    LOGGER.log(Level.WARNING, message, e);
-                }
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+    protected void handleException(final HttpServletResponse response, final String mappingKey, final boolean isNotResourcePath, final Exception e)
+            throws ServletException, IOException {
+        if (e instanceof IllegalArgumentException) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
             }
-        } catch (final IOException ioe) {
-            throw new ServletException(ioe);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.flushBuffer();
+        } else {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                final String message = "Error while trying to display a page or resource for key " + mappingKey;
+                LOGGER.log(Level.WARNING, message, e);
+            }
+            if (!response.isCommitted()) {
+                if (isNotResourcePath) {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+                } else {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    response.flushBuffer();
+                }
+            } else {
+                throw new IOException("The response is already commited.", e);
+            }
         }
     }
 

@@ -207,7 +207,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", instantiationException);
+        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", true, instantiationException);
         verify(hsResponse, times(1)).sendError(500, "instatiation exception");
     }
 
@@ -220,8 +220,8 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", illegalArgumentException);
-        verify(hsResponse, times(1)).sendError(400);
+        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", true, illegalArgumentException);
+        verify(hsResponse, times(1)).setStatus(400);
     }
 
     @Test
@@ -300,7 +300,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(hsRequest, never()).getRequestDispatcher(anyString());
     }
     
@@ -315,7 +315,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN, "attempt to access unauthorized path " + unauthorizedPath);
+        verify(hsResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         verify(hsRequest, never()).getRequestDispatcher(anyString());
     }
 

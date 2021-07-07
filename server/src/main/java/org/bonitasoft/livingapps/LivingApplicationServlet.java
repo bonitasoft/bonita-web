@@ -55,7 +55,11 @@ public class LivingApplicationServlet extends HttpServlet {
                 final String message = "Error while trying to display application " + hsRequest.getPathInfo();
                 LOGGER.log(Level.WARNING, message, e);
             }
-            hsResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            if (!hsResponse.isCommitted()) {
+                hsResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } else {
+                throw new ServletException(e);
+            }
         }
 
     }
