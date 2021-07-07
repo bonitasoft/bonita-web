@@ -38,9 +38,11 @@ public class CustomPageRequestModifier {
 
     public void redirectToValidPageUrl(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
-        taskURLBuilder.append(request.getServletPath())
-                .append(request.getPathInfo())
-                .append("/");
+        taskURLBuilder.append(request.getServletPath());
+        if (request.getPathInfo() != null) {
+            taskURLBuilder.append(request.getPathInfo());
+        }
+        taskURLBuilder.append("/");
 
         if(!StringUtil.isBlank(request.getQueryString())){
             taskURLBuilder.append("?").append(request.getQueryString());
