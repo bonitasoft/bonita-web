@@ -72,8 +72,9 @@ public class LivingApplicationServlet extends HttpServlet {
     }
 
     private boolean isPageUrlWithoutFinalSlash(final HttpServletRequest request) {
-        return request.getPathInfo().matches("/[^/]+/[^/]+")
-                ||request.getPathInfo().matches("/[^/]+");
+        return request.getPathInfo() == null 
+                || request.getPathInfo().matches("/[^/]+/[^/]+")
+                || request.getPathInfo().matches("/[^/]+");
     }
 
     APISession getSession(final HttpServletRequest hsRequest) {
