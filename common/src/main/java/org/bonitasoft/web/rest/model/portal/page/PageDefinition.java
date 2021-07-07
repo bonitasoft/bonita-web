@@ -60,6 +60,8 @@ public class PageDefinition extends ItemDefinition<PageItem> {
         createAttribute(PageItem.ATTRIBUTE_UPDATED_BY_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(PageItem.ATTRIBUTE_PROCESS_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(PageItem.ATTRIBUTE_CONTENT_TYPE, ItemAttribute.TYPE.STRING);
+        createAttribute(PageItem.ATTRIBUTE_IS_EDITABLE, ItemAttribute.TYPE.BOOLEAN);
+        createAttribute(PageItem.ATTRIBUTE_IS_REMOVABLE, ItemAttribute.TYPE.BOOLEAN);
     }
 
     @Override

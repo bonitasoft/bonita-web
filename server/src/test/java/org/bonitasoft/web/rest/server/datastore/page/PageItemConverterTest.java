@@ -47,7 +47,8 @@ public class PageItemConverterTest extends APITestWithMock{
         when(engineItem.getContentName()).thenReturn("page1.zip");
         when(engineItem.getProcessDefinitionId()).thenReturn(2L);
         when(engineItem.getContentType()).thenReturn(ContentType.FORM);
-
+        when(engineItem.isEditable()).thenReturn(true);
+        when(engineItem.isRemovable()).thenReturn(false);
 
         //When
         final PageItem pageItem = pageitemConverter.convert(engineItem);
@@ -65,6 +66,8 @@ public class PageItemConverterTest extends APITestWithMock{
         assertTrue(pageItem.getContentName().equals(engineItem.getContentName()));
         assertTrue(pageItem.getProcessId().equals(engineItem.getProcessDefinitionId()));
         assertTrue(pageItem.getContentType().equals(engineItem.getContentType()));
+        assertTrue(pageItem.isEditable() == engineItem.isEditable());
+        assertTrue(pageItem.isRemovable() == engineItem.isRemovable());
 
     }
 }
