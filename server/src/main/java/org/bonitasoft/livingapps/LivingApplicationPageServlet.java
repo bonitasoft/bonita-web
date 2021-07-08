@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -43,7 +44,6 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 public class LivingApplicationPageServlet extends HttpServlet {
 
@@ -112,7 +112,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 }
                 boolean isNotResourcePath = isNotResourcePath(resourcePath);
                 customPageName = getCustomPageName(appToken, pageToken, apiSession, response, isNotResourcePath);
-                if (StringUtil.isBlank(customPageName)) {
+                if (StringUtils.isBlank(customPageName)) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING, "Error while trying to retrieve the application page");
                     }
