@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2021-06-27 01:31\n"
+"PO-Revision-Date: 2021-07-13 01:32\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -255,6 +255,12 @@ msgstr "Conectores"
 
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "Conectores devem ser resolvidos antes de ativar o processo."
+
+msgid "Core to Bonita platform"
+msgstr ""
+
+msgid "Core to Bonita platform; cannot be deleted"
+msgstr ""
 
 msgid "Country"
 msgstr "País"
@@ -640,6 +646,9 @@ msgstr "Nenhum mapeamento"
 msgid "No process found with id:"
 msgstr "Nenhum processo encontrado com o ID:"
 
+msgid "No profile"
+msgstr ""
+
 msgid "No profile mapped to this application"
 msgstr "Sem perfil mapeado para esta aplicação"
 
@@ -892,6 +901,9 @@ msgstr "Status"
 msgid "Status of importation"
 msgstr "Status da importação"
 
+msgid "Still, you can customize its look & feel on this page. You can also update some of its pages in the Resources menu."
+msgstr ""
+
 msgid "Submit"
 msgstr "Enviar"
 
@@ -993,6 +1005,9 @@ msgstr ""
 
 msgid "This URL is already in use"
 msgstr "Essa URL já está em uso"
+
+msgid "This application is core to the Bonita platform. To keep it working as it should, it must remain available and its menu should stay as it is."
+msgstr ""
 
 msgid "This field is mandatory"
 msgstr "Este campo é obrigatório"
@@ -1128,6 +1143,9 @@ msgstr "Valor"
 
 msgid "Version"
 msgstr "Versão"
+
+msgid "View application details"
+msgstr ""
 
 msgid "View case details"
 msgstr "Ver detalhes do casos"
