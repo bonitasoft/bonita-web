@@ -167,8 +167,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
             final Long customPageId = getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
             return getPageApi(apiSession).getPage(customPageId).getName();
         } catch (final NotFoundException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "The application page " + appToken + "/" + pageToken + " was not found", e);
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "The application page " + appToken + "/" + pageToken + " was not found.");
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND,
