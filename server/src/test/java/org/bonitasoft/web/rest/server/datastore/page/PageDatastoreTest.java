@@ -482,11 +482,31 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void it_should_set_the_new_name_value_to_original_file_name_field_on_creation() throws Exception {
+    public void it_should_set_the_new_zip_name_value_to_original_file_name_field_on_creation() throws Exception {
 
         // Given
         deleteDir(pagesDir);
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "page.zip::newPage.zip");
+        when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
+
+        // When
+        final PageItem addedPage = pageDatastore.add(pageToBeAdded);
+
+        final ArgumentCaptor<PageItem> argumentCaptor = ArgumentCaptor.forClass(PageItem.class);
+
+        //then
+        verify(pageDatastore, times(1)).createEnginePage(argumentCaptor.capture(), any(File.class));
+
+        assertThat(argumentCaptor.getValue().getContentName()).isEqualTo("newPage.zip");
+    }
+    
+    @Test
+    public void it_should_set_the_new_zip_name_value_to_original_file_name_field_on_creation_with_contentName_attribute() throws Exception {
+
+        // Given
+        deleteDir(pagesDir);
+        pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "page.zip");
+        pageToBeAdded.setAttribute(PageItem.ATTRIBUTE_CONTENT_NAME, "newPage.zip");
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
 
         // When

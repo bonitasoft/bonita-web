@@ -114,13 +114,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         final String zipFileAttribute = pageItem.getAttributeValue(UNMAPPED_ATTRIBUTE_ZIP_FILE);
         final String[] filenames = zipFileAttribute.split(FileUploadServlet.RESPONSE_SEPARATOR);
         final String filename = filenames[0];
-        String originalFileName;
-
-        if (filenames.length > 1) {
-            originalFileName = filenames[1];
-        } else {
-            originalFileName = filename;
-        }
+        String originalFileName = getOriginalFilename(filenames, filename, pageItem.getAttributes());
         pageItem.setContentName(originalFileName);
 
         try {
@@ -319,19 +313,14 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                 if (zipFileAttribute != null && !zipFileAttribute.isEmpty()) {
                     final String[] filenames = zipFileAttribute.split(FileUploadServlet.RESPONSE_SEPARATOR);
                     final String filename = filenames[0];
-                    String originalFileName;
-                    if (filenames.length > 1) {
-                        originalFileName = filenames[1];
-                    } else {
-                        originalFileName = filename;
-                    }
+                    String originalFileName = getOriginalFilename(filenames, filename, attributes);
                     final APISession engineSession = getEngineSession();
                     final long tenantId = engineSession.getTenantId();
                     zipFile = tenantFolder.getTempFile(filename, tenantId);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     pageContentValidator.validate(unzipPageTempFolder);
                     try {
-                        updatePageContent(pageId, zipFile, page.getName());
+                        updatePageContent(page, zipFile);
                         final PageUpdater pageUpdater = new PageUpdater();
                         pageUpdater.setContentName(originalFileName);
                         page = pageAPI.updatePage(pageId, pageUpdater);
@@ -360,17 +349,30 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         }
     }
 
-    protected void updatePageContent(final Long pageId, final File zipFile, final String oldURLToken) throws IOException,
+    protected String getOriginalFilename(final String[] filenames, final String tempFilename,
+            final Map<String, String> attributes) {
+        String originalFileName;
+        if (filenames.length > 1) {
+            originalFileName = filenames[1];
+        } else if (attributes.containsKey(PageItem.ATTRIBUTE_CONTENT_NAME)) {
+            originalFileName = attributes.get(PageItem.ATTRIBUTE_CONTENT_NAME);
+        } else {
+            originalFileName = tempFilename;
+        }
+        return originalFileName;
+    }
+
+    protected void updatePageContent(final Page page, final File zipFile) throws IOException,
             CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(pageAPI.getPage(pageId),
+            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
                     getEngineSession().getTenantId());
             customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
             customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
                     pageResourceProvider);
-            pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
+            pageAPI.updatePageContent(page.getId(), FileUtils.readFileToByteArray(zipFile));
         }
-        customPageService.removePage(getEngineSession(), oldURLToken);
+        customPageService.removePage(getEngineSession(), page.getName());
     }
 
     @Override
