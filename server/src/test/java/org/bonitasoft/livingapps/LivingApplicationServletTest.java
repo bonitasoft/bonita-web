@@ -5,12 +5,15 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
@@ -21,6 +24,7 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.livingapps.exception.CreationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +43,9 @@ public class LivingApplicationServletTest {
     HttpServletResponse hsResponse;
 
     @Mock
+    HttpSession httpSession;
+    
+    @Mock
     APISession session;
 
     @Mock
@@ -46,6 +53,9 @@ public class LivingApplicationServletTest {
 
     @Mock
     ResourceRenderer resourceRenderer;
+    
+    @Mock
+    AuthenticationManager authenticationManager;
 
     @Mock
     PageRenderer pageRenderer;
@@ -61,8 +71,12 @@ public class LivingApplicationServletTest {
         doReturn(router).when(servlet).createApplicationRouter(any(APISession.class));
         doReturn(pageRenderer).when(servlet).getPageRenderer();
         doReturn(resourceRenderer).when(servlet).getResourceRenderer();
+        doReturn(httpSession).when(hsRequest).getSession();
         doReturn(session).when(servlet).getSession(hsRequest);
         doReturn("/appToken/pageToken/").when(hsRequest).getPathInfo();
+        doReturn(1L).when(session).getTenantId();
+        doReturn("1").when(hsRequest).getParameter("tenant");
+        doReturn(authenticationManager).when(servlet).getAuthenticationManager(any());
         servlet.customPageRequestModifier = customPageRequestModifier;
     }
 
@@ -74,8 +88,6 @@ public class LivingApplicationServletTest {
 
         verify(hsResponse).sendError(404, "error");
     }
-
-
 
     @Test
     public void should_send_error_404_when_the_custom_page_is_not_associated_to_application() throws Exception {
@@ -141,6 +153,19 @@ public class LivingApplicationServletTest {
 
         verify(hsResponse).sendError(404, "error");
     }
+    
+    @Test
+    public void should_redirect_to_the_login_page_when_the_session_is_invalid() throws Exception {
+        doThrow(new InvalidSessionException("error")).when(router).route(eq(hsRequest), eq(hsResponse), eq(session), eq(pageRenderer), eq(resourceRenderer), any(BonitaHomeFolderAccessor.class));
+        doReturn("/bonita/apps/appToken/pageToken/").when(hsRequest).getRequestURI();
+        String encodedRedirectURL = "%2Fbonita%2Fapps%2FappToken%2FpageToken%2F";
+        String loginURL = "/bonita/login.jsp?redirectUrl=" + encodedRedirectURL;
+        doReturn(loginURL).when(authenticationManager).getLoginPageURL(any(HttpServletRequestAccessor.class), eq(encodedRedirectURL));
+
+        servlet.service(hsRequest, hsResponse);
+        
+        verify(hsResponse).sendRedirect(loginURL);
+    }
 
     @Test
     public void should_redirectToValidPageUrl_on_missing_final_slash() throws Exception {
@@ -166,7 +191,7 @@ public class LivingApplicationServletTest {
 
         servlet.service(hsRequest, hsResponse);
 
-        verify(customPageRequestModifier, times(0)).redirectToValidPageUrl(hsRequest, hsResponse);
+        verify(customPageRequestModifier, never()).redirectToValidPageUrl(hsRequest, hsResponse);
     }
 
 }

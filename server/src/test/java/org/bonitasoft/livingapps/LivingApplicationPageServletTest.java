@@ -17,6 +17,7 @@ package org.bonitasoft.livingapps;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,6 +39,7 @@ import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -119,6 +121,19 @@ public class LivingApplicationPageServletTest {
         servlet.service(hsRequest, hsResponse);
 
         verify(hsResponse).sendError(403, "User not Authorized");
+    }
+    
+    @Test
+    public void should_get_Unauthorized_Status_when_Invalid_session() throws Exception {
+        hsRequest.setPathInfo("/AppToken/pageToken/content/");
+        given(resourceRenderer.getPathSegments("/AppToken/pageToken/content/")).willReturn(Arrays.asList("AppToken", "pageToken", "content"));
+        given(customPageAuthorizationsHelper.isPageAuthorized("AppToken", "customPageName")).willReturn(true);
+
+        doThrow(new InvalidSessionException("invalid session")).when(applicationAPI).getApplicationPage("AppToken", "pageToken");
+
+        servlet.service(hsRequest, hsResponse);
+
+        verify(hsResponse).sendError(401, "Invalid Bonita engine session.");
     }
 
     @Test

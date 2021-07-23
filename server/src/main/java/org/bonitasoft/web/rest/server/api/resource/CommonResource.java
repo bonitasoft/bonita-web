@@ -27,11 +27,13 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
@@ -189,6 +191,9 @@ public class CommonResource extends ServerResource {
             errorMessage.setMessage("File Not Found");
         } else if (t instanceof NotFoundException) {
             status = Status.CLIENT_ERROR_NOT_FOUND;
+        } else if (t instanceof InvalidSessionException) {
+            status = Status.CLIENT_ERROR_UNAUTHORIZED;
+            SessionUtil.sessionLogout(getHttpSession());
         } else {
             super.doCatch(t);
             status = getStatus();

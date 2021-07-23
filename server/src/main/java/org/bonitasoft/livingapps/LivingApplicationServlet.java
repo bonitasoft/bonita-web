@@ -9,10 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bonitasoft.console.common.server.auth.AuthenticationManager;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
+import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
+import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
+import org.bonitasoft.console.common.server.login.TenantIdAccessor;
+import org.bonitasoft.console.common.server.login.utils.LoginUrl;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
+import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -21,8 +30,15 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.livingapps.exception.CreationException;
 
+/**
+ * Servlet which displays the application layout with an URL like /apps/<app-token>/*
+ * 
+ * Note: whenever there is an InvalidSessionException from the engine it performs an HTTP session logout and redirects to the login page (this is possible because unlike in LivingApplicationPageServlet we are in the top frame).
+ *
+ */
 public class LivingApplicationServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3911437607969651000L;
@@ -56,6 +72,14 @@ public class LivingApplicationServlet extends HttpServlet {
                 LOGGER.log(Level.WARNING, message, e);
             }
             hsResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (final InvalidSessionException e) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
+            SessionUtil.sessionLogout(hsRequest.getSession());
+            HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(hsRequest);
+            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(new TenantIdAccessor(requestAccessor)), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
+            hsResponse.sendRedirect(loginURL.getLocation());
         }
 
     }
@@ -82,5 +106,20 @@ public class LivingApplicationServlet extends HttpServlet {
 
     ResourceRenderer getResourceRenderer(){
         return new ResourceRenderer();
+    }
+    
+    protected RedirectUrl makeRedirectUrl(final HttpServletRequestAccessor httpRequest) {
+        final RedirectUrlBuilder builder = new RedirectUrlBuilder(httpRequest.getRequestedUri());
+        builder.appendParameters(httpRequest.getParameterMap());
+        return builder.build();
+    }
+    
+    // protected for test stubbing
+    protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+        try {
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
+        } catch (final AuthenticationManagerNotFoundException e) {
+            throw new ServletException(e);
+        }
     }
 }

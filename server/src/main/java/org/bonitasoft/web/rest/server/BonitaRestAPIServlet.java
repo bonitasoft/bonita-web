@@ -65,10 +65,11 @@ public class BonitaRestAPIServlet extends APIServlet {
         } catch (final UnsupportedEncodingException e) {
             super.catchAllExceptions(e, req, resp);
         }
-        if (exception instanceof APIException && exception.getCause() != null && exception.getCause() instanceof InvalidSessionException) {
+        if (exception instanceof InvalidSessionException 
+                || exception instanceof APIException && exception.getCause() != null && exception.getCause() instanceof InvalidSessionException) {
         	final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(req);
-        	if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, exception.getMessage(), exception);
+        	if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_UNAUTHORIZED);
             SessionUtil.sessionLogout(requestAccessor.getHttpSession());
