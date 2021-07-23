@@ -222,7 +222,7 @@ public class PageServletTest {
         pageServlet.service(hsRequest, hsResponse);
 
         verify(pageServlet).handleException(hsRequest, hsResponse, "process/processName/processVersion", true, illegalArgumentException);
-        verify(hsResponse, times(1)).sendError(400);
+        verify(hsResponse, times(1)).sendError(400, "Invalid Request.");
     }
     
     @Test
