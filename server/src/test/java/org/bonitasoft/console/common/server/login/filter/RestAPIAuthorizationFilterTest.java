@@ -45,6 +45,7 @@ import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
@@ -572,6 +573,17 @@ public class RestAPIAuthorizationFilterTest {
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
+    @Test
+    public void should_checkValidCondition_check_unauthorized_if_session_is_invalid() throws ServletException {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        doReturn("API/bpm/case/15").when(request).getRequestURI();
+        doThrow(InvalidSessionException.class).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
+        //when
+        final boolean isValid = restAPIAuthorizationFilterSpy.checkValidCondition(request, response);
+
+        assertThat(isValid).isFalse();
+        verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
 
     @Test
     public void should_checkValidCondition_check_permission_if_is_tenant_is_forbidden() throws ServletException {

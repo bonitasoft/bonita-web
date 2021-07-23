@@ -44,7 +44,15 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 
+/**
+ * Servlet which displays an application page (iframe below the layout menu) with an URL like /portal/resource/app/<app-token>/<application-page-token>/content/
+ * 
+ * Note: whenever there is an InvalidSessionException from the engine it performs an HTTP session logout and send a 401 error. since we are in a iframe, we cannot redirect to the login page.
+ * However, the page should handle the 401 and refresh the top window.
+ *
+ */
 public class LivingApplicationPageServlet extends HttpServlet {
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
@@ -111,11 +119,12 @@ public class LivingApplicationPageServlet extends HttpServlet {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
                 boolean isNotResourcePath = isNotResourcePath(resourcePath);
-                customPageName = getCustomPageName(appToken, pageToken, apiSession, response, isNotResourcePath);
+                customPageName = getCustomPageName(appToken, pageToken, apiSession, request, response, isNotResourcePath);
                 if (StringUtils.isBlank(customPageName)) {
                     if (LOGGER.isLoggable(Level.WARNING)) {
                         LOGGER.log(Level.WARNING, "Error while trying to retrieve the application page");
                     }
+                    //the response status is set in the error handling of getCustomPageName
                     return;
                 }
                 try {
@@ -137,7 +146,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         return;
                     }
                 } catch (final Exception e) {
-                    handleException(customPageName, e);
+                    handleException(customPageName, e, request, response, isNotResourcePath);
                 }
             } else if (isValidPathForToken(THEME_PATH_SEPARATOR, pathSegments)) {
                 //Support relative calls to the THEME from the application page using ../theme/
@@ -162,7 +171,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     }
 
-    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
+    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletRequest request, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
         try {
             final Long customPageId = getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
             return getPageApi(apiSession).getPage(customPageId).getName();
@@ -178,7 +187,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 response.flushBuffer();
             }
         } catch (final Exception e) {
-            handleException(appToken + "/" + pageToken, e);
+            handleException(appToken + "/" + pageToken, e, request, response, isNotResourcePath);
         }
         return "";
     }
@@ -207,11 +216,24 @@ public class LivingApplicationPageServlet extends HttpServlet {
         return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
     }
 
-    private void handleException(final String pageName, final Exception e) throws ServletException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
+    private void handleException(final String pageName, final Exception e, final HttpServletRequest request, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
+        if (e instanceof InvalidSessionException ) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
+            SessionUtil.sessionLogout(request.getSession());
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Bonita engine session.");
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.flushBuffer();
+            }
+        } else {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
+            }
+            throw new ServletException(e.getMessage());
         }
-        throw new ServletException(e.getMessage());
     }
 
     protected ApplicationAPI getApplicationApi(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
