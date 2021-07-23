@@ -42,12 +42,17 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.livingapps.ApplicationModelFactory;
 import org.bonitasoft.livingapps.exception.CreationException;
 
 /**
- * Servlet allowing to display a page or the resource of a page
+ * Servlet allowing to display a page or the resource of a page with an URL like /portal/resource/<page-mapping-key>/content/
  * (it can be a custom page or an external page)
+ * This servlet is used to display process forms/overview pages
+ * 
+ * Note: whenever there is an InvalidSessionException from the engine it performs an HTTP session logout and send a 401 error. since we are in a iframe, we cannot redirect to the login page.
+ * However, the page should handle the 401 and refresh the top window.
  *
  * @author Anthony Birembaut
  */
@@ -112,7 +117,7 @@ public class PageServlet extends HttpServlet {
             try {
                 resolveAndDisplayPage(request, response, apiSession, mappingKey, resourcePath);
             } catch (final Exception e) {
-                handleException(response, mappingKey, isNotResourcePath(resourcePath), e);
+                handleException(request, response, mappingKey, isNotResourcePath(resourcePath), e);
             }
         } else if (pathInfo.indexOf(THEME_PATH_SEPARATOR + "/") > 0) {
             final String[] pathInfoSegments = pathInfo.split(THEME_PATH_SEPARATOR + "/", 2);
@@ -121,7 +126,7 @@ public class PageServlet extends HttpServlet {
             try {
                 renderThemeResource(request, response, apiSession, resourcePath);
             } catch (final Exception e) {
-                handleException(response, mappingKey, false, e);
+                handleException(request, response, mappingKey, false, e);
             }
         } else {
             final String message = "/content or /theme is expected in the URL after the page mapping key";
@@ -302,7 +307,7 @@ public class PageServlet extends HttpServlet {
         response.sendRedirect(response.encodeRedirectURL(url));
     }
 
-    protected void handleException(final HttpServletResponse response, final String mappingKey, final boolean isNotResourcePath, final Exception e)
+    protected void handleException(final HttpServletRequest request, final HttpServletResponse response, final String mappingKey, final boolean isNotResourcePath, final Exception e)
             throws ServletException, IOException {
         if (e instanceof IllegalArgumentException) {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -310,6 +315,17 @@ public class PageServlet extends HttpServlet {
             }
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.flushBuffer();
+        } else if (e instanceof InvalidSessionException) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
+            SessionUtil.sessionLogout(request.getSession());
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Bonita engine session.");
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.flushBuffer();
+            }
         } else {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 final String message = "Error while trying to display a page or resource for key " + mappingKey;
