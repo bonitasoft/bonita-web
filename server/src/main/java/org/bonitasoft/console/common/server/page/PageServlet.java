@@ -313,8 +313,12 @@ public class PageServlet extends HttpServlet {
             if (LOGGER.isLoggable(Level.FINE)) {
                 LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
             }
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.flushBuffer();
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Request.");
+            } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.flushBuffer();
+            }
         } else if (e instanceof InvalidSessionException) {
             if (LOGGER.isLoggable(Level.FINER)) {
                 LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
