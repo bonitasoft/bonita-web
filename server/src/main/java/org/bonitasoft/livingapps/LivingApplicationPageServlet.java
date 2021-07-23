@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -37,14 +38,21 @@ import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 
+/**
+ * Servlet which displays an application page (iframe below the layout menu) with an URL like /portal/resource/app/<app-token>/<application-page-token>/content/
+ * 
+ * Note: whenever there is an InvalidSessionException from the engine it performs an HTTP session logout and send a 401 error. since we are in a iframe, we cannot redirect to the login page.
+ * However, the page should handle the 401 and refresh the top window.
+ *
+ */
 public class LivingApplicationPageServlet extends HttpServlet {
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
@@ -104,16 +112,24 @@ public class LivingApplicationPageServlet extends HttpServlet {
         if (pathSegments.size() >= 3) {
             appToken = pathSegments.get(0);
             pageToken = pathSegments.get(1);
-            customPageName = getCustomPageName(appToken, pageToken, apiSession, response);
 
             if (isValidPathForToken(RESOURCE_PATH_SEPARATOR, pathSegments)) {
                 final String pageMapping = "/" + appToken + "/" + pageToken + RESOURCE_PATH_SEPARATOR + "/";
                 if (pathInfo.length() > pageMapping.length()) {
                     resourcePath = pathInfo.substring(pageMapping.length());
                 }
+                boolean isNotResourcePath = isNotResourcePath(resourcePath);
+                customPageName = getCustomPageName(appToken, pageToken, apiSession, request, response, isNotResourcePath);
+                if (StringUtils.isBlank(customPageName)) {
+                    if (LOGGER.isLoggable(Level.WARNING)) {
+                        LOGGER.log(Level.WARNING, "Error while trying to retrieve the application page");
+                    }
+                    //the response status is set in the error handling of getCustomPageName
+                    return;
+                }
                 try {
                     if (isAuthorized(apiSession, appToken, customPageName)) {
-                        if (resourcePath == null || isNotResourcePath(resourcePath)) {
+                        if (isNotResourcePath) {
                             pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                         } else {
                             final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
@@ -125,7 +141,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         return;
                     }
                 } catch (final Exception e) {
-                    handleException(customPageName, e);
+                    handleException(customPageName, e, request, response);
                 }
             } else if (isValidPathForToken(THEME_PATH_SEPARATOR, pathSegments)) {
                 //Support relative calls to the THEME from the application page using ../theme/
@@ -143,34 +159,24 @@ public class LivingApplicationPageServlet extends HttpServlet {
         }
 
     }
-
-    private Long getCustomPageId(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws IOException, ServletException {
+    
+    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletRequest request, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
         try {
-            return getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
-        } catch (final ApplicationPageNotFoundException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
-            }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
-        } catch (final Exception e) {
-            handleException(appToken + "/" + pageToken, e);
-        }
-        return null;
-    }
-
-    private String getCustomPageName(final String appToken, final String pageToken, final APISession apiSession, final HttpServletResponse response) throws ServletException, IOException {
-        try {
-            final Long customPageId = getCustomPageId(appToken, pageToken, apiSession, response);
+            final Long customPageId = getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
             return getPageApi(apiSession).getPage(customPageId).getName();
-        } catch (final PageNotFoundException e) {
+        } catch (final NotFoundException e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + appToken + "/" + pageToken, e);
+                LOGGER.log(Level.WARNING, "The application page " + appToken + "/" + pageToken + " was not found", e);
             }
-            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "Cannot found the page" + pageToken + "for the application" + appToken + ".");
+            if (isNotResourcePath) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND,
+                        "Cannot find the page" + pageToken + "for the application" + appToken + ".");
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.flushBuffer();
+            }
         } catch (final Exception e) {
-            handleException(appToken + "/" + pageToken, e);
+            handleException(appToken + "/" + pageToken, e, request, response);
         }
         return "";
     }
@@ -199,11 +205,19 @@ public class LivingApplicationPageServlet extends HttpServlet {
         return getCustomPageAuthorizationsHelper(apiSession).isPageAuthorized(appToken, pageName);
     }
 
-    private void handleException(final String pageName, final Exception e) throws ServletException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
+    private void handleException(final String pageName, final Exception e, final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+        if (e instanceof InvalidSessionException ) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
+            SessionUtil.sessionLogout(request.getSession());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Bonita engine session.");
+        } else {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
+            }
+            throw new ServletException(e.getMessage());
         }
-        throw new ServletException(e.getMessage());
     }
 
     protected ApplicationAPI getApplicationApi(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {

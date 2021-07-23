@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.rest.server.utils.FakeResource;
 import org.bonitasoft.web.rest.server.utils.FakeResource.FakeService;
@@ -45,10 +48,15 @@ public class CommonResourceTest extends RestletTest {
 
     @Spy
     private final Series<Header> headers = new Series<>(Header.class);
+    
+    @Mock
+    HttpSession httpSession;
 
     @Override
     protected Application configureApplication() {
-        return aTestApp().attach("/test", new FakeResource(fakeService));
+        FakeResource resource = spy(new FakeResource(fakeService));
+        doReturn(httpSession).when(resource).getHttpSession();
+        return aTestApp().attach("/test", resource);
     }
 
     @Test
@@ -283,6 +291,16 @@ public class CommonResourceTest extends RestletTest {
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         assertThat(response).hasJsonEntityEqualTo("{\"exception\":\"class java.lang.IllegalArgumentException\",\"message\":\"an error message\"}'");
+    }
+    
+    @Test
+    public void should_respond_401_unauthorized_if_InvalidSessionException_occurs() throws Exception {
+        when(fakeService.saySomething()).thenThrow(new InvalidSessionException("an error message"));
+
+        final Response response = request("/test").get();
+
+        assertThat(response).hasStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+        assertThat(response).hasJsonEntityEqualTo("{\"exception\":\"class org.bonitasoft.engine.session.InvalidSessionException\",\"message\":\"an error message\"}'");
     }
 
     @Test

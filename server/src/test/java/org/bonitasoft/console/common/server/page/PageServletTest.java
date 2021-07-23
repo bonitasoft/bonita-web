@@ -25,6 +25,7 @@ import org.bonitasoft.engine.exception.UnauthorizedAccessException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -207,7 +208,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", instantiationException);
+        verify(pageServlet).handleException(hsRequest, hsResponse, "process/processName/processVersion", instantiationException);
         verify(hsResponse, times(1)).sendError(500, "instatiation exception");
     }
 
@@ -220,8 +221,22 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).handleException(hsResponse, "process/processName/processVersion", illegalArgumentException);
+        verify(pageServlet).handleException(hsRequest, hsResponse, "process/processName/processVersion", illegalArgumentException);
         verify(hsResponse, times(1)).sendError(400);
+    }
+    
+    @Test
+    public void should_get_unauthorized_when_engine_session_is_invalid() throws Exception {
+        when(hsRequest.getPathInfo()).thenReturn("/process/processName/processVersion/content/");
+        when(pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", locale, true)).thenReturn(new PageReference(PAGE_ID, null));
+        final InvalidSessionException invalidSessionException = new InvalidSessionException("Invalid session");
+        doThrow(invalidSessionException).when(pageRenderer).displayCustomPage(hsRequest, hsResponse, apiSession, PAGE_ID, locale);
+
+        pageServlet.service(hsRequest, hsResponse);
+
+        verify(pageServlet).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, null, locale);
+        verify(pageServlet).handleException(hsRequest, hsResponse, "process/processName/processVersion", invalidSessionException);
+        verify(hsResponse).sendError(401, "Invalid Bonita engine session.");
     }
 
     @Test

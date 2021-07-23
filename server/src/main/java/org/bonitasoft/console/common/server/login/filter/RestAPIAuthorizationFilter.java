@@ -43,6 +43,7 @@ import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
@@ -97,14 +98,23 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected boolean tenantAPIsCheck(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
         final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        if (apiSession == null) {
+        try {
+            if (apiSession == null) {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return false;
+            } else if (!checkPermissions(httpRequest)) {
+                httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return false;
+            } else {
+                return true;
+            }
+        } catch (InvalidSessionException e) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            SessionUtil.sessionLogout(httpRequest.getSession());
             return false;
-        } else if (!checkPermissions(httpRequest)) {
-            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return false;
-        } else {
-            return true;
         }
     }
 
@@ -131,6 +141,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final Long tenantId = apiSession.getTenantId();
+        
         final boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return true;
