@@ -6,15 +6,15 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 /* Fonts Signika-Regular and Signika-Semibold */
 @font-face {
   font-family: 'Signika-Regular';
-  src: url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.eot");
-  src: local('☺'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.woff") format('woff'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.ttf") format('truetype'), url("themeResource?theme=portal&location=skin/fonts/Signika-Regular.svg") format('svg');
+  src: url("../skin/fonts/Signika-Regular.eot");
+  src: local('☺'), url("../skin/fonts/Signika-Regular.woff") format('woff'), url("../skin/fonts/Signika-Regular.ttf") format('truetype'), url("../skin/fonts/Signika-Regular.svg") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Signika-Semibold';
-  src: url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.eot");
-  src: local('☺'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.woff") format('woff'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.ttf") format('truetype'), url("themeResource?theme=portal&location=skin/fonts/Signika-Semibold.svg") format('svg');
+  src: url("../skin/fonts/Signika-Semibold.eot");
+  src: local('☺'), url("../skin/fonts/Signika-Semibold.woff") format('woff'), url("../skin/fonts/Signika-Semibold.ttf") format('truetype'), url("../skin/fonts/Signika-Semibold.svg") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -101,10 +101,10 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 5px;
 }
 #LoginPage #LoginFormContainer > .body .formentry .input #password {
-  background: url("themeResource?theme=portal&location=skin/images/login-input-password.png") white no-repeat right center ;
+  background: url("../skin/images/login-input-password.png") white no-repeat right center ;
 }
 #LoginPage #LoginFormContainer > .body .formentry .input #username {
-  background: url("themeResource?theme=portal&location=skin/images/login-input-username.png") white no-repeat right center ;
+  background: url("../skin/images/login-input-username.png") white no-repeat right center ;
 }
 #LoginPage #LoginFormContainer > .body .formactions {
   margin: 0;
