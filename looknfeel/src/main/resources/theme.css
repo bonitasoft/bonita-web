@@ -1086,6 +1086,7 @@ textarea {
     line-height: inherit;
 }
 a {
+    color: #2c3e50;
     text-decoration: none;
 }
 a:hover,
@@ -1571,6 +1572,21 @@ pre code {
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
+}
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
 }
 .container-fluid {
     margin-right: auto;
@@ -2981,6 +2997,7 @@ select[multiple].input-lg {
     background-image: none;
     border: 1px solid transparent;
     white-space: nowrap;
+    padding: 8px 12px;
     font-size: 14px;
     line-height: 1.42857143;
     border-radius: 4px;
@@ -3635,6 +3652,11 @@ tbody.collapse.in {
 }
 .btn-toolbar {
     margin-left: -5px;
+}
+.btn-toolbar .btn,
+.btn-toolbar .btn-group,
+.btn-toolbar .input-group {
+    float: left;
 }
 .btn-toolbar > .btn,
 .btn-toolbar > .btn-group,
