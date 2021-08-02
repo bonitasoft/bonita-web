@@ -32,7 +32,7 @@ public class WebBonitaConstantsImplTest {
     WebBonitaConstantsImpl webBonitaConstants;
 
     @Test
-    public void getTenantsFolderPath_should_return_tenants_sibling_folder_aside_platform() throws Exception {
+    public void getTenantsFolderPath_should_return_tenants_sibling_folder_aside_platform() {
         doReturn("some/path/to/platform/").when(webBonitaConstants).getTempFolderPath();
 
         final String tenantsFolderPath = webBonitaConstants.getTenantsFolderPath();
