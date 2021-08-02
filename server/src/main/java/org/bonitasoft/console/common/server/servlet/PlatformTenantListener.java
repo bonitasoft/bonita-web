@@ -17,23 +17,12 @@ package org.bonitasoft.console.common.server.servlet;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.themes.ThemeExtractor;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
-import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.platform.LogoutException;
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.SessionNotFoundException;
-import org.bonitasoft.engine.theme.ThemeType;
 
 /**
  * @author Zhiheng Yang, Anthony Birembaut
@@ -55,43 +44,11 @@ public class PlatformTenantListener implements ServletContextListener {
         } catch (BonitaException e) {
             LOGGER.log(Level.SEVERE,
                     "Error initializing platform configuration. Engine most likely failed to start. Check previous error logs for more details.");
-            return;
         } catch (IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Error while retrieving configuration", e);
             }
         }
-        initializeDefaultTenant(new ThemeExtractor());
-    }
-
-    /**
-     * Initialize default tenant configuration folder
-     *
-     * @param themeExtractor the theme extractor
-     */
-    protected void initializeDefaultTenant(ThemeExtractor themeExtractor) {
-        try {
-            final APISession session = login();
-            final long tenantId = session.getTenantId();
-
-            // retrieve active theme for default tenant:
-            themeExtractor.retrieveAndExtractCurrentTheme(WebBonitaConstantsUtils.getInstance(tenantId).getPortalThemeFolder(), session, ThemeType.PORTAL);
-
-            logout(session);
-        } catch (final Throwable e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while initializing the default tenant", e);
-            }
-        }
-    }
-
-    protected void logout(APISession session)
-            throws SessionNotFoundException, LogoutException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        TenantAPIAccessor.getLoginAPI().logout(session);
-    }
-
-    protected APISession login() throws Exception {
-        return TenantAPIAccessor.getLoginAPI().login(TenantsManagementUtils.getTechnicalUserUsername(), TenantsManagementUtils.getTechnicalUserPassword());
     }
 
     @Override
