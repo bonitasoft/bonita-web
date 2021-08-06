@@ -5,16 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.ProfileAPI;
-import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileEntry;
-import org.bonitasoft.engine.profile.ProfileNotFoundException;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 
 public class PermissionsBuilder {
 
@@ -23,22 +17,20 @@ public class PermissionsBuilder {
     public static final String USER_TYPE_AUTHORIZATION_PREFIX = "user";
 
     protected final APISession session;
-    private final ProfileAPI profileAPI;
     private final ApplicationAPI applicationAPI;
     private final CustomPermissionsMapping customPermissionsMapping;
     private final CompoundPermissionsMapping compoundPermissionsMapping;
 
-    PermissionsBuilder(final APISession session, final ProfileAPI profileAPI,
+    PermissionsBuilder(final APISession session,
             final ApplicationAPI applicationAPI, final CustomPermissionsMapping customPermissionsMapping,
             final CompoundPermissionsMapping compoundPermissionsMapping) {
         this.session = session;
-        this.profileAPI = profileAPI;
         this.applicationAPI = applicationAPI;
         this.customPermissionsMapping = customPermissionsMapping;
         this.compoundPermissionsMapping = compoundPermissionsMapping;
     }
 
-    public Set<String> getPermissions() throws LoginFailedException {
+    public Set<String> getPermissions() {
         Set<String> permissions;
         if (session.isTechnicalUser()) {
             permissions = Collections.emptySet();
@@ -50,14 +42,8 @@ public class PermissionsBuilder {
         return permissions;
     }
 
-    void addProfilesPermissions(final Set<String> permissions) throws LoginFailedException {
-        final Set<String> pageTokens;
-        try {
-            pageTokens = getAllPagesForUser(permissions);
-        } catch (final ProfileNotFoundException e) {
-            throw new LoginFailedException(e);
-        }
-        for (final String pageToken : pageTokens) {
+    void addProfilesPermissions(final Set<String> permissions) {
+        for (final String pageToken : getAllPagesForUser(permissions)) {
             permissions.addAll(getCompoundPermissions(pageToken));
         }
     }
@@ -70,7 +56,7 @@ public class PermissionsBuilder {
      * @return
      *         the page names the user can access
      */
-    Set<String> getAllPagesForUser(final Set<String> permissions) throws ProfileNotFoundException {
+    Set<String> getAllPagesForUser(final Set<String> permissions) {
         final Set<String> pageTokens = new HashSet<>();
         for (final String profile : session.getProfiles()) {
                 addPageAndCustomPermissionsOfProfile(permissions, pageTokens, profile);
@@ -79,8 +65,7 @@ public class PermissionsBuilder {
     }
 
     void addPageAndCustomPermissionsOfProfile(final Set<String> permissions, final Set<String> pageTokens,
-            final String profile) throws ProfileNotFoundException {
-        addPagesOfProfile(profile, pageTokens);
+            final String profile) {
         addPagesOfApplication(profile, pageTokens);
         addCustomProfilePermissions(permissions, profile);
         addProfilesPermissions(permissions, profile);
@@ -88,15 +73,6 @@ public class PermissionsBuilder {
 
     private void addProfilesPermissions(final Set<String> permissions, final String profile) {
         permissions.add(PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + profile);
-    }
-
-    void addPagesOfProfile(final String profile, final Set<String> pageTokens) throws ProfileNotFoundException {
-        final List<ProfileEntry> profileEntries = profileAPI.getProfileEntries(profile);
-            for (final ProfileEntry profileEntry : profileEntries) {
-                if (profileEntry.getType().equals(ProfileEntryItem.VALUE_TYPE.link.name())) {
-                    pageTokens.add(profileEntry.getPage());
-                }
-            }
     }
 
     void addPagesOfApplication(final String profile, final Set<String> pageTokens) {

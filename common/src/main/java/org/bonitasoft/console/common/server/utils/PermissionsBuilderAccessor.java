@@ -8,7 +8,6 @@ import org.bonitasoft.console.common.server.preferences.properties.CustomPermiss
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -16,10 +15,8 @@ import org.bonitasoft.engine.session.APISession;
 public class PermissionsBuilderAccessor {
 
     public static PermissionsBuilder createPermissionBuilder(final APISession session) throws LoginFailedException {
-        ProfileAPI profileAPI;
         ApplicationAPI applicationAPI;
         try {
-            profileAPI = TenantAPIAccessor.getProfileAPI(session);
             applicationAPI = TenantAPIAccessor.getLivingApplicationAPI(session);
         } catch (final BonitaException e) {
             throw new LoginFailedException(e);
@@ -28,7 +25,7 @@ public class PermissionsBuilderAccessor {
         reloadPropertiesIfInDebug(securityProperties, new PlatformManagementUtils());
         final CustomPermissionsMapping customPermissionsMapping = PropertiesFactory.getCustomPermissionsMapping(session.getTenantId());
         final CompoundPermissionsMapping compoundPermissionsMapping = PropertiesFactory.getCompoundPermissionsMapping(session.getTenantId());
-        return new PermissionsBuilder(session, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping);
+        return new PermissionsBuilder(session, applicationAPI, customPermissionsMapping, compoundPermissionsMapping);
     }
 
     static void reloadPropertiesIfInDebug(SecurityProperties securityProperties, PlatformManagementUtils platformManagementUtils) throws LoginFailedException {

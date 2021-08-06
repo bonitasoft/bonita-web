@@ -3,35 +3,22 @@ package org.bonitasoft.console.common.server.utils;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.CustomPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.ProfileAPI;
-import org.bonitasoft.engine.exception.SearchException;
-import org.bonitasoft.engine.persistence.SBonitaReadException;
-import org.bonitasoft.engine.profile.Profile;
-import org.bonitasoft.engine.profile.ProfileEntry;
-import org.bonitasoft.engine.profile.ProfileNotFoundException;
-import org.bonitasoft.engine.profile.impl.ProfileEntryImpl;
 import org.bonitasoft.engine.session.impl.APISessionImpl;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,8 +33,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class PermissionsBuilderTest {
 
     private APISessionImpl apiSession = new APISessionImpl(1, new Date(), 100000, "myUser", 42L, "default", 1L);
-    @Mock
-    private ProfileAPI profileAPI;
     @Mock
     private CustomPermissionsMapping customPermissionsMapping;
     @Mock
@@ -66,7 +51,7 @@ public class PermissionsBuilderTest {
     }
 
     private void init() {
-        permissionsBuilder = spy(new PermissionsBuilder(apiSession, profileAPI, applicationAPI, customPermissionsMapping, compoundPermissionsMapping));
+        permissionsBuilder = spy(new PermissionsBuilder(apiSession, applicationAPI, customPermissionsMapping, compoundPermissionsMapping));
     }
 
     @Test
@@ -103,17 +88,6 @@ public class PermissionsBuilderTest {
     }
 
     @Test
-    public void should_addProfilesPermissions_throw_LoginException_when_issue_on_getAllPages() throws Exception {
-        doThrow(new ProfileNotFoundException(new Exception())).when(permissionsBuilder).getAllPagesForUser(anySetOf(String.class));
-        try {
-            permissionsBuilder.addProfilesPermissions(new HashSet<>());
-            fail("expecting " + LoginFailedException.class.getName());
-        } catch (final LoginFailedException e) {
-            assertThat(e.getCause()).isExactlyInstanceOf(ProfileNotFoundException.class);
-        }
-    }
-
-    @Test
     public void should_getAllPagesForUser_add_page_and_custom_permissions_of_profiles_of_user() throws Exception {
         final Set<String> permissions = new HashSet<>();
         doNothing().when(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions),
@@ -127,35 +101,6 @@ public class PermissionsBuilderTest {
         verify(permissionsBuilder).addPageAndCustomPermissionsOfProfile(eq(permissions), anySetOf(String.class),
                 eq("myProfile2"));
     }
-
-    @Test
-    public void should_addPageAndCustomPermissionsOfProfile_complete_set_of_permission_and_page() throws Exception {
-        final Set<String> permissions = new HashSet<>();
-        final Set<String> pages = new HashSet<>();
-        doReturn(aSet("Perm1", "Perm2")).when(permissionsBuilder).getCustomPermissions(eq("profile"), eq("myProfile1"));
-        doReturn(aSet("Perm2", "Perm3")).when(permissionsBuilder).getCustomPermissions(eq("profile"), eq("myProfile2"));
-        doNothing().when(permissionsBuilder).addPagesOfProfile(any(), anySetOf(String.class));
-
-        permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, "myProfile1");
-        permissionsBuilder.addPageAndCustomPermissionsOfProfile(permissions, pages, "myProfile2");
-
-        verify(permissionsBuilder).addPagesOfProfile("myProfile1", pages);
-        verify(permissionsBuilder).addPagesOfProfile("myProfile2", pages);
-        assertThat(permissions).containsOnly("Perm1", "Perm2", "Perm3", "profile|myProfile1", "profile|myProfile2");
-    }
-
-    @Test
-    public void should_addPagesOfProfile_complete_set_of_page() throws Exception {
-        final Set<String> pages = new HashSet<>();
-        doReturn(asList(profileEntryWithPage("page1"), profileEntryWithPage("page2"))).when(profileAPI).getProfileEntries("myProfile1");
-        doReturn(asList(profileEntryWithPage("page2"), profileEntryWithPage("page3"))).when(profileAPI).getProfileEntries("myProfile2");
-
-        permissionsBuilder.addPagesOfProfile("myProfile1", pages);
-        permissionsBuilder.addPagesOfProfile("myProfile2", pages);
-
-        assertThat(pages).containsOnly("page1", "page2", "page3");
-    }
-
     @Test
     public void should_getPermissions_retrieve_permisions_even_if_secu_not_active() throws Exception {
         //given
@@ -196,12 +141,5 @@ public class PermissionsBuilderTest {
 
     private Set<String> aSet(String... elements) {
         return new HashSet<>(asList(elements));
-    }
-
-    private ProfileEntry profileEntryWithPage(String page) {
-        ProfileEntryImpl profileEntry = new ProfileEntryImpl("myEntryFor" + page);
-        profileEntry.setType("link");
-        profileEntry.setPage(page);
-        return profileEntry;
     }
 }
