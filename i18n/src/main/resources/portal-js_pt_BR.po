@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2021-07-13 01:32\n"
+"PO-Revision-Date: 2021-08-15 01:30\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -257,10 +257,10 @@ msgid "Connectors must be resolved before enabling the Process."
 msgstr "Conectores devem ser resolvidos antes de ativar o processo."
 
 msgid "Core to Bonita platform"
-msgstr ""
+msgstr "Núcleo da plataforma Bonita BPM"
 
 msgid "Core to Bonita platform; cannot be deleted"
-msgstr ""
+msgstr "O núcleo da plataforma Bonita, não pode ser excluído"
 
 msgid "Country"
 msgstr "País"
@@ -446,19 +446,19 @@ msgid "Highest"
 msgstr "Mais alto"
 
 msgid "However, due to the use of Hibernate for data persistence, some changes on the data may not be well handled. These changes may lead to a corrupted database and CANNOT BE REVERTED."
-msgstr ""
+msgstr "No entanto, devido ao uso da Hibernate para a persistência de dados, algumas alterações nos dados podem não ser bem tratadas. Essas alterações podem levar a uma base de dados corrompida e NÃO PODEM SER REVERTIDAS."
 
 msgid "I have read and understood the previous warning message. I have prepared a database backup so I can rollback this operation."
-msgstr ""
+msgstr "Eu li e entendi a mensagem de aviso anterior. Eu preparei um backup de banco de dados para poder reverter esta operação."
 
 msgid "ID"
 msgstr "ID"
 
 msgid "IN ANY CASE, you MUST CREATE A BACKUP of the current BDM database before undergoing a BDM update."
-msgstr ""
+msgstr "EM QUALQUER CASE, você DEVE CRIAR UM BACKUP da base de dados BDM atual antes de passar por uma atualização BDM."
 
 msgid "If your changes do not fall into those change types, you can go ahead and proceed with the BDM update now."
-msgstr ""
+msgstr "Se suas mudanças não caírem nesses tipos de mudança, você pode prosseguir e prosseguir com a atualização BDM agora."
 
 msgid "Implementation version"
 msgstr "Versão de implementação"
@@ -476,7 +476,7 @@ msgid "In a production environment, this should be used with caution."
 msgstr ""
 
 msgid "In such cases, you must CANCEL THIS UPDATE and let the database administrator carefully script the changes and apply them to the database. Only then will you be able to update the BDM from this page."
-msgstr ""
+msgstr "Nesses casos, você deve CANCELAR ESTE UPDATE e permitir que o administrador da base de dados escreva cuidadosamente as alterações e as aplique ao banco de dados. Somente então você poderá atualizar o BDM a partir desta página."
 
 msgid "In task name column"
 msgstr "Na coluna nome da tarefa"
@@ -533,7 +533,7 @@ msgid "Loading..."
 msgstr "Carregando..."
 
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 msgid "Look & Feel"
 msgstr "Aparência"
@@ -647,7 +647,7 @@ msgid "No process found with id:"
 msgstr "Nenhum processo encontrado com o ID:"
 
 msgid "No profile"
-msgstr ""
+msgstr "Sem perfis"
 
 msgid "No profile mapped to this application"
 msgstr "Sem perfil mapeado para esta aplicação"
@@ -902,7 +902,7 @@ msgid "Status of importation"
 msgstr "Status da importação"
 
 msgid "Still, you can customize its look & feel on this page. You can also update some of its pages in the Resources menu."
-msgstr ""
+msgstr "Ainda assim, você pode personalizar sua aparência nesta página. Você também pode atualizar algumas de suas páginas no menu Recursos."
 
 msgid "Submit"
 msgstr "Enviar"
@@ -938,7 +938,7 @@ msgid "Technical error."
 msgstr "Erro técnico."
 
 msgid "The BDM schema and data have been rolled-back to what they were before this update attempt."
-msgstr ""
+msgstr "O esquema e os dados BDM foram revertidos para o que eram antes desta tentativa de atualização."
 
 msgid "The application"
 msgstr "A aplicação"
@@ -968,13 +968,13 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "O caso será excluído dos arquivos permanentemente."
 
 msgid "The file you are trying to upload has the wrong mime type"
-msgstr ""
+msgstr "O arquivo que você está tentando carregar tem um tipo errado de mime"
 
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "Os mapeamentos de formulário devem ser resolvidos antes de ativar o processo."
 
 msgid "The image you are trying to upload is too big"
-msgstr ""
+msgstr "A imagem que você está tentando enviar é muito grande"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
@@ -983,7 +983,7 @@ msgid "The task has been submitted but an error occurred while adding the commen
 msgstr "A tarefa foi apresentada, mas ocorreu um erro ao adicionar o comentário"
 
 msgid "The whole list of such changes is listed <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>here</a>."
-msgstr ""
+msgstr "A lista inteira de tais alterações é listada <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>aqui</a>."
 
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "As palavras 'conteúdo', 'API' e 'tema' são reservados para uso interno. Eles não devem ser usados em um aplicativo ou a URL da página."
@@ -1007,7 +1007,7 @@ msgid "This URL is already in use"
 msgstr "Essa URL já está em uso"
 
 msgid "This application is core to the Bonita platform. To keep it working as it should, it must remain available and its menu should stay as it is."
-msgstr ""
+msgstr "Essa aplicação é essencial para a plataforma Bonita. Para que continue a funcionar como deve ser, tem de permanecer disponível e o seu menu deve permanecer como está."
 
 msgid "This field is mandatory"
 msgstr "Este campo é obrigatório"
@@ -1118,7 +1118,7 @@ msgid "Updated on"
 msgstr "Atualizado em"
 
 msgid "Updating the Business Data Model applies changes to both existing database tables and data."
-msgstr ""
+msgstr "A atualização do Modelo de Dados de Negócio aplica alterações nas tabelas e dados do banco de dados existentes."
 
 msgid "Upload new picture"
 msgstr "Carregar nova imagem"
@@ -1145,7 +1145,7 @@ msgid "Version"
 msgstr "Versão"
 
 msgid "View application details"
-msgstr ""
+msgstr "Detalhes do aplicativo"
 
 msgid "View case details"
 msgstr "Ver detalhes do casos"
@@ -1202,7 +1202,7 @@ msgid "application descriptor has been successfully imported, with complete page
 msgstr "descritor de aplicativos foi importado com sucesso, com mapeamento completo de página e mapeamento de menu."
 
 msgid "here"
-msgstr ""
+msgstr "aqui"
 
 msgid "of"
 msgstr "de"
