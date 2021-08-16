@@ -429,7 +429,6 @@
                                             <fileset dir="${project.build.directory}/${project.build.finalName}">
                                                 <exclude name="**/console-server-*.jar" />
                                                 <exclude name="**/console-common-*.jar" />
-                                                <exclude name="**/console-client-*.jar" />
                                             </fileset>
                                         </copy>
                                     </target>
@@ -489,14 +488,6 @@
                                 <files>
                                     <!-- copy classes -->
                                     <file>
-                                        <file>${basedir}/../portal/target/classes</file>
-                                        <todir>webapps/bonita/WEB-INF/classes</todir>
-                                    </file>
-                                    <file>
-                                        <file>${basedir}/../common/target/classes</file>
-                                        <todir>webapps/bonita/WEB-INF/classes</todir>
-                                    </file>
-                                    <file>
                                         <file>${basedir}/target/classes</file>
                                         <todir>webapps/bonita/WEB-INF/classes</todir>
                                     </file>
@@ -504,10 +495,6 @@
                                     <file>
                                         <file>${basedir}/../portal/src/main/webapp</file>
                                         <todir>webapps/bonita</todir>
-                                    </file>
-                                    <file>
-                                        <file>${basedir}/../portal/target/console-client-${project.version}/portal</file>
-                                        <todir>webapps/bonita/portal</todir>
                                     </file>
                                     <file>
                                         <file>${basedir}/src/test/resources/tomcat/conf</file>
