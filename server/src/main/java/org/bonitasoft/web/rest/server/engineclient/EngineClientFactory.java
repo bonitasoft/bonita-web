@@ -33,7 +33,7 @@ public class EngineClientFactory {
     }
 
     public ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return new ProfileEntryEngineClient(apiAccessor.getProfileAPI());
+        return new ProfileEntryEngineClient();
     }
 
     public ProfileMemberEngineClient createProfileMemberEngineClient() {
