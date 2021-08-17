@@ -15,6 +15,7 @@
 package org.bonitasoft.web.rest.server.api.page;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +23,12 @@ import java.util.Map;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.DeployerFactory;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastore;
 import org.bonitasoft.web.rest.server.datastore.page.PageDatastoreFactory;
-import org.bonitasoft.web.rest.server.datastore.profile.entry.ProfileEntryItemConverter;
-import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
-import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
@@ -136,19 +131,7 @@ APIHasDelete {
     }
 
     private List<String> getPagesAlreadyAdded(final String profileId) {
-        final List<ProfileEntry> profileEntries = createProfileEntryEngineClient().getAllChildsOfAProfileEntry(Long.valueOf(profileId));
-        final List<ProfileEntryItem> profileEntyItems = new ProfileEntryItemConverter().convert(profileEntries);
-
-        final List<String> pages = new ArrayList<String>();
-        for (final ProfileEntryItem entryItem : profileEntyItems) {
-            pages.add(entryItem.getPage());
-        }
-        return pages;
-    }
-
-    private ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createProfileEntryEngineClient();
-
+        return Collections.emptyList();
     }
 
     @Override

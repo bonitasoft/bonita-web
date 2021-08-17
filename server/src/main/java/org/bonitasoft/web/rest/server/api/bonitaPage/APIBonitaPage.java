@@ -15,19 +15,14 @@
 package org.bonitasoft.web.rest.server.api.bonitaPage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.engine.profile.ProfileEntry;
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.datastore.profile.BonitaPageDatastore;
-import org.bonitasoft.web.rest.server.datastore.profile.entry.ProfileEntryItemConverter;
-import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
-import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -123,20 +118,7 @@ public class APIBonitaPage extends ConsoleAPI<BonitaPageItem> {
     }
 
     private List<String> getBonitaPagesAlreadyAdded(final String profileId, final int page, final int resultsByPage, final String search, final String orders, final Map<String, String> filters) {
-        final List<ProfileEntry> profileEntries = createProfileEntryEngineClient().getAllChildsOfAProfileEntry(
-                Long.valueOf(profileId));
-        final List<ProfileEntryItem> profileEntyItems = new ProfileEntryItemConverter().convert(profileEntries);
-
-        final List<String> bonitaPages = new ArrayList<String>();
-        for (final ProfileEntryItem entryItem : profileEntyItems) {
-            bonitaPages.add(entryItem.getPage());
-        }
-        return bonitaPages;
-    }
-
-    private ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return new EngineClientFactory(new EngineAPIAccessor(getEngineSession())).createProfileEntryEngineClient();
-
+        return Collections.emptyList();
     }
 
     @Override
