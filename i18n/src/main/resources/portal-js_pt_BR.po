@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2021-08-15 01:30\n"
+"PO-Revision-Date: 2021-08-18 01:34\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -656,7 +656,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "Nenhuma atualização foi feita nas categorias. Não esqueça de pressionar a tecla \"Enter\" depois de selecionar uma categoria."
 
 msgid "No user found with id:"
-msgstr ""
+msgstr "Nenhum usuário encontrado com o ID:"
 
 msgid "No value"
 msgstr "Nenhum valor"
@@ -1127,7 +1127,7 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Uso as teclas seta para cima e seta para baixo para navegar entre as categorias existentes."
 
 msgid "User id not provided. Unable to retrieve the user details."
-msgstr ""
+msgstr "ID do usuário não fornecido. Não foi possível recuperar os detalhes do usuário."
 
 msgid "Username"
 msgstr "Nome de usuário"
