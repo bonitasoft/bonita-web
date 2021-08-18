@@ -29,7 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.page.CustomPageAuthorizationsHelper;
 import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.page.GetUserRightsHelper;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
@@ -246,7 +245,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     protected CustomPageAuthorizationsHelper getCustomPageAuthorizationsHelper(final APISession apiSession) throws BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
-        return new CustomPageAuthorizationsHelper(new GetUserRightsHelper(apiSession),
+        return new CustomPageAuthorizationsHelper(apiSession,
                 TenantAPIAccessor.getLivingApplicationAPI(apiSession), TenantAPIAccessor.getCustomPageAPI(apiSession), new ApplicationModelFactory(
                 TenantAPIAccessor.getLivingApplicationAPI(apiSession),
                 TenantAPIAccessor.getCustomPageAPI(apiSession),

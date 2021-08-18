@@ -43,8 +43,6 @@ public class PageDownloadServlet extends HttpServlet {
 
     private static final String ID_PARAM = "id";
 
-//    private static final String EXPORT_FILE_EXTENTION = "page.zip";
-
     /**
      * Logger
      */
@@ -71,10 +69,6 @@ public class PageDownloadServlet extends HttpServlet {
             final PageAPI pageAPI = getPageAPI(apiSession);
             final Page page = pageAPI.getPage(pageId);
             final byte[] pageContent = pageAPI.getPageContent(pageId);
-            final GetUserRightsHelper getUserRightsHelper = new GetUserRightsHelper(apiSession);
-            if (!apiSession.isTechnicalUser() && !getUserRightsHelper.getUserRights().contains("pagelisting")) {
-                throw new IllegalAccessException("User not Authorized");
-            }
             // Set response headers
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/octet-stream");

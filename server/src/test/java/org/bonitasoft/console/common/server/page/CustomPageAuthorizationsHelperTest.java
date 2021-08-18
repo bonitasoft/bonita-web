@@ -38,12 +38,6 @@ public class CustomPageAuthorizationsHelperTest {
     CustomPageAuthorizationsHelper customPageAuthorizationsHelper;
 
     @Mock(answer = Answers.RETURNS_MOCKS)
-    APISession sessionAPI;
-
-    @Mock
-    GetUserRightsHelper getUserRightsHelper;
-
-    @Mock(answer = Answers.RETURNS_MOCKS)
     ApplicationAPI applicationAPI;
 
     @Mock(answer = Answers.RETURNS_MOCKS)
@@ -143,19 +137,8 @@ public class CustomPageAuthorizationsHelperTest {
 
         assertThat(isPageAuthorized).isFalse();
     }
-
     @Test
-    public void should_authorize_page_when_appToken_is_null_and_page_authorized_in_portal() throws Exception {
-        given(getUserRightsHelper.getUserRights()).willReturn(Arrays.asList("pageToken"));
-
-        final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("", "pageToken");
-
-        assertThat(isPageAuthorized).isTrue();
-    }
-
-    @Test
-    public void should_not_authorize_page_when_appToken_is_null_and_page_unauthorized_in_portal() throws Exception {
-        given(getUserRightsHelper.getUserRights()).willReturn(Collections.<String>emptyList());
+    public void should_not_authorize_page_when_appToken_is_null() throws Exception {
 
         final boolean isPageAuthorized = customPageAuthorizationsHelper.isPageAuthorized("", "pageToken");
 
