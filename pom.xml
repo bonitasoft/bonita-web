@@ -17,10 +17,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <gwt.version>2.5.1</gwt.version>
-        <!-- The following property is used by the gwt-maven plugin. As it does not follow the same naming convention as others, we decided to have both gwt.version
-            and gwtVersion properties. Of course the two properties refer to the same value. -->
-        <gwtVersion>${gwt.version}</gwtVersion>
         <wro4j.version>1.7.0</wro4j.version>
         <assertj.version>3.17.2</assertj.version>
 
@@ -116,19 +112,6 @@
                 <artifactId>system-rules</artifactId>
                 <version>1.16.0</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.google.gwt.gwtmockito</groupId>
-                <artifactId>gwtmockito</artifactId>
-                <version>1.1.8</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- Needed to override version pulled by gwtmockito: -->
-            <dependency>
-                <groupId>com.google.gwt</groupId>
-                <artifactId>gwt-dev</artifactId>
-                <version>${gwt.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
@@ -204,11 +187,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>gwt-maven-plugin</artifactId>
-                    <version>${gwt.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.8</version>
                 </plugin>
@@ -235,7 +213,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.0.1</version>
+                    <version>1.4.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -335,7 +313,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>bos-web-@{project.version}</tagNameFormat>
@@ -344,6 +322,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -366,6 +345,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -429,31 +409,13 @@
 
     <profiles>
         <profile>
+            <id>generate-sources</id>
             <activation>
                 <property>
                     <name>generateSource</name>
                 </property>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>dev</id>
             <build>
                 <plugins>
                     <plugin>
@@ -490,8 +452,6 @@
                 <jacoco.out.it.file>jacoco-web-it.exec</jacoco.out.it.file>
                 <!-- Tells Sonar where the Jacoco coverage result file is located for Integration Tests -->
                 <sonar.jacoco.itReportPath>${jacoco.outputDir}/${jacoco.out.it.file}</sonar.jacoco.itReportPath>
-                <!-- Exclude GWT based classes from sonar (not covered by unit tests) -->
-                <sonar.coverage.exclusions>**/org/bonitasoft/console/client/*,**/com/bonitasoft/console/client/*,**/org/bonitasoft/forms/client/view/*,**/org/bonitasoft/forms/client/i18n/*,**/org/bonitasoft/forms/client/FormsApplicationLoader</sonar.coverage.exclusions>
             </properties>
 
             <build>

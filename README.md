@@ -18,36 +18,21 @@ If you build a tag, you don't need to build the bonita-engine as its artifacts a
 I you want to contribute, ask questions about the project, report bug, see the [contributing guide](https://github.com/bonitasoft/bonita-developer-resources/blob/master/CONTRIBUTING.MD).
 
 
-
 ## Build the project ##
 
 At root level (same location as the parent pom.xml) :
     
-    ./mvnw clean install -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
+    ./mvnw clean install
 
-This `jvm_gwt` parameter is mandatory for GWT compilation.
-
-For development purpose use the *dev* profile (don't compile every gwt permutations)
-    
-    ./mvnw clean install -Pdev -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
-
-## Execution in hosted mode for dev/debug ##
+## Execution in hosted mode
 In server module, to build and launch a tomcat hosting the app :
 
-    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests -Pdev -Djvm_gwt=<PATH_TO_JAVA_8>/bin/java
+    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests
 
 H2 database is created (if it does not already exist) in ${user.home}/bonita/community/database
 When you checkout a different branch you need to clean this directory because the database schema may have changed.
 
 Hot reload is not supported, but when you update a class in portal/, server/ or common/ in your IDE all you need to do is to restart the tomcat with the previous command (classes will be retrieved from the projects target/classes directory)
-    
-In portal module :
-    
-    Super dev mode: ./mvnw -Pdev process-classes gwt:run-codeserver
-
-Visit the indicated URL and bookmark the Dev Mode On/Off links
-Then visit http://localhost:8080/bonita, login with install/install and click on the Dev Mode On link
-click on the portal module link to re-generate the portal Javascript
     
 ## Structure ##
 
