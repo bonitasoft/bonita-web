@@ -15,7 +15,6 @@
 package org.bonitasoft.web.toolkit.client.common;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 
 /**
  * 
@@ -58,11 +57,6 @@ public class TreeLeaf<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
     @Override
     public TreeLeaf<VALUE_CLASS> copy() {
         return new TreeLeaf<VALUE_CLASS>(this.value);
-    }
-
-    @Override
-    public String toUrl(final String key) {
-        return UrlSerializer.serialize(key, this.value);
     }
 
     @Override

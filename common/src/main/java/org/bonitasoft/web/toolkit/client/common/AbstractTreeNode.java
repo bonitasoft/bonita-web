@@ -15,7 +15,6 @@
 package org.bonitasoft.web.toolkit.client.common;
 
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializable;
 
 /**
  * 
@@ -23,7 +22,7 @@ import org.bonitasoft.web.toolkit.client.common.url.UrlSerializable;
  * 
  * @param <VALUE_CLASS>
  */
-public abstract class AbstractTreeNode<VALUE_CLASS> implements JsonSerializable, UrlSerializable {
+public abstract class AbstractTreeNode<VALUE_CLASS> implements JsonSerializable {
 
     protected AbstractTreeNode<VALUE_CLASS> parent = null;
 

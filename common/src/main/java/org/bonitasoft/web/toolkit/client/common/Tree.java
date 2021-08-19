@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 
 /**
  * 
@@ -117,11 +116,6 @@ public class Tree<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> implements 
         }
 
         return result;
-    }
-
-    @Override
-    public String toUrl(final String key) {
-        return UrlSerializer.serialize(key, this.children);
     }
 
     @Override

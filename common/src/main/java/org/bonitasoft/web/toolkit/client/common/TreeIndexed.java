@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
-import org.bonitasoft.web.toolkit.client.common.url.UrlSerializer;
 
 /**
  * 
@@ -202,11 +201,6 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
      */
     public void removeNode(final String key) {
         this.children.remove(key);
-    }
-
-    @Override
-    public String toUrl(final String key) {
-        return UrlSerializer.serialize(key, this.children);
     }
 
     @Override
