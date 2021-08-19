@@ -14,17 +14,20 @@
  */
 package org.bonitasoft.web.toolkit.client.common.json;
 
-import com.google.gwt.i18n.shared.DateTimeFormat;
-import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
-
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+
+import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 
 /**
  * @author Séverin Moussel
  */
 public class JSonSerializer extends JSonUtil {
+
+    // Thread local as recommended in the javadoc
+    private static final ThreadLocal<SimpleDateFormat> dateTimeFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
 
     public static String serialize(final JsonSerializable object) {
         return serializeInternal(object).toString();
@@ -55,8 +58,7 @@ public class JSonSerializer extends JSonUtil {
         } else if (object instanceof Boolean) {
             return new StringBuilder((Boolean) object ? "true" : "false");
         } else if (object instanceof Date) {
-            final DateTimeFormat sdf = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            return quoteInternal(sdf.format((Date) object));
+            return quoteInternal(dateTimeFormat.get().format((Date) object));
         } else if (object instanceof Throwable) {
             return new StringBuilder(serializeException((Throwable) object));
         }
