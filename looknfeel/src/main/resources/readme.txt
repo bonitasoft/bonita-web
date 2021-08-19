@@ -5,8 +5,6 @@ There are two types of page in the Portal: pages developed with GWT, as in earli
 For GWT pages, the most critical file in the Look & Feel definition is skin/skin.config.less file. For pages developed in Angular, the Look & Feel is defined using Bootstrap. To modify the Look & Feel of these pages, update the skin definition in skin\bootstrap\portal for Portal pages or in skin\bootstrap\applications for applications.
 
 Key files and directories:
-BonitaConsole.html:                     HTML entry page for Bonita Portal. If you want to add a custom JavaScript or custom CSS, modify this file and add it to the header.
-BonitaForm.html:                        HTML entry page for forms in Bonita Portal. If you want to add a custom JavaScript or custom CSS, modify this file and add it to the header.
 main.less:                              Used to compile the LESS files into CSS. You must not rename this file, and we recommend that you do not change it.
 css:                                    Directory containing default CSS files used by the process forms.
 css/bonita_forms.css:                   Default CSS for process forms.
