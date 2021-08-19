@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.api.bonitaPage;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +30,6 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  *
  */
 public class APIBonitaPage extends ConsoleAPI<BonitaPageItem> {
-
-    public static final String PAGES_ALLOWED_FOR_MENU = "pagesallowedformenu";
-
-    public static final String PAGES_ADDED_FOR_MENU = "pagesaddedformenu";
 
     @Override
     protected ItemDefinition<BonitaPageItem> defineItemDefinition() {
@@ -63,62 +57,13 @@ public class APIBonitaPage extends ConsoleAPI<BonitaPageItem> {
 
     @Override
     public BonitaPageItem get(final APIID id) {
-        final BonitaPageItem item = new BonitaPageDatastore().get(id);
-        return item;
+        return new BonitaPageDatastore().get(id);
     }
 
     @Override
     public ItemSearchResult<BonitaPageItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-
-        if (filters.containsKey(PAGES_ALLOWED_FOR_MENU)) {
-            return searchWithoutPagesAlreadyAdded(page, resultsByPage, search, filters, orders);
-        } else if (filters.containsKey(PAGES_ADDED_FOR_MENU)) {
-            return searchPagesAlreadyAdded(page, resultsByPage, search, filters, orders);
-        }
-
-        final ItemSearchResult<BonitaPageItem> results = new BonitaPageDatastore().search(page, resultsByPage, search, filters, orders);
-
-        return results;
-    }
-
-    private ItemSearchResult<BonitaPageItem> searchPagesAlreadyAdded(final int page, final int resultsByPage, final String search, final Map<String, String> filters, final String orders) {
-        final List<String> bonitaPagesAlreadyAdded = getBonitaPagesAlreadyAdded(filters.get(PAGES_ADDED_FOR_MENU), page, resultsByPage, search, orders,
-                filters);
-        final ItemSearchResult<BonitaPageItem> results = new BonitaPageDatastore().search(page, resultsByPage, search, filters, orders);
-        final List<BonitaPageItem> bonitaPages = new ArrayList<BonitaPageItem>();
-
-        for (final BonitaPageItem bonitaPage : results.getResults()) {
-            if (bonitaPagesAlreadyAdded.contains(bonitaPage.getToken())) {
-                bonitaPages.add(bonitaPage);
-            }
-        }
-        results.setResults(bonitaPages);
-        results.setTotal(bonitaPages.size());
-
-        return results;
-    }
-
-    private ItemSearchResult<BonitaPageItem> searchWithoutPagesAlreadyAdded(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
-            final String orders) {
-        final List<String> bonitaPagesAlreadyAdded = getBonitaPagesAlreadyAdded(filters.get(PAGES_ALLOWED_FOR_MENU), page, resultsByPage, search, orders,
-                filters);
-        final ItemSearchResult<BonitaPageItem> results = new BonitaPageDatastore().search(page, resultsByPage, search, filters, orders);
-        final List<BonitaPageItem> bonitaPages = new ArrayList<BonitaPageItem>();
-
-        for (final BonitaPageItem bonitaPage : results.getResults()) {
-            if (!bonitaPagesAlreadyAdded.contains(bonitaPage.getToken())) {
-                bonitaPages.add(bonitaPage);
-            }
-        }
-        results.setResults(bonitaPages);
-        results.setTotal(bonitaPages.size());
-
-        return results;
-    }
-
-    private List<String> getBonitaPagesAlreadyAdded(final String profileId, final int page, final int resultsByPage, final String search, final String orders, final Map<String, String> filters) {
-        return Collections.emptyList();
+        return new BonitaPageDatastore().search(page, resultsByPage, search, filters, orders);
     }
 
     @Override
