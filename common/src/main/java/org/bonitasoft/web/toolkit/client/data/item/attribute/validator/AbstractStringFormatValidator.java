@@ -18,7 +18,7 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 
-import com.google.gwt.regexp.shared.RegExp;
+import java.util.regex.Pattern;
 
 /**
  * @author Séverin Moussel
@@ -26,7 +26,7 @@ import com.google.gwt.regexp.shared.RegExp;
  */
 public abstract class AbstractStringFormatValidator extends AbstractStringValidator {
 
-    private final RegExp regexp;
+    private final Pattern regexp;
 
     private Boolean exclude;
 
@@ -36,16 +36,7 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
      * @param regexp
      */
     public AbstractStringFormatValidator(final String regexp) {
-        this(regexp, "", false);
-    }
-
-    /**
-     * Default Constructor.
-     * 
-     * @param regexp
-     */
-    public AbstractStringFormatValidator(final String regexp, final String flags) {
-        this(regexp, flags, false);
+        this(regexp, false);
     }
 
     /**
@@ -54,17 +45,8 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
      * @param regexp
      */
     public AbstractStringFormatValidator(final String regexp, final boolean exclude) {
-        this(regexp, "", exclude);
-    }
-
-    /**
-     * Default Constructor.
-     * 
-     * @param regexp
-     */
-    public AbstractStringFormatValidator(final String regexp, final String flags, final boolean exclude) {
         super();
-        this.regexp = RegExp.compile(regexp, flags);
+        this.regexp = Pattern.compile(regexp);
         this.exclude = exclude;
     }
 
@@ -79,7 +61,8 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
     @Override
     protected void _check(final String attributeValue) {
 
-        final boolean match = regexp.test(attributeValue);
+        // use `find()` instead of `matches()` because it was the implementation of the original `com.google.gwt.regexp.shared.RegExp#test()` method
+        final boolean match = regexp.matcher(attributeValue).find();
         if (attributeValue.contains("HTTP Error")) {
             addError(_("Error uploading the file. Maybe your session expired. You can try to refresh the page."));
         } else if (exclude && match || !exclude && !match) {

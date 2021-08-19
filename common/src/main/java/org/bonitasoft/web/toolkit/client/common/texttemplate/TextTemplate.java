@@ -20,9 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Text template using %...% syntax <br />
@@ -35,6 +34,7 @@ public class TextTemplate {
     private String template = null;
 
     private List<String> expectedParameters = null;
+    private final Pattern regex = Pattern.compile("%(.*?)%");
 
     public TextTemplate(final String template) {
         this.template = template;
@@ -89,13 +89,10 @@ public class TextTemplate {
      * Read the template to get the excepted parameters and store the result in the class variable "expectedParameters"
      */
     private void parseExpectedParameters() {
-        this.expectedParameters = new LinkedList<String>();
-
-        final RegExp regExp = RegExp.compile("%(.*?)%", "g");
-        MatchResult matcher = null;
-
-        while ((matcher = regExp.exec(this.template)) != null) {
-            this.expectedParameters.add(matcher.getGroup(1));
+        this.expectedParameters = new LinkedList<>();
+        Matcher matcher = regex.matcher(this.template);
+        while (matcher.find()) {
+            this.expectedParameters.add(matcher.group(1));
         }
     }
 
