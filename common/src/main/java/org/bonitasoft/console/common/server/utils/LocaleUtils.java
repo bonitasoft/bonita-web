@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -85,7 +85,7 @@ public class LocaleUtils {
     }
 
     public static boolean isLocaleSupportedInPortal(String locale) {
-        return new ArrayList<String>(AVAILABLE_LOCALES.keySet()).contains(locale);
+        return new ArrayList<>(AVAILABLE_LOCALES.keySet()).contains(locale);
     }
 
     public static boolean canLocaleBeReducedToSupportedLocale(String locale, String supportedLocale) {
@@ -101,8 +101,8 @@ public class LocaleUtils {
         if (isLocaleSupportedInPortal(locale)) {
             return locale;
         } else {
-            List<String> supportedLocales = new ArrayList<String>(AVAILABLE_LOCALES.keySet());
-            for (String supportedLocale: supportedLocales) {
+            List<String> supportedLocales = new ArrayList<>(AVAILABLE_LOCALES.keySet());
+            for (String supportedLocale : supportedLocales) {
                 if (canLocaleBeReducedToSupportedLocale(locale, supportedLocale)) {
                     if (LOGGER.isLoggable(Level.FINEST)) {
                         LOGGER.log(Level.FINEST, "Using available locale \"" + supportedLocale + "\" instead of \"" + locale + "\"");
@@ -156,7 +156,7 @@ public class LocaleUtils {
             }
             return localeAsString;
         }
-        return  null;
+        return null;
     }
 
     public static void addOrReplaceLocaleCookieResponse(final HttpServletResponse response, final String locale) {

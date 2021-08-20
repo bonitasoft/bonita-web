@@ -20,14 +20,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
 /**
  * @author Vincent Elcrin
  */
 public class APIPreconditions {
 
-    public static void check(boolean condition, _ message) {
+    public static void check(boolean condition, T_ message) {
         if(!condition) {
             throw new APIException(message);
         }

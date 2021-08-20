@@ -62,12 +62,12 @@ public class LocaleUtilsTest {
     }
 
     @After
-    public void cleanUp() throws Exception {
+    public void cleanUp() {
         I18n.setInstance(null);
     }
 
     @Test
-    public void testLocalCanBeRetrieveFromCookie() throws Exception {
+    public void testLocalCanBeRetrieveFromCookie() {
         Cookie[] cookies = {
                 new Cookie("aCookie", "value"),
                 new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "fr"),
@@ -81,7 +81,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testANullCookieResultsWithBrowserLocale() throws Exception {
+    public void testANullCookieResultsWithBrowserLocale() {
         doReturn(Locale.CANADA_FRENCH).when(request).getLocale();
 
         String locale = LocaleUtils.getUserLocaleAsString(request);
@@ -90,7 +90,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testANullCookieAndBrowserLocaleResultsWithDefaultLocale() throws Exception {
+    public void testANullCookieAndBrowserLocaleResultsWithDefaultLocale() {
 
         String locale = LocaleUtils.getUserLocaleAsString(request);
 
@@ -98,7 +98,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testWeCanRetrieveLocaleFromCookie() throws Exception {
+    public void testWeCanRetrieveLocaleFromCookie() {
         Cookie[] cookies = {
                 new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
         };
@@ -110,7 +110,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testWeCanRetrieveLocaleFromRequest() throws Exception {
+    public void testWeCanRetrieveLocaleFromRequest() {
         Cookie[] cookies = {
                 new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "en_US"),
         };
@@ -122,7 +122,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testAnInvalidCookieResultsWithDefaultLocale() throws Exception {
+    public void testAnInvalidCookieResultsWithDefaultLocale() {
         Cookie[] cookies = {
                 new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "weirdvalue"),
         };
@@ -132,7 +132,7 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testAnInvalidLocaleInRequestResultsWithDefaultLocale() throws Exception {
+    public void testAnInvalidLocaleInRequestResultsWithDefaultLocale() {
         doReturn("weirdvalue").when(request).getParameter(LocaleUtils.LOCALE_PARAM);
 
         String locale = LocaleUtils.getUserLocaleAsString(request);

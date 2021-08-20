@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Paul AMAR
@@ -30,7 +32,7 @@ public class StringFormatColorValidator extends AbstractStringFormatValidator {
 
     @Override
     protected String defineErrorMessage() {
-        return _("%attribute% is not a valid Color value");
+        return AbstractI18n.t_("%attribute% is not a valid Color value");
     }
 
 }

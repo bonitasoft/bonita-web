@@ -37,7 +37,7 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -75,14 +75,14 @@ public class CaseEngineClient {
                 }
             }
         } catch (final ProcessDefinitionNotFoundException e) {
-            throw new APINotFoundException(new _("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
+            throw new APINotFoundException(new T_("Can't start process, process %processId% not found", new Arg("processId", processId)), e);
         } catch (final ProcessActivationException e) {
-            throw new APIException(new _("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
+            throw new APIException(new T_("Can't start process, process %processId% is not enabled", new Arg("processId", processId)), e);
         } catch (final ProcessExecutionException e) {
-            throw new APIException(new _("Error occured when starting process %processId%", new Arg("processId", processId)), e);
+            throw new APIException(new T_("Error occured when starting process %processId%", new Arg("processId", processId)), e);
         } catch (final UserNotFoundException e) {
             throw new APIException(
-                    new _("Can't start process %processId%, user %userId% not found", new Arg("processId", processId), new Arg("userId", userId)), e);
+                    new T_("Can't start process %processId%, user %userId% not found", new Arg("processId", processId), new Arg("userId", userId)), e);
         }
     }
 

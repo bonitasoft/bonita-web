@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 import org.bonitasoft.web.rest.server.framework.json.JacksonDeserializer;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -43,12 +43,12 @@ public class VariableMapper {
         try {
             return (Serializable) deserializer.convertValue(variable.getValue(), Class.forName(className));
         } catch (IllegalArgumentException e) {
-            throw new APIException(new _("%value% is not a valid value for %className%", new Arg("value", variable.getValue()), 
+            throw new APIException(new T_("%value% is not a valid value for %className%", new Arg("value", variable.getValue()),
                     new Arg("className", className)));
         } catch (ClassNotFoundException e) {
-            throw new APIException(new _("%className% not found. Only jdk types are supported", new Arg("className", className)));
+            throw new APIException(new T_("%className% not found. Only jdk types are supported", new Arg("className", className)));
         } catch (ClassCastException e) {
-            throw new APIException(new _("%className% is not Serializable", new Arg("className", className)));
+            throw new APIException(new T_("%className% is not Serializable", new Arg("className", className)));
         }
     }
     

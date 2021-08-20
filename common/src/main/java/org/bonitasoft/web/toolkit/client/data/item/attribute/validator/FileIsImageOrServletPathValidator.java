@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  *
@@ -46,7 +48,7 @@ public class FileIsImageOrServletPathValidator extends AbstractStringFormatValid
 
     @Override
     protected String defineErrorMessage() {
-        return _("%attribute% file format not allowed or not starting with correct servlet path");
+        return AbstractI18n.t_("%attribute% file format not allowed or not starting with correct servlet path");
     }
 
 }

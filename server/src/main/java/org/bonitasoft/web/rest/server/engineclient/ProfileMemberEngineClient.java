@@ -32,7 +32,7 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
 /**
  * @author Vincent Elcrin
@@ -62,7 +62,7 @@ public class ProfileMemberEngineClient {
         } catch (InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(new _("Profile member already exists"), e);
+            throw new APIForbiddenException(new T_("Profile member already exists"), e);
         } catch (CreationException e) {
             throw new APIException(e);
         }

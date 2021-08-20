@@ -16,11 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
 
@@ -69,8 +70,8 @@ public class FileExtensionAllowedValidator extends AbstractStringFormatValidator
 
     @Override
     protected String defineErrorMessage() {
-        return _("%attribute% file format is not allowed. Only %file_formats% files are allowed.",
-                new Arg("file_formats", ListUtils.join(this.extensions, ", ", " " + _("or") + " ", "\".", "\"")));
+        return AbstractI18n.t_("%attribute% file format is not allowed. Only %file_formats% files are allowed.",
+                new Arg("file_formats", ListUtils.join(this.extensions, ", ", " " + AbstractI18n.t_("or") + " ", "\".", "\"")));
 
     }
 }

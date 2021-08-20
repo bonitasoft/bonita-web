@@ -16,9 +16,8 @@
  */
 package org.bonitasoft.console.server.service;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.api.OrganizationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
@@ -38,6 +36,7 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.identity.ImportPolicy;
 import org.bonitasoft.engine.identity.InvalidOrganizationFileFormatException;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
@@ -70,14 +69,14 @@ public class OrganizationImportService extends ConsoleService {
             getIdentityAPI().importOrganizationWithWarnings(new String(organizationContent), getImportPolicy());
         } catch (final InvalidSessionException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            String message = _("Session expired. Please log in again.");
+            String message = AbstractI18n.t_("Session expired. Please log in again.");
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
         } catch (InvalidOrganizationFileFormatException | IllegalArgumentException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            String message = _("Can't import organization. Please check that your file is well-formed.");
+            String message = AbstractI18n.t_("Can't import organization. Please check that your file is well-formed.");
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.log(Level.INFO, message, e.getMessage());
             }
@@ -86,7 +85,7 @@ public class OrganizationImportService extends ConsoleService {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
-            throw new ServiceException(TOKEN, _("Can't import organization"), e);
+            throw new ServiceException(TOKEN, AbstractI18n.t_("Can't import organization"), e);
         }
         return "";
     }

@@ -16,13 +16,13 @@
  */
 package org.bonitasoft.web.toolkit.client.common.i18n;
 
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.TextTemplate;
+import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 
 /**
  * @author Séverin Moussel
@@ -1047,26 +1047,26 @@ public abstract class AbstractI18n {
     }
 
     protected String getText(final String string, final Arg... args) {
-        return new TextTemplate(_(string)).toString(args);
+        return new TextTemplate(t_(string)).toString(args);
     }
 
     protected String getText(final LOCALE locale, final String string, final Arg... args) {
-        return new TextTemplate(_(string, locale)).toString(args);
+        return new TextTemplate(t_(string, locale)).toString(args);
     }
 
-    public static String _(final String string) {
+    public static String t_(final String string) {
         return StringUtil.isBlank(string) ? "" : I18N_instance.getText(string);
     }
 
-    public static String _(final String string, final Arg... args) {
+    public static String t_(final String string, final Arg... args) {
         return string.isEmpty() ? "" : I18N_instance.getText(string, args);
     }
 
-    public static String _(final String string, final LOCALE locale) {
+    public static String t_(final String string, final LOCALE locale) {
         return string.isEmpty() ? "" : I18N_instance.getText(locale, string);
     }
 
-    public static String _(final String string, final LOCALE locale, final Arg... args) {
+    public static String t_(final String string, final LOCALE locale, final Arg... args) {
         return StringUtil.isBlank(string) ? "" : I18N_instance.getText(locale, string, args);
     }
 }

@@ -16,10 +16,11 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils.dateformat;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.Date;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat.UNIT;
 
@@ -70,22 +71,22 @@ public class RelativeStringDateFormatter {
         String unitString = null;
         switch (unit) {
             case YEAR:
-                unitString = time <= 1 ? _("yr") : _("yr");
+                unitString = time <= 1 ? AbstractI18n.t_("yr") : AbstractI18n.t_("yr");
                 break;
             case MONTH:
-                unitString = time <= 1 ? _("mo") : _("mo");
+                unitString = time <= 1 ? AbstractI18n.t_("mo") : AbstractI18n.t_("mo");
                 break;
             case DAY:
-                unitString = time <= 1 ? _("day") : _("day");
+                unitString = time <= 1 ? AbstractI18n.t_("day") : AbstractI18n.t_("day");
                 break;
             case HOUR:
-                unitString = time <= 1 ? _("hr") : _("hr");
+                unitString = time <= 1 ? AbstractI18n.t_("hr") : AbstractI18n.t_("hr");
                 break;
             case MINUTE:
-                unitString = time <= 1 ? _("min") : _("min");
+                unitString = time <= 1 ? AbstractI18n.t_("min") : AbstractI18n.t_("min");
                 break;
             case SECOND:
-                unitString = time <= 1 ? _("sec") : _("sec");
+                unitString = time <= 1 ? AbstractI18n.t_("sec") : AbstractI18n.t_("sec");
                 break;
             default:
                 // FIXME : uncomment throw, delete break
@@ -93,9 +94,9 @@ public class RelativeStringDateFormatter {
                 break;
         }
         if (ago) {
-            return _("%time% ago", new Arg("time", time + " " + unitString));
+            return AbstractI18n.t_("%time% ago", new Arg("time", time + " " + unitString));
         } else {
-            return _("in %time%", new Arg("time", time + " " + unitString));
+            return AbstractI18n.t_("in %time%", new Arg("time", time + " " + unitString));
         }
     }
 }

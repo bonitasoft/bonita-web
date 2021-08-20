@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -36,7 +37,7 @@ public class StringLengthValidator extends AbstractStringValidator {
     @Override
     protected void _check(final String attributeValue) {
         if (attributeValue.length() != this.length) {
-            addError(_("%attribute% must contain exactly %length% characters", new Arg("length", String.valueOf(this.length))));
+            addError(AbstractI18n.t_("%attribute% must contain exactly %length% characters", new Arg("length", String.valueOf(this.length))));
         }
     }
 }

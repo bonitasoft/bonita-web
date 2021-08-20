@@ -16,12 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+
 import org.bonitasoft.web.toolkit.client.common.exception.http.JsonExceptionSerializer;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
-
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
 /**
  * @author Séverin Moussel
@@ -37,7 +37,7 @@ public class APIException extends ServerException implements JsonSerializable {
 
     private String resource = "...";
 
-    private _ localizedMessage;
+    private T_ localizedMessage;
 
     protected APIException() {
         super();
@@ -55,12 +55,12 @@ public class APIException extends ServerException implements JsonSerializable {
         super(cause);
     }
 
-    public APIException(final _ localizedMessage, final Throwable cause) {
+    public APIException(final T_ localizedMessage, final Throwable cause) {
         super(cause);
         this.localizedMessage = localizedMessage;
     }
 
-    public APIException(final _ localizedMessage) {
+    public APIException(final T_ localizedMessage) {
         this.localizedMessage = localizedMessage;
     }
 

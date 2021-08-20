@@ -16,12 +16,13 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Fabio Lombardi
@@ -31,28 +32,28 @@ public class PageLister {
 
     protected final static List<BonitaPageItem> pages = new ArrayList<BonitaPageItem>();
     static {
-        pages.add(new BonitaPageItem("tasklistinguser", _("For user-type of profiles. To view and do tasks  if he is a candidate"), _("For user-type of profiles. To view and do tasks  if he is a candidate"), _("Tasks")));
-        pages.add(new BonitaPageItem("tasklistingadmin", _("For administrator-type of profiles. To monitor task completion for all processes"), _("For administrator-type of profiles. To monitor task completion for all processes"), _("Tasks")));
-        pages.add(new BonitaPageItem("tasklistingpm", _("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), _("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), _("Tasks")));
-        pages.add(new BonitaPageItem("caselistinguser", _("For user-type of profiles. To visualize cases started by the user or cases he has worked on"), _("For user-type of profiles. To visualize cases started by the user or cases he has worked on"), _("Cases")));
-        pages.add(new BonitaPageItem("caselistingadmin", _("For administrator-type of profiles. To monitor cases of all processes"), _("For administrator-type of profiles. To monitor cases of all processes"), _("Cases")));
-        pages.add(new BonitaPageItem("caselistingpm", _("For process manager-type of profiles. To monitor cases of processes under her responsibility"), _("For process manager-type of profiles. To monitor cases of processes under her responsibility"), _("Cases")));
-        pages.add(new BonitaPageItem("custompage_processlistBonita", _("For user-type of profiles. UI Designer page to visualize processes and start cases"), _("UI Designer page to visualize processes and start cases"), _("Processes")));
-        pages.add(new BonitaPageItem("processlistingadmin", _("For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"), _("For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"), _("Processes")));
-        pages.add(new BonitaPageItem("processlistingpm", _("For process manager-type of profiles. To manage processes under her responsibility"), _("For process manager-type of profiles. To manage processes under her responsibility"), _("Processes")));
-        pages.add(new BonitaPageItem("userlistingadmin", _("Manage users"), _("Manage users"), _("Users")));
-        pages.add(new BonitaPageItem("grouplistingadmin", _("Manage groups"), _("Manage groups"), _("Groups")));
-        pages.add(new BonitaPageItem("rolelistingadmin", _("Manage roles"), _("Manage roles"), _("Roles")));
-        pages.add(new BonitaPageItem("custompage_adminInstallExportOrganizationBonita", _("Install/export organization"), _("Install/export organization"), _("Install/Export")));
-        pages.add(new BonitaPageItem("profilelisting", _("User privilege settings"),  _("User privilege settings"), _("Profiles")));
-        pages.add(new BonitaPageItem("reportlistingadminext", _("Analytics"), _("Analytics"), _("Analytics")));
-        pages.add(new BonitaPageItem("thememoredetailsadminext", _("Manage Look and Feel"), _("Manage Look and Feel"), _("Look and Feel")));
-        pages.add(new BonitaPageItem("pagelisting", _("Manage custom pages"), _("Manage custom pages"), _("Custom Pages")));
-        pages.add(new BonitaPageItem("applicationslistingadmin", _("Manage applications"), _("Manage applications"), _("Applications")));
-        pages.add(new BonitaPageItem("monitoringadmin", _("For administrator-type of profiles. To monitor all processes"), _("For administrator-type of profiles. To monitor all processes"), _("Monitoring")));
-        pages.add(new BonitaPageItem("monitoringpm", _("For process manager-type of profiles. To monitor processes under her responsibility"), _("For process manager-type of profiles. To monitor processes under her responsibility"), _("Monitoring")));
-        pages.add(new BonitaPageItem("licensemonitoringadmin", _("License"), _("License"), _("License")));
-        pages.add(new BonitaPageItem("bdm", _("BDM"), _("Manage BDM"), _("BDM")));
+        pages.add(new BonitaPageItem("tasklistinguser", AbstractI18n.t_("For user-type of profiles. To view and do tasks  if he is a candidate"), AbstractI18n.t_("For user-type of profiles. To view and do tasks  if he is a candidate"), AbstractI18n.t_("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingadmin", AbstractI18n.t_("For administrator-type of profiles. To monitor task completion for all processes"), AbstractI18n.t_("For administrator-type of profiles. To monitor task completion for all processes"), AbstractI18n.t_("Tasks")));
+        pages.add(new BonitaPageItem("tasklistingpm", AbstractI18n.t_("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), AbstractI18n.t_("For process manager-type of profiles. To monitor task completion, only for processes under her responsibility"), AbstractI18n.t_("Tasks")));
+        pages.add(new BonitaPageItem("caselistinguser", AbstractI18n.t_("For user-type of profiles. To visualize cases started by the user or cases he has worked on"), AbstractI18n.t_("For user-type of profiles. To visualize cases started by the user or cases he has worked on"), AbstractI18n.t_("Cases")));
+        pages.add(new BonitaPageItem("caselistingadmin", AbstractI18n.t_("For administrator-type of profiles. To monitor cases of all processes"), AbstractI18n.t_("For administrator-type of profiles. To monitor cases of all processes"), AbstractI18n.t_("Cases")));
+        pages.add(new BonitaPageItem("caselistingpm", AbstractI18n.t_("For process manager-type of profiles. To monitor cases of processes under her responsibility"), AbstractI18n.t_("For process manager-type of profiles. To monitor cases of processes under her responsibility"), AbstractI18n.t_("Cases")));
+        pages.add(new BonitaPageItem("custompage_processlistBonita", AbstractI18n.t_("For user-type of profiles. UI Designer page to visualize processes and start cases"), AbstractI18n.t_("UI Designer page to visualize processes and start cases"), AbstractI18n.t_("Processes")));
+        pages.add(new BonitaPageItem("processlistingadmin", AbstractI18n.t_("For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"), AbstractI18n.t_("For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"), AbstractI18n.t_("Processes")));
+        pages.add(new BonitaPageItem("processlistingpm", AbstractI18n.t_("For process manager-type of profiles. To manage processes under her responsibility"), AbstractI18n.t_("For process manager-type of profiles. To manage processes under her responsibility"), AbstractI18n.t_("Processes")));
+        pages.add(new BonitaPageItem("userlistingadmin", AbstractI18n.t_("Manage users"), AbstractI18n.t_("Manage users"), AbstractI18n.t_("Users")));
+        pages.add(new BonitaPageItem("grouplistingadmin", AbstractI18n.t_("Manage groups"), AbstractI18n.t_("Manage groups"), AbstractI18n.t_("Groups")));
+        pages.add(new BonitaPageItem("rolelistingadmin", AbstractI18n.t_("Manage roles"), AbstractI18n.t_("Manage roles"), AbstractI18n.t_("Roles")));
+        pages.add(new BonitaPageItem("custompage_adminInstallExportOrganizationBonita", AbstractI18n.t_("Install/export organization"), AbstractI18n.t_("Install/export organization"), AbstractI18n.t_("Install/Export")));
+        pages.add(new BonitaPageItem("profilelisting", AbstractI18n.t_("User privilege settings"),  AbstractI18n.t_("User privilege settings"), AbstractI18n.t_("Profiles")));
+        pages.add(new BonitaPageItem("reportlistingadminext", AbstractI18n.t_("Analytics"), AbstractI18n.t_("Analytics"), AbstractI18n.t_("Analytics")));
+        pages.add(new BonitaPageItem("thememoredetailsadminext", AbstractI18n.t_("Manage Look and Feel"), AbstractI18n.t_("Manage Look and Feel"), AbstractI18n.t_("Look and Feel")));
+        pages.add(new BonitaPageItem("pagelisting", AbstractI18n.t_("Manage custom pages"), AbstractI18n.t_("Manage custom pages"), AbstractI18n.t_("Custom Pages")));
+        pages.add(new BonitaPageItem("applicationslistingadmin", AbstractI18n.t_("Manage applications"), AbstractI18n.t_("Manage applications"), AbstractI18n.t_("Applications")));
+        pages.add(new BonitaPageItem("monitoringadmin", AbstractI18n.t_("For administrator-type of profiles. To monitor all processes"), AbstractI18n.t_("For administrator-type of profiles. To monitor all processes"), AbstractI18n.t_("Monitoring")));
+        pages.add(new BonitaPageItem("monitoringpm", AbstractI18n.t_("For process manager-type of profiles. To monitor processes under her responsibility"), AbstractI18n.t_("For process manager-type of profiles. To monitor processes under her responsibility"), AbstractI18n.t_("Monitoring")));
+        pages.add(new BonitaPageItem("licensemonitoringadmin", AbstractI18n.t_("License"), AbstractI18n.t_("License"), AbstractI18n.t_("License")));
+        pages.add(new BonitaPageItem("bdm", AbstractI18n.t_("BDM"), AbstractI18n.t_("Manage BDM"), AbstractI18n.t_("BDM")));
     }
 
     public List<BonitaPageItem> getPages() {

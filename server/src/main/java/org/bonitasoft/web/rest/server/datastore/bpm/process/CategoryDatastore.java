@@ -40,7 +40,7 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -138,7 +138,7 @@ public class CategoryDatastore extends CommonDatastore<CategoryItem, Category> i
             final Category result = getProcessAPI().createCategory(item.getName(), item.getDescription());
             return convertEngineToConsoleItem(result);
         } catch (final AlreadyExistsException e) {
-            throw new APIForbiddenException(new _("Category with name %categoryName% already exists", new Arg("categoryName", item.getName())), e);
+            throw new APIForbiddenException(new T_("Category with name %categoryName% already exists", new Arg("categoryName", item.getName())), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

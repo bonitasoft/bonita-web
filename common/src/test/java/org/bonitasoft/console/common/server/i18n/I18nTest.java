@@ -15,20 +15,20 @@ import org.junit.Test;
 public class I18nTest {
 
     @Test
-    public void getStreams_should_read_from_classpath() throws Exception {
+    public void getStreams_should_read_from_classpath() {
         final List<InputStream> streams = I18n.getInstance().getStreams(AbstractI18n.LOCALE.fr);
         assertThat(streams).hasSize(2);
         assertThat(streams.get(0)).isNotNull();
     }
 
     @Test
-    public void getStreams_should_not_fail_if_no_resource_found() throws Exception {
+    public void getStreams_should_not_fail_if_no_resource_found() {
         final List<InputStream> streams = I18n.getInstance().getStreams(AbstractI18n.LOCALE.es);
         assertThat(streams).isEmpty();
     }
 
     @Test
-    public void getAvailableLocalesFor_should_look_in_classpath() throws Exception {
+    public void getAvailableLocalesFor_should_look_in_classpath() {
         final Map<String, String> availableLocales = I18n.getInstance().getAvailableLocalesFor("test");
         assertThat(availableLocales).containsKey("fr");
     }
@@ -44,7 +44,7 @@ public class I18nTest {
     }
 
     @Test
-    public void loadLocale_should_read_from_FS_if_custom_property_set() throws Exception {
+    public void loadLocale_should_read_from_FS_if_custom_property_set() {
         System.setProperty(I18n.I18N_CUSTOM_DIR_PROPERTY, this.getClass().getResource("/custom_po_resource").getPath());
 
         final I18n i18n = I18n.getInstance();
@@ -58,7 +58,7 @@ public class I18nTest {
     }
 
     @Test
-    public void loadLocale_should_override_value_if_custom_property_set() throws Exception {
+    public void loadLocale_should_override_value_if_custom_property_set() {
         System.setProperty(I18n.I18N_CUSTOM_DIR_PROPERTY, this.getClass().getResource("/custom_po_resource").getPath());
 
         final I18n i18n = I18n.getInstance();
@@ -72,7 +72,7 @@ public class I18nTest {
     }
 
     @Test
-    public void loadLocale_should_merge_values_from_classpath_and_filesystem() throws Exception {
+    public void loadLocale_should_merge_values_from_classpath_and_filesystem() {
         System.setProperty(I18n.I18N_CUSTOM_DIR_PROPERTY, this.getClass().getResource("/custom_po_resource").getPath());
 
         final I18n i18n = I18n.getInstance();

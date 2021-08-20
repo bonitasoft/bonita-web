@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -28,7 +30,7 @@ public class StringSingleLineValidator extends AbstractStringValidator {
     protected void _check(final String attributeValue) {
 
         if (attributeValue.indexOf('\n') >= 0) {
-            addError(_("%attribute% must be on a single line"));
+            addError(AbstractI18n.t_("%attribute% must be on a single line"));
         }
     }
 }

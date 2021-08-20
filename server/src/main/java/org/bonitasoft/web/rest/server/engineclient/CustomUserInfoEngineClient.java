@@ -30,7 +30,7 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -49,7 +49,7 @@ public class CustomUserInfoEngineClient {
         try {
             return identity.createCustomUserInfoDefinition(creator);
         } catch (CreationException e) {
-            throw new APIException(new _("An error occurred while creating a definition"), e);
+            throw new APIException(new T_("An error occurred while creating a definition"), e);
         }
     }
 
@@ -57,7 +57,7 @@ public class CustomUserInfoEngineClient {
         try {
             identity.deleteCustomUserInfoDefinition(id);
         } catch (DeletionException e) {
-            throw new APIException(new _("An error occurred while deleting an item with the id %id%", new Arg("id", id)), e);
+            throw new APIException(new T_("An error occurred while deleting an item with the id %id%", new Arg("id", id)), e);
         }
     }
 

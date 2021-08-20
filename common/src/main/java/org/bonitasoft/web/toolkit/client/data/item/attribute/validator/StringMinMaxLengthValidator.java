@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -60,22 +61,22 @@ public class StringMinMaxLengthValidator extends AbstractStringValidator {
         // Checking for including the minLength
         if (includeMin) {
             if (minLength != null && length < minLength) {
-                addError(_("%attribute% must be more or equal than %value%", new Arg("value", minLength)));
+                addError(AbstractI18n.t_("%attribute% must be more or equal than %value%", new Arg("value", minLength)));
             }
         } else {
             if (minLength != null && length <= minLength) {
-                addError(_("%attribute% must be more than %value%", new Arg("value", minLength)));
+                addError(AbstractI18n.t_("%attribute% must be more than %value%", new Arg("value", minLength)));
             }
         }
 
         // Checking for including the maxLength
         if (includeMax) {
             if (maxLength != null && length > maxLength) {
-                addError(_("%attribute% must be less or equal than %value%", new Arg("value", maxLength)));
+                addError(AbstractI18n.t_("%attribute% must be less or equal than %value%", new Arg("value", maxLength)));
             }
         } else {
             if (maxLength != null && length >= maxLength) {
-                addError(_("%attribute% must be less than %value%", new Arg("value", maxLength)));
+                addError(AbstractI18n.t_("%attribute% must be less than %value%", new Arg("value", maxLength)));
             }
         }
 

@@ -16,11 +16,12 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.Date;
 
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.ui.utils.dateformat.RelativeStringDateFormatter;
 
@@ -52,9 +53,9 @@ public abstract class DateFormat {
 
     public static enum FORMAT {
         SQL("yyyy-MM-dd HH:mm:ss.SSS"),
-        FORM(_("MM/dd/yyyy")),
-        DISPLAY(_("MM/dd/yyyy h:mm a")),
-        DISPLAY_SHORT(_("MMMM dd, yyyy")),
+        FORM(AbstractI18n.t_("MM/dd/yyyy")),
+        DISPLAY(AbstractI18n.t_("MM/dd/yyyy h:mm a")),
+        DISPLAY_SHORT(AbstractI18n.t_("MMMM dd, yyyy")),
         LONG,
         DISPLAY_RELATIVE;
 

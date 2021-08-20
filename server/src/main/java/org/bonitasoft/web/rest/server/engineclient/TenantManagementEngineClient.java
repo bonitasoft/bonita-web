@@ -11,7 +11,7 @@ package org.bonitasoft.web.rest.server.engineclient;
 import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
 /**
  * @author Colin PUY
@@ -38,7 +38,7 @@ public class TenantManagementEngineClient {
         try {
             tenantAdministrationAPI.pause();
         } catch (final UpdateException e) {
-            throw new APIException(new _("Error when pausing BPM services"), e);
+            throw new APIException(new T_("Error when pausing BPM services"), e);
         }
     }
 
@@ -52,7 +52,7 @@ public class TenantManagementEngineClient {
         try {
             tenantAdministrationAPI.resume();
         } catch (final UpdateException e) {
-            throw new APIException(new _("Error when resuming BPM services"), e);
+            throw new APIException(new T_("Error when resuming BPM services"), e);
         }
     }
 }

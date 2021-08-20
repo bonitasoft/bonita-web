@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
 /**
  * @author Séverin Moussel
@@ -40,11 +40,11 @@ public class APINotFoundException extends APIException {
         setResource(resource);
     }
 
-    public APINotFoundException(final _ localizedMessage, final Throwable cause) {
+    public APINotFoundException(final T_ localizedMessage, final Throwable cause) {
         super(localizedMessage, cause);
     }
 
-    public APINotFoundException(final _ localizedMessage) {
+    public APINotFoundException(final T_ localizedMessage) {
         super(localizedMessage);
     }
 

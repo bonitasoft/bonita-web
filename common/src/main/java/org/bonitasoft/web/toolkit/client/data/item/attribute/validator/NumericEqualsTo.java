@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Paul AMAR
@@ -31,7 +33,7 @@ public class NumericEqualsTo extends AbstractNumericComparisonValidator {
     @Override
     protected void _check(final Double attributeValue, final Double secondAttributeValue) {
         if (!attributeValue.equals(secondAttributeValue)) {
-            addError(_("%attribute% must be equal to %secondAttribute%"));
+            addError(AbstractI18n.t_("%attribute% must be equal to %secondAttribute%"));
         }
     }
 

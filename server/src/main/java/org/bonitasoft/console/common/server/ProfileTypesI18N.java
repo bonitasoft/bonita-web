@@ -14,7 +14,9 @@
  */
 package org.bonitasoft.console.common.server;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Fabio Lombardi
@@ -26,22 +28,22 @@ public class ProfileTypesI18N {
     // /////////////////////////////////////////
     // // USER
     // /////////////////////////////////////////
-    protected static final String USER = _("User");
+    protected static final String USER = AbstractI18n.t_("User");
 
-    protected static final String USER_DESCRIPTION = _("The user can view and perform tasks and can start a new case of a process.");
+    protected static final String USER_DESCRIPTION = AbstractI18n.t_("The user can view and perform tasks and can start a new case of a process.");
 
     // /////////////////////////////////////////
     // // ADMINISTRATOR
     // /////////////////////////////////////////
-    protected static final String ADMINISTRATOR = _("Administrator");
+    protected static final String ADMINISTRATOR = AbstractI18n.t_("Administrator");
 
-    protected static final String ADMINISTRATOR_DESCRIPTION = _("The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task).");
+    protected static final String ADMINISTRATOR_DESCRIPTION = AbstractI18n.t_("The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task).");
 
     // /////////////////////////////////////////
     // // PROCESS MANAGER
     // /////////////////////////////////////////
-    protected static final String PROCESS_MANAGER = _("Process manager");
+    protected static final String PROCESS_MANAGER = AbstractI18n.t_("Process manager");
 
-    protected static final String PROCESS_MANAGER_DESCRIPTION = _("The Process manager can supervise designated processes, and manage cases and tasks of those processes.");
+    protected static final String PROCESS_MANAGER_DESCRIPTION = AbstractI18n.t_("The Process manager can supervise designated processes, and manage cases and tasks of those processes.");
 }
 

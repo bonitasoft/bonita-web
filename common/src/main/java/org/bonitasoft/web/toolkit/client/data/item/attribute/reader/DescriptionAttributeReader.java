@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.reader;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasDualDescription;
 
 /**
@@ -28,13 +29,13 @@ public class DescriptionAttributeReader extends FirstNotBlancAttributeReader {
 
     public DescriptionAttributeReader(final String DisplayDescriptionAttributeToRead, final String DescriptionAttributeToRead) {
         super(DisplayDescriptionAttributeToRead, DescriptionAttributeToRead);
-        setDefaultValue(_("No description."));
+        setDefaultValue(AbstractI18n.t_("No description."));
         this.leadAttribute = DisplayDescriptionAttributeToRead;
     }
     
     public DescriptionAttributeReader(final String DescriptionAttributeToRead) {
         super(DescriptionAttributeToRead);
-        setDefaultValue(_("No description."));
+        setDefaultValue(AbstractI18n.t_("No description."));
         this.leadAttribute = DescriptionAttributeToRead;
     }
 

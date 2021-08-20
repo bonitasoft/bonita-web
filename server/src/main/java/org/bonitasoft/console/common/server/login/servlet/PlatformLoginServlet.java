@@ -64,13 +64,16 @@ public class PlatformLoginServlet extends HttpServlet {
      * Logger
      */
     private static final Logger LOGGER = Logger.getLogger(PlatformLoginServlet.class.getName());
+
     /**
      * the URL of the login page
      */
+    // FIXME: page does not exist:
     protected static String LOGIN_PAGE = "/platformLogin.jsp";
-    
+
+    // FIXME: page does not exist:
     protected static String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
-    
+
     public static final String ERROR_MESSAGE = "Error while logging in to the platform";
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();

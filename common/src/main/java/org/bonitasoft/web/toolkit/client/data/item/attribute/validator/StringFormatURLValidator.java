@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Paul AMAR
@@ -25,12 +27,12 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
 public class StringFormatURLValidator extends AbstractStringFormatValidator {
 
     public StringFormatURLValidator() {
-        super("(((?:http|https|ftp|mailto):\\/\\/[a-zA-Z0-9\\/\\?=#&%~\\-]+(.[a-zA-Z0-9\\/\\?=#&%~\\-]+)+)|(www(.[a-zA-Z0-9\\/\\?=_#&%~\\-\\)\\(]+){2,}))");
+        super("(((?:http|https|ftp|mailto):\\/\\/[a-zA-Z0-9\\/\\?=#&%~\\-]+(.[a-zA-Z0-9\\/\\?=#&%~\\-]+)+)|(www(.[a-zA-Z0-9\\/\\?=T_#&%~\\-\\)\\(]+){2,}))");
     }
 
     @Override
     protected String defineErrorMessage() {
-        return _("%attribute% is not a valid URL");
+        return AbstractI18n.t_("%attribute% is not a valid URL");
     }
 
 }

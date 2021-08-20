@@ -16,6 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.containsOnly;
+
 import java.util.Map;
 
 import org.bonitasoft.engine.identity.CustomUserInfoValue;
@@ -33,13 +37,9 @@ import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCre
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-
-import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.ATTRIBUTE_VALUE;
-import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
-import static org.bonitasoft.web.rest.server.api.APIPreconditions.containsOnly;
 
 /**
  * @author Vincent Elcrin
@@ -77,7 +77,7 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
 
     @Override
     public CustomUserInfoItem update(APIID id, Map<String, String> attributes) {
-        check(containsOnly(ATTRIBUTE_VALUE, attributes), new _("Only the value attribute can be updated"));
+        check(containsOnly(ATTRIBUTE_VALUE, attributes), new T_("Only the value attribute can be updated"));
 
         return converter.convert(getClient().setCustomUserInfoValue(
                 id.getPartAsLong(1),

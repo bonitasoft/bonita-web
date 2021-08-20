@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +33,9 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-
-import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
 
 /**
  * @author Vincent Elcrin
@@ -75,9 +75,9 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
             final String orders,
             final Map<String, String> filters) {
 
-        check(search == null, new _("Search terms are not supported by this API"));
-        check(filters == null || filters.isEmpty(), new _("Filters are not supported by this API"));
-        check(orders.equals(FIX_ORDER), new _("Sorting is not supported by this API"));
+        check(search == null, new T_("Search terms are not supported by this API"));
+        check(filters == null || filters.isEmpty(), new T_("Filters are not supported by this API"));
+        check(orders.equals(FIX_ORDER), new T_("Sorting is not supported by this API"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
         List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();

@@ -33,7 +33,7 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.Definitions;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -58,7 +58,7 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
             if (!platformAPI.isPlatformCreated()) {
                 platformAPI.createAndInitializePlatform();
             } else {
-                throw new APIException(new _("The platform already exist !"));
+                throw new APIException(new T_("The platform already exist !"));
             }
             return get(null);
         } catch (final APIException apie) {

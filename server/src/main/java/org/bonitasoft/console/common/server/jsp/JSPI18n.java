@@ -33,8 +33,8 @@ public class JSPI18n {
         I18n.getInstance();
     }
 
-    public String _(String message) {
-        return I18n._(message, locale);
+    public String t_(String message) {
+        return I18n.t_(message, locale);
     }
 
     public LOCALE getLocale() {

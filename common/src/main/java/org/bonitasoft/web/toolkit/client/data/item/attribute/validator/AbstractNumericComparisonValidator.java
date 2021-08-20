@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -39,12 +39,12 @@ public abstract class AbstractNumericComparisonValidator extends AbstractStringC
         try {
             numericValue = Double.valueOf(attributeValue);
         } catch (final NumberFormatException e) {
-            addError(_("%attribute% must be a numeric value"));
+            addError(AbstractI18n.t_("%attribute% must be a numeric value"));
         }
         try {
             secondNumericValue = Double.valueOf(secondAttributeValue);
         } catch (final NumberFormatException e) {
-            addError(_("%secondAttribute% must be a numeric value"));
+            addError(AbstractI18n.t_("%secondAttribute% must be a numeric value"));
         }
 
         if (!hasError()) {

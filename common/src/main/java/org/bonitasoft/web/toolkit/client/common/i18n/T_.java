@@ -17,36 +17,29 @@
 
 package org.bonitasoft.web.toolkit.client.common.i18n;
 
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
-/**
- * Created by Vincent Elcrin
- * Date: 25/09/13
- * Time: 14:09
- *
- * This class name is compatible with internationalization mechanism gettext.
- */
-public class _ {
+public class T_ {
 
     private String message;
     private Arg[] args;
 
-    public _(String message) {
+    public T_(String message) {
         this.message = message;
     }
 
-    public _(String message, Arg... args) {
+    public T_(String message, Arg... args) {
         this(message);
         this.args = args;
     }
 
     public String localize(LOCALE locale) {
         if(args != null) {
-            return _(message, locale, args);
+            return t_(message, locale, args);
         }
-        return _(message, locale);
+        return AbstractI18n.t_(message, locale);
     }
 }
