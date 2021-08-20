@@ -26,7 +26,7 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -100,7 +100,7 @@ public class ProcessCategoryDatastore extends CommonDatastore<ProcessCategoryIte
 
             return item;
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(new _("This category has already been added to this process"), e);
+            throw new APIForbiddenException(new T_("This category has already been added to this process"), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

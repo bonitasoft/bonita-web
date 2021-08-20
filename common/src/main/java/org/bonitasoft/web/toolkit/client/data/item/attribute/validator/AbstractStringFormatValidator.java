@@ -16,9 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
-
 import java.util.regex.Pattern;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -64,7 +64,7 @@ public abstract class AbstractStringFormatValidator extends AbstractStringValida
         // use `find()` instead of `matches()` because it was the implementation of the original `com.google.gwt.regexp.shared.RegExp#test()` method
         final boolean match = regexp.matcher(attributeValue).find();
         if (attributeValue.contains("HTTP Error")) {
-            addError(_("Error uploading the file. Maybe your session expired. You can try to refresh the page."));
+            addError(AbstractI18n.t_("Error uploading the file. Maybe your session expired. You can try to refresh the page."));
         } else if (exclude && match || !exclude && !match) {
             addError(defineErrorMessage());
         }

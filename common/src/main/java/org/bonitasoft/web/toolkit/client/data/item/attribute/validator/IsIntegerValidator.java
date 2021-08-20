@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -29,7 +31,7 @@ public class IsIntegerValidator extends AbstractStringValidator {
         try {
             Long.valueOf(attributeValue);
         } catch (final NumberFormatException e) {
-            addError(_("%attribute% must be an integer value"));
+            addError(AbstractI18n.t_("%attribute% must be an integer value"));
         }
     }
 

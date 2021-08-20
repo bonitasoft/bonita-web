@@ -23,9 +23,10 @@ import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 /**
  * @author Vincent Elcrin
@@ -76,7 +77,7 @@ public class ProcessItemConverter extends ItemConverter<ProcessItem, ProcessDepl
         } catch (ActorNotFoundException e) {
             actorInitiatorId = -1L;
         } catch (ProcessDefinitionNotFoundException e) {
-            throw new APIException(_("Process definition not found for id %processId%", new Arg("processId", String.valueOf(engineItem.getProcessId()))), e);
+            throw new APIException(AbstractI18n.t_("Process definition not found for id %processId%", new Arg("processId", String.valueOf(engineItem.getProcessId()))), e);
         }
         return actorInitiatorId;
     }

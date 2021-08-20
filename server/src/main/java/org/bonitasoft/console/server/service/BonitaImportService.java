@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.server.service;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +34,7 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
 import org.bonitasoft.web.rest.server.framework.json.JacksonSerializer;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.server.ServiceException;
 
 /**
@@ -67,7 +68,7 @@ abstract class BonitaImportService extends ConsoleService {
             return serializer.serialize(importStatusMessages);
         } catch (final InvalidSessionException e) {
             if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, _("Session expired. Please log in again."), e);
+                getLogger().log(Level.INFO, AbstractI18n.t_("Session expired. Please log in again."), e);
             }
             throw e;
         } catch (final ExecutionException e) {

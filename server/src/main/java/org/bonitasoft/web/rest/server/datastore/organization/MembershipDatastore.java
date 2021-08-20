@@ -32,7 +32,7 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -132,7 +132,7 @@ public class MembershipDatastore extends CommonDatastore<MembershipItem, UserMem
             return convertEngineToConsoleItem(getIdentityAPI()
                     .addUserMembership(item.getUserId().toLong(), item.getGroupId().toLong(), item.getRoleId().toLong()));
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(new _("This membership is already added to user"), e);
+            throw new APIForbiddenException(new T_("This membership is already added to user"), e);
         } catch (final Exception e) {
             throw new APIException(e);
         }

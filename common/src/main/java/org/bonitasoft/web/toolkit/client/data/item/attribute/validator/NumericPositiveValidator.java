@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -27,7 +29,7 @@ public class NumericPositiveValidator extends AbstractNumericValidator {
     @Override
     protected void _check(final Double attributeValue) {
         if (attributeValue.compareTo(0D) < 0) {
-            addError(_("%attribute% must be a positive value"));
+            addError(AbstractI18n.t_("%attribute% must be a positive value"));
         }
     }
 

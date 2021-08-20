@@ -48,6 +48,7 @@ public class PlatformLogoutServlet extends HttpServlet {
     /**
      * the URL of the login page
      */
+    // FIXME: page does not exist:
     protected String PLATFORM_LOGIN_PAGE = "platformLogin.jsp";
 
     /**

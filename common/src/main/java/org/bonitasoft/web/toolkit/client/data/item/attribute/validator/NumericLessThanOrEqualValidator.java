@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -31,7 +33,7 @@ public class NumericLessThanOrEqualValidator extends AbstractNumericComparisonVa
     @Override
     protected void _check(final Double attributeValue, final Double secondAttributeValue) {
         if (attributeValue.compareTo(secondAttributeValue) > 0) {
-            addError(_("%attribute% must be less than %secondAttribute%"));
+            addError(AbstractI18n.t_("%attribute% must be less than %secondAttribute%"));
         }
 
     }

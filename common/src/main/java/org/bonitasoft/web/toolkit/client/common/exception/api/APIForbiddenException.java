@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.api;
 
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
 /**
  * @author Vincent Elcrin
@@ -34,11 +34,11 @@ public class APIForbiddenException extends APIException {
         super(message, cause);
     }
 
-    public APIForbiddenException(_ localizedMessage) {
+    public APIForbiddenException(T_ localizedMessage) {
         super(localizedMessage);
     }
 
-    public APIForbiddenException(_ localizedMessage, Throwable cause) {
+    public APIForbiddenException(T_ localizedMessage, Throwable cause) {
         super(localizedMessage, cause);
     }
 }

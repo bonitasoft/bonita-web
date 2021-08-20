@@ -16,6 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.FILTER_USER_ID;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
+import static org.bonitasoft.web.rest.server.api.APIPreconditions.containsOnly;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +32,9 @@ import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.CustomUserInfoEngineClientCreator;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-
-import static org.bonitasoft.web.rest.model.identity.CustomUserInfoItem.FILTER_USER_ID;
-import static org.bonitasoft.web.rest.server.api.APIPreconditions.check;
-import static org.bonitasoft.web.rest.server.api.APIPreconditions.containsOnly;
 
 /**
  * @author Vincent Elcrin
@@ -53,9 +53,9 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
 
     @Override
     public ItemSearchResult<CustomUserInfoItem> search(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
-        check(containsOnly(FILTER_USER_ID, filters), new _("The only mandatory filter is %name%", new Arg("name", FILTER_USER_ID)));
-        check(orders.equals(FIX_ORDER), new _("Sorting is not supported by this API"));
-        check(search == null, new _("Search terms are not supported by this API"));
+        check(containsOnly(FILTER_USER_ID, filters), new T_("The only mandatory filter is %name%", new Arg("name", FILTER_USER_ID)));
+        check(orders.equals(FIX_ORDER), new T_("Sorting is not supported by this API"));
+        check(search == null, new T_("Search terms are not supported by this API"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
         List<CustomUserInfo> items = client.listCustomInformation(

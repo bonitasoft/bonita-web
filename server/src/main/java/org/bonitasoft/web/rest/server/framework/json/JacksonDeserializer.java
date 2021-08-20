@@ -17,7 +17,7 @@
  */
 package org.bonitasoft.web.rest.server.framework.json;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,9 +51,9 @@ public class JacksonDeserializer {
         try {
             return mapper.readValue(json.getBytes(), javaType);
         } catch (JsonParseException e) {
-            throw new APIException(_("Can't parse json, non-well formed content"), e);
+            throw new APIException(AbstractI18n.t_("Can't parse json, non-well formed content"), e);
         } catch (JsonMappingException e) {
-            throw new APIException(AbstractI18n._("Json can't be mapped to " + javaType.getRawClass().getName()), e);
+            throw new APIException(AbstractI18n.t_("Json can't be mapped to " + javaType.getRawClass().getName()), e);
         } catch (IOException e) {
             // should never appear
             throw new APIException(e);

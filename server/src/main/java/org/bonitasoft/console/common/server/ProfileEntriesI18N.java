@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.console.common.server;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Paul AMAR
@@ -29,36 +31,36 @@ public class ProfileEntriesI18N {
     // // USER
     // /////////////////////////////////////////
 
-    protected static final String CASES = _("Cases");
+    protected static final String CASES = AbstractI18n.t_("Cases");
 
-    protected static final String PROCESSES = _("Processes");
+    protected static final String PROCESSES = AbstractI18n.t_("Processes");
 
-    protected static final String TASKS = _("Tasks");
+    protected static final String TASKS = AbstractI18n.t_("Tasks");
 
     // /////////////////////////////////////////
     // // ADMIN
     // /////////////////////////////////////////
 
-    protected static final String DIRECTORY = _("Organization");
+    protected static final String DIRECTORY = AbstractI18n.t_("Organization");
 
-    protected static final String USERS = _("Users");
+    protected static final String USERS = AbstractI18n.t_("Users");
 
-    protected static final String GROUPS = _("Groups");
+    protected static final String GROUPS = AbstractI18n.t_("Groups");
 
-    protected static final String ROLES = _("Roles");
+    protected static final String ROLES = AbstractI18n.t_("Roles");
 
-    protected static final String ORGANIZATION = _("Organization");
+    protected static final String ORGANIZATION = AbstractI18n.t_("Organization");
 
-    protected static final String PROCESS_MANAGEMENT = _("Process management");
+    protected static final String PROCESS_MANAGEMENT = AbstractI18n.t_("Process management");
 
-    protected static final String CONFIGURATION = _("Configuration");
+    protected static final String CONFIGURATION = AbstractI18n.t_("Configuration");
 
-    protected static final String USER_RIGHTS = _("Profiles");
+    protected static final String USER_RIGHTS = AbstractI18n.t_("Profiles");
 
-    protected static final String ANALYTICS = _("Analytics");
+    protected static final String ANALYTICS = AbstractI18n.t_("Analytics");
 
-    protected static final String REPORTS = _("Reports");
+    protected static final String REPORTS = AbstractI18n.t_("Reports");
 
-    protected static final String PORTAL = _("Portal");
+    protected static final String PORTAL = AbstractI18n.t_("Portal");
 
 }

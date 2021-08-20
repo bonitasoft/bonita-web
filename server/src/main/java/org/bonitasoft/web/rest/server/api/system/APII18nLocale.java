@@ -43,7 +43,7 @@ public class APII18nLocale extends API<I18nLocaleItem> {
             final Map<String, String> filters) {
 
         final Map<String, String> availableLocales = I18n.getInstance().getAvailableLocalesFor(DEFAULT_APPLICATION);
-        final LinkedList<I18nLocaleItem> items = new LinkedList<I18nLocaleItem>();
+        final LinkedList<I18nLocaleItem> items = new LinkedList<>();
 
         for (final String locale : availableLocales.keySet()) {
             final String name = availableLocales.get(locale);
@@ -53,7 +53,7 @@ public class APII18nLocale extends API<I18nLocaleItem> {
             }
         }
 
-        return new ItemSearchResult<I18nLocaleItem>(page * resultsByPage, resultsByPage, new Long(items.size()).longValue(), items);
+        return new ItemSearchResult<>(page * resultsByPage, resultsByPage, new Long(items.size()).longValue(), items);
 
     }
 

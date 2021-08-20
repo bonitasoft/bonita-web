@@ -61,20 +61,20 @@
 		"noBonitaHomeMessage".equals(noBonitaHomeMessage) ||
 		"noBonitaClientFileMessage".equals(noBonitaClientFileMessage)
 	) {
-        errorMessage = i18n._("The server is not available") + "<br />" + i18n._("Please, contact your administrator.");
+        errorMessage = i18n.t_("The server is not available") + "<br />" + i18n.t_("Please, contact your administrator.");
         disableLogin = true;
     }
     // No profile for this user
     else if ("noProfileForUser".equals(loginFailMessage)) {
-        errorMessage = i18n._("Login failed. No profile has been set up for this user. Contact your administrator.");
+        errorMessage = i18n.t_("Login failed. No profile has been set up for this user. Contact your administrator.");
     }
  	// Tenant in Maintenance error
     else if ("tenantInMaintenanceMessage".equals(tenantInMaintenanceMessage)) {
-        errorMessage = i18n._("This service is offline for maintenance. Please try later.");
+        errorMessage = i18n.t_("This service is offline for maintenance. Please try later.");
     }
  	// Login or password error
     else if ("loginFailMessage".equals(loginFailMessage)) {
-        errorMessage = i18n._("Unable to log in. Please check your username and password.");
+        errorMessage = i18n.t_("Unable to log in. Please check your username and password.");
     }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -109,7 +109,7 @@
 <body id="LoginPage">
 
 	<div id="LoginHeader">
-		<h1><span><%= i18n._("Welcome to") %></span> <%= i18n._("Bonita Portal") %></h1>
+		<h1><span><%= i18n.t_("Welcome to") %></span> <%= i18n.t_("Bonita Portal") %></h1>
 	</div>
 
 	<div id="floater"></div>
@@ -124,23 +124,23 @@
 			<form id="LoginForm" action="<%=actionUrl%>" method="post" autocomplete="off">
 
 				<div class="header">
-					<h2><%=i18n._("Login form")%></h2>
+					<h2><%=i18n.t_("Login form")%></h2>
 				</div>
 
 				<p class="error"><%=errorMessage.length() > 0 ? errorMessage  : ""%></p>
 
 				<div class="formentries">
 
-					<div class="formentry" title="<%=i18n._("Enter your login (username)")%>">
+					<div class="formentry" title="<%=i18n.t_("Enter your login (username)")%>">
 						<div class="label">
-							<label for="username"><%=i18n._("User")%></label>
+							<label for="username"><%=i18n.t_("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Username")%>"
+							<input title="<%=i18n.t_("Username")%>"
                                    id="username"
                                    name="username"
                                    value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>"
-                                   placeholder="<%=i18n._("User")%>"
+                                   placeholder="<%=i18n.t_("User")%>"
                                    type="text"
                                    autocomplete="off"
                                    tabindex="1"
@@ -149,19 +149,19 @@
 						</div>
 					</div>
 
-					<div class="formentry" title="<%=i18n._("Enter your password")%>">
+					<div class="formentry" title="<%=i18n.t_("Enter your password")%>">
 						<div class="label">
-							<label for="password"><%=i18n._("Password")%></label>
+							<label for="password"><%=i18n.t_("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n._("Password")%>"
+							<input title="<%=i18n.t_("Password")%>"
                                    id="password"
                                    name="password"
                                    type="password"
                                    tabindex="2"
                                    autocomplete="off"
                                    maxlength="50"
-                                   placeholder="<%=i18n._("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
+                                   placeholder="<%=i18n.t_("Password")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
                             />
 						</div>
 						<input name="_l" type="hidden" value="<%=i18n.getLocale()%>" />
@@ -170,7 +170,7 @@
 				</div>
 				<div class="formactions">
 					<input type="submit"
-                           value="<%=i18n._("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
+                           value="<%=i18n.t_("Login")%>" <%=disableLogin ? "disabled=\"disabled\" " : ""%>
                     />
 				</div>
 			</form>

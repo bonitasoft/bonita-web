@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -68,22 +69,22 @@ public class NumericMinMaxValidator extends AbstractNumericValidator {
         // Checking for including the min
         if (this.includeMin) {
             if (this.min != null && attributeValue.compareTo(this.min) < 0) {
-                addError(_("%attribute% must be more or equal than %value%", new Arg("value", attributeValue)));
+                addError(AbstractI18n.t_("%attribute% must be more or equal than %value%", new Arg("value", attributeValue)));
             }
         } else {
             if (this.min != null && attributeValue.compareTo(this.min) <= 0) {
-                addError(_("%attribute% must be more than %value%", new Arg("value", attributeValue)));
+                addError(AbstractI18n.t_("%attribute% must be more than %value%", new Arg("value", attributeValue)));
             }
         }
 
         // Checking for including the max
         if (this.includeMax) {
             if (this.max != null && attributeValue.compareTo(this.max) > 0) {
-                addError(_("%attribute% must be less or equal than %value%", new Arg("value", attributeValue)));
+                addError(AbstractI18n.t_("%attribute% must be less or equal than %value%", new Arg("value", attributeValue)));
             }
         } else {
             if (this.max != null && attributeValue.compareTo(this.max) >= 0) {
-                addError(_("%attribute% must be less than %value%", new Arg("value", attributeValue)));
+                addError(AbstractI18n.t_("%attribute% must be less than %value%", new Arg("value", attributeValue)));
             }
         }
     }

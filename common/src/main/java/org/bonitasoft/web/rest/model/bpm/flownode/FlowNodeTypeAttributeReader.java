@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.rest.model.bpm.flownode;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.reader.AbstractAttributeReader;
 
@@ -36,19 +37,19 @@ public class FlowNodeTypeAttributeReader extends AbstractAttributeReader {
         if (item instanceof IFlowNodeItem) {
             if (((IFlowNodeItem) item).isHumanTask()) {
                 className = "human_task";
-                return _("Human task");
+                return AbstractI18n.t_("Human task");
             } else if (((IFlowNodeItem) item).isCallActivity()) {
                 className = "call_activity_task";
-                return _("Call activity");
+                return AbstractI18n.t_("Call activity");
             } else if (((IFlowNodeItem) item).isMultiInsatnceActivity()) {
                 className = "multi_instance_task";
-                return _("Multi-instanciation activity");
+                return AbstractI18n.t_("Multi-instanciation activity");
             } else if (((IFlowNodeItem) item).isLoopActivity()) {
                 className = "loop_task";
-                return _("Loop activity");
+                return AbstractI18n.t_("Loop activity");
             } else if (((IFlowNodeItem) item).isAutomaticTask()) {
                 className = "automatic_task";
-                return _("Service task");
+                return AbstractI18n.t_("Service task");
             }
         }
         className = "automatic_task";

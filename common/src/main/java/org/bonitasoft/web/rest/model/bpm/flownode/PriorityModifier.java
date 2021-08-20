@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.web.rest.model.bpm.flownode;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.AbstractStringModifier;
 
@@ -38,15 +39,15 @@ public class PriorityModifier extends AbstractStringModifier {
         if (StringUtil.isBlank(value)) {
             return null;
         } else if (IHumanTaskItem.VALUE_PRIORITY_HIGHEST.equals(value)) {
-            return _("Highest");
+            return AbstractI18n.t_("Highest");
         } else if (IHumanTaskItem.VALUE_PRIORITY_ABOVE_NORMAL.equals(value)) {
-            return _("High");
+            return AbstractI18n.t_("High");
         } else if (IHumanTaskItem.VALUE_PRIORITY_NORMAL.equals(value)) {
-            return _("Normal");
+            return AbstractI18n.t_("Normal");
         } else if (IHumanTaskItem.VALUE_PRIORITY_UNDER_NORMAL.equals(value)) {
-            return _("Low");
+            return AbstractI18n.t_("Low");
         } else if (IHumanTaskItem.VALUE_PRIORITY_LOWEST.equals(value)) {
-            return _("Lowest");
+            return AbstractI18n.t_("Lowest");
         } else {
             return value;
         }

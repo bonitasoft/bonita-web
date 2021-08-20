@@ -16,13 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.api.organization.password.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringValidator;
 
 

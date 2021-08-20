@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.server.servlet;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.io.FileNotFoundException;
 
@@ -27,6 +27,7 @@ import org.bonitasoft.engine.exception.ExportException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * Export Resources with Ids as XML file
@@ -62,7 +63,7 @@ public abstract class ExportByIdsServlet extends BonitaExportServlet {
         if(resourceIDParamValue!=null){
             return resourceIDParamValue.split(",");
         } else{
-            throw new RuntimeException(_("Request parameter \"id\" must be set."));
+            throw new RuntimeException(AbstractI18n.t_("Request parameter \"id\" must be set."));
         }
     }
     

@@ -22,9 +22,8 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 import java.util.List;
@@ -41,9 +40,9 @@ public class UserEngineClient {
         try {
             return identityAPI.updateUser(userId, userUpdater);
         } catch (UserNotFoundException e) {
-            throw new APINotFoundException(new _("Can't update user. User not found"), e);
+            throw new APINotFoundException(new T_("Can't update user. User not found"), e);
         } catch (UpdateException e) {
-            throw new APIException(new _("Error when updating user"), e);
+            throw new APIException(new T_("Error when updating user"), e);
         }
     }
     
@@ -51,10 +50,10 @@ public class UserEngineClient {
         try {
             return identityAPI.createUser(creator);
         } catch (AlreadyExistsException e) {
-            throw new APIForbiddenException(new _("Can't create user. User '%userName%' already exists",
+            throw new APIForbiddenException(new T_("Can't create user. User '%userName%' already exists",
                     new Arg("userName", creator.getFields().get(UserField.NAME))), e);
         } catch (CreationException e) {
-            throw new APIException(new _("Error when creating user"), e);
+            throw new APIException(new T_("Error when creating user"), e);
         }
     }
     
@@ -62,7 +61,7 @@ public class UserEngineClient {
         try {
             return identityAPI.getUser(userId);
         } catch (UserNotFoundException e) {
-            throw new APINotFoundException(new _("User not found"), e);
+            throw new APINotFoundException(new T_("User not found"), e);
         }
     }
     
@@ -70,7 +69,7 @@ public class UserEngineClient {
         try {
             identityAPI.deleteUsers(userIds);
         } catch (DeletionException e) {
-            throw new APIException(new _("Error when deleting users"), e);
+            throw new APIException(new T_("Error when deleting users"), e);
         }
     }
     
@@ -78,7 +77,7 @@ public class UserEngineClient {
         try {
             return identityAPI.searchUsers(searchOptions);
         } catch (SearchException e) {
-            throw new APIException(new _("Error when searching users"), e);
+            throw new APIException(new T_("Error when searching users"), e);
         }
     }
     

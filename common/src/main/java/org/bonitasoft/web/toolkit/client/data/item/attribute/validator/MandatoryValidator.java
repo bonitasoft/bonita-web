@@ -16,7 +16,9 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
+
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
  * @author Séverin Moussel
@@ -24,7 +26,7 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
  */
 public class MandatoryValidator extends AbstractCollectionValidator {
 
-    private String message = _("%attribute% is mandatory");
+    private String message = AbstractI18n.t_("%attribute% is mandatory");
 
     public MandatoryValidator() {
         super();

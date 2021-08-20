@@ -17,19 +17,16 @@ package org.bonitasoft.web.toolkit.client.common.exception.http;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.bonitasoft.console.common.FakeI18n;
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
-import org.bonitasoft.web.toolkit.client.common.i18n._;
+import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
  * Created by Vincent Elcrin
@@ -87,7 +84,7 @@ public class JsonExceptionSerializerTest {
 
     @Test
     public void testJsonContainsInternationalizedMessageWhenLocalIsSet() throws Exception {
-        APIException exception = new APIException(new _("message"));
+        APIException exception = new APIException(new T_("message"));
         fakeI18n.setL10n("localization");
         exception.setLocale(LOCALE.en);
         JsonExceptionSerializer serializer = new JsonExceptionSerializer(exception);

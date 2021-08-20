@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.server.service;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n._;
+import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,6 +31,7 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 /**
@@ -73,17 +74,17 @@ public class ApplicationsImportService extends BonitaImportService {
 
     @Override
     protected String getFileFormatExceptionMessage() {
-        return _("Can't import Applications.", getLocale());
+        return AbstractI18n.t_("Can't import Applications.", getLocale());
     }
 
     @Override
     protected String getAlreadyExistsExceptionMessage(final AlreadyExistsException e) {
-        return _("Can't import applications. An application '%token%' already exists", getLocale(), new Arg("token", e.getName()));
+        return t_("Can't import applications. An application '%token%' already exists", getLocale(), new Arg("token", e.getName()));
     }
 
     @Override
     protected String getFileReadingError() {
-        return _("Error during Application import file reading.");
+        return AbstractI18n.t_("Error during Application import file reading.");
     }
 
     @Override
