@@ -14,16 +14,13 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.util.Arrays;
-import java.util.List;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+
+import java.util.Collections;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
-import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
-import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
-import org.bonitasoft.web.rest.server.engineclient.EngineClientFactory;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
-import org.bonitasoft.web.rest.server.engineclient.ProfileEntryEngineClient;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionItem;
@@ -57,7 +54,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION, getBrandingVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION_WITH_DATE, getBrandingVersionWithDate());
             session.setAttribute(SessionItem.ATTRIBUTE_COPYRIGHT, getCopyright());
-            session.setAttribute(SessionItem.ATTRIBUTE_CONF, getUserRights(apiSession));
+            session.setAttribute(SessionItem.ATTRIBUTE_CONF, getLogoutConfiguration(apiSession));
         }
         return session;
     }
@@ -70,43 +67,11 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return AuthenticationManagerProperties.getProperties(tenantId);
     }
 
-    public String getUserRights(final org.bonitasoft.engine.session.APISession apiSession) {
-        final List<Profile> profiles = getProfilesForUser(apiSession);
-        if (apiSession.isTechnicalUser()) {
-            return JSonSerializer.serialize(new UserRightsBuilder(apiSession, new TokenListProvider(Arrays.asList(
-                    "userlistingadmin",
-                    "rolelistingadmin",
-                    "grouplistingadmin",
-                    "profilelisting",
-                    "custompage_adminInstallExportOrganizationBonita",
-                    "custompage_tenantStatusBonita",
-                    "pagelisting",
-                    "businessdatamodelimport",
-                    "bdm"))).build());
-        } else {
-            return getUserRightsForProfiles(profiles, apiSession);
+    public String getLogoutConfiguration(final org.bonitasoft.engine.session.APISession apiSession) {
+        if (!apiSession.isTechnicalUser() && isLogoutDisabled(apiSession.getTenantId())) {
+            return JSonSerializer.serialize(singletonList(AuthenticationManagerProperties.LOGOUT_DISABLED));
         }
-    }
-
-    private List<Profile> getProfilesForUser(final org.bonitasoft.engine.session.APISession apiSession) {
-        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(apiSession));
-        final ProfileEngineClient profileApi = engineClientFactory.createProfileEngineClient();
-        return profileApi.listProfilesForUser(apiSession.getUserId(), false);
-    }
-
-    private String getUserRightsForProfiles(final List<Profile> profiles, final org.bonitasoft.engine.session.APISession session) {
-        final List<String> rights = new UserRightsBuilder(session, new TokenProfileProvider(profiles, createProfileEntryEngineClient(session)))
-                .build();
-        // TODO restrict the current user from being able to call the logout directly as a profileEntry (is it possible)?
-        if (isLogoutDisabled(session.getTenantId())) {
-            rights.add(AuthenticationManagerProperties.LOGOUT_DISABLED);
-        }
-        return JSonSerializer.serialize(rights);
-    }
-
-    private ProfileEntryEngineClient createProfileEntryEngineClient(final org.bonitasoft.engine.session.APISession session) {
-        final EngineClientFactory engineClientFactory = new EngineClientFactory(new EngineAPIAccessor(session));
-        return engineClientFactory.createProfileEntryEngineClient();
+        return JSonSerializer.serialize(emptyList());
     }
 
     /**

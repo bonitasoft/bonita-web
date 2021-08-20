@@ -32,10 +32,6 @@ public class EngineClientFactory {
         return new ProfileEngineClient(apiAccessor.getProfileAPI());
     }
 
-    public ProfileEntryEngineClient createProfileEntryEngineClient() {
-        return new ProfileEntryEngineClient();
-    }
-
     public ProfileMemberEngineClient createProfileMemberEngineClient() {
         return new ProfileMemberEngineClient(apiAccessor.getProfileAPI());
     }
