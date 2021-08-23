@@ -1,14 +1,10 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Arrays;
@@ -18,12 +14,13 @@ import java.util.List;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.process.impl.internal.ArchivedProcessInstanceImpl;
+import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
+import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -84,8 +81,21 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_delete_archive_case_call_right_engine_method() throws DeletionException, ArchivedProcessInstanceNotFoundException,
-            ProcessInstanceNotFoundException {
+    public void search_should_pass_long_parameters_as_long_to_engine_and_not_as_string() {
+        // given:
+        doReturn(mock(SearchResult.class)).when(datastore).runSearch(any(), any());
+
+        // when:
+        datastore.search(0, 10, null, null, emptyMap());
+
+        // then:
+        verify(datastore).addLongFilterToSearchBuilder(any(), any(), anyString(), eq(ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID));
+        verify(datastore).addLongFilterToSearchBuilder(any(), any(), anyString(), eq(ProcessInstanceSearchDescriptor.STARTED_BY));
+        verify(datastore).addLongFilterToSearchBuilder(any(), any(), anyString(), eq(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID));
+    }
+
+    @Test
+    public void should_delete_archive_case_call_right_engine_method() throws DeletionException, ArchivedProcessInstanceNotFoundException {
         //given
 
         final List<APIID> idList = Arrays.asList(APIID.makeAPIID(archivedProcessInstanceId1), APIID.makeAPIID(archivedProcessInstanceId2),
@@ -105,7 +115,7 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void should_delete_all_archived_cases_when_one_id_is_given() throws DeletionException, ProcessInstanceNotFoundException,
+    public void should_delete_all_archived_cases_when_one_id_is_given() throws DeletionException,
             ArchivedProcessInstanceNotFoundException {
         //given
         final List<APIID> idList = Collections.singletonList(APIID.makeAPIID(archivedProcessInstanceId1));
@@ -131,7 +141,7 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void testConvertEngineToConsoleItem() throws Exception {
+    public void testConvertEngineToConsoleItem() {
         //given
         ArchivedProcessInstance archivedProcessInstance = mock(ArchivedProcessInstance.class);
         doReturn("labelOne").when(archivedProcessInstance).getStringIndexLabel(1);
@@ -164,7 +174,7 @@ public class ArchivedCaseDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void testConvertEngineToConsoleItemWithNullValues() throws Exception {
+    public void testConvertEngineToConsoleItemWithNullValues() {
         //given
         ArchivedProcessInstance archivedProcessInstance = mock(ArchivedProcessInstance.class);
         doReturn(null).when(archivedProcessInstance).getStringIndexLabel(1);
