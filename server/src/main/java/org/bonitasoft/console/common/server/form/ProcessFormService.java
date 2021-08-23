@@ -14,20 +14,11 @@
  */
 package org.bonitasoft.console.common.server.form;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
@@ -37,7 +28,6 @@ import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
-import org.bonitasoft.engine.bpm.process.ActivationState;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ArchivedProcessInstancesSearchDescriptor;
@@ -57,12 +47,7 @@ import org.bonitasoft.engine.session.APISession;
 
 public class ProcessFormService {
 
-    protected static final String PROCESS_DEPLOY = "process_deploy";
-
-    /**
-     * Logger
-     */
-    private static Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
 
     public String getProcessPath(final APISession apiSession, final long processDefinitionId) throws BonitaException, UnsupportedEncodingException {
         final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
@@ -183,74 +168,8 @@ public class ProcessFormService {
         }
     }
 
-    protected boolean isLoggedUserAdmin(final HttpServletRequest request) {
-    	final HttpSession session = request.getSession();
-        @SuppressWarnings("unchecked")
-        final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
-    	return userPermissions.contains(PROCESS_DEPLOY);
-    }
-
-    protected boolean isLoggedUserProcessSupervisor(final APISession apiSession, final long processDefinitionId) throws BonitaException {
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-        return processAPI.isUserProcessSupervisor(processDefinitionId, apiSession.getUserId());
-    }
-
-    public boolean isAllowedToSeeTask(final APISession apiSession, final long taskInstanceId, final long enforcedUserId,
-            final boolean assignTask) throws BonitaException {
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-        try {
-            if (processAPI.isInvolvedInHumanTaskInstance(enforcedUserId, taskInstanceId)) {
-                if (assignTask) {
-                    assignTaskIfNotAssigned(apiSession, taskInstanceId, enforcedUserId);
-                }
-                return true;
-            }
-            return false;
-        } catch (final ActivityInstanceNotFoundException e) {
-            final ArchivedActivityInstance archivedActivity = processAPI.getArchivedActivityInstance(taskInstanceId);
-            return enforcedUserId == archivedActivity.getExecutedBy();
-        }
-    }
-
-    public boolean isAllowedToSeeProcessInstance(final APISession apiSession, final long processInstanceId,
-            final long enforcedUserId) throws BonitaException {
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-        return processAPI.isInvolvedInProcessInstance(enforcedUserId, processInstanceId);
-    }
-
-    public boolean isAllowedToStartProcess(final APISession apiSession, final long processDefinitionId, final long enforcedUserId) throws BonitaException {
-        if (ActivationState.ENABLED.equals(getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId).getActivationState())) {
-            final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
-            parameters.put("USER_ID_KEY", enforcedUserId);
-            parameters.put("PROCESS_DEFINITION_ID_KEY", processDefinitionId);
-            return (Boolean) getCommandAPI(apiSession).execute("canStartProcessDefinition", parameters);
-        }
-        return false;
-    }
-
-    public boolean isAllowedAsAdminOrProcessSupervisor(final HttpServletRequest request, final APISession apiSession, final long processDefinitionId,
-            final long taskInstanceId, final long userId, final boolean assignTask) throws BonitaException {
-        if (isLoggedUserAdmin(request) || isLoggedUserProcessSupervisor(apiSession, processDefinitionId)) {
-            if (taskInstanceId != -1L && assignTask) {
-                assignTaskIfNotAssigned(apiSession, taskInstanceId, userId);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    protected void assignTaskIfNotAssigned(final APISession apiSession, final long taskId, final long userId) throws BonitaException {
-        final HumanTaskInstance humanTaskInstance = getProcessAPI(apiSession).getHumanTaskInstance(taskId);
-        if (userId != -1 && humanTaskInstance.getAssigneeId() != userId) {
-            getProcessAPI(apiSession).assignUserTask(taskId, userId);
-        }
-    }
-
     protected ProcessAPI getProcessAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getProcessAPI(apiSession);
     }
 
-    protected CommandAPI getCommandAPI(final APISession apiSession) throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        return TenantAPIAccessor.getCommandAPI(apiSession);
-    }
 }

@@ -67,18 +67,6 @@ public class TestProcess {
 
     private boolean enabled = false;
 
-    public static final String COMMAND_ADD_USER_TO_SUPERVISOR = "createSupervisor";
-
-    public static final String KEY_PROCESS_DEFINITION_ID = "processDefinitionId";
-
-    public static final String KEY_MEMBER_TYPE = "memberType";
-
-    public static final String KEY_USER_ID = "userId";
-
-    public static final String KEY_GROUP_ID = "groupId";
-
-    public static final String KEY_ROLE_ID = "roleId";
-
     private ProcessSupervisor processSupervisor;
 
     private final List<ActorInstance> actors = new ArrayList<>();
