@@ -10,10 +10,8 @@ import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
-import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -58,7 +56,7 @@ public class ArchivedCaseDatastoreIntegrationTest extends AbstractConsoleTest {
         Thread.sleep(1000); // asynchronous, wait process2 to be archived
 
         // Filters for archived Cases
-        ItemSearchResult<ArchivedCaseItem> itemSearchResult = archivedCaseDatastore.search(0, 100, null, null, new HashMap<String, String>());
+        ItemSearchResult<ArchivedCaseItem> itemSearchResult = archivedCaseDatastore.search(0, 100, null, null, new HashMap<>());
 
         assertEquals("2 cases started but one via call activity so only 1 should be archived", 1, itemSearchResult.getResults().size());
 
