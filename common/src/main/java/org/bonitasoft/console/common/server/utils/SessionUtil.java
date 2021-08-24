@@ -57,10 +57,16 @@ public class SessionUtil {
     }
 
     public static void sessionLogout(final HttpSession session) {
+        sessionLogout(session, true);
+    }
+    
+    public static void sessionLogout(final HttpSession session, final boolean invalidateHTTPSession) {
         session.removeAttribute(API_SESSION_PARAM_KEY);
         session.removeAttribute(USERNAME_SESSION_PARAM);
         session.removeAttribute(USER_SESSION_PARAM_KEY);
         session.removeAttribute(PERMISSIONS_SESSION_PARAM_KEY);
-        session.invalidate();
+        if (invalidateHTTPSession) {
+            session.invalidate();
+        }
     }
 }
