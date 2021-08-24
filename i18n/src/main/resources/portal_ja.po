@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-13 05:21+0100\n"
+"POT-Creation-Date: 2021-08-20 05:21+0200\n"
 "PO-Revision-Date: 2021-08-24 07:49\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
@@ -14,20 +14,17 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
-"X-Crowdin-File-ID: 61797\n"
-
-msgid " To do so, go to %entitymappingprofilelink%."
-msgstr " そのためには、%entitymappingprofilelink% へ進みます。"
-
-msgid " for "
-msgstr " 対象: "
+"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 60581\n"
 
 msgid "%attribute% file format is not allowed. Only %file_formats% files are allowed."
 msgstr "%attribute% ファイルの形式は許可されていません。%file_formats%のファイルのみが許可されます。"
 
 msgid "%attribute% file format not allowed"
 msgstr "%attribute%のファイル形式は許可されていません。"
+
+msgid "%attribute% file format not allowed or not starting with correct servlet path"
+msgstr ""
 
 msgid "%attribute% is mandatory"
 msgstr "%attribute%は必須です。"
@@ -104,263 +101,26 @@ msgstr "%attribute% には、正確に%length%文字が含まれている必要�
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% は、 %secondAttribute% と異なっていなければなりません。"
 
-msgid "%attribute% must not contain '/'"
-msgstr "%attribute% には、'/' を含めてはいけません。"
-
-msgid "%attribute% must not contain blank spaces"
-msgstr "%attribute% には、空白スペースを含むことができません"
-
-msgid "%attribute% must not contain spaces"
-msgstr "%attribute% にはスペースを含めてはいけません"
-
 msgid "%className% is not Serializable"
 msgstr "%className% は、シリアライズ可能ではありません"
 
 msgid "%className% not found. Only jdk types are supported"
 msgstr "%className% が見つかりません。jdk type だけがサポートされます"
 
-msgid "%current_page% of %total_pages%"
-msgstr "%current_page% / %total_pages%"
-
-msgid "%firstname% %lastname%"
-msgstr "%firstname% %lastname%"
-
-msgid "%firstname% %lastname% for"
-msgstr "%firstname% %lastname% for"
-
-msgid "%groupname%"
-msgstr "%groupname%"
-
-msgid "%nb_archived% archived"
-msgstr "アーカイブ数 %nb_archived%"
-
-msgid "%nb_ongoing% ongoing"
-msgstr "%nb_ongoing% 件が継続中です。"
-
-msgid "%pageName% is used by:"
-msgstr "%pageName% の使用者："
-
-msgid "%rolename%"
-msgstr "%rolename%"
-
-msgid "%rolename% of %groupname%"
-msgstr "%groupname% の %rolename% "
-
 msgid "%secondAttribute% must be a numeric value"
 msgstr "%secondAttribute% は数値でなければなりません"
-
-msgid "%start_result% - %end_result% of %total_results%"
-msgstr "%start_result% - %end_result% / %total_results%"
-
-msgid "%start_result% of %total_results%"
-msgstr "%start_result% / %total_results%"
 
 msgid "%time% ago"
 msgstr "%time%前"
 
-msgid "%user%"
-msgstr "%user% さん"
-
 msgid "%value% is not a valid value for %className%"
 msgstr "%value% は、%className% の適正な値ではありません"
-
-msgid "'%applicationName%' as page '%associationName%'"
-msgstr "「 %applicationName%」 をページ 「%associationName%」に改名"
-
-msgid "'%layoutName%' is used as layout for:"
-msgstr "「%layoutName%'」は、次のレイアウトとして使用されます: "
-
-msgid "'%pageName%' is used by:"
-msgstr "%pageName% の使用者："
-
-msgid "'%themeName%' is used as Theme for:"
-msgstr "'%themeName%' テーマの使用先："
-
-msgid "?"
-msgstr "？"
-
-msgid "A business archive has a .bar extension"
-msgstr "ビジネス アーカイブは、.bar の拡張子持っています。"
-
-msgid "A case has been started successfully."
-msgstr "案件は正常に開始されました。"
-
-msgid "A form is a page mapped to case start or a human task."
-msgstr "フォームは、案件開始またはヒューマン タスクにアサインされるページです。"
 
 msgid "A group with the name %groupName% already exists"
 msgstr "%groupName% と同名のグループが既に存在しています。"
 
-msgid "A page archive has a .zip extension"
-msgstr "ページのアーカイブは.zip 拡張子を持ちます"
-
-msgid "A page with this name already exists."
-msgstr "この名前のページは既に存在します。"
-
-msgid "A process with the same name and version already exists."
-msgstr "同じ名前とバージョンのプロセスが既に存在します。"
-
-msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
-msgstr "リソースは、resources フォルダと page.properties ファイルを含む zip アーカイブ形式でインポートされます。"
-
-msgid "Aborted by:"
-msgstr "次によって中止されました："
-
-msgid "Aborted on:"
-msgstr "中止されたタスク："
-
-msgid "About"
-msgstr "バージョン情報"
-
-msgid "Actions"
-msgstr "アクション"
-
-msgid "Activate"
-msgstr "アクティベート"
-
-msgid "Activate selected users"
-msgstr "選択した利用者を有効にする"
-
-msgid "Activation state"
-msgstr "有効化の状態"
-
-msgid "Active"
-msgstr "アクティブ"
-
-msgid "Active Users"
-msgstr "アクティブな利用者"
-
-msgid "Actor mapping"
-msgstr "アクターマッピング"
-
-msgid "Actor name"
-msgstr "アクター名"
-
-msgid "Actors: %ok_ko%"
-msgstr "アクター： %ok_ko%"
-
-msgid "Add"
-msgstr "追加"
-
-msgid "Add Comment"
-msgstr "コメントを追加します"
-
-msgid "Add a category"
-msgstr "カテゴリを追加します"
-
-msgid "Add a comment"
-msgstr "コメントを追加します"
-
-msgid "Add a group"
-msgstr "グループを追加"
-
-msgid "Add a group to %actor_name%"
-msgstr "グループを %actor_name% に追加します。"
-
-msgid "Add a group to profile %%"
-msgstr "グループをプロファイル%%に追加します"
-
-msgid "Add a membership"
-msgstr "所属を追加"
-
-msgid "Add a membership to %actor_name%"
-msgstr "%actor_name% に所属を追加します"
-
-msgid "Add a membership to profile %%"
-msgstr "所属をプロファイル %%に追加します"
-
-msgid "Add a new category"
-msgstr "新しいカテゴリを追加します"
-
-msgid "Add a new category to %%"
-msgstr "新しいカテゴリを %%に追加します。"
-
-msgid "Add a new custom page"
-msgstr "新しいカスタム ページを追加"
-
-msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "新しいリソース（ページ、フォーム、レイアウト、テーマ、または REST API 拡張） を追加します。 <br/>このリソースは、（プロセスまたはアプリケーション レベル）ではなくグローバル スコープでインストールされます。 <br/>このアーカイブ （.zip ファイル）は、ルート レベルに resources という名前のフォルダと page.properties ファイルを含める必要があります。<br/> この page.properties 内には少なくとも 、name、displayName および contentType（デフォルトの contentType は page）を定義する必要があります。 <br/>resources フォルダには、index.html または index.groovy ファイルのいずれかと、必要なリソースを含める必要があります。"
-
-msgid "Add a resource"
-msgstr "リソースを追加します"
-
-msgid "Add a role"
-msgstr "役割を追加"
-
-msgid "Add a role to %actor_name%"
-msgstr "役割を %actor_name% に追加します。"
-
-msgid "Add a role to profile %%"
-msgstr "役割をプロファイル %%に追加します"
-
-msgid "Add a user"
-msgstr "ユーザーを追加"
-
-msgid "Add a user to %actor_name%"
-msgstr "ユーザーを  %actor_name% に追加します。"
-
-msgid "Add a user to profile %%"
-msgstr "ユーザーをプロファイル %%に追加します"
-
-msgid "Add resource"
-msgstr "リソースを追加"
-
-msgid "Add selected group(s) to this profile"
-msgstr "選択したグループをこのプロファイルに追加します。"
-
-msgid "Add selected role(s) to this profile"
-msgstr "選択した役割をこのプロファイルに追加します。"
-
-msgid "Add selected user(s) to this profile"
-msgstr "選択したユーザーをこのプロファイルに追加します。"
-
-msgid "Add this group to %actor_name%"
-msgstr "このグループを %actor_name% に追加します。"
-
-msgid "Add this membership"
-msgstr "この所属を追加します"
-
-msgid "Add this membership to %actor_name%"
-msgstr "この所属を %actor_name% に追加します。"
-
-msgid "Add this role to %actor_name%"
-msgstr "この役割を %actor_name% に追加します。"
-
-msgid "Add this user to %actor_name%"
-msgstr "このユーザーを %actor_name% に追加します。"
-
-msgid "Add your comment"
-msgstr "あなたのコメントを追加します。"
-
 msgid "Administrator"
 msgstr "システム管理者"
-
-msgid "Alert"
-msgstr "警告"
-
-msgid "All"
-msgstr "すべて"
-
-msgid "All Groups"
-msgstr "すべてのグループ"
-
-msgid "All Profiles"
-msgstr "すべてのプロファイル"
-
-msgid "All Roles"
-msgstr "すべての役割"
-
-msgid "All groups"
-msgstr "すべてのグループ"
-
-msgid "All pages"
-msgstr "全ページ"
-
-msgid "All processes are automatically paused."
-msgstr "すべてのプロセスが自動的に一時停止します。"
-
-msgid "An archive has a .zip extension"
-msgstr "アーカイブは .zip 拡張子を持ちます"
 
 msgid "An error occurred while creating a definition"
 msgstr "定義の作成中にエラーが発生しました"
@@ -368,118 +128,20 @@ msgstr "定義の作成中にエラーが発生しました"
 msgid "An error occurred while deleting an item with the id %id%"
 msgstr "Id %id% を持つ項目を削除中にエラーが発生しました"
 
-msgid "An error occurred while importing the organization.\n"
-"Consult the logs for more information."
-msgstr "組織のインポート中にエラーが発生しました。\n"
-"詳細については、ログを参照してください。"
-
 msgid "Analytics"
 msgstr "分析"
 
 msgid "Applications"
 msgstr "アプリケーション"
 
-msgid "April"
-msgstr "4月"
-
-msgid "Archive"
-msgstr "アーカイブ"
-
-msgid "Archived"
-msgstr "完了済み"
-
-msgid "Archived date"
-msgstr "完了日時"
-
-msgid "Archives"
-msgstr "アーカイブ"
-
-msgid "Are you sur you want to remove selected actor members from the process ?"
-msgstr "選択したアクターをプロセスの実行メンバーから削除してもいいですか？"
-
-msgid "Are you sure you want to delete it?"
-msgstr ""
-
-msgid "Are you sure you want to delete them?"
-msgstr ""
-
-msgid "Are you sure you want to remove category '%categoryName%' from process '%appName%' ?"
-msgstr "プロセス： '%appName%' からカテゴリ： '%categoryName%' を削除してもいいですか？"
-
-msgid "Assign"
-msgstr "アサイン"
-
-msgid "Assign selected tasks to user"
-msgstr "選択したタスクを担当者にアサインします"
-
-msgid "Assign task to someone"
-msgstr "タスクを誰かにアサインします"
-
-msgid "Assign this task to me. Other allowed users will no longer see it"
-msgstr "このタスクに自分をアサインします。その他の許可されているユーザーには、もはやそれは表示されません。"
-
-msgid "Assigned date"
-msgstr "アサインされた日時"
-
-msgid "Assigned to"
-msgstr ">>>マッピング>>>"
-
-msgid "Assigned to me"
-msgstr "自分にアサインされました。"
-
-msgid "August"
-msgstr "8月"
-
-msgid "Available"
-msgstr "利用可能"
-
-msgid "Available tasks"
-msgstr "応受援タスク"
-
-msgid "Avatar"
-msgstr "アバター"
-
 msgid "BDM"
 msgstr "BDM"
-
-msgid "BPM Services are paused. You may need to resume them."
-msgstr "BPM サービスは一時停止します。それらを再開する必要があります。"
-
-msgid "BPM services"
-msgstr "BPM サービス"
-
-msgid "Back"
-msgstr "戻る"
-
-msgid "Be careful, your organization will be merged with existing data."
-msgstr "注意： 組織は既存のデータとマージされます。"
-
-msgid "Bonita Archive"
-msgstr "Bonita アーカイブ"
 
 msgid "Bonita Portal"
 msgstr "Bonita ポータル"
 
-msgid "Browse your computer and select the business archive containing the process definition to install."
-msgstr "お使いのコンピューターを閲覧し、インストールするプロセス定義を含むビジネス アーカイブを選択します。"
-
-msgid "Build id"
-msgstr ""
-
-msgid "Business Data Model"
-msgstr "ビジネス データ モデル"
-
-msgid "Business archive"
-msgstr "ビジネス アーカイブ"
-
-msgid "By default, forms are included in the process bar file for deployment."
-msgstr "デフォルトでは、フォームはデプロイ用のプロセス bar ファイル内に含まれます。"
-
 msgid "Call activity"
 msgstr "コールアクティビティ"
-
-msgid "Call activity (launches another process)"
-msgstr "コールアクティビティ（別のプロセスを起動します）"
 
 msgid "Can't create group. Group '%groupName%' already exists"
 msgstr "グループを作成することはできません。グループ  '%groupName%' が既に存在します。"
@@ -520,437 +182,20 @@ msgstr "グループが見つからないため、グループを更新できま
 msgid "Can't update user. User not found"
 msgstr "利用者が見つからないため、更新できません"
 
-msgid "Cancel"
-msgstr "キャンセル"
-
-msgid "Cancel this action"
-msgstr "この操作を取り消す"
-
-msgid "Cancel this form"
-msgstr "このフォームをキャンセルします。"
-
-msgid "Case"
-msgstr "案件"
-
-msgid "Case id"
-msgstr "案件ID"
-
-msgid "Case id: "
-msgstr "案件ID:"
-
-msgid "Case variables"
-msgstr "案件変数"
-
 msgid "Cases"
 msgstr "案件"
-
-msgid "Cases I have started"
-msgstr "私は開始した案件"
-
-msgid "Cases I have started or I have worked on"
-msgstr "私が開始した、または仕事をした案件"
-
-msgid "Cases I worked on"
-msgstr "私が作業した案件"
-
-msgid "Categories"
-msgstr "カテゴリ"
-
-msgid "Category"
-msgstr "カテゴリ"
 
 msgid "Category with name %categoryName% already exists"
 msgstr "カテゴリ名  %categoryName% は既に存在します。"
 
-msgid "Change to selected language"
-msgstr "選択した言語に変更します。"
-
-msgid "Choose a language"
-msgstr "言語を選択します。"
-
-msgid "Class name"
-msgstr "クラス名"
-
-msgid "Click here to choose your file."
-msgstr "ここであなたが選択するファイルをクリックします。"
-
-msgid "Click here to choose your file. "
-msgstr "あなたのファイルを選択するには、ここをクリックします。"
-
-msgid "Click here to go to Profile listing page"
-msgstr "ページ上のプロファイルに移動するにはここをクリックします"
-
-msgid "Click to export this page"
-msgstr "このページをエクスポートするためにクリック"
-
-msgid "Close"
-msgstr "閉じる"
-
-msgid "Close without saving"
-msgstr "保存せずに閉じる"
-
-msgid "Comment"
-msgstr "コメント"
-
-msgid "Comments"
-msgstr "コメント"
-
-msgid "Compilation failure. Verify that the Index.groovy class implements the PageController interface."
-msgstr "コンパイルに失敗しました。Index.groovy クラスが PageController インターフェイスを実装することを確認します。"
-
 msgid "Configuration"
 msgstr "構成設定"
-
-msgid "Configuration state "
-msgstr "構成設定の状態"
-
-msgid "Configure BPM services for maintenance"
-msgstr "メンテナンスのための BPM サービスを構成設定します。"
-
-msgid "Confirm"
-msgstr "確認"
-
-msgid "Confirm Delete?"
-msgstr "削除を確認？"
-
-msgid "Confirm delete ?"
-msgstr "削除の確認？"
-
-msgid "Confirm deletion"
-msgstr "削除の確認"
-
-msgid "Confirm deletion ?"
-msgstr "削除を確認？"
-
-msgid "Confirm password"
-msgstr "パスワードの確認入力をします。"
-
-msgid "Confirm removing"
-msgstr "削除を確認します。"
-
-msgid "Confirm removing ?"
-msgstr "削除の確認？"
-
-msgid "Confirm services pause?"
-msgstr "サービスの一時停止を確認しますか？"
-
-msgid "Confirm services resumption?"
-msgstr "サービスの再開を確認しますか？"
-
-msgid "Confirm the new page"
-msgstr "新しいページを確認します"
-
-msgid "Confirm the page adding"
-msgstr "ページの追加を確認します"
-
-msgid "Confirm the password for this user"
-msgstr "この利用者のパスワードの確認入力をします。"
-
-msgid "Confirm this action"
-msgstr "この操作を確認します。"
-
-msgid "Confirm update"
-msgstr "更新を確認します"
-
-msgid "Connector definitions"
-msgstr "コネクタの定義"
-
-msgid "Connector definitions must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前に、コネクタの定義を解決する必要があります。"
-
-msgid "Connectors"
-msgstr "コネクタ"
-
-msgid "Connectors: %ok_ko%"
-msgstr "コネクタ： %ok_ko%"
-
-msgid "Content"
-msgstr "コンテンツ"
-
-msgid "Content type is 'apiExtension'."
-msgstr " contentType は 'apiExtension' です。"
-
-msgid "Content type is 'form'."
-msgstr " contentType は 'form' です。"
-
-msgid "Content type is 'layout'."
-msgstr " contentType は 'layout'です。"
-
-msgid "Content type is 'page'."
-msgstr " contentType は 'page' です。"
-
-msgid "Content type is 'theme'."
-msgstr " contentType は 'theme' です。"
-
-msgid "Create"
-msgstr "新規作成"
-
-msgid "Create a form from the contract in Bonita Studio."
-msgstr "Bonita Studio のコントラクトからフォームを作成します。"
-
-msgid "Create a group"
-msgstr "グループを作成"
-
-msgid "Create a new category"
-msgstr "新しいカテゴリを作成します。"
-
-msgid "Create a new element"
-msgstr "新しい要素を作成します。"
-
-msgid "Create a role"
-msgstr "役割を作成"
-
-msgid "Create a user"
-msgstr "利用者登録"
-
-msgid "Create this group"
-msgstr "このグループを作成します。"
-
-msgid "Create this role"
-msgstr "この役割を作成します。"
-
-msgid "Create this user"
-msgstr "この利用者を登録します。"
-
-msgid "Created by"
-msgstr "作成者"
-
-msgid "Created on"
-msgstr "作成日時:"
-
-msgid "Creation date"
-msgstr "作成日"
 
 msgid "Custom Pages"
 msgstr "カスタム ページ"
 
-msgid "Dactivate selected user"
-msgstr "選択した利用者を無効にする"
-
 msgid "Data definition %dataName% doesn't exists for process %processId%"
 msgstr "データ定義：%dataName% は、プロセス：%processId% に存在しません"
-
-msgid "Data included are : Users, groups and roles"
-msgstr "含まれているデータは: ユーザー、グループおよび役割"
-
-msgid "Deactivate"
-msgstr "無効にする"
-
-msgid "Deactivate selected users"
-msgstr "選択した利用者を無効にする"
-
-msgid "Deactivated user"
-msgstr "無効化された利用者"
-
-msgid "December"
-msgstr "12月"
-
-msgid "Deletable"
-msgstr "削除可能"
-
-msgid "Delete"
-msgstr "削除"
-
-msgid "Delete %resource_name%"
-msgstr "%resource_name% を削除します。"
-
-msgid "Delete pages"
-msgstr "ページを削除"
-
-msgid "Delete selected groups"
-msgstr "選択したグループを削除します。"
-
-msgid "Delete selected pages"
-msgstr "選択されているページを削除"
-
-msgid "Delete selected processes"
-msgstr "選択したプロセスを削除します"
-
-msgid "Delete selected roles"
-msgstr "選択した役割を削除します。"
-
-msgid "Delete the pages"
-msgstr "ページを削除"
-
-msgid "Delete the process %app_name%?"
-msgstr "プロセス %app_name% を削除しますか？"
-
-msgid "Delete this member"
-msgstr "このメンバーを削除します。"
-
-msgid "Delete this process"
-msgstr "このプロセスを削除します"
-
-msgid "Deleting a process definition will also delete all open and archived cases of this process."
-msgstr ""
-
-msgid "Description"
-msgstr "説明"
-
-msgid "Description:"
-msgstr "説明："
-
-msgid "Direct users"
-msgstr "直接の利用者"
-
-msgid "Disable"
-msgstr "無効にする"
-
-msgid "Disable selected processes"
-msgstr "選択したプロセスを無効にします"
-
-msgid "Disable this process"
-msgstr "このプロセスを無効にします"
-
-msgid "Disabled"
-msgstr "無効"
-
-msgid "Disabled processes"
-msgstr "無効になっているプロセス"
-
-msgid "Discuss :"
-msgstr "意見交換："
-
-msgid "Display a case form of process %app_name%"
-msgstr "プロセス： %app_name% の案件フォームを表示します"
-
-msgid "Display a summary of all processes"
-msgstr "全プロセスのサマリーを表示します"
-
-msgid "Display name"
-msgstr "表示名"
-
-msgid "Display tasks I have done"
-msgstr "私が実行したタスクを表示"
-
-msgid "Display the case overview"
-msgstr "案件概況を表示"
-
-msgid "Do it"
-msgstr "実行する"
-
-msgid "Do you still want to delete the selected pages?"
-msgstr "選択したページを削除してもよろしいですか？"
-
-msgid "Done"
-msgstr "遂行済み"
-
-msgid "Done %task_last_update% by %executed_by%"
-msgstr "%executed_by% によって %task_last_update% に完了済み"
-
-msgid "Done by"
-msgstr "遂行者："
-
-msgid "Done on"
-msgstr "実行された日時"
-
-msgid "Done tasks"
-msgstr "完了したタスク"
-
-msgid "Due date"
-msgstr "期限"
-
-msgid "Due in:"
-msgstr "期限："
-
-msgid "Edit"
-msgstr "編集"
-
-msgid "Edit %pageName%"
-msgstr "%pageName% を編集"
-
-msgid "Edit a role"
-msgstr "役割を編集"
-
-msgid "Edit case variable"
-msgstr "案件変数を編集します"
-
-msgid "Edit groups of actor %actor_name%"
-msgstr "アクター %actor_name% のグループを編集します。"
-
-msgid "Edit memberships of actor %actor_name%"
-msgstr "アクター %actor_name% の所属を編集します。"
-
-msgid "Edit roles of actor %actor_name%"
-msgstr "アクター %actor_name% の役割を編集します。"
-
-msgid "Edit selected page"
-msgstr "選択したページを編集"
-
-msgid "Edit this group"
-msgstr "このグループを編集"
-
-msgid "Edit this value"
-msgstr "この値を編集します。"
-
-msgid "Edit users of actor %actor_name%"
-msgstr "アクター %actor_name% のユーザーを編集します。"
-
-msgid "Edit variable"
-msgstr "変数を編集"
-
-msgid "Email"
-msgstr "Eメール"
-
-msgid "Enable"
-msgstr "有効にする"
-
-msgid "Enable selected processes"
-msgstr "選択したプロセスを有効にします"
-
-msgid "Enable this process"
-msgstr "このプロセスを有効にします"
-
-msgid "Enabled"
-msgstr "有効"
-
-msgid "Enabled processes"
-msgstr "有効なプロセス"
-
-msgid "Enter a category name"
-msgstr "カテゴリ名を入力してください。"
-
-msgid "Enter the description for this category"
-msgstr "このカテゴリの説明を入力します"
-
-msgid "Enter the description of this group"
-msgstr "このグループの説明を入力します"
-
-msgid "Enter the description of this role"
-msgstr "この役割の説明を入力します"
-
-msgid "Enter the display name of this group"
-msgstr "この役割の表示名を入力してください。"
-
-msgid "Enter the display name of this role"
-msgstr "この役割の表示名を入力します。"
-
-msgid "Enter the first name of this user"
-msgstr "この利用者の姓（本名の上の名前）を入力してください。"
-
-msgid "Enter the last name of this user"
-msgstr "この利用者の名（本名の下の名前）を入力してください。"
-
-msgid "Enter the name of this group"
-msgstr "このグループの名前を入力してください。"
-
-msgid "Enter the name of this role"
-msgstr "この役割の名前を入力します"
-
-msgid "Enter the password for this user"
-msgstr "この利用者のパスワードを入力します"
-
-msgid "Enter the text to search for"
-msgstr "検索するテキストを入力します"
-
-msgid "Enter the username for this user"
-msgstr "このユーザーの利用者名を入力してください"
-
-msgid "Entity Mapping must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にエンティティへの マッピングを解決する必要があります。"
-
-msgid "Error"
-msgstr "エラー"
 
 msgid "Error during Application import file reading."
 msgstr "アプリケーションのインポート ファイルの読み取り中にエラーが発生しました。"
@@ -997,68 +242,8 @@ msgstr "プロセスのデプロイ情報を更新中にエラーが発生しま
 msgid "Error when updating user"
 msgstr "利用者を更新時のエラー"
 
-msgid "Error while trying to execute the task."
-msgstr "タスクを実行しようとしてエラーが発生しました。"
-
-msgid "Error while trying to execute the task. Some required information is missing (contract not fulfilled)."
-msgstr "タスクを実行しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
-
-msgid "Error while trying to start the case."
-msgstr "案件を開始しようとしてエラーが発生しました。"
-
-msgid "Error while trying to start the case. Some required information is missing (contract not fulfilled)."
-msgstr "案件を開始しようとしてエラーが発生しました。一部の必須情報がありません （コントラクトのデータが満たされていない）。"
-
-msgid "Executed by"
-msgstr "次に人によって実行されたもの："
-
-msgid "Executed by:"
-msgstr "次に人によって実行されたもの："
-
-msgid "Export"
-msgstr "エクスポート"
-
-msgid "Export the installed organization"
-msgstr "インストールされている組織をエクスポートします。"
-
-msgid "Failed"
-msgstr "エラー"
-
-msgid "Failed on"
-msgstr "エラー発生日時："
-
-msgid "Failed on %task_last_update%"
-msgstr "%task_last_update%にエラーが発生しました"
-
-msgid "Failed on:"
-msgstr "エラー発生日時："
-
-msgid "Failed tasks"
-msgstr "失敗したタスク"
-
-msgid "February"
-msgstr "2月"
-
-msgid "Filename too long. The zip filename must be no longer than %number% characters"
-msgstr "ファイル名が長すぎます。Zip ファイル名は %number% 文字以内である必要があります。"
-
 msgid "Filters are not supported by this API"
 msgstr "この API では、フィルターはサポートされていません"
-
-msgid "Finish"
-msgstr "完了"
-
-msgid "Finish this page"
-msgstr "このページを終了します。"
-
-msgid "First name"
-msgstr "姓（英語の場合：First name）"
-
-msgid "First name of the user"
-msgstr "ユーザーの姓"
-
-msgid "Firstname"
-msgstr "姓"
 
 msgid "For administrator-type of profiles. To manage processes: install, delete and configure, for all processes"
 msgstr "システム管理者プロファイル。すべてのプロセスを管理（インストール、削除、構成設定）"
@@ -1071,9 +256,6 @@ msgstr "システム管理者プロファイル： すべてのプロセスの�
 
 msgid "For administrator-type of profiles. To monitor task completion for all processes"
 msgstr "システム管理者プロファイル： すべてのプロセスのタスク完了状態をモニタリングできる。"
-
-msgid "For each actor, check that each entity (user, group, role, membership) has the relevant user profile in the Portal."
-msgstr "各アクターに対し、各エンティティ （ユーザー、グループ、役割、所属） がポータルのユーザー プロファイルに関連付けられているかどうか、確認してください。"
 
 msgid "For process manager-type of profiles. To manage processes under her responsibility"
 msgstr "プロセス管理者プロファイル： その管理者が所轄するプロセスを管理"
@@ -1096,44 +278,8 @@ msgstr "利用者プロファイル： 彼または彼女が開始した案件�
 msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
 msgstr "ユーザータイプのプロファイル。UI デザイナーページではプロセスと開始ケースを視覚化します。"
 
-msgid "Form"
-msgstr "フォーム"
-
-msgid "Format: %namePrefix% followed only by alphanumeric characters."
-msgstr "形式： %namePrefix%の後に英数字だけ続く 。"
-
-msgid "Forms"
-msgstr "フォーム"
-
-msgid "Fr"
-msgstr "金"
-
-msgid "Getting more information about the specified case"
-msgstr "指定した案件に関する詳細情報の入手"
-
-msgid "Go back to previous view"
-msgstr "以前のビューに戻る"
-
-msgid "Go to page %pagenumber%"
-msgstr "ページ %pagenumber% に進む"
-
-msgid "Go to previous step"
-msgstr "前のタスクに戻る"
-
-msgid "Group"
-msgstr "グループ"
-
-msgid "Group (%nb_group%)"
-msgstr "グループ（%nb_group%）\\n"
-
 msgid "Groups"
 msgstr "グループ"
-
-msgid "Groups mapping"
-msgstr "グループをアサイン"
-
-msgid "Groups: %nb_groups%"
-msgstr "グループ： %nb_groups%"
 
 msgid "High"
 msgstr "高"
@@ -1141,70 +287,8 @@ msgstr "高"
 msgid "Highest"
 msgstr "最高"
 
-msgid "Human Task"
-msgstr "ヒューマン タスク"
-
 msgid "Human task"
 msgstr "ヒューマン タスク"
-
-msgid "ID"
-msgstr "id"
-
-msgid "Icon"
-msgstr "アイコン"
-
-msgid "Id:"
-msgstr "Id:"
-
-msgid "If these pages are used in a profile, the pages and related profile entries will be permanently deleted."
-msgstr "これらのページがプロファイルで使用されている場合、そのページおよび関連プロファイル エントリは完全に削除されます。"
-
-msgid "If this page is used in a profile, the page and related profile entries will be permanently deleted."
-msgstr "このページがプロファイルで使用されている場合、そのページおよび関連プロファイル エントリは恒久的に削除されます。"
-
-msgid "If you create a resource with the UI designer, the exported zip automatically has the correct format."
-msgstr "UI デザイナーを使用してリソースを作成した場合は、そのエクスポートした zip ファイルは、自動的に適切な形式を持ちます。"
-
-msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
-"Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "プロセスで使用されるページを削除した場合、そのプロセスは未解決になります。\n"
-"ページを削除する前に、カスタム プロファイル ナビゲーションでそれが使用されているかどうかを確認してください。"
-
-msgid "Image files"
-msgstr "画像ファイル"
-
-msgid "Import"
-msgstr "インポート"
-
-msgid "Import / Export"
-msgstr "インポート/エクスポート"
-
-msgid "Import an existing organization"
-msgstr "既存の組織をインポートします。"
-
-msgid "In a production environment, this should be used with caution."
-msgstr ""
-
-msgid "In case of conflict, priority is given to the imported file"
-msgstr "マージ結合の場合、ファイルを優先します。"
-
-msgid "Inactive"
-msgstr "利用停止"
-
-msgid "Inactive Users"
-msgstr "使用していない利用者"
-
-msgid "Install"
-msgstr "インストール"
-
-msgid "Install / Export"
-msgstr "インストールと/エクスポート"
-
-msgid "Install a process"
-msgstr "プロセスをインストール する"
-
-msgid "Install or export data"
-msgstr "データをインストールまたはエクスポートする"
 
 msgid "Install/Export"
 msgstr "インストール/エクスポート"
@@ -1212,80 +296,11 @@ msgstr "インストール/エクスポート"
 msgid "Install/export organization"
 msgstr "組織のインストール/エクスポート"
 
-msgid "Installed by"
-msgstr "インストールした人"
-
-msgid "Installed on"
-msgstr "インストール日"
-
-msgid "It is still assigned to you until you release it."
-msgstr "あなたがそれを手放すまで、あなたにアサインされたままです。"
-
-msgid "Item not found"
-msgstr "指定のタスクが見つかりません"
-
-msgid "January"
-msgstr "1月"
-
-msgid "Jasper Archive"
-msgstr "Jasper アーカイブ"
-
-msgid "Job title"
-msgstr "役職"
-
-msgid "Job title of the user"
-msgstr "ユーザーの役職"
-
 msgid "Json can't be mapped to "
 msgstr "Json を次にマップできません"
 
-msgid "July"
-msgstr "7月"
-
-msgid "June"
-msgstr "6月"
-
-msgid "Language"
-msgstr "言語"
-
-msgid "Last executed task : "
-msgstr "最後に実行されたタスク:"
-
-msgid "Last login"
-msgstr "最終ログイン日時"
-
-msgid "Last name"
-msgstr "名（英語の場合：Last name）"
-
-msgid "Last name of the user"
-msgstr "ユーザーの名前"
-
-msgid "Last update"
-msgstr "最新更新日時"
-
-msgid "Last update date"
-msgstr "最新更新日時"
-
-msgid "Last updated"
-msgstr "最新更新日時"
-
-msgid "Last updated on"
-msgstr "最新更新日時"
-
-msgid "Lastname"
-msgstr "名"
-
-msgid "Layout"
-msgstr "レイアウト"
-
-msgid "Layouts"
-msgstr "レイアウト"
-
 msgid "License"
 msgstr "ライセンス"
-
-msgid "Link to the tasks"
-msgstr "タスクへリンクします。"
 
 msgid "Login failed. No profile has been set up for this user. Contact your administrator."
 msgstr "ログインに失敗しました。この利用者のプロファイルが設定されていません。BPMのシステム管理者に問い合わせてください。"
@@ -1293,17 +308,11 @@ msgstr "ログインに失敗しました。この利用者のプロファイル
 msgid "Login form"
 msgstr "ログイン フォーム"
 
-msgid "Logout"
-msgstr "ログアウト"
-
 msgid "Look and Feel"
 msgstr "ルック＆フィール"
 
 msgid "Loop activity"
 msgstr "ループ・アクティビティ"
-
-msgid "Loop activity (launches and controls loop execution)"
-msgstr "ループ・アクティビティ （ループの実行を起動しコントロールします）"
 
 msgid "Low"
 msgstr "低"
@@ -1316,9 +325,6 @@ msgstr "yyyy/MM/dd"
 
 msgid "MM/dd/yyyy h:mm a"
 msgstr "yyyy/MM/dd HH:mm"
-
-msgid "MM/dd/yyyy h:mm:ss a"
-msgstr "yyyy/MM/dd HH:mm:ss"
 
 msgid "MMMM dd, yyyy"
 msgstr "yyyy年MM月dd日"
@@ -1338,223 +344,29 @@ msgstr "カスタム ページを管理します"
 msgid "Manage groups"
 msgstr "グループを管理"
 
-msgid "Manage profiles"
-msgstr "プロファイルの管理"
-
-msgid "Manage resources"
-msgstr "リソースを管理"
-
 msgid "Manage roles"
 msgstr "役割を管理"
 
 msgid "Manage users"
 msgstr "ユーザーを管理"
 
-msgid "Manager"
-msgstr "マネージャ"
-
-msgid "Manager of the specified user"
-msgstr "指定したユーザーの上司"
-
-msgid "Mapping"
-msgstr "マッピング"
-
-msgid "March"
-msgstr "3月"
-
-msgid "May"
-msgstr "5月"
-
-msgid "Member"
-msgstr "メンバー"
-
-msgid "Membership"
-msgstr "所属"
-
-msgid "Membership (%nb_membership%)"
-msgstr "所属 (%nb_membership%)"
-
-msgid "Memberships mapping"
-msgstr "所属のアサイン"
-
-msgid "Memberships: %nb_memberships%"
-msgstr "所属： %nb_memberships%"
-
-msgid "Menu name"
-msgstr "メニュー名"
-
-msgid "Mo"
-msgstr "月"
-
 msgid "Monitoring"
 msgstr "モニタリング"
-
-msgid "More"
-msgstr "詳細"
-
-msgid "More information"
-msgstr "詳細情報について"
-
-msgid "Move this element after the next one"
-msgstr "この要素を次の１つ後に移動します。"
-
-msgid "Move this element before the previous one"
-msgstr "この要素を以前の １つ前に移動します。"
 
 msgid "Multi-instanciation activity"
 msgstr "マルチ インスタンス・アクティビティ"
 
-msgid "Multi-instanciation activity (launches and controls instances execution)"
-msgstr "マルチ インスタンス・アクティビティ （インスタンスの実行を起動しコントロールします ）"
-
-msgid "My cases"
-msgstr "私の案件"
-
-msgid "My tasks"
-msgstr "マイタスク"
-
-msgid "N/A"
-msgstr "N/A"
-
-msgid "Name"
-msgstr "名前"
-
-msgid "Name for the URL"
-msgstr "URL の名前"
-
-msgid "Name of the role"
-msgstr "役割の名前"
-
-msgid "Name of the user who executed this task"
-msgstr "このタスクを最後に実行したユーザーの名前"
-
-msgid "Name of the user who started this case"
-msgstr "この案件を起案したユーザーの名前"
-
-msgid "Name of the variable"
-msgstr "変数の名前"
-
-msgid "Next"
-msgstr "次へ"
-
-msgid "Next >"
-msgstr "次へ >"
-
-msgid "No"
-msgstr "いいえ"
-
-msgid "No attachments"
-msgstr "添付ファイルなし"
-
-msgid "No data"
-msgstr "データがありません。"
-
 msgid "No description."
 msgstr "説明がありません。"
-
-msgid "No opened task"
-msgstr "オープンされたタスクがありません。"
-
-msgid "No overview page has been defined for this process"
-msgstr "このプロセスには案件概況ページが定義されていません。"
-
-msgid "No overview page has been defined for this process."
-msgstr "このプロセスには案件概況ページが定義されていません。"
-
-msgid "No response has been received yet, but the background operation might still be in progress. Wait a few seconds then reload the page."
-msgstr "応答がまだ受信されていませんが、バック グラウンドで操作がまだ進行中です。数秒待ってから、このページを再表示してください。"
-
-msgid "No task done"
-msgstr "実行されたタスクがありません。"
 
 msgid "Normal"
 msgstr "普通"
 
-msgid "Not implemented"
-msgstr "実装されていません"
-
-msgid "Notice"
-msgstr "お知らせ"
-
-msgid "November"
-msgstr "11月"
-
-msgid "Number of attachments : %nb_attachments%"
-msgstr "添付ファイルの数:  %nb_attachments%"
-
-msgid "Number of cases: %nb_cases%"
-msgstr "案件件数： %nb_cases%"
-
-msgid "Number of open tasks : %nb_openTask%"
-msgstr "オープンされているタスクの数: %nb_openTask%"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "October"
-msgstr "10月"
-
-msgid "Ok"
-msgstr "OK"
-
-msgid "Only the technical user can log in to the Portal."
-msgstr "テクニカル ユーザーのみ、ポータルにログインすることができます。"
-
 msgid "Only the value attribute can be updated"
 msgstr "Value 属性のみを更新することができます"
 
-msgid "Opens a popup to create a group"
-msgstr "グループを作成するポップアップを開きます"
-
-msgid "Opens a popup to create a role"
-msgstr "役割を作成するポップアップを開きます"
-
-msgid "Opens a popup to create a user"
-msgstr "利用者登録のポップアップを開きます"
-
-msgid "Opens a popup to install a process"
-msgstr "プロセスをインストールするポップアップを開きます"
-
-msgid "Organisation file"
-msgstr "組織のファイル"
-
 msgid "Organization"
 msgstr "組織"
-
-msgid "Organization successfully imported."
-msgstr "組織は、正常にインポートされました。"
-
-msgid "Original name"
-msgstr "元の名前"
-
-msgid "Oups... This item is not available anymore.\n"
-"You will be redirected to a safest place."
-msgstr "おっと！この項目はもう利用できません。\n"
-"あなたは、安全な場所にリダイレクトされます。"
-
-msgid "Overview"
-msgstr "案件概況"
-
-msgid "Page"
-msgstr "ページ"
-
-msgid "Page archive"
-msgstr "ページのアーカイブ"
-
-msgid "Pages"
-msgstr "ページ"
-
-msgid "Parameters"
-msgstr "パラメータ"
-
-msgid "Parameters must be resolved before enabling the Process."
-msgstr "プロセスを有効にする前にパラメータを解決する必要があります。"
-
-msgid "Parent Group"
-msgstr "親グループ"
-
-msgid "Parent group"
-msgstr "親グループ"
 
 msgid "Password"
 msgstr "パスワード"
@@ -1574,74 +386,11 @@ msgstr "パスワードは少なくとも、%number% 文字の特殊文字を含
 msgid "Password must contain at least %number% upper case characters"
 msgstr "パスワードは少なくとも、 %number% 文字の大文字を含める必要があります"
 
-msgid "Passwords don't match"
-msgstr "パスワードが一致しません"
-
-msgid "Pause"
-msgstr "一時停止"
-
-msgid "Paused"
-msgstr "一時停止"
-
-msgid "Pending"
-msgstr "待機中"
-
-msgid "Pending tasks"
-msgstr "保留中のタスク"
-
-msgid "Perform by"
-msgstr "遂行者："
-
-msgid "Performed"
-msgstr "遂行済み"
-
-msgid "Performed by:"
-msgstr "遂行者："
-
-msgid "Performed date"
-msgstr "実行された日時"
-
-msgid "Performed on"
-msgstr "実行した日"
-
-msgid "Performed on:"
-msgstr "実行された日時："
-
-msgid "Permission denied: you do not have the rights to perform this action."
-msgstr "アクセスが拒否されました: このアクションを実行する権限がありません。"
-
-msgid "Permission denied: you do not have the rights to view this item."
-msgstr "アクセスが拒否されました: このアイテムを表示する権限がありません。"
-
-msgid "Please choose a file to import"
-msgstr "インポートするファイルを選択してください。"
-
-msgid "Please contact your administrator."
-msgstr "BPMのシステム管理者に問い合わせてください。"
-
-msgid "Please select a file first"
-msgstr "最初のファイルを選択してください。"
-
-msgid "Please wait for your files to be uploaded."
-msgstr "ファイルがアップロードされるのをお待ちください。"
-
 msgid "Please, contact your administrator."
 msgstr "BPMのシステム管理者に問い合わせてください。"
 
 msgid "Portal"
 msgstr "ポータル"
-
-msgid "Post time"
-msgstr "掲示時間"
-
-msgid "Previous"
-msgstr "戻る"
-
-msgid "Priority"
-msgstr "優先度"
-
-msgid "Process"
-msgstr "プロセス"
 
 msgid "Process %appName% in version %version% already exists"
 msgstr "プロセス： %appName% バージョン %version% では既に存在します"
@@ -1658,17 +407,8 @@ msgstr "プロセス管理"
 msgid "Process manager"
 msgstr "プロセス管理者"
 
-msgid "Process name"
-msgstr "プロセス名"
-
-msgid "Process version"
-msgstr "プロセスのバージョン"
-
 msgid "Processes"
 msgstr "プロセス"
-
-msgid "Profile"
-msgstr "プロファイル"
 
 msgid "Profile member already exists"
 msgstr "プロファイルのメンバーは既に存在します"
@@ -1676,538 +416,50 @@ msgstr "プロファイルのメンバーは既に存在します"
 msgid "Profiles"
 msgstr "プロファイル"
 
-msgid "RESOLVED"
-msgstr "解決済み"
-
-msgid "REST API extensions"
-msgstr "REST API 拡張"
-
-msgid "Ready since %task_last_update%"
-msgstr " %task_last_update% から待機しています"
-
-msgid "Refresh this table"
-msgstr "このテーブルを更新"
-
-msgid "Release"
-msgstr "手放す"
-
-msgid "Remove"
-msgstr "削除"
-
-msgid "Remove this category"
-msgstr "このカテゴリを削除します。"
-
 msgid "Reports"
 msgstr "レポート"
 
 msgid "Request parameter \"id\" must be set."
 msgstr "リクエスト パラメータ　\"id\"　を設定する必要があります。"
 
-msgid "Resolved"
-msgstr "解決済み"
-
-msgid "Resolved processes"
-msgstr "解決されたプロセス"
-
-msgid "Resources"
-msgstr "リソース"
-
-msgid "Resources not recognized:"
-msgstr "認識されないリソース："
-
-msgid "Rest API extension"
-msgstr "REST API 拡張"
-
-msgid "Resume"
-msgstr "再開する"
-
-msgid "Role"
-msgstr "役割"
-
-msgid "Role (%nb_role%)"
-msgstr "役割 (%nb_role%)"
-
 msgid "Roles"
 msgstr "役割"
-
-msgid "Roles mapping"
-msgstr "役割をアサイン"
-
-msgid "Roles: %nb_roles%"
-msgstr "役割： %nb_roles%"
-
-msgid "Running"
-msgstr "実行中"
-
-msgid "Sa"
-msgstr "土"
-
-msgid "Save"
-msgstr "保存"
-
-msgid "Save this element"
-msgstr "この要素を保存します。"
-
-msgid "Save this group changes"
-msgstr "このグループの変更を保存"
-
-msgid "Saving a page will change it immediately for all users who can view it."
-msgstr "全ユーザーがページを見ることができるように、直ちにページを変更し保存します。"
-
-msgid "Search"
-msgstr "検索"
 
 msgid "Search terms are not supported by this API"
 msgstr "その検索用語は、このAPI ではサポートされていません"
 
-msgid "Search..."
-msgstr "検索..."
-
-msgid "Select a group"
-msgstr "グループを選択します"
-
-msgid "Select a group by typing a part of its name."
-msgstr "その名前の一部を入力して、グループを選択します。"
-
-msgid "Select a group to set to this profile"
-msgstr "このプロファイルを設定するグループを選択します。"
-
-msgid "Select a process in the list below to display the available tasks"
-msgstr "下のリストから応受援タスクを表示するプロセスを選択します"
-
-msgid "Select a role"
-msgstr "役割を選択します。"
-
-msgid "Select a role by typing a part of its name."
-msgstr "その名前の一部を入力して、役割を選択します。"
-
-msgid "Select a user"
-msgstr "ユーザーを選択します"
-
-msgid "Select a user by typing a part of his name."
-msgstr "彼の名前の一部を入力して、ユーザーを選択します。"
-
-msgid "Select a user to be added to actor"
-msgstr "アクターに追加する利用者を選択してください"
-
-msgid "Select an avatar for this group"
-msgstr "この役割のアバターを選択します。"
-
-msgid "Select an avatar for this role"
-msgstr "この役割のアバターを選択します。"
-
-msgid "Select profile"
-msgstr "プロファイルを選択します"
-
-msgid "Select the category which the process will be linked to"
-msgstr "プロセスにリンクされるカテゴリを選択します"
-
-msgid "Select the entities (users, groups, roles, memberships) to map to the actors. These entities will do the human tasks in the process."
-msgstr "アクターにアサインするエンティティ（ユーザー、グループ、役割、所属など）を選択します。これらのエンティティは、プロセスにヒューマン タスクを実行します。"
-
-msgid "Select the parent group"
-msgstr "親グループを選択します"
-
-msgid "Select the role of this profile in the selected group"
-msgstr "選択したグループ内のこのプロファイルの役割を選択します。"
-
-msgid "Select user to assign task"
-msgstr "タスクにアサインする担当者を選択します"
-
-msgid "September"
-msgstr "9月"
-
 msgid "Service task"
 msgstr "サービス タスク"
-
-msgid "Service task (performed automatically)"
-msgstr "サービス タスク（自動的に実行されます）"
-
-msgid "Services will be paused for maintenance.\n"
-msgstr "サービスは、メンテナンスのため一時停止されます。"
-
-msgid "Services will resume. Users will be able to log in.\n"
-msgstr "サービスを再開します。ユーザーはログインできるようになります。"
 
 msgid "Session expired. Please log in again."
 msgstr "セッションが切れました。再度ログインしてください。"
 
-msgid "Settings"
-msgstr "設定"
-
-msgid "Show all profiles of portal"
-msgstr "ポータルのすべてのプロファイルを表示します。"
-
-msgid "Show more details about this process"
-msgstr "このプロセスについての詳細を表示します"
-
-msgid "Show more details about this profile"
-msgstr "このプロファイルについての詳細を表示します。"
-
-msgid "Show more details about this task"
-msgstr "このタスクについての詳細を表示します。"
-
-msgid "Show more details about this user"
-msgstr "このユーザーについての詳細を表示します。"
-
-msgid "Show the group list"
-msgstr "グループ一覧を表示します。"
-
-msgid "Show the role list"
-msgstr "役割一覧を表示します。"
-
-msgid "Show the user list"
-msgstr "ユーザー一覧に表示します。"
-
-msgid "Skip"
-msgstr "スキップ"
-
-msgid "Skip this task"
-msgstr "このタスクをスキップします。"
-
-msgid "Skipped on %task_last_update% by %executed_by%"
-msgstr " %executed_by% によって %task_last_update% にスキップされました"
-
-msgid "Some of the pages you selected for deletion are used by processes:"
-msgstr "いくつかの削除用に選択したページがプロセスによって使用されています："
-
-msgid "Sorry the variable %variableName% has a type which is not editable"
-msgstr "申し訳ありません。変数 %variableName% は編集可能でない型を持っています。"
-
-msgid "Sort by"
-msgstr "並べ替え"
-
 msgid "Sorting is not supported by this API"
 msgstr "この API では、並べ替えはサポートされていません"
-
-msgid "Start"
-msgstr "開始"
-
-msgid "Start a case"
-msgstr "案件を開始"
-
-msgid "Start an instance of process %app_name%"
-msgstr "プロセス： %app_name% の案件処理を開始します"
-
-msgid "Start date"
-msgstr "起案日"
-
-msgid "Start this process"
-msgstr "このプロセスを開始します"
-
-msgid "Started by"
-msgstr "起案者"
-
-msgid "Started by:"
-msgstr "起案者："
-
-msgid "Started on"
-msgstr "開始日時"
-
-msgid "Started on:"
-msgstr "開始日時："
-
-msgid "State"
-msgstr "状態"
-
-msgid "State:"
-msgstr "状態："
-
-msgid "Statistics"
-msgstr "統計情報"
-
-msgid "Status"
-msgstr "ステータス"
-
-msgid "Status: "
-msgstr "ステータス:"
-
-msgid "Su"
-msgstr "日"
-
-msgid "Sub groups"
-msgstr "サブ ・ グループ"
-
-msgid "Submit"
-msgstr "送信"
-
-msgid "Submit a comment"
-msgstr "コメントを送信します。"
-
-msgid "Subprocess"
-msgstr "サブプロセス"
-
-msgid "Subprocess version"
-msgstr "サブプロセスのバージョン"
-
-msgid "Subscription edition: To replace a form in a deployed process, upload the form zip and update the form mapping in the Portal process view."
-msgstr "サブスクリプション版: デプロイされたプロセスのフォームを置換するためには、フォームの zip ファイルをアップロードし、ポータルのプロセス ビューでフォームのマッピングを更新します。"
-
-msgid "Success"
-msgstr "成功"
-
-msgid "System"
-msgstr "システム"
-
-msgid "Take"
-msgstr "引き受ける"
-
-msgid "Task name:"
-msgstr "タスク名:"
 
 msgid "Tasks"
 msgstr "タスク"
 
-msgid "Tasks "
-msgstr "タスク"
-
-msgid "Tasks I can do"
-msgstr "自分も含め複数の人が実行できるタスク"
-
-msgid "Tasks assigned to me"
-msgstr "自分に指名されたタスク"
-
-msgid "Tasks in failed status: %nb_tasks%"
-msgstr "失敗した状態のタスク： %nb_tasks%"
-
-msgid "Tasks to do"
-msgstr "実行すべきタスク"
-
-msgid "Technical details"
-msgstr "テクニカルな詳細"
-
-msgid "Technical user warning"
-msgstr "テクニカルなユーザー警告"
-
-msgid "Technical version"
-msgstr ""
-
-msgid "Th"
-msgstr "木"
-
-msgid "The Process cannot be enabled"
-msgstr "プロセスを有効にすることができません"
-
 msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
 msgstr "プロセス管理者は、指定されたプロセスを監督し、それらのプロセスの案件とタスクを管理できます。"
-
-msgid "The URL token for accessing this page"
-msgstr "このページにアクセスするURL トークン"
 
 msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
 msgstr "システム管理者は、プロセスのインストール、組織の管理、一部のエラーへの対処（たとえば、タスクの再実行）をすることができます。"
 
-msgid "The application encountered an error."
-msgstr "アプリケーション エラーが発生しました。"
-
-msgid "The application encountered an unexpected error. Please try again.\n"
-"If the error persists, please contact Bonitasoft support"
-msgstr "アプリケーションに予期しないエラーに遭遇しました。もう一度やり直してください。\n"
-"エラーを解決できない場合は、Bonitasoft のサポートに問い合わせてください。"
-
-msgid "The case %caseId% has been started successfully."
-msgstr "案件 %caseId% が正常に開始されました。"
-
-msgid "The configuration state of the process"
-msgstr "プロセスの構成設定状態"
-
-msgid "The content type is defined in page.properties."
-msgstr "contentType は、page.properties 内に定義されます。"
-
-msgid "The current state of the case"
-msgstr "案件の現在の状態"
-
-msgid "The date of the creation of the group"
-msgstr "グループの作成日"
-
-msgid "The date of the creation of the user"
-msgstr "ユーザーの作成日"
-
-msgid "The date of the group creation"
-msgstr "グループの作成日"
-
-msgid "The date of the last connection of the user"
-msgstr "ユーザーの最後接続日時"
-
-msgid "The date of the last modification"
-msgstr "最後の変更日時"
-
-msgid "The date of the last update of the group"
-msgstr "このグループを最後に更新した日時"
-
-msgid "The date of the last update of the user"
-msgstr "利用者が最後に更新した日時です。"
-
-msgid "The date when the case was updated"
-msgstr "この案件が最後に更新された日"
-
-msgid "The date when the page was updated"
-msgstr "ページが更新された日時"
-
-msgid "The date when the process was updated"
-msgstr "プロセスが更新された日時"
-
-msgid "The date when the task must be finished"
-msgstr "タスクが完了しなければならない日時"
-
-msgid "The date when the task was assigned"
-msgstr "タスクがアサインされた日時"
-
-msgid "The date when this page has been added"
-msgstr "このページが追加された日時"
-
-msgid "The date when this process has been installed"
-msgstr "このプロセスがインストールされた日時"
-
-msgid "The date while the case has been started"
-msgstr "案件の開始日時"
-
-msgid "The element you try to edit can't be retrieved due to a connection problem."
-msgstr "接続の問題が原因で、編集しようとしている要素を取得できません。"
-
-msgid "The element you try to edit can't be retrieved due to a server problem."
-msgstr "サーバーの問題のため、編集しようとする要素を取得できません。"
-
-msgid "The element you try to edit doesn't exists."
-msgstr "編集しようとしている要素は存在しません。"
-
-msgid "The elements you try to display can't be retrieved due to a connection problem."
-msgstr "接続の問題が原因で、表示しようとしている要素が取得できません。"
-
-msgid "The elements you try to display can't be retrieved due to a server problem."
-msgstr "サーバーの問題が原因で、編集しようとしている要素が取得できません。"
-
-msgid "The group parent path"
-msgstr "グループの親のパス"
-
-msgid "The id of the related case"
-msgstr "関連する案件ID"
-
-msgid "The item you try to edit can't be retrieved due to a connection problem. Please contact your administrator."
-msgstr "接続の問題が原因で、編集しようとしている項目を取得できません。BPMのシステム管理者に問い合わせてください。"
-
-msgid "The name for the URL must start with %namePrefix% followed only by alphanumeric characters."
-msgstr "URL の名前は %namePrefix% の後に英数字のみで続ける必要があります。"
-
-msgid "The number of archived cases."
-msgstr "完了済み案件数。"
-
-msgid "The number of failed tasks."
-msgstr "失敗したタスクの数です。"
-
-msgid "The number of on going cases."
-msgstr "継続中の案件数"
-
 msgid "The only mandatory filter is %name%"
 msgstr "唯一の必須のフィルターは、%name% です。"
-
-msgid "The page allows users with relevant profiles to access the following permissions:"
-msgstr "ページは次の権限でアクセスできる関連プロファイルをユーザーに付与します。"
-
-msgid "The page you try to display is out of range."
-msgstr "あなたが表示しようとしているページは範囲外です。"
 
 msgid "The platform already exist !"
 msgstr "プラットフォームは既に存在します！"
 
-msgid "The priority of the task"
-msgstr "タスクの優先順位"
-
-msgid "The process responsible for the creation of this task"
-msgstr "このタスクの作成に関与したプロセス"
-
-msgid "The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."
-msgstr "resources フォルダには少なくとも Index.groovy クラス、 index.html または theme.css を含める必要があります。"
-
 msgid "The server is not available"
 msgstr "サーバーは利用できません。"
-
-msgid "The state of the case"
-msgstr "案件の状態"
-
-msgid "The state of the process"
-msgstr "プロセスの状態"
-
-msgid "The state of the task"
-msgstr "タクスの状態"
-
-msgid "The sub process responsible for the creation of this task"
-msgstr "このタスクの作成に関与したサブプロセス"
-
-msgid "The task %taskName% has been executed. The task list is being refreshed."
-msgstr "タスク %taskName% が実行されています。タスク リストが更新されています。"
-
-msgid "The task %taskName% has not been executed. "
-msgstr "タスク %taskName% は実行されていません。 "
-
-msgid "The task has been executed. The task list is being refreshed."
-msgstr "タスクが実行されました。タスク一覧が更新されています。"
-
-msgid "The task is going to be executed. No form is needed. You can enter a comment and confirm, or cancel."
-msgstr "タスクは、実行しようとしています。フォームは不要です。コメントの入力、確認、またはキャンセルができます。"
-
-msgid "The type of the task"
-msgstr "タスクのタイプ"
 
 msgid "The user can view and perform tasks and can start a new case of a process."
 msgstr "ユーザーはタスクを表示して実行することができます。そしてプロセスの新規案件を起案することができます。"
 
-msgid "The user that has added this page"
-msgstr "このページに追加したユーザー"
-
-msgid "The user that has started this case"
-msgstr "この案件を開始したユーザー"
-
-msgid "The user that has uploaded this process"
-msgstr "その利用者は、このプロセスをアップロードしました"
-
-msgid "The user that updated this page"
-msgstr "このページを更新したユーザー"
-
-msgid "The user who did the task."
-msgstr "タスクを実行した利用者。"
-
-msgid "The username to which the task is assigned."
-msgstr "このタスクにアサインされているユーザーの名前"
-
-msgid "The version of the process"
-msgstr "プロセスのバージョン"
-
-msgid "The version of the process that created this case"
-msgstr "この案件を作成したプロセスのバージョン"
-
-msgid "Theme"
-msgstr "テーマ"
-
-msgid "Themes"
-msgstr "テーマ"
-
-msgid "These %item_name_plural% and related profile entries will be permanently deleted."
-msgstr "これらの %item_name_plural% と関連プロファイル エントリは恒久的に削除されます。"
-
-msgid "These %item_name_plural% will be definitively deleted."
-msgstr "これらの%item_name_plural% は、間違いなく削除されます。"
-
-msgid "These pages cannot be deleted because at least one is used in an application. You must remove a page from an application before you can delete it."
-msgstr "少なくとも 1 つがアプリケーションで使用されるため、これらのページは削除できません。それを削除する前に、アプリケーションからページを削除する必要があります。"
-
-msgid "They will be removed from the database permanently."
-msgstr ""
-
-msgid "This %item_name% and related profile entries will be permanently deleted."
-msgstr "この %item_name% と関連プロファイル エントリは恒久的に削除されます。"
-
-msgid "This %item_name% will be definitively deleted."
-msgstr "この%item_name% は間違いなく削除されます。"
-
 msgid "This category has already been added to this process"
 msgstr "このカテゴリは既にこのプロセスに追加されました"
-
-msgid "This category was not found or this field is mandatory"
-msgstr "このカテゴリが見つからなかったか、あるいはこのフィールドは必須です。"
-
-msgid "This file format is not allowed. Only .zip files are allowed."
-msgstr "このファイル形式は許可されません。.Zip ファイルのみが許可されます。"
 
 msgid "This group has already been mapped to actor"
 msgstr "このグループは、既にアクターにアサインされています"
@@ -2218,13 +470,6 @@ msgstr "この所属は、既にアクターにアサインされています"
 msgid "This membership is already added to user"
 msgstr "この所属は既にユーザーに追加されています。"
 
-msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
-" update the page definition to specify the list of resources used."
-msgstr "このページのアクセス権限が定義されていません。このページが REST リソースを使用し、アクセス承認チェックが有効になっている場合は、使用しているリソースのリストを指定するためにページ定義を更新します。"
-
-msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
-msgstr "このプロファイルにアサインされたユーザーは、次のログインで、そのプロファイル権限が利用可能になります。自分自身にプロファイルをアサインした場合は、お使いのブラウザでページをリフレッシ後、利用可能になります。"
-
 msgid "This role has already been mapped to actor"
 msgstr "この役割は、既にアクターにアサインされています"
 
@@ -2234,56 +479,8 @@ msgstr "このサービスは、保守のためオフラインです。後でや
 msgid "This user has already been mapped to actor"
 msgstr "このユーザーは既にアクターにアサインされています。"
 
-msgid "This will export a file containing your whole organization data. "
-msgstr "これは、組織全体のデータを含むファイルをエクスポートします。"
-
-msgid "This will import a file containing your whole organization data."
-msgstr "これは、組織全体のデータを含むファイルをインポートします。"
-
-msgid "To change the content of this custom page, specify a new zip file in the field below."
-msgstr "このカスタム ページのコンテンツを変更するには、下のフィールドに新しい zip ファイルを指定します。"
-
-msgid "To do"
-msgstr "To do"
-
-msgid "To do so, contact your administrator"
-msgstr "そのためには、システム管理者に問い合わせてください。"
-
-msgid "To know more, check the %link%documentation%_link%."
-msgstr "詳細については、 %link%documentation%_link% を参照してください。"
-
-msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
-msgstr "プロセス間でフォームを共有するには、zip ファイルをアップロードし、関連するプロセスとタスクにマップします。"
-
-msgid "To view an imported page, add it to an application page list and navigation."
-msgstr "インポートされたページを表示するには、アプリケーション ページ リストやナビゲーションに追加します。"
-
-msgid "Tu"
-msgstr "火"
-
-msgid "Type"
-msgstr "タイプ"
-
-msgid "Type new comment"
-msgstr "新しいコメントの種類"
-
-msgid "Type of the variable"
-msgstr "変数の型"
-
-msgid "Type the new value for %variableName%"
-msgstr "%variableName% の新しい値を入力します。"
-
-msgid "Type to search"
-msgstr "検索キーワードを入力"
-
 msgid "UI Designer page to visualize processes and start cases"
 msgstr "プロセスを視覚化してケースを開始するためのUIデザイナーページ"
-
-msgid "UNRESOLVED"
-msgstr "未解決"
-
-msgid "URL token"
-msgstr "URL トークン"
 
 msgid "Unable to deploy business archive"
 msgstr "ビジネス アーカイブをデプロイすることはできません。"
@@ -2300,6 +497,12 @@ msgstr "アクティビティ：%activityId% のデータ・インスタンス�
 msgid "Unable to find group %groupId%"
 msgstr "グループ: %groupId% が見つかりません"
 
+msgid "Unable to find process with id %processId%"
+msgstr ""
+
+msgid "Unable to find role %roleId%"
+msgstr ""
+
 msgid "Unable to get group path, group not found"
 msgstr "グループが見つからないため、グループのパスを取得することができません"
 
@@ -2309,59 +512,8 @@ msgstr "プロセスのデータ定義を取得できません。 プロセス�
 msgid "Unable to log in. Please check your username and password."
 msgstr "ログインできません。ユーザー名とパスワードを確認してください。"
 
-msgid "Unassign"
-msgstr "アサインを解除"
-
-msgid "Unassign this task. Other allowed users will see it"
-msgstr "このタスクのアサインを解除します。このタスクはその他の許可されているユーザーに表示されます。"
-
-msgid "Unassigned"
-msgstr "未アサイン"
-
-msgid "Unassigned tasks I can do"
-msgstr "自分も含め複数の人が実行でき、まだアサインされていないタスク"
-
-msgid "Unresolved"
-msgstr "未解決"
-
-msgid "Unresolved processes"
-msgstr "未解決のプロセス"
-
-msgid "Unsupported file."
-msgstr "サポートされていないファイルです。"
-
-msgid "Update a group"
-msgstr "グループを更新"
-
-msgid "Update a role"
-msgstr "役割を更新"
-
-msgid "Update date"
-msgstr "更新日時"
-
-msgid "Update the page"
-msgstr "ページを更新"
-
-msgid "Update this page using the defined search query"
-msgstr "定義した検索クエリを使用してこのページを更新します"
-
-msgid "Update this role"
-msgstr "この役割を更新"
-
-msgid "Updated by"
-msgstr "更新者"
-
-msgid "Updated on"
-msgstr "更新日時"
-
 msgid "User"
 msgstr "利用者"
-
-msgid "User (%nb_user%)"
-msgstr "利用者（%nb_user%）"
-
-msgid "User name"
-msgstr "ユーザー名"
 
 msgid "User not found"
 msgstr "利用者が見つかりません"
@@ -2369,141 +521,20 @@ msgstr "利用者が見つかりません"
 msgid "User privilege settings"
 msgstr "ユーザー権限の設定"
 
-msgid "Username"
-msgstr "ユーザー名"
-
-msgid "Username of the user"
-msgstr "ユーザー名"
-
 msgid "Users"
 msgstr "ユーザー"
-
-msgid "Users mapping"
-msgstr "ユーザーのアサイン"
-
-msgid "Users who are currently logged in, including Administrator users, are automatically logged out."
-msgstr "現在ログインしているユーザー（システム管理者を含む）。ユーザーは自動的にログアウトされます。"
-
-msgid "Users who are filling in forms when the services are paused will lose any information that has not been submitted."
-msgstr "サービスが一時停止されたときには、利用者がフォームに入力中で未送信の情報はすべて失われます。"
-
-msgid "Users with the app above can see this page."
-msgstr "上記のプロセスのユーザーは、このページを見ることができます。"
-
-msgid "Users: %nb_users%"
-msgstr "ユーザー: %nb_users%"
-
-msgid "Value"
-msgstr "値"
-
-msgid "Version"
-msgstr "バージョン"
-
-msgid "Version of the process"
-msgstr "プロセスのバージョン"
-
-msgid "Visible to"
-msgstr "表示"
-
-msgid "Warning"
-msgstr "警告"
-
-msgid "Warning:"
-msgstr "警告:"
-
-msgid "We"
-msgstr "水"
 
 msgid "Welcome to"
 msgstr "ようこそ"
 
-msgid "Welcome: "
-msgstr "ようこそ："
-
-msgid "When you resume the services, tell your users that they can log back in to the Portal."
-msgstr "サービスが再開したら、ポータルにログインすることができることを利用者に伝えてください。"
-
-msgid "Worked on"
-msgstr "作業した日"
-
-msgid "Yes"
-msgstr "はい"
-
-msgid "You are going to start a new case. No form is needed."
-msgstr "新しい案件を開始しようとしています。フォームは不要です。"
-
-msgid "You are logged as technical user. This user has limited rights. Its purpose is to initialize the organization and activate a Business Data Model if needed."
-msgstr "あなたはテクニカルなユーザーとして記録されます。このユーザー権限は制限されています。ビジネス データ モデルをアクティブにする必要がある場合は、その目的のために組織を初期化します。"
-
-msgid "You need to pause the BPM services when you make an update to your environment that cannot be done while there are active users. When the services are paused:"
-msgstr "アクティブな利用者がいる状態で、サービスを実行ができない環境を更新する場合、 BPM サービスを一時停止する必要があります。サービスが一時停止されます。"
-
-msgid "You risk interrupting one or more processes.\n\n"
-"Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
-"Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
-"Are you sure you want to deactivate this user now ?"
-msgstr "あなたは１つ以上のアプリを中断する恐れがあります。\n\n"
-"タスクを遂行できる唯一のユーザーを無効にすると、プロセスの中断が発生します。\n\n"
-"先へ進む前に、プロセスの「詳細」ページに移動し、アクター マッピングを確認することができます。\n\n"
-"今から本当にこの利用者を無効にしますか？"
-
-msgid "You will be rediected"
-msgstr "リダイレクトになります。"
-
-msgid "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
-msgstr "プロセスに6.xレガシーアーティファクト（フォームまたはケースの概要ページ）が含まれています。\n"
-"これらはGoogle WebToolkitに基づきBonitaでサポートされなくなったテクノロジーです。"
-
-msgid "Your session has expired. Please log in again and retry."
-msgstr "あなたのセッションが期限切れです。再度ログインして再試行してください。"
-
-msgid "Zip Archive"
-msgstr "Zip アーカイブ"
-
-msgid "Zip file structure error. Check that your .zip contains a well-formed page.properties and either the index.html or the Index.groovy file. For details, see the documentation or the example page readme (available in the custom page list)."
-msgstr "Zip ファイル構造にエラーがあります。.zipに適切な形式の page.properties と、index.html または Index.groovy ファイルが 含まれているか確認してください。詳細については、マニュアルまたはサンプル ページ readme （カスタム ページのリストで利用可能） を参照してください。"
-
-msgid "add"
-msgstr "追加"
-
-msgid "ascending"
-msgstr "昇順"
-
-msgid "by"
-msgstr "差出人"
-
-msgid "cancel"
-msgstr "キャンセル"
-
-msgid "create"
-msgstr "作成"
-
 msgid "day"
 msgstr "日"
-
-msgid "descending"
-msgstr "降順"
-
-msgid "false"
-msgstr "false"
-
-msgid "group"
-msgstr "グループ"
-
-msgid "groups"
-msgstr "グループ"
 
 msgid "hr"
 msgstr "時"
 
-msgid "human task"
-msgstr "ヒューマン タスク"
-
 msgid "in %time%"
 msgstr "%time%以内"
-
-msgid "in menu "
-msgstr "メニュー "
 
 msgid "message"
 msgstr "Message"
@@ -2511,48 +542,15 @@ msgstr "Message"
 msgid "min"
 msgstr "分"
 
-msgid "mm/dd/yy"
-msgstr "yy/mm/dd"
-
-msgid "mm/dd/yyyy"
-msgstr "yyyy/mm/dd"
-
 msgid "mo"
 msgstr "月"
 
 msgid "or"
 msgstr "または"
 
-msgid "page"
-msgstr "ページ"
-
-msgid "pages"
-msgstr "ページ"
-
-msgid "process"
-msgstr "プロセス"
-
-msgid "processes"
-msgstr "プロセス"
-
-msgid "remove"
-msgstr "削除"
-
 msgid "sec"
 msgstr "秒"
 
-msgid "system"
-msgstr "システム"
-
-msgid "this field"
-msgstr "このフィールド"
-
-msgid "true"
-msgstr "true"
-
 msgid "yr"
 msgstr "年"
-
-msgid "zip file"
-msgstr "zip ファイル"
 
