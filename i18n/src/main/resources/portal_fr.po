@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-16 05:55+0200\n"
-"PO-Revision-Date: 2020-08-18 01:28\n"
+"POT-Creation-Date: 2021-01-13 05:21+0100\n"
+"PO-Revision-Date: 2021-08-24 07:49\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
-"X-Crowdin-File-ID: 60581\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 61797\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " Pour cela, consultez la page %entitymappingprofilelink%."
@@ -117,7 +117,7 @@ msgid "%className% is not Serializable"
 msgstr "%className% n'est pas serializable"
 
 msgid "%className% not found. Only jdk types are supported"
-msgstr "%className% est introuvable. Seuls les éléments de types jdk sont supportés"
+msgstr "%className% introuvable. Seuls les éléments de types jdk sont supportés."
 
 msgid "%current_page% of %total_pages%"
 msgstr "%current_page% de %total_pages%"
@@ -279,7 +279,7 @@ msgid "Add a new custom page"
 msgstr "Ajouter une nouvelle page personnalisée"
 
 msgid "Add a new resource (page, form, layout, theme, or REST API extension).<br/>This resource will be installed at global scope (not at process or application level).<br/>This archive (.zip file) must contain a page.properties file at the root level, and a folder named 'resources'. <br/>This properties file must at least define the name, displayName and contentType(default contentType is 'page'). <br/>The 'resources' folder must contain either the index.html or the Index.groovy file and the resources needed."
-msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension des API REST). <br/> Cette ressource sera installée au niveau global (ni processus, ni application). <br/> Cette archive (fichier .zip) doit contenir un fichier page.properties à la racine et un dossier nommé « resources ». <br/> Le fichier properties doit définir au moins name, displayName et contentType (qui, par défaut, est « page »). <br/> Le dossier « resources » doit contenir soit le fichier index.html, soit le fichier Index.groovy, et les ressources nécessaires à la page."
+msgstr "Ajoutez une nouvelle ressource (page, formulaire, layout, thème ou extension des API REST). <br/> Cette ressource sera installée au niveau global (ni processus, ni application). <br/> Cette archive (fichier .zip) doit contenir un fichier page.properties à la racine et un dossier nommé « resources ». <br/> Le fichier properties doit définir au moins name, displayName (nom métier) et contentType (qui, par défaut, est « page »). <br/> Le dossier « resources » doit contenir soit le fichier index.html, soit le fichier Index.groovy, et les ressources nécessaires à la page."
 
 msgid "Add a resource"
 msgstr "Ajouter une ressource"
@@ -371,7 +371,7 @@ msgstr "Une erreur s'est produite lors de la suppression d'un élément dont l'i
 msgid "An error occurred while importing the organization.\n"
 "Consult the logs for more information."
 msgstr "Une erreur s’est produite lors de l'importation de l'organisation.\n"
-" Pour plus d’informations, consultez les logs."
+"Pour plus d’informations, consultez les logs."
 
 msgid "Analytics"
 msgstr "Métriques"
@@ -449,7 +449,7 @@ msgid "BPM services"
 msgstr "Services BPM"
 
 msgid "Back"
-msgstr "Précédent"
+msgstr "Retour"
 
 msgid "Be careful, your organization will be merged with existing data."
 msgstr "Attention, votre organisation va fusionner avec les données existantes."
@@ -462,6 +462,9 @@ msgstr "Bonita Portal"
 
 msgid "Browse your computer and select the business archive containing the process definition to install."
 msgstr "Recherchez et sélectionnez le fichier contenant la définition du processus à installer (.bar)."
+
+msgid "Build id"
+msgstr ""
 
 msgid "Business Data Model"
 msgstr "Modèle de Données Métier"
@@ -482,10 +485,10 @@ msgid "Can't create group. Group '%groupName%' already exists"
 msgstr "Impossible de créer le groupe. Le groupe '%groupName%' existe"
 
 msgid "Can't create role. Role '%roleName%' already exists"
-msgstr "Impossible de créer ce rôle, car '%roleName%' est déjà présent"
+msgstr "Il n'est pas possible de créer ce rôle, car '%roleName%' est déjà présent"
 
 msgid "Can't create user. User '%userName%' already exists"
-msgstr "Impossible de créer cet utilisateur, car '%userName%' est déjà présent"
+msgstr "Il n'est pas possible de créer cet utilisateur, car '%userName%' est déjà présent"
 
 msgid "Can't import Applications."
 msgstr "Impossible d'importer l'application."
@@ -497,7 +500,7 @@ msgid "Can't import organization"
 msgstr "Impossible d'importer l'organisation"
 
 msgid "Can't import organization. Please check that your file is well-formed."
-msgstr "Impossible d'importer l'organisation. Veuillez vérifier que votre fichier est correct."
+msgstr "Impossible d'importer l'organisation. Vérifiez que votre fichier correspond au XSD."
 
 msgid "Can't parse json, non-well formed content"
 msgstr "Impossible de lire le json, le contenu n'est pas correctement structuré"
@@ -815,7 +818,7 @@ msgid "Display a summary of all processes"
 msgstr "Afficher un résumé de tous les processus"
 
 msgid "Display name"
-msgstr "Nom affiché"
+msgstr "Nom métier"
 
 msgid "Display tasks I have done"
 msgstr "Tâche que j'ai effectuée"
@@ -917,10 +920,10 @@ msgid "Enter the description of this role"
 msgstr "Entrez la description du rôle"
 
 msgid "Enter the display name of this group"
-msgstr "Entrez le nom d'affichage du groupe"
+msgstr "Entrez le nom métier du groupe"
 
 msgid "Enter the display name of this role"
-msgstr "Entrez le nom d'affichage du rôle"
+msgstr "Entrez le nom métier du rôle"
 
 msgid "Enter the first name of this user"
 msgstr "Entrez le prénom de cet utilisateur"
@@ -956,7 +959,7 @@ msgid "Error occured when starting process %processId%"
 msgstr "Une erreur s'est produite au démarrage du processus %processId%"
 
 msgid "Error uploading the file. Maybe your session expired. You can try to refresh the page."
-msgstr "Erreur au téléchargement du fichier. Votre session a peut-être expiré. Essayez de rafraîchir la page."
+msgstr "Erreur au téléversement du fichier. Votre session a peut-être expiré. Essayez de rafraîchir la page."
 
 msgid "Error when adding group to actor member"
 msgstr "Erreur lors de l'ajout du groupe aux membres de l'acteur"
@@ -1164,8 +1167,7 @@ msgstr "Si vous créez une ressource avec le UI Designer, le fichier zip est aut
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "Si vous supprimez une page ou un formulaire qui est utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé).\n"
-"Avant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
+msgstr "Si vous supprimez une page ou formulaire utilisé(e) par un processus, celui-ci passera en état non résolu (et désactivé). \\nAvant de supprimer, vérifiez aussi son utilisation éventuelle dans les menus des profils personnalisés."
 
 msgid "Image files"
 msgstr "Fichier image"
@@ -1526,8 +1528,7 @@ msgstr "Nom originel"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "Oups... Cet item n'est plus disponible. \n"
-" Vous allez être redirigé."
+msgstr "Oups... Cet item n'est plus disponible. \\n Vous allez être redirigé."
 
 msgid "Overview"
 msgstr "Synthèse"
@@ -1686,7 +1687,7 @@ msgid "Refresh this table"
 msgstr "Rafraîchir ce tableau"
 
 msgid "Release"
-msgstr "Liberer"
+msgstr "Libérer"
 
 msgid "Remove"
 msgstr "Supprimer"
@@ -1821,10 +1822,10 @@ msgid "Service task (performed automatically)"
 msgstr "Tâche automatique (exécutée automatiquement)"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "Les services vont être suspendus pour des raisons de maintenance."
+msgstr "Les services vont être suspendus pour raison de maintenance.\n"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\n"
+msgstr "Les services vont reprendre. Les utilisateurs pourront à nouveau se connecter.\\n.\n"
 
 msgid "Session expired. Please log in again."
 msgstr "La session a expiré. Connectez-vous à nouveau."
@@ -1976,6 +1977,9 @@ msgstr "Détails techniques"
 msgid "Technical user warning"
 msgstr "AVERTISSEMENT: utilisateur technique"
 
+msgid "Technical version"
+msgstr ""
+
 msgid "Th"
 msgstr "Jeu"
 
@@ -1996,8 +2000,7 @@ msgstr "L'application a rencontré une erreur."
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau.\n"
-"Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
+msgstr "L'application a rencontré une erreur inattendue. Essayez de nouveau. \\n Si l'erreur persiste, veuillez contacter le support de Bonitasoft"
 
 msgid "The case %caseId% has been started successfully."
 msgstr "Le cas %caseId% a été démarré avec succès."
@@ -2111,7 +2114,7 @@ msgid "The process responsible for the creation of this task"
 msgstr "Le processus dont est issue la tâche"
 
 msgid "The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."
-msgstr "Le dossier ressources doit contenir au moins une classe Index.groovy ou un index.html (ou un theme.css pour les thèmes)."
+msgstr "Le dossier ressources doit contenir au moins une classe Index.groovy ou un index.html (theme.css pour les thèmes)."
 
 msgid "The server is not available"
 msgstr "Le serveur n'est pas disponible"
@@ -2214,8 +2217,7 @@ msgstr "Cette adhésion est déjà présente pour cet utilisateur"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "Aucune autorisation n'est définit pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée,\n"
-" mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
+msgstr "Aucune autorisation n'est définie pour cette page. Si elle utilise des ressources REST et que la vérification d'autorisation est activée, \\n mettez à jour la définition de la page afin de spécifier la liste des ressources utilisées."
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "Les utilisateurs qui viennent d'être associés à ce profil pourront l'utiliser lors de leur prochaine connexion. Si vous vous êtes attribué ce profil, rafraîchissez la page de votre navigateur pour pouvoir l'utiliser."
@@ -2437,10 +2439,7 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "Cette action pourrait interrompre un ou plusieurs processus.\n\n"
-"Désactiver le seul utilisateur capable d'effectuer une(des) tâche(s), entraînera l'interruption d'un(des) processus.\n\n"
-"Il est possible au préalable de vérifier l'acteur mapping à la page « Détails » de l'app.\n\n"
-"Confirmez-vous la désactivation de cet utilisateur?"
+msgstr "Cette action pourrait interrompre un ou plusieurs processus.\\n\\nDésactiver le seul utilisateur capable d'effectuer une(des) tâche(s) entraînera l'interruption d'un(des) processus.\\n\\nVérifiez l'acteur mapping sur la page « Détails » du processus avant de procéder.\\n\\nConfirmez-vous la désactivation de cet utilisateur?"
 
 msgid "You will be rediected"
 msgstr "Vous allez être redirigé."

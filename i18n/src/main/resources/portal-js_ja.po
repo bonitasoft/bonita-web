@@ -7,11 +7,11 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 60594\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 61810\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2020-08-18 01:29\n"
+"PO-Revision-Date: 2021-08-24 07:49\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -80,7 +80,8 @@ msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
 
 msgid "An error occurred when deploying the BDM. Consult the logs for more information."
-msgstr ""
+msgstr "BDMのデプロイ中にエラーが発生しました。\n"
+"詳細についてはログを参照してください。"
 
 msgid "An error occurred while submitting the form."
 msgstr "フォームの送信中にエラーが発生しました。"
@@ -93,6 +94,9 @@ msgstr "すべて"
 
 msgid "Application XML file"
 msgstr "アプリケーションのXMLファイル"
+
+msgid "Application id not provided. Unable to retrieve the application details."
+msgstr ""
 
 msgid "Application list"
 msgstr "アプリケーション リスト"
@@ -122,34 +126,39 @@ msgid "Available tasks"
 msgstr "応受援タスク"
 
 msgid "BDM access control file can now be installed."
-msgstr ""
+msgstr "BDM のアクセス コントロール ファイルをインストールできるようになりました。"
 
 msgid "BDM file"
-msgstr ""
+msgstr "BDM ファイル"
 
 msgid "BDM has not been uploaded. System was not able to upload the provided BDM file for technical reasons. You can try again later."
-msgstr ""
+msgstr "BDMはアップロードされていません。\n"
+"技術的な理由によりシステムは指定されたBDMファイルをアップロードできませんでした。\n"
+"後ほど再度お試しください。"
 
 msgid "BDM successfully updated."
-msgstr ""
+msgstr "BDMは正常に更新されました。"
 
 msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
-msgstr ""
+msgstr "BPMサービスを一時停止する必要があります。 \n"
+"「BPMサービス」メニューオプションに移動します。"
 
 msgid "Back"
 msgstr "戻る"
 
 msgid "Before updating the BDM, access control file should be deleted."
-msgstr ""
+msgstr "BDMを更新する前にアクセス コントロールファイルを削除する必要があります。"
 
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "アプリケーション記述子をインポートする前に、ページとプロファイルは、ポータル内に既に読み込まれている必要があります。"
 
 msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
-msgstr ""
+msgstr "Bonitaはデータの永続性にHibernateを使用しています。\n"
+"したがって、一部の変更は、新しいオブジェクトや属性の追加と同様に適切に処理されます。\n"
+"ただし、属性のタイプを変更したり属性を削除したりするなど、保証できないものもあります。"
 
 msgid "Business Data Model definition"
-msgstr ""
+msgstr "ビジネス データ モデル定義"
 
 msgid "Business card"
 msgstr "業務上の連絡先"
@@ -203,7 +212,7 @@ msgid "Cases"
 msgstr "案件"
 
 msgid "Cases with failures"
-msgstr ""
+msgstr "ケース エラー"
 
 msgid "Categories"
 msgstr "カテゴリ"
@@ -221,7 +230,7 @@ msgid "Click here to choose the .xml file"
 msgstr ".xml ファイルを選択するにはここをクリック"
 
 msgid "Click here to choose your .zip file"
-msgstr ""
+msgstr ".zip  ファイルを選択しクリックしてください。"
 
 msgid "Close"
 msgstr "閉じる"
@@ -305,13 +314,13 @@ msgid "Description"
 msgstr "説明"
 
 msgid "Disable"
-msgstr ""
+msgstr "無効にする"
 
 msgid "Display name"
 msgstr "表示名"
 
 msgid "Don't forget to start BPM Services again."
-msgstr ""
+msgstr "BPMサービスを再開することを忘れないでください。"
 
 msgid "Done tasks"
 msgstr "完了したタスク"
@@ -335,7 +344,7 @@ msgid "Email"
 msgstr "Eメール"
 
 msgid "Enable"
-msgstr ""
+msgstr "有効にする"
 
 msgid "Enable all"
 msgstr "すべて有効にする"
@@ -425,7 +434,7 @@ msgid "Groups"
 msgstr "グループ"
 
 msgid "Healthy cases"
-msgstr ""
+msgstr "正常なケース"
 
 msgid "Hide Menu"
 msgstr "メニューを非表示"
@@ -443,7 +452,7 @@ msgid "ID"
 msgstr "id"
 
 msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
-msgstr ""
+msgstr "新しいBDMにそのような変更が含まれている場合、データベース管理者は最初にスクリプトを使用してデータベースの更新をする必要があります。次にデータモデルのみを更新し、変更のテストを実施する必要があります。"
 
 msgid "Implementation version"
 msgstr "実装のバージョン"
@@ -467,31 +476,31 @@ msgid "In the menu <i>Organization > Manage</i>, go to the <i>Users</i> page of 
 msgstr "メニューの <i>組織 > 管理</i>で、 <i>ユーザー</i> のウィザード ページに進む"
 
 msgid "Install"
-msgstr ""
+msgstr "インストール"
 
 msgid "Install Business Data Model"
-msgstr ""
+msgstr "ビジネス データ モデルのインストール"
 
 msgid "Install a BDM file"
-msgstr ""
+msgstr "BDM ファイルのインストール"
 
 msgid "Installed"
-msgstr ""
+msgstr "インストール済み"
 
 msgid "Installed by"
-msgstr ""
+msgstr "インストール者 "
 
 msgid "Installed on"
-msgstr ""
+msgstr "インストール日時 "
 
 msgid "Installing"
-msgstr ""
+msgstr "インストール中 "
 
 msgid "Installing Business Data Model"
-msgstr ""
+msgstr "ビジネス データ モデルのインストール "
 
 msgid "Installing or updating the BDM implies to be logged in as Technical User, and to shut down all BPM services."
-msgstr ""
+msgstr "BDM のインストールまたは更新はテクニカルユーザーとしてログインし、すべての BPM サービスをシャットダウンすることを意味します。"
 
 msgid "Items per page"
 msgstr "ページあたりの表示件数"
@@ -524,10 +533,10 @@ msgid "MM/dd/yyyy h:mm a"
 msgstr "yyyy/MM/dd HH:mm"
 
 msgid "MMM DD LT"
-msgstr "MMM Do LT"
+msgstr "MMM Do LT "
 
 msgid "Make sure all artifacts enabled on the platform are compatible with the new BDM."
-msgstr ""
+msgstr "プラットフォームで有効にされているすべてのアーティファクトが新しいBDMと互換性があることを確認してください。 "
 
 msgid "Make this task available to other team members again"
 msgstr "このタスクは他のチーム メンバーでも行えるようにする"
@@ -569,7 +578,7 @@ msgid "Mobile"
 msgstr "携帯番号"
 
 msgid "Monitoring status"
-msgstr ""
+msgstr "進捗状況のモニタリング "
 
 msgid "Multi-page menu"
 msgstr "複数ページ メニュー"
@@ -595,6 +604,9 @@ msgstr "新しいコメント"
 msgid "No application available."
 msgstr "利用可能なアプリケーションはありません。"
 
+msgid "No application found with id:"
+msgstr ""
+
 msgid "No cases to display"
 msgstr "表示する案件はありません"
 
@@ -619,20 +631,29 @@ msgstr "フォームは不要です。コメントを入力し、確認するこ
 msgid "No mapping"
 msgstr "マッピングなし"
 
+msgid "No process found with id:"
+msgstr ""
+
 msgid "No profile mapped to this application"
 msgstr "このアプリケーションにマップされているプロファイルはありません。"
 
 msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
 msgstr "カテゴリは更新されていません。カテゴリを選択後、「Enter」キーを押すことを忘れないでください。"
 
+msgid "No user found with id:"
+msgstr ""
+
+msgid "No value"
+msgstr "値なし "
+
 msgid "Normal"
 msgstr "普通"
 
 msgid "Not installed"
-msgstr ""
+msgstr "インストールされていません。"
 
 msgid "Note that updating the model modifies existing database tables definitively."
-msgstr ""
+msgstr "注意：モデルを更新すると既存のデータベーステーブルが変更されます。"
 
 msgid "One or more connectors on case start or case end failed"
 msgstr "案件の開始または終了時に、1 つ、または複数のコネクタでエラーが発生しました"
@@ -650,7 +671,7 @@ msgid "Only cases from root processes are displayed in the table below. No detai
 msgstr "ルート親プロセスの案件だけが、次の表に表示されます。コール アクティビティによって開始された案件詳細は表示されません。"
 
 msgid "Only one Business Data Model (BDM) can be active at a time."
-msgstr ""
+msgstr "一度にアクティブにできるビジネスデータモデル（BDM）は1つだけです。"
 
 msgid "Open cases"
 msgstr "進行中案件"
@@ -662,7 +683,7 @@ msgid "Open the task to perform it"
 msgstr "実行するタスクを開く"
 
 msgid "Overview"
-msgstr "案件概況"
+msgstr "オーバービュー"
 
 msgid "Page"
 msgstr "ページ"
@@ -710,6 +731,9 @@ msgid "Process"
 msgstr "プロセス"
 
 msgid "Process id"
+msgstr "プロセス ID"
+
+msgid "Process id not provided. Unable to retrieve the process details."
 msgstr ""
 
 msgid "Process name"
@@ -860,7 +884,7 @@ msgid "State"
 msgstr "状態"
 
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 msgid "Status of importation"
 msgstr "インポートの状態"
@@ -893,7 +917,7 @@ msgid "Task name"
 msgstr "タスク名"
 
 msgid "Technical User"
-msgstr ""
+msgstr "テクニカル ユーザー"
 
 msgid "Technical error."
 msgstr "テクニカルなエラーが発生。"
@@ -968,13 +992,14 @@ msgid "This name is already in use"
 msgstr "この名前は既に使用中"
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
-msgstr ""
+msgstr "このプロセスは完全には設定されていませんが有効です。 \n"
+"ユーザーは引き続きケースを開始したりタスクを実行できますがエラーになる可能性があります。"
 
 msgid "This process is not fully configured."
-msgstr ""
+msgstr "このプロセスは完全に設定されていません。"
 
 msgid "This process is not fully configured. It cannot be enabled."
-msgstr ""
+msgstr "このプロセスは完全い設定されてないので有効ではありません。"
 
 msgid "This task cannot be executed from here."
 msgstr ""
@@ -1001,13 +1026,13 @@ msgid "To do so, go to"
 msgstr "これを行うには、次へ進む: "
 
 msgid "To do so, log out and then log back in as the Technical User, whose credentials are set upon Bonita platform installation."
-msgstr ""
+msgstr "そのためにログアウトし、Bonita プラットフォーム のインストール時に設定されたテクニカル ユーザーの資格で再度ログインします。"
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "フォームに記入するには、このタスクを引き受ける必要があります。つまり、あなただけがこのタスクを実行できることになります。もう一度、チームで実行できるようにする（つまり、応受援タスクにする）には、そのタスクを手放します。"
 
 msgid "To know more about this platform configuration option, go to the"
-msgstr ""
+msgstr "このプラットフォームの設定オプションの詳細については"
 
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "検索キー の表示（および一般的な表示列）をカスタマイズしたい場合は、右側にある [テーブルの設定] ボタンを使用します。最大 5 つの検索キーで検索できます。"
@@ -1043,7 +1068,7 @@ msgid "Update"
 msgstr "更新"
 
 msgid "Update Business Data Model"
-msgstr ""
+msgstr "ビジネス データ モデルの更新"
 
 msgid "Update business card"
 msgstr "業務上の連絡先を更新"
@@ -1071,6 +1096,9 @@ msgstr "新しい画像をアップロード"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
+
+msgid "User id not provided. Unable to retrieve the user details."
+msgstr ""
 
 msgid "Username"
 msgstr "ユーザー名"
@@ -1100,7 +1128,7 @@ msgid "View this task"
 msgstr "このタスクを見る"
 
 msgid "Warning:"
-msgstr ""
+msgstr "警告:"
 
 msgid "We couldn't find what you are looking for."
 msgstr "お探しのものが見つかりませんでした。"
@@ -1142,7 +1170,7 @@ msgid "application descriptor has been successfully imported, with complete page
 msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
 
 msgid "documentation"
-msgstr ""
+msgstr "ドキュメント"
 
 msgid "of"
 msgstr "日目/"
