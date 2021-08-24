@@ -7,11 +7,11 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 60594\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 61810\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2020-08-18 01:28\n"
+"PO-Revision-Date: 2021-08-24 07:49\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -95,6 +95,9 @@ msgstr "Tout le monde"
 msgid "Application XML file"
 msgstr "Fichier XML de l'application"
 
+msgid "Application id not provided. Unable to retrieve the application details."
+msgstr "L'identifiant de l'application n'a pas été fourni. Impossible de récupérer les informations."
+
 msgid "Application list"
 msgstr "Liste des applications"
 
@@ -138,7 +141,7 @@ msgid "BPM Services must be paused. Go to \"BPM Services\" menu option."
 msgstr "Les services BPM doivent être suspendus. Aller dans menu « BPM Services »."
 
 msgid "Back"
-msgstr "Précédent"
+msgstr "Retour"
 
 msgid "Before updating the BDM, access control file should be deleted."
 msgstr "Avant de mettre à jour le BDM, le fichier de contrôle d’accès doit être supprimé."
@@ -309,7 +312,7 @@ msgid "Disable"
 msgstr "Désactiver"
 
 msgid "Display name"
-msgstr "Nom affiché"
+msgstr "Nom métier"
 
 msgid "Don't forget to start BPM Services again."
 msgstr "N’oubliez pas de redémarrer les Services BPM."
@@ -596,6 +599,9 @@ msgstr "Nouveau commentaire"
 msgid "No application available."
 msgstr "Aucune application définie."
 
+msgid "No application found with id:"
+msgstr "Aucune application ne semble correspondre à l'identifiant :"
+
 msgid "No cases to display"
 msgstr "Aucun cas à afficher"
 
@@ -620,11 +626,20 @@ msgstr "Aucun formulaire à remplir. Vous pouvez saisir un commentaire et confir
 msgid "No mapping"
 msgstr "Aucun mapping"
 
+msgid "No process found with id:"
+msgstr "Aucun processus ne semble correspondre à l'identifiant :"
+
 msgid "No profile mapped to this application"
 msgstr "Cette application n'a pas de profil associé"
 
 msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
 msgstr "Aucune mise à jour n’a été faite sur les catégories. Appuyez bien sur « Entrée » après avoir sélectionné une catégorie."
+
+msgid "No user found with id:"
+msgstr ""
+
+msgid "No value"
+msgstr "Aucune valeur"
 
 msgid "Normal"
 msgstr "Normale"
@@ -713,6 +728,9 @@ msgstr "Processus"
 msgid "Process id"
 msgstr "Id du processus"
 
+msgid "Process id not provided. Unable to retrieve the process details."
+msgstr "L'identifiant du processus n'a pas été fourni. Impossible de récupérer les informations."
+
 msgid "Process name"
 msgstr "Nom du processus"
 
@@ -738,7 +756,7 @@ msgid "Refresh data"
 msgstr "Actualiser les données"
 
 msgid "Release"
-msgstr "Liberer"
+msgstr "Libérer"
 
 msgid "Remove"
 msgstr "Supprimer"
@@ -969,7 +987,7 @@ msgid "This name is already in use"
 msgstr "Ce nom est déjà utilisé"
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
-msgstr "Ce processus n'est pas entièrement configuré, mais il est toujours activé. Les utilisateurs peuvent toujours démarrer des cas ou exécuter des tâches, ce qui peut entraîner des erreurs."
+msgstr "Ce processus n'est pas entièrement configuré, mais il est toujours activé. Les utilisateurs peuvent toujours démarrer des cas ou exécuter des tâches, ce qui pourrait entraîner des erreurs."
 
 msgid "This process is not fully configured."
 msgstr "Ce processus n'est pas entièrement configuré. "
@@ -1072,6 +1090,9 @@ msgstr "Modifier l'image"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
+
+msgid "User id not provided. Unable to retrieve the user details."
+msgstr ""
 
 msgid "Username"
 msgstr "Nom d'utilisateur"

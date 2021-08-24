@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-16 05:55+0200\n"
-"PO-Revision-Date: 2020-08-18 01:29\n"
+"POT-Creation-Date: 2021-01-13 05:21+0100\n"
+"PO-Revision-Date: 2021-08-24 07:49\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal.po\n"
-"X-Crowdin-File-ID: 60581\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal.po\n"
+"X-Crowdin-File-ID: 61797\n"
 
 msgid " To do so, go to %entitymappingprofilelink%."
 msgstr " そのためには、%entitymappingprofilelink% へ進みます。"
@@ -198,7 +198,7 @@ msgid "A page with this name already exists."
 msgstr "この名前のページは既に存在します。"
 
 msgid "A process with the same name and version already exists."
-msgstr ""
+msgstr "同じ名前とバージョンのプロセスが既に存在します。"
 
 msgid "A resource is imported as a zip archive containing a page.properties file and a resources folder."
 msgstr "リソースは、resources フォルダと page.properties ファイルを含む zip アーカイブ形式でインポートされます。"
@@ -463,6 +463,9 @@ msgstr "Bonita ポータル"
 msgid "Browse your computer and select the business archive containing the process definition to install."
 msgstr "お使いのコンピューターを閲覧し、インストールするプロセス定義を含むビジネス アーカイブを選択します。"
 
+msgid "Build id"
+msgstr ""
+
 msgid "Business Data Model"
 msgstr "ビジネス データ モデル"
 
@@ -494,10 +497,10 @@ msgid "Can't import applications. An application '%token%' already exists"
 msgstr "アプリケーションをインポートできません。アプリケーション： '%token%' は既に存在します。"
 
 msgid "Can't import organization"
-msgstr ""
+msgstr "組織をインポートできません"
 
 msgid "Can't import organization. Please check that your file is well-formed."
-msgstr ""
+msgstr "組織をインポートできません。ファイルが正しい形式であることを確認してください。"
 
 msgid "Can't parse json, non-well formed content"
 msgstr "json を解析できません。 しっかり形式化されたコンテンツではありません。"
@@ -1091,7 +1094,7 @@ msgid "For user-type of profiles. To visualize cases started by the user or case
 msgstr "利用者プロファイル： 彼または彼女が開始した案件、または作業した案件を表示"
 
 msgid "For user-type of profiles. UI Designer page to visualize processes and start cases"
-msgstr ""
+msgstr "ユーザータイプのプロファイル。UI デザイナーページではプロセスと開始ケースを視覚化します。"
 
 msgid "Form"
 msgstr "フォーム"
@@ -1121,7 +1124,7 @@ msgid "Group"
 msgstr "グループ"
 
 msgid "Group (%nb_group%)"
-msgstr "グループ（%nb_group%）\n"
+msgstr "グループ（%nb_group%）\\n"
 
 msgid "Groups"
 msgstr "グループ"
@@ -1164,7 +1167,7 @@ msgstr "UI デザイナーを使用してリソースを作成した場合は、
 
 msgid "If you delete a page that is used by a process, the process becomes unresolved.\n"
 "Before deleting a page, you should also check whether it is used in a custom profile navigation."
-msgstr "プロセスで使用されるページを削除した場合、そのプロセスは不完全な状態になります。 \n"
+msgstr "プロセスで使用されるページを削除した場合、そのプロセスは未解決になります。\n"
 "ページを削除する前に、カスタム プロファイル ナビゲーションでそれが使用されているかどうかを確認してください。"
 
 msgid "Image files"
@@ -1195,19 +1198,19 @@ msgid "Install"
 msgstr "インストール"
 
 msgid "Install / Export"
-msgstr ""
+msgstr "インストールと/エクスポート"
 
 msgid "Install a process"
 msgstr "プロセスをインストール する"
 
 msgid "Install or export data"
-msgstr ""
+msgstr "データをインストールまたはエクスポートする"
 
 msgid "Install/Export"
-msgstr ""
+msgstr "インストール/エクスポート"
 
 msgid "Install/export organization"
-msgstr ""
+msgstr "組織のインストール/エクスポート"
 
 msgid "Installed by"
 msgstr "インストールした人"
@@ -1321,7 +1324,7 @@ msgid "MMMM dd, yyyy"
 msgstr "yyyy年MM月dd日"
 
 msgid "Manage BDM"
-msgstr ""
+msgstr "BDM を管理"
 
 msgid "Manage Look and Feel"
 msgstr "ルック＆フィールの管理"
@@ -1526,11 +1529,11 @@ msgstr "元の名前"
 
 msgid "Oups... This item is not available anymore.\n"
 "You will be redirected to a safest place."
-msgstr "このタスクは既に着手済みです。 \n"
-"その他の着手可能なタスクに移動します。"
+msgstr "おっと！この項目はもう利用できません。\n"
+"あなたは、安全な場所にリダイレクトされます。"
 
 msgid "Overview"
-msgstr "オーバービュー"
+msgstr "案件概況"
 
 msgid "Page"
 msgstr "ページ"
@@ -1644,7 +1647,7 @@ msgid "Process %appName% in version %version% already exists"
 msgstr "プロセス： %appName% バージョン %version% では既に存在します"
 
 msgid "Process %appName% in version %version% contains 6.x Legacy artifacts (forms or case overview page). Those are based on Google Web Toolkit (GWT), a technology that is no longer supported by Bonita. To know more, check the documentation."
-msgstr ""
+msgstr "バージョンのプロセスには、6.xレガシーアーティファクト（フォームまたはケースの概要ページ）が含まれています。これらはGoogle Web Toolkit (GWT)に基づきBonitaでサポートされなくなったテクノロジーです。詳細については、ドキュメントを確認してください。"
 
 msgid "Process definition not found for id %processId%"
 msgstr "ID: %processId% のプロセス定義 が見つかりません"
@@ -1821,11 +1824,10 @@ msgid "Service task (performed automatically)"
 msgstr "サービス タスク（自動的に実行されます）"
 
 msgid "Services will be paused for maintenance.\n"
-msgstr "メンテナンスためサービスは一時停止されます。\n"
-" "
+msgstr "サービスは、メンテナンスのため一時停止されます。"
 
 msgid "Services will resume. Users will be able to log in.\n"
-msgstr "サービスを再開します。ユーザーはログインできるようになります。\n"
+msgstr "サービスを再開します。ユーザーはログインできるようになります。"
 
 msgid "Session expired. Please log in again."
 msgstr "セッションが切れました。再度ログインしてください。"
@@ -1977,6 +1979,9 @@ msgstr "テクニカルな詳細"
 msgid "Technical user warning"
 msgstr "テクニカルなユーザー警告"
 
+msgid "Technical version"
+msgstr ""
+
 msgid "Th"
 msgstr "木"
 
@@ -1997,7 +2002,7 @@ msgstr "アプリケーション エラーが発生しました。"
 
 msgid "The application encountered an unexpected error. Please try again.\n"
 "If the error persists, please contact Bonitasoft support"
-msgstr "アプリケーションに予期しないエラーが発生しました。もう一度やり直してください。\n"
+msgstr "アプリケーションに予期しないエラーに遭遇しました。もう一度やり直してください。\n"
 "エラーを解決できない場合は、Bonitasoft のサポートに問い合わせてください。"
 
 msgid "The case %caseId% has been started successfully."
@@ -2112,7 +2117,7 @@ msgid "The process responsible for the creation of this task"
 msgstr "このタスクの作成に関与したプロセス"
 
 msgid "The resources folder must contain at least an Index.groovy class or an index.html or a theme.css for themes."
-msgstr ""
+msgstr "resources フォルダには少なくとも Index.groovy クラス、 index.html または theme.css を含める必要があります。"
 
 msgid "The server is not available"
 msgstr "サーバーは利用できません。"
@@ -2215,8 +2220,7 @@ msgstr "この所属は既にユーザーに追加されています。"
 
 msgid "This page has no authorization permissions defined. If the page uses REST resources and authorization checking is activated,\n"
 " update the page definition to specify the list of resources used."
-msgstr "このページのアクセス権限が定義されていません。このページが REST リソースを使用し、承認チェックが有効になっている場合、\n"
-"使用しているリソースのリストを指定するためにページ定義を更新します。"
+msgstr "このページのアクセス権限が定義されていません。このページが REST リソースを使用し、アクセス承認チェックが有効になっている場合は、使用しているリソースのリストを指定するためにページ定義を更新します。"
 
 msgid "This profile will be available on next login to the users who are mapped. If you mapped the profile to yourself, it will be available after you refresh the page in your browser."
 msgstr "このプロファイルにアサインされたユーザーは、次のログインで、そのプロファイル権限が利用可能になります。自分自身にプロファイルをアサインした場合は、お使いのブラウザでページをリフレッシ後、利用可能になります。"
@@ -2246,7 +2250,7 @@ msgid "To do so, contact your administrator"
 msgstr "そのためには、システム管理者に問い合わせてください。"
 
 msgid "To know more, check the %link%documentation%_link%."
-msgstr ""
+msgstr "詳細については、 %link%documentation%_link% を参照してください。"
 
 msgid "To share a form between processes, upload the zip and map it to the relevant processes and tasks."
 msgstr "プロセス間でフォームを共有するには、zip ファイルをアップロードし、関連するプロセスとタスクにマップします。"
@@ -2273,7 +2277,7 @@ msgid "Type to search"
 msgstr "検索キーワードを入力"
 
 msgid "UI Designer page to visualize processes and start cases"
-msgstr ""
+msgstr "プロセスを視覚化してケースを開始するためのUIデザイナーページ"
 
 msgid "UNRESOLVED"
 msgstr "未解決"
@@ -2438,16 +2442,17 @@ msgid "You risk interrupting one or more processes.\n\n"
 "Deactivating the only user able to perform a task(s), will cause the interruption of a Process.\n\n"
 "Before proceeding, you may want to go to the 'More' page of the process and check the actor mapping.\n\n"
 "Are you sure you want to deactivate this user now ?"
-msgstr "あなたは１つ以上のプロセスを中断する恐れがあります。\n\n"
-"タスクを遂行できる利用者を無効にすると、プロセスの中断を引き起こします。\n\n"
-"先へ進む前に、「詳細」ページに進んで、この利用者がどのプロセスのアクターにマッピングされているか確認することができます。\n\n"
-"この利用者を今から本当に無効にしますか？"
+msgstr "あなたは１つ以上のアプリを中断する恐れがあります。\n\n"
+"タスクを遂行できる唯一のユーザーを無効にすると、プロセスの中断が発生します。\n\n"
+"先へ進む前に、プロセスの「詳細」ページに移動し、アクター マッピングを確認することができます。\n\n"
+"今から本当にこの利用者を無効にしますか？"
 
 msgid "You will be rediected"
 msgstr "リダイレクトになります。"
 
 msgid "Your process contains 6.x Legacy artifacts (forms or case overview page).<br/>Those are based on Google Web Toolkit, a technology that is no longer supported by Bonita."
-msgstr ""
+msgstr "プロセスに6.xレガシーアーティファクト（フォームまたはケースの概要ページ）が含まれています。\n"
+"これらはGoogle WebToolkitに基づきBonitaでサポートされなくなったテクノロジーです。"
 
 msgid "Your session has expired. Please log in again and retry."
 msgstr "あなたのセッションが期限切れです。再度ログインして再試行してください。"

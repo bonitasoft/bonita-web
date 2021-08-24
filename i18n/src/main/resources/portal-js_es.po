@@ -7,11 +7,11 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 60594\n"
+"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 61810\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2020-08-18 01:28\n"
+"PO-Revision-Date: 2021-08-24 07:51\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -93,6 +93,9 @@ msgstr "Cualquiera"
 
 msgid "Application XML file"
 msgstr "Archivo de la aplicación XML"
+
+msgid "Application id not provided. Unable to retrieve the application details."
+msgstr "Id de la aplicación no proporcionado. Imposible recuperar los detalles de la aplicación."
 
 msgid "Application list"
 msgstr "Lista de aplicaciones"
@@ -203,7 +206,7 @@ msgid "Cases"
 msgstr "Casos"
 
 msgid "Cases with failures"
-msgstr ""
+msgstr "Casos con fallos"
 
 msgid "Categories"
 msgstr "Categorías"
@@ -305,7 +308,7 @@ msgid "Description"
 msgstr "Descripción"
 
 msgid "Disable"
-msgstr ""
+msgstr "Desactivar"
 
 msgid "Display name"
 msgstr "Título dinámico"
@@ -335,7 +338,7 @@ msgid "Email"
 msgstr "Correo Electrónico"
 
 msgid "Enable"
-msgstr ""
+msgstr "Activar"
 
 msgid "Enable all"
 msgstr "Activar todo"
@@ -425,7 +428,7 @@ msgid "Groups"
 msgstr "Grupos"
 
 msgid "Healthy cases"
-msgstr ""
+msgstr "Casos sin fallos"
 
 msgid "Hide Menu"
 msgstr "Ocultar menú"
@@ -479,10 +482,10 @@ msgid "Installed"
 msgstr "Instalado"
 
 msgid "Installed by"
-msgstr ""
+msgstr "Instalado por"
 
 msgid "Installed on"
-msgstr ""
+msgstr "Instalado el"
 
 msgid "Installing"
 msgstr "Instalando…"
@@ -569,7 +572,7 @@ msgid "Mobile"
 msgstr "Móvil"
 
 msgid "Monitoring status"
-msgstr ""
+msgstr "Monitorización"
 
 msgid "Multi-page menu"
 msgstr "Menú multi-página"
@@ -595,6 +598,9 @@ msgstr "Nuevo comentario"
 msgid "No application available."
 msgstr "Ninguna aplicación disponible."
 
+msgid "No application found with id:"
+msgstr "No se encontró ninguna aplicación con id:"
+
 msgid "No cases to display"
 msgstr "No hay casos para mostrar"
 
@@ -619,11 +625,20 @@ msgstr "No se necesita ningún formulario. Puede introducir un comentario y conf
 msgid "No mapping"
 msgstr "Ningún mapeo"
 
+msgid "No process found with id:"
+msgstr "No se encontró ningún proceso con id:"
+
 msgid "No profile mapped to this application"
 msgstr "Sin perfil asignado a esta aplicación"
 
 msgid "No updates have been made on categories. Don't forget to press \"Enter\" key after selecting a category."
 msgstr "No se hicieron actualizaciones en las categorías. No olvide presionar la tecla \"Enter\" después de seleccionar una categoría."
+
+msgid "No user found with id:"
+msgstr ""
+
+msgid "No value"
+msgstr "Ningún valor"
 
 msgid "Normal"
 msgstr "Normal"
@@ -710,7 +725,10 @@ msgid "Process"
 msgstr "Proceso"
 
 msgid "Process id"
-msgstr ""
+msgstr "Id de proceso"
+
+msgid "Process id not provided. Unable to retrieve the process details."
+msgstr "Id de proceso no proporcionado. Imposible recuperar los detalles del proceso."
 
 msgid "Process name"
 msgstr "Nombre de Proceso"
@@ -740,7 +758,7 @@ msgid "Release"
 msgstr "Liberar"
 
 msgid "Remove"
-msgstr "Suprimir"
+msgstr "Eliminar"
 
 msgid "Remove all"
 msgstr "Eliminar todo"
@@ -968,13 +986,13 @@ msgid "This name is already in use"
 msgstr "Este nombre ya está en uso"
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
-msgstr ""
+msgstr "Este proceso no está completamente configurado, pero todavía está habilitado. Los usuarios todavía pueden iniciar casos o realizar tareas, lo que puede llevar a errores."
 
 msgid "This process is not fully configured."
-msgstr ""
+msgstr "Este proceso no está completamente configurado."
 
 msgid "This process is not fully configured. It cannot be enabled."
-msgstr ""
+msgstr "Este proceso no está completamente configurado. No se puede activar."
 
 msgid "This task cannot be executed from here."
 msgstr ""
@@ -1071,6 +1089,9 @@ msgstr "Subir nueva imagen"
 
 msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Use la tecla de flecha arriba y flecha abajo para navegar entre las categorías existentes."
+
+msgid "User id not provided. Unable to retrieve the user details."
+msgstr ""
 
 msgid "Username"
 msgstr "Nombre de usuario"

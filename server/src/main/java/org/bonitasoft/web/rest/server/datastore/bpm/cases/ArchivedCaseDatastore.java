@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -48,7 +48,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Séverin Moussel
  */
 public class ArchivedCaseDatastore extends CommonDatastore<ArchivedCaseItem, ArchivedProcessInstance> implements DatastoreHasGet<ArchivedCaseItem>,
-DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
+        DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
 
     public ArchivedCaseDatastore(final APISession engineSession) {
         super(engineSession);
@@ -85,28 +85,35 @@ DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
 
     @Override
     public ItemSearchResult<ArchivedCaseItem> search(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                                     final Map<String, String> filters) {
 
         // Build search
         final SearchOptionsBuilder builder = SearchOptionsBuilderUtil.buildSearchOptions(page, resultsByPage, orders, search);
 
         addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_NAME, ProcessInstanceSearchDescriptor.NAME);
-        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
-        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
-        addStringFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
+        addLongFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ProcessInstanceSearchDescriptor.PROCESS_DEFINITION_ID);
+        addLongFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID, ProcessInstanceSearchDescriptor.STARTED_BY);
+        addLongFilterToSearchBuilder(filters, builder, ArchivedCaseItem.ATTRIBUTE_SOURCE_OBJECT_ID, ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID);
 
         // Run search depending on filters passed
         final SearchResult<ArchivedProcessInstance> searchResult = runSearch(filters, builder);
 
         // Convert to ConsoleItems
-        return new ItemSearchResult<ArchivedCaseItem>(
+        return new ItemSearchResult<>(
                 page,
                 resultsByPage,
                 searchResult.getCount(),
                 convertEngineToConsoleItemsList(searchResult.getResult()));
     }
 
-    private SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
+    // Overridden for testing
+    protected void addLongFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
+                                                final String engineAttributeName) {
+        super.addLongFilterToSearchBuilder(filters, builder, filterName, engineAttributeName);
+    }
+
+    // protected for testing
+    protected SearchResult<ArchivedProcessInstance> runSearch(final Map<String, String> filters, final SearchOptionsBuilder builder) {
 
         try {
             final ProcessAPI processAPI = getProcessApi();
@@ -156,7 +163,7 @@ DatastoreHasSearch<ArchivedCaseItem>, DatastoreHasDelete {
     public void delete(final List<APIID> ids) {
         try {
             final ProcessAPI processAPI = getProcessApi();
-            final List<Long> toDeleteIds = new ArrayList<Long>();
+            final List<Long> toDeleteIds = new ArrayList<>();
             for (final APIID apiId : ids) {
                 final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(apiId.toLong());
                 toDeleteIds.add(archivedProcessInstance.getSourceObjectId());
