@@ -7,8 +7,8 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 61810\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 60594\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "PO-Revision-Date: 2021-08-24 07:51\n"
@@ -148,9 +148,6 @@ msgstr "Antes de actualizar el BDM, el archivo de control de acceso debe ser sup
 msgid "Before you import the application descriptor, the pages and the profile must already be loaded in the Portal."
 msgstr "Antes de importar el descriptor de aplicación, las páginas y el perfil ya deben estar cargados en el Portal."
 
-msgid "Bonita uses Hibernate for data persistence, therefore some changes are handled well, like adding new objects or attributes, but some others we cannot guarantee so far, like changing the type of an attribute or deleting an attribute."
-msgstr "Bonita utiliza Hibernate para la persistencia de datos, por lo tanto se manejan bien algunos cambios como la adición de nuevos objetos y atributos, pero hay algunos otros que no podemos garantizar hasta ahora, como cambiar el tipo de un atributo o suprimir un atributo."
-
 msgid "Business Data Model definition"
 msgstr "Definición del modelo de datos de negocio (BDM)"
 
@@ -258,6 +255,12 @@ msgstr "Conectores"
 
 msgid "Connectors must be resolved before enabling the Process."
 msgstr "Los conectores deben resolverse antes de activar el proceso."
+
+msgid "Core to Bonita platform"
+msgstr "Core para la plataforma Bonita"
+
+msgid "Core to Bonita platform; cannot be deleted"
+msgstr "Core para la plataforma Bonita, no puede borrarse"
 
 msgid "Country"
 msgstr "País"
@@ -442,11 +445,20 @@ msgstr "Ocultar panel"
 msgid "Highest"
 msgstr "Mayor"
 
+msgid "However, due to the use of Hibernate for data persistence, some changes on the data may not be well handled. These changes may lead to a corrupted database and CANNOT BE REVERTED."
+msgstr "Sin embargo, debido al uso de Hibernate para la persistencia de datos, es posible que algunos cambios en los datos no estén bien manejados. Estos cambios pueden llevar a una base de datos corrupta y NO SE PUEDE REVERTIR."
+
+msgid "I have read and understood the previous warning message. I have prepared a database backup so I can rollback this operation."
+msgstr "He leído y entendido el mensaje de advertencia anterior. He preparado una copia de seguridad de la base de datos para poder deshacer esta operación."
+
 msgid "ID"
 msgstr "ID"
 
-msgid "If the new BDM contains such changes, the database administrator will need to first handle the database update with scripts, then you will need to update only the data model and thoroughly test the changes."
-msgstr "Si el nuevo BDM contiene semejantes cambios, el administrador de base de datos deberá tratar primero la actualización de la base de datos con scripts, y luego necesita usted actualizar únicamente el modelo de datos y probar bien los cambios."
+msgid "IN ANY CASE, you MUST CREATE A BACKUP of the current BDM database before undergoing a BDM update."
+msgstr "EN CUALQUIER CASO, DEBES CREAR UN BACKUP de la base de datos BDM actual antes de realizar una actualización BDM."
+
+msgid "If your changes do not fall into those change types, you can go ahead and proceed with the BDM update now."
+msgstr "Si sus cambios no están dentro de este tipo de cambios puede seguir adelante y proceder ahora con la actualización de BDM."
 
 msgid "Implementation version"
 msgstr "Versión de implementación"
@@ -462,6 +474,9 @@ msgstr "Importar un descriptor de aplicación"
 
 msgid "In a production environment, this should be used with caution."
 msgstr ""
+
+msgid "In such cases, you must CANCEL THIS UPDATE and let the database administrator carefully script the changes and apply them to the database. Only then will you be able to update the BDM from this page."
+msgstr "En tales casos, debe CANCELAR ESTA ACTUALIZACIÓN y permitir al administrador de bases de datos escribir cuidadosamente los cambios y aplicarlos a la base de datos. Sólo entonces podrá actualizar el BDM desde esta página."
 
 msgid "In task name column"
 msgstr "En la columna Nombre de tarea"
@@ -516,6 +531,9 @@ msgstr "Layout"
 
 msgid "Loading..."
 msgstr "Cargando…"
+
+msgid "Logo"
+msgstr "Logo"
 
 msgid "Look & Feel"
 msgstr "Apariencia"
@@ -628,6 +646,9 @@ msgstr "Ningún mapeo"
 msgid "No process found with id:"
 msgstr "No se encontró ningún proceso con id:"
 
+msgid "No profile"
+msgstr "Sin perfil"
+
 msgid "No profile mapped to this application"
 msgstr "Sin perfil asignado a esta aplicación"
 
@@ -645,9 +666,6 @@ msgstr "Normal"
 
 msgid "Not installed"
 msgstr "No instalado"
-
-msgid "Note that updating the model modifies existing database tables definitively."
-msgstr "Tenga en cuenta que actualizar el modelo modifica las tablas existentes de la base de datos de manera definitiva."
 
 msgid "One or more connectors on case start or case end failed"
 msgstr "Uno o más conectores al inicio o al final del caso han fallado"
@@ -758,7 +776,7 @@ msgid "Release"
 msgstr "Liberar"
 
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Suprimir"
 
 msgid "Remove all"
 msgstr "Eliminar todo"
@@ -883,6 +901,9 @@ msgstr "Estado"
 msgid "Status of importation"
 msgstr "Estado de la importación"
 
+msgid "Still, you can customize its look & feel on this page. You can also update some of its pages in the Resources menu."
+msgstr "Aún así, puedes personalizar su apariencia en esta página. También puedes actualizar algunas de sus páginas en el menú de Recursos."
+
 msgid "Submit"
 msgstr "Enviar"
 
@@ -916,6 +937,9 @@ msgstr "Usuario técnico"
 msgid "Technical error."
 msgstr "Error técnico."
 
+msgid "The BDM schema and data have been rolled-back to what they were before this update attempt."
+msgstr "El esquema y los datos de BDM han sido revertidos al estado anterior de este intento de actualización."
+
 msgid "The application"
 msgstr "La aplicación"
 
@@ -943,14 +967,23 @@ msgstr "El caso eliminado se eliminará permanentemente y no se archivará."
 msgid "The deleted case will be permanently deleted from the archives."
 msgstr "El caso eliminado se eliminará permanentemente del histórico."
 
+msgid "The file you are trying to upload has the wrong mime type"
+msgstr "El archivo que estás intentando subir tiene un mime type incorrecto"
+
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "El mapeo de formularios debe resolverse antes de activar el proceso."
+
+msgid "The image you are trying to upload is too big"
+msgstr "La imagen que estás intentando subir es demasiado grande"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "El nombre de la URL debe comenzar con custompage_ seguido de sólo caracteres alfanuméricos."
 
 msgid "The task has been submitted but an error occurred while adding the comment"
 msgstr "La tarea ha sido enviada pero ocurrió un error al agregar el comentario"
+
+msgid "The whole list of such changes is listed <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>here</a>."
+msgstr "La lista completa de estos cambios se muestra <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>aquí</a>."
 
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "Las palabras 'content', 'API' y 'theme' están reservadas para uso interno. No debe utilizarse en la URL de una página o en una aplicación."
@@ -972,6 +1005,9 @@ msgstr ""
 
 msgid "This URL is already in use"
 msgstr "Esta URL ya está en uso"
+
+msgid "This application is core to the Bonita platform. To keep it working as it should, it must remain available and its menu should stay as it is."
+msgstr "Esta aplicación es core para la plataforma Bonita. Para que siga funcionando como debería, debe permanecer disponible y su menú debe permanecer como está."
 
 msgid "This field is mandatory"
 msgstr "Este campo es obligatorio"
@@ -1023,9 +1059,6 @@ msgstr "Para ello, cierre la sesión y luego inicie sesión con el Usuario Técn
 
 msgid "To fill out the form, you need to take this task. This means you will be the only one able to do it. To make it available to the team again, release it."
 msgstr "Para rellenar el formulario, es necesario tomar esta tarea. Esto significa que serás el único que podrá realizarla. Para que esté disponible de nuevo para el equipo, libérala."
-
-msgid "To know more about this platform configuration option, go to the"
-msgstr "Para saber más sobre esta opción de configuración de la plataforma, vaya a la"
 
 msgid "To personalize the display of search keys (and columns in general), use the table settings button on the right. You can search on up to 5 search keys."
 msgstr "Para personalizar la pantalla de búsqueda de claves (y columnas en general), utilice el botón de configuración de tabla de la derecha. Puede buscar hasta 5 claves de búsqueda."
@@ -1084,6 +1117,9 @@ msgstr "Actualizado por"
 msgid "Updated on"
 msgstr "Actualizada"
 
+msgid "Updating the Business Data Model applies changes to both existing database tables and data."
+msgstr "Actualizar el Modelo de Datos de Negocio aplica cambios tanto a las tablas de base de datos existentes como a los datos."
+
 msgid "Upload new picture"
 msgstr "Subir nueva imagen"
 
@@ -1107,6 +1143,9 @@ msgstr "Valor"
 
 msgid "Version"
 msgstr "Version"
+
+msgid "View application details"
+msgstr "Ver detalles de la aplicación"
 
 msgid "View case details"
 msgstr "Ver detalles del caso"
@@ -1162,8 +1201,8 @@ msgstr "el descriptor de aplicación ha sido parcialmente importado. Los siguien
 msgid "application descriptor has been successfully imported, with complete page mapping and menu mapping."
 msgstr "el descriptor de aplicación ha sido importado con éxito, con un completo mapeo de páginas y de menú."
 
-msgid "documentation"
-msgstr "documentación"
+msgid "here"
+msgstr "aquí"
 
 msgid "of"
 msgstr "de"
