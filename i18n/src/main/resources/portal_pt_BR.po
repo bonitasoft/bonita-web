@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-17 05:21+0200\n"
-"PO-Revision-Date: 2021-08-18 01:34\n"
+"POT-Creation-Date: 2021-08-20 05:21+0200\n"
+"PO-Revision-Date: 2021-08-24 01:32\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -100,12 +100,6 @@ msgstr "%attribute% deve conter exatamente %length% caracteres"
 
 msgid "%attribute% must not be equal to %secondAttribute%"
 msgstr "%attribute% não deve ser igual a %secondAttribute%"
-
-msgid "%attribute% must not contain blank spaces"
-msgstr "%attribute% não deve conter espaços em branco"
-
-msgid "%attribute% must not contain spaces"
-msgstr "%attribute% não deve conter espaços"
 
 msgid "%className% is not Serializable"
 msgstr "%className% não é serializável"
