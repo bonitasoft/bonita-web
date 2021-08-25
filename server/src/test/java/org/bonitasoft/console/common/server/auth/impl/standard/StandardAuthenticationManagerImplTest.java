@@ -63,16 +63,6 @@ public class StandardAuthenticationManagerImplTest {
     }
 
     @Test
-    public void testGetLoginpageURLFromMobile() throws Exception {
-        String redirectUrl = "%2Fmobile%2F";
-        request.setServletPath("/mobile/#login");
-
-        String loginURL = standardLoginManagerImpl.getLoginPageURL(requestAccessor, redirectUrl);
-
-        assertThat(loginURL).isEqualToIgnoringCase("bonita/mobile/login.jsp?tenant=1&redirectUrl=%2Fmobile%2F");
-    }
-
-    @Test
     public void should_add_tenant_parameter_contained_in_request_params() throws Exception {
         request.setParameter("tenant", "4");
         request.setCookies(new Cookie("bonita.tenant", "123"));

@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 /**
  * @author Julien Mege
  */
-// TODO add url pathParameter to load available locales by application (portal, mobile, platform, ...)
+// TODO add url pathParameter to load available locales by application (portal, platform, ...)
 public class APII18nLocale extends API<I18nLocaleItem> {
 
     private static final String DEFAULT_APPLICATION = "portal";
