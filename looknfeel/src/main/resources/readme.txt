@@ -18,7 +18,7 @@ skin/bootstrap/applications:            Customizations to Bootstrap for applicat
 skin/bootstrap/applications/main.less:  The entry point that identifies the files to be compiled to create the Bootstrap Look & Feel for applications.
 skin/bootstrap/portal:                  Customizations to Bootstrap for the Portal. Change these files to modify the appearance of Portal pages.
 skin/bootstrap/portal/main.less:        The entry point that identifies the files to be compiled to create the Bootstrap Look & Feel for Portal pages developed with Angular.
-skin/skin.config.less:                  The main LESS file that defines the appearance. Change this file to modify the appearance of Bonita Portal web (not mobile). You only need to modify the other LESS files if you want to change the behaviour of the pages.
+skin/skin.config.less:                  The main LESS file that defines the appearance. Change this file to modify the appearance of Bonita Portal web. You only need to modify the other LESS files if you want to change the behaviour of the pages.
 tools:                                  Contains special files required for compatibility with Internet Explorer.
 VERSION:                                Contains the version flag. Do not update or delete this file.
 theme.css:                              Default file use as theme for forms in portal. Overwrite it to customize your portal forms.

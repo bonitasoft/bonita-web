@@ -20,8 +20,8 @@ public class URLProtectorTest {
 
     @Test
     public void testProtectRedirectUrlShouldNotChangeURL() {
-        assertEquals("mobile/#home", urlProtecter.protectRedirectUrl("mobile/#home"));
-        assertEquals("/bonita/mobile/#login", urlProtecter.protectRedirectUrl("/bonita/mobile/#login"));
+        assertEquals("apps/#home", urlProtecter.protectRedirectUrl("apps/#home"));
+        assertEquals("/bonita/apps/#login", urlProtecter.protectRedirectUrl("/bonita/apps/#login"));
         assertEquals("/apps/appDirectoryBonita", urlProtecter.protectRedirectUrl("/apps/appDirectoryBonita"));
     }
 

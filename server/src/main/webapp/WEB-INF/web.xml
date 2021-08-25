@@ -259,8 +259,6 @@
         <!-- War -->
         <url-pattern>/css</url-pattern>
         <url-pattern>/images</url-pattern>
-        <url-pattern>/mobile</url-pattern>
-        <url-pattern>/mobile/*</url-pattern>
         <url-pattern>/portal/css/*</url-pattern>
         <url-pattern>/portal/fonts/*</url-pattern>
         <url-pattern>/portal/images/*</url-pattern>

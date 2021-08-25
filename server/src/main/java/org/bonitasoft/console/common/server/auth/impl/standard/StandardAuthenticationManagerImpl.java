@@ -18,10 +18,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
@@ -44,10 +42,6 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ServletException {
         final StringBuilder url = new StringBuilder();
         String context = request.asHttpServletRequest().getContextPath();
-        final String servletPath = request.asHttpServletRequest().getServletPath();
-        if (StringUtils.isNotBlank(servletPath) && servletPath.startsWith("/mobile")) {
-            context += "/mobile";
-        }
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
         long tenantId = getTenantId(request);
         if (tenantId != getDefaultTenantId()) {
