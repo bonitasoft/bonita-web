@@ -95,12 +95,11 @@
             The AuthenticationFilter check credentials when access is requested
             However, to ensure authentication redirect and/or error handling works properly,
             we need to let a set of pages not securized :
-            portal/scripts & portal/themeResource : to enable the layout and JS handling on login.jsp
             The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
         -->
         <!-- init-param>
             <param-name>excludePattern</param-name>
-            <param-value>^/(bonita/)?(portal/themeResource$)|(theme/)|(portal/scripts)|(apps/.+/API/)|(portal/resource/.+/API/)</param-value>
+            <param-value>^/(bonita/)?(login.jsp$)|(apps/.+/API/)|(portal/resource/.+/API/)</param-value>
         </init-param -->
         <init-param>
             <param-name>redirectWhenUnauthorized</param-name>
@@ -169,13 +168,11 @@
         <url-pattern>/API/*</url-pattern>
         <url-pattern>/APIToolkit/*</url-pattern>
         <url-pattern>/portal/custom-page/API/*</url-pattern>
-        <url-pattern>/portal/portal.nocache.js</url-pattern>
         <url-pattern>/portal.js/index.html</url-pattern>
         <!-- New manage on no cache Filter -->
         <url-pattern>/portal/exportOrganization</url-pattern>
         <url-pattern>/portal/pageDownload</url-pattern>
         <url-pattern>/portal/exportActors</url-pattern>
-        <url-pattern>/portal/ReportScreenshotServlet</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -249,7 +246,6 @@
     <filter-mapping>
         <filter-name>CacheFilter</filter-name>
         <url-pattern>/login.jsp</url-pattern>
-        <url-pattern>/portal/themeResource</url-pattern>
         <url-pattern>/portal/pageResource</url-pattern>
         <url-pattern>/platformloginservice</url-pattern>
         <url-pattern>/platformlogoutservice</url-pattern>
@@ -259,13 +255,8 @@
         <!-- War -->
         <url-pattern>/css</url-pattern>
         <url-pattern>/images</url-pattern>
-        <url-pattern>/portal/css/*</url-pattern>
-        <url-pattern>/portal/fonts/*</url-pattern>
-        <url-pattern>/portal/images/*</url-pattern>
-        <url-pattern>/portal/scripts/*</url-pattern>
-        <url-pattern>/portal/deferredjs/*</url-pattern>
+        <url-pattern>/portal-theme</url-pattern>
         <url-pattern>/portal.js/*</url-pattern>
-        <url-pattern>/theme/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -532,12 +523,6 @@
         <servlet-name>PageServlet</servlet-name>
         <servlet-class>org.bonitasoft.console.common.server.page.PageServlet</servlet-class>
     </servlet>
-    <!-- theme -->
-    <servlet>
-        <servlet-name>themeResource</servlet-name>
-        <servlet-class>org.bonitasoft.console.common.server.themes.ThemeResourceServlet</servlet-class>
-    </servlet>
-    <!-- End theme -->
     <!-- For engine HTTP API -->
     <servlet>
         <servlet-name>HttpAPIServlet</servlet-name>
@@ -551,12 +536,6 @@
     <servlet-mapping>
         <servlet-name>livingApplicationPageServlet</servlet-name>
         <url-pattern>/portal/resource/app/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>themeResource</servlet-name>
-        <url-pattern>/portal/themeResource</url-pattern>
-        <url-pattern>/theme/*</url-pattern>
-        <url-pattern>/portal/custom-page/theme/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>processUploadServlet</servlet-name>

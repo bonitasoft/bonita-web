@@ -21,8 +21,6 @@ import java.io.File;
  */
 public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
-    static final String ICONS_WORK_FOLDER_NAME = "icons";
-    private static final String THEME_WORK_FOLDER_NAME = "theme";
     private static final String REPORTS_WORK_FOLDER_NAME = "reports";
     private static final String PAGES_WORK_FOLDER_NAME = "pages";
     private String tenantsFolderPath = null;
@@ -30,7 +28,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     private String tempFolderPath = null;
     private String confFolderPath = null;
     private String formsWorkFolderPath = null;
-    private String themeWorkFolderPath = null;
     private String reportsWorkFolderPath = null;
     private String pagesWorkFolderPath = null;
     private String bdmWorkFolderPath;
@@ -103,14 +100,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
             formsWorkFolderPath = getTempFolderPath() + formsFolderName + File.separator;
         }
         return formsWorkFolderPath;
-    }
-
-    @Override
-    public String getThemeFolderPath() {
-        if (themeWorkFolderPath == null) {
-            themeWorkFolderPath = getTempFolderPath() + File.separator + THEME_WORK_FOLDER_NAME + File.separator;
-        }
-        return themeWorkFolderPath;
     }
 
     @Override

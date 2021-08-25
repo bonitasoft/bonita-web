@@ -64,13 +64,6 @@ public interface WebBonitaConstants {
     String getTempFolderPath();
 
     /**
-     * Get Tenant ThemeConsoleFolder Path
-     *
-     * @return path
-     */
-    String getThemeFolderPath();
-
-    /**
      * Get Tenant ConfFolder Path
      *
      * @return path
