@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.preferences.constants;
 
 import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstants.rootTempDir;
-import static org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsTenancyImpl.ICONS_WORK_FOLDER_NAME;
 import static org.bonitasoft.engine.io.IOUtil.createTempDirectory;
 
 import java.io.File;
@@ -74,20 +73,6 @@ public class WebBonitaConstantsUtils {
      */
     public File getConfFolder() {
         return getFolder(webBonitaConstants.getConfFolderPath());
-    }
-
-    /**
-     * Get the folder of Tenant themes files (ie CSS files)
-     */
-    public File getPortalThemeFolder() {
-        return getFolder(webBonitaConstants.getThemeFolderPath());
-    }
-
-    /**
-     * Get the folder of the user Console default icons
-     */
-    public File getConsoleDefaultIconsFolder() {
-        return new File(getPortalThemeFolder(), ICONS_WORK_FOLDER_NAME);
     }
 
     /**

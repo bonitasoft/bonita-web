@@ -275,8 +275,6 @@ public class AuthenticationFilterTest {
     @Test
     public void testMatchExcludePatterns() throws Exception {
 
-        matchExcludePattern("http://localhost:8080/portal/themeResource", true);
-        matchExcludePattern("http://localhost:8080/portal/themeResource/poutpout", false);
         matchExcludePattern("/bonita/portal/resource/page/API/system/session/unusedId", true);
         matchExcludePattern("/bonita/apps/app/API/system/session/unusedId", true);
         matchExcludePattern("/bonita/portal/resource/page/content/", false);
@@ -325,7 +323,7 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testCompileExcludePattern() throws Exception {
-        final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/themeResource$)|(portal/scripts)|(/bonita/?$)|(logoutservice)";
+        final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(/bonita/?$)|(logoutservice)";
         assertThat(authenticationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
 
             @Override

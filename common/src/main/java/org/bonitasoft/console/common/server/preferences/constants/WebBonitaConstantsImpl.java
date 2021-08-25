@@ -81,11 +81,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
         return tempFolderPath;
     }
 
-    @Override
-    public String getThemeFolderPath() {
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */
