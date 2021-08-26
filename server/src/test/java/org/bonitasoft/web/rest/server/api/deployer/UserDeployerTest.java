@@ -17,14 +17,13 @@
 package org.bonitasoft.web.rest.server.api.deployer;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.web.rest.model.ModelFactory;
+import org.bonitasoft.web.rest.model.identity.GroupItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.rest.model.monitoring.report.ReportItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
@@ -49,25 +48,25 @@ public class UserDeployerTest extends APITestWithMock {
     }
 
     @Test
-    public void testDeployableAttributeIsDeployed() throws Exception {
+    public void testDeployableAttributeIsDeployed() {
         UserItem user = prepareGetterToReturnAUser();
-        ReportItem report = aReportInstalledBy(APIID.makeAPIID(6L));
+        GroupItem group = aGroupInstalledBy(APIID.makeAPIID(6L));
 
-        UserDeployer installedByDeployer = new UserDeployer(getter, ReportItem.ATTRIBUTE_INSTALLED_BY);
-        installedByDeployer.deployIn(report);
+        UserDeployer installedByDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        installedByDeployer.deployIn(group);
 
-        assertEquals(user, report.getInstalledBy());
+        assertEquals(user, group.getCreatedByUser());
     }
 
     @Test
-    public void testNotDeployableAttributeIsNotDeployed() throws Exception {
+    public void testNotDeployableAttributeIsNotDeployed() {
         prepareGetterToReturnAUser();
-        ReportItem report = aReportInstalledBy(null);
+        GroupItem group = spy(aGroupInstalledBy(null));
 
-        UserDeployer nameDeployer = new UserDeployer(getter, ReportItem.ATTRIBUTE_INSTALLED_BY);
-        nameDeployer.deployIn(report);
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
 
-        assertNull(report.getInstalledBy());
+        verify(group, never()).setDeploy(any(), any());
     }
 
     private UserItem prepareGetterToReturnAUser() {
@@ -76,9 +75,9 @@ public class UserDeployerTest extends APITestWithMock {
         return user;
     }
 
-    private ReportItem aReportInstalledBy(APIID userId) {
-        ReportItem item = new ReportItem();
-        item.setInstalledBy(userId);
+    private GroupItem aGroupInstalledBy(APIID userId) {
+        GroupItem item = new GroupItem();
+        item.setCreatedByUserId(userId);
         return item;
     }
 

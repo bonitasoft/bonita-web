@@ -57,7 +57,6 @@ import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
 import org.bonitasoft.web.rest.model.identity.RoleDefinition;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.model.monitoring.report.ReportDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
@@ -182,11 +181,6 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new SessionDefinition();
         } else if (TenantAdminDefinition.TOKEN.equals(token)) {
             return new TenantAdminDefinition();
-        }
-
-        // monitoring
-        else if (ReportDefinition.TOKEN.equals(token)) {
-            return new ReportDefinition();
         }
 
         // platform
