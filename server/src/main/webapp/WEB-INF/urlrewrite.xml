@@ -3,7 +3,6 @@
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 
 <urlrewrite>
-    ${proxy-portal-js}
 
     <rule>
         <from>^(/portal/custom-page)?/API/bpm/activity([\?/]|$)</from>
@@ -297,7 +296,4 @@
         <to>/apps/appDirectoryBonita</to>
     </rule>
 
-    <!--  Only used in dev mode  -->
-    ${proxy-portal-js}
-    
 </urlrewrite>
