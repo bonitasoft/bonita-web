@@ -1,9 +1,3 @@
-launch less in dev mode
-
-run
-'''
-mvn jetty:run -Pcss
-'''
 
 ## Compile the less without maven
 
