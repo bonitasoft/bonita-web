@@ -55,6 +55,11 @@
 
             <!-- MISCELLANEOUS -->
             <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-classloader</artifactId>
+                <version>3.7</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>batik-bridge</artifactId>
                 <version>${batik.version}</version>
