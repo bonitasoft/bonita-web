@@ -280,6 +280,9 @@ public class ContractTypeConverter {
     }
 
     public ContractDefinition getAdaptedContractDefinition(final ContractDefinition contract) {
+        if (contract == null) {
+            return null;
+        }
         final List<ConstraintDefinition> constraints = contract.getConstraints();
         final List<InputDefinition> inputDefinitions = adaptContractInputList(contract.getInputs());
         final ContractDefinitionImpl contractDefinition = getContractDefinition(constraints, inputDefinitions);
