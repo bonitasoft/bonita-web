@@ -39,11 +39,5 @@ public class ProfileTypesI18N {
 
     protected static final String ADMINISTRATOR_DESCRIPTION = AbstractI18n.t_("The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task).");
 
-    // /////////////////////////////////////////
-    // // PROCESS MANAGER
-    // /////////////////////////////////////////
-    protected static final String PROCESS_MANAGER = AbstractI18n.t_("Process manager");
-
-    protected static final String PROCESS_MANAGER_DESCRIPTION = AbstractI18n.t_("The Process manager can supervise designated processes, and manage cases and tasks of those processes.");
 }
 
