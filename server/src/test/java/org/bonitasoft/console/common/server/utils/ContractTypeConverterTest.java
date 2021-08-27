@@ -284,6 +284,15 @@ public class ContractTypeConverterTest {
     }
 
     @Test
+    public void getAdaptedContractDefinition_should_return_null_on_null_contract() {
+        //when
+        final ContractDefinition adaptedContractDefinition = contractTypeConverter.getAdaptedContractDefinition(null);
+
+        //assert
+        assertThat(adaptedContractDefinition).isNull();
+    }
+
+    @Test
     public void should_be_able_to_convert_Integer_to_Date() throws Exception {
 
         Object conversionResult = contractTypeConverter.convertToType(Type.DATE, 86400000);

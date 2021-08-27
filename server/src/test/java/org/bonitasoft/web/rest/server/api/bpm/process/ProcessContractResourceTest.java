@@ -95,5 +95,13 @@ public class ProcessContractResourceTest extends RestletTest {
         final Response response = request(TEST_CONTRACT_API_URL).get();
         assertThat(response).hasStatus(Status.CLIENT_ERROR_NOT_FOUND);
     }
+    @Test
+    public void should_respond_204_when_there_is_no_contract_on_the_process() throws Exception {
+        when(processAPI.getProcessContract(PROCESS_DEFINITION_ID)).thenReturn(null);
+
+        Response response = request(TEST_CONTRACT_API_URL).get();
+
+        assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
+    }
 
 }

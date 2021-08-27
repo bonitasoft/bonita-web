@@ -90,6 +90,15 @@ public class UserTaskContractResourceTest extends RestletTest {
     }
 
     @Test
+    public void should_respond_204_when_there_is_no_contract_on_the_task() throws Exception {
+        when(processAPI.getUserTaskContract(2)).thenReturn(null);
+
+        Response response = request("/bpm/userTask/2/contract").get();
+
+        assertThat(response).hasStatus(Status.SUCCESS_NO_CONTENT);
+    }
+
+    @Test
     public void should_getTaskIDParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
         //given
         doReturn(null).when(taskContractResource).getAttribute(UserTaskContractResource.TASK_ID);
