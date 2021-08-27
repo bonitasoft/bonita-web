@@ -62,23 +62,35 @@ public class PlatformLoginServletTest {
         doReturn(platformLoginAPI).when(platformLoginServlet).getPlatformLoginAPI();
         doReturn(JOHN).when(httpServletRequest).getParameter(PlatformLoginServlet.USERNAME_PARAM);
         doReturn(DOE).when(httpServletRequest).getParameter(PlatformLoginServlet.PASSWORD_PARAM);
-        doReturn("false").when(httpServletRequest).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
     }
 
     @Test
     public void should_send_error_403_on_wrong_credential() throws Exception {
         //given
         doThrow(new InvalidPlatformCredentialsException("")).when(platformLoginAPI).login(JOHN, DOE);
+        doReturn("true").when(httpServletRequest).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         //when
         platformLoginServlet.doPost(httpServletRequest, httpServletResponse);
         //then
         verify(httpServletResponse).sendError(eq(HttpServletResponse.SC_FORBIDDEN), anyString());
     }
 
+    @Test
+    public void should_set_status_403_on_wrong_credential() throws Exception {
+        //given
+        doThrow(new InvalidPlatformCredentialsException("")).when(platformLoginAPI).login(JOHN, DOE);
+        doReturn("false").when(httpServletRequest).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
+        //when
+        platformLoginServlet.doPost(httpServletRequest, httpServletResponse);
+        //then
+        verify(httpServletResponse).setStatus(eq(HttpServletResponse.SC_FORBIDDEN));
+    }
+
     @Test(expected = ServletException.class)
     public void should_throw_exception_on_internal_error() throws Exception {
         //given
         doThrow(new PlatformLoginException("")).when(platformLoginAPI).login(JOHN, DOE);
+        doReturn("false").when(httpServletRequest).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         //when
         platformLoginServlet.doPost(httpServletRequest, httpServletResponse);
     }

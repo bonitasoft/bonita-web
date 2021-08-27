@@ -106,7 +106,11 @@ public class PlatformLoginServlet extends HttpServlet {
             }
         } catch (final InvalidPlatformCredentialsException e) {
             LOGGER.log(Level.FINEST, "Wrong username or password", e);
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Wrong username or password");
+            if (redirectAfterLogin) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Wrong username or password");
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            }
         } catch (final Exception e) {
             LOGGER.log(Level.SEVERE, ERROR_MESSAGE, e);
             if (redirectAfterLogin) {
