@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2021-08-24 07:49\n"
+"PO-Revision-Date: 2021-08-30 01:30\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -261,10 +261,10 @@ msgid "Connectors must be resolved before enabling the Process."
 msgstr "コネクタは、プロセスを有効にする前に設定する必要があります。"
 
 msgid "Core to Bonita platform"
-msgstr ""
+msgstr "Bonita プラットフォームのコア"
 
 msgid "Core to Bonita platform; cannot be deleted"
-msgstr ""
+msgstr "Bonita プラットフォームのコア; 削除できません"
 
 msgid "Country"
 msgstr "国"
@@ -450,19 +450,19 @@ msgid "Highest"
 msgstr "最高"
 
 msgid "However, due to the use of Hibernate for data persistence, some changes on the data may not be well handled. These changes may lead to a corrupted database and CANNOT BE REVERTED."
-msgstr ""
+msgstr "ただし、データの永続化にHibernateを使用するため、データの一部の変更はうまく処理されない可能性があります。 これらの変更により、データベースが破損する可能性があり、元に戻すことはできません。"
 
 msgid "I have read and understood the previous warning message. I have prepared a database backup so I can rollback this operation."
-msgstr ""
+msgstr "以前の警告メッセージを読んで理解しました。 この操作をロールバックできるように、データベースのバックアップを準備しました。"
 
 msgid "ID"
 msgstr "id"
 
 msgid "IN ANY CASE, you MUST CREATE A BACKUP of the current BDM database before undergoing a BDM update."
-msgstr ""
+msgstr "いずれの場合も、BDMの更新を行う前に現在のBDMデータベースのバックアップを作成する必要があります。"
 
 msgid "If your changes do not fall into those change types, you can go ahead and proceed with the BDM update now."
-msgstr ""
+msgstr "変更がこれらの変更タイプに該当しない場合は、先に進んみ今すぐBDMアップデートを継続することができます。"
 
 msgid "Implementation version"
 msgstr "実装のバージョン"
@@ -480,7 +480,7 @@ msgid "In a production environment, this should be used with caution."
 msgstr ""
 
 msgid "In such cases, you must CANCEL THIS UPDATE and let the database administrator carefully script the changes and apply them to the database. Only then will you be able to update the BDM from this page."
-msgstr ""
+msgstr "このような場合、このアップデートをキャンセルし、データベース管理者に注意深く変更をスクリプトして、それらをデータベースに適用させなければなりません。 その時のみ、このページからBDMを更新することができます。"
 
 msgid "In task name column"
 msgstr "[タスク名] 列"
@@ -537,7 +537,7 @@ msgid "Loading..."
 msgstr "ロード中..."
 
 msgid "Logo"
-msgstr ""
+msgstr "ロゴ"
 
 msgid "Look & Feel"
 msgstr "ルック＆フィール"
@@ -651,7 +651,7 @@ msgid "No process found with id:"
 msgstr ""
 
 msgid "No profile"
-msgstr ""
+msgstr "プロファイルがありません"
 
 msgid "No profile mapped to this application"
 msgstr "このアプリケーションにマップされているプロファイルはありません。"
@@ -906,7 +906,7 @@ msgid "Status of importation"
 msgstr "インポートの状態"
 
 msgid "Still, you can customize its look & feel on this page. You can also update some of its pages in the Resources menu."
-msgstr ""
+msgstr "それでも、このページでそのルック＆フィールをカスタマイズすることができます。[リソース]メニューのいくつかのページを更新することもできます。"
 
 msgid "Submit"
 msgstr "送信"
@@ -942,7 +942,7 @@ msgid "Technical error."
 msgstr "テクニカルなエラーが発生。"
 
 msgid "The BDM schema and data have been rolled-back to what they were before this update attempt."
-msgstr ""
+msgstr "BDM スキーマとデータは、この更新試行される前のものにロールバックされています。"
 
 msgid "The application"
 msgstr "アプリケーション"
@@ -972,13 +972,13 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "削除された案件は、アーカイブから完全に削除されます。"
 
 msgid "The file you are trying to upload has the wrong mime type"
-msgstr ""
+msgstr "アップロードしようとしているファイルのmimeタイプが間違っています"
 
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "プロセスを有効にする前にフォームの マッピングを解決する必要があります。"
 
 msgid "The image you are trying to upload is too big"
-msgstr ""
+msgstr "アップロードしようとしている画像が大きすぎます"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
@@ -987,7 +987,7 @@ msgid "The task has been submitted but an error occurred while adding the commen
 msgstr "タスクが送信されましたが、コメントを追加するときにエラーが発生しました。"
 
 msgid "The whole list of such changes is listed <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate>here</a>."
-msgstr ""
+msgstr "このような変更の一覧はこちら <a ng-href=\"https://documentation.bonitasoft.com/bonita/{{bonitaVersion}}/bdm-management-in-bonita-bpm-portal\" target=\"_blank\" translate></a>に掲載されています。"
 
 msgid "The words 'content', 'API' and 'theme' are reserved for internal use. They must not be used in an application or page URL."
 msgstr "'content'、'API' 、 'theme' の単語は、内部使用のため予約されています。アプリケーション、またはページの URL にそれらを使用してはいけません。"
@@ -1011,7 +1011,7 @@ msgid "This URL is already in use"
 msgstr "この URL は、既に使用中"
 
 msgid "This application is core to the Bonita platform. To keep it working as it should, it must remain available and its menu should stay as it is."
-msgstr ""
+msgstr "このアプリケーションは、Bonitaプラットフォームの中核です。 正常に機能し続けるには、使用可能な状態を維持し、メニューをそのままにしておく必要があります。"
 
 msgid "This field is mandatory"
 msgstr "このフィールドは必須です"
@@ -1123,7 +1123,7 @@ msgid "Updated on"
 msgstr "更新日時"
 
 msgid "Updating the Business Data Model applies changes to both existing database tables and data."
-msgstr ""
+msgstr "ビジネス データ モデルの更新は、既存のデータベース テーブルとデータの両方に変更を適用します。"
 
 msgid "Upload new picture"
 msgstr "新しい画像をアップロード"
@@ -1150,7 +1150,7 @@ msgid "Version"
 msgstr "バージョン"
 
 msgid "View application details"
-msgstr ""
+msgstr "アプリケーションの詳細表示"
 
 msgid "View case details"
 msgstr "案件詳細を表示"
@@ -1207,7 +1207,7 @@ msgid "application descriptor has been successfully imported, with complete page
 msgstr "アプリケーション記述子は正常にインポートされ、ページ マッピングとメニュー マッピングが完了しています。"
 
 msgid "here"
-msgstr ""
+msgstr "こちら"
 
 msgid "of"
 msgstr "日目/"

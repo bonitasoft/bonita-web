@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-20 05:21+0200\n"
-"PO-Revision-Date: 2021-08-24 07:51\n"
+"POT-Creation-Date: 2021-08-28 05:21+0200\n"
+"PO-Revision-Date: 2021-08-30 01:32\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -188,9 +188,6 @@ msgstr "Casos"
 msgid "Category with name %categoryName% already exists"
 msgstr "La categoría %categoryName% ya existe"
 
-msgid "Configuration"
-msgstr "Configuración"
-
 msgid "Custom Pages"
 msgstr "Páginas Personalizadas"
 
@@ -365,9 +362,6 @@ msgstr "Normal"
 msgid "Only the value attribute can be updated"
 msgstr "Sólo el atributo de valor puede ser actualizado"
 
-msgid "Organization"
-msgstr "Organización"
-
 msgid "Password"
 msgstr "Contraseña"
 
@@ -389,9 +383,6 @@ msgstr "La contraseña debe tener al menos %number% mayusculas"
 msgid "Please, contact your administrator."
 msgstr "Por favor, ponte en contacto con tu administrador."
 
-msgid "Portal"
-msgstr "Portal"
-
 msgid "Process %appName% in version %version% already exists"
 msgstr "El proceso %appName% en la version %version% ya existe"
 
@@ -401,12 +392,6 @@ msgstr "El proceso %appName% en la versión %version% contiene 6.x artefactos he
 msgid "Process definition not found for id %processId%"
 msgstr "No se encuentra la definición del proceso con identificador %processId%"
 
-msgid "Process management"
-msgstr "Gestión de procesos"
-
-msgid "Process manager"
-msgstr "Gestor de Procesos"
-
 msgid "Processes"
 msgstr "Procesos"
 
@@ -415,9 +400,6 @@ msgstr "El usuario ya está asociado con este perfil "
 
 msgid "Profiles"
 msgstr "Perfiles"
-
-msgid "Reports"
-msgstr "Reportes"
 
 msgid "Request parameter \"id\" must be set."
 msgstr "Debe establecerse el parámetro \"id\"."
@@ -439,9 +421,6 @@ msgstr "Ordenes no son soportados por la API"
 
 msgid "Tasks"
 msgstr "Tareas"
-
-msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
-msgstr "El Gestor de Procesos puede supervisar los procesos designados y administrar los casos y las tareas de dichos procesos."
 
 msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
 msgstr "El administrador puede instalar un proceso, administrar la organización y gestionar algunos errores (por ejemplo, ejecutando de nuevo una tarea)."

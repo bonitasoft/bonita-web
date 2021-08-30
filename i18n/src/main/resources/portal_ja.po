@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-20 05:21+0200\n"
-"PO-Revision-Date: 2021-08-24 07:49\n"
+"POT-Creation-Date: 2021-08-28 05:21+0200\n"
+"PO-Revision-Date: 2021-08-30 01:30\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -24,7 +24,7 @@ msgid "%attribute% file format not allowed"
 msgstr "%attribute%のファイル形式は許可されていません。"
 
 msgid "%attribute% file format not allowed or not starting with correct servlet path"
-msgstr ""
+msgstr "%attribute% ファイル形式は正しいサーブレットパスで開始できません。"
 
 msgid "%attribute% is mandatory"
 msgstr "%attribute%は必須です。"
@@ -187,9 +187,6 @@ msgstr "案件"
 
 msgid "Category with name %categoryName% already exists"
 msgstr "カテゴリ名  %categoryName% は既に存在します。"
-
-msgid "Configuration"
-msgstr "構成設定"
 
 msgid "Custom Pages"
 msgstr "カスタム ページ"
@@ -365,9 +362,6 @@ msgstr "普通"
 msgid "Only the value attribute can be updated"
 msgstr "Value 属性のみを更新することができます"
 
-msgid "Organization"
-msgstr "組織"
-
 msgid "Password"
 msgstr "パスワード"
 
@@ -389,9 +383,6 @@ msgstr "パスワードは少なくとも、 %number% 文字の大文字を含�
 msgid "Please, contact your administrator."
 msgstr "BPMのシステム管理者に問い合わせてください。"
 
-msgid "Portal"
-msgstr "ポータル"
-
 msgid "Process %appName% in version %version% already exists"
 msgstr "プロセス： %appName% バージョン %version% では既に存在します"
 
@@ -401,12 +392,6 @@ msgstr "バージョンのプロセスには、6.xレガシーアーティファ
 msgid "Process definition not found for id %processId%"
 msgstr "ID: %processId% のプロセス定義 が見つかりません"
 
-msgid "Process management"
-msgstr "プロセス管理"
-
-msgid "Process manager"
-msgstr "プロセス管理者"
-
 msgid "Processes"
 msgstr "プロセス"
 
@@ -415,9 +400,6 @@ msgstr "プロファイルのメンバーは既に存在します"
 
 msgid "Profiles"
 msgstr "プロファイル"
-
-msgid "Reports"
-msgstr "レポート"
 
 msgid "Request parameter \"id\" must be set."
 msgstr "リクエスト パラメータ　\"id\"　を設定する必要があります。"
@@ -439,9 +421,6 @@ msgstr "この API では、並べ替えはサポートされていません"
 
 msgid "Tasks"
 msgstr "タスク"
-
-msgid "The Process manager can supervise designated processes, and manage cases and tasks of those processes."
-msgstr "プロセス管理者は、指定されたプロセスを監督し、それらのプロセスの案件とタスクを管理できます。"
 
 msgid "The administrator can install a process, manage the organization, and handle some errors (for example, by replaying a task)."
 msgstr "システム管理者は、プロセスのインストール、組織の管理、一部のエラーへの対処（たとえば、タスクの再実行）をすることができます。"
@@ -498,10 +477,10 @@ msgid "Unable to find group %groupId%"
 msgstr "グループ: %groupId% が見つかりません"
 
 msgid "Unable to find process with id %processId%"
-msgstr ""
+msgstr "id %processId% のプロセスが見つかりません"
 
 msgid "Unable to find role %roleId%"
-msgstr ""
+msgstr "ロール %roleId% が見つかりません"
 
 msgid "Unable to get group path, group not found"
 msgstr "グループが見つからないため、グループのパスを取得することができません"
