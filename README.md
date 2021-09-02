@@ -3,7 +3,7 @@
 
 ## Requirements
 
->     Java JDK 1.8 or higher
+>     Java JDK 11
 
 This project bundles the [Maven Wrapper](https://github.com/takari/maven-wrapper), so the `mvnw` script is available at the project root.
 
@@ -47,28 +47,5 @@ Contains the back-end business logic, i.e., the code executed on the server side
 ### test-toolkit
 Contains integration tests utils
 
-### portal module
-Module containing portal implementation
-Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
-Build the portal web application
-
 ### server module
 Contains the server side code of portal
-	
-### Forms module ###
-Module containing 6.x forms implementation
-
-#### forms-design
-Contains a customizable theme shared between form's web application & studio.
-
-#### forms-model
-Contains the source code of the model definition.
-	
-#### forms-rpc
-Contains the source code of the client-server communication.
-
-#### forms-server
-Contains the back-end business logic, i.e., the code executed on the server side.
-
-#### forms-view
-Contains the source code of the client, i.e., the code cross-compiled to javascript and all the resources; 
