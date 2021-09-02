@@ -40,6 +40,7 @@ import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.data.CharacterSet;
+import org.restlet.data.MediaType;
 import org.restlet.data.Range;
 import org.restlet.data.Status;
 import org.restlet.ext.servlet.ServletUtils;
@@ -206,9 +207,15 @@ public class CommonResource extends ServerResource {
 
     @Override
     protected Representation doHandle(final Variant variant) throws ResourceException {
+        setContentType(variant);
         // Used to ensure output is correctly encoded:
         variant.setCharacterSet(CharacterSet.UTF_8);
         return super.doHandle(variant);
+    }
+
+    protected void setContentType(final Variant variant) {
+        // Set JSON as default content type (Resources methods returning a different content type need to override this method)
+        variant.setMediaType(MediaType.APPLICATION_JSON);
     }
 
     @Override
