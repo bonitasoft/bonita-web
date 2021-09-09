@@ -21,6 +21,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.engine.bpm.category.CategoryCriterion;
+import org.bonitasoft.engine.bpm.category.CategoryNotFoundException;
 import org.bonitasoft.engine.bpm.category.CategoryUpdater;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
@@ -28,6 +29,7 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
@@ -40,6 +42,7 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -149,6 +152,8 @@ public class CategoryDatastore extends CommonDatastore<CategoryItem, Category> i
         try {
             final Category result = getProcessAPI().getCategory(id.toLong());
             return convertEngineToConsoleItem(result);
+        } catch (CategoryNotFoundException e) {
+            throw new APIItemNotFoundException(CategoryDefinition.TOKEN, id);
         } catch (final Exception e) {
             throw new APIException(e);
         }
@@ -188,7 +193,11 @@ public class CategoryDatastore extends CommonDatastore<CategoryItem, Category> i
                 processAPI.deleteCategory(idCat);
             }
         } catch (final Exception e) {
-            throw new APIException(e);
+            if (e.getCause() instanceof CategoryNotFoundException) {
+                throw new APIItemNotFoundException(CategoryDefinition.TOKEN);
+            } else {
+                throw new APIException(e);
+            }
         }
     }
 

@@ -26,11 +26,14 @@ import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.profile.ProfileMember;
+import org.bonitasoft.engine.profile.ProfileMemberNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISessionInvalidException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 
@@ -84,7 +87,11 @@ public class ProfileMemberEngineClient {
         } catch (InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (DeletionException e) {
-            throw new APIException(e);
+            if (e.getCause() instanceof ProfileMemberNotFoundException) {
+                throw new APIItemNotFoundException(ProfileMemberDefinition.TOKEN);
+            } else {
+                throw new APIException(e);
+            }
         }
     }
 

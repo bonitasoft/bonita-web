@@ -29,6 +29,10 @@ public class APIItemNotFoundException extends APIItemException {
 
     private final APIID id;
 
+    public APIItemNotFoundException(final String itemType) {
+        this(itemType, null);
+    }
+    
     public APIItemNotFoundException(final String itemType, final APIID id) {
         super(itemType);
         this.id = id;
@@ -43,14 +47,28 @@ public class APIItemNotFoundException extends APIItemException {
 
     @Override
     protected JsonExceptionSerializer buildJson() {
-        return super.buildJson()
-                .appendAttribute("id", getId());
+        JsonExceptionSerializer json =  super.buildJson();
+        if (id != null) {
+            json.appendAttribute("id", getId());
+        }
+        return json;
     }
 
     @Override
     protected String defaultMessage() {
-        return this.itemType.substring(0, 1).toUpperCase() + this.itemType.substring(1) + " with id (" + this.id.toString() + ") not found for API " + getApi()
-                + "#" + getResource();
+        StringBuilder message = new StringBuilder();
+        message.append(this.itemType.substring(0, 1).toUpperCase());
+        message.append(this.itemType.substring(1));
+        if (id != null) {
+            message.append(" with id (");
+            message.append(getId().toString());
+            message.append(")");
+        }
+        message.append(" not found for API ");
+        message.append(getApi());
+        message.append("#");
+        message.append(getResource());
+        return  message.toString();
     }
 
 }

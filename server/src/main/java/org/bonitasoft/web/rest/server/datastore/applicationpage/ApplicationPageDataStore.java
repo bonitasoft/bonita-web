@@ -22,9 +22,11 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
+import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
@@ -36,6 +38,7 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -45,14 +48,12 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 public class ApplicationPageDataStore extends CommonDatastore<ApplicationPageItem, ApplicationPage> implements DatastoreHasAdd<ApplicationPageItem>,
 DatastoreHasGet<ApplicationPageItem>, DatastoreHasSearch<ApplicationPageItem>, DatastoreHasDelete {
     private final ApplicationAPI applicationAPI;
-    private final PageAPI pageAPI;
     private final ApplicationPageItemConverter converter;
 
     public ApplicationPageDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI,
             final ApplicationPageItemConverter converter) {
         super(engineSession);
         this.applicationAPI = applicationAPI;
-        this.pageAPI = pageAPI;
         this.converter = converter;
     }
 
@@ -84,7 +85,11 @@ DatastoreHasGet<ApplicationPageItem>, DatastoreHasSearch<ApplicationPageItem>, D
                 applicationAPI.deleteApplicationPage(id.toLong());
             }
         } catch (final Exception e) {
-            throw new APIException(e);
+            if (e.getCause() instanceof ApplicationPageNotFoundException) {
+                throw new APIItemNotFoundException(ApplicationPageDefinition.TOKEN);
+            } else {
+                throw new APIException(e);
+            }
         }
     }
 

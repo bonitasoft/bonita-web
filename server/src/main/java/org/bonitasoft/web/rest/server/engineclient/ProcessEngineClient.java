@@ -39,9 +39,11 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * Process engine API client
@@ -66,7 +68,7 @@ public class ProcessEngineClient {
             return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final ProcessDefinitionNotFoundException e) {
             LOGGER.log(Level.FINE,"Unable to find process with id " + processId);
-            throw new APINotFoundException(new T_("Unable to find process with id %processId%", new Arg("processId", processId)), e);
+            throw new APIItemNotFoundException(org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition.TOKEN, APIID.makeAPIID(processId));
         } catch (final Exception e) {
             throw new APIException("Error when getting process deployment information", e);
         }
@@ -125,7 +127,11 @@ public class ProcessEngineClient {
                 getProcessApi().deleteProcessDefinition(id);
             }
         } catch (final BonitaException e) {
-            throw new APIException("Error when deleting process(es) " + processIds, e);
+            if (e.getCause() instanceof ProcessDefinitionNotFoundException) {
+                throw new APIItemNotFoundException(org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition.TOKEN);
+            } else {
+                throw new APIException("Error when deleting some of the processes in the list " + processIds, e);
+            }
         }
     }
 

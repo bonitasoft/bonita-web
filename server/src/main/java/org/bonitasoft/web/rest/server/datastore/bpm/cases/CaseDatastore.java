@@ -14,6 +14,9 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 
+import java.util.List;
+import java.util.Map;
+
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
@@ -25,6 +28,7 @@ import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.engineclient.EngineAPIAccessor;
@@ -36,11 +40,9 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Séverin Moussel
@@ -156,7 +158,11 @@ DatastoreHasDelete, DatastoreHasAdd<CaseItem> {
                 processApi.deleteArchivedProcessInstancesInAllStates(id.toLong());
             }
         } catch (final Exception e) {
-            throw new APIException(e);
+            if (e.getCause() instanceof ProcessInstanceNotFoundException) {
+                throw new APIItemNotFoundException(CaseDefinition.TOKEN);
+            } else {
+                throw new APIException(e);
+            }
         }
     }
 
