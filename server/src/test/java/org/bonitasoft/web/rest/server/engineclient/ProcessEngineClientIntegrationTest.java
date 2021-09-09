@@ -30,7 +30,7 @@ import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.junit.Test;
 
 /**
@@ -84,7 +84,7 @@ public class ProcessEngineClientIntegrationTest extends AbstractConsoleTest {
         TestProcessFactory.getInstance().remove(deployedProcess);
     }
 
-    @Test(expected = APINotFoundException.class)
+    @Test(expected = APIItemNotFoundException.class)
     public void
             getProcessDeploymentInfo_return_api_not_found_exception_if_process_is_not_found() throws Exception {
         final long unknownProcessId = 1L;

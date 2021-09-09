@@ -23,6 +23,7 @@ import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.datastore.bpm.process.CategoryDatastore;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.After;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class APICategoryIntegrationTest extends AbstractConsoleTest {
         try {
             return new CategoryDatastore(getInitiator().getSession()).get(makeAPIID(categoryId));
         } catch (final APIException e) {
-            if (e.getCause() instanceof CategoryNotFoundException) {
+            if (e instanceof APIItemNotFoundException) {
                 return null;
             }
             throw e;

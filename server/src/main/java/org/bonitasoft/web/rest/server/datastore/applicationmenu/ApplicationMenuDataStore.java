@@ -21,9 +21,11 @@ import java.util.Map;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.business.application.ApplicationMenu;
+import org.bonitasoft.engine.business.application.ApplicationMenuNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuDefinition;
 import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
@@ -36,6 +38,7 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
@@ -91,7 +94,11 @@ DatastoreHasGet<ApplicationMenuItem>, DatastoreHasSearch<ApplicationMenuItem>, D
                 applicationAPI.deleteApplicationMenu(id.toLong());
             }
         } catch (final Exception e) {
-            throw new APIException(e);
+            if (e.getCause() instanceof ApplicationMenuNotFoundException) {
+                throw new APIItemNotFoundException(ApplicationMenuDefinition.TOKEN);
+            } else {
+                throw new APIException(e);
+            }
         }
     }
 

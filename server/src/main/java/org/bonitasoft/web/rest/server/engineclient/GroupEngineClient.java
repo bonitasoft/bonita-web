@@ -17,6 +17,8 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.GroupAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -27,13 +29,14 @@ import org.bonitasoft.engine.identity.GroupCreator;
 import org.bonitasoft.engine.identity.GroupCreator.GroupField;
 import org.bonitasoft.engine.identity.GroupNotFoundException;
 import org.bonitasoft.engine.identity.GroupUpdater;
+import org.bonitasoft.web.rest.model.identity.GroupDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-
-import java.util.List;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Paul AMAR
@@ -51,7 +54,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.getGroup(groupId);
         } catch (GroupNotFoundException e) {
-            throw new APINotFoundException(new T_("Unable to find group %groupId%", new Arg("groupId", groupId)));
+            throw new APIItemNotFoundException(GroupDefinition.TOKEN, APIID.makeAPIID(groupId));
         }
     }
     
@@ -75,7 +78,11 @@ public class GroupEngineClient {
         try {
             groupAPI.deleteGroups(groupIds);
         } catch (DeletionException e) {
-            throw new APIException(new T_("Error when deleting groups"), e);
+            if (e.getCause() instanceof GroupNotFoundException) {
+                throw new APIItemNotFoundException(GroupDefinition.TOKEN);
+            } else {
+                throw new APIException(new T_("Error when deleting groups"), e);
+            }
         }
     }
     
@@ -83,7 +90,7 @@ public class GroupEngineClient {
         try {
             return groupAPI.updateGroup(groupId, groupUpdater);
         } catch (GroupNotFoundException e) {
-            throw new APINotFoundException(new T_("Can't update group. Group not found"));
+            throw new APIItemNotFoundException(GroupDefinition.TOKEN, APIID.makeAPIID(groupId));
         } catch (UpdateException e) {
             throw new APIException(new T_("Error when updating group"), e);
         } catch (AlreadyExistsException e) {
