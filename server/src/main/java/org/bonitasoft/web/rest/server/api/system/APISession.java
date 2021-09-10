@@ -17,8 +17,6 @@ package org.bonitasoft.web.rest.server.api.system;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-import java.util.Collections;
-
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
@@ -93,7 +91,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
     }
 
     public String getBrandingVersionWithDate() {
-        return bonitaVersion.getBrandingVersionWithDate();
+        return bonitaVersion.getBrandingVersionWithUpdate();
     }
 
     public String getCopyright() {
