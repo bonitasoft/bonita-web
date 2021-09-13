@@ -14,7 +14,6 @@
         <wro4j.version>1.7.0</wro4j.version>
         <restlet-version>2.3.12</restlet-version>
         <jackson-ext-modules-version>2.10.1</jackson-ext-modules-version>
-        <batik.version>1.7</batik.version>
         <!-- Keycloak version cannot be updated without also updating the ovewritten code in server-sp/src/main/java/org/bonitasoft/console/common/server/auth/impl/oidc -->
         <keycloak.version>6.0.1</keycloak.version>
         <spnego.version>r9</spnego.version>
@@ -60,66 +59,9 @@
                 <version>3.7</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.xmlgraphics</groupId>
-                <artifactId>batik-bridge</artifactId>
-                <version>${batik.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>xalan</artifactId>
-                        <groupId>xalan</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>xml-apis</artifactId>
-                        <groupId>xml-apis</groupId>
-                    </exclusion>
-                    <!-- we exclude batik-js since it is already part of console-war-sp WEB-INF/lib as a patched jar to remove classpath entry in manifest.mf (see JIRA
-                        WEB-2729) -->
-                    <exclusion>
-                        <groupId>org.apache.xmlgraphics</groupId>
-                        <artifactId>batik-js</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.xmlgraphics</groupId>
-                <artifactId>batik-dom</artifactId>
-                <version>${batik.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>xalan</artifactId>
-                        <groupId>xalan</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>xml-apis</artifactId>
-                        <groupId>xml-apis</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.xmlgraphics</groupId>
-                <artifactId>batik-svggen</artifactId>
-                <version>${batik.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>xml-apis</artifactId>
-                        <groupId>xml-apis</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.xmlbeans</groupId>
                 <artifactId>xmlbeans</artifactId>
                 <version>2.6.0</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>2.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-math3</artifactId>
-                <version>3.2</version>
             </dependency>
             <dependency>
                 <groupId>net.htmlparser.jericho</groupId>
