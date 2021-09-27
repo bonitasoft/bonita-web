@@ -109,7 +109,7 @@
 <body id="LoginPage">
 
 	<div id="LoginHeader">
-		<h1><span><%= i18n.t_("Welcome to") %></span> <%= i18n.t_("Bonita Portal") %></h1>
+		<h1><span><%= i18n.t_("Welcome to") %></span> <%= i18n.t_("Bonita Applications") %></h1>
 	</div>
 
 	<div id="floater"></div>
