@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-28 05:21+0200\n"
-"PO-Revision-Date: 2021-08-30 01:30\n"
+"POT-Creation-Date: 2021-09-28 10:28+0200\n"
+"PO-Revision-Date: 2021-09-28 08:55\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -137,8 +137,8 @@ msgstr "アプリケーション"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "Bonita Portal"
-msgstr "Bonita ポータル"
+msgid "Bonita Applications"
+msgstr ""
 
 msgid "Call activity"
 msgstr "コールアクティビティ"
@@ -175,9 +175,6 @@ msgstr "プロセスを開始できません。プロセス：%processId% は有
 
 msgid "Can't start process, process %processId% not found"
 msgstr "プロセスを開始できません。 プロセス：%processId% が見つかりません"
-
-msgid "Can't update group. Group not found"
-msgstr "グループが見つからないため、グループを更新できません"
 
 msgid "Can't update user. User not found"
 msgstr "利用者が見つからないため、更新できません"
@@ -472,12 +469,6 @@ msgstr "プロセスを有効にすることはできません。"
 
 msgid "Unable to find data instance %dataName% for activity %activityId%"
 msgstr "アクティビティ：%activityId% のデータ・インスタンス：%dataName% を見つけることができません"
-
-msgid "Unable to find group %groupId%"
-msgstr "グループ: %groupId% が見つかりません"
-
-msgid "Unable to find process with id %processId%"
-msgstr "id %processId% のプロセスが見つかりません"
 
 msgid "Unable to find role %roleId%"
 msgstr "ロール %roleId% が見つかりません"

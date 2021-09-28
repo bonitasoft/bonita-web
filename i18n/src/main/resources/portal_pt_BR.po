@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-28 05:21+0200\n"
-"PO-Revision-Date: 2021-08-30 01:31\n"
+"POT-Creation-Date: 2021-09-28 10:28+0200\n"
+"PO-Revision-Date: 2021-09-28 08:58\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -137,8 +137,8 @@ msgstr "Aplicações"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "Bonita Portal"
-msgstr "Bonita BPM Portal"
+msgid "Bonita Applications"
+msgstr ""
 
 msgid "Call activity"
 msgstr "Atividade de Chamada"
@@ -175,9 +175,6 @@ msgstr "Não pode iniciar o processo, o processo %processId% não está ativado"
 
 msgid "Can't start process, process %processId% not found"
 msgstr "Não pode iniciar processo, o processo %processId% não foi encontrado"
-
-msgid "Can't update group. Group not found"
-msgstr "Não é possível atualizar o grupo. Grupo não encontrado"
 
 msgid "Can't update user. User not found"
 msgstr "Impossível atualizar usuário. Usuário não foi encontrado"
@@ -472,12 +469,6 @@ msgstr "Impossível ativar processo"
 
 msgid "Unable to find data instance %dataName% for activity %activityId%"
 msgstr "Impossível encontrar dados de instância %dataName% da atividade %activityId%"
-
-msgid "Unable to find group %groupId%"
-msgstr "Não é possível localizar o grupo %groupId%"
-
-msgid "Unable to find process with id %processId%"
-msgstr "Não foi possível encontrar o processo com o id %processId%"
 
 msgid "Unable to find role %roleId%"
 msgstr "Não é possível localizar a função %roleId%"

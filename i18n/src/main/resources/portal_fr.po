@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-28 05:21+0200\n"
-"PO-Revision-Date: 2021-08-30 01:29\n"
+"POT-Creation-Date: 2021-09-28 10:28+0200\n"
+"PO-Revision-Date: 2021-09-28 08:53\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -137,8 +137,8 @@ msgstr "Applications"
 msgid "BDM"
 msgstr "BDM"
 
-msgid "Bonita Portal"
-msgstr "Bonita Portal"
+msgid "Bonita Applications"
+msgstr ""
 
 msgid "Call activity"
 msgstr "Activité appelante"
@@ -175,9 +175,6 @@ msgstr "Impossible de démarrer le processus, car %processId% n'est pas activé"
 
 msgid "Can't start process, process %processId% not found"
 msgstr "Impossible de démarrer le processus, processus %processId% introuvable"
-
-msgid "Can't update group. Group not found"
-msgstr "Impossible de mettre à jour le groupe. Il n'a pas été trouvé"
 
 msgid "Can't update user. User not found"
 msgstr "Impossible de mettre à jour les données de l'utilisateur. L'utilisateur est introuvable"
@@ -472,12 +469,6 @@ msgstr "Impossible d'activer l'app"
 
 msgid "Unable to find data instance %dataName% for activity %activityId%"
 msgstr "Impossible de trouver les données de l'instance %dataName% pour l'activité %activityId%"
-
-msgid "Unable to find group %groupId%"
-msgstr "Impossible de trouver le groupe %groupId%"
-
-msgid "Unable to find process with id %processId%"
-msgstr "Impossible de trouver le processus avec l'id %processId%"
 
 msgid "Unable to find role %roleId%"
 msgstr "Impossible de trouver le rôle %roleId%"
