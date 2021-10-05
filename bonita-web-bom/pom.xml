@@ -8,6 +8,34 @@
     <name>Bonita web community BOM (Bill of Materials)</name>
     <packaging>pom</packaging>
 
+    <!-- Mandatory information needed to pass OSS Sonatype Maven Central checks -->
+    <description>Bonita community web backend - Bill of Materials</description>
+    <url>https://community.bonitasoft.com/</url>
+    <organization>
+        <name>Bonitasoft S.A.</name>
+        <url>https://community.bonitasoft.com/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License Version 2.1</name>
+            <url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>bonita-runtime-team</id>
+            <name>The Bonita Runtime Development Team</name>
+            <organization>Bonitasoft S.A.</organization>
+            <organizationUrl>http://community.bonitasoft.com/</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:bonitasoft/bonita-web.git</connection>
+        <url>scm:git:git@github.com:bonitasoft/bonita-web.git</url>
+    </scm>
+
+
     <properties>
         <bonita.engine.version>${project.version}</bonita.engine.version>
         <gwt.version>2.5.1</gwt.version>
