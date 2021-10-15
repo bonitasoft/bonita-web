@@ -6,7 +6,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
 import static java.lang.String.format;
@@ -50,6 +49,15 @@ public class TokenValidatorFilterTest {
     @Test
     public void should_not_check_csrf_token_for_HEAD_request() throws Exception {
         request.setMethod("HEAD");
+
+        boolean valid = filter.checkValidCondition(request, response);
+
+        assertThat(valid).isTrue();
+    }
+    
+    @Test
+    public void should_not_check_csrf_token_for_OPTIONS_request() throws Exception {
+        request.setMethod("OPTIONS");
 
         boolean valid = filter.checkValidCondition(request, response);
 

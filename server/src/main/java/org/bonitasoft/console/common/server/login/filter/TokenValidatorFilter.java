@@ -80,7 +80,7 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
     }
 
     private boolean isSafeMethod(String method) {
-        return "GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method);
+        return "GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method) || "OPTIONS".equalsIgnoreCase(method);
     }
 
 }
