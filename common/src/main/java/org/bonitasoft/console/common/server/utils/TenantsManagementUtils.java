@@ -178,4 +178,11 @@ public class TenantsManagementUtils {
     public static String getTechnicalUserPassword() throws Exception {
         return PropertiesFactory.getPlatformTenantConfigProperties().defaultTenantPassword();
     }
+
+    public static boolean isDefaultTenantPaused() throws Exception {
+        final APISession apiSession = TenantAPIAccessor.getLoginAPI().login(getTechnicalUserUsername(), getTechnicalUserPassword());
+        boolean isPaused = TenantAPIAccessor.getTenantAdministrationAPI(apiSession).isPaused();
+        TenantAPIAccessor.getLoginAPI().logout(apiSession);
+        return isPaused;
+    }
 }
