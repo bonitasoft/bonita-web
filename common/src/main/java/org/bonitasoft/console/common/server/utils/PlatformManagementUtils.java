@@ -62,7 +62,7 @@ public class PlatformManagementUtils {
             try {
                 return localPlatformLogin();
             } catch (final Exception e) {
-                throw new ServerAPIException("unable to do the local login", e);
+                throw new ServerAPIException("Unable to login locally", e);
             }
         } else {
             String username = System.getProperty("org.bonitasoft.platform.username");
