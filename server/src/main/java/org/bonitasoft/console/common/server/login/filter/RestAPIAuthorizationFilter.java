@@ -15,12 +15,10 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -31,22 +29,17 @@ import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.PermissionAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ExecutionException;
-import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.session.PlatformSession;
-import org.bonitasoft.web.rest.model.identity.UserDefinition;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
 import org.bonitasoft.web.rest.server.framework.utils.RestRequestParser;
 import org.bonitasoft.web.toolkit.client.common.i18n.model.I18nLocaleDefinition;
 import org.bonitasoft.web.toolkit.client.common.session.SessionDefinition;
@@ -59,17 +52,15 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
-    public static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
-
     private static final String PLATFORM_API_URI_REGEXP = ".*(API|APIToolkit)/platform/.*";
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
-    
+
     /**
      * Logger
      */
     protected static final Logger LOGGER = Logger.getLogger(RestAPIAuthorizationFilter.class.getName());
-    
+
     private final Boolean reload;
 
     public RestAPIAuthorizationFilter(final boolean reload) {
@@ -137,70 +128,58 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             throws ServletException {
         final String method = request.getMethod();
         final HttpSession session = request.getSession();
-        @SuppressWarnings("unchecked")
-        final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
+        // userPermissions are of type: "organization_visualization"
+        @SuppressWarnings("unchecked") final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final Long tenantId = apiSession.getTenantId();
-        
+
         final boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return true;
         }
         final String resourceQualifiersAsString = resourceQualifiers != null ? resourceQualifiers.toString() : null;
 
+        // E.g. "profile|Administrator", "check|org.bonitasoft.permissions.CasePermissionRule" for dynamic permissions
+        // "organization_visualization" for static permissions
+
         final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
-        final Set<String> resourceAuthorizations = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, dynamicPermissionsChecks);
-        if (!resourceAuthorizations.isEmpty()) {
+
+        final Set<String> resourceDynamicPermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, dynamicPermissionsChecks);
+
+        if (!resourceDynamicPermissions.isEmpty()) {
             //if there is a dynamic rule, use it to check the permissions
             final String requestBody = getRequestBody(request);
             final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(),
                     requestBody);
-            return dynamicCheck(apiCallContext, userPermissions, resourceAuthorizations, apiSession);
+            try {
+                return dynamicCheck(apiCallContext, userPermissions, resourceDynamicPermissions, apiSession);
+            } catch (BonitaException e) {
+                throw new ServletException(e);
+            }
         } else {
             //if there is no dynamic rule, use the static permissions
             final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
             final Set<String> resourcePermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, resourcesPermissionsMapping);
             final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString);
-            if (isAllwaysAuthorizedResource(request, apiSession, apiCallContext)) {
+            if (isAlwaysAuthorizedResource(apiCallContext)) {
                 return true;
             }
             return staticCheck(apiCallContext, userPermissions, resourcePermissions, apiSession.getUserName());
         }
     }
 
-    protected boolean isAllwaysAuthorizedResource(final HttpServletRequest request, final APISession apiSession, final APICallContext apiCallContext) {
-        return apiCallContext.isGET()  
-                && (isSingleResourceCall(apiCallContext, "system", SessionDefinition.TOKEN) 
-                        ||isSingleResourceCall(apiCallContext, "system", I18nLocaleDefinition.TOKEN) 
-                        ||isSingleResourceCall(apiCallContext, "system", "license")
-                        || isMyProfilesListCall(request, apiSession, apiCallContext) 
-                        || isMyUserCall(apiSession, apiCallContext));
+    protected boolean isAlwaysAuthorizedResource(final APICallContext apiCallContext) {
+        return apiCallContext.isGET()
+                && (isSingleResourceCall(apiCallContext, SessionDefinition.TOKEN)
+                || isSingleResourceCall(apiCallContext, I18nLocaleDefinition.TOKEN));
     }
 
-    private boolean isSingleResourceCall(final APICallContext apiCallContext, final String authorizedAPIName, final String authorizedResourceName) {
-        return authorizedResourceName.equals(apiCallContext.getResourceName()) && authorizedAPIName.equals(apiCallContext.getApiName());
-    }
-    
-    private boolean isMyUserCall(final APISession apiSession, final APICallContext apiCallContext) {
-        return UserDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "identity".equals(apiCallContext.getApiName()) 
-                && Long.toString(apiSession.getUserId()).equals(apiCallContext.getResourceId());
-    }
-
-    private boolean isMyProfilesListCall(final HttpServletRequest request, final APISession apiSession, final APICallContext apiCallContext) {
-        if (ProfileDefinition.TOKEN.equals(apiCallContext.getResourceName()) && "portal".equals(apiCallContext.getApiName())) {
-            //only process the query string if the above condition is true for performances reasons
-            apiCallContext.setQueryString(request.getQueryString());
-            return hasUserIDFilter(apiSession, apiCallContext);
-        }
-        return false;
-    }
-
-    private boolean hasUserIDFilter(APISession apiSession, APICallContext apiCallContext) {
-        return Long.toString(apiSession.getUserId()).equals(apiCallContext.getFilters().get("user_id"));
+    private boolean isSingleResourceCall(final APICallContext apiCallContext, final String authorizedResourceName) {
+        return authorizedResourceName.equals(apiCallContext.getResourceName()) && "system".equals(apiCallContext.getApiName());
     }
 
     protected Set<String> getDeclaredPermissions(final String apiName, final String resourceName, final String method, final APIID resourceQualifiers,
-            final ResourcesPermissionsMapping resourcesPermissionsMapping) {
+                                                 final ResourcesPermissionsMapping resourcesPermissionsMapping) {
         List<String> resourceQualifiersIds = null;
         if (resourceQualifiers != null) {
             resourceQualifiersIds = resourceQualifiers.getIds();
@@ -237,7 +216,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected boolean staticCheck(final APICallContext apiCallContext, final Set<String> permissionsOfUser,
-            final Set<String> resourcePermissions, final String username) {
+                                  final Set<String> resourcePermissions, final String username) {
         for (final String resourcePermission : resourcePermissions) {
             if (permissionsOfUser.contains(resourcePermission)) {
                 return true;
@@ -252,106 +231,10 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         return false;
     }
 
-    protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceAuthorizations,
-            final APISession apiSession) throws ServletException {
-        checkResourceAuthorizationsSyntax(resourceAuthorizations);
-        if (checkDynamicPermissionsWithUsername(resourceAuthorizations, apiSession)
-                || checkDynamicPermissionsWithProfiles(resourceAuthorizations, userPermissions)) {
-            return true;
-        }
-        final String resourceClassname = getResourceClassname(resourceAuthorizations);
-        if (resourceClassname != null) {
-            return checkDynamicPermissionsWithScript(apiCallContext, resourceClassname, apiSession);
-        }
-        return false;
-    }
-
-    protected boolean checkDynamicPermissionsWithScript(final APICallContext apiCallContext, final String resourceClassname,
-            final APISession apiSession) throws ServletException {
-        try {
-            return executeScript(apiSession, resourceClassname, apiCallContext);
-        } catch (final NotFoundException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Unable to find the dynamic permissions script: " + resourceClassname, e);
-            }
-            return false;
-        } catch (final ExecutionException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Unable to execute the dynamic permissions script: " + resourceClassname, e);
-            }
-            return false;
-        } catch (final BonitaException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Unable to retrieve the permissions API", e);
-            }
-            throw new ServletException(e);
-        }
-    }
-
-    protected boolean checkDynamicPermissionsWithProfiles(final Set<String> resourceAuthorizations, final Set<String> userPermissions) {
-        final Set<String> profileAuthorizations = getResourceProfileAuthorizations(resourceAuthorizations);
-        for (final String profileAuthorization : profileAuthorizations) {
-            if (userPermissions.contains(profileAuthorization)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected boolean checkDynamicPermissionsWithUsername(final Set<String> resourceAuthorizations, final APISession apiSession) {
-        return resourceAuthorizations.contains(PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|" + apiSession.getUserName());
-    }
-
-    protected boolean checkResourceAuthorizationsSyntax(final Set<String> resourceAuthorizations) {
-        boolean valid = true;
-        for (final String resourceAuthorization : resourceAuthorizations) {
-            if (!resourceAuthorization.matches("(" + PermissionsBuilder.USER_TYPE_AUTHORIZATION_PREFIX + "|"
-                    + PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|" + SCRIPT_TYPE_AUTHORIZATION_PREFIX + ")\\|.+")) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Error while getting dynamic authoriations. Unknown syntax: " + resourceAuthorization
-                            + " defined in dynamic-permissions-checks.properties");
-                }
-                valid = false;
-            }
-        }
-        return valid;
-    }
-
-    protected String getResourceClassname(final Set<String> resourcePermissions) {
-        String className = null;
-        for (final String resourcePermission : resourcePermissions) {
-            if (resourcePermission.startsWith(SCRIPT_TYPE_AUTHORIZATION_PREFIX + "|")) {
-                className = resourcePermission.substring((SCRIPT_TYPE_AUTHORIZATION_PREFIX + "|").length());
-            }
-        }
-        return className;
-    }
-
-    protected Set<String> getResourceProfileAuthorizations(final Set<String> resourcePermissions) {
-        final Set<String> profileAuthorizations = new HashSet<String>();
-        for (final String authorizedItem : resourcePermissions) {
-            if (authorizedItem.startsWith(PermissionsBuilder.PROFILE_TYPE_AUTHORIZATION_PREFIX + "|")) {
-                profileAuthorizations.add(authorizedItem);
-            }
-        }
-        return profileAuthorizations;
-    }
-
-    protected boolean executeScript(final APISession apiSession, final String resourceClassname, final APICallContext apiCallContext)
-            throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException,
-            ExecutionException, NotFoundException {
+    protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceDynamicPermissions,
+                                   final APISession apiSession) throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException {
         final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
-        final boolean authorized = permissionAPI.checkAPICallWithScript(resourceClassname, apiCallContext, shouldReload(apiSession));
-        if (!authorized) {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(
-                        Level.FINEST,
-                        "Unauthorized access to " + apiCallContext.getMethod() + " " + apiCallContext.getApiName() + "/" + apiCallContext.getResourceName()
-                                + (apiCallContext.getResourceId() != null ? "/" + apiCallContext.getResourceId() : "") + " attempted by "
-                                + apiSession.getUserName() + " Permission script: " + resourceClassname);
-            }
-        }
-        return authorized;
+        return permissionAPI.isAuthorized(apiCallContext, shouldReload(apiSession), userPermissions, resourceDynamicPermissions);
     }
 
     private boolean shouldReload(final APISession apiSession) {
