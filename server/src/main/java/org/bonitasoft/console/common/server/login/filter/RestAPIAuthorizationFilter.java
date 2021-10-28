@@ -35,6 +35,7 @@ import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
+import org.bonitasoft.engine.exception.ExecutionException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
@@ -232,7 +233,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceDynamicPermissions,
-                                   final APISession apiSession) throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException {
+                                   final APISession apiSession) throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException, ExecutionException {
         final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
         return permissionAPI.isAuthorized(apiCallContext, shouldReload(apiSession), userPermissions, resourceDynamicPermissions);
     }
