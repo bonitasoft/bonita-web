@@ -14,25 +14,32 @@
 
 package org.bonitasoft.console.common.server.servlet;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.business.application.ApplicationNotFoundException;
-import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.business.application.ApplicationUpdater;
 import org.bonitasoft.engine.business.application.impl.IconImpl;
+import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.UpdateException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Anthony Birembaut
@@ -134,7 +141,7 @@ public class ApplicationIconServletTest {
 
         assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NOT_FOUND);
     }
-    
+
     @Test
     public void should_content_type_be_set_to_what_is_return_from_the_engine() throws Exception {
         doReturn(new IconImpl("theMimeTypeOfTheIcon", "content".getBytes())).when(applicationAPI).getIconOfApplication(APPLICATION_ID);
@@ -143,5 +150,40 @@ public class ApplicationIconServletTest {
         applicationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getContentType()).isEqualTo("theMimeTypeOfTheIcon");
+    }
+
+    @Test
+    public void should_return_no_content_success_when_deleting_icon() throws Exception {
+        httpServletRequest.setPathInfo("/" + APPLICATION_ID);
+        httpServletRequest.setMethod("DELETE");
+        ApplicationUpdater updater = new ApplicationUpdater();
+        updater.setIcon(null, null);
+        ArgumentCaptor<ApplicationUpdater> captor = ArgumentCaptor.forClass(ApplicationUpdater.class);
+
+        applicationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+
+        verify(applicationAPI, times(1)).updateApplication(eq(APPLICATION_ID), captor.capture());
+        assertEquals(updater.getFields(), captor.getValue().getFields());
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    @Test
+    public void should_return_not_found_when_deleting_icon_for_application_that_does_not_exist() throws Exception {
+        doThrow(new ApplicationNotFoundException(APPLICATION_ID)).when(applicationAPI).updateApplication(eq(APPLICATION_ID), any());
+        httpServletRequest.setPathInfo("/" + APPLICATION_ID);
+        httpServletRequest.setMethod("DELETE");
+
+        applicationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    @Test
+    public void should_return_bad_request_when_deleting_icon_for_application_with_generic_error() throws Exception {
+        doThrow(new UpdateException("Server crash")).when(applicationAPI).updateApplication(eq(APPLICATION_ID), any());
+        httpServletRequest.setPathInfo("/" + APPLICATION_ID);
+        httpServletRequest.setMethod("DELETE");
+
+        applicationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 }

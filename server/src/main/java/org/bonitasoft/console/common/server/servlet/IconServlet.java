@@ -1,5 +1,16 @@
 package org.bonitasoft.console.common.server.servlet;
 
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
+import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
+import org.restlet.Server;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -7,12 +18,6 @@ import java.net.URLEncoder;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.bonitasoft.engine.session.APISession;
 
 public abstract class IconServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(IconServlet.class.getName());
@@ -51,7 +56,41 @@ public abstract class IconServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doDelete(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+        String pathInfo = request.getPathInfo();
+        if (pathInfo == null || pathInfo.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        Long entityId = parseLong(pathInfo);
+        if (entityId == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        try {
+            deleteIcon(entityId, (APISession) request.getSession().getAttribute("apiSession"), request, response);
+        } catch (APIItemNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        } catch (APIMalformedUrlException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        } catch (ServerException e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return;
+        }
+        try {
+            setHeaders(request, response, entityId);
+        } catch (UnsupportedEncodingException e) {
+            logAndThrowException(e, "Error while generating the headers.");
+        }
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
     protected abstract Optional<IconContent> retrieveIcon(Long iconId, APISession apiSession);
+
+    protected abstract void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request, HttpServletResponse response) throws ServerException;
 
     private Long parseLong(String iconIdPath) {
         try {
