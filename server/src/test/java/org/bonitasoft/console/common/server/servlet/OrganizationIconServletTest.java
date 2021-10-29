@@ -14,24 +14,33 @@
 
 package org.bonitasoft.console.common.server.servlet;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.exception.NotFoundException;
+import org.bonitasoft.engine.exception.UpdateException;
+import org.bonitasoft.engine.identity.UserNotFoundException;
+import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.identity.impl.IconImpl;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Baptiste Mesta
@@ -40,6 +49,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 public class OrganizationIconServletTest {
 
     private static final long ICON_ID = 1238970432L;
+    private static final long USER_ID = 8211558366L;
     @Spy
     private OrganizationIconServlet organizationIconServlet;
     private MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
@@ -132,5 +142,63 @@ public class OrganizationIconServletTest {
         organizationIconServlet.doGet(httpServletRequest, httpServletResponse);
 
         assertThat(httpServletResponse.getContentType()).isEqualTo("theMimeTypeOfTheIcon");
+    }
+
+    @Test
+    public void should_return_no_content_success_when_deleting_icon() throws Exception {
+        httpServletRequest.setPathInfo("/" + USER_ID);
+        httpServletRequest.setParameter("type", "user");
+        httpServletRequest.setMethod("DELETE");
+        UserUpdater updater = new UserUpdater();
+        updater.setIcon(null, null);
+        ArgumentCaptor<UserUpdater> captor = ArgumentCaptor.forClass(UserUpdater.class);
+
+        organizationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+
+        verify(identityAPI, times(1)).updateUser(eq(USER_ID), captor.capture());
+        assertEquals(updater.getFields(), captor.getValue().getFields());
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    @Test
+    public void should_return_API_Malformed_Exception_when_type_is_not_defined_in_url() throws Exception {
+        httpServletRequest.setPathInfo("/" + USER_ID);
+        httpServletRequest.setMethod("DELETE");
+
+        organizationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    @Test
+    public void should_return_API_Malformed_Exception_when_type_is_incorrect_in_url() throws Exception {
+        httpServletRequest.setPathInfo("/" + USER_ID);
+        httpServletRequest.setMethod("DELETE");
+        httpServletRequest.setParameter("type", "group");
+
+        organizationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    @Test
+    public void should_return_not_found_when_deleting_icon_for_user_that_does_not_exist() throws Exception {
+        doThrow(new UserNotFoundException("User not found")).when(identityAPI).updateUser(eq(USER_ID), any());
+        httpServletRequest.setPathInfo("/" + USER_ID);
+        httpServletRequest.setParameter("type", "user");
+        httpServletRequest.setMethod("DELETE");
+
+        organizationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    @Test
+    public void should_return_bad_request_when_deleting_icon_for_user_with_generic_error() throws Exception {
+        doThrow(new UpdateException("Server crash")).when(identityAPI).updateUser(eq(USER_ID), any());
+        httpServletRequest.setPathInfo("/" + USER_ID);
+        httpServletRequest.setParameter("type", "user");
+        httpServletRequest.setMethod("DELETE");
+
+        organizationIconServlet.doDelete(httpServletRequest, httpServletResponse);
+        assertThat(httpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 }
