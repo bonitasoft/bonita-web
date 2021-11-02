@@ -142,9 +142,8 @@ public class ApiExtensionResource extends ServerResource {
     }
 
     private void fillContent(StringRepresentation stringRepresentation, RestApiResponse restApiResponse) {
-        if (restApiResponse.getResponse() != null) {
-            stringRepresentation.setText(restApiResponse.getResponse().toString());
-        }
+        stringRepresentation.setText(
+                restApiResponse.getResponse() != null ? restApiResponse.getResponse().toString() : null);
     }
 
     private RestApiResponse handleRequest() throws BonitaException {

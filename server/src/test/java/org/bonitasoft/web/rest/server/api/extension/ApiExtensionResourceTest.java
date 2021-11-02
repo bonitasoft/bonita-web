@@ -84,7 +84,7 @@ public class ApiExtensionResourceTest {
         //given
         method = new Method(GET);
         doReturn(method).when(request).getMethod();
-        doReturn(new RestApiResponseBuilder().build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
+        doReturn(new RestApiResponseBuilder().withResponse("").build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
                 any(ResourceExtensionResolver.class));
 
         //when
@@ -92,6 +92,21 @@ public class ApiExtensionResourceTest {
 
         //then
         assertThat(representation.getText()).as("should return response").isEqualTo("");
+    }
+    
+    @Test
+    public void should_handle_return_no_response() throws Exception {
+        //given
+        method = new Method(GET);
+        doReturn(method).when(request).getMethod();
+        doReturn(new RestApiResponseBuilder().build()).when(restApiRenderer).handleRestApiCall(any(HttpServletRequest.class),
+                any(ResourceExtensionResolver.class));
+
+        //when
+        final Representation representation = apiExtensionResource.doHandle();
+
+        //then
+        assertThat(representation.getText()).as("should return response").isEqualTo(null);
     }
 
     @Test
