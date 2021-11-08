@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
-import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.PermissionAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -139,33 +136,15 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             return true;
         }
         final String resourceQualifiersAsString = resourceQualifiers != null ? resourceQualifiers.toString() : null;
-
-        // E.g. "profile|Administrator", "check|org.bonitasoft.permissions.CasePermissionRule" for dynamic permissions
-        // "organization_visualization" for static permissions
-
-        final DynamicPermissionsChecks dynamicPermissionsChecks = getDynamicPermissionsChecks(tenantId);
-
-        final Set<String> resourceDynamicPermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, dynamicPermissionsChecks);
-
-        if (!resourceDynamicPermissions.isEmpty()) {
-            //if there is a dynamic rule, use it to check the permissions
-            final String requestBody = getRequestBody(request);
-            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(),
-                    requestBody);
-            try {
-                return dynamicCheck(apiCallContext, userPermissions, resourceDynamicPermissions, apiSession);
-            } catch (BonitaException e) {
-                throw new ServletException(e);
-            }
-        } else {
-            //if there is no dynamic rule, use the static permissions
-            final ResourcesPermissionsMapping resourcesPermissionsMapping = getResourcesPermissionsMapping(tenantId);
-            final Set<String> resourcePermissions = getDeclaredPermissions(apiName, resourceName, method, resourceQualifiers, resourcesPermissionsMapping);
-            final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString);
-            if (isAlwaysAuthorizedResource(apiCallContext)) {
-                return true;
-            }
-            return staticCheck(apiCallContext, userPermissions, resourcePermissions, apiSession.getUserName());
+        final String body = getRequestBody(request);
+        final APICallContext apiCallContext = new APICallContext(method, apiName, resourceName, resourceQualifiersAsString, request.getQueryString(), body);
+        if (isAlwaysAuthorizedResource(apiCallContext)) {
+            return true;
+        }
+        try {
+            return enginePermissionsCheck(apiCallContext, userPermissions, apiSession);
+        } catch (BonitaException e) {
+            throw new ServletException(e);
         }
     }
 
@@ -177,22 +156,6 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     private boolean isSingleResourceCall(final APICallContext apiCallContext, final String authorizedResourceName) {
         return authorizedResourceName.equals(apiCallContext.getResourceName()) && "system".equals(apiCallContext.getApiName());
-    }
-
-    protected Set<String> getDeclaredPermissions(final String apiName, final String resourceName, final String method, final APIID resourceQualifiers,
-                                                 final ResourcesPermissionsMapping resourcesPermissionsMapping) {
-        List<String> resourceQualifiersIds = null;
-        if (resourceQualifiers != null) {
-            resourceQualifiersIds = resourceQualifiers.getIds();
-        }
-        Set<String> resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName, resourceQualifiersIds);
-        if (resourcePermissions.isEmpty()) {
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissionsWithWildCard(method, apiName, resourceName, resourceQualifiersIds);
-        }
-        if (resourcePermissions.isEmpty()) {
-            resourcePermissions = resourcesPermissionsMapping.getResourcePermissions(method, apiName, resourceName);
-        }
-        return resourcePermissions;
     }
 
     protected String getRequestBody(final HttpServletRequest request) throws ServletException {
@@ -208,34 +171,10 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         return PropertiesFactory.getSecurityProperties(tenantId).isAPIAuthorizationsCheckEnabled();
     }
 
-    protected ResourcesPermissionsMapping getResourcesPermissionsMapping(final long tenantId) {
-        return PropertiesFactory.getResourcesPermissionsMapping(tenantId);
-    }
-
-    protected DynamicPermissionsChecks getDynamicPermissionsChecks(final long tenantId) {
-        return PropertiesFactory.getDynamicPermissionsChecks(tenantId);
-    }
-
-    protected boolean staticCheck(final APICallContext apiCallContext, final Set<String> permissionsOfUser,
-                                  final Set<String> resourcePermissions, final String username) {
-        for (final String resourcePermission : resourcePermissions) {
-            if (permissionsOfUser.contains(resourcePermission)) {
-                return true;
-            }
-        }
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.log(Level.FINEST,
-                    "Unauthorized access to " + apiCallContext.getMethod() + " " + apiCallContext.getApiName() + "/" + apiCallContext.getResourceName()
-                            + (apiCallContext.getResourceId() != null ? "/" + apiCallContext.getResourceId() : "") + " attempted by " + username
-                            + " required permissions: " + resourcePermissions);
-        }
-        return false;
-    }
-
-    protected boolean dynamicCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final Set<String> resourceDynamicPermissions,
-                                   final APISession apiSession) throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException, ExecutionException {
+    protected boolean enginePermissionsCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final APISession apiSession)
+            throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException, ExecutionException {
         final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
-        return permissionAPI.isAuthorized(apiCallContext, shouldReload(apiSession), userPermissions, resourceDynamicPermissions);
+        return permissionAPI.isAuthorized(apiCallContext, shouldReload(apiSession), userPermissions);
     }
 
     private boolean shouldReload(final APISession apiSession) {
