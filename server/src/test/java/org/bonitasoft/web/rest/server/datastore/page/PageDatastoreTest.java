@@ -217,7 +217,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(apiExtensionToBeAdded);
 
         //then
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
     @Test(expected = APIException.class)
@@ -272,7 +272,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(pageToBeAdded);
 
         // Then
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(null), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(null), any(File.class), eq(engineSession));
     }
 
     @Test
@@ -330,7 +330,7 @@ public class PageDatastoreTest extends APITestWithMock {
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
         verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
         verify(customPageService).removePage(any(), eq("custompage_apiExt"));
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
 
@@ -355,7 +355,7 @@ public class PageDatastoreTest extends APITestWithMock {
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
         verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
         verify(customPageService, never()).removePage(any(), eq("custompage_apiExt"));
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(resourcesPermissionsMapping), eq(compoundPermissionsMapping), eq(engineSession));
+        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
     @Test(expected = APIForbiddenException.class)
@@ -499,7 +499,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         assertThat(argumentCaptor.getValue().getContentName()).isEqualTo("newPage.zip");
     }
-    
+
     @Test
     public void it_should_set_the_new_zip_name_value_to_original_file_name_field_on_creation_with_contentName_attribute() throws Exception {
 

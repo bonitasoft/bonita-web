@@ -96,7 +96,7 @@ public class PageUploadServlet extends TenantFileUploadServlet {
         final CustomPageService customPageService = new CustomPageService();
         final Properties properties = customPageService.getPageProperties(apiSession, FileUtils.readFileToByteArray(uploadedFile),
                 checkIfItAlreadyExists, processDefinitionId);
-        return customPageService.getCustomPagePermissions(properties, PropertiesFactory.getResourcesPermissionsMapping(apiSession.getTenantId()), true);
+        return customPageService.getCustomPagePermissions(properties, PropertiesFactory.getResourcesPermissionsMapping(apiSession.getTenantId()));
     }
 
     private Long getProcessDefinitionId(final HttpServletRequest request) {
