@@ -18,19 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,16 +28,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
+import org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
@@ -69,8 +60,6 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import groovy.lang.GroovyClassLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -131,8 +120,6 @@ public class CustomPageServiceTest {
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
         doReturn(pageFile).when(customPageService).getGroovyPageFile(any(File.class));
-        final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
-        doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(),
                 any(CustomPageDependenciesResolver.class), any(BDMClientDependenciesResolver.class));
 
@@ -158,8 +145,6 @@ public class CustomPageServiceTest {
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDir);
         doReturn(pageFile).when(customPageService).getPageFile(any(File.class), anyString());
-        final File pageLibDir = new File(pageFile.getParentFile(), File.separator + "lib");
-        doReturn(pageLibDir).when(customPageService).getCustomPageLibDirectory(any(File.class));
         doReturn(Thread.currentThread().getContextClassLoader()).when(customPageService).getParentClassloader(anyString(),
                 any(CustomPageDependenciesResolver.class),
                 any(BDMClientDependenciesResolver.class));
@@ -210,58 +195,38 @@ public class CustomPageServiceTest {
 
         final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping)
+        doReturn(new HashSet<>(List.of("Organization Visualization"))).when(resourcesPermissionsMapping)
                 .getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
                 .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
-        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile,
-                resourcesPermissionsMapping, true);
+        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new PropertiesWithSet(pagePropertiesFile),
+                resourcesPermissionsMapping);
 
         // Then
         assertThat(customPagePermissions).contains("Organization Visualization", "Organization Managment");
     }
 
     @Test
-    public void should_not_return_it_when_unkown_resource_is_declared_in_PageProperties_and_flag_false() throws Exception {
+    public void should_return_unknown_resources_declared_in_PageProperties() throws Exception {
         // Given
         final String fileContent = "name=customPage1\n" +
-                "resources=[GET|unkown/resource, PUT|identity/user]";
+                "resources=[GET|unknown/resource, GET|identity/user, PUT|identity/user]";
 
         final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
-        doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
-                .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
-
-        // When
-        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile,
-                resourcesPermissionsMapping, false);
-
-        // Then
-        assertThat(customPagePermissions).containsOnly("Organization Visualization", "Organization Managment");
-    }
-
-    @Test
-    public void should_return_it_when_unkown_resource_is_declared_in_PageProperties_and_flag_true() throws Exception {
-        // Given
-        final String fileContent = "name=customPage1\n" +
-                "resources=[GET|unkown/resource, GET|identity/user, PUT|identity/user]";
-
-        final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
-        IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(new HashSet<>(Arrays.asList("Organization Visualization"))).when(resourcesPermissionsMapping)
+        doReturn(new HashSet<>(List.of("Organization Visualization"))).when(resourcesPermissionsMapping)
                 .getPropertyAsSet("GET|identity/user");
         doReturn(new HashSet<>(Arrays.asList("Organization Visualization", "Organization Managment")))
                 .when(resourcesPermissionsMapping).getPropertyAsSet("PUT|identity/user");
 
         // When
-        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile,
-                resourcesPermissionsMapping, true);
+        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new PropertiesWithSet(pagePropertiesFile),
+                resourcesPermissionsMapping);
 
         // Then
-        assertThat(customPagePermissions).contains("<GET|unkown/resource>", "Organization Visualization",
+        assertThat(customPagePermissions).contains("<GET|unknown/resource>", "Organization Visualization",
                 "Organization Managment");
     }
 
@@ -273,29 +238,16 @@ public class CustomPageServiceTest {
 
         final File pagePropertiesFile = File.createTempFile(PAGE_PROPERTIES, ".tmp");
         IOUtils.write(fileContent.getBytes(), new FileOutputStream(pagePropertiesFile));
-        doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unkown/resource");
+        doReturn(Collections.emptySet()).when(resourcesPermissionsMapping).getPropertyAsSet("GET|unknown/resource");
 
         // When
-        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(pagePropertiesFile,
-                resourcesPermissionsMapping, false);
+        final Set<String> customPagePermissions = customPageService.getCustomPagePermissions(new PropertiesWithSet(pagePropertiesFile),
+                resourcesPermissionsMapping);
 
         // Then
         assertTrue(customPagePermissions.equals(new HashSet<String>()));
     }
 
-    @Test
-    public void should_add_Custom_Page_permissions_to_CompoundPermissions() throws Exception {
-        // Given
-        final HashSet<String> customPagePermissions = new HashSet<>(
-                Arrays.asList("Organization Visualization", "Organization Managment"));
-
-        // When
-        customPageService.addPermissionsToCompoundPermissions("customPage1", customPagePermissions,
-                compoundPermissionsMapping, resourcesPermissionsMapping);
-
-        // Then
-        verify(compoundPermissionsMapping).setPropertyAsSet("customPage1", customPagePermissions);
-    }
 
     @Test
     public void should_GetPageProperties_does_not_throws_already_exist_exception_if_checkIfItAlreadyExists_is_false()
@@ -442,41 +394,6 @@ public class CustomPageServiceTest {
                 restAPIContext);
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
                 .hasNoAdditionalCookies().hasHttpStatus(200);
-    }
-
-    @Test
-    public void should_add_api_extension_permission() throws Exception {
-        //given
-        doReturn("custompage_test").when(mockedPage).getName();
-        doReturn(null).when(mockedPage).getProcessDefinitionId();
-        final File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
-        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
-        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-
-        //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
-
-        //then
-        verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
-        verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
-    }
-
-    @Test
-    public void should_add_no_api_extension_permission() throws Exception {
-        //given
-        doReturn("custompage_test").when(mockedPage).getName();
-        doReturn(null).when(mockedPage).getProcessDefinitionId();
-        final File propertyFile = new File(getClass().getResource(PAGE_NO_API_EXTENSION_PROPERTIES).toURI());
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
-        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
-        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-
-        //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
-
-        //then
-        verifyZeroInteractions(resourcesPermissionsMapping);
     }
 
     @Test

@@ -2,8 +2,7 @@ package org.bonitasoft.web.rest.server.api.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.net.URL;
@@ -94,7 +93,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
         final PageItem getItem = apiPage.get(expectedItem.getId());
 
         // Validate
-        assertTrue(expectedItem.getUrlToken().equals(getItem.getUrlToken()));
+        assertEquals(expectedItem.getUrlToken(), getItem.getUrlToken());
     }
 
     @Test(expected = APIException.class)
@@ -136,19 +135,6 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     }
 
     @Test
-    public void should_add_rest_api_extension_update_resource_permission() throws Exception {
-        // Given
-        final PageItem pageItem = aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId());
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should not have permission before add").isNull();
-
-        // When
-        apiPage.add(pageItem);
-
-        //then
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should add permission").isEqualTo("[permission1,permission2]");
-    }
-
-    @Test
     public void should_delete_rest_api_extension_remove_resource_permission() throws Exception {
         // Given
         final PageItem pageItem = apiPage.add(aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId()));
@@ -168,25 +154,6 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
 
     private long getTenantId() {
         return getInitiator().getSession().getTenantId();
-    }
-
-    @Test
-    public void should_update_rest_api_extension_change_resource_permission() throws Exception {
-        // Given
-        final PageItem pageItem = apiPage.add(aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId()));
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should not have permission before add").isEqualTo(
-                "[permission1,permission2]");
-        assertThat(resourcesPermissionsMapping.getProperty("POST|extension/restUpdated")).as("should not have permission before add").isNull();
-
-        // When
-        final PageItem pageItemUpdate = aPageItem().withZip(PAGE_API_EXTENSION_UPDATE_ZIP).build(getTenantId());
-        apiPage.update(pageItem.getId(), pageItemUpdate.getAttributes());
-
-        // Then
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should remove old permission").isNull();
-        assertThat(resourcesPermissionsMapping.getProperty("POST|extension/restUpdated")).as("should add new permission")
-                .isEqualTo("[permission2,permission3]");
-
     }
 
     /**

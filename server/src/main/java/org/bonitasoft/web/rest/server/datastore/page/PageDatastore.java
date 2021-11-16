@@ -127,7 +127,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             final PageItem addedPage = convertEngineToConsoleItem(page);
 
             PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, tenantId);
-            customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, resourcesPermissionsMapping, compoundPermissionsMapping, engineSession);
+            customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, engineSession);
             deleteTempDirectory(unzipPageTempFolder);
             return addedPage;
         } catch (final UnauthorizedFolderException e) {
@@ -331,7 +331,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     } finally {
                         PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
                                 tenantId);
-                        customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, resourcesPermissionsMapping, compoundPermissionsMapping, engineSession);
+                        customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, engineSession);
                         deleteTempDirectory(unzipPageTempFolder);
                     }
 
