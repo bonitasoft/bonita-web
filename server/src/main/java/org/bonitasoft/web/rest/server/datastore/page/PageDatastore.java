@@ -19,26 +19,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
-import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.CreationException;
 import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.exception.UpdateException;
-import org.bonitasoft.engine.exception.UpdatingWithInvalidPageTokenException;
-import org.bonitasoft.engine.exception.UpdatingWithInvalidPageZipContentException;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageCreator;
@@ -85,10 +79,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     protected final CustomPageService customPageService;
 
-    private final CompoundPermissionsMapping compoundPermissionsMapping;
-
-    private final ResourcesPermissionsMapping resourcesPermissionsMapping;
-
     private final BonitaHomeFolderAccessor tenantFolder;
 
     private CustomPageContentValidator pageContentValidator;
@@ -96,15 +86,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue,
                          final PageAPI pageAPI,
                          final CustomPageService customPageService,
-                         final CompoundPermissionsMapping compoundPermissionsMapping,
-                         final ResourcesPermissionsMapping resourcesPermissionsMapping,
                          final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
         constants = constantsValue;
         this.pageAPI = pageAPI;
         this.customPageService = customPageService;
-        this.compoundPermissionsMapping = compoundPermissionsMapping;
-        this.resourcesPermissionsMapping = resourcesPermissionsMapping;
         this.tenantFolder = tenantFolder;
         this.pageContentValidator = new CustomPageContentValidator();
     }
@@ -127,7 +113,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             final PageItem addedPage = convertEngineToConsoleItem(page);
 
             PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, tenantId);
-            customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, engineSession);
+            customPageService.writePageToPageDirectory(page, pageResourceProvider, unzipPageTempFolder, engineSession);
             deleteTempDirectory(unzipPageTempFolder);
             return addedPage;
         } catch (final UnauthorizedFolderException e) {
@@ -155,7 +141,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         return urlToken.matches(PAGE_TOKEN_PREFIX + "\\p{Alnum}+");
     }
 
-
     protected void deleteTempDirectory(final File unzipPage) {
         try {
             if (unzipPage.isDirectory()) {
@@ -171,12 +156,9 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     }
 
     protected Page createEnginePage(final PageItem pageItem, final File zipFile)
-            throws AlreadyExistsException, CreationException, IOException,
-            UpdatingWithInvalidPageTokenException, UpdatingWithInvalidPageZipContentException, UpdateException {
-
+            throws CreationException, IOException, UpdateException {
         try {
             final byte[] zipContent = readZipFile(zipFile);
-
             Page page = pageAPI.createPage(pageItem.getContentName(), zipContent);
             if (pageItem.getProcessId() != null) {
                 final PageUpdater pageUpdater = new PageUpdater();
@@ -187,7 +169,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                 page = pageAPI.updatePage(page.getId(), pageUpdater);
             }
             return page;
-
         } finally {
             zipFile.delete();
         }
@@ -223,11 +204,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                 PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
                 customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
                 pageAPI.deletePage(id.toLong());
-                customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
-                        pageResourceProvider);
-                customPageService.removePage(engineSession,page.getName());
-                compoundPermissionsMapping.removeProperty(page.getName());
-
+                customPageService.removePageLocally(engineSession, page.getName());
             }
         } catch (final Exception e) {
             throw new APIException(e);
@@ -302,7 +279,6 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     @Override
     public PageItem update(final APIID id, final Map<String, String> attributes) {
-
         File zipFile = null;
         try {
             Long pageId = id.toLong();
@@ -325,16 +301,12 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                         pageUpdater.setContentName(originalFileName);
                         page = pageAPI.updatePage(pageId, pageUpdater);
                         updatedPage = convertEngineToConsoleItem(page);
-                        if (!Objects.equals(page.getName(), updatedPage.getUrlToken())) {
-                            compoundPermissionsMapping.removeProperty(page.getName());
-                        }
                     } finally {
                         PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
                                 tenantId);
-                        customPageService.writePageToPageDirectoryAndAddPermissions(page, pageResourceProvider, unzipPageTempFolder, engineSession);
+                        customPageService.writePageToPageDirectory(page, pageResourceProvider, unzipPageTempFolder, engineSession);
                         deleteTempDirectory(unzipPageTempFolder);
                     }
-
                 }
             }
             return updatedPage;
@@ -349,15 +321,12 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         }
     }
 
-    protected String getOriginalFilename(final String[] filenames, final String tempFilename,
-            final Map<String, String> attributes) {
+    protected String getOriginalFilename(final String[] filenames, final String tempFilename, final Map<String, String> attributes) {
         String originalFileName;
         if (filenames.length > 1) {
             originalFileName = filenames[1];
-        } else if (attributes.containsKey(PageItem.ATTRIBUTE_CONTENT_NAME)) {
-            originalFileName = attributes.get(PageItem.ATTRIBUTE_CONTENT_NAME);
         } else {
-            originalFileName = tempFilename;
+            originalFileName = attributes.getOrDefault(PageItem.ATTRIBUTE_CONTENT_NAME, tempFilename);
         }
         return originalFileName;
     }
@@ -368,11 +337,9 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
                     getEngineSession().getTenantId());
             customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
-            customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
-                    pageResourceProvider);
             pageAPI.updatePageContent(page.getId(), FileUtils.readFileToByteArray(zipFile));
         }
-        customPageService.removePage(getEngineSession(), page.getName());
+        customPageService.removePageLocally(getEngineSession(), page.getName());
     }
 
     @Override

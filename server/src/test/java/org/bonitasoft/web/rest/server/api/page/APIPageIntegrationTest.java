@@ -134,24 +134,6 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
 
     }
 
-    @Test
-    public void should_delete_rest_api_extension_remove_resource_permission() throws Exception {
-        // Given
-        final PageItem pageItem = apiPage.add(aPageItem().withZip(PAGE_API_EXTENSION_ZIP).build(getTenantId()));
-
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should have permission").isNotNull()
-                .isEqualTo("[permission1,permission2]");
-
-        // When
-        final List<APIID> ids = new ArrayList<>();
-        ids.add(pageItem.getId());
-        apiPage.delete(ids);
-
-        // Then
-        assertThat(resourcesPermissionsMapping.getProperty("GET|extension/rest")).as("should remove permission").isNull();
-
-    }
-
     private long getTenantId() {
         return getInitiator().getSession().getTenantId();
     }
