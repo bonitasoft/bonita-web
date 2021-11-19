@@ -42,8 +42,6 @@ import org.assertj.core.groups.Tuple;
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -112,12 +110,6 @@ public class PageDatastoreTest extends APITestWithMock {
     BonitaHomeFolderAccessor tenantFolder;
 
     @Mock
-    CompoundPermissionsMapping compoundPermissionsMapping;
-
-    @Mock
-    ResourcesPermissionsMapping resourcesPermissionsMapping;
-
-    @Mock
     CustomPageService customPageService;
 
     @Mock
@@ -168,9 +160,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(constantsValue.getTempFolder()).thenReturn(pageZipFile.getParentFile());
         when(constantsValue.getPagesFolder()).thenReturn(pagesDir);
 
-        pageDatastore = spy(new PageDatastore(engineSession, constantsValue, pageAPI, customPageService, compoundPermissionsMapping,
-                resourcesPermissionsMapping,
-                tenantFolder));
+        pageDatastore = spy(new PageDatastore(engineSession, constantsValue, pageAPI, customPageService, tenantFolder));
 
         pageToBeAdded = new PageItem();
         pageToBeAdded.setUrlToken("custompage_page1");
@@ -217,7 +207,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(apiExtensionToBeAdded);
 
         //then
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
+        verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
     @Test(expected = APIException.class)
@@ -257,8 +247,7 @@ public class PageDatastoreTest extends APITestWithMock {
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(pageAPI, never()).deletePage(1l);
         verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
-        verify(customPageService, never()).removePage(any(), anyString());
-        verify(compoundPermissionsMapping, never()).removeProperty(anyString());
+        verify(customPageService, never()).removePageLocally(any(), anyString());
     }
 
 
@@ -272,7 +261,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.add(pageToBeAdded);
 
         // Then
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(null), any(File.class), eq(engineSession));
+        verify(customPageService).writePageToPageDirectory(any(Page.class), eq(null), any(File.class), eq(engineSession));
     }
 
     @Test
@@ -287,8 +276,7 @@ public class PageDatastoreTest extends APITestWithMock {
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
         verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
-        verify(customPageService, never()).removePage(any(), anyString());
-        verify(compoundPermissionsMapping, never()).removeProperty(anyString());
+        verify(customPageService, never()).removePageLocally(any(), anyString());
     }
 
     @Test
@@ -302,10 +290,8 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // then
         verify(pageAPI).deletePage(mockedApiExtension.getId());
-        verify(customPageService).removePage(engineSession, mockedApiExtension.getName());
+        verify(customPageService).removePageLocally(engineSession, mockedApiExtension.getName());
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(compoundPermissionsMapping).removeProperty(mockedApiExtension.getName());
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
     }
 
     @Test
@@ -328,9 +314,8 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         verify(pageAPI).updatePage(eq(PAGE_ID), any());
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
-        verify(customPageService).removePage(any(), eq("custompage_apiExt"));
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
+        verify(customPageService).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
 
@@ -353,9 +338,8 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService).removeRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
-        verify(customPageService, never()).removePage(any(), eq("custompage_apiExt"));
-        verify(customPageService).writePageToPageDirectoryAndAddPermissions(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
+        verify(customPageService, never()).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
     @Test(expected = APIForbiddenException.class)

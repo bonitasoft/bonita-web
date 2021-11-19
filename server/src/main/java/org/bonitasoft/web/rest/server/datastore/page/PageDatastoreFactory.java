@@ -15,8 +15,6 @@ public class PageDatastoreFactory {
                 constantsValue,
                 pageAPI,
                 new CustomPageService(),
-                PropertiesFactory.getCompoundPermissionsMapping(engineSession.getTenantId()),
-                PropertiesFactory.getResourcesPermissionsMapping(engineSession.getTenantId()),
                 new BonitaHomeFolderAccessor());
     }
 }

@@ -114,7 +114,7 @@ public class CustomPageService {
                 final String timestampString = FileUtils.readFileToString(timestampFile);
                 final long timestamp = Long.parseLong(timestampString);
                 if (lastUpdateTimestamp != timestamp) {
-                    removePage(apiSession, pageResourceProvider.getPageName());
+                    removePageLocally(apiSession, pageResourceProvider.getPageName());
                     retrievePageZipContent(apiSession, pageResourceProvider);
                 }
             } else {
@@ -186,14 +186,14 @@ public class CustomPageService {
         return restApiControllerClass.newInstance();
     }
 
-    public void removePage(final APISession apiSession, final String pageName) throws IOException {
+    public void removePageLocally(final APISession apiSession, final String pageName) throws IOException {
         closeClassloader(pageName);
         final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(pageName, apiSession.getTenantId());
         removePageZipContent(pageResourceProvider);
         CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
     }
 
-    public void removePage(final APISession apiSession, final Page page) throws IOException {
+    public void removePageLocally(final APISession apiSession, final Page page) throws IOException {
         final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(page, apiSession.getTenantId());
         final String pageName = pageResourceProvider.getFullPageName();
         closeClassloader(pageName);
@@ -409,10 +409,10 @@ public class CustomPageService {
         }
     }
 
-    public void writePageToPageDirectoryAndAddPermissions(Page page,
-                                                          PageResourceProvider pageResourceProvider,
-                                                          File unzipPageTempFolder,
-                                                          APISession session) throws IOException {
+    public void writePageToPageDirectory(Page page,
+                                         PageResourceProvider pageResourceProvider,
+                                         File unzipPageTempFolder,
+                                         APISession session) throws IOException {
         verifyPageClass(unzipPageTempFolder, session);
         File pageDirectory = pageResourceProvider.getPageDirectory();
         FileUtils.copyDirectory(unzipPageTempFolder, pageDirectory);

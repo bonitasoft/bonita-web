@@ -12,9 +12,7 @@ import static org.mockito.Mockito.verify;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
@@ -37,7 +35,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessDatastoreTest extends APITestWithMock {
@@ -113,17 +110,16 @@ public class ProcessDatastoreTest extends APITestWithMock {
         doReturn("page1").when(page1).getName();
         final Page page2 = mock(Page.class);
         doReturn("page2").when(page2).getName();
-        Arrays.asList(page1, page2);
         doReturn(Arrays.asList(page1, page2)).when(searchResult).getResult();
         doReturn(2L).when(searchResult).getCount();
 
         final APIID id = APIID.makeAPIID(2L);
-        processDatastore.delete(Arrays.asList(id));
+        processDatastore.delete(List.of(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times(1)).removePage(engineSession, page1);
+        verify(customPageService, times(1)).removePageLocally(engineSession, page1);
         verify(compoundPermissionsMapping, times(1)).removeProperty("page1");
-        verify(customPageService, times(1)).removePage(engineSession, page2);
+        verify(customPageService, times(1)).removePageLocally(engineSession, page2);
         verify(compoundPermissionsMapping, times(1)).removeProperty("page2");
     }
 
@@ -133,7 +129,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
         final long nbOfPages = 130L;
         final Page page = mock(Page.class);
         doReturn("page").when(page).getName();
-        final List<Page> pages = new ArrayList<Page>();
+        final List<Page> pages = new ArrayList<>();
         for (int i = 0; i < nbOfPages; i++) {
             pages.add(page);
         }
@@ -141,10 +137,10 @@ public class ProcessDatastoreTest extends APITestWithMock {
         doReturn(nbOfPages).when(searchResult).getCount();
 
         final APIID id = APIID.makeAPIID(2L);
-        processDatastore.delete(Arrays.asList(id));
+        processDatastore.delete(List.of(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times((int) nbOfPages)).removePage(engineSession, page);
+        verify(customPageService, times((int) nbOfPages)).removePageLocally(engineSession, page);
         verify(compoundPermissionsMapping, times((int) nbOfPages)).removeProperty("page");
     }
 }
