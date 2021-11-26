@@ -1,22 +1,13 @@
 package org.bonitasoft.console.common.server.login;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anySetOf;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,7 +18,6 @@ import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
 import org.junit.Before;
@@ -60,9 +50,6 @@ public class LoginManagerTest {
     APISession apiSession;
 
     @Mock
-    PermissionsBuilder permissionsBuilder;
-    
-    @Mock
     TokenGenerator tokenGenerator;
     
     @Spy
@@ -85,11 +72,10 @@ public class LoginManagerTest {
         final Credentials credentials = new StandardCredentials("name", "password", 1L);
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doReturn(apiSession).when(userLogger).doLogin(credentials);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
-        verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anySetOf(String.class), anyBoolean());
+        verify(loginManager).initSession(eq(requestAccessor), eq(apiSession), any(User.class), anyBoolean());
         verify(session).invalidate();
     }
 
@@ -98,7 +84,6 @@ public class LoginManagerTest {
         final Credentials credentials = new StandardCredentials("name", "password", 1L);
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
         doReturn(apiSession).when(userLogger).doLogin(credentials);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
@@ -113,7 +98,6 @@ public class LoginManagerTest {
         credentialsMap.put("principal", "userId");
         doReturn(credentialsMap).when(authenticationManager).authenticate(requestAccessor, credentials);
         doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
@@ -130,7 +114,6 @@ public class LoginManagerTest {
         credentialsMap.put(AuthenticationManager.INVALIDATE_SESSION, Boolean.FALSE);
         doReturn(credentialsMap).when(authenticationManager).authenticate(requestAccessor, credentials);
         doReturn(apiSession).when(userLogger).doLogin(credentialsMap);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
@@ -172,7 +155,6 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         when(apiSession.getTenantId()).thenReturn(123L);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 
@@ -185,7 +167,6 @@ public class LoginManagerTest {
         doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
         doReturn(apiSession).when(userLogger).doLogin(credentials);
         when(apiSession.getTenantId()).thenReturn(123L);
-        doReturn(permissionsBuilder).when(loginManager).createPermissionsBuilder(apiSession);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 

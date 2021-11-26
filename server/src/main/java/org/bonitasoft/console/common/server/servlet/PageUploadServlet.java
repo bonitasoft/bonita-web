@@ -20,12 +20,10 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.InvalidPageTokenException;
@@ -88,15 +86,13 @@ public class PageUploadServlet extends TenantFileUploadServlet {
     }
 
     protected Set<String> getPagePermissions(final HttpServletRequest request, final File uploadedFile, final boolean checkIfItAlreadyExists)
-            throws InvalidPageZipContentException, InvalidPageTokenException, AlreadyExistsException, BonitaException,
-            IOException, InvalidPageZipContentException {
-
+            throws BonitaException, IOException {
         final APISession apiSession = getAPISession(request);
         final Long processDefinitionId = getProcessDefinitionId(request);
         final CustomPageService customPageService = new CustomPageService();
         final Properties properties = customPageService.getPageProperties(apiSession, FileUtils.readFileToByteArray(uploadedFile),
                 checkIfItAlreadyExists, processDefinitionId);
-        return customPageService.getCustomPagePermissions(properties, PropertiesFactory.getResourcesPermissionsMapping(apiSession.getTenantId()));
+        return customPageService.getCustomPagePermissions(properties, apiSession);
     }
 
     private Long getProcessDefinitionId(final HttpServletRequest request) {

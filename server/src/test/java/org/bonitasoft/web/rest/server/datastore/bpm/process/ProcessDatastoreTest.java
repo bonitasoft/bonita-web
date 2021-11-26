@@ -2,12 +2,7 @@ package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -57,9 +51,6 @@ public class ProcessDatastoreTest extends APITestWithMock {
     private CustomPageService customPageService;
 
     @Mock
-    private CompoundPermissionsMapping compoundPermissionsMapping;
-
-    @Mock
     private SearchResult<Page> searchResult;
 
     @Mock
@@ -75,7 +66,6 @@ public class ProcessDatastoreTest extends APITestWithMock {
         doReturn(processEngineClient).when(processDatastore).getProcessEngineClient();
         doReturn(customPageService).when(processDatastore).getCustomPageService();
         doReturn(pageAPI).when(processDatastore).getPageAPI();
-        doReturn(compoundPermissionsMapping).when(processDatastore).getCompoundPermissionsMapping();
         doReturn(searchResult).when(pageAPI).searchPages(any(SearchOptions.class));
     }
 
@@ -118,9 +108,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
 
         verify(processDatastore).removeProcessPagesFromHome(id);
         verify(customPageService, times(1)).removePageLocally(engineSession, page1);
-        verify(compoundPermissionsMapping, times(1)).removeProperty("page1");
         verify(customPageService, times(1)).removePageLocally(engineSession, page2);
-        verify(compoundPermissionsMapping, times(1)).removeProperty("page2");
     }
 
     @Test
@@ -141,6 +129,5 @@ public class ProcessDatastoreTest extends APITestWithMock {
 
         verify(processDatastore).removeProcessPagesFromHome(id);
         verify(customPageService, times((int) nbOfPages)).removePageLocally(engineSession, page);
-        verify(compoundPermissionsMapping, times((int) nbOfPages)).removeProperty("page");
     }
 }

@@ -18,20 +18,14 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.LoginFailedException;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
-import org.bonitasoft.engine.session.APISession;
 import org.scribe.model.Token;
 
 /**
@@ -59,7 +53,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
             throws AuthenticationFailedException, ServletException {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "#authenticate (this implementation of " + AuthenticationManager.class.getName()
-                    + " is an exemple of Oauth authentication working with Linkedin service provider)");
+                    + " is an example of Oauth authentication working with Linkedin service provider)");
         }
         if (request.getOAuthVerifier() == null) {
             throw new AuthenticationFailedException();
@@ -69,10 +63,6 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
         return Collections.emptyMap();
     }
 
-    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
-        return PermissionsBuilderAccessor.createPermissionBuilder(session);
-    }
-
     private String getOAuthUserId(final HttpServletRequestAccessor request, final long tenantId)
             throws AuthenticationFailedException {
         try {
@@ -80,8 +70,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
             final String requestTokenStr = request.getOAuthToken();
             final Token requestToken = TokenCacheUtil.getToken(requestTokenStr);
             final Token accessToken = aConsumer.getAccessToken(requestToken, request.getOAuthVerifier());
-            final String userId = aConsumer.getUserJSONString(accessToken);
-            return userId;
+            return aConsumer.getUserJSONString(accessToken);
         } catch (final ConsumerNotFoundException e) {
             logSevereException(e);
             throw new AuthenticationFailedException(e.getMessage(), e);

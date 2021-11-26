@@ -1,9 +1,7 @@
 package org.bonitasoft.console.common.server.auth.impl.standard;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.Cookie;
 

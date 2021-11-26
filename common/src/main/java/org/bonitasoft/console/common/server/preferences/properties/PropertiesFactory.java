@@ -19,22 +19,6 @@ package org.bonitasoft.console.common.server.preferences.properties;
  */
 public class PropertiesFactory {
 
-    public static ResourcesPermissionsMapping getResourcesPermissionsMapping(final long tenantId) {
-        return new ResourcesPermissionsMapping(tenantId);
-    }
-
-    public static CompoundPermissionsMapping getCompoundPermissionsMapping(final long tenantId) {
-        return new CompoundPermissionsMapping(tenantId);
-    }
-
-    public static CustomPermissionsMapping getCustomPermissionsMapping(final long tenantId) {
-        return new CustomPermissionsMapping(tenantId);
-    }
-
-    public static DynamicPermissionsChecks getDynamicPermissionsChecks(final long tenantId) {
-        return new DynamicPermissionsChecks(tenantId);
-    }
-
     public static SecurityProperties getSecurityProperties(final long tenantId) {
         return new SecurityProperties(tenantId);
     }

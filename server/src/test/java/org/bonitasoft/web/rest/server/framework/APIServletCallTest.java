@@ -16,24 +16,15 @@
 package org.bonitasoft.web.rest.server.framework;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -48,11 +39,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class APIServletCallTest {
 
     @Mock
-    private ResourcesPermissionsMapping resourcesPermissionsMapping;
-    @Mock
     private HttpServletRequest request;
-    @Mock
-    private HttpServletResponse response;
     @Mock
     private APISession apiSession;
     @Mock

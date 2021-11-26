@@ -15,22 +15,15 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyMapOf;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +33,6 @@ import java.util.logging.Logger;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
-import org.bonitasoft.engine.bpm.contract.InputDefinition;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
@@ -89,7 +81,7 @@ public class UserTaskExecutionResourceTest extends RestletTest {
         doReturn(null).when(userTaskExecutionResource).getAttribute("assign");
         // this allows us to track method calls on this internal dependency
         userTaskExecutionResource.typeConverterUtil = spy(userTaskExecutionResource.typeConverterUtil);
-        when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
+        when(contractDefinition.getInputs()).thenReturn(emptyList());
     }
 
     @Override

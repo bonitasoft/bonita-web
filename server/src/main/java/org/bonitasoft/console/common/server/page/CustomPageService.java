@@ -14,13 +14,14 @@
  */
 package org.bonitasoft.console.common.server.page;
 
+import static java.util.Collections.emptySet;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,13 +38,12 @@ import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConst
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
 import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.api.PermissionAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.page.ContentType;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -58,7 +58,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 public class CustomPageService {
 
-    private static final String PAGE_PROPERTIES = "page.properties";
     /**
      * Logger
      */
@@ -78,13 +77,6 @@ public class CustomPageService {
 
     public static final String RESOURCES_PROPERTY = "resources";
     public static final String PROPERTY_CONTENT_TYPE = "contentType";
-    public static final String PROPERTY_API_EXTENSIONS = "apiExtensions";
-    public static final String PROPERTY_METHOD_MASK = "%s.method";
-    public static final String PROPERTY_PATH_TEMPLATE_MASK = "%s.pathTemplate";
-    public static final String PROPERTY_PERMISSIONS_MASK = "%s.permissions";
-    public static final String RESOURCE_PERMISSION_KEY_MASK = "%s|extension/%s";
-    public static final String RESOURCE_PERMISSION_VALUE = "[%s]";
-    public static final String EXTENSION_SEPARATOR = ",";
 
     public static final String NAME_PROPERTY = "name";
 
@@ -279,6 +271,10 @@ public class CustomPageService {
         return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
 
+    protected PermissionAPI getPermissionAPI(final APISession apiSession) throws BonitaException {
+        return TenantAPIAccessor.getPermissionAPI(apiSession);
+    }
+
     protected void removePageZipContent(final PageResourceProvider pageResourceProvider) throws IOException {
         FileUtils.deleteDirectory(pageResourceProvider.getPageDirectory());
     }
@@ -336,14 +332,13 @@ public class CustomPageService {
         return properties;
     }
 
-    public Set<String> getCustomPagePermissions(final Properties pageProperties,
-                                                final ResourcesPermissionsMapping resourcesPermissionsMapping) {
+    public Set<String> getCustomPagePermissions(final Properties pageProperties, APISession apiSession) throws BonitaException {
         final PropertiesWithSet pagePropertiesWithSet = new PropertiesWithSet(pageProperties);
         final Set<String> pageRestResources = new HashSet<>(pagePropertiesWithSet.getPropertyAsSet(RESOURCES_PROPERTY));
         final Set<String> permissions = new HashSet<>();
         for (final String pageRestResource : pageRestResources) {
-            final Set<String> resourcePermissions = resourcesPermissionsMapping.getPropertyAsSet(pageRestResource);
-            if (Collections.emptySet().equals(resourcePermissions)) {
+            final Set<String> resourcePermissions = getPermissionAPI(apiSession).getResourcePermissions(pageRestResource);
+            if (emptySet().equals(resourcePermissions)) {
                 permissions.add("<" + pageRestResource + ">");
             }
             permissions.addAll(resourcePermissions);
@@ -358,45 +353,6 @@ public class CustomPageService {
 
     public Page getPage(final APISession apiSession, final long pageId) throws BonitaException {
         return getPageAPI(apiSession).getPage(pageId);
-    }
-
-    /**
-     * Rest Api extension permissions will be removed according to the pageResourceProvider given in parameter. The pageResourceProvider
-     * must be updated before the calling of the remove. The refresh could be done with invocation of
-     * customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
-     */
-    public void removeRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
-                                                  final PageResourceProvider pageResourceProvider) {
-        final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
-        for (final String key : permissionsMapping.keySet()) {
-            resourcesPermissionsMapping.removeProperty(key);
-        }
-    }
-
-    private Map<String, String> getPermissionMapping(final PageResourceProvider pageResourceProvider) {
-        Map<String, String> permissionsMapping;
-        final File pageProperties = pageResourceProvider.getResourceAsFile(PAGE_PROPERTIES);
-        permissionsMapping = getApiExtensionResourcesPermissionsMapping(pageProperties);
-        return permissionsMapping;
-    }
-
-    private Map<String, String> getApiExtensionResourcesPermissionsMapping(final File pagePropertyFile) {
-        final Properties pageProperties = new PropertiesWithSet(pagePropertyFile);
-        final Map<String, String> permissionsMap = new HashMap<>();
-        if (ContentType.API_EXTENSION.equals(pageProperties.getProperty(PROPERTY_CONTENT_TYPE))) {
-            final String apiExtensionList = pageProperties.getProperty(PROPERTY_API_EXTENSIONS);
-            final String[] apiExtensions = apiExtensionList.split(EXTENSION_SEPARATOR);
-            for (final String apiExtension : apiExtensions) {
-                final String method = pageProperties.getProperty(String.format(PROPERTY_METHOD_MASK, apiExtension.trim()));
-                final String pathTemplate = pageProperties
-                        .getProperty(String.format(PROPERTY_PATH_TEMPLATE_MASK, apiExtension.trim()));
-                final String permissions = pageProperties
-                        .getProperty(String.format(PROPERTY_PERMISSIONS_MASK, apiExtension.trim()));
-                permissionsMap.put(String.format(RESOURCE_PERMISSION_KEY_MASK, method, pathTemplate),
-                        String.format(RESOURCE_PERMISSION_VALUE, permissions));
-            }
-        }
-        return permissionsMap;
     }
 
     public PageResourceProvider getPageResourceProvider(final Page page, final long tenantId) {
