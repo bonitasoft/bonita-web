@@ -5,10 +5,8 @@ import static org.mockito.Mockito.doReturn;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,9 +23,6 @@ public class PageUploadServletTest {
 
     @Mock
     APISession apiSession;
-
-    @Mock
-    ResourcesPermissionsMapping resourcesPermissionsMapping;
 
     @Spy
     PageUploadServlet pageUploadServlet = new PageUploadServlet();

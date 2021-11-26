@@ -128,7 +128,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
     @Before
     public void setUp() throws Exception {
-        final Date mockedDate = new Date(0l);
+        final Date mockedDate = new Date(0L);
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
         final File pageZipFile = deployZipFileToTarget(PAGE_ZIP);
@@ -141,7 +141,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(mockedPage.getDescription()).thenReturn("This is a page description");
         when(mockedPage.getInstallationDate()).thenReturn(mockedDate);
         when(mockedPage.getLastModificationDate()).thenReturn(mockedDate);
-        when(mockedPage.getInstalledBy()).thenReturn(1l);
+        when(mockedPage.getInstalledBy()).thenReturn(1L);
         when(mockedPage.isProvided()).thenReturn(false);
 
         when(mockedApiExtension.getId()).thenReturn(PAGE_ID);
@@ -150,7 +150,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(mockedApiExtension.getDescription()).thenReturn("This is a page description");
         when(mockedApiExtension.getInstallationDate()).thenReturn(mockedDate);
         when(mockedApiExtension.getLastModificationDate()).thenReturn(mockedDate);
-        when(mockedApiExtension.getInstalledBy()).thenReturn(1l);
+        when(mockedApiExtension.getInstalledBy()).thenReturn(1L);
 
         when(engineSession.getTenantId()).thenReturn(TENANT_ID);
 
@@ -228,25 +228,24 @@ public class PageDatastoreTest extends APITestWithMock {
     public void should_get_a_not_existing_page_rise_exception() throws Exception {
         // Given
         deleteDir(pagesDir);
-        when(pageAPI.getPage(1l)).thenThrow(new PageNotFoundException("newPage"));
+        when(pageAPI.getPage(1L)).thenThrow(new PageNotFoundException("newPage"));
 
         // When
-        pageDatastore.get(makeAPIID(1l));
+        pageDatastore.get(makeAPIID(1L));
     }
 
 
     @Test
-    public void should_thrown_ApiException_and_not_remove_contentFile_and_permission_when_delete_a_not_existing() throws Exception {
+    public void should_thrown_ApiException_and_not_remove_contentFile_when_delete_a_not_existing() throws Exception {
         // Given
         deleteDir(pagesDir);
-        when(pageAPI.getPage(1l)).thenThrow(new PageNotFoundException("newPage"));
+        when(pageAPI.getPage(1L)).thenThrow(new PageNotFoundException("newPage"));
 
         // When
         final Throwable throwable = catchThrowable(() -> pageDatastore.delete(singletonList(makeAPIID(1L))));
 
         assertThat(throwable).isInstanceOf(APIException.class);
-        verify(pageAPI, never()).deletePage(1l);
-        verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
+        verify(pageAPI, never()).deletePage(1L);
         verify(customPageService, never()).removePageLocally(any(), anyString());
     }
 
@@ -275,7 +274,6 @@ public class PageDatastoreTest extends APITestWithMock {
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService, never()).removeRestApiExtensionPermissions(any(), any());
         verify(customPageService, never()).removePageLocally(any(), anyString());
     }
 

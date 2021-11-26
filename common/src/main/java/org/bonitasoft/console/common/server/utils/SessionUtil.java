@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import java.util.Set;
-
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.session.APISession;
@@ -44,16 +42,10 @@ public class SessionUtil {
      */
     public static final String USERNAME_SESSION_PARAM = "username";
 
-    /**
-     * the session param for the permissions
-     */
-    public static final String PERMISSIONS_SESSION_PARAM_KEY = "permissions";
-
-    public static void sessionLogin(final User user, final APISession apiSession, final Set<String> permissions, final HttpSession session) {
+    public static void sessionLogin(final User user, final APISession apiSession, final HttpSession session) {
         session.setAttribute(USERNAME_SESSION_PARAM, user.getUsername());
         session.setAttribute(USER_SESSION_PARAM_KEY, user);
         session.setAttribute(API_SESSION_PARAM_KEY, apiSession);
-        session.setAttribute(PERMISSIONS_SESSION_PARAM_KEY, permissions);
     }
 
     public static void sessionLogout(final HttpSession session) {
@@ -64,7 +56,6 @@ public class SessionUtil {
         session.removeAttribute(API_SESSION_PARAM_KEY);
         session.removeAttribute(USERNAME_SESSION_PARAM);
         session.removeAttribute(USER_SESSION_PARAM_KEY);
-        session.removeAttribute(PERMISSIONS_SESSION_PARAM_KEY);
         if (invalidateHTTPSession) {
             session.invalidate();
         }

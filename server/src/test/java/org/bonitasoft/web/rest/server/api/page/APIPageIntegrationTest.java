@@ -2,7 +2,8 @@ package org.bonitasoft.web.rest.server.api.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.model.builder.page.PageItemBuilder.aPageItem;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -13,8 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.page.Page;
@@ -33,11 +32,8 @@ import org.junit.Test;
 
 public class APIPageIntegrationTest extends AbstractConsoleTest {
 
-    public static final String PAGE_API_EXTENSION_ZIP = "/pageApiExtension.zip";
-    public static final String PAGE_API_EXTENSION_UPDATE_ZIP = "/pageApiExtensionUpdate.zip";
     public static final String NEW_PAGE_ZIP = "/newPage.zip";
     private APIPage apiPage;
-    private ResourcesPermissionsMapping resourcesPermissionsMapping;
 
     @After
     public void cleanPages() throws Exception {
@@ -54,9 +50,6 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
         apiPage = new APIPage();
         final APISession session = getInitiator().getSession();
         apiPage.setCaller(getAPICaller(session, "API/portal/page"));
-
-        resourcesPermissionsMapping = PropertiesFactory.getResourcesPermissionsMapping(session
-                .getTenantId());
     }
 
     @Override

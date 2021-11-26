@@ -14,11 +14,10 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
-import java.io.IOException;
+import static org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet.stringToSet;
+
 import java.util.Properties;
 import java.util.Set;
-
-import static org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet.stringToSet;
 
 /**
  * @author Ruiheng Fan, Anthony Birembaut
@@ -27,11 +26,6 @@ public class ConfigurationFile {
 
     private final String propertiesFilename;
     private final long tenantId;
-
-    public ConfigurationFile(final String propertiesFilename) {
-        this.propertiesFilename = propertiesFilename;
-        tenantId = -1L;
-    }
 
     public ConfigurationFile(String propertiesFilename, long tenantId) {
         this.propertiesFilename = propertiesFilename;
@@ -50,28 +44,9 @@ public class ConfigurationFile {
         return ConfigurationFilesManager.getInstance().getPlatformProperties(propertiesFilename);
     }
 
-    public void removeProperty(final String propertyName) {
-        try {
-            ConfigurationFilesManager.getInstance().removeProperty(propertiesFilename, tenantId, propertyName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setProperty(final String propertyName, final String propertyValue) {
-        try {
-            ConfigurationFilesManager.getInstance().setProperty(propertiesFilename, tenantId, propertyName, propertyValue);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Set<String> getPropertyAsSet(final String propertyName) {
         final String propertyAsString = getProperty(propertyName);
         return stringToSet(propertyAsString);
     }
 
-    public void setPropertyAsSet(final String property, final Set<String> permissions) {
-        setProperty(property, permissions.toString());
-    }
 }

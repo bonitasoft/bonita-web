@@ -16,19 +16,15 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
-import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.session.APISession;
@@ -44,10 +40,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class RestAPIAuthorizationFilterTest {
 
-    @Mock
-    private ResourcesPermissionsMapping resourcesPermissionsMapping;
-    @Mock
-    private DynamicPermissionsChecks dynamicPermissionsChecks;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -70,31 +62,24 @@ public class RestAPIAuthorizationFilterTest {
         doReturn("john").when(apiSession).getUserName();
     }
 
-    private Set<String> initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy) throws ServletException {
-        final Set<String> permissions = new HashSet<>(List.of("plop"));
-        return initSpy(restAPIAuthorizationFilterSpy, permissions);
-    }
-
-    private Set<String> initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy, final Set<String> permissions) throws ServletException {
+    private void initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy) throws ServletException {
         doReturn("GET").when(request).getMethod();
-        doReturn(permissions).when(httpSession).getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         doReturn("").when(restAPIAuthorizationFilterSpy).getRequestBody(request);
-        return permissions;
     }
 
     @Test
-    public void should_checkPermissions_call_engine_check_if_secu_is_enabled() throws Exception {
+    public void should_checkPermissions_call_engine_check_if_security_is_enabled() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
-        final Set<String> permissions = initSpy(restAPIAuthorizationFilterSpy);
+        initSpy(restAPIAuthorizationFilterSpy);
         doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1L);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).enginePermissionsCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions, apiSession);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).enginePermissionsCheck(new APICallContext("GET", "bpm", "case", null, "", ""), apiSession);
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
 
         //then
         assertThat(isAuthorized).isTrue();
-        verify(restAPIAuthorizationFilterSpy).enginePermissionsCheck(new APICallContext("GET", "bpm", "case", null, "", ""), permissions, apiSession);
+        verify(restAPIAuthorizationFilterSpy).enginePermissionsCheck(new APICallContext("GET", "bpm", "case", null, "", ""), apiSession);
     }
 
     @Test
@@ -110,7 +95,7 @@ public class RestAPIAuthorizationFilterTest {
         assertThat(isAuthorized).isTrue();
         verify(restAPIAuthorizationFilterSpy).isAlwaysAuthorizedResource(any(APICallContext.class));
         verify(restAPIAuthorizationFilterSpy, never()).enginePermissionsCheck(any(APICallContext.class),
-                anySetOf(String.class), any(APISession.class));
+                any(APISession.class));
     }
 
     @Test
@@ -126,7 +111,7 @@ public class RestAPIAuthorizationFilterTest {
         //then
         assertThat(isAuthorized).isTrue();
         verify(restAPIAuthorizationFilterSpy, never()).enginePermissionsCheck(any(APICallContext.class),
-                anySetOf(String.class), any(APISession.class));
+                any(APISession.class));
     }
 
     @Test
@@ -141,7 +126,7 @@ public class RestAPIAuthorizationFilterTest {
         //then
         assertThat(isAuthorized).isTrue();
         verify(restAPIAuthorizationFilterSpy, never()).enginePermissionsCheck(any(APICallContext.class),
-                anySetOf(String.class), any(APISession.class));
+                any(APISession.class));
     }
 
     @Test

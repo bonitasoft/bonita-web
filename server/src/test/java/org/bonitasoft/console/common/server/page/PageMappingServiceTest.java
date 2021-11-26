@@ -1,27 +1,18 @@
 package org.bonitasoft.console.common.server.page;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.api.PageAPI;
-import org.bonitasoft.engine.page.AuthorizationRuleConstants;
 import org.bonitasoft.engine.page.PageURL;
 import org.bonitasoft.engine.page.URLAdapterConstants;
 import org.bonitasoft.engine.session.APISession;
@@ -70,20 +61,17 @@ public class PageMappingServiceTest {
         when(pageURL.getPageId()).thenReturn(null);
         ArgumentCaptor<Map> contextCaptor = ArgumentCaptor.forClass(Map.class);
         when(pageAPI.resolvePageOrURL(eq("process/processName/processVersion"), anyMap(), eq(true))).thenReturn(pageURL);
-        final Set<String> userPermissions = new HashSet<>();
-        when(httpSession.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY)).thenReturn(userPermissions);
 
         final PageReference returnedPageReference = pageMappingService.getPage(hsRequest, apiSession, "process/processName/processVersion", new Locale("en"),
                 true);
 
         verify(pageAPI).resolvePageOrURL(eq("process/processName/processVersion"), contextCaptor.capture(), eq(true));
         Map<String, Serializable> capturedContext = contextCaptor.getValue();
-        assertEquals("/bonita", (String)capturedContext.get(URLAdapterConstants.CONTEXT_PATH));
-        assertEquals("en", (String)capturedContext.get(URLAdapterConstants.LOCALE));
-        assertEquals(false, (Boolean)capturedContext.get(AuthorizationRuleConstants.IS_ADMIN));
+        assertEquals("/bonita", capturedContext.get(URLAdapterConstants.CONTEXT_PATH));
+        assertEquals("en", capturedContext.get(URLAdapterConstants.LOCALE));
         assertEquals("value", ((Map<String, String[]>)capturedContext.get(URLAdapterConstants.QUERY_PARAMETERS)).get("key")[0]);
         assertNotNull(returnedPageReference);
-        assertEquals(null, returnedPageReference.getPageId());
+        assertNull(returnedPageReference.getPageId());
         assertEquals("/externalURL", returnedPageReference.getURL());
     }
 

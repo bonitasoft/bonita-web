@@ -16,10 +16,8 @@ package org.bonitasoft.console.common.server.login;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +33,6 @@ import org.bonitasoft.console.common.server.login.credentials.UserLogger;
 import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilder;
-import org.bonitasoft.console.common.server.utils.PermissionsBuilderAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.exception.TenantStatusException;
 import org.bonitasoft.engine.session.APISession;
@@ -137,12 +133,10 @@ public class LoginManager {
     protected void storeCredentials(final HttpServletRequestAccessor request, final APISession session, boolean recreateHTTPSession) throws LoginFailedException {
         String local = LocaleUtils.getUserLocaleAsString(request.asHttpServletRequest());
         final User user = new User(request.getUsername(), local);
-        final PermissionsBuilder permissionsBuilder = createPermissionsBuilder(session);
-        final Set<String> permissions = permissionsBuilder.getPermissions();
-        initSession(request, session, user, permissions, recreateHTTPSession);
+        initSession(request, session, user, recreateHTTPSession);
     }
 
-    protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, final Set<String> permissions, boolean recreateHTTPSession) {
+    protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, boolean recreateHTTPSession) {
         if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.log(Level.FINE, "HTTP session initialization");
         }
@@ -151,10 +145,7 @@ public class LoginManager {
             request.getHttpSession().invalidate();
         }
         //calling request.getSession() creates a new Session if no any valid exists
-        SessionUtil.sessionLogin(user, session, permissions, request.getHttpSession());
+        SessionUtil.sessionLogin(user, session, request.getHttpSession());
     }
 
-    protected PermissionsBuilder createPermissionsBuilder(final APISession session) throws LoginFailedException {
-        return PermissionsBuilderAccessor.createPermissionBuilder(session);
-    }
 }

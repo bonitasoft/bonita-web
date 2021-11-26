@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,7 +26,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.api.PermissionAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.permission.APICallContext;
 import org.bonitasoft.engine.exception.BonitaException;
@@ -127,7 +125,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         final String method = request.getMethod();
         final HttpSession session = request.getSession();
         // userPermissions are of type: "organization_visualization"
-        @SuppressWarnings("unchecked") final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
+//        @SuppressWarnings("unchecked") final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         final Long tenantId = apiSession.getTenantId();
 
@@ -142,7 +140,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             return true;
         }
         try {
-            return enginePermissionsCheck(apiCallContext, userPermissions, apiSession);
+            return enginePermissionsCheck(apiCallContext, apiSession);
         } catch (BonitaException e) {
             throw new ServletException(e);
         }
@@ -171,10 +169,9 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         return PropertiesFactory.getSecurityProperties(tenantId).isAPIAuthorizationsCheckEnabled();
     }
 
-    protected boolean enginePermissionsCheck(final APICallContext apiCallContext, final Set<String> userPermissions, final APISession apiSession)
+    protected boolean enginePermissionsCheck(final APICallContext apiCallContext, final APISession apiSession)
             throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException, ExecutionException {
-        final PermissionAPI permissionAPI = TenantAPIAccessor.getPermissionAPI(apiSession);
-        return permissionAPI.isAuthorized(apiCallContext, shouldReload(apiSession), userPermissions);
+        return TenantAPIAccessor.getPermissionAPI(apiSession).isAuthorized(apiCallContext, shouldReload(apiSession));
     }
 
     private boolean shouldReload(final APISession apiSession) {

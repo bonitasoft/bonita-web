@@ -22,8 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.FormsResourcesUtils;
@@ -201,7 +199,6 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
                 startIndex = startIndex + result.getResult().size();
                 for (final Page page : result.getResult()) {
                     getCustomPageService().removePageLocally(getEngineSession(), page);
-                    getCompoundPermissionsMapping().removeProperty(page.getName());
                 }
             } while (startIndex < count);
         } catch (final Exception e) {
@@ -209,10 +206,6 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
                 logger.log(Level.WARNING, "Error when deleting pages for process with ID " + id, e);
             }
         }
-    }
-
-    protected ConfigurationFile getCompoundPermissionsMapping() {
-        return PropertiesFactory.getCompoundPermissionsMapping(getEngineSession().getTenantId());
     }
 
     protected CustomPageService getCustomPageService() {
