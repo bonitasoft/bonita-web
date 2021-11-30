@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2021-09-28 08:55\n"
+"PO-Revision-Date: 2021-11-30 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -699,7 +699,7 @@ msgid "Open the task to perform it"
 msgstr "実行するタスクを開く"
 
 msgid "Overview"
-msgstr "オーバービュー"
+msgstr "案件概況"
 
 msgid "Page"
 msgstr "ページ"
