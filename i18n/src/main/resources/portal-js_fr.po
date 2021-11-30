@@ -7,17 +7,20 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: fr\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 61810\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 60594\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2021-09-28 08:53\n"
+"PO-Revision-Date: 2021-11-30 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
 
 msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
+
+msgid "A server error occurred. The operation did not complete successfully"
+msgstr ""
 
 msgid "Above normal"
 msgstr "Haute priorité"
@@ -72,6 +75,12 @@ msgstr "Tous"
 
 msgid "All done. Good job!"
 msgstr "Vous avez accompli toutes vos tâches. Bravo !"
+
+msgid "An Error occurred during process activation/deactivation."
+msgstr ""
+
+msgid "An Error occurred during process deletion."
+msgstr ""
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
@@ -737,6 +746,9 @@ msgstr "Les informations personnelles ont été mises à jour avec succès"
 msgid "Phone"
 msgstr "Téléphone"
 
+msgid "Please refresh the page."
+msgstr ""
+
 msgid "Priority"
 msgstr "Priorité"
 
@@ -784,6 +796,9 @@ msgstr "Tout supprimer"
 
 msgid "Reset"
 msgstr "Réinitialiser"
+
+msgid "Reset to default"
+msgstr ""
 
 msgid "Roles"
 msgstr "Rôles"
@@ -977,6 +992,9 @@ msgstr "Le mapping de tous les éléments en attente d'un formulaire ou d'une pa
 msgid "The image you are trying to upload is too big"
 msgstr "L'image que vous essayez de télécharger est trop grande"
 
+msgid "The item does not exist anymore. Refresh the page to see the new status"
+msgstr ""
+
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
 
@@ -1021,6 +1039,9 @@ msgstr "Cette zone est dédiée aux détails d'une tâche. Aucune information à
 
 msgid "This name is already in use"
 msgstr "Ce nom est déjà utilisé"
+
+msgid "This process is no longer available."
+msgstr ""
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
 msgstr "Ce processus n'est pas entièrement configuré, mais il est toujours activé. Les utilisateurs peuvent toujours démarrer des cas ou exécuter des tâches, ce qui pourrait entraîner des erreurs."
@@ -1174,6 +1195,9 @@ msgstr "Avec erreurs"
 
 msgid "You are about to export the descriptor of the application"
 msgstr "Vous allez exporter le descripteur de l'application"
+
+msgid "You are going to be redirected to the process list."
+msgstr ""
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Vous pouvez créer des informations spécifiques dans Bonita Studio :"

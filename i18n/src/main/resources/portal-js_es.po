@@ -7,17 +7,20 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 61810\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 60594\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2021-09-28 08:59\n"
+"PO-Revision-Date: 2021-11-30 02:31\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
 
 msgid "A page with this name already exists."
 msgstr "Ya existe una página con este nombre."
+
+msgid "A server error occurred. The operation did not complete successfully"
+msgstr ""
 
 msgid "Above normal"
 msgstr "Por encima de la normal"
@@ -72,6 +75,12 @@ msgstr "Todos"
 
 msgid "All done. Good job!"
 msgstr "Todo hecho. ¡Buen trabajo!"
+
+msgid "An Error occurred during process activation/deactivation."
+msgstr ""
+
+msgid "An Error occurred during process deletion."
+msgstr ""
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Una aplicación es un entorno personalizado para un perfil de usuario específico, en el cual los usuarios interactúan con Datos de Negocio y procesos de negocio de la manera más eficiente."
@@ -656,7 +665,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "No se hicieron actualizaciones en las categorías. No olvide presionar la tecla \"Enter\" después de seleccionar una categoría."
 
 msgid "No user found with id:"
-msgstr ""
+msgstr "Ningún usuario encontrado con id:"
 
 msgid "No value"
 msgstr "Ningún valor"
@@ -736,6 +745,9 @@ msgstr "Información personal actualizada correctamente"
 msgid "Phone"
 msgstr "Teléfono"
 
+msgid "Please refresh the page."
+msgstr ""
+
 msgid "Priority"
 msgstr "Prioridad"
 
@@ -776,13 +788,16 @@ msgid "Release"
 msgstr "Liberar"
 
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Suprimir"
 
 msgid "Remove all"
 msgstr "Eliminar todo"
 
 msgid "Reset"
 msgstr "Reiniciar"
+
+msgid "Reset to default"
+msgstr ""
 
 msgid "Roles"
 msgstr "Roles"
@@ -976,6 +991,9 @@ msgstr "El mapeo de formularios debe resolverse antes de activar el proceso."
 msgid "The image you are trying to upload is too big"
 msgstr "La imagen que estás intentando subir es demasiado grande"
 
+msgid "The item does not exist anymore. Refresh the page to see the new status"
+msgstr ""
+
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "El nombre de la URL debe comenzar con custompage_ seguido de sólo caracteres alfanuméricos."
 
@@ -1020,6 +1038,9 @@ msgstr "Este es el panel de detalles de la tarea. No hay información para mostr
 
 msgid "This name is already in use"
 msgstr "Este nombre ya está en uso"
+
+msgid "This process is no longer available."
+msgstr ""
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
 msgstr "Este proceso no está completamente configurado, pero todavía está habilitado. Los usuarios todavía pueden iniciar casos o realizar tareas, lo que puede llevar a errores."
@@ -1127,7 +1148,7 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Use la tecla de flecha arriba y flecha abajo para navegar entre las categorías existentes."
 
 msgid "User id not provided. Unable to retrieve the user details."
-msgstr ""
+msgstr "Id de usuario no proporcionado. No se pueden recuperar los detalles del usuario."
 
 msgid "Username"
 msgstr "Nombre de usuario"
@@ -1173,6 +1194,9 @@ msgstr "Con fallos"
 
 msgid "You are about to export the descriptor of the application"
 msgstr "Está a punto de exportar el descriptor de la aplicación"
+
+msgid "You are going to be redirected to the process list."
+msgstr ""
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Puede crear información personalizada en el Studio de Bonita:"
