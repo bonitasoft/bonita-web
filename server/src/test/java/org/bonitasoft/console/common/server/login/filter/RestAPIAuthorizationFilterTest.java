@@ -49,7 +49,7 @@ public class RestAPIAuthorizationFilterTest {
     @Mock
     private HttpSession httpSession;
 
-    private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter(false);
+    private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter();
 
     @Before
     public void before() {
