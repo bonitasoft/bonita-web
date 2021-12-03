@@ -57,16 +57,6 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
      */
     protected static final Logger LOGGER = Logger.getLogger(RestAPIAuthorizationFilter.class.getName());
 
-    private final Boolean reload;
-
-    public RestAPIAuthorizationFilter(final boolean reload) {
-        this.reload = reload;
-    }
-
-    public RestAPIAuthorizationFilter() {
-        reload = null;//will check property from security-config
-    }
-
     @Override
     protected boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
         try {
@@ -171,10 +161,6 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected boolean enginePermissionsCheck(final APICallContext apiCallContext, final APISession apiSession)
             throws ServerAPIException, BonitaHomeNotSetException, UnknownAPITypeException, ExecutionException {
-        return TenantAPIAccessor.getPermissionAPI(apiSession).isAuthorized(apiCallContext, shouldReload(apiSession));
-    }
-
-    private boolean shouldReload(final APISession apiSession) {
-        return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode() : reload;
+        return TenantAPIAccessor.getPermissionAPI(apiSession).isAuthorized(apiCallContext);
     }
 }

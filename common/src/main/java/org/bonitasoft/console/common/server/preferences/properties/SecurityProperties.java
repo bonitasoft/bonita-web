@@ -50,11 +50,6 @@ public class SecurityProperties {
     public static final String API_AUTHORIZATIONS_CHECK = "security.rest.api.authorizations.check.enabled";
 
     /**
-     * Custom page debug mode
-     */
-    public static final String API_AUTHORIZATIONS_CHECK_DEBUG = "security.rest.api.authorizations.check.debug";
-
-    /**
      * Logger
      */
     private static Logger LOGGER = Logger.getLogger(SecurityProperties.class.getName());
@@ -82,14 +77,6 @@ public class SecurityProperties {
     public boolean isAPIAuthorizationsCheckEnabled() {
         final String res = getProperties().getProperty(API_AUTHORIZATIONS_CHECK);
         return res != null && res.equals("true");
-    }
-
-    /**
-     * @return the value allow permission properties file debug
-     */
-    public boolean isAPIAuthorizationsCheckInDebugMode() {
-        final String debugMode = getProperties().getProperty(API_AUTHORIZATIONS_CHECK_DEBUG);
-        return Boolean.parseBoolean(debugMode);
     }
 
     /**
