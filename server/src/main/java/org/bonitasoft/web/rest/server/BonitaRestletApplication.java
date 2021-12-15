@@ -33,6 +33,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
+import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
@@ -86,6 +87,8 @@ public class BonitaRestletApplication extends Application {
     private static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
     
     public static final String BPM_ARCHIVED_CASE_VARIABLE_URL = "/bpm/archivedCaseVariable";
+    
+    public static final String BPM_ARCHIVED_ACTIVITY_VARIABLE_URL = "/bpm/archivedActivityVariable";
 
     private final FinderFactory factory;
 
@@ -186,6 +189,8 @@ public class BonitaRestletApplication extends Application {
 
         router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL+"/{caseId}/{variableName}", factory.create(ArchivedCaseVariableResource.class));
         router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL, factory.create(ArchivedCaseVariablesResource.class));
+        
+        router.attach(BPM_ARCHIVED_ACTIVITY_VARIABLE_URL+ "/{activityId}/{variableName}", factory.create(ArchivedActivityVariableResource.class));
         
         return router;
     }
