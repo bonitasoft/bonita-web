@@ -30,14 +30,16 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariableResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
-import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
@@ -48,6 +50,8 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
@@ -108,6 +112,8 @@ public class FinderFactory {
         finders.put(ProcessInstantiationResource.class, new ProcessInstantiationResourceFinder());
         finders.put(BusinessDataModelResource.class, new BusinessDataModelResourceFinder());
         finders.put(I18nTanslationResource.class, new I18nTanslationResourceFinder());
+        finders.put(ArchivedCaseVariableResource.class, new ArchivedCaseVariableResourceFinder());
+        finders.put(ArchivedCaseVariablesResource.class, new ArchivedCaseVariablesResourceFinder());
 
         return finders;
     }

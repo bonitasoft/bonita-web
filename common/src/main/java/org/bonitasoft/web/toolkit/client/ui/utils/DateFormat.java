@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.util.Date;
 
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;

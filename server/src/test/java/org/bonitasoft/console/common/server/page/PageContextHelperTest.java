@@ -104,7 +104,7 @@ public class PageContextHelperTest {
         final Locale returnedLocale = pageContextHelper.getCurrentLocale();
 
         //then
-        assertThat(returnedLocale.toString()).isEqualTo(LocaleUtils.DEFAULT_LOCALE);
+        assertThat(returnedLocale).hasToString(LocaleUtils.DEFAULT_LOCALE);
     }
 
 
@@ -112,7 +112,7 @@ public class PageContextHelperTest {
     public void should_return_ApiSession() throws Exception {
         //given
         doReturn(httpSession).when(request).getSession();
-        doReturn(apiSession).when(httpSession).getAttribute(pageContextHelper.ATTRIBUTE_API_SESSION);
+        doReturn(apiSession).when(httpSession).getAttribute(PageContextHelper.ATTRIBUTE_API_SESSION);
         pageContextHelper = new PageContextHelper(request);
 
         //when

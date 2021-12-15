@@ -23,6 +23,8 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariableResource;
+import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
@@ -82,6 +84,8 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
 
     private static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
+    
+    public static final String BPM_ARCHIVED_CASE_VARIABLE_URL = "/bpm/archivedCaseVariable";
 
     private final FinderFactory factory;
 
@@ -180,6 +184,9 @@ public class BonitaRestletApplication extends Application {
         // GET all translations
         router.attach("/system/i18ntranslation", factory.create(I18nTanslationResource.class));
 
+        router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL+"/{caseId}/{variableName}", factory.create(ArchivedCaseVariableResource.class));
+        router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL, factory.create(ArchivedCaseVariablesResource.class));
+        
         return router;
     }
 
