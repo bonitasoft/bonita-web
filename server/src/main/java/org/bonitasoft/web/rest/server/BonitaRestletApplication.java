@@ -38,6 +38,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskC
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
+import org.bonitasoft.web.rest.server.api.bpm.signal.BPMSignalResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
 import org.bonitasoft.web.rest.server.api.system.I18nTanslationResource;
 import org.restlet.Application;
@@ -77,6 +78,8 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_TIMER_EVENT_TRIGGER_URL = "/bpm/timerEventTrigger";
 
     public static final String BPM_MESSAGE_URL = "/bpm/message";
+    
+    public static final String BPM_SIGNAL_URL = "/bpm/signal";
 
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
 
@@ -137,6 +140,9 @@ public class BonitaRestletApplication extends Application {
 
         // POST to send a BPM message to the engine:
         router.attach(BPM_MESSAGE_URL, factory.create(BPMMessageResource.class));
+        
+        // POST to send a BPM signal to the engine:
+        router.attach(BPM_SIGNAL_URL, factory.create(BPMSignalResource.class));
 
         // GET to case info (with task state counter)
         router.attach(BPM_CASE_INFO_URL + "/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
