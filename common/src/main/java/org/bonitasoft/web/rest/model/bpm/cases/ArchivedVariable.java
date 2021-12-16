@@ -29,7 +29,7 @@ public abstract class ArchivedVariable {
     /**
      * The date and time when this variable was archived
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date archivedDate;
 
     /**
