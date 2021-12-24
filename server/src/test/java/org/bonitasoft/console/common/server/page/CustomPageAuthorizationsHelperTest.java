@@ -110,7 +110,7 @@ public class CustomPageAuthorizationsHelperTest {
 
     @Test
     public void should_filter_application_page_search_on_custom_page_id() throws Exception {
-        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, false, "", 0, 0, 0, 0, "", ContentType.PAGE, null));
+        given(pageAPI.getPageByName("pageToken")).willReturn(new PageImpl(2L, "", "", false, "", 0, 0, 0, 0, "", ContentType.PAGE, null));
         given(applicationAPI.searchApplications(any(SearchOptions.class)))
                 .willReturn(applicationResult);
         given(applicationResult.getCount()).willReturn(1L);

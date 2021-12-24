@@ -44,7 +44,6 @@ public class PageSearchDescriptorConverter implements AttributeConverter {
         addAttributeConverterItem(PageItem.ATTRIBUTE_URL_TOKEN, PageSearchDescriptor.NAME, TYPE.STRING);
         addAttributeConverterItem(PageItem.ATTRIBUTE_DISPLAY_NAME, PageSearchDescriptor.DISPLAY_NAME, TYPE.STRING);
         addAttributeConverterItem(PageItem.ATTRIBUTE_IS_PROVIDED, PageSearchDescriptor.PROVIDED, TYPE.BOOLEAN);
-        addAttributeConverterItem(PageItem.ATTRIBUTE_IS_HIDDEN, PageSearchDescriptor.HIDDEN, TYPE.BOOLEAN);
         addAttributeConverterItem(PageItem.ATTRIBUTE_CREATED_BY_USER_ID, PageSearchDescriptor.INSTALLED_BY,
                 TYPE.STRING);
         addAttributeConverterItem(PageItem.ATTRIBUTE_CREATION_DATE, PageSearchDescriptor.INSTALLATION_DATE,

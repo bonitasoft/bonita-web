@@ -190,7 +190,7 @@ public class ApplicationModelTest {
     @Test
     public void should_getCustomPage_return_expectedPage() throws Exception {
         given(applicationApi.getApplicationPage("token", "pageToken")).willReturn(new ApplicationPageImpl(1, 1, "pageToken"));
-        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, false, "", 0L, 0L, 0L, 0L, "", ContentType.PAGE,null));
+        given(pageApi.getPage(1)).willReturn(new PageImpl(1, "", "", false, "", 0L, 0L, 0L, 0L, "", ContentType.PAGE,null));
 
         assertThat(model.getCustomPage("pageToken").getId()).isEqualTo(1);
     }

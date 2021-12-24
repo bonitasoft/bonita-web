@@ -602,13 +602,6 @@ public class PageDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void makeSearchOptionCreator_converts_isHidden_field_to_boolean() {
-        final List<SearchFilter> filters = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC",
-                Collections.singletonMap(PageItem.ATTRIBUTE_IS_HIDDEN, "true")).create().getFilters();
-        assertThat(filters.get(0).getValue()).isEqualTo(true);
-    }
-
-    @Test
     public void makeSearchOptionCreator_converts_isProvided_field_to_boolean() {
         final List<SearchFilter> filters = pageDatastore.makeSearchOptionCreator(0, 10, "", "displayName ASC",
                 Collections.singletonMap(PageItem.ATTRIBUTE_IS_PROVIDED, "false")).create().getFilters();
