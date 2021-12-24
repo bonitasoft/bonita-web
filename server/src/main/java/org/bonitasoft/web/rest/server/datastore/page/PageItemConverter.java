@@ -36,7 +36,6 @@ public class PageItemConverter extends ItemConverter<PageItem, Page> {
         pageItem.setUpdatedByUserId(engineItem.getLastUpdatedBy());
         pageItem.setContentName(engineItem.getContentName());
         pageItem.setContentType(engineItem.getContentType());
-        pageItem.setIsHidden(engineItem.isHidden());
         pageItem.setIsEditable(engineItem.isEditable());
         pageItem.setIsRemovable(engineItem.isRemovable());
         return pageItem;
