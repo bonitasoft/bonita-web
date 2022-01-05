@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2021-09-28 08:53\n"
+"PO-Revision-Date: 2022-01-05 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -657,7 +657,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "Aucune mise à jour n’a été faite sur les catégories. Appuyez bien sur « Entrée » après avoir sélectionné une catégorie."
 
 msgid "No user found with id:"
-msgstr ""
+msgstr "Aucun utilisateur n'a été trouvé avec l'id :"
 
 msgid "No value"
 msgstr "Aucune valeur"
@@ -969,13 +969,13 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "The file you are trying to upload has the wrong mime type"
-msgstr "Le fichier que vous essayez de télécharger a le mauvais type MIME"
+msgstr "Le fichier que vous essayez de charger n'a pas le bon type MIME"
 
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "Le mapping de tous les éléments en attente d'un formulaire ou d'une page doit être effectif pour pouvoir activer le processus."
 
 msgid "The image you are trying to upload is too big"
-msgstr "L'image que vous essayez de télécharger est trop grande"
+msgstr "L'image que vous essayez de charger est trop grande"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
@@ -1128,7 +1128,7 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
 
 msgid "User id not provided. Unable to retrieve the user details."
-msgstr ""
+msgstr "Identifiant utilisateur non fourni. Impossible de récupérer les détails de l'utilisateur."
 
 msgid "Username"
 msgstr "Nom d'utilisateur"

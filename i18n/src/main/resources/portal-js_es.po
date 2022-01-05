@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2021-11-30 02:31\n"
+"PO-Revision-Date: 2022-01-04 04:32\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -107,7 +107,7 @@ msgid "Archived cases"
 msgstr "Casos archivados"
 
 msgid "Are you sure you want to delete it?"
-msgstr ""
+msgstr "¿Seguro que deseas eliminarlo?"
 
 msgid "Are you sure you want to delete this membership ?"
 msgstr "¿Está seguro que desea eliminar esta membresía?"
@@ -305,7 +305,7 @@ msgid "Delete process"
 msgstr "Eliminar proceso"
 
 msgid "Deleting a process definition will also delete all open and archived cases of this process."
-msgstr ""
+msgstr "Eliminar una definición de proceso también eliminará todos los casos abiertos y archivados de este proceso."
 
 msgid "Description"
 msgstr "Descripción"
@@ -398,7 +398,7 @@ msgid "Failed instances"
 msgstr "Instancias fallidas"
 
 msgid "File format may be invalid. For more information, check the log file."
-msgstr ""
+msgstr "El formato de archivo puede ser inválido. Para más información, compruebe el archivo de log."
 
 msgid "Filename too long. The zip filename must be no longer than 50 characters"
 msgstr "Nombre de archivo demasiado largo. El nombre del archivo zip debe ser no más de 50 caracteres"
@@ -473,7 +473,7 @@ msgid "Import an application descriptor"
 msgstr "Importar un descriptor de aplicación"
 
 msgid "In a production environment, this should be used with caution."
-msgstr ""
+msgstr "En un entorno de producción, esto debería ser utilizado con precaución."
 
 msgid "In such cases, you must CANCEL THIS UPDATE and let the database administrator carefully script the changes and apply them to the database. Only then will you be able to update the BDM from this page."
 msgstr "En tales casos, debe CANCELAR ESTA ACTUALIZACIÓN y permitir al administrador de bases de datos escribir cuidadosamente los cambios y aplicarlos a la base de datos. Sólo entonces podrá actualizar el BDM desde esta página."
@@ -806,7 +806,7 @@ msgid "Search Key 5"
 msgstr "Clave de búsqueda 5"
 
 msgid "Search by process name or search keys"
-msgstr ""
+msgstr "Buscar por nombre de proceso o claves de búsqueda"
 
 msgid "Search..."
 msgstr "Búsqueda..."
@@ -1001,7 +1001,7 @@ msgid "These deleted cases will be permanently deleted from the archives."
 msgstr "Estos casos eliminados se eliminarán permanentemente del histórico."
 
 msgid "They will be removed from the database permanently."
-msgstr ""
+msgstr "Serán eliminados de la base de datos permanentemente."
 
 msgid "This URL is already in use"
 msgstr "Esta URL ya está en uso"
@@ -1013,7 +1013,7 @@ msgid "This field is mandatory"
 msgstr "Este campo es obligatorio"
 
 msgid "This filters the case list only by process name. The display name is shown for information purposes."
-msgstr ""
+msgstr "Esto filtra la lista de casos sólo por nombre de proceso. El nombre mostrado solo se muestra con fines informativos."
 
 msgid "This is the task details panel. No information to display"
 msgstr "Este es el panel de detalles de la tarea. No hay información para mostrar"
@@ -1031,7 +1031,7 @@ msgid "This process is not fully configured. It cannot be enabled."
 msgstr "Este proceso no está completamente configurado. No se puede activar."
 
 msgid "This task cannot be executed from here."
-msgstr ""
+msgstr "Esta tarea no se puede ejecutar desde aquí."
 
 msgid "This task is completed."
 msgstr "Esta tarea se ha completado."
