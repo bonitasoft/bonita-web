@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -67,6 +69,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         DatastoreHasGet<PageItem>, DatastoreHasSearch<PageItem>, DatastoreHasDelete {
 
     /**
+     * Logger
+     */
+    private static final Logger LOGGER = Logger.getLogger(PageDatastore.class.getName());
+
+    /**
      * page files
      */
     public static final String UNMAPPED_ATTRIBUTE_ZIP_FILE = "pageZip";
@@ -82,6 +89,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     private final BonitaHomeFolderAccessor tenantFolder;
 
     private CustomPageContentValidator pageContentValidator;
+
+    private static boolean hasShownIsHiddenLog = false;
 
     public PageDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue,
                          final PageAPI pageAPI,
@@ -246,7 +255,13 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     protected SearchOptionsCreator makeSearchOptionCreator(final int page, final int resultsByPage, final String search,
                                                            final String orders,
                                                            final Map<String, String> filters) {
-
+        if (filters.containsKey(PageItem.ATTRIBUTE_IS_HIDDEN)) {
+            if (!hasShownIsHiddenLog && LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.warning("Parameter \"isHidden\" for page search is deprecated and will be removed in a future release");
+                hasShownIsHiddenLog = true;
+            }
+            filters.remove(PageItem.ATTRIBUTE_IS_HIDDEN);
+        }
         final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search,
                 new Sorts(orders,
                         getSearchDescriptorConverter()),

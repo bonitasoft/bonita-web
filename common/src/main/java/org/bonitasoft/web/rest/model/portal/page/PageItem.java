@@ -18,6 +18,7 @@ package org.bonitasoft.web.rest.model.portal.page;
 
 import java.util.Date;
 
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
@@ -52,6 +53,13 @@ public class PageItem extends Item implements ItemHasUniqueId {
     public static final String ATTRIBUTE_CONTENT_NAME = "contentName";
 
     public static final String ATTRIBUTE_CONTENT_TYPE = "contentType";
+
+    /**
+     * @param isHidden
+     * @deprecated Since 7.14.0
+     */
+    @Deprecated
+    public static final String ATTRIBUTE_IS_HIDDEN = "isHidden";
     
     public static final String ATTRIBUTE_IS_EDITABLE = "isEditable";
 
@@ -203,6 +211,10 @@ public class PageItem extends Item implements ItemHasUniqueId {
 
     public APIID getUpdatedByUserId() {
         return getAttributeValueAsAPIID(ATTRIBUTE_UPDATED_BY_USER_ID);
+    }
+
+    public boolean isHidden() {
+        return Boolean.parseBoolean(getAttributeValue(ATTRIBUTE_IS_HIDDEN));
     }
 
     public APIID getProcessId() {
