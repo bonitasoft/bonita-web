@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2021-11-30 02:29\n"
+"PO-Revision-Date: 2022-01-09 02:28\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -20,7 +20,7 @@ msgid "A page with this name already exists."
 msgstr "Une page portant ce nom existe déjà."
 
 msgid "A server error occurred. The operation did not complete successfully"
-msgstr ""
+msgstr "Une erreur de serveur s'est produite. L'opération n'a pas été terminée avec succès"
 
 msgid "Above normal"
 msgstr "Haute priorité"
@@ -77,10 +77,10 @@ msgid "All done. Good job!"
 msgstr "Vous avez accompli toutes vos tâches. Bravo !"
 
 msgid "An Error occurred during process activation/deactivation."
-msgstr ""
+msgstr "Une erreur s'est produite lors de l'activation/désactivation du processus."
 
 msgid "An Error occurred during process deletion."
-msgstr ""
+msgstr "Une erreur s'est produite durant la suppression du processus. "
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
@@ -666,7 +666,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "Aucune mise à jour n’a été faite sur les catégories. Appuyez bien sur « Entrée » après avoir sélectionné une catégorie."
 
 msgid "No user found with id:"
-msgstr ""
+msgstr "Aucun utilisateur n'a été trouvé avec l'id :"
 
 msgid "No value"
 msgstr "Aucune valeur"
@@ -747,7 +747,7 @@ msgid "Phone"
 msgstr "Téléphone"
 
 msgid "Please refresh the page."
-msgstr ""
+msgstr "Veuillez actualiser la page."
 
 msgid "Priority"
 msgstr "Priorité"
@@ -798,7 +798,7 @@ msgid "Reset"
 msgstr "Réinitialiser"
 
 msgid "Reset to default"
-msgstr ""
+msgstr "Réinitialiser avec les paramètres par défaut"
 
 msgid "Roles"
 msgstr "Rôles"
@@ -984,16 +984,16 @@ msgid "The deleted case will be permanently deleted from the archives."
 msgstr "Le cas supprimé sera définitivement supprimé des archives."
 
 msgid "The file you are trying to upload has the wrong mime type"
-msgstr "Le fichier que vous essayez de télécharger a le mauvais type MIME"
+msgstr "Le fichier que vous essayez de charger n'a pas le bon type MIME"
 
 msgid "The form mappings must be resolved before enabling the Process."
 msgstr "Le mapping de tous les éléments en attente d'un formulaire ou d'une page doit être effectif pour pouvoir activer le processus."
 
 msgid "The image you are trying to upload is too big"
-msgstr "L'image que vous essayez de télécharger est trop grande"
+msgstr "L'image que vous essayez de charger est trop grande"
 
 msgid "The item does not exist anymore. Refresh the page to see the new status"
-msgstr ""
+msgstr "L' élément n'existe plus. Rafraîchissez la page pour voir le nouveau statut"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
@@ -1041,7 +1041,7 @@ msgid "This name is already in use"
 msgstr "Ce nom est déjà utilisé"
 
 msgid "This process is no longer available."
-msgstr ""
+msgstr "Ce processus n'est plus disponible."
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
 msgstr "Ce processus n'est pas entièrement configuré, mais il est toujours activé. Les utilisateurs peuvent toujours démarrer des cas ou exécuter des tâches, ce qui pourrait entraîner des erreurs."
@@ -1149,7 +1149,7 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "Utilisez les flèches haut et bas du clavier pour parcourir la liste des catégories existantes."
 
 msgid "User id not provided. Unable to retrieve the user details."
-msgstr ""
+msgstr "Identifiant utilisateur non fourni. Impossible de récupérer les détails de l'utilisateur."
 
 msgid "Username"
 msgstr "Nom d'utilisateur"
@@ -1197,7 +1197,7 @@ msgid "You are about to export the descriptor of the application"
 msgstr "Vous allez exporter le descripteur de l'application"
 
 msgid "You are going to be redirected to the process list."
-msgstr ""
+msgstr "Vous allez être redirigé vers la liste des processus."
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Vous pouvez créer des informations spécifiques dans Bonita Studio :"
