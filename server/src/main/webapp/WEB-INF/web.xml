@@ -8,15 +8,15 @@
     <!--  Error pages -->
     <error-page>
         <error-code>500</error-code>
-        <location>/apps/appDirectoryBonita/error-500</location>
+        <location>/error/500</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/apps/appDirectoryBonita/error-403</location>
+        <location>/error/403</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/apps/appDirectoryBonita/error-404</location>
+        <location>/error/404</location>
     </error-page>
 
     <!-- No Cache Filter -->
@@ -295,6 +295,11 @@
     </listener>
 
     <servlet>
+        <servlet-name>errorPageServlet</servlet-name>
+        <servlet-class>org.bonitasoft.console.common.server.servlet.ErrorPageServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>BonitaRestAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.web.rest.server.BonitaRestAPIServlet</servlet-class>
     </servlet>
@@ -528,6 +533,11 @@
         <servlet-name>HttpAPIServlet</servlet-name>
         <servlet-class>org.bonitasoft.engine.api.internal.servlet.HttpAPIServlet</servlet-class>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>errorPageServlet</servlet-name>
+        <url-pattern>/error/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>livingApplicationServlet</servlet-name>
