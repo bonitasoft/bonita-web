@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,7 @@ import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.theme.ThemeType;
 import org.bonitasoft.forms.server.accessor.impl.util.FormDocumentBuilderFactory;
 import org.bonitasoft.forms.server.exception.InvalidFormDefinitionException;
@@ -79,7 +81,7 @@ public class HomepageServlet extends ThemeResourceServlet {
     public static final String CONTENT_TYPE = "text/html";
 
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) {
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         enforceLocaleCookieIfPresentInURLOrBrowser(request, response);
         final boolean isForm = isForm(getUrlPrefix(request), getUiMode(request));
         final String themeName = getThemeName(request);
@@ -149,7 +151,7 @@ public class HomepageServlet extends ThemeResourceServlet {
         return request.getServletPath().replaceAll(HOMEPAGE_SERVLET_ID_IN_PATH, "");
     }
 
-    protected void showDefaultPage(final HttpServletRequest request, final HttpServletResponse response, final boolean isForm) {
+    protected void showDefaultPage(final HttpServletRequest request, final HttpServletResponse response, final boolean isForm) throws ServletException, IOException {
         try {
             // Check if the portal theme directory exists,
             // if it doesn't, retrieve it from the engine and create a timestamp file with the theme last update date,
@@ -159,6 +161,16 @@ public class HomepageServlet extends ThemeResourceServlet {
             final File themeFolder = getResourcesParentFolder(request);
             new ThemeExtractor().retrieveAndExtractCurrentTheme(themeFolder, apiSession, ThemeType.PORTAL);
             getResourceFile(request, response, PORTAL_THEME_NAME, getFileName(isForm));
+        } catch (final InvalidSessionException e) {
+            if (LOGGER.isLoggable(Level.FINER)) {
+                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+            }
+            //invalidate the HTTP session
+            SessionUtil.sessionLogout(request.getSession());
+            //and forward the request to the current servlet URL so that is goes through the Authentication filter again 
+            //(where the redirection to the login page is handled)
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(request.getServletPath()) ;
+            requestDispatcher.forward(request, response);
         } catch (final Throwable e) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "Error while loading the file " + getFileName(isForm) + " in theme " + PORTAL_THEME_NAME, e);
