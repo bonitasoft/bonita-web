@@ -12,6 +12,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.Sort;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -61,5 +63,6 @@ public class AbstractHumanTaskDatastoreTest {
         Assert.assertEquals(builder.done().getSorts().get(0).getField(), ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID);
         Assert.assertEquals(builder.done().getSorts().get(0).getOrder(), Order.DESC);
     }
+
 
 }

@@ -5,19 +5,21 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 
+import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
@@ -25,21 +27,22 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedActivitySearchDescriptorConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
- * 
  */
-public class AbstractArchivedActivityDatastore<CONSOLE_ITEM extends ArchivedActivityItem, ENGINE_ITEM extends ArchivedActivityInstance>
+public abstract class  AbstractArchivedActivityDatastore<CONSOLE_ITEM extends ArchivedActivityItem, ENGINE_ITEM extends ArchivedActivityInstance>
         extends AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM, ENGINE_ITEM> {
 
-    public AbstractArchivedActivityDatastore(final APISession engineSession) {
-        super(engineSession);
+    public AbstractArchivedActivityDatastore(final APISession engineSession, String token) {
+        super(engineSession, token);
     }
 
     /**
      * Fill a console item using the engine item passed.
-     * 
+     *
      * @param result
      *            The console item to fill
      * @param item
@@ -73,4 +76,12 @@ public class AbstractArchivedActivityDatastore<CONSOLE_ITEM extends ArchivedActi
         }
     }
 
+    @Override
+    protected ENGINE_ITEM runGet(final APIID id) {
+        try {
+            return super.runGet(id);
+        } catch (ClassCastException e) {
+            throw new APIItemNotFoundException(this.token, id);
+        }
+    }
 }

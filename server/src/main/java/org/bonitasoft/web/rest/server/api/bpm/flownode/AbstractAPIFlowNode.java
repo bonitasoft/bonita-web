@@ -22,11 +22,7 @@ import java.util.Map;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
-import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.*;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.GenericDeployer;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
@@ -177,7 +173,7 @@ APIHasSearch<ITEM> {
             public IItem get(final APIID id) {
                 return new TaskFinder(
                         new TaskDatastore(getEngineSession()),
-                        new ArchivedTaskDatastore(getEngineSession())).find(id);
+                        new ArchivedTaskDatastore(getEngineSession(), ArchivedTaskDefinition.TOKEN)).find(id);
             }
         }, HumanTaskItem.ATTRIBUTE_PARENT_TASK_ID));
 

@@ -25,7 +25,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskItem;
  */
 public class ArchivedTaskDatastore extends AbstractArchivedTaskDatastore<ArchivedTaskItem, ArchivedTaskInstance> {
 
-    public ArchivedTaskDatastore(final APISession engineSession) {
-        super(engineSession);
+    public ArchivedTaskDatastore(final APISession engineSession, String token) {
+        super(engineSession, token);
     }
 }

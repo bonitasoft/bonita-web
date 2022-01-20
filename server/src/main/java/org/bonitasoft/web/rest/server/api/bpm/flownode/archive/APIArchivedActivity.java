@@ -34,7 +34,7 @@ public class APIArchivedActivity extends AbstractAPIActivity<ArchivedActivityIte
 
     @Override
     protected ArchivedActivityDatastore defineDefaultDatastore() {
-        return new ArchivedActivityDatastore(getEngineSession());
+        return new ArchivedActivityDatastore(getEngineSession(), ArchivedActivityDefinition.TOKEN);
     }
 
     @Override

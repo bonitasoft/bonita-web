@@ -25,7 +25,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
  */
 public class ArchivedActivityDatastore extends AbstractArchivedActivityDatastore<ArchivedActivityItem, ArchivedActivityInstance> {
 
-    public ArchivedActivityDatastore(final APISession engineSession) {
-        super(engineSession);
+    public ArchivedActivityDatastore(final APISession engineSession, String token) {
+        super(engineSession, token);
     }
 }
