@@ -19,6 +19,7 @@ import java.util.Map;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
+import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstanceNotFoundException;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
@@ -34,19 +35,23 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasSearch;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Séverin Moussel
  */
-public class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlowNodeItem, ENGINE_ITEM extends ArchivedFlowNodeInstance>
+public abstract class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlowNodeItem, ENGINE_ITEM extends ArchivedFlowNodeInstance>
         extends CommonDatastore<CONSOLE_ITEM, ENGINE_ITEM> implements
         DatastoreHasGet<CONSOLE_ITEM>,
         DatastoreHasSearch<CONSOLE_ITEM>
 {
 
-    public AbstractArchivedFlowNodeDatastore(final APISession engineSession) {
+    protected final String token;
+
+    public AbstractArchivedFlowNodeDatastore(final APISession engineSession, String token) {
         super(engineSession);
+        this.token = token;
     }
 
     /**
@@ -77,7 +82,7 @@ public class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlow
         return result;
     }
 
-    protected final ProcessAPI getProcessAPI() {
+    protected ProcessAPI getProcessAPI() {
         try {
             return TenantAPIAccessor.getProcessAPI(getEngineSession());
         } catch (final Exception e) {
@@ -105,18 +110,19 @@ public class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends ArchivedFlow
         try {
             final ENGINE_ITEM archivedFlowNodeInstance = runGet(id);
             return convertEngineToConsoleItem(archivedFlowNodeInstance);
+        } catch (APIItemNotFoundException e) {
+            throw e;
         } catch (final Exception e) {
             throw new APIException(e);
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected ENGINE_ITEM runGet(final APIID id) {
         try {
-            @SuppressWarnings("unchecked")
-            final ENGINE_ITEM archivedFlowNodeInstance = (ENGINE_ITEM) getProcessAPI().getArchivedFlowNodeInstance(id.toLong());
-            return archivedFlowNodeInstance;
-        } catch (final Exception e) {
-            throw new APIException(e);
+            return (ENGINE_ITEM) getProcessAPI().getArchivedFlowNodeInstance(id.toLong());
+        } catch (ArchivedFlowNodeInstanceNotFoundException e) {
+            throw new APIItemNotFoundException(this.token, id);
         }
     }
 

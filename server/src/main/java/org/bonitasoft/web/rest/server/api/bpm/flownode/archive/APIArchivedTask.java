@@ -36,7 +36,7 @@ public class APIArchivedTask extends AbstractAPITask<ArchivedTaskItem> {
 
     @Override
     protected ArchivedTaskDatastore defineDefaultDatastore() {
-        return new ArchivedTaskDatastore(getEngineSession());
+        return new ArchivedTaskDatastore(getEngineSession(), ArchivedTaskDefinition.TOKEN);
     }
 
     @Override

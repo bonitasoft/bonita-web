@@ -13,21 +13,31 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedCallActivityInstanceImpl;
+import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedGatewayInstanceImpl;
+import org.bonitasoft.engine.search.impl.SearchFilter;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedUserTaskDefinition;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.bonitasoft.engine.search.impl.SearchFilter;
-import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Emmanuel Duchastenier
  */
 public class AbstractArchivedFlowNodeDatastoreTest {
 
-    private AbstractArchivedFlowNodeDatastore datastore = new AbstractArchivedFlowNodeDatastore(null);
+    private ArchivedHumanTaskDatastore datastore = new ArchivedHumanTaskDatastore(null, "token");
 
     @Test
     public void makeSearchOptionCreator_should_converts_TERMINAL_field_to_boolean() {
@@ -35,4 +45,8 @@ public class AbstractArchivedFlowNodeDatastoreTest {
                 Collections.singletonMap(ArchivedFlowNodeItem.FILTER_IS_TERMINAL, "true")).create().getFilters();
         assertThat(filters.get(0).getValue()).isEqualTo(true);
     }
+
+
+
+
 }

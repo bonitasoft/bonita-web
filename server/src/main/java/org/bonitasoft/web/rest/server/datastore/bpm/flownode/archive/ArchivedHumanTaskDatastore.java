@@ -25,7 +25,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
  */
 public class ArchivedHumanTaskDatastore extends AbstractArchivedHumanTaskDatastore<ArchivedHumanTaskItem, ArchivedHumanTaskInstance> {
 
-    public ArchivedHumanTaskDatastore(final APISession engineSession) {
-        super(engineSession);
+    public ArchivedHumanTaskDatastore(final APISession engineSession, String token) {
+        super(engineSession, token);
     }
 }

@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
 import org.bonitasoft.engine.search.SearchResult;
@@ -32,23 +30,24 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundExc
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
+import java.util.Map;
+import java.util.concurrent.CancellationException;
+
 /**
  * @author Séverin Moussel
  */
-public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHumanTaskItem, ENGINE_ITEM extends ArchivedHumanTaskInstance>
+public abstract class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHumanTaskItem, ENGINE_ITEM extends ArchivedHumanTaskInstance>
         extends AbstractArchivedTaskDatastore<CONSOLE_ITEM, ENGINE_ITEM> {
 
-    public AbstractArchivedHumanTaskDatastore(final APISession engineSession) {
-        super(engineSession);
+    public AbstractArchivedHumanTaskDatastore(final APISession engineSession, String token) {
+        super(engineSession, token);
     }
 
     /**
      * Fill a console item using the engine item passed.
-     * 
-     * @param result
-     *        The console item to fill
-     * @param item
-     *        The engine item to use for filling
+     *
+     * @param result The console item to fill
+     * @param item   The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
     public static ArchivedHumanTaskItem fillConsoleItem(final ArchivedHumanTaskItem result, final ArchivedHumanTaskInstance item) {
@@ -69,7 +68,7 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
 
     @Override
     public ItemSearchResult<CONSOLE_ITEM> search(final int page, final int resultsByPage, final String search, final String orders,
-            final Map<String, String> filters) {
+                                                 final Map<String, String> filters) {
         try {
             // can't use the ArchivedFlowNodeSearchDescriptorConverter to map web filter to engine ones since
             // the supervisor id filter isn't handle in engine but is a specific method
@@ -95,7 +94,7 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
     @SuppressWarnings("unchecked")
     @Override
     protected SearchResult<ENGINE_ITEM> runSearch(final SearchOptionsCreator creator,
-            final Map<String, String> filters) {
+                                                  final Map<String, String> filters) {
         try {
             final SearchResult<ENGINE_ITEM> result;
             if (!MapUtil.isBlank(filters, ArchivedHumanTaskItem.FILTER_SUPERVISOR_ID)) {
@@ -122,14 +121,5 @@ public class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends ArchivedHum
         return new ArchivedHumanTaskSearchDescriptorConverter();
     }
 
-    @Override
-    protected ENGINE_ITEM runGet(final APIID id) {
-        final ENGINE_ITEM result = super.runGet(id);
 
-        if (!(result instanceof ArchivedHumanTaskInstance)) {
-            throw new APIItemNotFoundException("Human task", id);
-        }
-
-        return result;
-    }
 }
