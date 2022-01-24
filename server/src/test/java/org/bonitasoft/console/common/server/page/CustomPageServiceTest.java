@@ -92,8 +92,8 @@ public class CustomPageServiceTest {
     private Page mockedPage;
     @Mock
     private ConsoleProperties consoleProperties;
-    @Mock
-    private WebBonitaConstantsUtils webBonitaConstantUtils;
+
+    private final WebBonitaConstantsUtils webBonitaConstantUtils = WebBonitaConstantsUtils.getInstance(1L);
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();

@@ -12,7 +12,6 @@
     <properties>
         <output.directory>${project.build.directory}/${project.build.finalName}</output.directory>
         <wro.config>${basedir}/src/main/wro/wro-build-time</wro.config>
-        <!--<jacoco.skip>true</jacoco.skip> -->
     </properties>
 
     <dependencies>

@@ -10,10 +10,6 @@
     <packaging>jar</packaging>
     <name>Test toolkit</name>
 
-    <properties>
-        <!--<jacoco.skip>true</jacoco.skip>-->
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.bonitasoft.engine</groupId>
