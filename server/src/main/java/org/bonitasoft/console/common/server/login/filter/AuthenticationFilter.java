@@ -40,6 +40,7 @@ import org.bonitasoft.console.common.server.login.utils.LoginUrlException;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Vincent Elcrin
@@ -129,11 +130,27 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
         for (final AuthenticationRule rule : getRules()) {
             if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
-                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response, tenantIdAccessor.ensureTenantId());
+                long tenantId = getTenantId(requestAccessor, tenantIdAccessor, rule);
+                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response, tenantId);
                 return true;
             }
         }
         return false;
+    }
+
+    protected long getTenantId(final HttpServletRequestAccessor requestAccessor,
+            final TenantIdAccessor tenantIdAccessor, final AuthenticationRule rule) throws ServletException {
+        APISession apiSession = requestAccessor.getApiSession();
+        long tenantId;
+        if (apiSession != null) {
+            tenantId = apiSession.getTenantId();
+        } else {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+                LOGGER.log(Level.WARNING, "API session was not found in HTTP session. Rule " + rule.getClass().getName() + " may be missing the engine login.");
+            }
+            tenantId = tenantIdAccessor.ensureTenantId();
+        }
+        return tenantId;
     }
 
     protected void handleUserNotFoundOrInactiveException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,

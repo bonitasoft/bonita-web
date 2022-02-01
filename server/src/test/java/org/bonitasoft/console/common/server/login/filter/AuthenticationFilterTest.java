@@ -49,6 +49,8 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -67,19 +69,16 @@ public class AuthenticationFilterTest {
     private FilterChain chain;
 
     @Mock
-    private HttpServletRequestAccessor request;
-
-    @Mock
     private HttpServletRequest httpRequest;
 
     @Mock
     private HttpServletResponse httpResponse;
 
     @Mock
-    private TenantIdAccessor tenantIdAccessor;
-
-    @Mock
     private HttpSession httpSession;
+    
+    @Mock
+    private APISession apiSession;
 
     @Mock
     private FilterConfig filterConfig;
@@ -92,21 +91,29 @@ public class AuthenticationFilterTest {
     
     @Spy
     AuthenticationManager authenticationManager = new FakeAuthenticationManager(1L);
+    
+    HttpServletRequestAccessor request;
+    
+    TenantIdAccessor tenantIdAccessor;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        doReturn(httpSession).when(request).getHttpSession();
-        when(request.asHttpServletRequest()).thenReturn(httpRequest);
+        doReturn(httpSession).when(httpRequest).getSession();
         doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
+        when(httpRequest.getMethod()).thenReturn("GET");
+        when(httpRequest.getParameter(AuthenticationManager.TENANT)).thenReturn("1");
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
+        
+        request = spy(new HttpServletRequestAccessor(httpRequest));
+        tenantIdAccessor = spy(new TenantIdAccessor(request));
+        
+        //remove default rules (already logged in) as they have their own tests
+        authenticationFilter.getRules().clear();
         authenticationFilter.init(filterConfig);
-        when(request.getTenantId()).thenReturn("1");
-        when(tenantIdAccessor.ensureTenantId()).thenReturn(1L);
-        when(httpRequest.getMethod()).thenReturn("GET");
     }
 
     @Test
@@ -119,6 +126,18 @@ public class AuthenticationFilterTest {
 
         verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
+    }
+    
+    @Test
+    public void should_use_the_tenant_id_from_APISession_when_rule_passes() throws Exception {
+        when(apiSession.getTenantId()).thenReturn(3L);
+        when(httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY)).thenReturn(apiSession);
+        AuthenticationRule passingRule = spy(createPassingRule());
+        authenticationFilter.addRule(passingRule);
+
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+
+        verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 3L);
     }
 
     @Test
@@ -283,7 +302,7 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testMakeRedirectUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("/apps/appDirectoryBonita");
+        doReturn("/apps/appDirectoryBonita").when(request).getRequestedUri();
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(request, times(1)).getRequestedUri();
         assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/apps/appDirectoryBonita");
@@ -291,7 +310,7 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testMakeRedirectUrlFromRequestUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("apps/appDirectoryBonita");
+        doReturn("apps/appDirectoryBonita").when(request).getRequestedUri();
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/apps/appDirectoryBonita"));
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(request, times(1)).getRequestedUri();
