@@ -145,7 +145,6 @@ public class ConfigurationFilesManager {
         if (properties != null) {
             properties.remove(propertyName);
             update(tenantId, internalFilename, properties);
-            updateAggregatedProperties(propertiesFilename, tenantId, propertyName, null, resources);
         } else {
             if (LOGGER.isLoggable(Level.FINER)) {
                 LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
@@ -182,31 +181,9 @@ public class ConfigurationFilesManager {
         if (properties != null) {
             properties.setProperty(propertyName, propertyValue);
             update(tenantId, internalFilename, properties);
-            updateAggregatedProperties(propertiesFilename, tenantId, propertyName, propertyValue, resources);
         } else {
             if (LOGGER.isLoggable(Level.FINER)) {
                 LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
-            }
-        }
-    }
-
-    public void updateAggregatedProperties(String propertiesFilename, long tenantId, String propertyName, String propertyValue,
-                                           Map<String, Properties> resources) throws IOException {
-        Map<String, Properties> aggregatedTenantConfigurations = getPlatformManagementUtils().getTenantConfigurations().get(tenantId);
-        if (aggregatedTenantConfigurations == null) {
-            return;
-        }
-        final String customFilename = getSuffixedPropertyFilename(propertiesFilename, "-custom");
-        Properties customResources = resources.get(customFilename);
-        if (customResources == null || !customResources.containsKey(propertyName)) {
-            //only update the aggregated properties if there is not a custom property overriding the internal one
-            Properties aggregatedTenantConfiguration = aggregatedTenantConfigurations.get(propertiesFilename);
-            if (aggregatedTenantConfiguration != null) {
-                if (propertyValue != null) {
-                    aggregatedTenantConfiguration.put(propertyName, propertyValue);
-                } else {
-                    aggregatedTenantConfiguration.remove(propertyName);
-                }
             }
         }
     }
