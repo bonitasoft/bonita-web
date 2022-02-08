@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2021-11-30 02:30\n"
+"PO-Revision-Date: 2022-02-08 02:31\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -24,6 +24,9 @@ msgstr ""
 
 msgid "Above normal"
 msgstr "Acima do nomal"
+
+msgid "Access denied. For more information, check the log file."
+msgstr ""
 
 msgid "Actions"
 msgstr "Ações"
@@ -84,6 +87,9 @@ msgstr ""
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados e processos de negócios de maneira mais eficaz."
+
+msgid "An error has occurred. For more information, check the log file."
+msgstr ""
 
 msgid "An error occured during categories update"
 msgstr "Ocorreu um erro durante a atualização de categorias"
@@ -883,6 +889,12 @@ msgstr "Mostrar painel"
 msgid "Show the tasks that I have done"
 msgstr "Mostrar as tarefas que eu fiz"
 
+msgid "Something went wrong during the deletion. You might want to cancel and try again."
+msgstr ""
+
+msgid "Something went wrong. You might want to cancel and try again."
+msgstr ""
+
 msgid "Sort by URL"
 msgstr "Ordenar pela URL"
 
@@ -958,6 +970,9 @@ msgstr "O esquema e os dados BDM foram revertidos para o que eram antes desta te
 msgid "The application"
 msgstr "A aplicação"
 
+msgid "The application page does not exist. Reload the page to see the new list of application pages."
+msgstr ""
+
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "O anexo é muito grande. <br/> Selecione um anexo menor e envie novamente."
 
@@ -992,6 +1007,9 @@ msgid "The image you are trying to upload is too big"
 msgstr "A imagem que você está tentando enviar é muito grande"
 
 msgid "The item does not exist anymore. Refresh the page to see the new status"
+msgstr ""
+
+msgid "The menu does not exist. Reload the page to see the new list of menus."
 msgstr ""
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
