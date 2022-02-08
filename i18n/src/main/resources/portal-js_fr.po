@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2022-01-09 02:28\n"
+"PO-Revision-Date: 2022-02-08 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -24,6 +24,9 @@ msgstr "Une erreur de serveur s'est produite. L'opération n'a pas été termin�
 
 msgid "Above normal"
 msgstr "Haute priorité"
+
+msgid "Access denied. For more information, check the log file."
+msgstr "Accès refusé. Pour plus d'informations, consultez les logs."
 
 msgid "Actions"
 msgstr "Actions"
@@ -84,6 +87,9 @@ msgstr "Une erreur s'est produite durant la suppression du processus. "
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Une application est un environnement adapté à un profil particulier, dans lequel les utilisateurs interagissent avec les données et les processus métier avec une efficacité optimale."
+
+msgid "An error has occurred. For more information, check the log file."
+msgstr "Une erreur s'est produite. Pour plus d'informations, consultez les logs."
 
 msgid "An error occured during categories update"
 msgstr "Une erreur s'est produite à la mise à jour des catégories"
@@ -884,6 +890,12 @@ msgstr "Afficher le panneau"
 msgid "Show the tasks that I have done"
 msgstr "Afficher les tâches que j’ai faites"
 
+msgid "Something went wrong during the deletion. You might want to cancel and try again."
+msgstr "Une erreur s'est produite lors de la suppression. Vous pouvez annuler et réessayer."
+
+msgid "Something went wrong. You might want to cancel and try again."
+msgstr "Une erreur s'est produite lors de la suppression. Vous pouvez annuler et réessayer."
+
 msgid "Sort by URL"
 msgstr "Trier par URL"
 
@@ -959,6 +971,9 @@ msgstr "Le schéma et les données du BDM ont été annulés à ce qu'ils étaie
 msgid "The application"
 msgstr "L'application"
 
+msgid "The application page does not exist. Reload the page to see the new list of application pages."
+msgstr "La page d'application n'existe pas. Rechargez la, pour voir la nouvelle liste des pages d'application."
+
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "Le fichier joint est trop volumineux.<br/>Sélectionnez un fichier plus petit et soumettez le formulaire à nouveau."
 
@@ -994,6 +1009,9 @@ msgstr "L'image que vous essayez de charger est trop grande"
 
 msgid "The item does not exist anymore. Refresh the page to see the new status"
 msgstr "L' élément n'existe plus. Rafraîchissez la page pour voir le nouveau statut"
+
+msgid "The menu does not exist. Reload the page to see the new list of menus."
+msgstr "Le menu n'existe pas. Rechargez la page pour voir la nouvelle liste de menus."
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "Le nom de l'URL doit commencer par custompage_ puis contenir uniquement des caractères alphanumériques."
