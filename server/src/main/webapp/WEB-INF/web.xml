@@ -727,4 +727,23 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>bonita-http-api-url</web-resource-name>
+            <url-pattern>/serverAPI/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>bonita-http-api</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Restricted access</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>bonita-http-api</role-name>
+    </security-role>
+    
 </web-app>
