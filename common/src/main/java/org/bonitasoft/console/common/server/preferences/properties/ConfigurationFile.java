@@ -26,7 +26,7 @@ import static org.bonitasoft.console.common.server.preferences.properties.Proper
 public class ConfigurationFile {
 
     private final String propertiesFilename;
-    private final long tenantId;
+    protected final long tenantId;
 
     public ConfigurationFile(final String propertiesFilename) {
         this.propertiesFilename = propertiesFilename;
