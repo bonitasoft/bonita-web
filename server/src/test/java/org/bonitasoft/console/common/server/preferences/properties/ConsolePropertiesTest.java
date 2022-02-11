@@ -51,11 +51,4 @@ public class ConsolePropertiesTest {
         assertEquals("Cannot retrieve a property", value, "aValue");
     }
 
-    @Test
-    public void testDefaultIsRetrieveIfPropertyIsEmpty() {
-        String defaultValue = properties.getProperty("notExistingProperty", "defaultValue");
-
-        assertEquals("Cannot return property default value", defaultValue, "defaultValue");
-    }
-
 }
