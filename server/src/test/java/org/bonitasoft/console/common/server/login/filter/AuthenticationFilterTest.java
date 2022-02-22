@@ -250,11 +250,10 @@ public class AuthenticationFilterTest {
         matchExcludePattern("http://localhost:8080/portal/themeResource", true);
         matchExcludePattern("http://localhost:8080/portal/themeResource/poutpout", false);
         matchExcludePattern("http://localhost:8080/portal/formsService", true);
-        matchExcludePattern("/bonita/portal/resource/page/API/system/session/unusedId", true);
-        matchExcludePattern("/bonita/apps/app/API/system/session/unusedId", true);
-        matchExcludePattern("/bonita/portal/resource/page/content/", false);
-        matchExcludePattern("/bonita/apps/app/page/", false);
-        matchExcludePattern("/bonita/portal/homepage", false);
+        matchExcludePattern("http://host/bonita/portal/resource/page/API/system/session/unusedId", true);
+        matchExcludePattern("http://host/bonita/apps/app/API/system/session/unusedId", true);
+        matchExcludePattern("http://host/bonita/portal/resource/page/content/", false);
+        matchExcludePattern("http://host/bonita/apps/app/page/", false);
     }
 
     @Test
@@ -310,7 +309,6 @@ public class AuthenticationFilterTest {
     }
 
     private void matchExcludePattern(final String urlToMatch, final Boolean mustMatch) {
-        doReturn(Pattern.compile(AuthenticationFilter.AUTHENTICATION_FILTER_EXCLUDED_PAGES_PATTERN)).when(authenticationFilter).getExcludePattern();
         if (authenticationFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
             Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);
         }
