@@ -21,13 +21,17 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -57,7 +61,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  * @author Baptiste Mesta
  * @author Anthony Birembaut
  */
-public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
+public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
 
     public static final String SCRIPT_TYPE_AUTHORIZATION_PREFIX = "check";
 
@@ -65,6 +69,8 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     protected static final String PLATFORM_SESSION_PARAM_KEY = "platformSession";
     
+    protected static final String AUTHORIZATION_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?((apps/.+/)|(portal/resource/.+/))?(API|APIToolkit)/system/(i18ntranslation|feature)";
+
     /**
      * Logger
      */
@@ -81,12 +87,18 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
     }
 
     @Override
-    protected boolean checkValidCondition(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
+    public void proceedWithFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
         try {
-            if (httpRequest.getRequestURI().matches(PLATFORM_API_URI_REGEXP)) {
-                return platformAPIsCheck(httpRequest, httpResponse);
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+            boolean isAuthorized;
+            if (httpServletRequest.getRequestURI().matches(PLATFORM_API_URI_REGEXP)) {
+                isAuthorized = platformAPIsCheck(httpServletRequest, httpServletResponse);
             } else {
-                return tenantAPIsCheck(httpRequest, httpResponse);
+                isAuthorized = tenantAPIsCheck(httpServletRequest, httpServletResponse);
+            }
+            if (isAuthorized) {
+                chain.doFilter(request, response);
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
@@ -96,14 +108,16 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
         }
     }
 
-    protected boolean tenantAPIsCheck(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException {
+    protected boolean tenantAPIsCheck(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse) throws ServletException, IOException {
         final APISession apiSession = (APISession) httpRequest.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         try {
             if (apiSession == null) {
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                httpResponse.flushBuffer();
                 return false;
             } else if (!checkPermissions(httpRequest)) {
                 httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                httpResponse.flushBuffer();
                 return false;
             } else {
                 return true;
@@ -114,6 +128,7 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
             }
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             SessionUtil.sessionLogout(httpRequest.getSession());
+            httpResponse.flushBuffer();
             return false;
         }
     }
@@ -356,5 +371,10 @@ public class RestAPIAuthorizationFilter extends AbstractAuthorizationFilter {
 
     private boolean shouldReload(final APISession apiSession) {
         return reload == null ? PropertiesFactory.getSecurityProperties(apiSession.getTenantId()).isAPIAuthorizationsCheckInDebugMode() : reload;
+    }
+
+    @Override
+    public String getDefaultExcludedPages() {
+        return AUTHORIZATION_FILTER_EXCLUDED_PAGES_PATTERN;
     }
 }
