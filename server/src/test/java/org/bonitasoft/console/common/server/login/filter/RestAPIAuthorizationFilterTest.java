@@ -26,18 +26,29 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Condition;
 import org.bonitasoft.console.common.server.preferences.properties.DynamicPermissionsChecks;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -66,18 +77,24 @@ public class RestAPIAuthorizationFilterTest {
     @Mock
     private HttpServletResponse response;
     @Mock
+    private FilterChain chain;
+    @Mock
     private APISession apiSession;
     @Mock
     private HttpSession httpSession;
+    @Mock
+    private FilterConfig filterConfig;
+    @Mock
+    private ServletContext servletContext;
 
-    private final RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter(false);
+    private RestAPIAuthorizationFilter restAPIAuthorizationFilter = new RestAPIAuthorizationFilter(false);
 
     private final String username = "john";
     
     private final long userId = 9l;
 
     @Before
-    public void before() {
+    public void setUp() throws Exception {
         doReturn(httpSession).when(request).getSession();
         doReturn("").when(request).getQueryString();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
@@ -85,6 +102,10 @@ public class RestAPIAuthorizationFilterTest {
         doReturn(userId).when(apiSession).getUserId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn(username).when(apiSession).getUserName();
+        when(servletContext.getContextPath()).thenReturn("");
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
+        when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
+        restAPIAuthorizationFilter.init(filterConfig);
     }
 
     private Set<String> initSpy(final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy) throws ServletException {
@@ -532,83 +553,86 @@ public class RestAPIAuthorizationFilterTest {
     }
 
     @Test
-    public void should_checkValidCondition_check_session_is_platform() throws ServletException {
+    public void should_checkValidCondition_check_session_is_platform() throws Exception {
         doReturn("API/platform/plop").when(request).getRequestURI();
         doReturn(mock(PlatformSession.class)).when(httpSession).getAttribute(RestAPIAuthorizationFilter.PLATFORM_SESSION_PARAM_KEY);
         //when
-        final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isTrue();
+        verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
 
     @Test
-    public void should_checkValidCondition_check_session_is_platform_with_API_toolkit() throws ServletException {
+    public void should_checkValidCondition_check_session_is_platform_with_API_toolkit() throws Exception {
         doReturn("APIToolkit/platform/plop").when(request).getRequestURI();
         doReturn(mock(PlatformSession.class)).when(httpSession).getAttribute(RestAPIAuthorizationFilter.PLATFORM_SESSION_PARAM_KEY);
         //when
-        final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isTrue();
+        verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
 
     @Test
-    public void should_checkValidCondition_check_unauthorized_if_no_platform_session() throws ServletException {
+    public void should_checkValidCondition_check_unauthorized_if_no_platform_session() throws Exception {
         doReturn("API/platform/plop").when(request).getRequestURI();
         doReturn(null).when(httpSession).getAttribute(RestAPIAuthorizationFilter.PLATFORM_SESSION_PARAM_KEY);
         //when
-        final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isFalse();
+        verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     @Test
-    public void should_checkValidCondition_check_unauthorized_if_no_tenant_session() throws ServletException {
+    public void should_checkValidCondition_check_unauthorized_if_no_tenant_session() throws Exception {
         doReturn(null).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
         //when
-        final boolean isValid = restAPIAuthorizationFilter.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isFalse();
+        verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     @Test
-    public void should_checkValidCondition_check_unauthorized_if_session_is_invalid() throws ServletException {
+    public void should_checkValidCondition_check_unauthorized_if_session_is_invalid() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
+        doReturn("/bpm/case/15").when(request).getPathInfo();
         doThrow(InvalidSessionException.class).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
         //when
-        final boolean isValid = restAPIAuthorizationFilterSpy.checkValidCondition(request, response);
+        restAPIAuthorizationFilterSpy.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isFalse();
+        verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
         verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
     @Test
-    public void should_checkValidCondition_check_permission_if_is_tenant_is_forbidden() throws ServletException {
+    public void should_checkValidCondition_check_permission_if_is_tenant_is_forbidden() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
+        doReturn("/bpm/case/15").when(request).getPathInfo();
         doReturn(false).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
 
         //when
-        final boolean isValid = restAPIAuthorizationFilterSpy.checkValidCondition(request, response);
+        restAPIAuthorizationFilterSpy.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isFalse();
+        verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
         verify(response).setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 
 
     @Test
-    public void should_checkValidCondition_check_permission_if_is_tenant_is_ok() throws ServletException {
+    public void should_checkValidCondition_check_permission_if_is_tenant_is_ok() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
+        doReturn("/bpm/case/15").when(request).getPathInfo();
         doReturn(true).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
 
         //when
-        final boolean isValid = restAPIAuthorizationFilterSpy.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
-        assertThat(isValid).isTrue();
+        verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
 
     @Test(expected = ServletException.class)
@@ -616,7 +640,7 @@ public class RestAPIAuthorizationFilterTest {
         doThrow(new RuntimeException()).when(request).getRequestURI();
 
         //when
-        restAPIAuthorizationFilter.checkValidCondition(request, response);
+        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
 
     }
 
@@ -639,5 +663,68 @@ public class RestAPIAuthorizationFilterTest {
         final boolean isValid = restAPIAuthorizationFilterSpy.checkResourceAuthorizationsSyntax(resourceAuthorizations);
 
         assertThat(isValid).isTrue();
+    }
+    
+    @Test
+    public void testFilterWithExcludedURL() throws Exception {
+        final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
+        final String url = "test";
+        when(request.getRequestURL()).thenReturn(new StringBuffer(url));
+        doReturn(true).when(restAPIAuthorizationFilterSpy).matchExcludePatterns(url);
+        restAPIAuthorizationFilterSpy.doFilter(request, response, chain);
+        verify(restAPIAuthorizationFilterSpy, times(0)).proceedWithFiltering(request, response, chain);
+        verify(chain, times(1)).doFilter(request, response);
+    }
+
+    @Test
+    public void testMatchExcludePatterns() throws Exception {
+        matchExcludePattern("http://host/bonita/portal/resource/page/API/system/i18ntranslation", true);
+        matchExcludePattern("http://host/bonita/apps/app/API/system/i18ntranslation", true);
+        matchExcludePattern("http://host/bonita/API/system/i18ntranslation", true);
+        matchExcludePattern("http://host/bonita/API/bpm/process", false);
+        matchExcludePattern("http://host/bonita/API/bpm/process/;i18ntranslation", false);
+        matchExcludePattern("http://host/bonita/API/bpm/process/../../../API/system/i18ntranslation", false);
+        matchExcludePattern("http://host/bonita/API/system/i18ntranslation/../../bpm/process", false);
+        matchExcludePattern("http://host/bonita/API/bpm/activity/test/../i18ntranslation/..?p=0&c=10", false);
+    }
+
+    @Test
+    public void testCompileNullPattern() throws Exception {
+        assertThat(restAPIAuthorizationFilter.compilePattern(null)).isNull();
+    }
+
+    @Test
+    public void testCompileWrongPattern() throws Exception {
+        assertThat(restAPIAuthorizationFilter.compilePattern("((((")).isNull();
+    }
+
+    @Test
+    public void testCompileSimplePattern() throws Exception {
+        final String patternToCompile = "test";
+        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+
+            @Override
+            public boolean matches(final Pattern pattern) {
+                return pattern.pattern().equalsIgnoreCase(patternToCompile);
+            }
+        });
+    }
+
+    @Test
+    public void testCompileExcludePattern() throws Exception {
+        final String patternToCompile = RestAPIAuthorizationFilter.AUTHORIZATION_FILTER_EXCLUDED_PAGES_PATTERN;
+        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+
+            @Override
+            public boolean matches(final Pattern pattern) {
+                return pattern.pattern().equalsIgnoreCase(patternToCompile);
+            }
+        });
+    }
+
+    private void matchExcludePattern(final String urlToMatch, final Boolean mustMatch) {
+        if (restAPIAuthorizationFilter.matchExcludePatterns(urlToMatch) != mustMatch) {
+            Assertions.fail("Matching excludePattern and the Url " + urlToMatch + " must return " + mustMatch);
+        }
     }
 }
