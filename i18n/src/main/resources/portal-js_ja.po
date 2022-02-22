@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2021-11-30 02:29\n"
+"PO-Revision-Date: 2022-02-22 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -21,6 +21,9 @@ msgstr "この名前のページは既に存在します。"
 
 msgid "Above normal"
 msgstr "平均以上"
+
+msgid "Access denied. For more information, check the log file."
+msgstr ""
 
 msgid "Actions"
 msgstr "アクション"
@@ -75,6 +78,9 @@ msgstr "実行すべきタスクがアサインされていません。"
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "アプリケーションは、特定のユーザー プロファイル用にカスタマイズされた環境になり、利用者はビジネス データおよびビジネス プロセスを最も効率的な方法で利用できるようになります。"
+
+msgid "An error has occurred. For more information, check the log file."
+msgstr ""
 
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
@@ -872,6 +878,12 @@ msgstr "パネルを表示"
 msgid "Show the tasks that I have done"
 msgstr "自分が関与し実行したタスクを表示"
 
+msgid "Something went wrong during the deletion. You might want to cancel and try again."
+msgstr ""
+
+msgid "Something went wrong during the modification. You might want to cancel and try again."
+msgstr ""
+
 msgid "Sort by URL"
 msgstr "URL で並べ替え"
 
@@ -947,6 +959,15 @@ msgstr "BDM スキーマとデータは、この更新試行される前のも�
 msgid "The application"
 msgstr "アプリケーション"
 
+msgid "The application does not exist. Go to application list page to see the new list of applications."
+msgstr ""
+
+msgid "The application does not exist. Reload the page to see the new list of applications."
+msgstr ""
+
+msgid "The application page does not exist. Reload the page to see the new list of application pages."
+msgstr ""
+
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
 
@@ -979,6 +1000,9 @@ msgstr "プロセスを有効にする前にフォームの マッピングを�
 
 msgid "The image you are trying to upload is too big"
 msgstr "アップロードしようとしている画像が大きすぎます"
+
+msgid "The menu does not exist. Reload the page to see the new list of menus."
+msgstr ""
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
