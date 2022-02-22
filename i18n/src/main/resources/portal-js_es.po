@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2022-01-04 04:32\n"
+"PO-Revision-Date: 2022-02-22 02:30\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -21,6 +21,9 @@ msgstr "Ya existe una página con este nombre."
 
 msgid "Above normal"
 msgstr "Por encima de la normal"
+
+msgid "Access denied. For more information, check the log file."
+msgstr "Acceso denegado. Para obtener más información, consulte el archivo de registro."
 
 msgid "Actions"
 msgstr "acciones"
@@ -75,6 +78,9 @@ msgstr "Todo hecho. ¡Buen trabajo!"
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Una aplicación es un entorno personalizado para un perfil de usuario específico, en el cual los usuarios interactúan con Datos de Negocio y procesos de negocio de la manera más eficiente."
+
+msgid "An error has occurred. For more information, check the log file."
+msgstr "Ha ocurrido un error. Para más información, compruebe el archivo de registro."
 
 msgid "An error occured during categories update"
 msgstr "Se produjo un error durante la actualización de las categorías"
@@ -868,6 +874,12 @@ msgstr "Mostrar panel"
 msgid "Show the tasks that I have done"
 msgstr "Mostrar las tareas que he realizado"
 
+msgid "Something went wrong during the deletion. You might want to cancel and try again."
+msgstr "Algo salió mal durante la eliminación. Es posible que quiera cancelar y volver a intentarlo."
+
+msgid "Something went wrong during the modification. You might want to cancel and try again."
+msgstr ""
+
 msgid "Sort by URL"
 msgstr "Ordenar por URL"
 
@@ -943,6 +955,15 @@ msgstr "El esquema y los datos de BDM han sido revertidos al estado anterior de 
 msgid "The application"
 msgstr "La aplicación"
 
+msgid "The application does not exist. Go to application list page to see the new list of applications."
+msgstr ""
+
+msgid "The application does not exist. Reload the page to see the new list of applications."
+msgstr ""
+
+msgid "The application page does not exist. Reload the page to see the new list of application pages."
+msgstr "La página de la aplicación no existe. Recarga la página para ver la nueva lista de páginas de la aplicación."
+
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "El archivo adjunto es demasiado grande. <br/> Seleccione un archivo más pequeño y envíe el formulario de nuevo."
 
@@ -975,6 +996,9 @@ msgstr "El mapeo de formularios debe resolverse antes de activar el proceso."
 
 msgid "The image you are trying to upload is too big"
 msgstr "La imagen que estás intentando subir es demasiado grande"
+
+msgid "The menu does not exist. Reload the page to see the new list of menus."
+msgstr "El menú no existe. Recarga la página para ver la nueva lista de menús."
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "El nombre de la URL debe comenzar con custompage_ seguido de sólo caracteres alfanuméricos."
