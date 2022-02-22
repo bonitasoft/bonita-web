@@ -7,11 +7,11 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 60594\n"
+"X-Crowdin-File: /release-7.14.0/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 66494\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
-"PO-Revision-Date: 2022-02-08 02:31\n"
+"PO-Revision-Date: 2022-02-22 02:30\n"
 
 msgid "1 case has been deleted"
 msgstr "Se ha eliminado 1 caso"
@@ -892,6 +892,9 @@ msgstr "Mostrar las tareas que he realizado"
 msgid "Something went wrong during the deletion. You might want to cancel and try again."
 msgstr "Algo salió mal durante la eliminación. Es posible que quiera cancelar y volver a intentarlo."
 
+msgid "Something went wrong during the modification. You might want to cancel and try again."
+msgstr ""
+
 msgid "Something went wrong. You might want to cancel and try again."
 msgstr "Algo salió mal. Puede que quieras cancelar e intentarlo de nuevo."
 
@@ -969,6 +972,12 @@ msgstr "El esquema y los datos de BDM han sido revertidos al estado anterior de 
 
 msgid "The application"
 msgstr "La aplicación"
+
+msgid "The application does not exist. Go to application list page to see the new list of applications."
+msgstr ""
+
+msgid "The application does not exist. Reload the page to see the new list of applications."
+msgstr ""
 
 msgid "The application page does not exist. Reload the page to see the new list of application pages."
 msgstr "La página de la aplicación no existe. Recarga la página para ver la nueva lista de páginas de la aplicación."
