@@ -14,6 +14,10 @@
  */
 package org.bonitasoft.console.common.server.auth;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
@@ -71,6 +75,8 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
      */
     protected static final String CAS_BONITA_SERVICE_URL = "Cas.bonitaServiceURL";
 
+    private static Map<Long, Map<String, Optional<String>>> authenticationProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
+    
     /**
      * properties
      */
@@ -136,5 +142,20 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
      */
     public boolean isLogoutDisabled() {
         return BooleanUtils.toBoolean(getProperty(LOGOUT_DISABLED));
+    }
+    
+    @Override
+    public String getProperty(String propertyName) {
+        Map<String, Optional<String>> tenantAuthenticationProperties = authenticationProperties.get(tenantId);
+        if (tenantAuthenticationProperties == null) {
+            tenantAuthenticationProperties = new ConcurrentHashMap<String, Optional<String>>();
+            authenticationProperties.put(tenantId, tenantAuthenticationProperties);
+        }
+        Optional<String> propertyValue = tenantAuthenticationProperties.get(propertyName);
+        if (propertyValue == null) {
+            propertyValue = Optional.ofNullable(super.getProperty(propertyName));
+            tenantAuthenticationProperties.put(propertyName, propertyValue);
+        }
+        return propertyValue.orElse(null);
     }
 }

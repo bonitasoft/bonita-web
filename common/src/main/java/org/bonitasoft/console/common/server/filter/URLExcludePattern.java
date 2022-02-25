@@ -1,5 +1,6 @@
 package org.bonitasoft.console.common.server.filter;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,14 +19,15 @@ public class URLExcludePattern {
     
     public URLExcludePattern(final FilterConfig filterConfig, String defaultExcludePattern) {
         final String contextPath = filterConfig.getServletContext().getContextPath();
-        String webappName;
-        if (contextPath.length() > 0) {
-            webappName = contextPath.substring(1);
+        String processedDefaultExcludePattern;
+        if (contextPath.length() > 0 && !contextPath.equals("/bonita")) {
+            String webappName = contextPath.substring(1);
+            processedDefaultExcludePattern = defaultExcludePattern.replace("bonita", webappName);
         } else {
-            webappName = "";
+            processedDefaultExcludePattern = defaultExcludePattern;
         }
         final String configExcludePattern = filterConfig.getInitParameter("excludePattern");
-        excludePattern = compilePattern(StringUtils.defaultString(configExcludePattern, defaultExcludePattern.replace("bonita", webappName)));
+        excludePattern = compilePattern(StringUtils.defaultString(configExcludePattern, processedDefaultExcludePattern));
     }
 
     protected Pattern compilePattern(final String stringPattern) {
@@ -48,7 +50,16 @@ public class URLExcludePattern {
      */
     public boolean matchExcludePatterns(final String url) {
         try {
-            final boolean isExcluded = getExcludePattern() != null && getExcludePattern().matcher(new URL(url).getPath()).find();
+            boolean isExcluded;
+            if (getExcludePattern() == null) {
+                isExcluded = false;
+            } else {
+                String path = new URL(url).getPath();
+                // interprete ../
+                String normalizedPath = new URI(url).normalize().getPath();
+                isExcluded = getExcludePattern().matcher(path).find()
+                        && getExcludePattern().matcher(normalizedPath).find();
+            }
             if (LOGGER.isLoggable(Level.FINE)) {
                 if (isExcluded) {
                     LOGGER.log(Level.FINE, " Exclude pattern match with this url:" + url);

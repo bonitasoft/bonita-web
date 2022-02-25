@@ -25,7 +25,7 @@ import java.util.Set;
 public class ConfigurationFile {
 
     private final String propertiesFilename;
-    private final long tenantId;
+    protected final long tenantId;
 
     public ConfigurationFile(String propertiesFilename, long tenantId) {
         this.propertiesFilename = propertiesFilename;

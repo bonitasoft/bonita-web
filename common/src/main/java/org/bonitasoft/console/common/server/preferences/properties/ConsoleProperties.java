@@ -14,7 +14,10 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
+import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Yang zhiheng
@@ -37,8 +40,10 @@ public class ConsoleProperties {
     private static final String CUSTOM_PAGE_DEBUG = "custom.page.debug";
 
     private static final String PROPERTIES_FILE = "console-config.properties";
-
-    private long tenantId;
+    
+    private static Map<Long, Map<String, Optional<String>>> consoleProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
+    
+    private final long tenantId;
 
     ConsoleProperties(long tenantId) {
         this.tenantId = tenantId;
@@ -46,14 +51,6 @@ public class ConsoleProperties {
 
     public Properties getProperties() {
         return ConfigurationFilesManager.getInstance().getTenantProperties(PROPERTIES_FILE, tenantId);
-    }
-
-    public String getProperty(final String propertyName) {
-        return getProperties().getProperty(propertyName);
-    }
-
-    public String getProperty(final String propertyName, final String defaultValue) {
-        return getProperties().getProperty(propertyName, defaultValue);
     }
 
     public long getMaxSize() {
@@ -75,5 +72,19 @@ public class ConsoleProperties {
     public boolean isPageInDebugMode() {
         final String debugMode = this.getProperty(CUSTOM_PAGE_DEBUG);
         return Boolean.parseBoolean(debugMode);
+    }
+    
+    public String getProperty(String propertyName) {
+        Map<String, Optional<String>> tenantConsoleProperties = consoleProperties.get(tenantId);
+        if (tenantConsoleProperties == null) {
+            tenantConsoleProperties = new ConcurrentHashMap<String, Optional<String>>();
+            consoleProperties.put(tenantId, tenantConsoleProperties);
+        }
+        Optional<String> propertyValue = tenantConsoleProperties.get(propertyName);
+        if (propertyValue == null) {
+            propertyValue = Optional.ofNullable(getProperties().getProperty(propertyName));
+            tenantConsoleProperties.put(propertyName, propertyValue);
+        }
+        return propertyValue.orElse(null);
     }
 }
