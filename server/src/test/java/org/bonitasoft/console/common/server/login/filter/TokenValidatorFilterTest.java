@@ -176,6 +176,7 @@ public class TokenValidatorFilterTest {
         matchExcludePattern("http://host/bonita/API/bpm/process/../../../API/system/session", false);
         matchExcludePattern("http://host/bonita/API/system/i18ntranslation/../../bpm/process", false);
         matchExcludePattern("http://host/bonita/API/bpm/activity/test/../i18ntranslation/..?p=0&c=10", false);
+        matchExcludePattern("http://host/bonita/API/bpm/activity/i18ntranslation/../?p=0&c=10", false);
     }
 
     @Test
