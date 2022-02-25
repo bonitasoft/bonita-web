@@ -89,7 +89,8 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
     @Override
     public void proceedWithFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
         try {
-            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            //we need to use a MultiReadHttpServletRequest wrapper in order to be able to get the inputstream twice (in the filter and in the API servlet)
+            MultiReadHttpServletRequest httpServletRequest = new MultiReadHttpServletRequest((HttpServletRequest) request);
             HttpServletResponse httpServletResponse = (HttpServletResponse)response;
             boolean isAuthorized;
             if (httpServletRequest.getRequestURI().matches(PLATFORM_API_URI_REGEXP)) {
@@ -98,7 +99,7 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
                 isAuthorized = tenantAPIsCheck(httpServletRequest, httpServletResponse);
             }
             if (isAuthorized) {
-                chain.doFilter(request, response);
+                chain.doFilter(httpServletRequest, response);
             }
         } catch (final Exception e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
