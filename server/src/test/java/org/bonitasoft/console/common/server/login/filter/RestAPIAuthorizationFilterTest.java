@@ -599,7 +599,7 @@ public class RestAPIAuthorizationFilterTest {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
         doReturn("/bpm/case/15").when(request).getPathInfo();
-        doThrow(InvalidSessionException.class).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
+        doThrow(InvalidSessionException.class).when(restAPIAuthorizationFilterSpy).checkPermissions(any(HttpServletRequest.class));
         //when
         restAPIAuthorizationFilterSpy.proceedWithFiltering(request, response, chain);
 
@@ -612,7 +612,7 @@ public class RestAPIAuthorizationFilterTest {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
         doReturn("/bpm/case/15").when(request).getPathInfo();
-        doReturn(false).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
+        doReturn(false).when(restAPIAuthorizationFilterSpy).checkPermissions(any(HttpServletRequest.class));
 
         //when
         restAPIAuthorizationFilterSpy.proceedWithFiltering(request, response, chain);
