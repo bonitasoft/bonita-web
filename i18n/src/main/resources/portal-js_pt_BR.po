@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2022-02-22 02:30\n"
+"PO-Revision-Date: 2022-02-25 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 caso foi excluído"
@@ -20,13 +20,13 @@ msgid "A page with this name already exists."
 msgstr "Já existe uma página com esse nome."
 
 msgid "A server error occurred. The operation did not complete successfully"
-msgstr ""
+msgstr "Ocorreu um erro de servidor. A operação não foi concluída com sucesso"
 
 msgid "Above normal"
 msgstr "Acima do nomal"
 
 msgid "Access denied. For more information, check the log file."
-msgstr ""
+msgstr "Acesso negado. Para mais informações, verifique o arquivo de log."
 
 msgid "Actions"
 msgstr "Ações"
@@ -80,16 +80,16 @@ msgid "All done. Good job!"
 msgstr "Tudo feito. Bom trabalho!"
 
 msgid "An Error occurred during process activation/deactivation."
-msgstr ""
+msgstr "Ocorreu um erro durante a ativação/desativação do processo"
 
 msgid "An Error occurred during process deletion."
-msgstr ""
+msgstr "Ocorreu um erro durante o processo de deleção."
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados e processos de negócios de maneira mais eficaz."
 
 msgid "An error has occurred. For more information, check the log file."
-msgstr ""
+msgstr "Ocorreu um erro. Para mais informações, verifique o arquivo de log."
 
 msgid "An error occured during categories update"
 msgstr "Ocorreu um erro durante a atualização de categorias"
@@ -752,7 +752,7 @@ msgid "Phone"
 msgstr "Telefone"
 
 msgid "Please refresh the page."
-msgstr ""
+msgstr "Por favor, atualize a página."
 
 msgid "Priority"
 msgstr "Prioridade"
@@ -803,7 +803,7 @@ msgid "Reset"
 msgstr "Restaurar"
 
 msgid "Reset to default"
-msgstr ""
+msgstr "Redefinir para padrão"
 
 msgid "Roles"
 msgstr "Funções"
@@ -890,13 +890,13 @@ msgid "Show the tasks that I have done"
 msgstr "Mostrar as tarefas que eu fiz"
 
 msgid "Something went wrong during the deletion. You might want to cancel and try again."
-msgstr ""
+msgstr "Algo deu errado durante a exclusão. Você pode cancelar e tentar de novo."
 
 msgid "Something went wrong during the modification. You might want to cancel and try again."
-msgstr ""
+msgstr "Algo deu errado durante a modificação. Talvez você queira cancelar e tentar novamente."
 
 msgid "Something went wrong. You might want to cancel and try again."
-msgstr ""
+msgstr "Algo deu errado. Talvez você queira cancelar e tentar novamente."
 
 msgid "Sort by URL"
 msgstr "Ordenar pela URL"
@@ -974,13 +974,13 @@ msgid "The application"
 msgstr "A aplicação"
 
 msgid "The application does not exist. Go to application list page to see the new list of applications."
-msgstr ""
+msgstr "O aplicativo não existe. Vá para a página da lista de aplicativos para ver a nova lista de aplicativos."
 
 msgid "The application does not exist. Reload the page to see the new list of applications."
-msgstr ""
+msgstr "A aplicação não existe. Recarregue a página para ver a nova lista de aplicações."
 
 msgid "The application page does not exist. Reload the page to see the new list of application pages."
-msgstr ""
+msgstr "A página da aplicação não existe. Recarregue a página para ver a nova lista de páginas da aplicação."
 
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "O anexo é muito grande. <br/> Selecione um anexo menor e envie novamente."
@@ -1016,10 +1016,10 @@ msgid "The image you are trying to upload is too big"
 msgstr "A imagem que você está tentando enviar é muito grande"
 
 msgid "The item does not exist anymore. Refresh the page to see the new status"
-msgstr ""
+msgstr "O item não existe mais. Atualize a página para ver o novo status"
 
 msgid "The menu does not exist. Reload the page to see the new list of menus."
-msgstr ""
+msgstr "O menu não existe. Recarregue a página para ver a nova lista de menus."
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "O nome da URL deve começar com custompage_ seguido somente por caracteres alfanuméricos."
@@ -1067,7 +1067,7 @@ msgid "This name is already in use"
 msgstr "Este nome já está em uso"
 
 msgid "This process is no longer available."
-msgstr ""
+msgstr "Este processo não está mais disponível."
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
 msgstr "Esse processo não está totalmente configurado, mas ainda está habilitado. Os usuários ainda podem iniciar casos ou realizar tarefas, o que pode levar a erros."
@@ -1223,7 +1223,7 @@ msgid "You are about to export the descriptor of the application"
 msgstr "Você está prestes a exportar o descritor da aplicação"
 
 msgid "You are going to be redirected to the process list."
-msgstr ""
+msgstr "Você vai ser redirecionado para a lista de processos."
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Você pode criar informações personalizadas no Bonita Studio:"
