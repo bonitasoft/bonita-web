@@ -14,40 +14,62 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
+import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * @author Paul AMAR
+ *
  */
-public class TokenValidatorFilter extends AbstractAuthorizationFilter {
+public class TokenValidatorFilter extends ExcludingPatternFilter {
 
     private static final String CSRF_TOKEN_PARAM = "CSRFToken";
     private static final String CSRF_TOKEN_HEADER = "X-Bonita-API-Token";
-
+    
+    protected static final String TOKEN_VALIDATOR_FILTER_EXCLUDED_PAGES_PATTERN = "^/(bonita/)?((apps/.+/)|(portal/resource/.+/))?(API|APIToolkit)/system/(i18ntranslation|feature|session)";
+    
+    /**
+     * Logger
+     */
+    protected static final Logger LOGGER = Logger.getLogger(TokenValidatorFilter.class.getName());
+    
+    
     @Override
-    boolean checkValidCondition(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
-
-        if (isCsrfProtectionEnabled() && !isSafeMethod(httpRequest.getMethod())) {
-            String headerFromRequest = getCSRFToken(httpRequest);
-            String apiToken = (String) httpRequest.getSession().getAttribute("api_token");
+    public void proceedWithFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
+        
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+        if (isCsrfProtectionEnabled() && !isSafeMethod(httpServletRequest.getMethod())) {
+            String headerFromRequest = getCSRFToken(httpServletRequest);
+            String apiToken = (String) httpServletRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
                 if (LOGGER.isLoggable(Level.FINE)) {
                     LOGGER.log(Level.FINE, "Token Validation failed, expected: " + apiToken + ", received: " + headerFromRequest);
                 }
-                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return false;
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.flushBuffer();
+            } else {
+                chain.doFilter(request, response);
             }
+        } else {
+            chain.doFilter(request, response);
         }
-        return true;
     }
 
     // protected for testing
@@ -83,4 +105,10 @@ public class TokenValidatorFilter extends AbstractAuthorizationFilter {
         return "GET".equalsIgnoreCase(method) || "HEAD".equalsIgnoreCase(method) || "OPTIONS".equalsIgnoreCase(method);
     }
 
+    @Override
+    public String getDefaultExcludedPages() {
+        return TOKEN_VALIDATOR_FILTER_EXCLUDED_PAGES_PATTERN;
+    }
+
+    
 }
