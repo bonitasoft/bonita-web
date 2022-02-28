@@ -14,8 +14,10 @@
  */
 package org.bonitasoft.console.common.server.preferences.properties;
 
+import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
-import java.util.logging.Logger;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Utility class for security properties access
@@ -49,10 +51,8 @@ public class SecurityProperties {
      */
     public static final String API_AUTHORIZATIONS_CHECK = "security.rest.api.authorizations.check.enabled";
 
-    /**
-     * Logger
-     */
-    private static Logger LOGGER = Logger.getLogger(SecurityProperties.class.getName());
+    private static Map<Long, Map<String, Optional<String>>> securityProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
+    
     private final long tenantId;
 
 
@@ -68,14 +68,14 @@ public class SecurityProperties {
      * @return the password validator property
      */
     public String getPasswordValidator() {
-        return getProperties().getProperty(PASSWORD_VALIDATOR_CLASSNAME);
+        return getProperty(PASSWORD_VALIDATOR_CLASSNAME);
     }
 
     /**
      * @return the value to allow or not API authorization checks
      */
     public boolean isAPIAuthorizationsCheckEnabled() {
-        final String res = getProperties().getProperty(API_AUTHORIZATIONS_CHECK);
+        final String res = getProperty(API_AUTHORIZATIONS_CHECK);
         return res != null && res.equals("true");
     }
 
@@ -83,7 +83,7 @@ public class SecurityProperties {
      * @return the value to allow or not CSRF protection
      */
     public boolean isCSRFProtectionEnabled() {
-        final String res = getProperties().getProperty(CSRF_PROTECTION);
+        final String res = getProperty(CSRF_PROTECTION);
         return res != null && res.equals("true");
     }
     
@@ -91,10 +91,9 @@ public class SecurityProperties {
      * @return the value to add or not secure flag to the cookies for CSRF token
      */
     public boolean isCSRFTokenCookieSecure() {
-        final String res = getProperties().getProperty(SECURE_TOKEN_COOKIE);
+        final String res = getProperty(SECURE_TOKEN_COOKIE);
         return res != null && res.equals("true");
     }
-
 
     Properties getProperties() {
         if (tenantId > 0) {
@@ -105,6 +104,20 @@ public class SecurityProperties {
 
     protected ConfigurationFilesManager getConfigurationFilesManager() {
         return ConfigurationFilesManager.getInstance();
+    }
+    
+    public String getProperty(String propertyName) {
+        Map<String, Optional<String>> tenantSecurityProperties = securityProperties.get(tenantId);
+        if (tenantSecurityProperties == null) {
+            tenantSecurityProperties = new ConcurrentHashMap<String, Optional<String>>();
+            securityProperties.put(tenantId, tenantSecurityProperties);
+        }
+        Optional<String> propertyValue = tenantSecurityProperties.get(propertyName);
+        if (propertyValue == null) {
+            propertyValue = Optional.ofNullable(getProperties().getProperty(propertyName));
+            tenantSecurityProperties.put(propertyName, propertyValue);
+        }
+        return propertyValue.orElse(null);
     }
 
 }

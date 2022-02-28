@@ -61,18 +61,26 @@
     <filter>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.RestAPIAuthorizationFilter</filter-class>
-        <init-param>
-            <param-name>excludePatterns</param-name>
-            <param-value>i18ntranslation</param-value>
-        </init-param>
+        <!--
+            We need to let a set of URL accessible in order to serve the translations
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?((apps/.+/)|(portal/resource/.+/))?(API|APIToolkit)/system/(i18ntranslation|feature)</param-value>
+        </init-param-->
     </filter>
     <filter>
         <filter-name>RestAPIAuthorizationFilterToolkit</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.RestAPIAuthorizationFilter</filter-class>
-        <init-param>
-            <param-name>excludePatterns</param-name>
-            <param-value>i18ntranslation</param-value>
-        </init-param>
+        <!--
+            We need to let a set of URL accessible in order to serve the translations
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?((apps/.+/)|(portal/resource/.+/))?(API|APIToolkit)/system/(i18ntranslation|feature)</param-value>
+        </init-param-->
     </filter>
     <!-- Token Filter -->
     <filter>
@@ -83,10 +91,14 @@
     <filter>
         <filter-name>TokenValidatorFilter</filter-name>
         <filter-class>org.bonitasoft.console.common.server.login.filter.TokenValidatorFilter</filter-class>
-        <init-param>
-            <param-name>excludePatterns</param-name>
-            <param-value>i18ntranslation,session</param-value>
-        </init-param>
+        <!--
+            We need to let a set of URL accessible in order to handle the translations on the login page and token request
+            The excludePattern default value is the one commented out bellow, but you can uncomment it and add new patterns if you need to
+        -->
+        <!-- init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>^/(bonita/)?((apps/.+/)|(portal/resource/.+/))?(API|APIToolkit)/system/(i18ntranslation|feature|session)</param-value>
+        </init-param-->
     </filter>
     <filter>
         <filter-name>AuthenticationFilter</filter-name>
