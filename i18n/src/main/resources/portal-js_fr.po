@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 66494\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
-"PO-Revision-Date: 2022-02-22 02:29\n"
+"PO-Revision-Date: 2022-03-03 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 cas a été supprimé"
@@ -894,7 +894,7 @@ msgid "Something went wrong during the deletion. You might want to cancel and tr
 msgstr "Une erreur s'est produite lors de la suppression. Vous pouvez annuler et réessayer."
 
 msgid "Something went wrong during the modification. You might want to cancel and try again."
-msgstr ""
+msgstr "Une erreur s'est produite lors de la modification. Vous pouvez annuler et réessayer."
 
 msgid "Something went wrong. You might want to cancel and try again."
 msgstr "Une erreur s'est produite lors de la suppression. Vous pouvez annuler et réessayer."
@@ -975,10 +975,10 @@ msgid "The application"
 msgstr "L'application"
 
 msgid "The application does not exist. Go to application list page to see the new list of applications."
-msgstr ""
+msgstr "L'application n'existe pas. Allez à la page de la liste des applications pour voir la nouvelle liste d'applications."
 
 msgid "The application does not exist. Reload the page to see the new list of applications."
-msgstr ""
+msgstr "L'application n'existe pas. Rechargez la page pour voir la nouvelle liste d'applications."
 
 msgid "The application page does not exist. Reload the page to see the new list of application pages."
 msgstr "La page d'application n'existe pas. Rechargez la, pour voir la nouvelle liste des pages d'application."
