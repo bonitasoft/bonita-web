@@ -55,8 +55,10 @@ public class TokenValidatorFilter extends ExcludingPatternFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse)response;
         if (isCsrfProtectionEnabled() && !isSafeMethod(httpServletRequest.getMethod())) {
-            String headerFromRequest = getCSRFToken(httpServletRequest);
-            String apiToken = (String) httpServletRequest.getSession().getAttribute("api_token");
+            //we need to use a MultiReadHttpServletRequest wrapper in order to be able to get the inputstream twice (in the filter and in the API servlet)
+            MultiReadHttpServletRequest multiReadHttpServletRequest = new MultiReadHttpServletRequest(httpServletRequest);
+            String headerFromRequest = getCSRFToken(multiReadHttpServletRequest);
+            String apiToken = (String) multiReadHttpServletRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
                 if (LOGGER.isLoggable(Level.FINE)) {
@@ -65,7 +67,7 @@ public class TokenValidatorFilter extends ExcludingPatternFilter {
                 httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.flushBuffer();
             } else {
-                chain.doFilter(request, response);
+                chain.doFilter(multiReadHttpServletRequest, response);
             }
         } else {
             chain.doFilter(request, response);
