@@ -11,7 +11,7 @@ msgstr ""
 "X-Crowdin-File-ID: 61810\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
-"PO-Revision-Date: 2022-02-22 02:29\n"
+"PO-Revision-Date: 2022-03-09 02:29\n"
 
 msgid "1 case has been deleted"
 msgstr "1 案件が削除されました"
@@ -23,7 +23,7 @@ msgid "Above normal"
 msgstr "平均以上"
 
 msgid "Access denied. For more information, check the log file."
-msgstr ""
+msgstr "アクセスが拒否されました。 詳細についてはログファイルを確認してください。"
 
 msgid "Actions"
 msgstr "アクション"
@@ -80,7 +80,7 @@ msgid "An application is a customized environment for a specific user profile, i
 msgstr "アプリケーションは、特定のユーザー プロファイル用にカスタマイズされた環境になり、利用者はビジネス データおよびビジネス プロセスを最も効率的な方法で利用できるようになります。"
 
 msgid "An error has occurred. For more information, check the log file."
-msgstr ""
+msgstr "エラーが発生しました。 詳細についてはログファイルを確認してください。"
 
 msgid "An error occured during categories update"
 msgstr "カテゴリの更新中にエラーが発生しました"
@@ -102,7 +102,7 @@ msgid "Application XML file"
 msgstr "アプリケーションのXMLファイル"
 
 msgid "Application id not provided. Unable to retrieve the application details."
-msgstr ""
+msgstr "アプリケーション ID が提供されていません。アプリケーションの詳細を取得できません。"
 
 msgid "Application list"
 msgstr "アプリケーション リスト"
@@ -627,7 +627,7 @@ msgid "No application available."
 msgstr "利用可能なアプリケーションはありません。"
 
 msgid "No application found with id:"
-msgstr ""
+msgstr "ID付きのアプリケーションが見つかりません:"
 
 msgid "No cases to display"
 msgstr "表示する案件はありません"
@@ -654,7 +654,7 @@ msgid "No mapping"
 msgstr "マッピングなし"
 
 msgid "No process found with id:"
-msgstr ""
+msgstr "IDt付プロセスが見つかりません:"
 
 msgid "No profile"
 msgstr "プロファイルがありません"
@@ -666,7 +666,7 @@ msgid "No updates have been made on categories. Don't forget to press \"Enter\" 
 msgstr "カテゴリは更新されていません。カテゴリを選択後、「Enter」キーを押すことを忘れないでください。"
 
 msgid "No user found with id:"
-msgstr ""
+msgstr "ID付ユーザーが見つかりません:"
 
 msgid "No value"
 msgstr "値なし "
@@ -756,7 +756,7 @@ msgid "Process id"
 msgstr "プロセス ID"
 
 msgid "Process id not provided. Unable to retrieve the process details."
-msgstr ""
+msgstr "プロセスID が提供されていません。プロセスの詳細を取得できません。"
 
 msgid "Process name"
 msgstr "プロセス名"
@@ -879,10 +879,10 @@ msgid "Show the tasks that I have done"
 msgstr "自分が関与し実行したタスクを表示"
 
 msgid "Something went wrong during the deletion. You might want to cancel and try again."
-msgstr ""
+msgstr "削除中に問題が発生しました。 キャンセルして再試行してください。"
 
 msgid "Something went wrong during the modification. You might want to cancel and try again."
-msgstr ""
+msgstr "変更中に問題が発生しました。キャンセルして再試行してください。"
 
 msgid "Sort by URL"
 msgstr "URL で並べ替え"
@@ -960,13 +960,13 @@ msgid "The application"
 msgstr "アプリケーション"
 
 msgid "The application does not exist. Go to application list page to see the new list of applications."
-msgstr ""
+msgstr "アプリケーションが存在しません。アプリケーションのリストページに移動して、アプリケーションの新しいリストを表示します。"
 
 msgid "The application does not exist. Reload the page to see the new list of applications."
-msgstr ""
+msgstr "アプリケーションが存在しません。 ページをリロードして、アプリケーションの新しいリストを表示します。"
 
 msgid "The application page does not exist. Reload the page to see the new list of application pages."
-msgstr ""
+msgstr "アプリケーションページが存在しません。 ページをリロードして、アプリケーションページの新しいリストを表示します。"
 
 msgid "The attachment is too big.<br/>Select a smaller attachment and submit the form again."
 msgstr "添付ファイルが大きすぎます。 <br/>小さい添付ファイルを選択して、フォームを再度送信してください。"
@@ -1002,7 +1002,7 @@ msgid "The image you are trying to upload is too big"
 msgstr "アップロードしようとしている画像が大きすぎます"
 
 msgid "The menu does not exist. Reload the page to see the new list of menus."
-msgstr ""
+msgstr "メニューは存在しません。 ページをリロードしてメニューの新しいリストを表示します。"
 
 msgid "The name for the URL must start with custompage_ followed only by alphanumeric characters."
 msgstr "URL の名前は、英数字のみが続く custompage_ で始まらなければなりません。"
@@ -1156,7 +1156,7 @@ msgid "Use Arrow up and Arrow down keys to browse among existing categories."
 msgstr "既存のカテゴリを閲覧するには、上矢印キーおよび下矢印キーを使用します。"
 
 msgid "User id not provided. Unable to retrieve the user details."
-msgstr ""
+msgstr "ユーザーIDが提供されていません。 ユーザーの詳細を取得できません。"
 
 msgid "Username"
 msgstr "ユーザー名"
