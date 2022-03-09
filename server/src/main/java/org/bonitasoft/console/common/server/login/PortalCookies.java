@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 
@@ -15,7 +16,9 @@ public class PortalCookies {
      * set the CSRF security token to the HTTP response as cookie.
      */
     public void addCSRFTokenCookieToResponse(HttpServletRequest request, HttpServletResponse res, Object apiTokenFromClient) {
-        String path = System.getProperty("bonita.csrf.cookie.path", request.getContextPath());
+        // set the cookie path to / if the app is deployed at root context
+        String defaultCookiePath = StringUtils.isEmpty(request.getContextPath()) ? "/" : request.getContextPath();
+        String path = System.getProperty("bonita.csrf.cookie.path", defaultCookiePath);
         invalidatePreviousCSRFTokenCookie(request, res, path);
 
         Cookie csrfCookie = new Cookie(TokenGenerator.X_BONITA_API_TOKEN, apiTokenFromClient.toString());
