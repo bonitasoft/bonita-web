@@ -61,6 +61,7 @@ public class LoginManagerTest {
     @Before
     public void setUp() throws Exception {
         when(request.getSession()).thenReturn(session);
+        when(request.getContextPath()).thenReturn("/bonita");
         when(request.getParameter("tenant")).thenReturn("1");
         requestAccessor = new HttpServletRequestAccessor(request);
         
