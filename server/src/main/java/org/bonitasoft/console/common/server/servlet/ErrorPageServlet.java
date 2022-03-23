@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
+import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.engine.session.APISession;
 
 public class ErrorPageServlet extends HttpServlet {
 
@@ -67,23 +70,29 @@ public class ErrorPageServlet extends HttpServlet {
                 if (LOGGER.isLoggable(Level.INFO)) {
                     LOGGER.log(Level.INFO, "Displaying error page with code " + errorCode);
                 }
-                String contextPath = request.getContextPath();
-                if (contextPath.equals("/")){
-                    //avoid double / in URL if Bonita is deployed at the root
-                    contextPath = "";
-                }
-                if (errorPageString == null) {
-                    ServletContext sc = getServletContext();
-                    try (InputStream errorPageInputStream = sc.getResourceAsStream(ERROR_TEMPLATE_PATH)) {
-                        errorPageString = new String(errorPageInputStream.readAllBytes(), StandardCharsets.UTF_8);
-                    } catch (Exception e) {
-                        if (LOGGER.isLoggable(Level.SEVERE)) {
-                            LOGGER.log(Level.SEVERE, "Error while trying to get the error page.", e);
-                        }
-                        output.println("An Error occured.");
+                final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+                if (apiSession != null && isPlatformHealthy()) {
+                    String contextPath = request.getContextPath();
+                    if (contextPath.equals("/")){
+                        //avoid double / in URL if Bonita is deployed at the root
+                        contextPath = "";
                     }
+                    if (errorPageString == null) {
+                        ServletContext sc = getServletContext();
+                        try (InputStream errorPageInputStream = sc.getResourceAsStream(ERROR_TEMPLATE_PATH)) {
+                            errorPageString = new String(errorPageInputStream.readAllBytes(), StandardCharsets.UTF_8);
+                        } catch (Exception e) {
+                            if (LOGGER.isLoggable(Level.SEVERE)) {
+                                LOGGER.log(Level.SEVERE, "Error while trying to get the error page.", e);
+                            }
+                            output.println("An Error occured.");
+                        }
+                    }
+                    writeFormatedResponse(output, errorCode, contextPath);
+                } else {
+                    //if there is no session or if the platform is not available, fallback on generic error pages
+                    getServletContext().getRequestDispatcher("/" + errorCode + ".html").forward(request, response);
                 }
-                writeFormatedResponse(output, errorCode, contextPath);
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
                     LOGGER.log(Level.WARNING, "Status code missing from request.");
@@ -92,6 +101,11 @@ public class ErrorPageServlet extends HttpServlet {
             }
             output.flush();
         }
+    }
+    
+    protected boolean isPlatformHealthy() {
+        PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
+        return platformManagementUtils.isPlatformAvailable();
     }
 
     protected void writeFormatedResponse(PrintWriter output, String errorCode, String contextPath) throws IOException {
