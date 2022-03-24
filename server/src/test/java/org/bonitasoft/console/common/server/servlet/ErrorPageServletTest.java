@@ -113,7 +113,7 @@ public class ErrorPageServletTest {
 
         errorServlet.doGet(request, response);
         
-        verify(sc, times(1)).getRequestDispatcher("/404.html");
+        verify(sc, times(1)).getRequestDispatcher("/404.jsp");
     }
     
     @Test
@@ -125,7 +125,7 @@ public class ErrorPageServletTest {
 
         errorServlet.doGet(request, response);
         
-        verify(sc, times(1)).getRequestDispatcher("/403.html");
+        verify(sc, times(1)).getRequestDispatcher("/403.jsp");
     }
     
     @Test
@@ -137,6 +137,6 @@ public class ErrorPageServletTest {
 
         errorServlet.doGet(request, response);
         
-        verify(sc, times(1)).getRequestDispatcher("/500.html");
+        verify(sc, times(1)).getRequestDispatcher("/500.jsp");
     }
 }

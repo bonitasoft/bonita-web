@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
 
 public class ErrorPageServlet extends HttpServlet {
@@ -91,7 +92,7 @@ public class ErrorPageServlet extends HttpServlet {
                     writeFormatedResponse(output, errorCode, contextPath);
                 } else {
                     //if there is no session or if the platform is not available, fallback on generic error pages
-                    getServletContext().getRequestDispatcher("/" + errorCode + ".html").forward(request, response);
+                    getServletContext().getRequestDispatcher("/" + errorCode + ".jsp").forward(request, response);
                 }
             } else {
                 if (LOGGER.isLoggable(Level.WARNING)) {
@@ -104,8 +105,15 @@ public class ErrorPageServlet extends HttpServlet {
     }
     
     protected boolean isPlatformHealthy() {
-        PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
-        return platformManagementUtils.isPlatformAvailable();
+        try {
+            PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
+            return platformManagementUtils.isPlatformAvailable() && !TenantsManagementUtils.isDefaultTenantPaused();
+        } catch (Exception e) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Platform is not healthy.");
+            }
+            return false;
+        }
     }
 
     protected void writeFormatedResponse(PrintWriter output, String errorCode, String contextPath) throws IOException {
