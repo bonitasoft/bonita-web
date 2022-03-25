@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
@@ -39,6 +41,8 @@ import org.bonitasoft.engine.util.APITypeManager;
  * @author Baptiste Mesta
  */
 public class PlatformManagementUtils {
+    
+    private static final Logger LOGGER = Logger.getLogger(PlatformManagementUtils.class.getName());
 
     private final ConfigurationFilesManager configurationFilesManager = ConfigurationFilesManager.getInstance();
 
@@ -165,6 +169,25 @@ public class PlatformManagementUtils {
             }
         } catch (BonitaException e) {
             throw new IOException(e);
+        }
+    }
+    
+    public boolean isPlatformAvailable() {
+        try {
+            final PlatformSession platformSession = platformLogin();
+            try {
+                PlatformAPI platformAPI = PlatformAPIAccessor.getPlatformAPI(platformSession);
+                return platformAPI.isNodeStarted();
+            } finally {
+                platformLogout(platformSession);
+            }
+        } catch (Exception e) {
+            if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, "Platform is not available.", e);
+            } else if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, "Platform is not available.");
+            }
+            return false;
         }
     }
 }
