@@ -43,7 +43,7 @@
         <restlet-version>2.3.12</restlet-version>
         <jackson-ext-modules-version>2.10.1</jackson-ext-modules-version>
         <!-- Keycloak version cannot be updated without also updating the ovewritten code in server-sp/src/main/java/org/bonitasoft/console/common/server/auth/impl/oidc -->
-        <keycloak.version>6.0.1</keycloak.version>
+        <keycloak.version>17.0.0</keycloak.version>
         <spnego.version>r9</spnego.version>
     </properties>
 
@@ -248,8 +248,12 @@
                         <artifactId>slf4j-api</artifactId>
                     </exclusion>
                     <exclusion>
-                        <groupId>org.apache.santuario</groupId>
-                        <artifactId>xmlsec</artifactId>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>javax.activation-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>javax.activation</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -271,12 +275,6 @@
                         <artifactId>jackson-annotations</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <!-- Specify xmlsec version to override the version pulled by keycloak-saml-core -->
-            <dependency>
-                <groupId>org.apache.santuario</groupId>
-                <artifactId>xmlsec</artifactId>
-                <version>2.1.7</version>
             </dependency>
 
         </dependencies>
