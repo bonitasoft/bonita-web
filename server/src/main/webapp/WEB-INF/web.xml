@@ -222,6 +222,8 @@
         <url-pattern>/portal.js/*</url-pattern>
         <url-pattern>/apps/*</url-pattern>
         <url-pattern>/services/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>RestAPIAuthorizationFilter</filter-name>
