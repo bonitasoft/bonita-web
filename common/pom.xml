@@ -26,8 +26,8 @@
             <artifactId>bonita-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.sf.ehcache.internal</groupId>
-            <artifactId>ehcache-core</artifactId>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
