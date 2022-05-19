@@ -23,7 +23,6 @@ import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.platform.PlatformLoginException;
-import org.bonitasoft.engine.platform.StartNodeException;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
@@ -41,37 +40,6 @@ public class TestPlatform {
     protected static final String PLATFORM_PASSWORD = "platform";
 
     private PlatformAPI platformAPI;
-
-    /**
-     * Default Constructor.
-     */
-    protected TestPlatform() {
-        // createPlatform();
-    }
-
-    /**
-     * Create and start the platform
-     */
-    private void createPlatform() {
-
-        // platform creation
-        try {
-            if (!getPlatformAPI().isPlatformCreated()) {
-                getPlatformAPI().createAndInitializePlatform();
-            }
-        } catch (final Exception e) {
-            throw new TestToolkitException("Can't create platform", e);
-        }
-
-        // start
-        try {
-            getPlatformAPI().startNode();
-        } catch (final InvalidSessionException e) {
-            throw new TestToolkitException("Invalid session to start platform", e);
-        } catch (final StartNodeException e) {
-            throw new TestToolkitException("Failed to start platform", e);
-        }
-    }
 
     public PlatformAPI getPlatformAPI() {
         if (this.platformAPI == null) {
@@ -99,14 +67,8 @@ public class TestPlatform {
      * Stop and delete platform
      */
     protected void destroy() {
-        final PlatformAPI platformAPI = getPlatformAPI();
-
-        /*
-         * Stop and delete platform
-         */
         try {
-            platformAPI.stopNode();
-            platformAPI.cleanAndDeletePlaftorm();
+            getPlatformAPI().stopNode();
         } catch (final Exception e) {
             throw new TestToolkitException("Can't stop platform", e);
         }

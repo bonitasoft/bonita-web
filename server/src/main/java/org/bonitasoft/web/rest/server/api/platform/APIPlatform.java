@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,32 +41,14 @@ import org.bonitasoft.web.toolkit.client.ui.utils.DateFormat;
 
 /**
  * @author Séverin Moussel
- * 
  */
-public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<PlatformItem> implements APIHasGet<PlatformItem>, APIHasUpdate<PlatformItem>,
-        APIHasAdd<PlatformItem>, APIHasDelete {
+public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<PlatformItem> implements APIHasGet<PlatformItem>, APIHasUpdate<PlatformItem> {
 
     @Override
     protected ItemDefinition defineItemDefinition() {
         return Definitions.get(PlatformDefinition.TOKEN);
     }
 
-    @Override
-    public PlatformItem add(final PlatformItem item) {
-        try {
-            final PlatformAPI platformAPI = getPlatformAPI();
-            if (!platformAPI.isPlatformCreated()) {
-                platformAPI.createAndInitializePlatform();
-            } else {
-                throw new APIException(new T_("The platform already exist !"));
-            }
-            return get(null);
-        } catch (final APIException apie) {
-            throw apie;
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
 
     @Override
     public PlatformItem update(final APIID id, final Map<String, String> attributes) {
@@ -116,19 +98,6 @@ public class APIPlatform extends org.bonitasoft.web.rest.server.api.PlatformAPI<
     private PlatformAPI getPlatformAPI() {
         try {
             return PlatformAPIAccessor.getPlatformAPI(getPlatformSession());
-        } catch (final Exception e) {
-            throw new APIException(e);
-        }
-    }
-
-    @Override
-    public void delete(final List<APIID> ids) {
-        try {
-            final PlatformAPI platformAPI = getPlatformAPI();
-            if (platformAPI.isPlatformCreated()) {
-                platformAPI.cleanAndDeletePlaftorm();
-                // TODO delete tenant directories in bonita home client-side
-            }
         } catch (final Exception e) {
             throw new APIException(e);
         }
