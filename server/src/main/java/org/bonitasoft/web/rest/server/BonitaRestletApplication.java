@@ -37,6 +37,7 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedActivityV
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.signal.BPMSignalResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
@@ -84,6 +85,8 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
 
     public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
+    
+    public static final String BPM_PROCESS_INFO_URL = "/bpm/processInfo";
 
     public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
 
@@ -146,6 +149,9 @@ public class BonitaRestletApplication extends Application {
 
         // GET to case info (with task state counter)
         router.attach(BPM_CASE_INFO_URL + "/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
+        
+        // GET to process info (with active task state counter)
+        router.attach(BPM_PROCESS_INFO_URL + "/{" + ProcessInfoResource.PROCESS_ID + "}", factory.create(ProcessInfoResource.class));
 
         // GET to retrieve a case context:
         router.attach(BPM_CASE_CONTEXT_URL + "/{caseId}/context", factory.create(CaseContextResource.class));

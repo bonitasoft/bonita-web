@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 BonitaSoft S.A.
+ * Copyright (C) 2022 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,42 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.bpm.cases;
+package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseInfo;
+import org.bonitasoft.web.rest.model.bpm.process.ProcessInfo;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Get;
 
-public class CaseInfoResource extends CommonResource {
+public class ProcessInfoResource extends CommonResource {
 
-    public static final String CASE_ID = "caseId";
+    public static final String PROCESS_ID = "processId";
 
     private final ProcessAPI processAPI;
 
-    public CaseInfoResource(final ProcessAPI processAPI) {
+    public ProcessInfoResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;
     }
 
     @Get("json")
-    public CaseInfo getCaseInfo() {
+    public ProcessInfo getProcessInfo() {
         try {
-            final long caseId = Long.parseLong(getAttribute(CASE_ID));
-            final CaseInfo caseInfo = new CaseInfo();
-            caseInfo.setId(caseId);
-            caseInfo.setFlowNodeStatesCounters(getFlownodeCounters(caseId));
-            return caseInfo;
+            final long processId = Long.parseLong(getAttribute(PROCESS_ID));
+            final ProcessInfo processInfo = new ProcessInfo();
+            processInfo.setProcessDefinitionId(processId);
+            processInfo.setFlowNodeStatesCounters(getFlownodeCounters(processId));
+            return processInfo;
         } catch (final Exception e) {
             throw new APIException(e);
         }
     }
 
 
-    protected Map<String, Map<String, Long>> getFlownodeCounters(final Long caseId) throws DataNotFoundException {
-        return processAPI.getFlownodeStateCounters(caseId);
+    protected Map<String, Map<String, Long>> getFlownodeCounters(final Long processId) throws DataNotFoundException {
+        return processAPI.getActiveFlownodeStateCountersForProcessDefinition(processId);
     }
 }

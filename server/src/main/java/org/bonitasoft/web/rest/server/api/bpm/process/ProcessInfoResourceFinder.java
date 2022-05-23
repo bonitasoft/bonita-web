@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 BonitaSoft S.A.
+ * Copyright (C) 2022 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.bpm.cases;
+package org.bonitasoft.web.rest.server.api.bpm.process;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.web.rest.server.ResourceFinder;
@@ -23,13 +23,13 @@ import org.restlet.Response;
 import org.restlet.resource.ServerResource;
 
 /**
- * @author Baptiste Mesta
+ * @author Anthony Birembaut
  */
-public class CaseInfoResourceFinder extends ResourceFinder {
+public class ProcessInfoResourceFinder extends ResourceFinder {
 
     @Override
     public ServerResource create(final Request request, final Response response) {
         final ProcessAPI processAPI = getProcessAPI(request);
-        return new CaseInfoResource(processAPI);
+        return new ProcessInfoResource(processAPI);
     }
 }

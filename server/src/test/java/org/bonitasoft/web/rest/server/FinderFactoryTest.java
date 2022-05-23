@@ -32,18 +32,20 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
-import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResource;
+import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
@@ -164,6 +166,14 @@ public class FinderFactoryTest {
         doReturn(processAPI).when(caseInfoResourceFinder).getProcessAPI(any(Request.class));
         final ServerResource serverResource = caseInfoResourceFinder.create(request, response);
         assertThat(serverResource).isInstanceOf(CaseInfoResource.class);
+    }
+    
+    @Test
+    public void should_return_ProcessInfoResource_for_ProcessInfoResourceFinder() {
+        final ProcessInfoResourceFinder processInfoResourceFinder = spy(new ProcessInfoResourceFinder());
+        doReturn(processAPI).when(processInfoResourceFinder).getProcessAPI(any(Request.class));
+        final ServerResource serverResource = processInfoResourceFinder.create(request, response);
+        assertThat(serverResource).isInstanceOf(ProcessInfoResource.class);
     }
 
     @Test
