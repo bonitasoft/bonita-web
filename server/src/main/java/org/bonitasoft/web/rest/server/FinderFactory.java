@@ -36,8 +36,6 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResourc
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
-import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
@@ -58,8 +56,6 @@ import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResourceFinder;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResourceFinder;
 import org.bonitasoft.web.rest.server.api.bpm.signal.BPMSignalResource;
@@ -101,8 +97,6 @@ public class FinderFactory {
         finders.put(TimerEventTriggerResource.class, new TimerEventTriggerResourceFinder());
         finders.put(BPMMessageResource.class, new BPMMessageResourceFinder());
         finders.put(BPMSignalResource.class, new BPMSignalResourceFinder());
-        finders.put(CaseInfoResource.class, new CaseInfoResourceFinder());
-        finders.put(ProcessInfoResource.class, new ProcessInfoResourceFinder());
         finders.put(CaseContextResource.class, new CaseContextResourceFinder());
         finders.put(ArchivedCaseContextResource.class, new ArchivedCaseContextResourceFinder());
         finders.put(BusinessDataResource.class, new BusinessDataResourceFinder());

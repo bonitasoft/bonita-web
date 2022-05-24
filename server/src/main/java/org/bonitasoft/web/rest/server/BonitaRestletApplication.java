@@ -26,7 +26,6 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
-import org.bonitasoft.web.rest.server.api.bpm.cases.CaseInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
@@ -37,7 +36,6 @@ import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedActivityV
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
-import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInfoResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
 import org.bonitasoft.web.rest.server.api.bpm.signal.BPMSignalResource;
 import org.bonitasoft.web.rest.server.api.form.FormMappingResource;
@@ -83,10 +81,6 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_SIGNAL_URL = "/bpm/signal";
 
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
-
-    public static final String BPM_CASE_INFO_URL = "/bpm/caseInfo";
-    
-    public static final String BPM_PROCESS_INFO_URL = "/bpm/processInfo";
 
     public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
 
@@ -146,12 +140,6 @@ public class BonitaRestletApplication extends Application {
         
         // POST to send a BPM signal to the engine:
         router.attach(BPM_SIGNAL_URL, factory.create(BPMSignalResource.class));
-
-        // GET to case info (with task state counter)
-        router.attach(BPM_CASE_INFO_URL + "/{" + CaseInfoResource.CASE_ID + "}", factory.create(CaseInfoResource.class));
-        
-        // GET to process info (with active task state counter)
-        router.attach(BPM_PROCESS_INFO_URL + "/{" + ProcessInfoResource.PROCESS_ID + "}", factory.create(ProcessInfoResource.class));
 
         // GET to retrieve a case context:
         router.attach(BPM_CASE_CONTEXT_URL + "/{caseId}/context", factory.create(CaseContextResource.class));
