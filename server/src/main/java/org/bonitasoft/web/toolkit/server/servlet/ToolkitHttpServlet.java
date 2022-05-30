@@ -181,7 +181,15 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
                 // Response status is already set with an error code
                 outputException(exception, req, resp);
             }
+        } else if (exception instanceof APIIncorrectIdException) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            }
+            outputException(exception, req, resp, HttpServletResponse.SC_BAD_REQUEST);
         } else if (exception instanceof APIItemIdMalformedException) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            }
             outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } else {
             if (LOGGER.isLoggable(Level.SEVERE)) {

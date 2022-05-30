@@ -16,19 +16,28 @@
  */
 package org.bonitasoft.web.toolkit.client.data;
 
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIIncorrectIdException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemIdMalformedException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Dumitru Corini
  *
  */
 public class APIIDTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void makeAPIID_with_list_should_return_correct_result() throws Exception {
@@ -71,9 +80,7 @@ public class APIIDTest {
     }
 
     @Test(expected = APIItemIdMalformedException.class)
-    public void toLong_should_throw_APIItemIdMalformedException() throws Exception {
+    public void toLong_should_throw_APIItemIdMalformedException_with_string() {
         APIID.makeAPIID("undefined").toLong();
-        APIID.makeAPIID((String) null).toLong();
-        APIID.makeAPIID(-1L).toLong();
     }
 }
