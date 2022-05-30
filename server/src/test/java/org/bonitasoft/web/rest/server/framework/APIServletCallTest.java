@@ -28,8 +28,11 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIIncorrectIdException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -49,6 +52,9 @@ public class APIServletCallTest {
 
     @Spy
     private final APIServletCall apiServletCall = new APIServletCall();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void before() {
@@ -71,6 +77,16 @@ public class APIServletCallTest {
         assertThat(apiServletCall.getResourceName()).isEqualTo("case");
         assertThat(apiServletCall.getApiName()).isEqualTo("bpm");
 
+    }
+
+    @Test
+    public void should_parsePath_request_info_with_negative_id() {
+        final HttpServletRequest request = mock(HttpServletRequest.class);
+        doReturn("API/identity/user/-1").when(request).getPathInfo();
+        thrown.expect(APIIncorrectIdException.class);
+        thrown.expectMessage("Id must be non-zero positive for identity on resource user");
+
+        apiServletCall.parsePath(request);
     }
 
     @Test

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 BonitaSoft S.A.
+ * Copyright (C) 2022 BonitaSoft S.A.
  * BonitaSoft, 32 rue Gustave Eiffel - 38000 Grenoble
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,20 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.web.rest.server.api.bpm.cases;
+package org.bonitasoft.web.toolkit.client.common.exception.api;
 
-import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.web.rest.server.ResourceFinder;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.resource.ServerResource;
+/**
+ * @author Dumitru Corini
+ */
+public class APIIncorrectIdException extends APIException {
 
-public class ArchivedCaseVariableResourceFinder extends ResourceFinder {
+    private static final long serialVersionUID = 1054890811602278747L;
 
-    @Override
-    public ServerResource create(Request request, Response response) {
-        final ProcessAPI processAPI = getProcessAPI(request);
-        return new ArchivedCaseVariableResource(processAPI);
+    public APIIncorrectIdException(final String message) {
+        super(message);
     }
-
 }
