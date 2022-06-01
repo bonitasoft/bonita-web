@@ -29,9 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
+import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.*;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
+import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.server.ServiceException;
@@ -144,6 +146,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
         Item.setApplyValidatorMandatoryByDefault(false);
 
         CommonDateFormater.setDateFormater(new ServerDateFormater());
+        JSonItemReader.setUnserializer(new JSonSimpleDeserializer());
     }
 
     /**
