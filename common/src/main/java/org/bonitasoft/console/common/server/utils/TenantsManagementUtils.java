@@ -14,22 +14,12 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.NotFoundException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.profile.Profile;
 import org.bonitasoft.engine.profile.ProfileCriterion;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -42,111 +32,11 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 public class TenantsManagementUtils {
 
     /**
-     * The user ID parameter for the user profiles check
-     */
-    protected static final String USER_ID = "userId";
-
-    /**
-     * The command name for the profiles check
-     */
-    protected static final String GET_PROFILES_FOR_USER = "getProfilesForUser";
-
-    /**
-     * Copy file
-     *
-     * @param sourceFile
-     * @param targetFile
-     * @throws IOException
-     */
-    protected static void copyFile(final File sourceFile, final File targetFile) throws IOException {
-        BufferedInputStream inBuff = null;
-        BufferedOutputStream outBuff = null;
-        FileInputStream input = null;
-        FileOutputStream output = null;
-        try {
-            input = new FileInputStream(sourceFile);
-            inBuff = new BufferedInputStream(input);
-
-            output = new FileOutputStream(targetFile);
-            outBuff = new BufferedOutputStream(output);
-
-            final byte[] b = new byte[1024 * 5];
-            int len;
-            while ((len = inBuff.read(b)) != -1) {
-                outBuff.write(b, 0, len);
-            }
-            outBuff.flush();
-        } finally {
-            if (inBuff != null) {
-                inBuff.close();
-            }
-            if (outBuff != null) {
-                outBuff.close();
-            }
-            if (output != null) {
-                output.close();
-            }
-            if (input != null) {
-                input.close();
-            }
-        }
-    }
-
-    /**
-     * Copy a directory
-     *
-     * @param sourceDir
-     * @param targetDir
-     * @throws IOException
-     */
-    protected static void copyDirectory(final String sourceDir, final String targetDir) throws IOException {
-        // new target folder
-        new File(targetDir).mkdirs();
-
-        // get the file or folder of sourceDir
-        final File[] file = new File(sourceDir).listFiles();
-        for (int i = 0; i < file.length; i++) {
-            if (file[i].isFile()) {
-                final File sourceFile = file[i];
-                final File targetFile = new File(new File(targetDir).getAbsolutePath() + File.separator + file[i].getName());
-                copyFile(sourceFile, targetFile);
-            }
-            if (file[i].isDirectory()) {
-                final String dir1 = sourceDir + File.separator + file[i].getName();
-                final String dir2 = targetDir + File.separator + file[i].getName();
-                copyDirectory(dir1, dir2);
-            }
-        }
-    }
-
-    /**
-     * Delete a directory
-     *
-     * @param targetDir
-     */
-    protected static void deleteDirectory(final String targetDir) {
-        final File file = new File(targetDir);
-        if (file.exists()) {
-            if (file.isFile()) {
-                file.delete();
-            } else if (file.isDirectory()) {
-                final File files[] = file.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    final String dir = targetDir + File.separator + files[i].getName();
-                    deleteDirectory(dir);
-                }
-            }
-            file.delete();
-        }
-    }
-
-    /**
      * Check for user's profile
      */
-    public static boolean hasProfileForUser(final APISession apiSession) throws NotFoundException, InvalidSessionException, BonitaHomeNotSetException,
+    public static boolean hasProfileForUser(final APISession apiSession) throws InvalidSessionException, BonitaHomeNotSetException,
             ServerAPIException, UnknownAPITypeException {
-        final List<Profile> userProfiles = getProfileApi(apiSession).getProfilesForUser(apiSession.getUserId(), 0, 1, ProfileCriterion.ID_ASC);
-        return !userProfiles.isEmpty();
+        return !getProfileApi(apiSession).getProfilesForUser(apiSession.getUserId(), 0, 1, ProfileCriterion.ID_ASC).isEmpty();
     }
 
     private static ProfileAPI getProfileApi(final APISession session) throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException,
@@ -171,11 +61,11 @@ public class TenantsManagementUtils {
         }
     }
 
-    public static String getTechnicalUserUsername() throws Exception {
+    public static String getTechnicalUserUsername() {
         return PropertiesFactory.getPlatformTenantConfigProperties().defaultTenantUserName();
     }
 
-    public static String getTechnicalUserPassword() throws Exception {
+    public static String getTechnicalUserPassword() {
         return PropertiesFactory.getPlatformTenantConfigProperties().defaultTenantPassword();
     }
 

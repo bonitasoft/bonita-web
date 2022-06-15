@@ -32,7 +32,7 @@ public class TenantsManagementUtilsIT  extends AbstractJUnitTest {
     }
 
     @Override
-    protected void testTearDown() throws Exception {
+    protected void testTearDown() {
     }
 
 

@@ -21,8 +21,6 @@ import java.util.Properties;
  */
 public class PlatformTenantConfigProperties {
 
-    private static final String PLATFORM_DEFAULT_TENANT_ID = "platform.tenant.default.id";
-
     private static final String PLATFORM_TENANT_DEFAULT_USERNAME = "platform.tenant.default.username";
 
     private static final String PLATFORM_TENANT_DEFAULT_PASSWORD = "platform.tenant.default.password";
@@ -31,10 +29,6 @@ public class PlatformTenantConfigProperties {
 
     private Properties getProperties() {
         return ConfigurationFilesManager.getInstance().getPlatformProperties(PROPERTIES_FILE);
-                    }
-
-    public String getDefaultTenantId() {
-        return getProperties().getProperty(PLATFORM_DEFAULT_TENANT_ID);
     }
 
     public String defaultTenantUserName() {
