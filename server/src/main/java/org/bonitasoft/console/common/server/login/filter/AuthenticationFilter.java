@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -34,7 +33,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.TenantIdAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.LoginUrlException;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
@@ -96,7 +94,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     }
 
     protected TenantIdAccessor getTenantAccessor() {
-        return TenantIdAccessorFactory.getTenantIdAccessor();
+        return TenantIdAccessor.getInstance();
     }
 
     protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,

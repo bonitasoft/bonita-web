@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,6 @@ import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
-import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlHandler;
@@ -160,6 +158,6 @@ public class LogoutServlet extends HttpServlet {
     }
     
     protected UserLogger getUserLogger() {
-        return UserLoggerFactory.getUserLogger();
+        return new UserLogger();
     }
 }

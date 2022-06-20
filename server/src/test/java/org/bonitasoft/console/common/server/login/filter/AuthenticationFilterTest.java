@@ -15,28 +15,17 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -55,16 +44,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-/**
- * Created by Vincent Elcrin
- * Date: 28/08/13
- * Time: 17:52
- */
 public class AuthenticationFilterTest {
-    
+
     @Mock
     private FilterChain chain;
 
@@ -76,31 +59,32 @@ public class AuthenticationFilterTest {
 
     @Mock
     private HttpSession httpSession;
-    
+
     @Mock
     private APISession apiSession;
 
     @Mock
     private FilterConfig filterConfig;
-    
+
     @Mock
     private ServletContext servletContext;
-    
+
     @Spy
     AuthenticationFilter authenticationFilter;
-    
+
     @Spy
     AuthenticationManager authenticationManager = new FakeAuthenticationManager(1L);
-    
+
     HttpServletRequestAccessor request;
-    
+
+    @Mock
     TenantIdAccessor tenantIdAccessor;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
         doReturn(httpSession).when(httpRequest).getSession();
-        doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
+        doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(tenantIdAccessor);
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(httpRequest.getMethod()).thenReturn("GET");
         when(httpRequest.getParameter(AuthenticationManager.TENANT)).thenReturn("1");
@@ -109,7 +93,6 @@ public class AuthenticationFilterTest {
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
 
         request = spy(new HttpServletRequestAccessor(httpRequest));
-        tenantIdAccessor = spy(new TenantIdAccessor());
         doReturn(1L).when(tenantIdAccessor).getDefaultTenantId();
 
         //remove default rules (already logged in) as they have their own tests
@@ -128,7 +111,7 @@ public class AuthenticationFilterTest {
         verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
-    
+
     @Test
     public void should_use_the_tenant_id_from_APISession_when_rule_passes() throws Exception {
         when(apiSession.getTenantId()).thenReturn(3L);
@@ -166,14 +149,14 @@ public class AuthenticationFilterTest {
         verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(httpResponse).sendRedirect(anyString());
     }
-    
+
     @Test
     public void testIfWeGet401ErrorIfAllRulesFailAndRedirectParamIsFalse() throws Exception {
-    	AuthenticationFilter authenticationFilterWithConfig = spy(new AuthenticationFilter());
-        doReturn(authenticationManager).when(authenticationFilterWithConfig).getAuthenticationManager(any(TenantIdAccessor.class));
+        AuthenticationFilter authenticationFilterWithConfig = spy(new AuthenticationFilter());
+        doReturn(authenticationManager).when(authenticationFilterWithConfig).getAuthenticationManager(tenantIdAccessor);
         FilterConfig filterConfig = mock(FilterConfig.class);
         when(filterConfig.getServletContext()).thenReturn(servletContext);
-        List<String> initParams = new ArrayList<String>();
+        List<String> initParams = new ArrayList<>();
         initParams.add(AuthenticationFilter.REDIRECT_PARAM);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.enumeration(initParams));
         when(filterConfig.getInitParameter(AuthenticationFilter.REDIRECT_PARAM)).thenReturn(Boolean.FALSE.toString());
@@ -191,7 +174,7 @@ public class AuthenticationFilterTest {
         verify(httpResponse, never()).sendRedirect(anyString());
         verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
-    
+
     @Test
     public void testIfWeAreNotRedirectedIfRequestMethodIsNotGet() throws Exception {
         when(httpRequest.getMethod()).thenReturn("POST");
@@ -219,25 +202,19 @@ public class AuthenticationFilterTest {
     @Test
     public void testFilter() throws Exception {
         when(httpRequest.getSession()).thenReturn(httpSession);
-        doAnswer(new Answer<Object>() {
-
-            @Override
-            public Object answer(final InvocationOnMock invocation) throws Throwable {
-                return null;
-            }
-        }).when(authenticationFilter).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
+        doAnswer((Answer<Object>) invocation -> null).when(authenticationFilter).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
                 any(TenantIdAccessor.class), any(FilterChain.class));
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
         verify(authenticationFilter, times(1)).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
                 any(TenantIdAccessor.class), any(FilterChain.class));
     }
-    
+
     @Test
     public void testFailedLoginOnDoFiltering() throws Exception {
         EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
         doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
-        
+
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
@@ -245,13 +222,13 @@ public class AuthenticationFilterTest {
         verify(authenticationFilter).handleUserNotFoundOrInactiveException(request, httpResponse, engineUserNotFoundOrInactive);
         verify(authenticationFilter).redirectTo(request, httpResponse, 1L, AuthenticationFilter.USER_NOT_FOUND_JSP);
     }
-    
+
     @Test
     public void testTenantIsPausedOnDoFiltering() throws Exception {
         TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
         doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
-        
+
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
@@ -281,7 +258,7 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testMatchExcludePatterns() throws Exception {
+    public void testMatchExcludePatterns() {
         matchExcludePattern("http://host/bonita/portal/resource/page/API/system/session/unusedId", true);
         matchExcludePattern("http://host/bonita/apps/app/API/system/session/unusedId", true);
         matchExcludePattern("http://host/bonita/portal/resource/page/content/", false);
@@ -289,7 +266,7 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testMakeRedirectUrl() throws Exception {
+    public void testMakeRedirectUrl() {
         doReturn("/apps/appDirectoryBonita").when(request).getRequestedUri();
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(request, times(1)).getRequestedUri();
@@ -297,7 +274,7 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testMakeRedirectUrlFromRequestUrl() throws Exception {
+    public void testMakeRedirectUrlFromRequestUrl() {
         doReturn("apps/appDirectoryBonita").when(request).getRequestedUri();
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/apps/appDirectoryBonita"));
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
@@ -307,19 +284,19 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testCompileNullPattern() throws Exception {
+    public void testCompileNullPattern() {
         assertThat(authenticationFilter.compilePattern(null)).isNull();
     }
 
     @Test
-    public void testCompileWrongPattern() throws Exception {
+    public void testCompileWrongPattern() {
         assertThat(authenticationFilter.compilePattern("((((")).isNull();
     }
 
     @Test
-    public void testCompileSimplePattern() throws Exception {
+    public void testCompileSimplePattern() {
         final String patternToCompile = "test";
-        assertThat(authenticationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(authenticationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -329,9 +306,9 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testCompileExcludePattern() throws Exception {
+    public void testCompileExcludePattern() {
         final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(/bonita/?$)|(logoutservice)";
-        assertThat(authenticationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(authenticationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -350,7 +327,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
                 return true;
             }
         };
@@ -360,7 +337,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
                 return false;
             }
         };
@@ -370,7 +347,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
                 throw e;
             }
         };

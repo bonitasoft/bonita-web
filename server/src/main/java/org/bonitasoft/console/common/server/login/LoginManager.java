@@ -30,7 +30,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.login.credentials.StandardCredentials;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
-import org.bonitasoft.console.common.server.login.credentials.UserLoggerFactory;
 import org.bonitasoft.console.common.server.login.filter.TokenGenerator;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -56,9 +55,8 @@ public class LoginManager {
      */
     public void login(final HttpServletRequest request, final HttpServletResponse response)
         throws AuthenticationManagerNotFoundException, LoginFailedException, TenantStatusException, AuthenticationFailedException, ServletException {
-        final long tenantId = getTenantId(request);
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        final StandardCredentials userCredentials = createUserCredentials(tenantId, requestAccessor);
+        final StandardCredentials userCredentials = createUserCredentials(getTenantId(), requestAccessor);
         loginInternal(requestAccessor, response, getUserLogger(), userCredentials);
     }
     
@@ -92,10 +90,8 @@ public class LoginManager {
         portalCookies.addCSRFTokenCookieToResponse(request.asHttpServletRequest(), response, tokenGenerator.createOrLoadToken(request.getHttpSession()));
     }
     
-    protected long getTenantId(final HttpServletRequest request) throws ServletException {
-        final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        TenantIdAccessor tenantIdAccessor = TenantIdAccessorFactory.getTenantIdAccessor();
-        return tenantIdAccessor.getDefaultTenantId();
+    protected long getTenantId() throws ServletException {
+        return TenantIdAccessor.getInstance().getDefaultTenantId();
     }
     
     protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
@@ -103,7 +99,7 @@ public class LoginManager {
     }
 
     protected UserLogger getUserLogger() {
-        return UserLoggerFactory.getUserLogger();
+        return new UserLogger();
     }
 
     public AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {

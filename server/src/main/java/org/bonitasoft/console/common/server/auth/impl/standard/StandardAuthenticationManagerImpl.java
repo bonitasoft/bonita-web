@@ -23,7 +23,6 @@ import javax.servlet.ServletException;
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessorFactory;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;

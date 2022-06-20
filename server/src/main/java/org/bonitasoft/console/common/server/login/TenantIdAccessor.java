@@ -28,6 +28,15 @@ import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
  */
 public class TenantIdAccessor {
 
+    private static final TenantIdAccessor INSTANCE = new TenantIdAccessor();
+
+    public static TenantIdAccessor getInstance() {
+        return INSTANCE;
+    }
+
+    private TenantIdAccessor() {
+    }
+
     public long getDefaultTenantId() throws ServletException {
         return TenantsManagementUtils.getDefaultTenantId();
     }

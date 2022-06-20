@@ -82,7 +82,7 @@ public class LivingApplicationServlet extends HttpServlet {
             }
             SessionUtil.sessionLogout(hsRequest.getSession());
             HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(hsRequest);
-            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(new TenantIdAccessor()), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
+            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(TenantIdAccessor.getInstance()), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
             hsResponse.sendRedirect(loginURL.getLocation());
         }
 
