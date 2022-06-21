@@ -81,12 +81,16 @@ public class ApplicationRouter {
         }
         if (isApplicationPageRequest(pathSegments)) {
             //Application page request
-            if (application.hasPage(parsedRequest.getPageToken()) && application.authorize(session)) {
-                pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
-            } else {
+            if (!application.hasPage(parsedRequest.getPageToken())) {
+                hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "There is no page " + parsedRequest.getPageToken() + " in the application " + parsedRequest.getApplicationName());
+                return;
+            }
+            if (!application.authorize(session)) {
                 hsResponse.sendError(HttpServletResponse.SC_FORBIDDEN,
                         "Unauthorized access for the page " + parsedRequest.getPageToken() + " of the application " + parsedRequest.getApplicationName());
+                return;
             }
+            pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
         } else {
             //Layout or theme resource file request
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
