@@ -30,7 +30,7 @@ public class TenantIdAccessorFactory {
     private static final String TENANTIDACCESSOR_PROPERTY_NAME = "auth.TenantIdAccessor";
 
     @SuppressWarnings("unchecked")
-    public static TenantIdAccessor getTenantIdAccessor(HttpServletRequestAccessor requestAccessor) {
+    public static TenantIdAccessor getTenantIdAccessor() {
         ServerProperties serverProperties = ServerProperties.getInstance();
         String tenantIdAccessorClassName = serverProperties.getValue(TENANTIDACCESSOR_PROPERTY_NAME);
         TenantIdAccessor tenantIdAccessor;
@@ -38,14 +38,14 @@ public class TenantIdAccessorFactory {
             if (LOGGER.isLoggable(Level.FINEST)) {
                 LOGGER.log(Level.FINEST, "auth.TenantIdAccessor is undefined. Using default implementation : " + TenantIdAccessor.class.getName());
             }
-            tenantIdAccessor = new TenantIdAccessor(requestAccessor);
+            tenantIdAccessor = new TenantIdAccessor();
         } else {
             try {
                 Constructor<TenantIdAccessor> constructor = (Constructor<TenantIdAccessor>) Class.forName(tenantIdAccessorClassName).getConstructor(HttpServletRequestAccessor.class);
-                tenantIdAccessor = constructor.newInstance(requestAccessor);
+                tenantIdAccessor = constructor.newInstance();
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "The TenantIdAccessor specified " + tenantIdAccessorClassName + " could not be instantiated! Using default implementation : " + TenantIdAccessor.class.getName(), e);
-                tenantIdAccessor = new TenantIdAccessor(requestAccessor);
+                tenantIdAccessor = new TenantIdAccessor();
             }
         }
         return tenantIdAccessor;

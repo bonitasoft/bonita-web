@@ -92,11 +92,11 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     @Override
     public void proceedWithFiltering(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException, IOException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor((HttpServletRequest) request);
-        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, getTenantAccessor(requestAccessor), chain);
+        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, getTenantAccessor(), chain);
     }
 
-    protected TenantIdAccessor getTenantAccessor(final HttpServletRequestAccessor requestAccessor) throws ServletException {
-        return TenantIdAccessorFactory.getTenantIdAccessor(requestAccessor);
+    protected TenantIdAccessor getTenantAccessor() {
+        return TenantIdAccessorFactory.getTenantIdAccessor();
     }
 
     protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,
@@ -148,7 +148,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, "API session was not found in HTTP session. Rule " + rule.getClass().getName() + " may be missing the engine login.");
             }
-            tenantId = tenantIdAccessor.ensureTenantId();
+            tenantId = tenantIdAccessor.getDefaultTenantId();
         }
         return tenantId;
     }
@@ -205,7 +205,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     // protected for test stubbing
     protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.getDefaultTenantId());
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }

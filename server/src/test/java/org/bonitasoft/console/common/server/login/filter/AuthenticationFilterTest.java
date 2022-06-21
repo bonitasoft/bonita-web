@@ -107,10 +107,11 @@ public class AuthenticationFilterTest {
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
-        
+
         request = spy(new HttpServletRequestAccessor(httpRequest));
-        tenantIdAccessor = spy(new TenantIdAccessor(request));
-        
+        tenantIdAccessor = spy(new TenantIdAccessor());
+        doReturn(1L).when(tenantIdAccessor).getDefaultTenantId();
+
         //remove default rules (already logged in) as they have their own tests
         authenticationFilter.getRules().clear();
         authenticationFilter.init(filterConfig);
@@ -216,18 +217,6 @@ public class AuthenticationFilterTest {
     }
 
     @Test
-    public void testIfTenantIdIsAddedToRedirectUrlWhenInRequest() throws Exception {
-        authenticationFilter.addRule(createFailingRule());
-        doReturn("12").when(request).getTenantId();
-
-        when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
-
-        verify(httpResponse).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=");
-    }
-
-    @Test
     public void testFilter() throws Exception {
         when(httpRequest.getSession()).thenReturn(httpSession);
         doAnswer(new Answer<Object>() {
@@ -247,7 +236,7 @@ public class AuthenticationFilterTest {
     public void testFailedLoginOnDoFiltering() throws Exception {
         EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
-        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
+        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
         
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
@@ -261,7 +250,7 @@ public class AuthenticationFilterTest {
     public void testTenantIsPausedOnDoFiltering() throws Exception {
         TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
-        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
+        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
         
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 

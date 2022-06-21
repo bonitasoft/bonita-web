@@ -78,7 +78,7 @@ public class LogoutServletTest {
 
     @Test
     public void testGetURLToRedirectToFromAuthenticationManagerLogout() throws Exception {
-        doReturn("redirectURL").when(logoutServlet).createRedirectUrl(requestAccessor, 1L);
+        doReturn("redirectURL").when(logoutServlet).createRedirectUrl(requestAccessor);
         doReturn("logoutURL").when(authenticationManager).getLogoutPageURL(requestAccessor, "redirectURL");
         
         String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor, 1L);
@@ -109,25 +109,16 @@ public class LogoutServletTest {
     public void testCreateRedirectUrlWithDefaultRedirect() throws Exception {
         doReturn(null).when(requestAccessor).getRedirectUrl();
         
-        String redirectURL = logoutServlet.createRedirectUrl(requestAccessor, 1L);
+        String redirectURL = logoutServlet.createRedirectUrl(requestAccessor);
         
         assertThat(redirectURL).isEqualTo(AuthenticationManager.DEFAULT_DIRECT_URL);
-    }
-    
-    @Test
-    public void testCreateRedirectUrlWithDefaultRedirectAndNonDefaultTenant() throws Exception {
-        doReturn(null).when(requestAccessor).getRedirectUrl();
-        
-        String redirectURL = logoutServlet.createRedirectUrl(requestAccessor, 3L);
-        
-        assertThat(redirectURL).isEqualTo(AuthenticationManager.DEFAULT_DIRECT_URL + "?tenant=3");
     }
     
     @Test
     public void testCreateRedirectUrl() throws Exception {
         doReturn("redirectURL").when(requestAccessor).getRedirectUrl();
         
-        String redirectURL = logoutServlet.createRedirectUrl(requestAccessor, 1L);
+        String redirectURL = logoutServlet.createRedirectUrl(requestAccessor);
         
         assertThat(redirectURL).isEqualTo("redirectURL");
     }

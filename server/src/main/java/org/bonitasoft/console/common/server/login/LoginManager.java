@@ -46,8 +46,7 @@ import org.bonitasoft.web.rest.model.user.User;
 public class LoginManager {
 
     private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
-    public static final String TENANT_COOKIE_NAME = "bonita.tenant";
-    
+
     protected TokenGenerator tokenGenerator = new TokenGenerator();
     protected PortalCookies portalCookies = new PortalCookies();
     
@@ -95,8 +94,8 @@ public class LoginManager {
     
     protected long getTenantId(final HttpServletRequest request) throws ServletException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        TenantIdAccessor tenantIdAccessor = TenantIdAccessorFactory.getTenantIdAccessor(requestAccessor);
-        return tenantIdAccessor.ensureTenantId();
+        TenantIdAccessor tenantIdAccessor = TenantIdAccessorFactory.getTenantIdAccessor();
+        return tenantIdAccessor.getDefaultTenantId();
     }
     
     protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {

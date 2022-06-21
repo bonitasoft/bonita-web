@@ -82,7 +82,7 @@ public class LivingApplicationServlet extends HttpServlet {
             }
             SessionUtil.sessionLogout(hsRequest.getSession());
             HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(hsRequest);
-            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(new TenantIdAccessor(requestAccessor)), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
+            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(new TenantIdAccessor()), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
             hsResponse.sendRedirect(loginURL.getLocation());
         }
 
@@ -122,7 +122,7 @@ public class LivingApplicationServlet extends HttpServlet {
     // protected for test stubbing
     protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.ensureTenantId());
+            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.getDefaultTenantId());
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }

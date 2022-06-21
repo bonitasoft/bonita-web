@@ -16,7 +16,7 @@ package org.bonitasoft.console.common.server.utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class UrlBuilder {
 
     private final URIBuilder uriBuilder;
 
-    private List<NameValuePair> parameters = new LinkedList<>();
+    private final List<NameValuePair> parameters = new LinkedList<>();
 
     public UrlBuilder(final String urlString) {
         URI uri;
@@ -48,7 +48,7 @@ public class UrlBuilder {
         uriBuilder.setCharset(Consts.UTF_8);
         if (uri.getRawQuery() != null) {
             //avoid NPE thrown by httpClient 4.5.2 regression
-            parameters.addAll(URLEncodedUtils.parse(uri.getRawQuery(), Charset.forName("UTF8")));
+            parameters.addAll(URLEncodedUtils.parse(uri.getRawQuery(), StandardCharsets.UTF_8));
         }
     }
 

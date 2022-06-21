@@ -122,7 +122,7 @@ public class LogoutServlet extends HttpServlet {
         final AuthenticationManager authenticationManager = getAuthenticationManager(tenantId);
         final HttpServletRequest request = requestAccessor.asHttpServletRequest();
 
-        final String redirectURL = createRedirectUrl(requestAccessor, tenantId);
+        final String redirectURL = createRedirectUrl(requestAccessor);
 
         final String logoutPage = authenticationManager.getLogoutPageURL(requestAccessor, redirectURL);
         String redirectionPage = null;
@@ -140,9 +140,9 @@ public class LogoutServlet extends HttpServlet {
         return redirectionPage;
     }
 
-    protected String createRedirectUrl(final HttpServletRequestAccessor requestAccessor, final long tenantId)
+    protected String createRedirectUrl(final HttpServletRequestAccessor requestAccessor)
 			throws ServletException {
-		return RedirectUrlHandler.retrieveRedirectUrl(requestAccessor, tenantId, getDefaultTenantId());
+		return RedirectUrlHandler.retrieveRedirectUrl(requestAccessor);
 	}
     
     protected String sanitizeLoginPageUrl(final String loginURL) {

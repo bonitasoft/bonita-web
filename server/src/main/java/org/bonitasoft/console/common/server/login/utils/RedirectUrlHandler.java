@@ -39,9 +39,9 @@ public class RedirectUrlHandler {
         return redirectAfterLogin != null ? Boolean.parseBoolean(redirectAfterLogin) : (redirectURL != null || loginPageURL != null);
     }
     
-    public static String retrieveRedirectUrl(final HttpServletRequestAccessor request, final long currentTenantId, final long defaultTenantId, String... parametersToRemove) throws ServletException {
+    public static String retrieveRedirectUrl(final HttpServletRequestAccessor request, String... parametersToRemove) throws ServletException {
         final String redirectUrlFromRequest = request.getRedirectUrl();
-        String redirectUrl = redirectUrlFromRequest != null ? redirectUrlFromRequest : getDefaultRedirectUrl(currentTenantId, defaultTenantId);
+        String redirectUrl = redirectUrlFromRequest != null ? redirectUrlFromRequest : getDefaultRedirectUrl();
         RedirectUrlBuilder redirectUrlBuilder = new RedirectUrlBuilder(redirectUrl);
         for (String parameterToRemove : parametersToRemove) {
             redirectUrlBuilder.removeParameter(parameterToRemove);
@@ -49,11 +49,7 @@ public class RedirectUrlHandler {
         return redirectUrlBuilder.build().getUrl();
     }
 
-    protected static String getDefaultRedirectUrl(final long currentTenantId, final long defaultTenantId) throws ServletException {
-        StringBuilder defaultRedirectUrl = new StringBuilder(AuthenticationManager.DEFAULT_DIRECT_URL);
-        if (currentTenantId != defaultTenantId) {
-            defaultRedirectUrl.append("?").append(AuthenticationManager.TENANT).append("=").append(currentTenantId);
-        }
-        return defaultRedirectUrl.toString();
+    protected static String getDefaultRedirectUrl() {
+        return AuthenticationManager.DEFAULT_DIRECT_URL;
     }
 }

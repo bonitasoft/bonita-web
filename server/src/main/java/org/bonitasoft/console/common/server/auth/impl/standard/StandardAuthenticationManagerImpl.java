@@ -43,10 +43,6 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
         final StringBuilder url = new StringBuilder();
         String context = request.asHttpServletRequest().getContextPath();
         url.append(context).append(AuthenticationManager.LOGIN_PAGE).append("?");
-        long tenantId = getTenantId(request);
-        if (tenantId != getDefaultTenantId()) {
-            url.append(AuthenticationManager.TENANT).append("=").append(tenantId).append("&");
-        }
         //adds the locale to the login URL if it is set in the requested URL
         String localeFromRequestedURL = LocaleUtils.getLocaleFromRequestURL(request.asHttpServletRequest());
         if (localeFromRequestedURL != null) {
@@ -54,10 +50,6 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
         }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
-    }
-
-    private long getTenantId(HttpServletRequestAccessor request) throws ServletException {
-        return TenantIdAccessorFactory.getTenantIdAccessor(request).getTenantIdFromRequestOrCookie();
     }
 
     /**

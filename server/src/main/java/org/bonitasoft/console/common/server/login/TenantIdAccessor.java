@@ -28,52 +28,7 @@ import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
  */
 public class TenantIdAccessor {
 
-    private HttpServletRequestAccessor request;
-    private PortalCookies portalCookies = new PortalCookies();
-
-    public TenantIdAccessor(HttpServletRequestAccessor request) {
-        this.request = request;
-    }
-
-    public long getRequestedTenantId() throws ServletException {
-        return parseTenantId(request.getTenantId());
-    }
-
-    /*
-     * Ensure tenant id by fetching default one if request is empty
-     */
-    public long ensureTenantId() throws ServletException {
-        long tenantId = parseTenantId(request.getTenantId());
-        if(tenantId < 0) {
-            return getDefaultTenantId();
-        }
-        return getRequestedTenantId();
-    }
-
     public long getDefaultTenantId() throws ServletException {
         return TenantsManagementUtils.getDefaultTenantId();
-    }
-
-    public long getTenantIdFromRequestOrCookie() throws ServletException {
-        String tenantId = request.getTenantId();
-        if (tenantId == null) {
-            tenantId = portalCookies.getTenantCookieFromRequest(request.asHttpServletRequest());
-        }
-        if (tenantId == null) {
-            return getDefaultTenantId();
-        }
-        return parseTenantId(tenantId);
-    }
-
-    protected long parseTenantId(final String tenantId) throws ServletException {
-        if (tenantId != null) {
-            try {
-                return Long.parseLong(tenantId);
-            } catch (final NumberFormatException e) {
-                throw new ServletException("Invalid tenant id: " + tenantId, e);
-            }
-        } else {
-            return -1L;
-        }
     }
 }
