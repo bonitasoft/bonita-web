@@ -156,8 +156,8 @@ public class ApplicationRouterTest {
 
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
-        verify(hsResponse).sendError(HttpServletResponse.SC_FORBIDDEN,
-                "Unauthorized access for the page " + "leavingRequests" + " of the application " + "HumanResources");
+        verify(hsResponse).sendError(HttpServletResponse.SC_NOT_FOUND,
+                "There is no page " + "leavingRequests" + " in the application " + "HumanResources");
         verify(pageRenderer, never()).displayCustomPage(hsRequest, hsResponse, apiSession, LAYOUT_PAGE_NAME);
     }
 
@@ -204,7 +204,7 @@ public class ApplicationRouterTest {
     }
 
     private void accessUnknownPage(final String applicationToken, final String pageToken) throws Exception {
-        accessPage(applicationToken, pageToken, true, false);
+        accessPage(applicationToken, pageToken, false, false);
     }
 
     private void accessPage(final String applicationToken, final String pageToken, final boolean hasPage, final boolean isAuthorized) throws Exception {
