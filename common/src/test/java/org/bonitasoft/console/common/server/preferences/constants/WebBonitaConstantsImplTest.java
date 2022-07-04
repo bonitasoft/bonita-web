@@ -37,6 +37,6 @@ public class WebBonitaConstantsImplTest {
 
         final String tenantsFolderPath = webBonitaConstants.getTenantsFolderPath();
 
-        assertThat(tenantsFolderPath).isEqualTo(FilenameUtils.separatorsToSystem("some/path/to/tenants/"));
+        assertThat(tenantsFolderPath).isEqualTo(FilenameUtils.separatorsToSystem("some/path/to/tenant/"));
     }
 }

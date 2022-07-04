@@ -35,7 +35,7 @@ public class APIApplicationDataStoreFactory {
         try {
             final PageDatastoreFactory pageDatastoreFactory = new PageDatastoreFactory();
             return pageDatastoreFactory.create(session,
-                    WebBonitaConstantsUtils.getInstance(session.getTenantId()),
+                    WebBonitaConstantsUtils.getTenantInstance(),
                     new EngineAPIAccessor(session).getPageAPI());
         } catch (final Exception e) {
             throw new APIException(e);

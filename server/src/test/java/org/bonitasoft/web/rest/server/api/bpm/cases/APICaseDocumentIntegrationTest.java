@@ -145,7 +145,7 @@ public class APICaseDocumentIntegrationTest extends AbstractConsoleTest {
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_MIMETYPE, expectedDocument.getContentMimeType());
 
-        final File tmpDir = WebBonitaConstantsUtils.getInstance(getInitiator().getSession().getTenantId()).getTempFolder();
+        final File tmpDir = WebBonitaConstantsUtils.getTenantInstance().getTempFolder();
         tmpDir.mkdirs();
         final File file = new File(tmpDir, "thisismynewfile.doc");
         file.createNewFile();

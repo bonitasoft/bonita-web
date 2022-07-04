@@ -93,7 +93,7 @@ public class CustomPageServiceTest {
     @Mock
     private ConsoleProperties consoleProperties;
 
-    private final WebBonitaConstantsUtils webBonitaConstantUtils = WebBonitaConstantsUtils.getInstance(1L);
+    private final WebBonitaConstantsUtils webBonitaConstantUtils = WebBonitaConstantsUtils.getTenantInstance();
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();

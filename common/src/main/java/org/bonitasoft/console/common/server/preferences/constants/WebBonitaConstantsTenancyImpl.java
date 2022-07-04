@@ -35,11 +35,10 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     /**
      * Default constructor.
      *
-     * @param tenantId Tenant Id
      */
-    WebBonitaConstantsTenancyImpl(final long tenantId) {
-        tenantFolderPath = getTenantsFolderPath() + tenantId + File.separator;
-        tempFolderPath = rootTempDir + File.separator + tenantsFolderName + File.separator + tenantId + File.separator;
+    WebBonitaConstantsTenancyImpl() {
+        tenantFolderPath = getTenantsFolderPath();
+        tempFolderPath = rootTempDir + File.separator + tenantsFolderName + File.separator;
     }
 
     @Override

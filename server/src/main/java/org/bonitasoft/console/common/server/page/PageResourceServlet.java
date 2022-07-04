@@ -76,8 +76,8 @@ public class PageResourceServlet extends ResourceServlet {
     }
 
     @Override
-    protected File getResourcesParentFolder(final long tenantId) {
-        return WebBonitaConstantsUtils.getInstance(tenantId).getPagesFolder();
+    protected File getResourcesParentFolder() {
+        return WebBonitaConstantsUtils.getTenantInstance().getPagesFolder();
     }
 
     @Override

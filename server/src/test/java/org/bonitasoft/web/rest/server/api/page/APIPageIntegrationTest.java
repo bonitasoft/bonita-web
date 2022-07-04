@@ -64,7 +64,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     @Test
     public void runAdd_a_page_to_the_repository() throws Exception {
         // Given
-        final PageItem expectedPage = aPageItem().build(getTenantId());
+        final PageItem expectedPage = aPageItem().build();
         final PageItem addedPage = apiPage.add(expectedPage);
 
         // Validate
@@ -92,7 +92,7 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
     @Test(expected = APIException.class)
     public void runGet_not_existing_page_rise_exception() throws Exception {
         // When
-        final APIID notExistingPageId = aPageItem().build(getTenantId()).getId();
+        final APIID notExistingPageId = aPageItem().build().getId();
         apiPage.get(notExistingPageId);
     }
 
@@ -127,29 +127,18 @@ public class APIPageIntegrationTest extends AbstractConsoleTest {
 
     }
 
-    private long getTenantId() {
-        return getInitiator().getSession().getTenantId();
-    }
-
-    /**
-     * @return
-     * @throws Exception
-     * @param pageFileName
-     */
     private PageItem addNewPage(String pageFileName) throws Exception {
-        final long tenantId = getTenantId();
-        final PageItem pageItem = aPageItem().build(tenantId);
+        final PageItem pageItem = aPageItem().build();
         final URL zipFileUrl = getClass().getResource(pageFileName);
 
         final File zipFile = new File(zipFileUrl.toURI());
-        FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
+        FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getTenantInstance().getTempFolder());
 
         final byte[] pageContent = FileUtils.readFileToByteArray(new File(zipFileUrl.toURI()));
-        final PageItem addedPage = addPageItemToRepository(pageItem.getContentName(), pageContent);
-        return addedPage;
+        return addPageItemToRepository(pageItem.getContentName(), pageContent);
     }
 
     private PageItem addPageItemToRepository(final String pageContentName, final byte[] pageContent) throws Exception {
-        return aPageItem().fromEngineItem(getPageAPI().createPage(pageContentName, pageContent)).build(getTenantId());
+        return aPageItem().fromEngineItem(getPageAPI().createPage(pageContentName, pageContent)).build();
     }
 }

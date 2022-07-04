@@ -33,7 +33,7 @@ public class PlatformFileUploadServlet extends FileUploadServlet {
 
     @Override
     protected void defineUploadDirectoryPath(final HttpServletRequest request) {
-        setUploadDirectoryPath(WebBonitaConstantsUtils.getInstance().getTempFolder().getPath());
+        setUploadDirectoryPath(WebBonitaConstantsUtils.getPlatformInstance().getTempFolder().getPath());
     }
 
     @Override

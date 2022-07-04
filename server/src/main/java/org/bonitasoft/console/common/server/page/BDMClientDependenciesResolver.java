@@ -72,7 +72,7 @@ public class BDMClientDependenciesResolver {
         File bdmWorkDir = null;
         final String businessDataModelVersion = getBusinessDataModelVersion();
         if (businessDataModelVersion != null) {
-            bdmWorkDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).geBDMWorkFolder(),
+            bdmWorkDir = new File(WebBonitaConstantsUtils.getTenantInstance().geBDMWorkFolder(),
                     businessDataModelVersion);
         }
         return bdmWorkDir;

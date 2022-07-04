@@ -65,7 +65,7 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
     @Override
     public String getTenantsFolderPath() {
         if (tenantsFolderPath == null) {
-            tenantsFolderPath = Paths.get(getTempFolderPath()).resolveSibling(tenantsFolderName).toString() + File.separator;
+            tenantsFolderPath = Paths.get(getTempFolderPath()).resolveSibling(tenantsFolderName) + File.separator;
         }
         return tenantsFolderPath;
     }

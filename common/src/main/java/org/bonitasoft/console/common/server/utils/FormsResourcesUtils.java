@@ -35,8 +35,6 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.ProcessIdentifier;
-import org.bonitasoft.console.common.server.preferences.properties.SecurityProperties;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.api.TenantAdministrationAPI;
@@ -253,7 +251,7 @@ public class FormsResourcesUtils {
         try {
             final ProcessDefinition processDefinition = bpmEngineAPIUtil.getProcessAPI(session).getProcessDefinition(processDefinitionID);
 
-            final String processPath = WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder() + File.separator;
+            final String processPath = WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder() + File.separator;
             final File processDir = new File(processPath, processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion());
             if (processDir.exists()) {
                 final long lastDeployementDate = getLastDeployementDate(processDir);
@@ -316,7 +314,7 @@ public class FormsResourcesUtils {
             final ProcessAPI processAPI = bpmEngineAPIUtil.getProcessAPI(session);
             final ProcessDefinition processDefinition = processAPI.getProcessDefinition(processDefinitionID);
             final String processUUID = processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion();
-            final File formsDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(), processUUID);
+            final File formsDir = new File(WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder(), processUUID);
             final boolean deleted = deleteDirectory(formsDir);
             if (!deleted) {
                 if (LOGGER.isLoggable(Level.WARNING)) {
@@ -349,7 +347,7 @@ public class FormsResourcesUtils {
         final ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
         final ProcessDefinition processDefinition = process.getDefinition(processDefinitionID);
         final String processUUID = processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion();
-        return new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).getFormsWorkFolder(), processUUID + File.separator
+        return new File(WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder(), processUUID + File.separator
                 + processDeployementDate.getTime());
     }
 
@@ -380,7 +378,7 @@ public class FormsResourcesUtils {
         File bdmWorkDir = null;
         final String businessDataModelVersion = getBusinessDataModelVersion(session);
         if (businessDataModelVersion != null) {
-            bdmWorkDir = new File(WebBonitaConstantsUtils.getInstance(session.getTenantId()).geBDMWorkFolder(),
+            bdmWorkDir = new File(WebBonitaConstantsUtils.getTenantInstance().geBDMWorkFolder(),
                     businessDataModelVersion);
         }
         return bdmWorkDir;

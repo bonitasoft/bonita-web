@@ -132,9 +132,9 @@ public class PageResourceProviderImpl implements PageResourceProvider {
         this.pageName = pageName;
         this.pageId = pageId;
         fullPageName = buildFullPageName(pageName, processDefinitionId);
-        pageDirectory = buildPageDirectory(fullPageName, tenantId);
-        pageTempDirectory = buildPageTempDirectory(fullPageName, tenantId);
-        pageTempFile = buildPageTempFile(fullPageName, tenantId);
+        pageDirectory = buildPageDirectory(fullPageName);
+        pageTempDirectory = buildPageTempDirectory(fullPageName);
+        pageTempFile = buildPageTempFile(fullPageName);
     }
 
     private String buildFullPageName(final String pageName, final Long processDefinitionId) {
@@ -146,16 +146,16 @@ public class PageResourceProviderImpl implements PageResourceProvider {
         return builder.toString();
     }
 
-    protected File buildPageTempDirectory(final String fullPageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), fullPageName);
+    protected File buildPageTempDirectory(final String fullPageName) {
+        return new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), fullPageName);
     }
 
-    protected File buildPageTempFile(final String fullPageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), new StringBuilder().append(fullPageName).append(".zip").toString());
+    protected File buildPageTempFile(final String fullPageName) {
+        return new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), new StringBuilder().append(fullPageName).append(".zip").toString());
     }
 
-    protected File buildPageDirectory(final String fullPageName, final long tenantId) {
-        return new File(WebBonitaConstantsUtils.getInstance(tenantId).getPagesFolder(), fullPageName);
+    protected File buildPageDirectory(final String fullPageName) {
+        return new File(WebBonitaConstantsUtils.getTenantInstance().getPagesFolder(), fullPageName);
     }
 
     @Override

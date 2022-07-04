@@ -25,7 +25,7 @@ public interface WebBonitaConstants {
     /**
      * tenants folder
      */
-    String tenantsFolderName = "tenants";
+    String tenantsFolderName = "tenant";
 
     /**
      * Generics folders

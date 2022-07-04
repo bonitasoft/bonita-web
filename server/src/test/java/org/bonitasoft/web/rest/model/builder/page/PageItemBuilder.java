@@ -62,7 +62,7 @@ public class PageItemBuilder {
         return new PageItemBuilder();
     }
 
-    public PageItem build(final long tenantId) throws IOException, URISyntaxException {
+    public PageItem build() throws IOException, URISyntaxException {
         final PageItem item = new PageItem();
         item.setId(id);
         item.setUrlToken(urlToken);
@@ -77,7 +77,7 @@ public class PageItemBuilder {
         final URL zipFileUrl = getClass().getResource(zipFileName);
         final File zipFile = new File(zipFileUrl.toURI());
 
-        FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
+        FileUtils.copyFileToDirectory(zipFile, WebBonitaConstantsUtils.getTenantInstance().getTempFolder());
 
         item.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, zipFile.getName());
         return item;

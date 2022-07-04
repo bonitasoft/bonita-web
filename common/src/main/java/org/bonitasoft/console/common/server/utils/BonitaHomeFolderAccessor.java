@@ -42,9 +42,9 @@ public class BonitaHomeFolderAccessor {
 
     public WebBonitaConstantsUtils getBonitaConstantUtil(final Long tenantId) {
         if (tenantId != null) {
-            return WebBonitaConstantsUtils.getInstance(tenantId);
+            return WebBonitaConstantsUtils.getTenantInstance();
         } else {
-            return WebBonitaConstantsUtils.getInstance();
+            return WebBonitaConstantsUtils.getPlatformInstance();
         }
     }
 

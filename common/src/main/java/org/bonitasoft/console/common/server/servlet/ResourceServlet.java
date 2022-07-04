@@ -29,12 +29,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
-import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Anthony Birembaut
@@ -52,11 +49,6 @@ public abstract class ResourceServlet extends HttpServlet {
     private final static Logger LOGGER = Logger.getLogger(ResourceServlet.class.getName());
 
     /**
-     * tenant request parameter
-     */
-    private final static String TENANT_PARAM = "tenant";
-
-    /**
      * The engine API session param key name
      */
     public static final String API_SESSION_PARAM_KEY = "apiSession";
@@ -65,7 +57,7 @@ public abstract class ResourceServlet extends HttpServlet {
 
     protected abstract String getDefaultResourceName();
 
-    protected abstract File getResourcesParentFolder(long tenantId);
+    protected abstract File getResourcesParentFolder();
 
     /**
      * Return null if there is no subfolder
@@ -121,7 +113,7 @@ public abstract class ResourceServlet extends HttpServlet {
         fileName = URLDecoder.decode(fileName, "UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        final File resourcesParentFolder = getResourcesParentFolder(request);
+        final File resourcesParentFolder = getResourcesFolder();
         final String subFolderName = getSubFolderName();
         String subFolderSuffix;
         if (subFolderName != null) {
@@ -134,10 +126,10 @@ public abstract class ResourceServlet extends HttpServlet {
             final File file = new File(resourceFolder, fileName);
             final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
             if (!tenantFolder.isInFolder(resourceFolder, resourcesParentFolder)) {
-                throw new ServletException("For security reasons, access to this file paths" + resourceFolder.getAbsolutePath() + " is restricted.");
+                throw new ServletException("For security reasons, access to this file paths " + resourceFolder.getAbsolutePath() + " is restricted.");
             }
             if (!tenantFolder.isInFolder(file, resourceFolder)) {
-                throw new ServletException("For security reasons, access to this file paths" + file.getAbsolutePath() + " is restricted.");
+                throw new ServletException("For security reasons, access to this file paths " + file.getAbsolutePath() + " is restricted.");
             }
 
             byte[] content;
@@ -198,22 +190,11 @@ public abstract class ResourceServlet extends HttpServlet {
         }
     }
 
-    protected File getResourcesParentFolder(final HttpServletRequest request) throws ServletException {
-        final HttpSession session = request.getSession();
-        long tenantId = 1;
-        final String tenantFromRequest = request.getParameter(TENANT_PARAM);
-        if (tenantFromRequest != null) {
-            tenantId = Long.parseLong(tenantFromRequest);
-        } else {
-            final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-            if (apiSession != null) {
-                tenantId = apiSession.getTenantId();
-            }
-        }
+    protected File getResourcesFolder() throws ServletException {
         try {
-            return getResourcesParentFolder(tenantId);
+            return getResourcesParentFolder();
         } catch (final RuntimeException e) {
-            final String errorMessage = "Error while using the servlet to get themes parent folder.";
+            final String errorMessage = "Error while using the servlet to get parent folder.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, errorMessage);
             }

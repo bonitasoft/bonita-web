@@ -108,7 +108,7 @@ APIHasDelete {
         } catch (final Exception e) {
             throw new APIException(e);
         }
-        final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
+        final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getTenantInstance();
         final PageDatastoreFactory pageDatastoreFactory = new PageDatastoreFactory();
         return pageDatastoreFactory.create(getEngineSession(), constants, pageAPI);
     }

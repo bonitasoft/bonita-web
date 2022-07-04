@@ -90,7 +90,7 @@ public class APIArchivedCaseDocument extends ConsoleAPI<ArchivedCaseDocumentItem
         } catch (final Exception e) {
             throw new APIException(e);
         }
-        final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
+         final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getTenantInstance();
 
         return new ArchivedCaseDocumentDatastore(getEngineSession(), constants, processAPI);
     }

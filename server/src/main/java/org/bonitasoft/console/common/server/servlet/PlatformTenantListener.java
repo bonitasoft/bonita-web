@@ -40,7 +40,7 @@ public class PlatformTenantListener implements ServletContextListener {
         try {
             platformManagementUtils.initializePlatformConfiguration();
             // Create temporary folder specific to portal at startup:
-            WebBonitaConstantsUtils.getInstance().getTempFolder();
+            WebBonitaConstantsUtils.getPlatformInstance().getTempFolder();
         } catch (BonitaException e) {
             LOGGER.log(Level.SEVERE,
                     "Error initializing platform configuration. Engine most likely failed to start. Check previous error logs for more details.");

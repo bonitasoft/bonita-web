@@ -18,42 +18,28 @@ import static org.bonitasoft.console.common.server.preferences.constants.WebBoni
 import static org.bonitasoft.engine.io.IOUtil.createTempDirectory;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Anthony Birembaut
  */
 public class WebBonitaConstantsUtils {
 
-    private static Map<Long, WebBonitaConstantsUtils> tenantConstantsUtils = new HashMap<>();
+    private static WebBonitaConstantsUtils tenantConstantsUtils = new WebBonitaConstantsUtils(new WebBonitaConstantsTenancyImpl());
+
+    private static WebBonitaConstantsUtils platformConstantsUtils = new WebBonitaConstantsUtils(new WebBonitaConstantsImpl());
 
     private WebBonitaConstants webBonitaConstants;
 
-    public synchronized static WebBonitaConstantsUtils getInstance(final long tenantId) {
-        WebBonitaConstantsUtils instance = tenantConstantsUtils.get(tenantId);
-        if (instance == null) {
-            instance = new WebBonitaConstantsUtils(tenantId);
-            tenantConstantsUtils.put(tenantId, instance);
-        }
-        return instance;
+    public WebBonitaConstantsUtils(WebBonitaConstants constants) {
+        webBonitaConstants = constants;
     }
 
-    public synchronized static WebBonitaConstantsUtils getInstance() {
-        WebBonitaConstantsUtils instance = tenantConstantsUtils.get(null);
-        if (instance == null) {
-            instance = new WebBonitaConstantsUtils();
-            tenantConstantsUtils.put(null, instance);
-        }
-        return instance;
+    public static WebBonitaConstantsUtils getTenantInstance() {
+        return tenantConstantsUtils;
     }
 
-    protected WebBonitaConstantsUtils(final long tenantId) {
-        webBonitaConstants = new WebBonitaConstantsTenancyImpl(tenantId);
-    }
-
-    protected WebBonitaConstantsUtils() {
-        webBonitaConstants = new WebBonitaConstantsImpl();
+    public static WebBonitaConstantsUtils getPlatformInstance() {
+        return platformConstantsUtils;
     }
 
     /**
@@ -66,20 +52,6 @@ public class WebBonitaConstantsUtils {
             createTempDirectory(tempFolder.toURI());
         }
         return getFolder(webBonitaConstants.getTempFolderPath());
-    }
-
-    /**
-     * Get the folder where to get the Tenant conf files.
-     */
-    public File getConfFolder() {
-        return getFolder(webBonitaConstants.getConfFolderPath());
-    }
-
-    /**
-     * Get the folder of Tenant report files
-     */
-    public File getReportFolder() {
-        return getFolder(webBonitaConstants.getReportsTempFolderPath());
     }
 
     /**

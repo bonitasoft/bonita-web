@@ -234,7 +234,7 @@ public class CustomPageService {
     }
 
     protected WebBonitaConstantsUtils getWebBonitaConstantsUtils(final APISession apiSession) {
-        return WebBonitaConstantsUtils.getInstance(apiSession.getTenantId());
+        return WebBonitaConstantsUtils.getTenantInstance();
     }
 
     protected ClassLoader getParentClassloader(final String pageName,

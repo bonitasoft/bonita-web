@@ -118,7 +118,7 @@ public class ConfigurationFilesManager {
             if (entry.getKey().endsWith(".properties")) {
                 platformConfigurations.put(entry.getKey(), getProperties(entry.getValue()));
             } else {
-                File file = new File(WebBonitaConstantsUtils.getInstance().getTempFolder(), entry.getKey());
+                File file = new File(WebBonitaConstantsUtils.getPlatformInstance().getTempFolder(), entry.getKey());
                 FileUtils.writeByteArrayToFile(file, entry.getValue());
                 platformConfigurationFiles.put(entry.getKey(), file);
             }
@@ -129,7 +129,7 @@ public class ConfigurationFilesManager {
         Map<String, File> tenantFiles = new HashMap<>();
         for (Map.Entry<String, byte[]> entry : configurationFiles.entrySet()) {
             if (!entry.getKey().endsWith(".properties")) {
-                File file = new File(WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder(), entry.getKey());
+                File file = new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), entry.getKey());
                 FileUtils.writeByteArrayToFile(file, entry.getValue());
                 tenantFiles.put(entry.getKey(), file);
             }

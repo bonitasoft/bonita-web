@@ -41,7 +41,7 @@ public class PageResourceServletTest {
 
         when(req.getSession()).thenReturn(httpSession);
         when(req.getParameter("tenant")).thenReturn("1");
-        when(pageResourceServlet.getResourcesParentFolder(1L)).thenReturn(new File("."));
+        when(pageResourceServlet.getResourcesParentFolder()).thenReturn(new File("."));
 
         when(req.getParameter("location")).thenReturn("../../../file.txt");
         try {

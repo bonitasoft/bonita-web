@@ -101,7 +101,7 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
         } catch (final Exception e) {
             throw new APIException(e);
         }
-        final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getInstance(getEngineSession().getTenantId());
+        final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getTenantInstance();
 
         return new CaseDocumentDatastore(getEngineSession(), constants, processAPI, new BonitaHomeFolderAccessor());
     }

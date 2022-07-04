@@ -19,7 +19,7 @@ public class TenantCacheUtil {
 
     protected TenantCacheUtil(final long tenantID) {
         try {
-            CACHE_DISK_STORE_PATH = WebBonitaConstantsUtils.getInstance(tenantID).getFormsWorkFolder().getAbsolutePath();
+            CACHE_DISK_STORE_PATH = WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder().getAbsolutePath();
             this.tenantID = tenantID;
         } catch (final Exception e) {
             LOGGER.log(Level.WARNING, "Unable to retrieve the path of the cache disk store directory path.", e);

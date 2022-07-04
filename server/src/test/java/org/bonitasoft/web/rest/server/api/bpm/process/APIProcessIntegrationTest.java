@@ -53,12 +53,12 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
         final List<ProcessDeploymentInfo> before = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
         //final upload process archive
-        final String targetDirPath = WebBonitaConstantsUtils.getInstance().getTenantsFolder().getPath() + File.separator
+        final String targetDirPath = WebBonitaConstantsUtils.getPlatformInstance().getTenantsFolder().getPath() + File.separator
                 + TestUserFactory.getJohnCarpenter().getSession().getTenantId();
 
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();
-        final File file = writeBarToFolder("addProcessTest", businessArchive, TestUserFactory.getJohnCarpenter().getSession().getTenantId());
+        final File file = writeBarToFolder("addProcessTest", businessArchive);
 
         // use api to deploy process uploaded
         final ProcessItem item = new ProcessItem();
@@ -162,10 +162,10 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
      * @param BusinessArchive
      * businessArchive write in the temporary file
      */
-    private static File writeBarToFolder(final String barName, final BusinessArchive businessArchive, final Long tenantId) {
+    private static File writeBarToFolder(final String barName, final BusinessArchive businessArchive) {
         File tempFile = null;
         try {
-            tempFile = File.createTempFile(barName, ".bar", WebBonitaConstantsUtils.getInstance(tenantId).getTempFolder());
+            tempFile = File.createTempFile(barName, ".bar", WebBonitaConstantsUtils.getTenantInstance().getTempFolder());
             tempFile.delete();
             BusinessArchiveFactory.writeBusinessArchiveToFile(businessArchive, tempFile);
         } catch (final IOException e) {
