@@ -343,6 +343,26 @@ public class APICaseTest {
         // Then
         verify(item, never()).setDeploy(anyString(), any(Item.class));
     }
+    
+    /**
+     * Test method for
+     * {@link org.bonitasoft.web.rest.server.api.bpm.cases.APICase#fillDeploys(org.bonitasoft.web.rest.model.bpm.cases.CaseItem, java.util.List)}.
+     */
+    @Test
+    public final void fillDeploys_should_do_nothing_when_id_is_invalid() {
+        // Given
+        final CaseItem item = mock(CaseItem.class);
+        doReturn("0").when(item).getAttributeValue(CaseItem.ATTRIBUTE_PROCESS_ID);
+        doReturn("-1").when(item).getAttributeValue(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID);
+
+        final List<String> deploys = Arrays.asList(CaseItem.ATTRIBUTE_PROCESS_ID);
+
+        // When
+        apiCase.fillDeploys(item, deploys);
+
+        // Then
+        verify(item, never()).setDeploy(anyString(), any(Item.class));
+    }
 
     /**
      * Test method for
