@@ -31,11 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.rest.server.framework.json.JSonSimpleDeserializer;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.*;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
@@ -188,6 +184,16 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
                 // Response status is already set with an error code
                 outputException(exception, req, resp);
             }
+        } else if (exception instanceof APIIncorrectIdException) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            }
+            outputException(exception, req, resp, HttpServletResponse.SC_BAD_REQUEST);
+        } else if (exception instanceof APIItemIdMalformedException) {
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            }
+            outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } else {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, exception.getMessage(), exception);

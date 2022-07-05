@@ -458,7 +458,18 @@ public abstract class API<ITEM extends IItem> {
     protected final boolean isDeployable(final String attributeName, final List<String> deploys, final IItem item) {
         final String attributeValue = item.getAttributeValue(attributeName);
 
-        return deploys.contains(attributeName) && attributeValue != null && APIID.makeAPIID(attributeValue) != null;
+        if (deploys.contains(attributeName) && attributeValue != null && !attributeValue.isEmpty()) {
+            try {
+                final long longAttrValue = Long.valueOf(attributeValue);
+                //only positive numeric Ids are supported
+                return longAttrValue > 0L;
+            } catch (final NumberFormatException e) {
+                //non numeric Id are supported
+                return true;
+            }
+        }
+        return false;
+
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
