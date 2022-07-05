@@ -36,7 +36,6 @@ import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
 import org.bonitasoft.web.toolkit.client.common.Tree;
 import org.bonitasoft.web.toolkit.client.common.TreeLeaf;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIIncorrectIdException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemReader;
 import org.bonitasoft.web.toolkit.client.common.json.JSonItemWriter;
 import org.bonitasoft.web.toolkit.client.data.APIID;
@@ -147,26 +146,9 @@ public class APIServletCall extends ServletCall {
 
     void parsePath(final HttpServletRequest request) {
         final RestRequestParser restRequestParser = new RestRequestParser(request).invoke();
-        APIID resourceQualifiers = restRequestParser.getResourceQualifiers();
-        if (resourceQualifiers != null && resourceQualifiers.getIds().size() > 0 && isAnyNumberIdNegativeOrZero(resourceQualifiers.getIds())) {
-            throw new APIIncorrectIdException("Id must be non-zero positive for " + restRequestParser.getApiName() + " on resource " + restRequestParser.getResourceName());
-        }
-        id = resourceQualifiers;
+        id = restRequestParser.getResourceQualifiers();
         apiName = restRequestParser.getApiName();
         resourceName = restRequestParser.getResourceName();
-    }
-
-    private boolean isAnyNumberIdNegativeOrZero(List<String> ids) {
-        for (String id : ids) {
-            try {
-                if (Long.parseLong(id) <= 0L) {
-                    return true;
-                }
-            } catch (NumberFormatException e) {
-                // Ignore non-number ids, since they are acceptable
-            }
-        }
-        return false;
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
