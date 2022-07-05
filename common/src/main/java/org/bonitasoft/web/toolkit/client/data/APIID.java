@@ -17,11 +17,8 @@ package org.bonitasoft.web.toolkit.client.data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIIncorrectIdException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemIdMalformedException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
@@ -119,7 +116,14 @@ public class APIID implements JsonSerializable {
         // If at least one id is not null
         for (final String id : ids) {
             if (id != null && !id.isEmpty()) {
-                return new APIID(ids);
+                try {
+                    final long lid = Long.valueOf(id);
+                    if (lid > 0L) {
+                        return new APIID(ids);
+                    }
+                } catch (final NumberFormatException e) {
+                    return new APIID(ids);
+                }
             }
         }
 
@@ -154,9 +158,13 @@ public class APIID implements JsonSerializable {
         }
 
         try {
-            return Long.parseLong(this.ids.get(0));
+            if (this.ids.get(0) == null) {
+                return null;
+            }
+
+            return Long.valueOf(this.ids.get(0));
         } catch (final NumberFormatException e) {
-            throw new APIItemIdMalformedException("APIID", "Can't convert non numeric ID to long");
+            throw new NumberFormatException("Can't convert non numeric ID to long");
         }
 
     }
