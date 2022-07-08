@@ -24,7 +24,6 @@
     </properties>
     <modules>
         <module>bonita-web-bom</module>
-        <module>looknfeel</module>
         <module>test-toolkit</module>
         <module>common</module>
         <module>server</module>
@@ -50,7 +49,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!-- TEST -->
             <dependency>
                 <groupId>junit</groupId>
