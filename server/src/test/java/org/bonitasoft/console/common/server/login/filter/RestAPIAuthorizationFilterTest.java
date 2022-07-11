@@ -98,7 +98,7 @@ public class RestAPIAuthorizationFilterTest {
     public void should_checkPermissions_call_engine_check_if_security_is_enabled() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1L);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled();
         doReturn(true).when(restAPIAuthorizationFilterSpy).enginePermissionsCheck(new APICallContext("GET", "bpm", "case", null, "", ""), apiSession);
 
         //when
@@ -113,7 +113,7 @@ public class RestAPIAuthorizationFilterTest {
     public void should_not_call_engine_check_if_secu_is_enabled_but_session_call_is_always_authorized() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("GET").when(request).getMethod();
-        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1L);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled();
         doReturn("").when(restAPIAuthorizationFilterSpy).getRequestBody(any());
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "system", "session", null);
@@ -130,7 +130,7 @@ public class RestAPIAuthorizationFilterTest {
         doReturn(true).when(apiSession).isTechnicalUser();
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1L);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled();
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);
@@ -145,7 +145,7 @@ public class RestAPIAuthorizationFilterTest {
     public void should_checkPermissions_do_nothing_if_secu_is_disabled() throws Exception {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         initSpy(restAPIAuthorizationFilterSpy);
-        doReturn(false).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled(1L);
+        doReturn(false).when(restAPIAuthorizationFilterSpy).isApiAuthorizationsCheckEnabled();
 
         //when
         final boolean isAuthorized = restAPIAuthorizationFilterSpy.checkPermissions(request, "bpm", "case", null);

@@ -39,7 +39,7 @@ public class ConfigurationFile {
 
     public Properties getPropertiesOfScope() {
         if (tenantId > 0) {
-            return ConfigurationFilesManager.getInstance().getTenantProperties(propertiesFilename, tenantId);
+            return ConfigurationFilesManager.getInstance().getTenantProperties(propertiesFilename);
         }
         return ConfigurationFilesManager.getInstance().getPlatformProperties(propertiesFilename);
     }

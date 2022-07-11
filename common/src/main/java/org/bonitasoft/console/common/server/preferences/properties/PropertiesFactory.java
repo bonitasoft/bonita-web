@@ -19,10 +19,6 @@ package org.bonitasoft.console.common.server.preferences.properties;
  */
 public class PropertiesFactory {
 
-    public static SecurityProperties getSecurityProperties(final long tenantId) {
-        return new SecurityProperties(tenantId);
-    }
-
     public static SecurityProperties getSecurityProperties() {
         return new SecurityProperties();
     }

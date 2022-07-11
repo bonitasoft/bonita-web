@@ -114,7 +114,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
     }
 
     String getValidatorClassName() {
-        return PropertiesFactory.getSecurityProperties(getEngineSession().getTenantId()).getPasswordValidator();
+        return PropertiesFactory.getSecurityProperties().getPasswordValidator();
     }
 
     @Override

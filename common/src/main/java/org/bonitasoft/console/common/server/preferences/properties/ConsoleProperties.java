@@ -50,7 +50,7 @@ public class ConsoleProperties {
     }
 
     public Properties getProperties() {
-        return ConfigurationFilesManager.getInstance().getTenantProperties(PROPERTIES_FILE, tenantId);
+        return ConfigurationFilesManager.getInstance().getTenantProperties(PROPERTIES_FILE);
     }
 
     public long getMaxSize() {

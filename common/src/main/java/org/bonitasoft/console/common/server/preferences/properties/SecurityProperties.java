@@ -51,31 +51,20 @@ public class SecurityProperties {
      */
     public static final String API_AUTHORIZATIONS_CHECK = "security.rest.api.authorizations.check.enabled";
 
-    private static Map<Long, Map<String, Optional<String>>> securityProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
-    
-    private final long tenantId;
-
-
-    public SecurityProperties() {
-        tenantId = -1;
-    }
-
-    public SecurityProperties(long tenantId) {
-        this.tenantId = tenantId;
-    }
+    private static final Map<String, Optional<String>> securityProperties = new ConcurrentHashMap<String, Optional<String>>();
 
     /**
      * @return the password validator property
      */
     public String getPasswordValidator() {
-        return getProperty(PASSWORD_VALIDATOR_CLASSNAME);
+        return getTenantProperty(PASSWORD_VALIDATOR_CLASSNAME);
     }
 
     /**
      * @return the value to allow or not API authorization checks
      */
     public boolean isAPIAuthorizationsCheckEnabled() {
-        final String res = getProperty(API_AUTHORIZATIONS_CHECK);
+        final String res = getTenantProperty(API_AUTHORIZATIONS_CHECK);
         return res != null && res.equals("true");
     }
 
@@ -83,7 +72,7 @@ public class SecurityProperties {
      * @return the value to allow or not CSRF protection
      */
     public boolean isCSRFProtectionEnabled() {
-        final String res = getProperty(CSRF_PROTECTION);
+        final String res = getPlatformProperty(CSRF_PROTECTION);
         return res != null && res.equals("true");
     }
     
@@ -91,31 +80,30 @@ public class SecurityProperties {
      * @return the value to add or not secure flag to the cookies for CSRF token
      */
     public boolean isCSRFTokenCookieSecure() {
-        final String res = getProperty(SECURE_TOKEN_COOKIE);
+        final String res = getPlatformProperty(SECURE_TOKEN_COOKIE);
         return res != null && res.equals("true");
-    }
-
-    Properties getProperties() {
-        if (tenantId > 0) {
-            return getConfigurationFilesManager().getTenantProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME, tenantId);
-        }
-        return getConfigurationFilesManager().getPlatformProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME);
     }
 
     protected ConfigurationFilesManager getConfigurationFilesManager() {
         return ConfigurationFilesManager.getInstance();
     }
     
-    public String getProperty(String propertyName) {
-        Map<String, Optional<String>> tenantSecurityProperties = securityProperties.get(tenantId);
-        if (tenantSecurityProperties == null) {
-            tenantSecurityProperties = new ConcurrentHashMap<String, Optional<String>>();
-            securityProperties.put(tenantId, tenantSecurityProperties);
-        }
-        Optional<String> propertyValue = tenantSecurityProperties.get(propertyName);
+    public String getTenantProperty(String propertyName) {
+        Properties tenantProperties = getConfigurationFilesManager().getTenantProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME);
+        Optional<String> propertyValue = securityProperties.get(propertyName);
         if (propertyValue == null) {
-            propertyValue = Optional.ofNullable(getProperties().getProperty(propertyName));
-            tenantSecurityProperties.put(propertyName, propertyValue);
+            propertyValue = Optional.ofNullable(tenantProperties.getProperty(propertyName));
+            securityProperties.put(propertyName, propertyValue);
+        }
+        return propertyValue.orElse(null);
+    }
+
+    public String getPlatformProperty(String propertyName) {
+        Properties platformProperties = getConfigurationFilesManager().getPlatformProperties(SECURITY_DEFAULT_CONFIG_FILE_NAME);
+        Optional<String> propertyValue = securityProperties.get(propertyName);
+        if (propertyValue == null) {
+            propertyValue = Optional.ofNullable(platformProperties.getProperty(propertyName));
+            securityProperties.put(propertyName, propertyValue);
         }
         return propertyValue.orElse(null);
     }

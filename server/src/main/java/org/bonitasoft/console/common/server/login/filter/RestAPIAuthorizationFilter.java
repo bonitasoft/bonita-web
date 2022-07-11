@@ -132,9 +132,8 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
         // userPermissions are of type: "organization_visualization"
 //        @SuppressWarnings("unchecked") final Set<String> userPermissions = (Set<String>) session.getAttribute(SessionUtil.PERMISSIONS_SESSION_PARAM_KEY);
         final APISession apiSession = (APISession) session.getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        final Long tenantId = apiSession.getTenantId();
 
-        final boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled(tenantId);
+        final boolean apiAuthorizationsCheckEnabled = isApiAuthorizationsCheckEnabled();
         if (!apiAuthorizationsCheckEnabled || apiSession.isTechnicalUser()) {
             return true;
         }
@@ -170,8 +169,8 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
         }
     }
 
-    protected boolean isApiAuthorizationsCheckEnabled(final Long tenantId) {
-        return PropertiesFactory.getSecurityProperties(tenantId).isAPIAuthorizationsCheckEnabled();
+    protected boolean isApiAuthorizationsCheckEnabled() {
+        return PropertiesFactory.getSecurityProperties().isAPIAuthorizationsCheckEnabled();
     }
 
     protected boolean enginePermissionsCheck(final APICallContext apiCallContext, final APISession apiSession)

@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.PlatformManagementUtils;
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.exception.BonitaException;
 
 /**
@@ -43,9 +44,9 @@ public class ConfigurationFilesManager {
     private static final Logger LOGGER = Logger.getLogger(ConfigurationFilesManager.class.getName());
 
     /*
-     * Map<tenantId, Map<realConfigurationFileName, File>>
+     * Map<realConfigurationFileName, File>
      */
-    private Map<Long, Map<String, File>> tenantsConfigurationFiles = new HashMap<>();
+    private Map<String, File> tenantsConfigurationFiles = new HashMap<>();
 
     /*
      * Map<propertiesFileName, Properties>
@@ -65,10 +66,10 @@ public class ConfigurationFilesManager {
         return properties;
     }
 
-    Properties getAlsoCustomAndInternalPropertiesFromFilename(long tenantId, String propertiesFileName) {
+    Properties getAlsoCustomAndInternalPropertiesFromFilename(String propertiesFileName) {
         Properties properties = new Properties();
         try {
-            final Map<String, Properties> propertiesByFilename = getResources(tenantId);
+            final Map<String, Properties> propertiesByFilename = getResources();
             if (propertiesByFilename.containsKey(propertiesFileName)) {
                 properties.putAll(propertiesByFilename.get(propertiesFileName));
                 // if -internal properties also exists, merge key/value pairs:
@@ -92,8 +93,8 @@ public class ConfigurationFilesManager {
         return properties;
     }
 
-    public Properties getTenantProperties(String propertiesFileName, long tenantId) {
-        return getAlsoCustomAndInternalPropertiesFromFilename(tenantId, propertiesFileName);
+    public Properties getTenantProperties(String propertiesFileName) {
+        return getAlsoCustomAndInternalPropertiesFromFilename(propertiesFileName);
     }
 
     /**
@@ -134,13 +135,13 @@ public class ConfigurationFilesManager {
                 tenantFiles.put(entry.getKey(), file);
             }
         }
-        tenantsConfigurationFiles.put(tenantId, tenantFiles);
+        tenantsConfigurationFiles = tenantFiles;
     }
 
     public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
         // Now internal behavior stores and removes from -internal file:
         final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
-        Map<String, Properties> resources = getResources(tenantId);
+        Map<String, Properties> resources = getResources();
         Properties properties = resources.get(internalFilename);
         if (properties != null) {
             properties.remove(propertyName);
@@ -169,12 +170,12 @@ public class ConfigurationFilesManager {
         return new PlatformManagementUtils();
     }
 
-    Map<String, Properties> getResources(long tenantId) throws IOException {
-        return getPlatformManagementUtils().getTenantConfigurations().get(tenantId);
+    Map<String, Properties> getResources() throws IOException {
+        return getPlatformManagementUtils().getTenantConfigurations().get(TenantsManagementUtils.getDefaultTenantId());
     }
 
     public void setProperty(String propertiesFilename, long tenantId, String propertyName, String propertyValue) throws IOException {
-        Map<String, Properties> resources = getResources(tenantId);
+        Map<String, Properties> resources = getResources();
         // Now internal behavior stores and removes from -internal file:
         final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
         Properties properties = resources.get(internalFilename);
@@ -188,10 +189,9 @@ public class ConfigurationFilesManager {
         }
     }
 
-    public File getTenantConfigurationFile(String fileName, long tenantId) {
-        Map<String, File> tenantConfigurationFiles = tenantsConfigurationFiles.get(tenantId);
-        if (tenantConfigurationFiles != null) {
-            return tenantConfigurationFiles.get(fileName);
+    public File getTenantConfigurationFile(String fileName) {
+        if (tenantsConfigurationFiles != null) {
+            return tenantsConfigurationFiles.get(fileName);
         }
         return null;
     }
