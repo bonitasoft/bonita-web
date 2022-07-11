@@ -123,7 +123,7 @@ public class ApplicationRouterTest {
         final String customPageLayoutName = "custompage_layout";
         given(applicationModel.getApplicationLayoutName()).willReturn(customPageLayoutName);
 
-        given(pageRenderer.getPageResourceProvider(customPageLayoutName, 1L)).willReturn(pageResourceProvider);
+        given(pageRenderer.getPageResourceProvider(customPageLayoutName)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(layoutFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
 
@@ -140,7 +140,7 @@ public class ApplicationRouterTest {
         final String customPageThemeName = "custompage_theme";
         given(applicationModel.getApplicationThemeName()).willReturn(customPageThemeName);
 
-        given(pageRenderer.getPageResourceProvider(customPageThemeName, 1L)).willReturn(pageResourceProvider);
+        given(pageRenderer.getPageResourceProvider(customPageThemeName)).willReturn(pageResourceProvider);
         given(pageResourceProvider.getPageDirectory()).willReturn(themeFolder);
         given(bonitaHomeFolderAccessor.isInFolder(any(File.class), any(File.class))).willReturn(true);
 

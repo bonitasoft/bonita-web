@@ -201,7 +201,7 @@ public class PageDatastoreTest extends APITestWithMock {
     public void should_add_a_api_extension_add_related_permission() throws Exception {
         // given
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedApiExtension);
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension));
 
         // when
         pageDatastore.add(apiExtensionToBeAdded);
@@ -246,7 +246,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(pageAPI, never()).deletePage(1L);
-        verify(customPageService, never()).removePageLocally(any(), anyString());
+        verify(customPageService, never()).removePageLocally(anyString());
     }
 
 
@@ -274,21 +274,21 @@ public class PageDatastoreTest extends APITestWithMock {
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService, never()).removePageLocally(any(), anyString());
+        verify(customPageService, never()).removePageLocally(anyString());
     }
 
     @Test
     public void should_deletePage_and_remove_all_dependencies_when_deleting_page() throws Exception {
         // Given
         when(pageAPI.getPage(PAGE_ID)).thenReturn(mockedApiExtension);
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension));
 
         // When
         pageDatastore.delete(singletonList(makeAPIID(PAGE_ID)));
 
         // then
         verify(pageAPI).deletePage(mockedApiExtension.getId());
-        verify(customPageService).removePageLocally(engineSession, mockedApiExtension.getName());
+        verify(customPageService).removePageLocally(mockedApiExtension.getName());
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
     }
 
@@ -298,7 +298,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
         when(pageAPI.updatePage(eq(mockedApiExtension.getId()), any(PageUpdater.class))).thenReturn(mockedApiExtension);
 
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class));
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
         doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
@@ -312,7 +312,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         verify(pageAPI).updatePage(eq(PAGE_ID), any());
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService).removePageLocally(eq("custompage_apiExt"));
         verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
@@ -321,7 +321,7 @@ public class PageDatastoreTest extends APITestWithMock {
     public void should_not_update_resource_and_permission_pageContent_when_pageApi_updatePageContent_thown_exception() throws Exception {
         // Given
         when(pageAPI.getPage(mockedApiExtension.getId())).thenReturn(mockedApiExtension);
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class), anyLong());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class));
         doThrow(new UpdateException("")).when(pageAPI).updatePageContent(eq(PAGE_ID), any());
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
@@ -336,7 +336,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService, never()).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService, never()).removePageLocally(eq("custompage_apiExt"));
         verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 

@@ -84,8 +84,8 @@ public class CustomPageServlet extends HttpServlet {
                 if (isPageRequest(pathSegments)) {
                     pageRenderer.displayCustomPage(request, response, apiSession, pageName);
                 } else {
-                    final File resourceFile = getResourceFile(request.getPathInfo(), pageName, apiSession);
-                    pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId()));
+                    final File resourceFile = getResourceFile(request.getPathInfo(), pageName);
+                    pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName));
                     resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                 }
             } else {
@@ -116,8 +116,8 @@ public class CustomPageServlet extends HttpServlet {
         return request.getPathInfo().matches("/[^/]+");
     }
 
-    private File getResourceFile(final String resourcePath, final String pageName, final APISession apiSession) throws IOException, BonitaException {
-        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+    private File getResourceFile(final String resourcePath, final String pageName) throws IOException, BonitaException {
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName);
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePathWithoutPageName(resourcePath, pageName));
 

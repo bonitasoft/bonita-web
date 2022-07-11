@@ -107,8 +107,8 @@ public class ProcessDatastoreTest extends APITestWithMock {
         processDatastore.delete(List.of(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times(1)).removePageLocally(engineSession, page1);
-        verify(customPageService, times(1)).removePageLocally(engineSession, page2);
+        verify(customPageService, times(1)).removePageLocally(page1);
+        verify(customPageService, times(1)).removePageLocally(page2);
     }
 
     @Test
@@ -128,6 +128,6 @@ public class ProcessDatastoreTest extends APITestWithMock {
         processDatastore.delete(List.of(id));
 
         verify(processDatastore).removeProcessPagesFromHome(id);
-        verify(customPageService, times((int) nbOfPages)).removePageLocally(engineSession, page);
+        verify(customPageService, times((int) nbOfPages)).removePageLocally(page);
     }
 }

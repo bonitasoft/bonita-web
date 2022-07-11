@@ -104,7 +104,7 @@ public class CustomPageServiceTest {
         CustomPageService.clearCachedClassloaders();
         when(apiSession.getTenantId()).thenReturn(1L);
         doReturn(consoleProperties).when(customPageService).getConsoleProperties(apiSession);
-        doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils(apiSession);
+        doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(permissionAPI).when(customPageService).getPermissionAPI(apiSession);
     }

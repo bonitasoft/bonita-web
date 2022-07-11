@@ -131,8 +131,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         if (isNotResourcePath) {
                             pageRenderer.displayCustomPage(request, response, apiSession, customPageName);
                         } else {
-                            final File resourceFile = getResourceFile(resourcePath, customPageName, apiSession);
-                            pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName, apiSession.getTenantId()));
+                            final File resourceFile = getResourceFile(resourcePath, customPageName);
+                            pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName));
                             resourceRenderer.renderFile(request, response, resourceFile, apiSession);
                         }
                     } else {
@@ -200,8 +200,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 || CustomPageService.PAGE_CONTROLLER_FILENAME.equals(resourcePath) || CustomPageService.PAGE_INDEX_NAME.equals(resourcePath);
     }
 
-    private File getResourceFile(final String resourcePath, final String pageName, final APISession apiSession) throws IOException, BonitaException {
-        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+    private File getResourceFile(final String resourcePath, final String pageName) throws IOException, BonitaException {
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName);
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + resourcePath);
 

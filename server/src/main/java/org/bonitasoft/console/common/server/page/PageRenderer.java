@@ -57,14 +57,14 @@ public class PageRenderer {
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
-        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName);
         displayCustomPage(request, response, apiSession, pageResourceProvider, getCurrentLocale(request));
     }
 
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName, final Locale currentLocale)
             throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
 
-        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName);
         displayCustomPage(request, response, apiSession, pageResourceProvider, currentLocale);
     }
 
@@ -108,11 +108,11 @@ public class PageRenderer {
                                        final PageResourceProviderImpl pageResourceProvider)
             throws IOException, InstantiationException, BonitaException, IllegalAccessException {
 
-        final File resourceFile = getIndexFile(pageResourceProvider, apiSession);
+        final File resourceFile = getIndexFile(pageResourceProvider);
         resourceRenderer.renderFile(request, response, resourceFile, apiSession, true);
     }
 
-    private File getIndexFile(final PageResourceProviderImpl pageResourceProvider, final APISession apiSession) throws IOException, BonitaException {
+    private File getIndexFile(final PageResourceProviderImpl pageResourceProvider) throws IOException, BonitaException {
         final File indexHtml = new File(getResourceFolder(pageResourceProvider), CustomPageService.PAGE_INDEX_FILENAME);
         if (indexHtml.exists()) {
             return indexHtml;
@@ -161,13 +161,13 @@ public class PageRenderer {
         return LocaleUtils.getUserLocale(request);
     }
 
-    public PageResourceProviderImpl getPageResourceProvider(final String pageName, final long tenantId) {
-        return new PageResourceProviderImpl(pageName, tenantId);
+    public PageResourceProviderImpl getPageResourceProvider(final String pageName) {
+        return new PageResourceProviderImpl(pageName);
     }
 
     public PageResourceProviderImpl getPageResourceProvider(final long pageId, final APISession apiSession) throws BonitaException {
         final Page page = customPageService.getPage(apiSession, pageId);
-        return new PageResourceProviderImpl(page, apiSession.getTenantId());
+        return new PageResourceProviderImpl(page);
     }
 
 }

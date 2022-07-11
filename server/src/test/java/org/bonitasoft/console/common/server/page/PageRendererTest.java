@@ -141,7 +141,7 @@ public class PageRendererTest {
         doReturn(pageName).when(page).getName();
 
         //when
-        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName,1L);
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName);
 
         //then
         assertThat(pageResourceProvider.getPageName()).isEqualTo(pageName);

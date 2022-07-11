@@ -104,10 +104,7 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     private final String fullPageName;
 
-    protected long tenantId;
-
     protected String pageName;
-
 
     protected File pageDirectory;
 
@@ -119,16 +116,15 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     private final Long pageId;
 
-    public PageResourceProviderImpl(final String pageName, final long tenantId) {
-        this(pageName, tenantId, null, null);
+    public PageResourceProviderImpl(final String pageName) {
+        this(pageName, null, null);
     }
 
-    public PageResourceProviderImpl(final Page page, final long tenantId) {
-        this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId());
+    public PageResourceProviderImpl(final Page page) {
+        this(page.getName(), page.getId(), page.getProcessDefinitionId());
     }
 
-    private PageResourceProviderImpl(final String pageName, final long tenantId, final Long pageId, final Long processDefinitionId) {
-        this.tenantId = tenantId;
+    private PageResourceProviderImpl(final String pageName, final Long pageId, final Long processDefinitionId) {
         this.pageName = pageName;
         this.pageId = pageId;
         fullPageName = buildFullPageName(pageName, processDefinitionId);
@@ -170,13 +166,13 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     @Override
     public String getResourceURL(final String resourceName) {
-        return new StringBuilder(resourceName).append("?").append(TENANT_PARAM).append("=").append(tenantId).append("&").append(VERSION_PARAM).append("=")
+        return new StringBuilder(resourceName).append("?").append(VERSION_PARAM).append("=")
                 .append(productVersion).toString();
     }
 
     @Override
     public String getBonitaThemeCSSURL() {
-        return new StringBuilder(THEME_RESOURCE_SERVLET_NAME).append("?").append(TENANT_PARAM).append("=").append(tenantId).append("&").append(THEME_PARAM)
+        return new StringBuilder(THEME_RESOURCE_SERVLET_NAME).append("?").append(THEME_PARAM)
                 .append("=").append(PORTAL_THEME_NAME).append("&").append(LOCATION_PARAM).append("=").append(BONITA_THEME_CSS_FILENAME).append("&")
                 .append(VERSION_PARAM).append("=").append(productVersion).toString();
     }

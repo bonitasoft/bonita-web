@@ -189,7 +189,7 @@ public class LivingApplicationPageServletTest {
         given(resourceRenderer.getPathSegments("/AppToken/htmlexample/content/css/file.css")).willReturn(Arrays.asList("AppToken", "htmlexample", "content", "css", "file.css"));
         final String pageName = "customPage_htmlexample";
         doReturn(true).when(customPageAuthorizationsHelper).isPageAuthorized(any(String.class), any(String.class));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
@@ -211,7 +211,7 @@ public class LivingApplicationPageServletTest {
         final File pageDir = new File(".");
         given(resourceRenderer.getPathSegments("/AppToken/htmlexample/content/css/../../../file.css")).willReturn(
                 Arrays.asList("AppToken", "htmlexample", "content", "css", "..", "..", "..", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("htmlexample", 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("htmlexample");
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
         doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 

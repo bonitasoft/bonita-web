@@ -121,7 +121,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             final Page page = createEnginePage(pageItem, zipFile);
             final PageItem addedPage = convertEngineToConsoleItem(page);
 
-            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, tenantId);
+            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page);
             customPageService.writePageToPageDirectory(page, pageResourceProvider, unzipPageTempFolder, engineSession);
             deleteTempDirectory(unzipPageTempFolder);
             return addedPage;
@@ -210,10 +210,10 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 final APISession engineSession = getEngineSession();
-                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
+                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page);
                 customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
                 pageAPI.deletePage(id.toLong());
-                customPageService.removePageLocally(engineSession, page.getName());
+                customPageService.removePageLocally(page.getName());
             }
         } catch (final Exception e) {
             throw new APIException(e);
@@ -317,8 +317,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                         page = pageAPI.updatePage(pageId, pageUpdater);
                         updatedPage = convertEngineToConsoleItem(page);
                     } finally {
-                        PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
-                                tenantId);
+                        PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page);
                         customPageService.writePageToPageDirectory(page, pageResourceProvider, unzipPageTempFolder, engineSession);
                         deleteTempDirectory(unzipPageTempFolder);
                     }
@@ -349,12 +348,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     protected void updatePageContent(final Page page, final File zipFile) throws IOException,
             CompilationFailedException, BonitaException {
         if (zipFile != null) {
-            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page,
-                    getEngineSession().getTenantId());
+            PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page);
             customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
             pageAPI.updatePageContent(page.getId(), FileUtils.readFileToByteArray(zipFile));
         }
-        customPageService.removePageLocally(getEngineSession(), page.getName());
+        customPageService.removePageLocally(page.getName());
     }
 
     @Override

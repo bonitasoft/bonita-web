@@ -198,7 +198,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
                 }
                 startIndex = startIndex + result.getResult().size();
                 for (final Page page : result.getResult()) {
-                    getCustomPageService().removePageLocally(getEngineSession(), page);
+                    getCustomPageService().removePageLocally(page);
                 }
             } while (startIndex < count);
         } catch (final Exception e) {

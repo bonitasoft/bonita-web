@@ -106,7 +106,7 @@ public class CustomPageService {
                 final String timestampString = FileUtils.readFileToString(timestampFile);
                 final long timestamp = Long.parseLong(timestampString);
                 if (lastUpdateTimestamp != timestamp) {
-                    removePageLocally(apiSession, pageResourceProvider.getPageName());
+                    removePageLocally(pageResourceProvider.getPageName());
                     retrievePageZipContent(apiSession, pageResourceProvider);
                 }
             } else {
@@ -178,15 +178,15 @@ public class CustomPageService {
         return restApiControllerClass.newInstance();
     }
 
-    public void removePageLocally(final APISession apiSession, final String pageName) throws IOException {
+    public void removePageLocally(final String pageName) throws IOException {
         closeClassloader(pageName);
-        final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(pageName, apiSession.getTenantId());
+        final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(pageName);
         removePageZipContent(pageResourceProvider);
         CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
     }
 
-    public void removePageLocally(final APISession apiSession, final Page page) throws IOException {
-        final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(page, apiSession.getTenantId());
+    public void removePageLocally(final Page page) throws IOException {
+        final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(page);
         final String pageName = pageResourceProvider.getFullPageName();
         closeClassloader(pageName);
         removePageZipContent(pageResourceProvider);
@@ -211,7 +211,7 @@ public class CustomPageService {
                 || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
             synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
                 pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
-                        new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils(apiSession)),
+                        new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils()),
                         bdmDependenciesResolver));
                 pageClassLoader.addClasspath(pageDirectory.getPath());
                 PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
@@ -233,7 +233,7 @@ public class CustomPageService {
         return PropertiesFactory.getConsoleProperties(apiSession.getTenantId());
     }
 
-    protected WebBonitaConstantsUtils getWebBonitaConstantsUtils(final APISession apiSession) {
+    protected WebBonitaConstantsUtils getWebBonitaConstantsUtils() {
         return WebBonitaConstantsUtils.getTenantInstance();
     }
 
@@ -355,8 +355,8 @@ public class CustomPageService {
         return getPageAPI(apiSession).getPage(pageId);
     }
 
-    public PageResourceProvider getPageResourceProvider(final Page page, final long tenantId) {
-        return new PageResourceProviderImpl(page, tenantId);
+    public PageResourceProvider getPageResourceProvider(final Page page) {
+        return new PageResourceProviderImpl(page);
     }
 
     public static void clearCachedClassloaders() throws IOException {

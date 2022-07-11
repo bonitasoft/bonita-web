@@ -93,9 +93,9 @@ public class ApplicationRouter {
             pageRenderer.displayCustomPage(hsRequest, hsResponse, session, application.getApplicationLayoutName());
         } else {
             //Layout or theme resource file request
-            final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, session, bonitaHomeFolderAccessor);
+            final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, bonitaHomeFolderAccessor);
             pageRenderer
-                    .ensurePageFolderIsPresent(session, pageRenderer.getPageResourceProvider(getPageName(pathSegments, application), session.getTenantId()));
+                    .ensurePageFolderIsPresent(session, pageRenderer.getPageResourceProvider(getPageName(pathSegments, application)));
             resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session);
         }
     }
@@ -113,10 +113,10 @@ public class ApplicationRouter {
     }
 
     private File getResourceFile(final PageRenderer pageRenderer, final String resourcePath, final List<String> pathSegments,
-            final ApplicationModel application, final APISession apiSession, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException,
+            final ApplicationModel application, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor) throws IOException,
             BonitaException {
         final String pageName = getPageName(pathSegments, application);
-        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = pageRenderer.getPageResourceProvider(pageName);
         final File resourceFile = new File(pageResourceProvider.getPageDirectory(), CustomPageService.RESOURCES_PROPERTY + File.separator
                 + getResourcePath(resourcePath, pathSegments.get(0), pathSegments.get(1)));
 

@@ -124,7 +124,7 @@ public class CustomPageServletTest {
         final File pageDir = new File("/pageDir");
         final String pageName = "custompage_htmlexample";
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/file.css")).willReturn(Arrays.asList(pageName, "css", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName, 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider(pageName);
         doReturn(pageDir).when(pageResourceProvider).getPageDirectory();
         doReturn(true).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
         given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(true);
@@ -141,7 +141,7 @@ public class CustomPageServletTest {
         final File pageDir = new File(".");
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/../../../file.css")).willReturn(
                 Arrays.asList("custompage_htmlexample", "css", "..", "..", "..", "file.css"));
-        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample", 1L);
+        doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample");
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
         doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
         given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(false);

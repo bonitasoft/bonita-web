@@ -52,7 +52,7 @@ public class RestApiRenderer {
         final APISession apiSession = pageContextHelper.getApiSession();
         final Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
         final Page page = customPageService.getPage(apiSession, pageId);
-        final PageResourceProviderImpl pageResourceProvider = new PageResourceProviderImpl(page, apiSession.getTenantId());
+        final PageResourceProviderImpl pageResourceProvider = new PageResourceProviderImpl(page);
         synchronized (RestApiRenderer.class) {
             customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         }
