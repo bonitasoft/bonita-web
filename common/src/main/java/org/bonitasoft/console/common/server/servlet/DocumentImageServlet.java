@@ -20,8 +20,8 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +54,7 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(DocumentImageServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DocumentImageServlet.class.getName());
 
     /**
      * {@inheritDoc}
@@ -99,8 +99,8 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
                 }
             } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the document  with ID " + documentId + " from the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             }
@@ -119,8 +119,8 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
                 } else {
                     final String errorMessage = "Error while retrieving the resource " + resourcePath
                             + " : Either a process, instance or task is required in the URL";
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, errorMessage);
+                     if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error( errorMessage);
                     }
                     throw new ServletException(errorMessage);
                 }
@@ -135,22 +135,22 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
                     fileContent = getFileContent(resource, filePath);
                 } else {
                     final String errorMessage = "The target resource does not exist " + resource.getAbsolutePath();
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, errorMessage);
+                     if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error( errorMessage);
                     }
                     throw new IOException(errorMessage);
                 }
             } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the resource " + resourcePath;
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             }
         } else {
             final String errorMessage = "Error while getting the file. either a document, a filePath or a resourcePath parameter is required.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -182,8 +182,8 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
                     }
                 }
             } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( "Error while generating the response.", e);
                 }
                 throw new ServletException(e.getMessage(), e);
             }

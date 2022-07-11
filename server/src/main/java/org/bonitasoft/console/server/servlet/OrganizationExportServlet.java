@@ -18,8 +18,8 @@ package org.bonitasoft.console.server.servlet;
 
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,7 +46,7 @@ public class OrganizationExportServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(OrganizationExportServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationExportServlet.class.getName());
 
     /**
      * UID
@@ -85,13 +85,13 @@ public class OrganizationExportServlet extends HttpServlet {
 
         } catch (final InvalidSessionException e) {
             final String message = "Session expired. Please log in again.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( message, e);
             }
             throw new ServletException(e.getMessage(), e);
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( e.getMessage(), e);
             }
             throw new ServletException(e.getMessage(), e);
         } finally {

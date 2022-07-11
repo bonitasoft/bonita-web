@@ -21,8 +21,8 @@ import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +49,7 @@ public class OrganizationImportService extends ConsoleService {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(OrganizationImportService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationImportService.class.getName());
     
     /**
      * organization data file
@@ -70,20 +70,20 @@ public class OrganizationImportService extends ConsoleService {
         } catch (final InvalidSessionException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             String message = AbstractI18n.t_("Session expired. Please log in again.");
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e.getMessage());
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
         } catch (InvalidOrganizationFileFormatException | IllegalArgumentException e) {
             getHttpResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             String message = AbstractI18n.t_("Can't import organization. Please check that your file is well-formed.");
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e.getMessage());
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( message, e.getMessage());
             }
             throw new ServiceException(TOKEN, message, e);
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( e.getMessage(), e);
             }
             throw new ServiceException(TOKEN, AbstractI18n.t_("Can't import organization"), e);
         }

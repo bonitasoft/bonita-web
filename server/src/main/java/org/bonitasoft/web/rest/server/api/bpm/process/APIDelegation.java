@@ -142,8 +142,8 @@ public class APIDelegation extends ConsoleAPI<DelegationItem> {
     // final Map<Long, Long> overdueOpenTasksNb = taskDatastore.getNumberOfOverdueOpenTasks(user.getId());
     // return UserUtil.buildClientUser(apiSession.getRequestedTenantId(), user, openTasksNb.get(user.getId()), overdueOpenTasksNb.get(user.getId()));
     // } catch (final ConsoleException e) {
-    // if (LOGGER.isLoggable(Level.SEVERE)) {
-    // LOGGER.log(Level.SEVERE, e.getMessage(), e);
+    //  if (LOGGER.isErrorEnabled()) {
+    // LOGGER.error( e.getMessage(), e);
     // }
     // throw e;
     // }

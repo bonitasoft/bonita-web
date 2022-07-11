@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
@@ -61,7 +61,7 @@ public class CustomPageService {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(CustomPageService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageService.class.getName());
 
     private static final String PAGE_LIB_DIRECTORY = "lib";
 
@@ -131,7 +131,7 @@ public class CustomPageService {
                 if (groovyFile.exists()) {
                     return pageClassLoader.parseClass(groovyFile);
                 }
-                LOGGER.log(Level.SEVERE, "resource does not exists:" + mappingKey);
+                LOGGER.error( "resource does not exists:" + mappingKey);
                 throw new BonitaException("unable to handle rest api call to " + mappingKey);
             }
             return pageClassLoader.loadClass(restApiControllerClassName.getName());
@@ -158,7 +158,7 @@ public class CustomPageService {
             try {
                 pageClassLoader.parseClass(pageControllerFile);
             } catch (final CompilationFailedException ex) {
-                LOGGER.log(Level.SEVERE, "Failed to compile Index.groovy ", ex);
+                LOGGER.error( "Failed to compile Index.groovy ", ex);
             } finally {
                 final GroovyClassLoader classLoader = PAGES_CLASSLOADERS.remove(classloaderName);
                 if (classLoader != null) {
@@ -296,8 +296,8 @@ public class CustomPageService {
                 return lastUpdateDate.getTime();
             }
         } catch (final PageNotFoundException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Unable to find the page " + pageResourceProvider);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Unable to find the page " + pageResourceProvider);
             }
         }
         return 0L;

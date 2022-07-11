@@ -22,8 +22,8 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -114,7 +114,7 @@ public class DocumentDownloadServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(DocumentDownloadServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DocumentDownloadServlet.class.getName());
 
     /**
      * {@inheritDoc}
@@ -130,8 +130,8 @@ public class DocumentDownloadServlet extends HttpServlet {
         final APISession apiSession = (APISession) request.getSession().getAttribute(API_SESSION_PARAM_KEY);
         byte[] fileContent = null;
         if (filePath != null) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "attachmentPath: " + filePath);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("attachmentPath: " + filePath);
             }
             final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
             try {
@@ -150,8 +150,8 @@ public class DocumentDownloadServlet extends HttpServlet {
                 fileContent = bpmEngineAPIUtil.getProcessAPI(apiSession).getDocumentContent(contentStorageId);
             } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the document  with content storage ID " + contentStorageId + " from the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             }
@@ -172,8 +172,8 @@ public class DocumentDownloadServlet extends HttpServlet {
                 }
             } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the document  with ID " + documentId + " from the engine.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             }
@@ -192,8 +192,8 @@ public class DocumentDownloadServlet extends HttpServlet {
                 } else {
                     final String errorMessage = "Error while retrieving the resource " + resourcePath
                             + " : Either a process, instance or task is required in the URL";
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, errorMessage);
+                     if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error( errorMessage);
                     }
                     throw new ServletException(errorMessage);
                 }
@@ -208,22 +208,22 @@ public class DocumentDownloadServlet extends HttpServlet {
                     fileContent = getFileContent(resource, filePath);
                 } else {
                     final String errorMessage = "The target resource does not exist " + resource.getAbsolutePath();
-                    if (LOGGER.isLoggable(Level.SEVERE)) {
-                        LOGGER.log(Level.SEVERE, errorMessage);
+                     if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error( errorMessage);
                     }
                     throw new IOException(errorMessage);
                 }
             } catch (final Exception e) {
                 final String errorMessage = "Error while retrieving the resource " + resourcePath;
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             }
         } else {
             final String errorMessage = "Error while getting the file. either a document, a filePath or a resourcePath parameter is required.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -247,8 +247,8 @@ public class DocumentDownloadServlet extends HttpServlet {
             }
             out.close();
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while generating the response.", e);
             }
             throw new ServletException(e);
         }
@@ -281,8 +281,8 @@ public class DocumentDownloadServlet extends HttpServlet {
                 content = fileContent;
             } catch (final FileNotFoundException e) {
                 final String errorMessage = "Error while getting the attachment. The file " + filePath + " does not exist.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage, e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             } finally {
@@ -290,8 +290,8 @@ public class DocumentDownloadServlet extends HttpServlet {
             }
         } catch (final IOException e) {
             final String errorMessage = "Error while reading attachment (file  : " + filePath;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage, e);
             }
             throw new ServletException(errorMessage, e);
         }

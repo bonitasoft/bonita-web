@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
@@ -46,7 +46,7 @@ public abstract class ResourceServlet extends HttpServlet {
     /**
      * Logger
      */
-    private final static Logger LOGGER = Logger.getLogger(ResourceServlet.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(ResourceServlet.class.getName());
 
     /**
      * The engine API session param key name
@@ -80,8 +80,8 @@ public abstract class ResourceServlet extends HttpServlet {
             getResourceFile(request, response, resourceName, fileName);
         } catch (final UnsupportedEncodingException e) {
             final String errorMessage = "UnsupportedEncodingException :" + e;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -97,15 +97,15 @@ public abstract class ResourceServlet extends HttpServlet {
             throws ServletException, IOException {
         if (resourceName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + getResourceParameterName() + " is null.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(errorMessage);
             }
             throw new ServletException(errorMessage);
         }
         if (fileName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + ResourceLocationReader.LOCATION_PARAM + " is null.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(errorMessage);
             }
             throw new ServletException(errorMessage);
         }
@@ -178,13 +178,13 @@ public abstract class ResourceServlet extends HttpServlet {
             response.flushBuffer();
             out.close();
         } catch (FileNotFoundException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, e.getMessage());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( e.getMessage());
             }
             response.sendError(404);
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while generating the response.", e);
             }
             throw new ServletException(e.getMessage(), e);
         }
@@ -195,8 +195,8 @@ public abstract class ResourceServlet extends HttpServlet {
             return getResourcesParentFolder();
         } catch (final RuntimeException e) {
             final String errorMessage = "Error while using the servlet to get parent folder.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( errorMessage);
             }
             throw new ServletException(errorMessage);
         }

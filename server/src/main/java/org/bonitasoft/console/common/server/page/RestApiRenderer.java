@@ -15,8 +15,8 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +41,7 @@ import groovy.lang.GroovyClassLoader;
  */
 public class RestApiRenderer {
 
-    private static final Logger LOGGER = Logger.getLogger(RestApiRenderer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestApiRenderer.class.getName());
 
     private final CustomPageService customPageService = new CustomPageService();
 
@@ -80,7 +80,7 @@ public class RestApiRenderer {
             try {
                 return doHandle(request, apiSession, pageContextHelper, pageResourceProvider, restApiControllerClass);
             } catch (final Throwable e) {
-                LOGGER.log(Level.SEVERE, "Error when executing rest api extension call to " + mappingKey, e);
+                LOGGER.error( "Error when executing rest api extension call to " + mappingKey, e);
                 throw e;
             }
         } finally {

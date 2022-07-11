@@ -23,8 +23,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 
@@ -43,7 +43,7 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
 
     private boolean isActive = true;
 
-    private static final Logger LOGGER = Logger.getLogger(CustomPageChildFirstClassLoader.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageChildFirstClassLoader.class.getName());
 
     private final CustomPageDependenciesResolver customPageDependenciesResolver;
 
@@ -70,7 +70,7 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
         try {
             addURLs(bdmDependenciesResolver.getBDMDependencies());
         } catch (final IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to add BDM dependencies in ClassLoader", e);
+            LOGGER.error( "Failed to add BDM dependencies in ClassLoader", e);
         }
     }
 

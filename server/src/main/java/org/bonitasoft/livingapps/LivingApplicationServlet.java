@@ -1,8 +1,8 @@
 package org.bonitasoft.livingapps;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,7 +46,7 @@ public class LivingApplicationServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(LivingApplicationServlet.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(LivingApplicationServlet.class.getName());
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
@@ -67,9 +67,9 @@ public class LivingApplicationServlet extends HttpServlet {
         } catch (final ApplicationPageNotFoundException | PageNotFoundException | CreationException e) {
             hsResponse.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         } catch (final BonitaException | IllegalAccessException | InstantiationException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
+            if (LOGGER.isWarnEnabled()) {
                 final String message = "Error while trying to display application " + hsRequest.getPathInfo();
-                LOGGER.log(Level.WARNING, message, e);
+                LOGGER.warn( message, e);
             }
             if (!hsResponse.isCommitted()) {
                 hsResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -77,8 +77,8 @@ public class LivingApplicationServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         } catch (final InvalidSessionException e) {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+             if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("Invalid Bonita engine session.", e);
             }
             SessionUtil.sessionLogout(hsRequest.getSession());
             HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(hsRequest);

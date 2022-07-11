@@ -15,8 +15,8 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -63,7 +63,7 @@ public class PlatformLoginServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(PlatformLoginServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLoginServlet.class.getName());
 
     /**
      * the URL of the login page
@@ -105,20 +105,20 @@ public class PlatformLoginServlet extends HttpServlet {
                 response.sendRedirect(PLATFORM_PAGE);
             }
         } catch (final InvalidPlatformCredentialsException e) {
-            LOGGER.log(Level.FINEST, "Wrong username or password", e);
+            LOGGER.trace( "Wrong username or password", e);
             if (redirectAfterLogin) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Wrong username or password");
             } else {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
         } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, ERROR_MESSAGE, e);
+            LOGGER.error( ERROR_MESSAGE, e);
             if (redirectAfterLogin) {
                 try {
                     request.setAttribute(LOGIN_FAIL_MESSAGE, LOGIN_FAIL_MESSAGE);
                     getServletContext().getRequestDispatcher(LOGIN_PAGE).forward(request, response);
                 } catch (final IOException ioe) {
-                    LOGGER.log(Level.SEVERE, "Error while redirecting to login.jsp", ioe);
+                    LOGGER.error( "Error while redirecting to login.jsp", ioe);
                     throw new ServletException(ERROR_MESSAGE, e);
                 }
             } else {

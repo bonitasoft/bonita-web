@@ -17,8 +17,8 @@ package org.bonitasoft.console.common.server.page;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +46,7 @@ public class CustomPageServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(CustomPageServlet.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(CustomPageServlet.class.getName());
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
     protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
@@ -139,8 +139,8 @@ public class CustomPageServlet extends HttpServlet {
     }
 
     private void handleException(final String pageName, final Exception e) throws ServletException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, "Error while trying to render the custom page " + pageName, e);
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn( "Error while trying to render the custom page " + pageName, e);
         }
         throw new ServletException(e.getMessage());
     }

@@ -18,8 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.utils.BPMEngineException;
@@ -69,7 +69,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
         DatastoreHasSearch<ProcessItem>,
         DatastoreHasDelete {
 
-    private static final Logger logger = Logger.getLogger(ProcessDatastore.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessDatastore.class.getName());
 
     /**
      * process file
@@ -202,8 +202,8 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
                 }
             } while (startIndex < count);
         } catch (final Exception e) {
-            if (logger.isLoggable(Level.WARNING)) {
-                logger.log(Level.WARNING, "Error when deleting pages for process with ID " + id, e);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( "Error when deleting pages for process with ID " + id, e);
             }
         }
     }

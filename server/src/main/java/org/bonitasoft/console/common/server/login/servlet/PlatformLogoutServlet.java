@@ -17,8 +17,8 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -54,7 +54,7 @@ public class PlatformLogoutServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(PlatformLogoutServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformLogoutServlet.class.getName());
 
     /**
      * {@inheritDoc}
@@ -84,8 +84,8 @@ public class PlatformLogoutServlet extends HttpServlet {
                 final PlatformLoginAPI platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
                 platformLoginAPI.logout(platformSession);
             } catch (final BonitaException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while performing the logout", e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( "Error while performing the logout", e);
                 }
             }
         }

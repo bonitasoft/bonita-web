@@ -15,8 +15,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.junit.Rule;
+import org.junit.contrib.java.lang.system.SystemOutRule;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -44,6 +47,9 @@ import org.restlet.resource.ServerResource;
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessInstantiationResourceTest extends RestletTest {
 
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog().muteForSuccessfulTests();
+
     private static final long PROCESS_DEFINITION_ID = 2L;
 
     private static final String ID_PROCESS_DEFINITION = "2";
@@ -55,6 +61,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
     private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
+
 
     @Mock
     ProcessAPI processAPI;
@@ -193,19 +200,19 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
         doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
         .startProcessWithInputs(anyLong(), anyMapOf(String.class, Serializable.class));
-        doReturn(logger).when(processInstantiationResource).getLogger();
         doReturn(Long.toString(PROCESS_DEFINITION_ID)).when(processInstantiationResource).getAttribute(ProcessInstantiationResource.PROCESS_DEFINITION_ID);
         doReturn(contractDefinition).when(processAPI).getProcessContract(PROCESS_DEFINITION_ID);
-        doReturn(true).when(logger).isLoggable(Level.INFO);
         doReturn(response).when(processInstantiationResource).getResponse();
         final Map<String, Serializable> inputs = new HashMap<>();
         inputs.put("testKey", "testValue");
 
+
+        systemOutRule.clearLog();
         // when
         processInstantiationResource.instantiateProcess(inputs);
 
         // then
-        verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        assertThat(systemOutRule.getLog()).contains(message + "\nExplanations:\nexplanation1explanation2");
         verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 

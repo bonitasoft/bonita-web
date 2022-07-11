@@ -17,8 +17,8 @@ package org.bonitasoft.console.common.server.preferences.properties;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class ServerProperties {
 
@@ -28,7 +28,7 @@ public class ServerProperties {
 
     private static Properties serverProperties = new Properties();
     
-    private static Logger LOGGER = Logger.getLogger(ServerProperties.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(ServerProperties.class.getName());
 
     private ServerProperties() {
         InputStream inputStream = getClass().getResourceAsStream(FILENAME);
@@ -39,8 +39,8 @@ public class ServerProperties {
                 throw new RuntimeException(e);
             }
         } else {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, "No " + FILENAME + " file found.");
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace( "No " + FILENAME + " file found.");
             }
         }
     }

@@ -15,8 +15,8 @@ package org.bonitasoft.console.common.server.auth.impl.oauth;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerProperties;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
@@ -36,7 +36,7 @@ public class OAuthConsumerFactory {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(OAuthConsumerFactory.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuthConsumerFactory.class.getName());
 
     public static OAuthConsumer getOAuthConsumer(final long tenantId, final String redirectURL) throws ConsumerNotFoundException {
         if (!map.containsKey(tenantId)) {
@@ -45,13 +45,13 @@ public class OAuthConsumerFactory {
                 providerName = AuthenticationManagerProperties.getProperties(tenantId).getOAuthServiceProviderName();
                 if (providerName == null) {
                     providerName = OAUTH_CLASS_TYPE.LinkedIn.toString();
-                    LOGGER.log(Level.INFO, "The OAuth service provider undefined. Using the default implementation : " + providerName);
+                    LOGGER.info( "The OAuth service provider undefined. Using the default implementation : " + providerName);
                 }
                 map.put(tenantId, getOAuthConsumerClass(providerName, tenantId, redirectURL));
             } catch (final ClassNotFoundException e) {
                 final String message = "The OAuth provider class for " + providerName + " doesn't exist!";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, e.getMessage());
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( e.getMessage());
                 }
                 throw new ConsumerNotFoundException(message, e);
             }

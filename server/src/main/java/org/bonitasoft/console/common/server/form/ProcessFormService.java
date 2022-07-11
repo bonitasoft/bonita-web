@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.form;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -47,7 +47,7 @@ import org.bonitasoft.engine.session.APISession;
 
 public class ProcessFormService {
 
-    private static final Logger LOGGER = Logger.getLogger(ProcessFormService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessFormService.class.getName());
 
     public String getProcessPath(final APISession apiSession, final long processDefinitionId) throws BonitaException, UnsupportedEncodingException {
         final ProcessDeploymentInfo processDeploymentInfo = getProcessAPI(apiSession).getProcessDeploymentInfo(processDefinitionId);
@@ -69,8 +69,8 @@ public class ProcessFormService {
             try {
                 return getProcessAPI(apiSession).getProcessDefinitionId(processName, processVersion);
             } catch (final ProcessDefinitionNotFoundException e) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Wrong parameters for process name and version", e);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Wrong parameters for process name and version", e);
                 }
             }
         }

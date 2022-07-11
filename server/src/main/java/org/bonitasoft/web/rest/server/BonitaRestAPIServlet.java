@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server;
 
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,8 +68,8 @@ public class BonitaRestAPIServlet extends APIServlet {
         if (exception instanceof InvalidSessionException 
                 || exception instanceof APIException && exception.getCause() != null && exception.getCause() instanceof InvalidSessionException) {
         	final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(req);
-        	if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, exception.getMessage(), exception);
+        	 if (LOGGER.isDebugEnabled()){
+                LOGGER.debug(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_UNAUTHORIZED);
             SessionUtil.sessionLogout(requestAccessor.getHttpSession());

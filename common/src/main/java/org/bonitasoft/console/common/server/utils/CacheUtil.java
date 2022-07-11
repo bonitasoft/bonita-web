@@ -23,15 +23,15 @@ import net.sf.ehcache.config.DiskStoreConfiguration;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class CacheUtil {
 
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(CacheUtil.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(CacheUtil.class.getName());
 
     protected static CacheManager CACHE_MANAGER = null;
 
@@ -45,8 +45,8 @@ public class CacheUtil {
                 configuration.addDiskStore(diskStoreConfiguration);
                 CACHE_MANAGER = CacheManager.create(configuration);
             } else {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Unable to retrieve the cache configuration file. Creating a cache manager with the default configuration");
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "Unable to retrieve the cache configuration file. Creating a cache manager with the default configuration");
                 }
                 CACHE_MANAGER = CacheManager.create();
             }
@@ -72,8 +72,9 @@ public class CacheUtil {
         }
         final Element element = new Element(key, value);
         cache.put(element);
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.log(Level.FINEST, "####Element " + key + " created in cache with name " + cacheName);
+
+        if (LOGGER.isTraceEnabled()){
+            LOGGER.trace( "####Element " + key + " created in cache with name " + cacheName);
         }
     }
 
@@ -85,17 +86,17 @@ public class CacheUtil {
             final Element element = cache.get(key);
             if (element != null) {
                 value = element.getValue();
-                if (LOGGER.isLoggable(Level.FINEST)) {
-                    LOGGER.log(Level.FINEST, "####Element " + key + " found in cache with name " + cacheName);
+                if (LOGGER.isTraceEnabled()){
+                    LOGGER.trace( "####Element " + key + " found in cache with name " + cacheName);
                 }
             } else {
-                if (LOGGER.isLoggable(Level.FINEST)) {
-                    LOGGER.log(Level.FINEST, "####Element " + key + " not found in cache with name " + cacheName);
+                if (LOGGER.isTraceEnabled()){
+                    LOGGER.trace( "####Element " + key + " not found in cache with name " + cacheName);
                 }
             }
         } else {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, "####Cache with name " + cacheName + " doesn't exists or wasn't created yet.");
+            if (LOGGER.isTraceEnabled()){
+                LOGGER.trace( "####Cache with name " + cacheName + " doesn't exists or wasn't created yet.");
             }
         }
         return value;

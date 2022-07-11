@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -59,7 +59,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class.getName());
 
     private final LinkedList<AuthenticationRule> rules = new LinkedList<AuthenticationRule>();
 
@@ -143,8 +143,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         if (apiSession != null) {
             tenantId = apiSession.getTenantId();
         } else {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "API session was not found in HTTP session. Rule " + rule.getClass().getName() + " may be missing the engine login.");
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( "API session was not found in HTTP session. Rule " + rule.getClass().getName() + " may be missing the engine login.");
             }
             tenantId = tenantIdAccessor.getDefaultTenantId();
         }
@@ -153,8 +153,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
 
     protected void handleUserNotFoundOrInactiveException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
             final EngineUserNotFoundOrInactive e) throws ServletException {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirection to user not found page : " + e.getMessage(), e);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("redirection to user not found page : " + e.getMessage(), e);
         }
         if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
         	redirectTo(requestAccessor, response, e.getTenantId(), USER_NOT_FOUND_JSP);
@@ -165,8 +165,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     
     protected void handleTenantPausedException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,
             final TenantIsPausedException e) throws ServletException {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirection to maintenance page : " + e.getMessage(), e);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("redirection to maintenance page : " + e.getMessage(), e);
         }
         if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
         	redirectTo(requestAccessor, response, e.getTenantId(), MAINTENANCE_JSP);
@@ -186,8 +186,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         try {
             response.sendRedirect(request.asHttpServletRequest().getContextPath() + pagePath);
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, e.getMessage());
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( e.getMessage());
             }
         }
     }

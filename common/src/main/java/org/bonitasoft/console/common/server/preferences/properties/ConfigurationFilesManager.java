@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -41,7 +41,7 @@ public class ConfigurationFilesManager {
         return INSTANCE;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(ConfigurationFilesManager.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationFilesManager.class.getName());
 
     /*
      * Map<realConfigurationFileName, File>
@@ -83,12 +83,12 @@ public class ConfigurationFilesManager {
                     properties.putAll(propertiesByFilename.get(customSuffixedVersion));
                 }
             } else {
-                if (LOGGER.isLoggable(Level.FINER)) {
-                    LOGGER.log(Level.FINER, "File " + propertiesFileName + " not found. Returning empty properties object.");
+                 if (LOGGER.isDebugEnabled()){
+                    LOGGER.debug("File " + propertiesFileName + " not found. Returning empty properties object.");
                 }
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Cannot retrieve tenant configurations", e);
+            LOGGER.error( "Cannot retrieve tenant configurations", e);
         }
         return properties;
     }
@@ -107,7 +107,7 @@ public class ConfigurationFilesManager {
             try (ByteArrayInputStream inputStream = new ByteArrayInputStream(content)) {
                 properties.load(inputStream);
             } catch (IOException ioe) {
-                LOGGER.log(Level.SEVERE, "Cannot parse properties file content", ioe);
+                LOGGER.error( "Cannot parse properties file content", ioe);
             }
         }
         return properties;
@@ -147,8 +147,8 @@ public class ConfigurationFilesManager {
             properties.remove(propertyName);
             update(tenantId, internalFilename, properties);
         } else {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
+             if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
             }
         }
     }
@@ -183,8 +183,8 @@ public class ConfigurationFilesManager {
             properties.setProperty(propertyName, propertyValue);
             update(tenantId, internalFilename, properties);
         } else {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
+             if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
             }
         }
     }

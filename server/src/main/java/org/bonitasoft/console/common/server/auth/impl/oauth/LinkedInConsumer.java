@@ -13,8 +13,8 @@
  **/
 package org.bonitasoft.console.common.server.auth.impl.oauth;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.codehaus.jettison.json.JSONException;
@@ -36,7 +36,7 @@ public class LinkedInConsumer extends OAuthConsumer {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(LinkedInConsumer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LinkedInConsumer.class.getName());
 
     private static final String LINKEDIN_PREFIX = "LinkedIn_";
 
@@ -58,8 +58,8 @@ public class LinkedInConsumer extends OAuthConsumer {
 
         } catch (final JSONException e) {
             final String message = "Return values from LinkedIn cannot be resolved.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, e.getMessage());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( e.getMessage());
             }
             throw new AuthenticationFailedException(message, e);
         }

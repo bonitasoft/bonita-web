@@ -2,14 +2,14 @@ package org.bonitasoft.console.common.server.utils;
 
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class TenantCacheUtil {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(TenantCacheUtil.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(TenantCacheUtil.class.getName());
 
     protected static String CACHE_DISK_STORE_PATH = null;
 
@@ -22,7 +22,7 @@ public class TenantCacheUtil {
             CACHE_DISK_STORE_PATH = WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder().getAbsolutePath();
             this.tenantID = tenantID;
         } catch (final Exception e) {
-            LOGGER.log(Level.WARNING, "Unable to retrieve the path of the cache disk store directory path.", e);
+            LOGGER.warn( "Unable to retrieve the path of the cache disk store directory path.", e);
         }
     }
 

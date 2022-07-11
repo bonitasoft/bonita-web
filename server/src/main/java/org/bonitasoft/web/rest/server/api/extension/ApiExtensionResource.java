@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +52,7 @@ public class ApiExtensionResource extends ServerResource {
 
     private final PageMappingService pageMappingService;
 
-    private static final Logger LOGGER = Logger.getLogger(ApiExtensionResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiExtensionResource.class.getName());
 
     public ApiExtensionResource(RestApiRenderer restApiRenderer, PageMappingService pageMappingService) {
         this.restApiRenderer = restApiRenderer;
@@ -67,7 +67,7 @@ public class ApiExtensionResource extends ServerResource {
             fillAllContent(stringRepresentation, restApiResponse);
             return stringRepresentation;
         } catch (final BonitaException e) {
-            LOGGER.log(Level.SEVERE, "Failed to handle API Extension call", e);
+            LOGGER.error( "Failed to handle API Extension call", e);
             getResponse().setStatus(Status.SERVER_ERROR_INTERNAL);
             return null;
         }

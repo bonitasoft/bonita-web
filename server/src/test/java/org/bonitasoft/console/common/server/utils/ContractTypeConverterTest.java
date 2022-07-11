@@ -13,14 +13,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+
+import org.junit.Rule;
+import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -38,6 +39,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContractTypeConverterTest {
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog().muteForSuccessfulTests();
 
     public static final long DATE_01_01_1970_13H_AS_LONG_GMT = 46800000L;
 
@@ -521,10 +524,11 @@ public class ContractTypeConverterTest {
     public void convertToType_should_not_convert_into_a_LocalDate_a_String_that_is_too_short() {
         ContractTypeConverter converter = spy(new ContractTypeConverter(ISO_8601_DATE_PATTERNS));
 
+        systemOutRule.clearLog();
         final Object localDateString = converter.convertToType(Type.LOCALDATE, "1987-12");
 
         assertThat(localDateString).isEqualTo("1987-12");
-        verify(converter).logMessage(eq(Level.INFO), eq("unable to parse '1987-12' to type " + LocalDate.class.getName()), any(DateTimeParseException.class));
+        assertThat(systemOutRule.getLog()).contains("unable to parse '1987-12' to type " + LocalDate.class.getName());
     }
 
     @Test
@@ -566,14 +570,17 @@ public class ContractTypeConverterTest {
     public void convertToType_should_log_if_value_is_truncated() {
         ContractTypeConverter converter = spy(new ContractTypeConverter(ISO_8601_DATE_PATTERNS));
 
+        systemOutRule.clearLog();
         converter.convertToType(Type.LOCALDATE, "1987-10-11T19:32");
 
-        verify(converter).logMessage(any(Level.class),
-                eq("The string 1987-10-11T19:32 contains information that will be dropped to convert it to a LocalDate (most likely time and timezone information which are not relevant)."));
+        assertThat(systemOutRule.getLog())
+                .contains("The string 1987-10-11T19:32 contains information that will be dropped " +
+                "to convert it to a LocalDate (most likely time and timezone information which are not relevant).");
 
         converter.convertToType(Type.LOCALDATETIME, "1987-10-11T19:32Z");
 
-        verify(converter).logMessage(any(Level.class),
-                eq("The string 1987-10-11T19:32Z contains information that will be dropped to convert it to a LocalDateTime (most likely time and timezone information which are not relevant)."));
+        assertThat(systemOutRule.getLog())
+                .contains("The string 1987-10-11T19:32Z contains information that will be dropped to " +
+                        "convert it to a LocalDateTime (most likely time and timezone information which are not relevant).");
     }
 }

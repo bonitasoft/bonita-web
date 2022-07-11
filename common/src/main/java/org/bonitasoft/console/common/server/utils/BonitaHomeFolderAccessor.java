@@ -2,8 +2,8 @@ package org.bonitasoft.console.common.server.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -14,7 +14,7 @@ public class BonitaHomeFolderAccessor {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(BonitaHomeFolderAccessor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BonitaHomeFolderAccessor.class.getName());
 
     public BonitaHomeFolderAccessor() {
     }
@@ -71,8 +71,8 @@ public class BonitaHomeFolderAccessor {
                     + ". For security reasons, access to paths other than "
                     + parentFolder.getAbsolutePath()
                     + " is restricted.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage, e);
             }
             throw e;
         }

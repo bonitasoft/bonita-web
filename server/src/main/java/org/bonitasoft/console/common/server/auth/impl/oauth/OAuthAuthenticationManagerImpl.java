@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.auth.impl.oauth;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
@@ -37,7 +37,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(OAuthAuthenticationManagerImpl.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuthAuthenticationManagerImpl.class.getName());
 
     @Override
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
@@ -51,8 +51,8 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     @Override
     public Map<String, Serializable> authenticate(final HttpServletRequestAccessor request, final Credentials credentials)
             throws AuthenticationFailedException, ServletException {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "#authenticate (this implementation of " + AuthenticationManager.class.getName()
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("#authenticate (this implementation of " + AuthenticationManager.class.getName()
                     + " is an example of Oauth authentication working with Linkedin service provider)");
         }
         if (request.getOAuthVerifier() == null) {
@@ -78,8 +78,8 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
     }
 
     private void logSevereException(final Exception e) {
-        if (LOGGER.isLoggable(Level.SEVERE)) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+         if (LOGGER.isErrorEnabled()) {
+            LOGGER.error( e.getMessage());
         }
 
     }

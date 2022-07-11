@@ -22,8 +22,8 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +43,7 @@ public class ResourceRenderer {
     /**
      * Logger
      */
-    private final static Logger LOGGER = Logger.getLogger(ResourceRenderer.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(ResourceRenderer.class.getName());
 
     public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
             throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
@@ -76,8 +76,8 @@ public class ResourceRenderer {
                 response.flushBuffer();
             }
         } catch (final IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while generating the response.", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while generating the response.", e);
             }
             throw e;
         }
@@ -86,8 +86,8 @@ public class ResourceRenderer {
     private byte[] getFileContent(final File resourceFile, final HttpServletResponse response) throws IOException, BonitaException {
         if (resourceFile == null) {
             final String errorMessage = "Resource file must not be null.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( errorMessage);
             }
             throw new BonitaException(errorMessage);
         }
@@ -95,8 +95,8 @@ public class ResourceRenderer {
             return Files.readAllBytes(resourceFile.toPath());
         } else {
             final String fileNotFoundMessage = "Cannot find the resource file ";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, fileNotFoundMessage + resourceFile.getCanonicalPath());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( fileNotFoundMessage + resourceFile.getCanonicalPath());
             }
             throw new FileNotFoundException(fileNotFoundMessage + resourceFile.getName());
         }

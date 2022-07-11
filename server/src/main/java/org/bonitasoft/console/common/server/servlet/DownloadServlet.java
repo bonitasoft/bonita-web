@@ -19,8 +19,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +42,7 @@ public abstract class DownloadServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(DownloadServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadServlet.class.getName());
 
     /**
      * {@inheritDoc}
@@ -70,8 +70,8 @@ public abstract class DownloadServlet extends HttpServlet {
                 content = fileContent;
             } catch (final FileNotFoundException e) {
                 final String errorMessage = "Error while getting the attachment. The file " + attachmentPath + " does not exist.";
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, errorMessage, e);
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( errorMessage, e);
                 }
                 throw new ServletException(errorMessage, e);
             } finally {
@@ -79,14 +79,14 @@ public abstract class DownloadServlet extends HttpServlet {
             }
         } catch (final FileNotFoundException e) {
             final String errorMessage = "Attachment : No such file\n\t> " + attachmentPath;
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( errorMessage);
             }
             throw e;
         } catch (final IOException e) {
             final String errorMessage = "Attachment : Error while reading file " + attachmentPath;
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, errorMessage + "\n\t> " + e.getMessage());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( errorMessage + "\n\t> " + e.getMessage());
             }
             throw new ServletException(errorMessage, e);
         }

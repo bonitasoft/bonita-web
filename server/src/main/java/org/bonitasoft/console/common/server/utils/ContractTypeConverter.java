@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -56,7 +56,7 @@ public class ContractTypeConverter {
     /**
      * Logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(ContractTypeConverter.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ContractTypeConverter.class.getName());
 
     public static final String[] ISO_8601_DATE_PATTERNS = new String[] { "yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss'Z'",
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" };
@@ -136,7 +136,7 @@ public class ContractTypeConverter {
                     try {
                         deleteFile(bonitaHomeFolderAccessor.getTempFile(path, tenantId));
                     } catch (IOException e) {
-                        logMessage(Level.INFO, "Cannot delete " + path + "in the tenant temp directory.", e);
+                       LOGGER.info("Cannot delete " + path + "in the tenant temp directory.", e);
                     }
                 } else {
                     deleteTemporaryFilesInternal(element.getValue(), tenantId);
@@ -260,8 +260,8 @@ public class ContractTypeConverter {
     void deleteFile(final File sourceFile) {
         if (!sourceFile.delete()) {
             sourceFile.deleteOnExit();
-            if (LOGGER.isLoggable(Level.INFO)) {
-                logMessage(Level.INFO, "Cannot delete " + sourceFile.getPath() + "in the tenant temp directory.");
+            if (LOGGER.isInfoEnabled()) {
+               LOGGER.info("Cannot delete " + sourceFile.getPath() + "in the tenant temp directory.");
             }
         }
     }
@@ -341,7 +341,7 @@ public class ContractTypeConverter {
             if (clazz == LocalDate.class) {
                 //We drop useless info received from the widget ex: 2010-12-04T18:42:10Z, we drop T18:42:10Z to allow conversion
                 if (paramValueString.length() > 10) {
-                    logMessage(Level.FINE, "The string " + paramValueString
+                    LOGGER.debug( "The string " + paramValueString
                             + " contains information that will be dropped to convert it to a LocalDate (most likely time and timezone information which are not relevant).");
                     paramValueString = paramValueString.substring(0, 10);
                 }
@@ -350,7 +350,7 @@ public class ContractTypeConverter {
                 try {
                     return LocalDateTime.parse(paramValueString);
                 } catch (DateTimeParseException e) {
-                    logMessage(Level.FINE, "The string " + paramValueString
+                    LOGGER.debug( "The string " + paramValueString
                             + " contains information that will be dropped to convert it to a LocalDateTime (most likely time and timezone information which are not relevant).");
                     //We drop the timezone info from the String:
                     return ZonedDateTime.parse(paramValueString).toLocalDateTime();
@@ -362,17 +362,9 @@ public class ContractTypeConverter {
                 return convertUtilsBean.convert(parameterValue, clazz);
             }
         } catch (final ConversionException | DateTimeParseException e) {
-            logMessage(Level.INFO, "unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
+           LOGGER.info("unable to parse '" + parameterValue + "' to type " + clazz.getName(), e);
             return parameterValue;
         }
-    }
-
-    void logMessage(Level level, String msg) {
-        LOGGER.log(level, msg);
-    }
-
-    void logMessage(Level level, String msg, Throwable th) {
-        LOGGER.log(level, msg, th);
     }
 
     private Class<? extends Serializable> getClassFromType(final Type type) {

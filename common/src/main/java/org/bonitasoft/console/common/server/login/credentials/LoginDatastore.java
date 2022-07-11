@@ -16,8 +16,6 @@ package org.bonitasoft.console.common.server.login.credentials;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bonitasoft.engine.api.LoginAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -26,6 +24,8 @@ import org.bonitasoft.engine.platform.LoginException;
 import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.platform.UnknownUserException;
 import org.bonitasoft.engine.session.APISession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Yongtao Guo
@@ -35,25 +35,25 @@ public class LoginDatastore {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(LoginDatastore.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginDatastore.class.getName());
 
     public APISession login(final String username, final String password) throws BonitaException {
         APISession apiSession = null;
         final String errorMessage = "Error while logging in the engine API.";
         try {
             if (username == null || password == null) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+                LOGGER.error( errorMessage);
                 throw new LoginException(errorMessage);
             }
             apiSession = getLoginAPI().login(username, password);
         } catch (final UnknownUserException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            LOGGER.error( e.getMessage());
             throw e;
         } catch (final LoginException e) {
-            LOGGER.log(Level.SEVERE, errorMessage);
+            LOGGER.error( errorMessage);
             throw e;
         } catch (final BonitaException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            LOGGER.error( e.getMessage());
             throw e;
         }
         return apiSession;
@@ -70,16 +70,16 @@ public class LoginDatastore {
         try {
             if (credentials == null) {
                 final String errorMessage = "Error while logging in on the engine API.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage);
                 }
                 throw new LoginException(errorMessage);
             }
             apiSession = getLoginAPI().login(credentials);
         } catch (final LoginException e) {
             final String errorMessage = "Error while logging in on the engine API.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage);
             }
             throw new BonitaException(e);
         }
@@ -97,8 +97,8 @@ public class LoginDatastore {
                 getLoginAPI().logout(apiSession);
             } catch (final LogoutException e) {
                 final String errorMessage = "Logout error while calling the engine API.";
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, errorMessage);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( errorMessage);
                 }
                 throw new BonitaException(errorMessage, e);
             }
@@ -110,8 +110,8 @@ public class LoginDatastore {
             return TenantAPIAccessor.getLoginAPI();
         } catch (final BonitaException e) {
             final String errorMessage = "Error while getting the loginAPI.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( errorMessage);
             }
             throw new BonitaException(errorMessage, e);
         }

@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.console.server.servlet;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -24,6 +24,7 @@ import org.bonitasoft.engine.exception.ExportException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Julien MEGE
@@ -43,7 +44,7 @@ public class ApplicationsExportServlet extends ExportByIdsServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(ApplicationsExportServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationsExportServlet.class.getName());
 
     @Override
     protected String getFileExportName() {

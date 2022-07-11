@@ -28,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -86,7 +86,7 @@ public class FormsResourcesUtils {
     /**
      * Logger
      */
-    protected static Logger LOGGER = Logger.getLogger(FormsResourcesUtils.class.getName());
+    protected static Logger LOGGER = LoggerFactory.getLogger(FormsResourcesUtils.class.getName());
 
     /**
      * Retrieve the web resources from the business archive and store them in a local directory
@@ -130,8 +130,8 @@ public class FormsResourcesUtils {
                         try {
                             fos.close();
                         } catch (final IOException e) {
-                            if (LOGGER.isLoggable(Level.WARNING)) {
-                                LOGGER.log(Level.WARNING, "unable to close file output stream for business archive resource " + formResourceFile.getPath(), e);
+                            if (LOGGER.isWarnEnabled()) {
+                                LOGGER.warn( "unable to close file output stream for business archive resource " + formResourceFile.getPath(), e);
                             }
                         }
                     }
@@ -159,15 +159,15 @@ public class FormsResourcesUtils {
         try {
             final URL[] librariesURLs = getLibrariesURLs(processApplicationsResourcesDir);
             if (librariesURLs.length > 0) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Creating the classloader for process " + processDefinitionID);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Creating the classloader for process " + processDefinitionID);
                 }
                 processClassLoader = new URLClassLoader(librariesURLs, Thread.currentThread().getContextClassLoader());
             }
         } catch (final IOException e) {
             final String message = "Unable to create the class loader for the process's libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new IOException(message);
         }
@@ -198,8 +198,8 @@ public class FormsResourcesUtils {
                 urls.add(validatorsFiles[i].toURI().toURL());
             }
         } else {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "The validators directory doesn't exists.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("The validators directory doesn't exists.");
             }
         }
         final URL[] urlArray = new URL[urls.size()];
@@ -260,8 +260,8 @@ public class FormsResourcesUtils {
             }
         } catch (final Exception e) {
             final String message = "Unable to create the class loader for the libraries of process " + processDefinitionID;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         }
         return processClassLoader;
@@ -283,16 +283,16 @@ public class FormsResourcesUtils {
                     lastDeployementDate = deployementDate;
                 }
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING,
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn(
                             "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
                                     + directory.getName(), e);
                 }
             }
         }
         if (lastDeployementDate == 0L) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING,
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn(
                         "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
             }
         }
@@ -317,14 +317,14 @@ public class FormsResourcesUtils {
             final File formsDir = new File(WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder(), processUUID);
             final boolean deleted = deleteDirectory(formsDir);
             if (!deleted) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "unable to delete the web resources directory " + formsDir.getCanonicalPath()
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "unable to delete the web resources directory " + formsDir.getCanonicalPath()
                             + ". You will be able to delete it manually once the JVM will shutdown");
                 }
             }
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while deleting the web resources directory for process " + processDefinitionID, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while deleting the web resources directory for process " + processDefinitionID, e);
             }
         }
     }
@@ -396,8 +396,8 @@ public class FormsResourcesUtils {
                                 FileUtils.deleteDirectory(previousDeployedBDM);
                             } catch (final IOException e) {
                                 final String message = "Unable to delete obsolete bdm libraries";
-                                if (LOGGER.isLoggable(Level.WARNING)) {
-                                    LOGGER.log(Level.WARNING, message, e);
+                                if (LOGGER.isWarnEnabled()) {
+                                    LOGGER.warn( message, e);
                                 }
                             }
                         }
@@ -417,28 +417,28 @@ public class FormsResourcesUtils {
             unzipContentToFolder(clientBDMZip, bdmWorkDir);
         } catch (final BonitaHomeNotSetException e) {
             final String message = "Unable to create the class loader for the bdm libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         } catch (final ServerAPIException e) {
             final String message = "Unable to create the class loader for the bdm libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         } catch (final UnknownAPITypeException e) {
             final String message = "Unable to create the class loader for the bdm libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         } catch (final BusinessDataRepositoryException e) {
             final String message = "Unable to create the class loader for the bdm libraries, maybe no bdm has been installed";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, message, e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(message, e);
             }
         } catch (final IOException e) {
             final String message = "Unable to create the class loader for the bdm libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         }
     }
@@ -488,8 +488,8 @@ public class FormsResourcesUtils {
             return lastBDMDeployementId;
         } catch (final Exception e) {
             final String message = "Unable to retrieve business data model version";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             return null;
         }
@@ -511,8 +511,8 @@ public class FormsResourcesUtils {
         try {
             final URL[] librariesURLs = getBDMLibrariesURLs(bdmFolder);
             if (librariesURLs.length > 0) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Creating the classloader for process " + processDefinitionID);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Creating the classloader for process " + processDefinitionID);
                 }
                 if (parentClassloader == null) {
                     processClassLoader = new URLClassLoader(librariesURLs, Thread.currentThread().getContextClassLoader());
@@ -522,8 +522,8 @@ public class FormsResourcesUtils {
             }
         } catch (final IOException e) {
             final String message = "Unable to create the class loader for the application's libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new IOException(message);
         }
@@ -546,8 +546,8 @@ public class FormsResourcesUtils {
                 }
             }
         } else {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "The bdm directory doesn't exists.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("The bdm directory doesn't exists.");
             }
         }
         final URL[] urlArray = new URL[urls.size()];
@@ -570,8 +570,8 @@ public class FormsResourcesUtils {
             processClassLoader = setCorrectHierarchicalClassLoader(processClassLoader, parentClassLoader);
         } catch (final IOException e) {
             final String message = "Unable to create the class loader for the application's libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         }
         PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);

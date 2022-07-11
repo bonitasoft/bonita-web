@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +55,7 @@ public class ProcessFormServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(ProcessFormServlet.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(ProcessFormServlet.class.getName());
 
     private static final String PAGE_SERVLET_MAPPING = "/portal/resource/";
 
@@ -198,8 +198,8 @@ public class ProcessFormServlet extends HttpServlet {
             try {
                 return Long.parseLong(idAsString);
             } catch (final NumberFormatException e) {
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, "Wrong value for " + parameterName + " expecting a number (long value)");
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info( "Wrong value for " + parameterName + " expecting a number (long value)");
                 }
             }
         }
@@ -217,7 +217,7 @@ public class ProcessFormServlet extends HttpServlet {
             } else if (e instanceof ActivityInstanceNotFoundException) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Cannot find the task instance");
             } else {
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isWarnEnabled()) {
                     String message = "Error while trying to display a form";
                     if (processDefinitionId != -1) {
                         message = message + " for process " + processDefinitionId;
@@ -227,7 +227,7 @@ public class ProcessFormServlet extends HttpServlet {
                     } else if (hasProcessInstanceId) {
                         message = message + " ( instance overview)";
                     }
-                    LOGGER.log(Level.WARNING, message, e);
+                    LOGGER.warn( message, e);
                 }
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             }

@@ -16,8 +16,8 @@ package org.bonitasoft.livingapps;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,7 +64,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(LivingApplicationPageServlet.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(LivingApplicationPageServlet.class.getName());
     
     protected ResourceRenderer resourceRenderer = new ResourceRenderer();
 
@@ -120,8 +120,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 boolean isNotResourcePath = isNotResourcePath(resourcePath);
                 customPageName = getCustomPageName(appToken, pageToken, apiSession, request, response, isNotResourcePath);
                 if (StringUtils.isBlank(customPageName)) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Error while trying to retrieve the application page");
+                    if (LOGGER.isWarnEnabled()) {
+                        LOGGER.warn( "Error while trying to retrieve the application page");
                     }
                     //the response status is set in the error handling of getCustomPageName
                     return;
@@ -153,16 +153,16 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 String appThemeResourcePrefix = "/apps/" + appToken;
                 customPageRequestModifier.forwardIfRequestIsAuthorized(request, response, appThemeResourcePrefix + THEME_PATH_SEPARATOR + "/", appThemeResourcePrefix + themeResourcePath);
             } else {
-                if (LOGGER.isLoggable(Level.FINEST)) {
-                    LOGGER.log(Level.FINEST, "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
+                if (LOGGER.isTraceEnabled()){
+                    LOGGER.trace( "One of the separator '/content', '/theme' or '/API' is expected in the URL after the application token and the page token.");
                 }
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.flushBuffer();
             }
 
         } else {
-            if (LOGGER.isLoggable(Level.FINEST)) {
-                LOGGER.log(Level.FINEST, "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
+            if (LOGGER.isTraceEnabled()){
+                LOGGER.trace( "The info path is suppose to contain the application token, the page token and one of the separator '/content', '/theme' or '/API'.");
             }
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.flushBuffer();
@@ -175,8 +175,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
             final Long customPageId = getApplicationApi(apiSession).getApplicationPage(appToken, pageToken).getPageId();
             return getPageApi(apiSession).getPage(customPageId).getName();
         } catch (final NotFoundException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "The application page " + appToken + "/" + pageToken + " was not found.");
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( "The application page " + appToken + "/" + pageToken + " was not found.");
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND,
@@ -217,8 +217,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
 
     private void handleException(final String pageName, final Exception e, final HttpServletRequest request, final HttpServletResponse response, final boolean isNotResourcePath) throws ServletException, IOException {
         if (e instanceof InvalidSessionException ) {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+             if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("Invalid Bonita engine session.", e);
             }
             SessionUtil.sessionLogout(request.getSession());
             if (isNotResourcePath) {
@@ -228,8 +228,8 @@ public class LivingApplicationPageServlet extends HttpServlet {
                 response.flushBuffer();
             }
         } else {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Error while trying to render the application page " + pageName, e);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( "Error while trying to render the application page " + pageName, e);
             }
             throw new ServletException(e.getMessage());
         }

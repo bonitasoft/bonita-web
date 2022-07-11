@@ -2,7 +2,7 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.logging.Level;
+import org.slf4j.LoggerFactory;
 
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.junit.AfterClass;
@@ -31,7 +31,6 @@ public class AttributeEncodingTest {
 
     @BeforeClass
     public static void start() throws Exception {
-        Engine.setLogLevel(Level.WARNING);
         component = new Component();
         server = component.getServers().add(Protocol.HTTP, 0);
         final Application application = createApplication();

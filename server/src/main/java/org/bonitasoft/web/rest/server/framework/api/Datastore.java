@@ -16,7 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.framework.api;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Julien Mege
@@ -38,7 +39,7 @@ public class Datastore {
 
     protected final Logger getLogger() {
         if (this.logger == null) {
-            this.logger = Logger.getLogger(this.getClass().getName());
+            this.logger = LoggerFactory.getLogger(this.getClass().getName());
         }
         return this.logger;
     }

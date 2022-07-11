@@ -16,11 +16,11 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public abstract class IconServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(IconServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(IconServlet.class.getName());
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
@@ -101,7 +101,7 @@ public abstract class IconServlet extends HttpServlet {
     }
 
     private void logAndThrowException(IOException e, String msg) throws ServletException {
-        LOGGER.log(Level.SEVERE, msg, e);
+        LOGGER.error( msg, e);
         throw new ServletException(e.getMessage(), e);
     }
 

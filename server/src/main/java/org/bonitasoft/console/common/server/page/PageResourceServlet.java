@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.page;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class PageResourceServlet extends ResourceServlet {
     /**
      * Logger
      */
-    private final static Logger LOGGER = Logger.getLogger(PageResourceServlet.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(PageResourceServlet.class.getName());
 
     /**
      * theme name : the theme folder's name
@@ -62,8 +62,8 @@ public class PageResourceServlet extends ResourceServlet {
      */
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, "This servlet is deprecated. " +
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info( "This servlet is deprecated. " +
                     "You can now access your resources through their relative URL." +
                     "see the custom page documentation.");
         }

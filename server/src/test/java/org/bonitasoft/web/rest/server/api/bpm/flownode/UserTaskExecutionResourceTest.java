@@ -27,8 +27,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.junit.Rule;
+import org.junit.contrib.java.lang.system.SystemOutRule;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.contract.ContractDefinition;
@@ -53,6 +56,8 @@ import org.restlet.resource.ServerResource;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTaskExecutionResourceTest extends RestletTest {
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog().muteForSuccessfulTests();
 
     private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
 
@@ -184,26 +189,24 @@ public class UserTaskExecutionResourceTest extends RestletTest {
     }
 
     @Test
-    public void should_contract_violation_exception_log_explanations_when_logger_is_info() throws UserTaskNotFoundException, FlowNodeExecutionException,
-            ProcessDefinitionNotFoundException, ProcessActivationException, ProcessExecutionException, ContractViolationException, FileNotFoundException, UpdateException {
+    public void should_contract_violation_exception_log_explanations_when_logger_is_info() throws Exception {
         //given
         final String message = "contract violation !!!!";
         final List<String> explanations = Arrays.asList("explanation1", "explanation2");
         doThrow(new ContractViolationException(message, message, explanations, null)).when(processAPI)
                 .executeUserTask(anyLong(),anyLong(), anyMapOf(String.class, Serializable.class));
         when(processAPI.getUserTaskContract(1L)).thenReturn(contractDefinition);
-        doReturn(logger).when(userTaskExecutionResource).getLogger();
         doReturn(1L).when(userTaskExecutionResource).getTaskIdParameter();
-        doReturn(true).when(logger).isLoggable(Level.INFO);
         doReturn(response).when(userTaskExecutionResource).getResponse();
         final Map<String, Serializable> inputs = new HashMap<>();
         inputs.put("testKey", "testValue");
 
+        systemOutRule.clearLog();
         //when
         userTaskExecutionResource.executeTask(inputs);
 
         //then
-        verify(logger, times(1)).log(Level.INFO, message + "\nExplanations:\nexplanation1explanation2");
+        assertThat(systemOutRule.getLog()).contains(message + "\nExplanations:\nexplanation1explanation2");
         verify(userTaskExecutionResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
     }
 

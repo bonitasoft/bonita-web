@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -46,7 +46,7 @@ public class TokenValidatorFilter extends ExcludingPatternFilter {
     /**
      * Logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(TokenValidatorFilter.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(TokenValidatorFilter.class.getName());
     
     
     @Override
@@ -61,8 +61,8 @@ public class TokenValidatorFilter extends ExcludingPatternFilter {
             String apiToken = (String) multiReadHttpServletRequest.getSession().getAttribute("api_token");
 
             if (headerFromRequest == null || !headerFromRequest.equals(apiToken)) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Token Validation failed, expected: " + apiToken + ", received: " + headerFromRequest);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Token Validation failed, expected: " + apiToken + ", received: " + headerFromRequest);
                 }
                 httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.flushBuffer();

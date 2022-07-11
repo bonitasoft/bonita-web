@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import java.util.stream.Collectors;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
@@ -42,7 +42,7 @@ import org.bonitasoft.engine.util.APITypeManager;
  */
 public class PlatformManagementUtils {
     
-    private static final Logger LOGGER = Logger.getLogger(PlatformManagementUtils.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformManagementUtils.class.getName());
 
     private final ConfigurationFilesManager configurationFilesManager = ConfigurationFilesManager.getInstance();
 
@@ -182,10 +182,10 @@ public class PlatformManagementUtils {
                 platformLogout(platformSession);
             }
         } catch (Exception e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Platform is not available.", e);
-            } else if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Platform is not available.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Platform is not available.", e);
+            } else if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( "Platform is not available.");
             }
             return false;
         }

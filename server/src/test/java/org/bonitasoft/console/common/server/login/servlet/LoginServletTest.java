@@ -12,9 +12,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.junit.Rule;
+import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -45,7 +46,8 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServletTest {
-
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog().muteForSuccessfulTests();
     @Mock
     HttpServletRequest req;
 
@@ -134,56 +136,39 @@ public class LoginServletTest {
 
     @Test
     public void testDoGetShouldDropPassowrdWhenLoggingQueryString() throws Exception {
-        final Logger logger = Logger.getLogger(LoginServlet.class.getName());
-        logger.setLevel(Level.FINEST);
-
         //given
         final LoginServlet servlet = spy(new LoginServlet());
         doReturn("query string").when(req).getQueryString();
         doNothing().when(servlet).doPost(req, resp);
 
+        systemOutRule.clearLog();
         //when
         servlet.doGet(req, resp);
 
         //then
-        verify(req).getQueryString();
+        assertThat(systemOutRule.getLog()).containsPattern(".*TRACE.*.query string : "+req.getQueryString());
         verify(servlet).dropPassword(anyString());
     }
 
-    @Test
-    public void testDoGetShouldNotLogQueryString() throws Exception {
-        final Logger logger = Logger.getLogger(LoginServlet.class.getName());
-        logger.setLevel(Level.INFO);
-
-        //given
-        final LoginServlet servlet = spy(new LoginServlet());
-        doNothing().when(servlet).doPost(req, resp);
-
-        //when
-        servlet.doGet(req, resp);
-
-        //then
-        verify(req, never()).getQueryString();
-    }
 
     @Test
     public void testDoPostShouldNotUseQueryString() throws Exception {
-        final Logger logger = Logger.getLogger(LoginServlet.class.getName());
-        logger.setLevel(Level.FINEST);
 
         //given
         final LoginServlet servlet = spy(new LoginServlet());
         doReturn(httpSession).when(req).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
+        doReturn("query string").when(req).getQueryString();
         doReturn(true).when(apiSession).isTechnicalUser();
         doReturn(null).when(req).getParameter(AuthenticationManager.REDIRECT_AFTER_LOGIN_PARAM_NAME);
         doNothing().when(servlet).doLogin(req, resp);
 
         //when
+        systemOutRule.clearLog();
         servlet.doPost(req, resp);
 
         //then
-        verify(req, never()).getQueryString();
+        assertThat(systemOutRule.getLog()).doesNotContain(req.getQueryString());
     }
 
     @Test

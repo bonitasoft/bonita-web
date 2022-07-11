@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.bpm.businessdata.BusinessDataQueryMetadata;
@@ -46,7 +46,7 @@ public class BusinessDataQueryResource extends CommonResource {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(BusinessDataQueryResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusinessDataQueryResource.class.getName());
     
     public BusinessDataQueryResource(final CommandAPI commandAPI) {
         this.commandAPI = commandAPI;
@@ -68,12 +68,12 @@ public class BusinessDataQueryResource extends CommonResource {
         parameters.put("maxResults", searchPageSize);
         parameters.put("businessDataURIPattern", BusinessDataFieldValue.URI_PATTERN);
 
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "Executing business Data Query: " + parameters.get("queryName"));
-            LOGGER.log(Level.FINE, "entityClassName: " + parameters.get("entityClassName"));
-            LOGGER.log(Level.FINE, "queryParameters: " + parameters.get("queryParameters").toString());
-            LOGGER.log(Level.FINE, "startIndex: " + parameters.get("startIndex"));
-            LOGGER.log(Level.FINE, "maxResults: " + parameters.get("maxResults"));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Executing business Data Query: " + parameters.get("queryName"));
+            LOGGER.debug("entityClassName: " + parameters.get("entityClassName"));
+            LOGGER.debug("queryParameters: " + parameters.get("queryParameters").toString());
+            LOGGER.debug("startIndex: " + parameters.get("startIndex"));
+            LOGGER.debug("maxResults: " + parameters.get("maxResults"));
         }
         
         BusinessDataQueryResult businessDataQueryResult = (BusinessDataQueryResult) commandAPI.execute(COMMAND_NAME, parameters);

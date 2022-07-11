@@ -17,7 +17,7 @@ package org.bonitasoft.console.server.service;
 import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
 
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.api.ImportStatus;
@@ -33,6 +33,7 @@ import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.web.common.model.ImportStatusMessages;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Julien Mege
@@ -49,7 +50,7 @@ public class ApplicationsImportService extends BonitaImportService {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(ApplicationsImportService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationsImportService.class.getName());
 
     protected ApplicationAPI getApplicationAPI() throws InvalidSessionException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         return TenantAPIAccessor.getLivingApplicationAPI(getSession());

@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -48,7 +48,7 @@ public class ErrorPageServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(ErrorPageServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorPageServlet.class.getName());
     
     /**
      * Static variable to avoid reading the error HTML page every time the error page is displayed
@@ -68,8 +68,8 @@ public class ErrorPageServlet extends HttpServlet {
         try (PrintWriter output = response.getWriter()) {
             if(!StringUtils.isEmpty(pathInfo)) {
                 String errorCode = pathInfo.substring(1);
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, "Displaying error page with code " + errorCode);
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info( "Displaying error page with code " + errorCode);
                 }
                 final APISession apiSession = (APISession) request.getSession().getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
                 if (apiSession != null && isPlatformHealthy()) {
@@ -83,8 +83,8 @@ public class ErrorPageServlet extends HttpServlet {
                         try (InputStream errorPageInputStream = sc.getResourceAsStream(ERROR_TEMPLATE_PATH)) {
                             errorPageString = new String(errorPageInputStream.readAllBytes(), StandardCharsets.UTF_8);
                         } catch (Exception e) {
-                            if (LOGGER.isLoggable(Level.SEVERE)) {
-                                LOGGER.log(Level.SEVERE, "Error while trying to get the error page.", e);
+                             if (LOGGER.isErrorEnabled()) {
+                                LOGGER.error( "Error while trying to get the error page.", e);
                             }
                             output.println("An Error occured.");
                         }
@@ -95,8 +95,8 @@ public class ErrorPageServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher("/" + errorCode + ".jsp").forward(request, response);
                 }
             } else {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Status code missing from request.");
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "Status code missing from request.");
                 }
                 output.println("Status code missing from request.");
             }
@@ -109,8 +109,8 @@ public class ErrorPageServlet extends HttpServlet {
             PlatformManagementUtils platformManagementUtils = new PlatformManagementUtils();
             return platformManagementUtils.isPlatformAvailable() && !TenantsManagementUtils.isDefaultTenantPaused();
         } catch (Exception e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Platform is not healthy.");
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( "Platform is not healthy.");
             }
             return false;
         }
@@ -120,8 +120,8 @@ public class ErrorPageServlet extends HttpServlet {
         try {
             output.format(errorPageString, errorCode, contextPath, errorCode);
         } catch (Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while trying to display the error page.", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while trying to display the error page.", e);
             }
             output.println("An Error occured.");
         }

@@ -17,8 +17,8 @@ package org.bonitasoft.console.common.server.page;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,7 +46,7 @@ public class PageDownloadServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(PageDownloadServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PageDownloadServlet.class.getName());
 
     /**
      * UID
@@ -92,8 +92,8 @@ public class PageDownloadServlet extends HttpServlet {
 
         } catch (final InvalidSessionException e) {
             final String message = "Session expired. Please login again.";
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, message, e);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( message, e);
             }
             try {
                 out.write(message.getBytes());
@@ -103,8 +103,8 @@ public class PageDownloadServlet extends HttpServlet {
             }
 
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( e.getMessage(), e);
             }
             try {
                 out.write("An exception occured. Please contact an administrator".getBytes());

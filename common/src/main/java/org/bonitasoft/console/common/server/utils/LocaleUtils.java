@@ -17,8 +17,8 @@
 package org.bonitasoft.console.common.server.utils;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +53,7 @@ public class LocaleUtils {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(LocaleUtils.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocaleUtils.class.getName());
 
     /**
      * Return the user locale as set in the the request. If the locale code is invalid, returns the default locale (en).
@@ -79,8 +79,8 @@ public class LocaleUtils {
     }
 
     public static void logUnsupportedLocale(String unsupportedLocale, String usedLocale) {
-        if (!unsupportedLocale.equals(usedLocale) && LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "Locale \"" + unsupportedLocale + "\" is not part of the locales available. Using locale \"" + usedLocale + "\"");
+        if (!unsupportedLocale.equals(usedLocale) && LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Locale \"" + unsupportedLocale + "\" is not part of the locales available. Using locale \"" + usedLocale + "\"");
         }
     }
 
@@ -104,8 +104,8 @@ public class LocaleUtils {
             List<String> supportedLocales = new ArrayList<>(AVAILABLE_LOCALES.keySet());
             for (String supportedLocale : supportedLocales) {
                 if (canLocaleBeReducedToSupportedLocale(locale, supportedLocale)) {
-                    if (LOGGER.isLoggable(Level.FINEST)) {
-                        LOGGER.log(Level.FINEST, "Using available locale \"" + supportedLocale + "\" instead of \"" + locale + "\"");
+                    if (LOGGER.isTraceEnabled()){
+                        LOGGER.trace( "Using available locale \"" + supportedLocale + "\" instead of \"" + locale + "\"");
                     }
                     return supportedLocale;
                 }

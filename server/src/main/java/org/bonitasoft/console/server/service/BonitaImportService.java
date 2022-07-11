@@ -20,8 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -67,28 +68,28 @@ abstract class BonitaImportService extends ConsoleService {
             final ImportStatusMessages importStatusMessages = importFileContent(readImportFile(xmlFile), importPolicyAsString);
             return serializer.serialize(importStatusMessages);
         } catch (final InvalidSessionException e) {
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, AbstractI18n.t_("Session expired. Please log in again."), e);
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info(AbstractI18n.t_("Session expired. Please log in again."), e);
             }
             throw e;
         } catch (final ExecutionException e) {
-            if (getLogger().isLoggable(Level.WARNING)) {
-                getLogger().log(Level.WARNING, e.getMessage(), e);
+            if (getLogger().isWarnEnabled()) {
+                getLogger().warn(e.getMessage(), e);
             }
             throw new ServiceException(getToken(), getFileFormatExceptionMessage(), e);
         } catch (final ImportException e) {
-            if (getLogger().isLoggable(Level.WARNING)) {
-                getLogger().log(Level.WARNING, e.getMessage(), e);
+            if (getLogger().isWarnEnabled()) {
+                getLogger().warn(e.getMessage(), e);
             }
             throw new ServiceException(getToken(), getFileFormatExceptionMessage(), e);
-        }  catch (final AlreadyExistsException e) {
-            if (getLogger().isLoggable(Level.WARNING)) {
-                getLogger().log(Level.WARNING, e.getMessage(), e);
+        } catch (final AlreadyExistsException e) {
+            if (getLogger().isWarnEnabled()) {
+                getLogger().warn(e.getMessage(), e);
             }
             throw new ServiceException(getToken(), getAlreadyExistsExceptionMessage(e), e);
         } catch (final Exception e) {
-            if (getLogger().isLoggable(Level.SEVERE)) {
-                getLogger().log(Level.SEVERE, e.getMessage(), e);
+            if (getLogger().isErrorEnabled()) {
+                getLogger().error(e.getMessage(), e);
             }
             throw new ServiceException(getToken(), e);
         }

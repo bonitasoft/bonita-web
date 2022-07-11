@@ -15,8 +15,8 @@
 package org.bonitasoft.console.common.server.servlet;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -32,7 +32,7 @@ public class PlatformTenantListener implements ServletContextListener {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(PlatformTenantListener.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformTenantListener.class.getName());
 
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
@@ -42,11 +42,11 @@ public class PlatformTenantListener implements ServletContextListener {
             // Create temporary folder specific to portal at startup:
             WebBonitaConstantsUtils.getPlatformInstance().getTempFolder();
         } catch (BonitaException e) {
-            LOGGER.log(Level.SEVERE,
+            LOGGER.error(
                     "Error initializing platform configuration. Engine most likely failed to start. Check previous error logs for more details.");
         } catch (IOException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while retrieving configuration", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while retrieving configuration", e);
             }
         }
     }

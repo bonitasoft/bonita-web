@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,7 +61,7 @@ public class CommonResource extends ServerResource {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonResource.class.getName());
 
     /**
      * Get the tenant session to access the engine APIs
@@ -181,8 +181,8 @@ public class CommonResource extends ServerResource {
 
         final ErrorMessage errorMessage = new ErrorMessage(t);
         final String message = "Error while querying REST resource " + getClass().getName() + " message: " + t.getMessage();
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "***" + message);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("***" + message);
         }
         Status status;
         if (t instanceof IllegalArgumentException || t instanceof JsonParseException) {
@@ -292,12 +292,12 @@ public class CommonResource extends ServerResource {
     }
 
     protected void manageContractViolationException(final ContractViolationException e, final String statusErrorMessage) {
-        if (getLogger().isLoggable(Level.INFO)) {
+        if (LOGGER.isInfoEnabled()) {
             final StringBuilder explanations = new StringBuilder();
             for (final String explanation : e.getExplanations()) {
                 explanations.append(explanation);
             }
-            getLogger().log(Level.INFO, e.getSimpleMessage() + "\nExplanations:\n" + explanations);
+            LOGGER.info(e.getSimpleMessage() + "\nExplanations:\n" + explanations);
         }
         getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST, statusErrorMessage);
         final ErrorMessageWithExplanations errorMessage = new ErrorMessageWithExplanations(e);

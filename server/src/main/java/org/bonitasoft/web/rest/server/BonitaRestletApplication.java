@@ -27,13 +27,13 @@ import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariableResource
 import org.bonitasoft.web.rest.server.api.bpm.cases.ArchivedCaseVariablesResource;
 import org.bonitasoft.web.rest.server.api.bpm.cases.CaseContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.ActivityVariableResource;
-import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.TimerEventTriggerResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContextResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.UserTaskExecutionResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedActivityVariableResource;
 import org.bonitasoft.web.rest.server.api.bpm.flownode.archive.ArchivedUserTaskContextResource;
+import org.bonitasoft.web.rest.server.api.bpm.message.BPMMessageResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessContractResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessDefinitionDesignResource;
 import org.bonitasoft.web.rest.server.api.bpm.process.ProcessInstantiationResource;
@@ -61,7 +61,7 @@ public class BonitaRestletApplication extends Application {
     public static final String ROUTER_EXTENSION_PREFIX = "/extension/";
 
     public static final String BDM_DEFINITION_URL = "/tenant/bdm";
-    
+
     public static final String BDM_BUSINESS_DATA_URL = "/bdm/businessData";
 
     public static final String BDM_BUSINESS_DATA_REFERENCE_URL = "/bdm/businessDataReference";
@@ -77,7 +77,7 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_TIMER_EVENT_TRIGGER_URL = "/bpm/timerEventTrigger";
 
     public static final String BPM_MESSAGE_URL = "/bpm/message";
-    
+
     public static final String BPM_SIGNAL_URL = "/bpm/signal";
 
     public static final String BPM_ACTIVITY_VARIABLE_URL = "/bpm/activityVariable";
@@ -85,15 +85,15 @@ public class BonitaRestletApplication extends Application {
     public static final String BPM_CASE_CONTEXT_URL = "/bpm/case";
 
     private static final String BPM_ARCHIVED_CASE_CONTEXT_URL = "/bpm/archivedCase";
-    
+
     public static final String BPM_ARCHIVED_CASE_VARIABLE_URL = "/bpm/archivedCaseVariable";
-    
+
     public static final String BPM_ARCHIVED_ACTIVITY_VARIABLE_URL = "/bpm/archivedActivityVariable";
 
     private final FinderFactory factory;
 
 
-    public BonitaRestletApplication(final FinderFactory finderFactory,ConverterHelper converterHelper ) {
+    public BonitaRestletApplication(final FinderFactory finderFactory, ConverterHelper converterHelper) {
         super();
         factory = finderFactory;
         getMetadataService().setDefaultMediaType(MediaType.APPLICATION_JSON);
@@ -105,7 +105,7 @@ public class BonitaRestletApplication extends Application {
         final List<ConverterHelper> registeredConverters = Engine.getInstance().getRegisteredConverters();
         registeredConverters.add(converterHelper);
         for (ConverterHelper registeredConverter : registeredConverters) {
-            if (registeredConverter.getClass().equals(JacksonConverter.class)){
+            if (registeredConverter.getClass().equals(JacksonConverter.class)) {
                 registeredConverters.remove(registeredConverter);
                 registeredConverters.add(converterHelper);
             }
@@ -137,7 +137,7 @@ public class BonitaRestletApplication extends Application {
 
         // POST to send a BPM message to the engine:
         router.attach(BPM_MESSAGE_URL, factory.create(BPMMessageResource.class));
-        
+
         // POST to send a BPM signal to the engine:
         router.attach(BPM_SIGNAL_URL, factory.create(BPMSignalResource.class));
 
@@ -169,7 +169,7 @@ public class BonitaRestletApplication extends Application {
 
         // GET the BDM status
         router.attach(BDM_DEFINITION_URL, factory.create(BusinessDataModelResource.class));
-        
+
         //GET a BusinessData
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}/findByIds", factory.create(BusinessDataFindByIdsResource.class));
         router.attach(BDM_BUSINESS_DATA_URL + "/{className}", factory.create(BusinessDataQueryResource.class));
@@ -187,11 +187,11 @@ public class BonitaRestletApplication extends Application {
         // GET all translations
         router.attach("/system/i18ntranslation", factory.create(I18nTanslationResource.class));
 
-        router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL+"/{caseId}/{variableName}", factory.create(ArchivedCaseVariableResource.class));
+        router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL + "/{caseId}/{variableName}", factory.create(ArchivedCaseVariableResource.class));
         router.attach(BPM_ARCHIVED_CASE_VARIABLE_URL, factory.create(ArchivedCaseVariablesResource.class));
-        
-        router.attach(BPM_ARCHIVED_ACTIVITY_VARIABLE_URL+ "/{activityId}/{variableName}", factory.create(ArchivedActivityVariableResource.class));
-        
+
+        router.attach(BPM_ARCHIVED_ACTIVITY_VARIABLE_URL + "/{activityId}/{variableName}", factory.create(ArchivedActivityVariableResource.class));
+
         return router;
     }
 

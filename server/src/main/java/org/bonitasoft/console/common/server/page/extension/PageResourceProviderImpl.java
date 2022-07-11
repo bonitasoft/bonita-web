@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -41,7 +41,7 @@ public class PageResourceProviderImpl implements PageResourceProvider {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(PageResourceProviderImpl.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(PageResourceProviderImpl.class.getName());
 
     private static final String VERSION_FILENAME = "VERSION";
 
@@ -59,16 +59,16 @@ public class PageResourceProviderImpl implements PageResourceProvider {
             try {
                 productVersion = IOUtils.toString(versionStream);
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Unable to read the file " + VERSION_FILENAME, e);
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "Unable to read the file " + VERSION_FILENAME, e);
                 }
                 productVersion = "";
             } finally {
                 try {
                     versionStream.close();
                 } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Unable to close the input stream for file " + VERSION_FILENAME, e);
+                    if (LOGGER.isWarnEnabled()) {
+                        LOGGER.warn( "Unable to close the input stream for file " + VERSION_FILENAME, e);
                     }
                 }
             }

@@ -17,8 +17,8 @@ package org.bonitasoft.web.rest.server.api.organization;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.web.rest.model.identity.UserDefinition;
@@ -52,7 +52,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(APIUser.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIUser.class.getName());
 
     @Override
     protected ItemDefinition<UserItem> defineItemDefinition() {
@@ -95,19 +95,19 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
                     throw new ValidationException(validator.getErrors());
                 }
             } catch (final InstantiationException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Error while instanciating the class", e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( "Error while instanciating the class", e);
                 }
                 e.printStackTrace();
             } catch (final IllegalAccessException e) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, "Illegal access with the file ", e);
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( "Illegal access with the file ", e);
                 }
                 e.printStackTrace();
             }
         } catch (final ClassNotFoundException e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Class not found", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Class not found", e);
             }
             e.printStackTrace();
         }

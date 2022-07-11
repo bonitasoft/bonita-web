@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -40,7 +40,7 @@ public class BDMClientDependenciesResolver {
 
     private final APISession session;
 
-    private static Logger LOGGER = Logger.getLogger(BDMClientDependenciesResolver.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(BDMClientDependenciesResolver.class.getName());
 
     private final Set<String> dependenciesNames = new HashSet<>();
 
@@ -86,8 +86,8 @@ public class BDMClientDependenciesResolver {
                     try {
                         FileUtils.deleteDirectory(previousDeployedBDM);
                     } catch (final IOException e) {
-                        if (LOGGER.isLoggable(Level.WARNING)) {
-                            LOGGER.log(Level.WARNING, "Unable to delete obsolete BDM libraries", e);
+                        if (LOGGER.isWarnEnabled()) {
+                            LOGGER.warn( "Unable to delete obsolete BDM libraries", e);
                         }
                     }
                 }
@@ -106,8 +106,8 @@ public class BDMClientDependenciesResolver {
             IOUtil.unzipToFolder(inpuStream, bdmWorkDir);
         } catch (final BonitaHomeNotSetException | IOException | BusinessDataRepositoryException | ServerAPIException | UnknownAPITypeException e) {
             final String message = "Unable to create the class loader for the BDM libraries";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
         }
     }
@@ -121,7 +121,7 @@ public class BDMClientDependenciesResolver {
             final TenantAdministrationAPI tenantAdministrationAPI = getTenantAdminstrationAPI();
             return tenantAdministrationAPI.getBusinessDataModelVersion();
         } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, "Unable to retrieve business data model version", e);
+            LOGGER.error( "Unable to retrieve business data model version", e);
             return null;
         }
     }

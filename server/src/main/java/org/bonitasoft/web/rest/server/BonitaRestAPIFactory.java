@@ -16,7 +16,7 @@
  */
 package org.bonitasoft.web.rest.server;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import org.bonitasoft.web.rest.server.api.application.APIApplication;
 import org.bonitasoft.web.rest.server.api.applicationmenu.APIApplicationMenu;
@@ -77,13 +77,14 @@ import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Séverin Moussel
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
 	
-    private static Logger LOGGER = Logger.getLogger(BonitaRestAPIFactory.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(BonitaRestAPIFactory.class.getName());
 	
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
@@ -126,13 +127,13 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             //    - duplication not removed because userXp must stay like this
         } else if ("userXP".equals(apiToken)) {
             if ("profile".equals(resourceToken)) {
-                LOGGER.warning("Deprecated API path, please use /API/portal/profile instead");
+                LOGGER.warn("Deprecated API path, please use /API/portal/profile instead");
                 return new APIProfile();
             } else if ("profileEntry".equals(resourceToken)) {
-                LOGGER.warning("Deprecated API path, please use /API/portal/profileEntry instead");
+                LOGGER.warn("Deprecated API path, please use /API/portal/profileEntry instead");
                 return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
-                LOGGER.warning("Deprecated API path, please use /API/portal/profileMember instead");
+                LOGGER.warn("Deprecated API path, please use /API/portal/profileMember instead");
                 return new APIProfileMember();
             } else if ("bonitaPage".equals(resourceToken)) {
                 return new APIBonitaPage();

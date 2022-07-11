@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,19 +61,19 @@ abstract class BonitaExportServlet extends HttpServlet {
 
         } catch (final InvalidSessionException e) {
             String message = "Session expired. Please log in again.";
-            if (getLogger().isLoggable(Level.FINE)) {
-                getLogger().log(Level.FINE, message, e);
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug(message, e);
             }
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         } catch (final FileNotFoundException e) {
             String message = "There is no BDM Access control installed.";
-            if (getLogger().isLoggable(Level.INFO)) {
-                getLogger().log(Level.INFO, message);
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info(message);
             }
             response.sendError(HttpServletResponse.SC_NOT_FOUND, message);
         } catch (final Exception e) {
-            if (getLogger().isLoggable(Level.SEVERE)) {
-                getLogger().log(Level.SEVERE, e.getMessage(), e);
+            if (getLogger().isErrorEnabled()) {
+                getLogger().error(e.getMessage(), e);
             }
             throw new ServletException(e.getMessage(), e);
         } finally {
@@ -82,7 +82,7 @@ abstract class BonitaExportServlet extends HttpServlet {
                     out.close();
                 }
             } catch (final IOException e) {
-                getLogger().log(Level.SEVERE, e.getMessage(), e);
+                getLogger().error(e.getMessage(), e);
             }
         }
     }

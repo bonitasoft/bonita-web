@@ -22,8 +22,8 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +51,7 @@ public abstract class FileUploadServlet extends HttpServlet {
      */
     protected static final long serialVersionUID = -948661031179067420L;
 
-    protected static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(FileUploadServlet.class.getName());
 
     protected String uploadDirectoryPath = null;
 
@@ -174,8 +174,8 @@ public abstract class FileUploadServlet extends HttpServlet {
 
                 // Upload file
                 item.write(uploadedFile);
-                if (LOGGER.isLoggable(Level.FINEST)) {
-                    LOGGER.log(Level.FINEST, "File uploaded : " + uploadedFile.getPath());
+                if (LOGGER.isTraceEnabled()){
+                    LOGGER.trace( "File uploaded : " + uploadedFile.getPath());
                 }
                 uploadedFile.deleteOnExit();
 
@@ -193,19 +193,19 @@ public abstract class FileUploadServlet extends HttpServlet {
             }
         } catch (SessionNotFoundException e) {
             final String message = "Session expired";
-            LOGGER.log(Level.FINE, message);
+            LOGGER.debug(message);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         } catch (final SizeLimitExceededException e) {
-            LOGGER.log(Level.SEVERE, "File is Too Big", e);
+            LOGGER.error( "File is Too Big", e);
             generateFileTooBigError(response, responsePW, "Uploaded file is too large, server is unable to process it");
         } catch (final FileSizeLimitExceededException e) {
-            LOGGER.log(Level.SEVERE, "File is Too Big", e);
+            LOGGER.error( "File is Too Big", e);
             generateFileTooBigError(response, responsePW, e.getFileName() + " is " + e.getActualSize() + " large, limit is set to " + e.getPermittedSize()
                     / FileUploadServlet.MEGABYTE + "Mb");
         } catch (final Exception e) {
             final String theErrorMessage = "Exception while uploading file.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, theErrorMessage, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( theErrorMessage, e);
             }
             throw new ServletException(theErrorMessage, e);
         } finally {

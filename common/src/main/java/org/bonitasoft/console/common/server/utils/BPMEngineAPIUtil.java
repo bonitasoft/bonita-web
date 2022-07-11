@@ -18,8 +18,8 @@ package org.bonitasoft.console.common.server.utils;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.IdentityAPI;
@@ -46,7 +46,7 @@ public class BPMEngineAPIUtil {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(BPMEngineAPIUtil.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(BPMEngineAPIUtil.class.getName());
 
     /**
      * Get the engine command API
@@ -62,20 +62,20 @@ public class BPMEngineAPIUtil {
             return TenantAPIAccessor.getCommandAPI(session);
         } catch (final BonitaHomeNotSetException e) {
             final String message = "Bonita home system variable is not defined";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final UnknownAPITypeException e) {
             final String message = "The engine API Implementation is unknown.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final ServerAPIException e) {
             final String message = "The engine client was not able to communicate with the engine server.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         }
@@ -95,20 +95,20 @@ public class BPMEngineAPIUtil {
             return TenantAPIAccessor.getProcessAPI(session);
         } catch (final BonitaHomeNotSetException e) {
             final String message = "Bonita home system variable is not defined";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final UnknownAPITypeException e) {
             final String message = "The engine API Implementation is unknown.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final ServerAPIException e) {
             final String message = "The engine client was not able to communicate with the engine server.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         }
@@ -128,20 +128,20 @@ public class BPMEngineAPIUtil {
             return TenantAPIAccessor.getIdentityAPI(session);
         } catch (final BonitaHomeNotSetException e) {
             final String message = "Bonita home system variable is not defined";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final UnknownAPITypeException e) {
             final String message = "The engine API Implementation is unknown.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final ServerAPIException e) {
             final String message = "The engine client was not able to communicate with the engine server.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         }
@@ -161,20 +161,20 @@ public class BPMEngineAPIUtil {
             return TenantAPIAccessor.getProfileAPI(session);
         } catch (final BonitaHomeNotSetException e) {
             final String message = "Bonita home system variable is not defined";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final UnknownAPITypeException e) {
             final String message = "The engine API Implementation is unknown.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final ServerAPIException e) {
             final String message = "The engine client was not able to communicate with the engine server.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         }
@@ -186,20 +186,20 @@ public class BPMEngineAPIUtil {
             return commandAPI.execute(name, parameters);
         } catch (final CommandNotFoundException e) {
             final String message = "The command " + name + " could not be found.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final CommandParameterizationException e) {
             final String message = "The command " + name + " expect different parameters types.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         } catch (final CommandExecutionException e) {
             final String message = "A error occured while executing the command.";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new BPMEngineException(message);
         }

@@ -17,8 +17,8 @@ package org.bonitasoft.console.common.server.page;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class CustomPageRequestModifier {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(CustomPageRequestModifier.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(CustomPageRequestModifier.class.getName());
 
     public void redirectToValidPageUrl(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());
@@ -55,8 +55,8 @@ public class CustomPageRequestModifier {
             URI uri = new URI(apiPath);
             if (!uri.normalize().toString().startsWith(apiPathShouldStartWith)) {
                 final String message = "attempt to access unauthorized path " + apiPath;
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, message);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(message);
                 }
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.flushBuffer();
@@ -64,8 +64,8 @@ public class CustomPageRequestModifier {
                 request.getRequestDispatcher(apiPath).forward(request, response);
             }
         } catch (URISyntaxException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, e.getMessage());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(e.getMessage());
             }
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.flushBuffer();

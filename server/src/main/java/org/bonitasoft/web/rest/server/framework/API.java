@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -62,7 +62,7 @@ public abstract class API<ITEM extends IItem> {
 
     private final Map<String, Deployer> deployers = new HashMap<>();
 
-    private static Logger LOGGER = Logger.getLogger(API.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(API.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -433,10 +433,10 @@ public abstract class API<ITEM extends IItem> {
             try {
                 deployers.get(attribute).deployIn(item);
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, getFailedDeployMessage(attribute, item), e);
-                } else if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, getFailedDeployMessage(attribute, item));
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(getFailedDeployMessage(attribute, item), e);
+                } else if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info( getFailedDeployMessage(attribute, item));
                 }
             }
         }

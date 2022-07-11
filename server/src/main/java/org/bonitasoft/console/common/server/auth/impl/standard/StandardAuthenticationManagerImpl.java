@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.auth.impl.standard;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
@@ -35,7 +35,7 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(StandardAuthenticationManagerImpl.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StandardAuthenticationManagerImpl.class.getName());
 
     @Override
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ServletException {
@@ -61,8 +61,8 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
     @Override
     public Map<String, Serializable> authenticate(final HttpServletRequestAccessor requestAccessor, final Credentials credentials)
             throws AuthenticationFailedException {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "#authenticate (this implementation of " + AuthenticationManager.class.getName()
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("#authenticate (this implementation of " + AuthenticationManager.class.getName()
                     + " does nothing. The subsequent engine login is enough to authenticate the user.)");
         }
         return Collections.emptyMap();

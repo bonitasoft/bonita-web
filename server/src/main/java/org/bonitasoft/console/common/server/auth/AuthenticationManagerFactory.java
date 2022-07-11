@@ -16,16 +16,17 @@ package org.bonitasoft.console.common.server.auth;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Ruiheng Fan
  */
 public class AuthenticationManagerFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(AuthenticationManagerFactory.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManagerFactory.class.getName());
 
     static Map<Long, AuthenticationManager> map = new HashMap<>();
 
@@ -48,7 +49,7 @@ public class AuthenticationManagerFactory {
         String authenticationManagerName = AuthenticationManagerProperties.getProperties(tenantId).getAuthenticationManagerImpl();
         if (authenticationManagerName == null || authenticationManagerName.isEmpty()) {
             authenticationManagerName = StandardAuthenticationManagerImpl.class.getName();
-            LOGGER.finest("The login manager implementation is undefined. Using default implementation : " + authenticationManagerName);
+            LOGGER.trace("The login manager implementation is undefined. Using default implementation : " + authenticationManagerName);
         }
         return authenticationManagerName;
     }

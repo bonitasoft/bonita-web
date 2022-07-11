@@ -114,7 +114,7 @@ APIHasSearch<ITEM> {
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_CASE_ID, deploys, item) || isDeployable(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, deploys, item)) {
             final CaseItem openedCaseItem = getCaseDatastore().get(item.getCaseId());
-            if ( openedCaseItem != null) {
+            if (openedCaseItem != null) {
                 item.setDeploy(FlowNodeItem.ATTRIBUTE_CASE_ID, openedCaseItem);
                 item.setDeploy(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID, openedCaseItem);
             } else {
@@ -126,7 +126,7 @@ APIHasSearch<ITEM> {
 
         if (isDeployable(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, deploys, item)) {
             final CaseItem openedParentCaseItem = getCaseDatastore().get(item.getParentCaseId());
-            if ( openedParentCaseItem != null) {
+            if (openedParentCaseItem != null) {
                 item.setDeploy(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID,
                         openedParentCaseItem);
             } else {

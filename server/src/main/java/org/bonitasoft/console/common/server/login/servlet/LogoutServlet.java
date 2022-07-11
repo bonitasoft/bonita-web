@@ -18,8 +18,8 @@ package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +61,7 @@ public class LogoutServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(LogoutServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogoutServlet.class.getName());
 
     /**
      * {@inheritDoc}
@@ -99,8 +99,8 @@ public class LogoutServlet extends HttpServlet {
                 response.sendRedirect(loginPage);
             }
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while performing the logout", e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( "Error while performing the logout", e);
             }
             throw new ServletException(e);
         }

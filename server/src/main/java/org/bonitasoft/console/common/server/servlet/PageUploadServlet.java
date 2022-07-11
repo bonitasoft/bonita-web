@@ -18,8 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -47,7 +47,7 @@ public class PageUploadServlet extends TenantFileUploadServlet {
 
     protected static final String PAGE_PROPERTIES = "page.properties";
 
-    protected static final Logger LOGGER = Logger.getLogger(PageUploadServlet.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(PageUploadServlet.class.getName());
 
     @Override
     protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
@@ -79,8 +79,8 @@ public class PageUploadServlet extends TenantFileUploadServlet {
     }
 
     protected String getPermissionsError(final Exception e) {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn( e.getMessage());
         }
         return e.getClass().getSimpleName();
     }

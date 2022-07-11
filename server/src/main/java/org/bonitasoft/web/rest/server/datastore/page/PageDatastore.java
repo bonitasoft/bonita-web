@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
@@ -71,7 +71,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(PageDatastore.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PageDatastore.class.getName());
 
     /**
      * page files
@@ -256,8 +256,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                                                            final String orders,
                                                            final Map<String, String> filters) {
         if (filters.containsKey(PageItem.ATTRIBUTE_IS_HIDDEN)) {
-            if (!hasShownIsHiddenLog && LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.warning("Parameter \"isHidden\" for page search is deprecated and will be removed in a future release");
+            if (!hasShownIsHiddenLog && LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Parameter \"isHidden\" for page search is deprecated and will be removed in a future release");
                 hasShownIsHiddenLog = true;
             }
             filters.remove(PageItem.ATTRIBUTE_IS_HIDDEN);

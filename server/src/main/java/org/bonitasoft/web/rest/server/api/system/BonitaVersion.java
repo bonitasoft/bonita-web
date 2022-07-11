@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.IOUtils;
 
@@ -28,7 +28,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class BonitaVersion {
 
-    private static Logger LOGGER = Logger.getLogger(BonitaVersion.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(BonitaVersion.class.getName());
 
     private List<String> metadata;
 
@@ -43,16 +43,16 @@ public class BonitaVersion {
             try {
                 return IOUtils.readLines(stream, "UTF-8");
             } catch (final Exception e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Unable to read the file VERSION", e);
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "Unable to read the file VERSION", e);
                 }
                 return Collections.emptyList();
             } finally {
                 try {
                     stream.close();
                 } catch (final IOException e) {
-                    if (LOGGER.isLoggable(Level.WARNING)) {
-                        LOGGER.log(Level.WARNING, "Unable to close the input stream for file VERSION", e);
+                    if (LOGGER.isWarnEnabled()) {
+                        LOGGER.warn( "Unable to close the input stream for file VERSION", e);
                     }
                 }
             }

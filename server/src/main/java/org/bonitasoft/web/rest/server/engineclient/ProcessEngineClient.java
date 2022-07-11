@@ -15,8 +15,8 @@
 package org.bonitasoft.web.rest.server.engineclient;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.bar.BusinessArchive;
@@ -53,7 +53,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class ProcessEngineClient {
 
-    private static Logger LOGGER = Logger.getLogger(ProcessEngineClient.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(ProcessEngineClient.class.getName());
 
     private static int DELETE_PROCESS_BUNCH_SIZE = 100;
 
@@ -67,7 +67,7 @@ public class ProcessEngineClient {
         try {
             return getProcessApi().getProcessDeploymentInfo(processId);
         } catch (final ProcessDefinitionNotFoundException e) {
-            LOGGER.log(Level.FINE,"Unable to find process with id " + processId);
+            LOGGER.debug("Unable to find process with id " + processId);
             throw new APIItemNotFoundException(org.bonitasoft.web.rest.model.bpm.process.ProcessDefinition.TOKEN, APIID.makeAPIID(processId));
         } catch (final Exception e) {
             throw new APIException("Error when getting process deployment information", e);
@@ -153,7 +153,7 @@ public class ProcessEngineClient {
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
-                    LOGGER.log(Level.WARNING,
+                    LOGGER.warn(
                             "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
                 }
             }
@@ -178,7 +178,7 @@ public class ProcessEngineClient {
                 if (processesAllowedToBeDeletedIds.contains(parentProcessID)) {
                     deleteProcessInstancesByBunch(parentProcessID, DELETE_PROCESS_BUNCH_SIZE, processesAllowedToBeDeletedIds);
                 } else {
-                    LOGGER.log(Level.WARNING,
+                    LOGGER.warn(
                             "Process with ID " + processId + " cannot be deleted without also deleting its parent (" + parentProcessID + ").");
                 }
             }

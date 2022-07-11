@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.login.servlet;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class.getName());
 
     /**
      * login fail message
@@ -78,8 +78,8 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        if (LOGGER.isLoggable(Level.FINEST)) {
-            LOGGER.log(Level.FINEST, "query string : " + dropPassword(req.getQueryString()));
+        if (LOGGER.isTraceEnabled()){
+            LOGGER.trace( "query string : " + dropPassword(req.getQueryString()));
         }
         doPost(req, resp);
     }
@@ -96,8 +96,8 @@ public class LoginServlet extends HttpServlet {
         }
         if (request.getContentType() != null
                 && !MediaType.APPLICATION_WWW_FORM.equals(ContentType.readMediaType(request.getContentType()))) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "The only content type supported by this service is application/x-www-form-urlencoded. The content-type request header needs to be set accordingly.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("The only content type supported by this service is application/x-www-form-urlencoded. The content-type request header needs to be set accordingly.");
             }
             response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
         } else {
@@ -126,19 +126,19 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (final AuthenticationManagerNotFoundException e) {
             final String message = "Can't get login manager";
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, message, e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( message, e);
             }
             throw new ServletException(e);
         } catch (final LoginFailedException e) {
             handleException(request, response, redirectAfterLogin, e, locale);
         } catch (final AuthenticationFailedException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Authentication failed : " + e.getMessage(), e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Authentication failed : " + e.getMessage(), e);
             }
             handleException(request, response, redirectAfterLogin, e, locale);
         } catch (final Exception e) {
-            LOGGER.log(Level.SEVERE, "Error while trying to log in", e);
+            LOGGER.error( "Error while trying to log in", e);
             throw new ServletException(e);
         }
     }
@@ -162,14 +162,14 @@ public class LoginServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL, locale)).forward(request, response);
                 }
             } catch (final Exception e1) {
-                if (LOGGER.isLoggable(Level.SEVERE)) {
-                    LOGGER.log(Level.SEVERE, e1.getMessage());
+                 if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error( e1.getMessage());
                 }
                 throw new ServletException(e1);
             }
         } else {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, e.getMessage());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(e.getMessage());
             }
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
@@ -177,8 +177,8 @@ public class LoginServlet extends HttpServlet {
 
     private String getRedirectUrl(final HttpServletRequest request, final boolean redirectAfterLogin) {
         String redirectURL = request.getParameter(AuthenticationManager.REDIRECT_URL);
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "redirecting to : " + redirectURL);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("redirecting to : " + redirectURL);
         }
         if (redirectAfterLogin && (redirectURL == null || redirectURL.isEmpty())) {
             redirectURL = AuthenticationManager.DEFAULT_DIRECT_URL;
@@ -203,8 +203,8 @@ public class LoginServlet extends HttpServlet {
             loginManager.login(request, response);
         } catch (final TenantStatusException e) {
             final String message = "Tenant is in pause, unable to log in with other user than the technical user.";
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, message, e);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( message, e);
             }
             request.setAttribute(TENANT_IN_MAINTENACE_MESSAGE, TENANT_IN_MAINTENACE_MESSAGE);
             throw new LoginFailedException(TENANT_IN_MAINTENACE_MESSAGE, e);

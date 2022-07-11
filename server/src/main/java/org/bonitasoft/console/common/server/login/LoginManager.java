@@ -16,8 +16,8 @@ package org.bonitasoft.console.common.server.login;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +44,7 @@ import org.bonitasoft.web.rest.model.user.User;
  */
 public class LoginManager {
 
-    private static final Logger LOGGER = Logger.getLogger(LoginManager.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginManager.class.getName());
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();
     protected PortalCookies portalCookies = new PortalCookies();
@@ -80,7 +80,7 @@ public class LoginManager {
         boolean invalidateAndRecreateHTTPSession = invalidateAndRecreateHTTPSessionIfSet != null ? invalidateAndRecreateHTTPSessionIfSet.booleanValue() : true;
         if(credentialsMap.isEmpty()) {
             if (credentials.getName() == null || credentials.getName().isEmpty()) {
-                LOGGER.log(Level.FINE, "There are no credentials in the request");
+                LOGGER.debug("There are no credentials in the request");
                 throw new AuthenticationFailedException("No credentials in request");
             }
         }
@@ -105,8 +105,8 @@ public class LoginManager {
     public AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
         try {
             final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Using the AuthenticationManager implementation: " + authenticationManager.getClass().getName());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Using the AuthenticationManager implementation: " + authenticationManager.getClass().getName());
             }
             return authenticationManager;
         } catch (final AuthenticationManagerNotFoundException e) {
@@ -117,10 +117,10 @@ public class LoginManager {
     private APISession loginWithAppropriateCredentials(UserLogger userLoger, Credentials credentials, Map<String, Serializable> credentialsMap)
             throws LoginFailedException {
         if (MapUtils.isEmpty(credentialsMap)) {
-            LOGGER.log(Level.FINE, "Engine login using the username and password");
+            LOGGER.debug("Engine login using the username and password");
             return userLoger.doLogin(credentials);
         } else {
-            LOGGER.log(Level.FINE, "Engine login using the map of credentials retrieved from the request");
+            LOGGER.debug("Engine login using the map of credentials retrieved from the request");
             return userLoger.doLogin(credentialsMap);
         }
     }
@@ -132,8 +132,8 @@ public class LoginManager {
     }
 
     protected void initSession(final HttpServletRequestAccessor request, final APISession session, final User user, boolean recreateHTTPSession) {
-        if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "HTTP session initialization");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("HTTP session initialization");
         }
         if (recreateHTTPSession) {
             //invalidating session allows to fix session fixation security issue

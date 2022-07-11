@@ -20,8 +20,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -66,7 +66,7 @@ public class PageServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = Logger.getLogger(PageServlet.class.getName());
+    private static Logger LOGGER = LoggerFactory.getLogger(PageServlet.class.getName());
 
     public static final String RESOURCE_PATH_SEPARATOR = "/content";
 
@@ -130,8 +130,8 @@ public class PageServlet extends HttpServlet {
             }
         } else {
             final String message = "/content or /theme is expected in the URL after the page mapping key";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Bad request: " + message);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Bad request: " + message);
             }
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
         }
@@ -147,8 +147,8 @@ public class PageServlet extends HttpServlet {
             String appTokenFromReferer = getAppFromReferer(request);
             if (appTokenFromReferer != null) {
                 if (resourcePath.endsWith(".css")) {
-                    if (LOGGER.isLoggable(Level.FINE)) {
-                        LOGGER.log(Level.FINE, "App parameter retrieved from the referer. Redirecting the request to get it in the URL for resource " + resourcePath);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("App parameter retrieved from the referer. Redirecting the request to get it in the URL for resource " + resourcePath);
                     }
                     String queryString = StringUtils.isEmpty(request.getQueryString()) ? "" : (request.getQueryString() + "&");
                     response.sendRedirect("?" + queryString + APPLICATION_PARAM + "=" + appTokenFromReferer);
@@ -157,8 +157,8 @@ public class PageServlet extends HttpServlet {
                 }
             } else {
                 // Try to get requested resource from portal theme
-                if (LOGGER.isLoggable(Level.FINE)) {
-                    LOGGER.log(Level.FINE, "Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Unable tor retrieve app parameter for resource " + resourcePath + ". Request referer is missing an an app parameter. Forwarding to the portal theme.");
                 }
                 String themePath = THEME_PATH_SEPARATOR + "/" + resourcePath;
                 //security check against directory traversal attack
@@ -189,8 +189,8 @@ public class PageServlet extends HttpServlet {
             try {
                 paramList = URLEncodedUtils.parse(new URI(referer), "UTF-8");
             } catch (URISyntaxException e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "Unable tor retrieve app parameter. Bad request referer: " + e.getMessage());
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "Unable tor retrieve app parameter. Bad request referer: " + e.getMessage());
                 }
             }
             for (NameValuePair param: paramList) {
@@ -198,8 +198,8 @@ public class PageServlet extends HttpServlet {
                     return param.getValue();
                 }
             }
-        } else if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, "Unable tor retrieve app parameter. Request referer is null.");
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Unable tor retrieve app parameter. Request referer is null.");
         }
         return null;
     }
@@ -227,16 +227,16 @@ public class PageServlet extends HttpServlet {
             } else if (pageReference.getPageId() != null) {
                 displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath, currentLocale);
             } else {
-                if (LOGGER.isLoggable(Level.FINE)) {
+                if (LOGGER.isDebugEnabled()) {
                     final String message = "Both URL and pageId are not set in the page mapping for " + mappingKey;
-                    LOGGER.log(Level.FINE, message);
+                    LOGGER.debug(message);
                 }
                 return;
             }
         } catch (final UnauthorizedAccessException e) {
             final String message = "User not Authorized";
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Forbidden: " + message, e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Forbidden: " + message, e);
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, message);
@@ -245,8 +245,8 @@ public class PageServlet extends HttpServlet {
                 response.flushBuffer();
             }
         } catch (final NotFoundException e) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Not found: Cannot find the form mapping for key " + mappingKey, e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Not found: Cannot find the form mapping for key " + mappingKey, e);
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Form mapping not found");
@@ -269,8 +269,8 @@ public class PageServlet extends HttpServlet {
                 resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession);
             }
         } catch (final PageNotFoundException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
-                LOGGER.log(Level.WARNING, "Cannot find the page with ID " + pageId);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn( "Cannot find the page with ID " + pageId);
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
@@ -292,8 +292,8 @@ public class PageServlet extends HttpServlet {
         final File resourceFile = pageResourceProvider.getResourceAsFile(CustomPageService.RESOURCES_PROPERTY + File.separator + resourcePath);
         if (!bonitaHomeFolderAccessor.isInFolder(resourceFile, pageResourceProvider.getPageDirectory())) {
             final String message = "For security reasons, access to this file path is forbidden : " + resourcePath;
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Forbidden: " + message);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Forbidden: " + message);
             }
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.flushBuffer();
@@ -310,8 +310,8 @@ public class PageServlet extends HttpServlet {
     protected void handleException(final HttpServletRequest request, final HttpServletResponse response, final String mappingKey, final boolean isNotResourcePath, final Exception e)
             throws ServletException, IOException {
         if (e instanceof IllegalArgumentException) {
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "The parameters passed to the servlet are invalid.", e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("The parameters passed to the servlet are invalid.", e);
             }
             if (isNotResourcePath) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Request.");
@@ -320,8 +320,8 @@ public class PageServlet extends HttpServlet {
                 response.flushBuffer();
             }
         } else if (e instanceof InvalidSessionException) {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+             if (LOGGER.isDebugEnabled()){
+                LOGGER.debug("Invalid Bonita engine session.", e);
             }
             SessionUtil.sessionLogout(request.getSession());
             if (isNotResourcePath) {
@@ -331,9 +331,9 @@ public class PageServlet extends HttpServlet {
                 response.flushBuffer();
             }
         } else {
-            if (LOGGER.isLoggable(Level.WARNING)) {
+            if (LOGGER.isWarnEnabled()) {
                 final String message = "Error while trying to display a page or resource for key " + mappingKey;
-                LOGGER.log(Level.WARNING, message, e);
+                LOGGER.warn( message, e);
             }
             if (!response.isCommitted()) {
                 if (isNotResourcePath) {

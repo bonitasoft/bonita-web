@@ -18,8 +18,8 @@ package org.bonitasoft.web.toolkit.server.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -52,7 +52,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     /**
      * Console logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(ToolkitHttpServlet.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ToolkitHttpServlet.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CATCH ALL EXCEPTIONS
@@ -157,22 +157,22 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
      */
     protected void catchAllExceptions(final Throwable exception, final HttpServletRequest req, final HttpServletResponse resp) {
         if (exception instanceof APIMethodNotAllowedException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         } else if (exception instanceof APINotFoundException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof ServiceNotFoundException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIItemNotFoundException) {
-            LOGGER.log(Level.FINE, exception.getMessage(), exception);
+            LOGGER.debug(exception.getMessage(), exception);
             outputException(null, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIForbiddenException) {
             outputException(exception, req, resp, HttpServletResponse.SC_FORBIDDEN);
@@ -185,18 +185,18 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
                 outputException(exception, req, resp);
             }
         } else if (exception instanceof APIIncorrectIdException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_BAD_REQUEST);
         } else if (exception instanceof APIItemIdMalformedException) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, exception.getMessage(), exception);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } else {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, exception.getMessage(), exception);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

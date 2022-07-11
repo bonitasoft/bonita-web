@@ -15,8 +15,8 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -60,7 +60,7 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
     /**
      * Logger
      */
-    protected static final Logger LOGGER = Logger.getLogger(RestAPIAuthorizationFilter.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(RestAPIAuthorizationFilter.class.getName());
 
     @Override
     public void proceedWithFiltering(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
@@ -78,8 +78,8 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
                 chain.doFilter(httpServletRequest, response);
             }
         } catch (final Exception e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+             if (LOGGER.isErrorEnabled()) {
+                LOGGER.error( e.getMessage(), e);
             }
             throw new ServletException(e);
         }
@@ -100,8 +100,9 @@ public class RestAPIAuthorizationFilter extends ExcludingPatternFilter {
                 return true;
             }
         } catch (InvalidSessionException e) {
-            if (LOGGER.isLoggable(Level.FINER)) {
-                LOGGER.log(Level.FINER, "Invalid Bonita engine session.", e);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Invalid Bonita engine session.", e);
             }
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             SessionUtil.sessionLogout(httpRequest.getSession());

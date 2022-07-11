@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -39,7 +39,7 @@ public class CustomPageDependenciesResolver {
 
     static final Map<String, File> PAGES_LIB_TMPDIR = new HashMap<>();
 
-    private static final Logger LOGGER = Logger.getLogger(CustomPageDependenciesResolver.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageDependenciesResolver.class.getName());
 
     private File libTempFolder;
 
@@ -86,7 +86,7 @@ public class CustomPageDependenciesResolver {
 
             });
         } catch (final IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.error( e.getMessage(), e);
         }
         return result;
     }
@@ -97,8 +97,8 @@ public class CustomPageDependenciesResolver {
             try {
                 FileUtils.deleteDirectory(libTempFolder);
             } catch (final IOException e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                    LOGGER.log(Level.WARNING, "The custom page temporary lib directory " + libTempFolder.getPath()
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn( "The custom page temporary lib directory " + libTempFolder.getPath()
                             + " cannot be deleted. This is likely to be due to a JDK bug on Windows. You can safely delete it after a server restart.");
                 }
             }

@@ -14,8 +14,8 @@
  */
 package org.bonitasoft.console.common.server.login.filter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import org.bonitasoft.console.common.server.login.PortalCookies;
  */
 public class TokenGenerator {
 
-    protected static final Logger LOGGER = Logger.getLogger(TokenGenerator.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(TokenGenerator.class.getName());
 
     public static final String API_TOKEN = "api_token";
     public static final String X_BONITA_API_TOKEN = "X-Bonita-API-Token";
@@ -57,8 +57,8 @@ public class TokenGenerator {
         if (apiTokenFromClient == null) {
             apiTokenFromClient = new APIToken().getToken();
             session.setAttribute(API_TOKEN, apiTokenFromClient);
-            if (LOGGER.isLoggable(Level.FINE)) {
-                LOGGER.log(Level.FINE, "Bonita API Token generated: " + apiTokenFromClient);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Bonita API Token generated: " + apiTokenFromClient);
             }
         }
         return apiTokenFromClient.toString();
