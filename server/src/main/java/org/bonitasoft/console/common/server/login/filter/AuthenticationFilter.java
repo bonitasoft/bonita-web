@@ -106,7 +106,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
                 cleanHttpSession(requestAccessor.getHttpSession());
                 if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
-                    response.sendRedirect(createLoginPageUrl(requestAccessor, tenantIdAccessor).getLocation());
+                    response.sendRedirect(createLoginPageUrl(requestAccessor).getLocation());
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 }
@@ -157,7 +157,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             LOGGER.debug("redirection to user not found page : " + e.getMessage(), e);
         }
         if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
-        	redirectTo(requestAccessor, response, e.getTenantId(), USER_NOT_FOUND_JSP);
+        	redirectTo(requestAccessor, response, USER_NOT_FOUND_JSP);
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
@@ -169,7 +169,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
             LOGGER.debug("redirection to maintenance page : " + e.getMessage(), e);
         }
         if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
-        	redirectTo(requestAccessor, response, e.getTenantId(), MAINTENANCE_JSP);
+        	redirectTo(requestAccessor, response, MAINTENANCE_JSP);
         } else {
             response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
@@ -181,7 +181,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
      * @param response
      * @param pagePath
      */
-    protected void redirectTo(final HttpServletRequestAccessor request, final HttpServletResponse response, final long tenantId, final String pagePath)
+    protected void redirectTo(final HttpServletRequestAccessor request, final HttpServletResponse response, final String pagePath)
             throws ServletException {
         try {
             response.sendRedirect(request.asHttpServletRequest().getContextPath() + pagePath);
@@ -201,9 +201,9 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     }
 
     // protected for test stubbing
-    protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager() throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.getDefaultTenantId());
+            return AuthenticationManagerFactory.getAuthenticationManager();
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
@@ -215,9 +215,9 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
         return builder.build();
     }
 
-    protected LoginUrl createLoginPageUrl(final HttpServletRequestAccessor requestAccessor, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected LoginUrl createLoginPageUrl(final HttpServletRequestAccessor requestAccessor) throws ServletException {
         try {
-            return new LoginUrl(getAuthenticationManager(tenantIdAccessor),
+            return new LoginUrl(getAuthenticationManager(),
                     makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
         } catch (final LoginUrlException e) {
             throw new ServletException(e);

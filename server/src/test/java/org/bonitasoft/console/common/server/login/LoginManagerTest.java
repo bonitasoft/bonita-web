@@ -62,7 +62,6 @@ public class LoginManagerTest {
     public void setUp() throws Exception {
         when(request.getSession()).thenReturn(session);
         when(request.getContextPath()).thenReturn("/bonita");
-        when(request.getParameter("tenant")).thenReturn("1");
         requestAccessor = new HttpServletRequestAccessor(request);
         
         doReturn("123").when(tokenGenerator).createOrLoadToken(session);
@@ -70,8 +69,8 @@ public class LoginManagerTest {
 
     @Test
     public void login_should_initSession() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doReturn(apiSession).when(userLogger).doLogin(credentials);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
@@ -82,8 +81,8 @@ public class LoginManagerTest {
 
     @Test
     public void login_should_perform_engine_login() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doReturn(apiSession).when(userLogger).doLogin(credentials);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
@@ -93,8 +92,8 @@ public class LoginManagerTest {
 
     @Test
     public void login_should_perform_engine_login_with_credentials_map() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         final Map<String, Serializable> credentialsMap = new HashMap<>();
         credentialsMap.put("principal", "userId");
         doReturn(credentialsMap).when(authenticationManager).authenticate(requestAccessor, credentials);
@@ -108,8 +107,8 @@ public class LoginManagerTest {
 
     @Test
     public void login_should_perform_engine_login_with_credentials_map_without_invalidating_session() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         final Map<String, Serializable> credentialsMap = new HashMap<>();
         credentialsMap.put("principal", "userId");
         credentialsMap.put(AuthenticationManager.INVALIDATE_SESSION, Boolean.FALSE);
@@ -124,8 +123,8 @@ public class LoginManagerTest {
     
     @Test(expected = LoginFailedException.class)
     public void login_should_throw_exception_when_login_fails() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doThrow(LoginFailedException.class).when(userLogger).doLogin(credentials);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
@@ -133,8 +132,8 @@ public class LoginManagerTest {
 
     @Test(expected = AuthenticationFailedException.class)
     public void login_should_throw_exception_when_authentication_fails() throws Exception {
-        final Credentials credentials = new StandardCredentials("name", "password", 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doThrow(AuthenticationFailedException.class).when(authenticationManager).authenticate(requestAccessor, credentials);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
@@ -142,32 +141,18 @@ public class LoginManagerTest {
     
     @Test(expected = AuthenticationFailedException.class)
     public void login_should_throw_exception_when_no_credentials_are_passed() throws Exception {
-        final Credentials credentials = new StandardCredentials(null, null, 1L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(1L);
+        final Credentials credentials = new StandardCredentials(null, null);
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doReturn(Collections.emptyMap()).when(authenticationManager).authenticate(requestAccessor, credentials);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
     }
 
-
-    @Test
-    public void should_store_tenant_id_in_cookies() throws Exception {
-        Credentials credentials = new StandardCredentials("name", "password", 123L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
-        doReturn(apiSession).when(userLogger).doLogin(credentials);
-        when(apiSession.getTenantId()).thenReturn(123L);
-
-        loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
-
-        assertThat(response.getCookie("bonita.tenant").getValue()).isEqualTo("123");
-    }
-    
     @Test
     public void should_store_csrf_token_in_cookies() throws Exception {
-        Credentials credentials = new StandardCredentials("name", "password", 123L);
-        doReturn(authenticationManager).when(loginManager).getAuthenticationManager(123L);
+        Credentials credentials = new StandardCredentials("name", "password");
+        doReturn(authenticationManager).when(loginManager).getAuthenticationManager();
         doReturn(apiSession).when(userLogger).doLogin(credentials);
-        when(apiSession.getTenantId()).thenReturn(123L);
 
         loginManager.loginInternal(requestAccessor, response, userLogger, credentials);
 

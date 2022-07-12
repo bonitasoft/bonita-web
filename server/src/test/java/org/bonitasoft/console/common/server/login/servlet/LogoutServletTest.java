@@ -2,7 +2,6 @@ package org.bonitasoft.console.common.server.login.servlet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -39,8 +38,7 @@ public class LogoutServletTest {
     @Before
     public void setup() throws Exception {
         doReturn(request).when(requestAccessor).asHttpServletRequest();
-        doReturn(authenticationManager).when(logoutServlet).getAuthenticationManager(anyLong());
-        doReturn(1L).when(logoutServlet).getDefaultTenantId();
+        doReturn(authenticationManager).when(logoutServlet).getAuthenticationManager();
     }
     
     @Test
@@ -81,7 +79,7 @@ public class LogoutServletTest {
         doReturn("redirectURL").when(logoutServlet).createRedirectUrl(requestAccessor);
         doReturn("logoutURL").when(authenticationManager).getLogoutPageURL(requestAccessor, "redirectURL");
         
-        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor, 1L);
+        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor);
         
         assertThat(loginPage).isEqualTo("logoutURL");
     }
@@ -90,7 +88,7 @@ public class LogoutServletTest {
     public void testGetURLToRedirectToFromAuthenticationManagerLogin() throws Exception {
         doReturn("loginURL").when(authenticationManager).getLoginPageURL(eq(requestAccessor), anyString());
         
-        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor, 1L);
+        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor);
         
         assertThat(loginPage).isEqualTo("loginURL");
     }
@@ -100,7 +98,7 @@ public class LogoutServletTest {
         doReturn(null).when(authenticationManager).getLoginPageURL(eq(requestAccessor), anyString());
         doReturn("redirectURLFromRequest").when(request).getParameter(AuthenticationManager.LOGIN_URL_PARAM_NAME);
         
-        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor, 1L);
+        String loginPage = logoutServlet.getURLToRedirectTo(requestAccessor);
         
         assertThat(loginPage).isEqualTo("redirectURLFromRequest");
     }

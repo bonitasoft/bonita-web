@@ -86,16 +86,12 @@ public class LogoutServlet extends HttpServlet {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
         final HttpSession session = requestAccessor.getHttpSession();
         final APISession apiSession = requestAccessor.getApiSession();
-        long tenantId = -1L;
-        if (apiSession != null) {
-            tenantId = apiSession.getTenantId();
-        }
         try {
             engineLogout(apiSession);
             SessionUtil.sessionLogout(session);
 
             if (RedirectUrlHandler.shouldRedirectAfterLogout(request)) {
-                final String loginPage = getURLToRedirectTo(requestAccessor, tenantId);
+                final String loginPage = getURLToRedirectTo(requestAccessor);
                 response.sendRedirect(loginPage);
             }
         } catch (final Exception e) {
@@ -107,23 +103,23 @@ public class LogoutServlet extends HttpServlet {
     }
     
     // protected for test stubbing
-    protected AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager() throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+            return AuthenticationManagerFactory.getAuthenticationManager();
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }
     }
 
-    protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor, final long tenantId)
+    protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor)
             throws AuthenticationManagerNotFoundException, UnsupportedEncodingException, ConsumerNotFoundException, ServletException {
-        final AuthenticationManager authenticationManager = getAuthenticationManager(tenantId);
+        final AuthenticationManager authenticationManager = getAuthenticationManager();
         final HttpServletRequest request = requestAccessor.asHttpServletRequest();
 
         final String redirectURL = createRedirectUrl(requestAccessor);
 
         final String logoutPage = authenticationManager.getLogoutPageURL(requestAccessor, redirectURL);
-        String redirectionPage = null;
+        String redirectionPage;
         if (logoutPage != null) {
             redirectionPage = logoutPage;
         } else {
@@ -151,10 +147,6 @@ public class LogoutServlet extends HttpServlet {
         if (apiSession != null) {
         	getUserLogger().doLogout(apiSession);
         }
-    }
-    
-    protected long getDefaultTenantId() {
-        return TenantsManagementUtils.getDefaultTenantId();
     }
     
     protected UserLogger getUserLogger() {

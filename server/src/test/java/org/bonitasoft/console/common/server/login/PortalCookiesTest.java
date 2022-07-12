@@ -24,37 +24,6 @@ public class PortalCookiesTest {
     HttpServletResponse response;
     
     private PortalCookies portalCookies = spy(new PortalCookies());
-
-    @Test
-    public void should_add_tenant_cookie_to_response() throws Exception {
-
-        portalCookies.addTenantCookieToResponse(response, 123L);
-        
-        ArgumentCaptor<Cookie> argument = ArgumentCaptor.forClass(Cookie.class);
-        verify(response).addCookie(argument.capture());
-        assertThat(argument.getValue().getValue()).isEqualTo("123");
-    }
-
-    @Test
-    public void should_get_tenant_cookie_from_request() throws Exception {
-        
-        doReturn(new Cookie[]{new Cookie("bonita.tenant", "123")}).when(request).getCookies();
-
-        String tenant = portalCookies.getTenantCookieFromRequest(request);
-
-        assertThat(tenant).isEqualTo("123");
-    }
-
-    @Test
-    public void should_get_cookie_by_name_from_request() throws Exception {
-        
-        Cookie cookie = new Cookie("bonita.tenant", "123");
-        doReturn(new Cookie[]{cookie}).when(request).getCookies();
-
-        Cookie fetchedCookie = portalCookies.getCookie(request, "bonita.tenant");
-
-        assertThat(fetchedCookie).isEqualTo(cookie);
-    }
     
     @Test
     public void should_add_csrf_cookie_to_response_with_context_path() throws Exception {

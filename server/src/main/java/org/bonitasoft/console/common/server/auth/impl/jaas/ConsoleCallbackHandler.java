@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.console.common.server.auth.impl.jaas;
 
+import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
+
 import java.io.IOException;
 
 import javax.security.auth.callback.Callback;
@@ -44,11 +46,6 @@ public class ConsoleCallbackHandler implements CallbackHandler {
     private final String password;
 
     /**
-     * User of tenant id
-     */
-    private final String tenantId;
-
-    /**
      * 
      * Default Constructor.
      * 
@@ -56,13 +53,10 @@ public class ConsoleCallbackHandler implements CallbackHandler {
      *            user name
      * @param password
      *            user password
-     * @param tenantId
-     *            tenant id
      */
-    public ConsoleCallbackHandler(final String name, final String password, final String tenantId) {
+    public ConsoleCallbackHandler(final String name, final String password) {
         this.name = name;
         this.password = password;
-        this.tenantId = tenantId;
     }
 
     /*
@@ -80,7 +74,7 @@ public class ConsoleCallbackHandler implements CallbackHandler {
                 pc.setPassword(this.password.toCharArray());
             } else if (callback instanceof TextInputCallback) {
                 final TextInputCallback tc = (TextInputCallback) callback;
-                tc.setText(this.tenantId);
+                tc.setText(String.valueOf(TenantsManagementUtils.getDefaultTenantId()));
             }
 
         }

@@ -13,7 +13,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
@@ -82,7 +81,7 @@ public class LivingApplicationServlet extends HttpServlet {
             }
             SessionUtil.sessionLogout(hsRequest.getSession());
             HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(hsRequest);
-            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(TenantIdAccessor.getInstance()), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
+            LoginUrl loginURL = new LoginUrl(getAuthenticationManager(), makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
             hsResponse.sendRedirect(loginURL.getLocation());
         }
 
@@ -120,9 +119,9 @@ public class LivingApplicationServlet extends HttpServlet {
     }
     
     // protected for test stubbing
-    protected AuthenticationManager getAuthenticationManager(final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected AuthenticationManager getAuthenticationManager() throws ServletException {
         try {
-            return AuthenticationManagerFactory.getAuthenticationManager(tenantIdAccessor.getDefaultTenantId());
+            return AuthenticationManagerFactory.getAuthenticationManager();
         } catch (final AuthenticationManagerNotFoundException e) {
             throw new ServletException(e);
         }

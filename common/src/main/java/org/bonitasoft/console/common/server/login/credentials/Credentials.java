@@ -25,6 +25,4 @@ public interface Credentials {
     String getName();
 
     String getPassword();
-
-    long getTenantId();
 }

@@ -28,13 +28,9 @@ public class StandardCredentials implements Credentials {
 
     private String password;
 
-    private long tenantId = -1L;
-
-    public StandardCredentials(final String name, final String password, final long tenantId) {
+    public StandardCredentials(final String name, final String password) {
         this.name = name;
         this.password = password;
-        this.tenantId = tenantId;
-
     }
 
     /**
@@ -54,14 +50,6 @@ public class StandardCredentials implements Credentials {
     }
 
     /**
-     * @see org.bonitasoft.console.common.server.login.credentials.Credentials#getTenantId()
-     */
-    @Override
-    public long getTenantId() {
-        return tenantId;
-    }
-
-    /**
      * @param name
      *            the name to set
      */
@@ -76,13 +64,4 @@ public class StandardCredentials implements Credentials {
     public void setPassword(final String password) {
         this.password = password;
     }
-
-    /**
-     * @param tenantId
-     *            the tenantId to set
-     */
-    public void setTenantId(final long tenantId) {
-        this.tenantId = tenantId;
-    }
-
 }

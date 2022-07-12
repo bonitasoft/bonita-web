@@ -24,7 +24,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.scribe.model.Token;
 
@@ -41,8 +40,7 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
 
     @Override
     public String getLoginPageURL(final HttpServletRequestAccessor request, final String redirectURL) throws ConsumerNotFoundException, ServletException {
-        long resolvedTenantId = TenantIdAccessor.getInstance().getDefaultTenantId();
-        final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(resolvedTenantId, redirectURL);
+        final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(redirectURL);
         final Token requestToken = aConsumer.getRequestToken();
         TokenCacheUtil.addRequestToken(requestToken);
         return aConsumer.getAuthorizationUrl(requestToken);
@@ -58,15 +56,14 @@ public class OAuthAuthenticationManagerImpl implements AuthenticationManager {
         if (request.getOAuthVerifier() == null) {
             throw new AuthenticationFailedException();
         }
-        final long tenantId = credentials.getTenantId();
-        getOAuthUserId(request, tenantId);
+        getOAuthUserId(request);
         return Collections.emptyMap();
     }
 
-    private String getOAuthUserId(final HttpServletRequestAccessor request, final long tenantId)
+    private String getOAuthUserId(final HttpServletRequestAccessor request)
             throws AuthenticationFailedException {
         try {
-            final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(tenantId, request.getRedirectUrl());
+            final OAuthConsumer aConsumer = OAuthConsumerFactory.getOAuthConsumer(request.getRedirectUrl());
             final String requestTokenStr = request.getOAuthToken();
             final Token requestToken = TokenCacheUtil.getToken(requestTokenStr);
             final Token accessToken = aConsumer.getAccessToken(requestToken, request.getOAuthVerifier());

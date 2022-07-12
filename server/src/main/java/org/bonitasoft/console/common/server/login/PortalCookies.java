@@ -10,8 +10,6 @@ import org.bonitasoft.console.common.server.preferences.properties.PropertiesFac
 
 public class PortalCookies {
 
-    public static final String TENANT_COOKIE_NAME = "bonita.tenant";
-
     /**
      * set the CSRF security token to the HTTP response as cookie.
      */
@@ -54,20 +52,6 @@ public class PortalCookies {
     // protected for testing
     public boolean isCSRFTokenCookieSecure() {
         return PropertiesFactory.getSecurityProperties().isCSRFTokenCookieSecure();
-    }
-    
-    public void addTenantCookieToResponse(HttpServletResponse response, Long tenantId) {
-        Cookie tenantCookie = new Cookie(TENANT_COOKIE_NAME, String.valueOf(tenantId));
-        response.addCookie(tenantCookie);
-    }
-
-    public String getTenantCookieFromRequest(HttpServletRequest request) {
-        return getCookieValue(request, TENANT_COOKIE_NAME);
-    }
-
-    private String getCookieValue(HttpServletRequest request, String name) {
-        Cookie cookie = getCookie(request, name);
-        return cookie == null ? null : cookie.getValue();
     }
 
     public Cookie getCookie(HttpServletRequest request, String name) {

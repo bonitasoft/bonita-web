@@ -27,13 +27,13 @@ public class AuthenticationManagerFactoryTest {
 
     @Test
     public void testGetLoginManager() throws AuthenticationManagerNotFoundException {
-        assertThat(AuthenticationManagerFactory.getAuthenticationManager(0L)).as("Cannot get the login manager").isNotNull();
+        assertThat(AuthenticationManagerFactory.getAuthenticationManager()).as("Cannot get the login manager").isNotNull();
     }
 
     @Test
     public void default_manager_implementation_should_be_StandardAuthenticationManagerImpl_class() throws AuthenticationManagerNotFoundException {
         // when:
-        AuthenticationManager managerImpl = AuthenticationManagerFactory.getAuthenticationManager(1678L);
+        AuthenticationManager managerImpl = AuthenticationManagerFactory.getAuthenticationManager();
 
         // then:
         assertThat(managerImpl).isInstanceOf(StandardAuthenticationManagerImpl.class);

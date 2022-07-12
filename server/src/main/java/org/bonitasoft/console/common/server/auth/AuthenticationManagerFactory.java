@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.common.server.auth;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.auth.impl.standard.StandardAuthenticationManagerImpl;
@@ -28,21 +26,20 @@ public class AuthenticationManagerFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManagerFactory.class.getName());
 
-    static Map<Long, AuthenticationManager> map = new HashMap<>();
+    static AuthenticationManager authenticationManager;
 
-    public static AuthenticationManager getAuthenticationManager(final long tenantId) throws AuthenticationManagerNotFoundException {
+    public static AuthenticationManager getAuthenticationManager() throws AuthenticationManagerNotFoundException {
         String authenticationManagerName = null;
-        if (!map.containsKey(tenantId)) {
+        if (authenticationManager == null) {
             try {
                 authenticationManagerName = getManagerImplementationClassName();
-                final AuthenticationManager authenticationManager = (AuthenticationManager) Class.forName(authenticationManagerName).newInstance();
-                map.put(tenantId, authenticationManager);
+                authenticationManager = (AuthenticationManager) Class.forName(authenticationManagerName).newInstance();
             } catch (final Exception e) {
                 final String message = "The AuthenticationManager implementation " + authenticationManagerName + " does not exist!";
                 throw new AuthenticationManagerNotFoundException(message);
             }
         }
-        return map.get(tenantId);
+        return authenticationManager;
     }
 
     private static String getManagerImplementationClassName() {

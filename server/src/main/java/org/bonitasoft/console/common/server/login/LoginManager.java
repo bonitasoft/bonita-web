@@ -56,7 +56,7 @@ public class LoginManager {
     public void login(final HttpServletRequest request, final HttpServletResponse response)
         throws AuthenticationManagerNotFoundException, LoginFailedException, TenantStatusException, AuthenticationFailedException, ServletException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor(request);
-        final StandardCredentials userCredentials = createUserCredentials(getTenantId(), requestAccessor);
+        final StandardCredentials userCredentials = createUserCredentials(requestAccessor);
         loginInternal(requestAccessor, response, getUserLogger(), userCredentials);
     }
     
@@ -71,7 +71,7 @@ public class LoginManager {
     
     public void loginInternal(HttpServletRequestAccessor request, HttpServletResponse response, UserLogger userLoger, Credentials credentials)
             throws AuthenticationFailedException, ServletException, LoginFailedException {
-        AuthenticationManager authenticationManager = getAuthenticationManager(credentials.getTenantId());
+        AuthenticationManager authenticationManager = getAuthenticationManager();
         Map<String, Serializable> credentialsMap = authenticationManager.authenticate(request, credentials);
         // In case of a login with the login service we invalidate the session and create a new one.
         // Otherwise, logging in with the credentials in the request (SSO) it is not mandatory it depends on the AuthenticationManager implementation used
@@ -85,26 +85,21 @@ public class LoginManager {
             }
         }
         APISession apiSession = loginWithAppropriateCredentials(userLoger, credentials, credentialsMap);
-        portalCookies.addTenantCookieToResponse(response, apiSession.getTenantId());
         storeCredentials(request, apiSession, invalidateAndRecreateHTTPSession);
         portalCookies.addCSRFTokenCookieToResponse(request.asHttpServletRequest(), response, tokenGenerator.createOrLoadToken(request.getHttpSession()));
     }
     
-    protected long getTenantId() throws ServletException {
-        return TenantIdAccessor.getInstance().getDefaultTenantId();
-    }
-    
-    protected StandardCredentials createUserCredentials(final long tenantId, final HttpServletRequestAccessor requestAccessor) {
-        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword(), tenantId);
+    protected StandardCredentials createUserCredentials(final HttpServletRequestAccessor requestAccessor) {
+        return new StandardCredentials(requestAccessor.getUsername(), requestAccessor.getPassword());
     }
 
     protected UserLogger getUserLogger() {
         return new UserLogger();
     }
 
-    public AuthenticationManager getAuthenticationManager(final long tenantId) throws ServletException {
+    public AuthenticationManager getAuthenticationManager() throws ServletException {
         try {
-            final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager(tenantId);
+            final AuthenticationManager authenticationManager = AuthenticationManagerFactory.getAuthenticationManager();
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Using the AuthenticationManager implementation: " + authenticationManager.getClass().getName());
             }

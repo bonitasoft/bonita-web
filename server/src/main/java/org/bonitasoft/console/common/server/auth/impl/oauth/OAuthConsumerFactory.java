@@ -13,8 +13,6 @@
  **/
 package org.bonitasoft.console.common.server.auth.impl.oauth;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -26,8 +24,7 @@ import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
  */
 public class OAuthConsumerFactory {
 
-    static Map<Long, OAuthConsumer> map = new HashMap<>();
-
+    static OAuthConsumer oAuthConsumer;
 
     private enum OAUTH_CLASS_TYPE {
         LinkedIn
@@ -38,8 +35,8 @@ public class OAuthConsumerFactory {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthConsumerFactory.class.getName());
 
-    public static OAuthConsumer getOAuthConsumer(final long tenantId, final String redirectURL) throws ConsumerNotFoundException {
-        if (!map.containsKey(tenantId)) {
+    public static OAuthConsumer getOAuthConsumer(final String redirectURL) throws ConsumerNotFoundException {
+        if (oAuthConsumer == null) {
             String providerName = null;
             try {
                 providerName = AuthenticationManagerProperties.getProperties().getOAuthServiceProviderName();
@@ -47,7 +44,7 @@ public class OAuthConsumerFactory {
                     providerName = OAUTH_CLASS_TYPE.LinkedIn.toString();
                     LOGGER.info( "The OAuth service provider undefined. Using the default implementation : " + providerName);
                 }
-                map.put(tenantId, getOAuthConsumerClass(providerName, redirectURL));
+                oAuthConsumer = getOAuthConsumerClass(providerName, redirectURL);
             } catch (final ClassNotFoundException e) {
                 final String message = "The OAuth provider class for " + providerName + " doesn't exist!";
                  if (LOGGER.isErrorEnabled()) {
@@ -56,7 +53,7 @@ public class OAuthConsumerFactory {
                 throw new ConsumerNotFoundException(message, e);
             }
         }
-        return map.get(tenantId);
+        return oAuthConsumer;
     }
 
     private static OAuthConsumer getOAuthConsumerClass(final String providerName, final String redirectURL) throws ClassNotFoundException {

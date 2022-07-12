@@ -53,7 +53,7 @@ public class StandardAuthenticationManagerImplIntegrationTest extends AbstractJU
         try {
             new StandardAuthenticationManagerImpl()
                     .authenticate(request,
-                            new StandardCredentials(TECHNICAL_USER_USERNAME, TECHNICAL_USER_PASSWORD, -1L));
+                            new StandardCredentials(TECHNICAL_USER_USERNAME, TECHNICAL_USER_PASSWORD));
         } catch (final AuthenticationFailedException e) {
             fail("Cannot login " + e);
         }

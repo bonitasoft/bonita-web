@@ -84,7 +84,7 @@ public class AuthenticationFilterTest {
     public void setUp() throws Exception {
         initMocks(this);
         doReturn(httpSession).when(httpRequest).getSession();
-        doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(tenantIdAccessor);
+        doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager();
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(httpRequest.getMethod()).thenReturn("GET");
         when(servletContext.getContextPath()).thenReturn("");
@@ -109,18 +109,6 @@ public class AuthenticationFilterTest {
 
         verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
-    }
-
-    @Test
-    public void should_use_the_tenant_id_from_APISession_when_rule_passes() throws Exception {
-        when(apiSession.getTenantId()).thenReturn(3L);
-        when(httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY)).thenReturn(apiSession);
-        AuthenticationRule passingRule = spy(createPassingRule());
-        authenticationFilter.addRule(passingRule);
-
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
-
-        verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 3L);
     }
 
     @Test
@@ -152,7 +140,7 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfWeGet401ErrorIfAllRulesFailAndRedirectParamIsFalse() throws Exception {
         AuthenticationFilter authenticationFilterWithConfig = spy(new AuthenticationFilter());
-        doReturn(authenticationManager).when(authenticationFilterWithConfig).getAuthenticationManager(tenantIdAccessor);
+        doReturn(authenticationManager).when(authenticationFilterWithConfig).getAuthenticationManager();
         FilterConfig filterConfig = mock(FilterConfig.class);
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         List<String> initParams = new ArrayList<>();
@@ -219,7 +207,7 @@ public class AuthenticationFilterTest {
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
         verify(chain, never()).doFilter(httpRequest, httpResponse);
         verify(authenticationFilter).handleUserNotFoundOrInactiveException(request, httpResponse, engineUserNotFoundOrInactive);
-        verify(authenticationFilter).redirectTo(request, httpResponse, 1L, AuthenticationFilter.USER_NOT_FOUND_JSP);
+        verify(authenticationFilter).redirectTo(request, httpResponse, AuthenticationFilter.USER_NOT_FOUND_JSP);
     }
 
     @Test
@@ -233,7 +221,7 @@ public class AuthenticationFilterTest {
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
         verify(chain, never()).doFilter(httpRequest, httpResponse);
         verify(authenticationFilter).handleTenantPausedException(request, httpResponse, tenantIsPausedException);
-        verify(authenticationFilter).redirectTo(request, httpResponse, 1L, AuthenticationFilter.MAINTENANCE_JSP);
+        verify(authenticationFilter).redirectTo(request, httpResponse, AuthenticationFilter.MAINTENANCE_JSP);
     }
 
     @Test
@@ -241,7 +229,7 @@ public class AuthenticationFilterTest {
         final String context = "/bonita";
         when(httpRequest.getContextPath()).thenReturn(context);
         final long tenantId = 0L;
-        authenticationFilter.redirectTo(request, httpResponse, tenantId, AuthenticationFilter.MAINTENANCE_JSP);
+        authenticationFilter.redirectTo(request, httpResponse, AuthenticationFilter.MAINTENANCE_JSP);
         verify(httpResponse, times(1)).sendRedirect(context + AuthenticationFilter.MAINTENANCE_JSP);
         verify(httpRequest, times(1)).getContextPath();
     }
