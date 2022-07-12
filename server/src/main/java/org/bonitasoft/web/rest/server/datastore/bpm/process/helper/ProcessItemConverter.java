@@ -26,19 +26,15 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 /**
  * @author Vincent Elcrin
  */
 public class ProcessItemConverter extends ItemConverter<ProcessItem, ProcessDeploymentInfo> {
 
     private final ProcessAPI processApi;
-    private final Long tenantId;
 
-    public ProcessItemConverter(final ProcessAPI processApi, final Long tenantId) {
+    public ProcessItemConverter(final ProcessAPI processApi) {
         this.processApi = processApi;
-        this.tenantId = tenantId;
     }
 
     @Override
@@ -62,7 +58,7 @@ public class ProcessItemConverter extends ItemConverter<ProcessItem, ProcessDepl
     }
 
     private Long getActorInitiator(ProcessDeploymentInfo engineItem) {
-        TenantCacheUtil tenantCacheUtil = TenantCacheUtilFactory.getTenantCacheUtil(tenantId);
+        TenantCacheUtil tenantCacheUtil = TenantCacheUtilFactory.getTenantCacheUtil();
         Long actorInitiatorId = tenantCacheUtil.getProcessActorInitiatorId(engineItem.getProcessId());
         if (actorInitiatorId == null) {
             actorInitiatorId = tenantCacheUtil.storeProcessActorInitiatorId(engineItem.getProcessId(), getActorInitiatorFromEngine(engineItem));

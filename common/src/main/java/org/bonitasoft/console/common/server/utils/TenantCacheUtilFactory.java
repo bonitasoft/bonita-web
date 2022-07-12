@@ -1,24 +1,21 @@
 package org.bonitasoft.console.common.server.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Julien Mege
  *
  */
 public class TenantCacheUtilFactory {
 
-    private static Map<Long, TenantCacheUtil> map = new HashMap();
+    private static TenantCacheUtil tenantCacheUtil;
 
     /**
      * Get FormCacheUtil of different Domain
      * @return TenatCacheUtil
      */
-    public static TenantCacheUtil getTenantCacheUtil(final long tenantID) {
-        if(!map.containsKey(tenantID)){
-            map.put(tenantID, new TenantCacheUtil(tenantID));
+    public static TenantCacheUtil getTenantCacheUtil() {
+        if (tenantCacheUtil == null) {
+            tenantCacheUtil = new TenantCacheUtil();
         }
-        return map.get(tenantID);
+        return tenantCacheUtil;
     }
 }

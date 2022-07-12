@@ -47,7 +47,7 @@ public class ProcessItemConverterTest {
         i18n = I18n.getInstance();
         CommonDateFormater.setDateFormater(new ServerDateFormater());
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
-        processItemConverter = spy(new ProcessItemConverter(processAPI, 1L));
+        processItemConverter = spy(new ProcessItemConverter(processAPI));
     }
 
     @Test

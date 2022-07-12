@@ -9,9 +9,9 @@ public class TenantCacheUtilTest {
 
     @Test
     public void shouldStoreActorInitiator() {
-        final TenantCacheUtil tenantCacheUtil = TenantCacheUtilFactory.getTenantCacheUtil(1);
+        final TenantCacheUtil tenantCacheUtil = TenantCacheUtilFactory.getTenantCacheUtil();
         tenantCacheUtil.storeProcessActorInitiatorId(2L, 3L);
-        final Long actorInitiatorRetrievedFromCacheByParameters = TenantCacheUtilFactory.getTenantCacheUtil(1).getProcessActorInitiatorId(2L);
+        final Long actorInitiatorRetrievedFromCacheByParameters = TenantCacheUtilFactory.getTenantCacheUtil().getProcessActorInitiatorId(2L);
         assertNotNull(actorInitiatorRetrievedFromCacheByParameters);
         assertEquals(3L, actorInitiatorRetrievedFromCacheByParameters.longValue());
     }

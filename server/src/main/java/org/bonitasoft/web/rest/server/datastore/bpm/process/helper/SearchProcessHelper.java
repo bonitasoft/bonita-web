@@ -35,11 +35,9 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
 
     private ProcessEngineClient engineClient;
-    private Long tenantId;
 
-    public SearchProcessHelper(ProcessEngineClient engineClient, Long tenantId) {
+    public SearchProcessHelper(ProcessEngineClient engineClient) {
         this.engineClient = engineClient;
-        this.tenantId = tenantId;
     }
 
     @Override
@@ -89,6 +87,6 @@ public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
 
     private ItemSearchResult<ProcessItem> convertResult(int page, int nbResultsByPage, final SearchResult<ProcessDeploymentInfo> result) {
         return new ItemSearchResultConverter<ProcessItem, ProcessDeploymentInfo>(page, nbResultsByPage, result, new ProcessItemConverter(
-                engineClient.getProcessApi(), tenantId)).toItemSearchResult();
+                engineClient.getProcessApi())).toItemSearchResult();
     }
 }
