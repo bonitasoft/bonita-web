@@ -44,8 +44,6 @@ public class HttpServletRequestAccessor {
 
     private final static String OAUTH_TOKEN = "oauth_token";
 
-    private final static String TENANT_ID = AuthenticationManager.TENANT;
-
     private final HttpServletRequest httpServletRequest;
 
     public HttpServletRequestAccessor(final HttpServletRequest httpServletRequest) {
@@ -58,10 +56,6 @@ public class HttpServletRequestAccessor {
 
     public String getPassword() {
         return httpServletRequest.getParameter(PASSWORD_PARAM);
-    }
-
-    public String getTenantId() {
-        return httpServletRequest.getParameter(TENANT_ID);
     }
 
     public HttpSession getHttpSession() {

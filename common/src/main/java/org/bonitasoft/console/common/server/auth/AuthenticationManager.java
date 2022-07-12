@@ -32,11 +32,6 @@ import org.bonitasoft.console.common.server.login.credentials.Credentials;
 public interface AuthenticationManager {
 
     /**
-     * Tenant parameter name
-     */
-    static final String TENANT = "tenant";
-
-    /**
      * Redirection URL parameter name
      */
     static final String REDIRECT_URL = "redirectUrl";
@@ -69,8 +64,6 @@ public interface AuthenticationManager {
     /**
      * Get Login Page URL
      *
-     * @param request
-     *        HTTP request accessor object
      * @param redirectURL
      *        redirect url
      * @return new redirect url
@@ -82,8 +75,6 @@ public interface AuthenticationManager {
     /**
      * Authenticate the user (If no exception is thrown, an engine login will then be performed with the credentials)
      *
-     * @param request
-     *        HTTP request accessor object
      * @param credentials
      *        credentials extracted from the request or from the auto-login config
      * @return a map of credentials which if not empty (and containing more than just the key "authentication.session.invalidate") will be used to login on the engine. Otherwise, the username and password contained in the
@@ -98,8 +89,6 @@ public interface AuthenticationManager {
      * Get Logout Page URL
      * If the LoginManager implementation of this method is to return null the default login page will be displayed
      *
-     * @param request
-     *        HTTP request accessor object
      * @param redirectURL
      *        redirect url
      * @return new redirect url

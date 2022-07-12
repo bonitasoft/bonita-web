@@ -56,7 +56,7 @@ public abstract class OAuthConsumer implements Serializable {
                 .provider(viewType)
                 .apiKey(consumerKey)
                 .apiSecret(consumerSecret)
-                .callback(callbackURL + "?" + AuthenticationManager.TENANT + "=" + tenantId + "&" + AuthenticationManager.REDIRECT_URL + "=" + redirectUrl)
+                .callback(callbackURL + "?" + AuthenticationManager.REDIRECT_URL + "=" + redirectUrl)
                 .build();
     }
 

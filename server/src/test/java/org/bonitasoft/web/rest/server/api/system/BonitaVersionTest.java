@@ -20,6 +20,7 @@ import static org.mockito.BDDMockito.given;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

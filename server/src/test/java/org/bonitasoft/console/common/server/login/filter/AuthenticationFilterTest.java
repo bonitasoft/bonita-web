@@ -87,7 +87,6 @@ public class AuthenticationFilterTest {
         doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(tenantIdAccessor);
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(httpRequest.getMethod()).thenReturn("GET");
-        when(httpRequest.getParameter(AuthenticationManager.TENANT)).thenReturn("1");
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
