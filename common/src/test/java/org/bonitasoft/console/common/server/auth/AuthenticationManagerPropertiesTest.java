@@ -12,7 +12,7 @@ public class AuthenticationManagerPropertiesTest {
     @Test
     public void isLogoutDisabled_should_return_FALSE_if_not_set() {
         // given:
-        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties(123L);
+        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties();
 
         // when:
         final boolean isLogoutDisabled = properties.isLogoutDisabled();

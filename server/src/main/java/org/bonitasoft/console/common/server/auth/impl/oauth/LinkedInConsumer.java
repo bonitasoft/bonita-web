@@ -40,8 +40,8 @@ public class LinkedInConsumer extends OAuthConsumer {
 
     private static final String LINKEDIN_PREFIX = "LinkedIn_";
 
-    protected LinkedInConsumer(final long tenantId, final String redirctURL) {
-        super(LinkedInApi.class, tenantId, redirctURL);
+    protected LinkedInConsumer(final String redirctURL) {
+        super(LinkedInApi.class, redirctURL);
     }
 
     private static final String PROTECTED_RESOURCE_URL = "http://api.linkedin.com/v1/people/~:(id,first-name,last-name)?format=json";

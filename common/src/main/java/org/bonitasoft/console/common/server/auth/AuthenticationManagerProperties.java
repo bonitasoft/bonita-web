@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFile;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 
 /**
  * Utility class for Session Manager access (read in a properties file)
@@ -75,86 +74,81 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
      */
     protected static final String CAS_BONITA_SERVICE_URL = "Cas.bonitaServiceURL";
 
-    private static Map<Long, Map<String, Optional<String>>> authenticationProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
+    private static Map<String, Optional<String>> authenticationProperties = new ConcurrentHashMap<String, Optional<String>>();
     
     /**
      * properties
      */
-    public AuthenticationManagerProperties(final long tenantId) {
-        super(AUTHENTICATION_CONFIG_FILE_NAME, tenantId >= 0 ? tenantId : TenantsManagementUtils.getDefaultTenantId());
+    public AuthenticationManagerProperties() {
+        super(AUTHENTICATION_CONFIG_FILE_NAME);
     }
 
-    public static AuthenticationManagerProperties getProperties(long tenantId) {
-        return new AuthenticationManagerProperties(tenantId);
+    public static AuthenticationManagerProperties getProperties() {
+        return new AuthenticationManagerProperties();
     }
 
     /**
      * @return get login manager implementation
      */
     public String getAuthenticationManagerImpl() {
-        return getProperty(AUTHENTICATION_MANAGER);
+        return getTenantProperty(AUTHENTICATION_MANAGER);
     }
 
     /**
      * @return get OAuth service provider name
      */
     public String getOAuthServiceProviderName() {
-        return getProperty(OAUTH_SERVICE_PROVIDER);
+        return getTenantProperty(OAUTH_SERVICE_PROVIDER);
     }
 
     /**
      * @return get OAuth consumer key
      */
     public String getOAuthConsumerKey() {
-        return getProperty(OAUTH_CONSUMER_KEY);
+        return getTenantProperty(OAUTH_CONSUMER_KEY);
     }
 
     /**
      * @return get OAuth consumer secret
      */
     public String getOAuthConsumerSecret() {
-        return getProperty(OAUTH_CONSUMER_SECRET);
+        return getTenantProperty(OAUTH_CONSUMER_SECRET);
     }
 
     /**
      * @return get OAuth callback URL
      */
     public String getOAuthCallbackURL() {
-        return getProperty(OAUTH_CALLBACK_URL);
+        return getTenantProperty(OAUTH_CALLBACK_URL);
     }
 
     /**
      * @return get OAuth callback URL
      */
     public String getCasServerURL() {
-        return getProperty(CAS_SERVER_URL);
+        return getTenantProperty(CAS_SERVER_URL);
     }
 
     /**
      * @return get OAuth callback URL
      */
     public String getCasBonitaServiceUrl() {
-        return getProperty(CAS_BONITA_SERVICE_URL);
+        return getTenantProperty(CAS_BONITA_SERVICE_URL);
     }
 
     /**
      * @return if properties are set up to display the logout button
      */
     public boolean isLogoutDisabled() {
-        return BooleanUtils.toBoolean(getProperty(LOGOUT_DISABLED));
+        return BooleanUtils.toBoolean(getTenantProperty(LOGOUT_DISABLED));
     }
     
     @Override
-    public String getProperty(String propertyName) {
-        Map<String, Optional<String>> tenantAuthenticationProperties = authenticationProperties.get(tenantId);
-        if (tenantAuthenticationProperties == null) {
-            tenantAuthenticationProperties = new ConcurrentHashMap<String, Optional<String>>();
-            authenticationProperties.put(tenantId, tenantAuthenticationProperties);
-        }
-        Optional<String> propertyValue = tenantAuthenticationProperties.get(propertyName);
+    public String getTenantProperty(String propertyName) {
+        Optional<String> propertyValue = authenticationProperties.get(propertyName);
         if (propertyValue == null) {
-            propertyValue = Optional.ofNullable(super.getProperty(propertyName));
-            tenantAuthenticationProperties.put(propertyName, propertyValue);
+            propertyValue = Optional.ofNullable(super.getTenantProperty(propertyName));
+            authenticationProperties.put(propertyName, propertyValue);
         }
         return propertyValue.orElse(null);
     }

@@ -19,7 +19,6 @@ import static org.mockito.Mockito.spy;
 @RunWith(MockitoJUnitRunner.class)
 public class ConfigurationFileTest {
 
-    public static final long TENANT_ID = 12L;
     public static final String COMPOUND_PERMISSIONS_MAPPING_FILE = "compound.properties";
     public static final String RESOURCES_PERMISSIONS_MAPPING_FILE = "resources.properties";
     public static final String CUSTOM_PERMISSIONS_MAPPING_FILE = "custom.properties";
@@ -36,20 +35,20 @@ public class ConfigurationFileTest {
 
     @Test
     public void should_getProperty_return_the_right_custom_permissions_with_special_characters() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(CUSTOM_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(customProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(CUSTOM_PERMISSIONS_MAPPING_FILE));
+        doReturn(customProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
-        final String customValue = tenantProperties.getProperty("profile|HR manager");
+        final String customValue = tenantProperties.getTenantProperty("profile|HR manager");
 
         assertEquals("[ManageProfiles]", customValue);
     }
 
     @Test
     public void should_getProperty_return_the_right_permissions_with_trailing_spaces() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(compoundProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE));
+        doReturn(compoundProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
-        final String value = tenantProperties.getProperty("caseListingPage");
+        final String value = tenantProperties.getTenantProperty("caseListingPage");
         final Set<String> valueAsList = tenantProperties.getPropertyAsSet("caseListingPage");
 
         assertEquals("caseVisualizationWithTrailingSpace", value);
@@ -58,48 +57,48 @@ public class ConfigurationFileTest {
 
     @Test
     public void should_getProperty_return_null_with_unknown_permissions() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(compoundProperties).when(tenantProperties).getPropertiesOfScope();
-        
-        final String value = tenantProperties.getProperty("unknownListingPage");
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE));
+        doReturn(compoundProperties).when(tenantProperties).getTenantPropertiesOfScope();
+
+        final String value = tenantProperties.getTenantProperty("unknownListingPage");
         
         Assert.assertNull(value);
     }
 
     @Test
     public void should_getProperty_return_the_right_compound_permissions() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(compoundProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE));
+        doReturn(compoundProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
-        final String compoundValue = tenantProperties.getProperty("taskListingPage");
+        final String compoundValue = tenantProperties.getTenantProperty("taskListingPage");
 
         assertEquals("[TaskVisualization, CaseVisualization]", compoundValue);
     }
 
     @Test
     public void should_getProperty_return_the_right_resource_permissions() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(RESOURCES_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(resourcesProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(RESOURCES_PERMISSIONS_MAPPING_FILE));
+        doReturn(resourcesProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
-        final String resourcesValue = tenantProperties.getProperty("GET|bpm/identity");
+        final String resourcesValue = tenantProperties.getTenantProperty("GET|bpm/identity");
 
         assertEquals("[UserVisualization, groupVisualization]", resourcesValue);
     }
 
     @Test
     public void should_getProperty_return_the_right_custom_permissions() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(CUSTOM_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(customProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(CUSTOM_PERMISSIONS_MAPPING_FILE));
+        doReturn(customProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
-        final String customValue = tenantProperties.getProperty("profile|User");
+        final String customValue = tenantProperties.getTenantProperty("profile|User");
 
         assertEquals("[ManageLooknFeel, ManageProfiles]", customValue);
     }
 
     @Test
     public void should_getProperty_return_the_right_permissions_list() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(compoundProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE));
+        doReturn(compoundProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
         final Set<String> compoundPermissionsList = tenantProperties.getPropertyAsSet("taskListingPage");
 
@@ -108,8 +107,8 @@ public class ConfigurationFileTest {
 
     @Test
     public void should_getProperty_return_the_right_permissions_list_with_single_value() {
-        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE, TENANT_ID));
-        doReturn(compoundProperties).when(tenantProperties).getPropertiesOfScope();
+        final ConfigurationFile tenantProperties = spy(new ConfigurationFile(COMPOUND_PERMISSIONS_MAPPING_FILE));
+        doReturn(compoundProperties).when(tenantProperties).getTenantPropertiesOfScope();
 
         final Set<String> compoundPermissionsList = tenantProperties.getPropertyAsSet("processListingPage");
 

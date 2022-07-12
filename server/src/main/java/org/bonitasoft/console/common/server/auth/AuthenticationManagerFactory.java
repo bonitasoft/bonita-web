@@ -34,7 +34,7 @@ public class AuthenticationManagerFactory {
         String authenticationManagerName = null;
         if (!map.containsKey(tenantId)) {
             try {
-                authenticationManagerName = getManagerImplementationClassName(tenantId);
+                authenticationManagerName = getManagerImplementationClassName();
                 final AuthenticationManager authenticationManager = (AuthenticationManager) Class.forName(authenticationManagerName).newInstance();
                 map.put(tenantId, authenticationManager);
             } catch (final Exception e) {
@@ -45,8 +45,8 @@ public class AuthenticationManagerFactory {
         return map.get(tenantId);
     }
 
-    private static String getManagerImplementationClassName(long tenantId) {
-        String authenticationManagerName = AuthenticationManagerProperties.getProperties(tenantId).getAuthenticationManagerImpl();
+    private static String getManagerImplementationClassName() {
+        String authenticationManagerName = AuthenticationManagerProperties.getProperties().getAuthenticationManagerImpl();
         if (authenticationManagerName == null || authenticationManagerName.isEmpty()) {
             authenticationManagerName = StandardAuthenticationManagerImpl.class.getName();
             LOGGER.trace("The login manager implementation is undefined. Using default implementation : " + authenticationManagerName);

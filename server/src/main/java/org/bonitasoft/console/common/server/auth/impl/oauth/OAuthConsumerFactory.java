@@ -42,12 +42,12 @@ public class OAuthConsumerFactory {
         if (!map.containsKey(tenantId)) {
             String providerName = null;
             try {
-                providerName = AuthenticationManagerProperties.getProperties(tenantId).getOAuthServiceProviderName();
+                providerName = AuthenticationManagerProperties.getProperties().getOAuthServiceProviderName();
                 if (providerName == null) {
                     providerName = OAUTH_CLASS_TYPE.LinkedIn.toString();
                     LOGGER.info( "The OAuth service provider undefined. Using the default implementation : " + providerName);
                 }
-                map.put(tenantId, getOAuthConsumerClass(providerName, tenantId, redirectURL));
+                map.put(tenantId, getOAuthConsumerClass(providerName, redirectURL));
             } catch (final ClassNotFoundException e) {
                 final String message = "The OAuth provider class for " + providerName + " doesn't exist!";
                  if (LOGGER.isErrorEnabled()) {
@@ -59,11 +59,11 @@ public class OAuthConsumerFactory {
         return map.get(tenantId);
     }
 
-    private static OAuthConsumer getOAuthConsumerClass(final String providerName, final long tenantId, final String redirectURL) throws ClassNotFoundException {
+    private static OAuthConsumer getOAuthConsumerClass(final String providerName, final String redirectURL) throws ClassNotFoundException {
         OAuthConsumer consumerClass;
         switch (OAUTH_CLASS_TYPE.valueOf(providerName)) {
             case LinkedIn:
-                consumerClass = new LinkedInConsumer(tenantId, redirectURL);
+                consumerClass = new LinkedInConsumer(redirectURL);
                 break;
             default:
                 throw new ClassNotFoundException();

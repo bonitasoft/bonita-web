@@ -31,23 +31,20 @@ public abstract class OAuthConsumer implements Serializable {
 
     protected String redirectUrl;
 
-    protected long tenantId;
-
     protected Class<? extends Api> viewType;
 
     protected OAuthService service;
 
     private static final long serialVersionUID = 1L;
 
-    protected OAuthConsumer(final Class<? extends Api> viewType, final long tenantId, final String redirctURL) {
+    protected OAuthConsumer(final Class<? extends Api> viewType, final String redirctURL) {
         this.viewType = viewType;
         redirectUrl = redirctURL;
-        this.tenantId = tenantId;
         generateOAuthService();
     }
 
     protected void generateOAuthService() {
-        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties(tenantId);
+        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties();
         final String consumerKey = properties.getOAuthConsumerKey();
         final String consumerSecret = properties.getOAuthConsumerSecret();
         final String callbackURL = properties.getOAuthCallbackURL();

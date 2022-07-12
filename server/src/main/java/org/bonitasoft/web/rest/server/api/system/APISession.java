@@ -47,7 +47,7 @@ public class APISession extends ConsoleAPI<SessionItem> {
             session.setAttribute(SessionItem.ATTRIBUTE_USERID, String.valueOf(apiSession.getUserId()));
             session.setAttribute(SessionItem.ATTRIBUTE_USERNAME, apiSession.getUserName());
             session.setAttribute(SessionItem.ATTRIBUTE_IS_TECHNICAL_USER, String.valueOf(apiSession.isTechnicalUser()));
-            session.setAttribute(SessionItem.ATTRIBUTE_IS_GUEST_USER, String.valueOf(isGuestUser(apiSession.getTenantId(), apiSession.getUserName())));
+            session.setAttribute(SessionItem.ATTRIBUTE_IS_GUEST_USER, String.valueOf(isGuestUser(apiSession.getUserName())));
             session.setAttribute(SessionItem.ATTRIBUTE_VERSION, getVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION, getBrandingVersion());
             session.setAttribute(SessionItem.ATTRIBUTE_BRANDING_VERSION_WITH_DATE, getBrandingVersionWithDate());
@@ -57,16 +57,16 @@ public class APISession extends ConsoleAPI<SessionItem> {
         return session;
     }
 
-    protected boolean isGuestUser(final long tenantId, final String loggedInUsername) {
+    protected boolean isGuestUser(final String loggedInUsername) {
         return false;
     }
 
-    protected AuthenticationManagerProperties getAuthenticationManagerProperties(final long tenantId) {
-        return AuthenticationManagerProperties.getProperties(tenantId);
+    protected AuthenticationManagerProperties getAuthenticationManagerProperties() {
+        return AuthenticationManagerProperties.getProperties();
     }
 
     public String getLogoutConfiguration(final org.bonitasoft.engine.session.APISession apiSession) {
-        if (!apiSession.isTechnicalUser() && isLogoutDisabled(apiSession.getTenantId())) {
+        if (!apiSession.isTechnicalUser() && isLogoutDisabled()) {
             return JSonSerializer.serialize(singletonList(AuthenticationManagerProperties.LOGOUT_DISABLED));
         }
         return JSonSerializer.serialize(emptyList());
@@ -75,11 +75,9 @@ public class APISession extends ConsoleAPI<SessionItem> {
     /**
      * enable to know if the logout button is visible or not
      *
-     * @param tenantId
-     *        the current user tenant id
      */
-    protected boolean isLogoutDisabled(final long tenantId) {
-        return getAuthenticationManagerProperties(tenantId).isLogoutDisabled();
+    protected boolean isLogoutDisabled() {
+        return getAuthenticationManagerProperties().isLogoutDisabled();
     }
 
     public String getVersion() {

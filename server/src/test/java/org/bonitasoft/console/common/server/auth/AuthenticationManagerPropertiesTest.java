@@ -30,17 +30,16 @@ import static org.mockito.Mockito.spy;
  */
 public class AuthenticationManagerPropertiesTest {
 
-    public static final long TENANT_ID = 65432L;
     public AuthenticationManagerProperties loginManagerProperties;
 
     @Before
     public void setUp() throws IOException {
-        loginManagerProperties = spy(new AuthenticationManagerProperties(TENANT_ID));
+        loginManagerProperties = spy(new AuthenticationManagerProperties());
         doReturn(getProperties(("login.LoginManager = org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl\n" +
                 "OAuth.serviceProvider = LinkedIn\n" +
                 "OAuth.consumerKey = ove2vcdjptar\n" +
                 "OAuth.consumerSecret = vdaBrCmHvkgJoYz1\n" +
-                "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes())).when(loginManagerProperties).getPropertiesOfScope();
+                "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes())).when(loginManagerProperties).getTenantPropertiesOfScope();
     }
 
     @After

@@ -25,27 +25,23 @@ import java.util.Set;
 public class ConfigurationFile {
 
     private final String propertiesFilename;
-    protected final long tenantId;
 
-    public ConfigurationFile(String propertiesFilename, long tenantId) {
+    public ConfigurationFile(String propertiesFilename) {
         this.propertiesFilename = propertiesFilename;
-        this.tenantId = tenantId;
     }
 
-    public String getProperty(final String propertyName) {
-        final String propertyValue = getPropertiesOfScope().getProperty(propertyName);
+    public String getTenantProperty(final String propertyName) {
+        final Properties properties = getTenantPropertiesOfScope();
+        final String propertyValue = properties.getProperty(propertyName);
         return propertyValue != null ? propertyValue.trim() : null;
     }
 
-    public Properties getPropertiesOfScope() {
-        if (tenantId > 0) {
-            return ConfigurationFilesManager.getInstance().getTenantProperties(propertiesFilename);
-        }
-        return ConfigurationFilesManager.getInstance().getPlatformProperties(propertiesFilename);
+    public Properties getTenantPropertiesOfScope() {
+        return ConfigurationFilesManager.getInstance().getTenantProperties(propertiesFilename);
     }
 
     public Set<String> getPropertyAsSet(final String propertyName) {
-        final String propertyAsString = getProperty(propertyName);
+        final String propertyAsString = getTenantProperty(propertyName);
         return stringToSet(propertyAsString);
     }
 
