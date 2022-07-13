@@ -23,7 +23,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import static org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem.FILTER_SHOW_ASSIGNED_TO_OTHERS;
+import static org.bonitasoft.web.rest.model.bpm.flownode.IHumanTaskItem.FILTER_USER_ID;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,6 +49,16 @@ public class AbstractHumanTaskDatastoreTest {
         datastore.runSearch(new SearchOptionsBuilder(1, 100), Collections.singletonMap("state", "ready"));
 
         verify(processAPI).searchAssignedAndPendingHumanTasks(any());
+    }
+
+    @Test
+    public void should_use_searchPendingOrAssignedToUserOrAssignedToOthersTasks_when_filtering_show_assigned_to_others_tasks() throws SearchException {
+        HashMap<String, String> filters = new HashMap<String, String>();
+        filters.put(FILTER_USER_ID, "44");
+        filters.put(FILTER_SHOW_ASSIGNED_TO_OTHERS, "true");
+        datastore.runSearch(new SearchOptionsBuilder(1, 100), filters);
+
+        verify(processAPI).searchPendingOrAssignedToUserOrAssignedToOthersTasks(eq(44L),any());
     }
 
     @Test
