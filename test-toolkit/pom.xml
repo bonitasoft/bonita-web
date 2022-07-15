@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.bonitasoft.console</groupId>
         <artifactId>bonita-console</artifactId>
-        <version>7.15-SNAPSHOT</version>
+        <version>7.15.0.W29</version>
     </parent>
     <artifactId>test-toolkit</artifactId>
     <packaging>jar</packaging>
