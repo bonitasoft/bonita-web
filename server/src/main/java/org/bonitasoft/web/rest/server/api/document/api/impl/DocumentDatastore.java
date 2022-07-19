@@ -110,7 +110,7 @@ public class DocumentDatastore {
         String fileName = null;
         String mimeType = null;
         byte[] fileContent = null;
-        final File theSourceFile = tenantFolder.getTempFile(path, apiSession.getTenantId());
+        final File theSourceFile = tenantFolder.getTempFile(path);
         if (theSourceFile.exists()) {
             final long maxSize = PropertiesFactory.getConsoleProperties(apiSession.getTenantId()).getMaxSize();
             if (theSourceFile.length() > maxSize * 1048576) {

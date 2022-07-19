@@ -100,7 +100,7 @@ public class OrganizationImportService extends ConsoleService {
     }
 
     public byte[] getOrganizationContent(final BonitaHomeFolderAccessor tenantFolder) throws IOException {
-        try (InputStream xmlStream = new FileInputStream(tenantFolder.getTempFile(getFileUploadParameter(), getTenantId()))) {
+        try (InputStream xmlStream = new FileInputStream(tenantFolder.getTempFile(getFileUploadParameter()))) {
             return IOUtils.toByteArray(xmlStream);
         }
     }

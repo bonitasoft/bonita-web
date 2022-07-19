@@ -72,7 +72,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_adding_a_bar_file_with_unauthorized_path() throws IOException {
         // Given
-        doThrow(new UnauthorizedFolderException("")).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
+        doThrow(new UnauthorizedFolderException("")).when(tenantFolder).getTempFile(any(String.class));
 
         // When
         processDatastore.add(processItem);
@@ -82,7 +82,7 @@ public class ProcessDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_throws_an_exception_adding_a_bar_file_with_ioException() throws IOException {
         // Given
-        doThrow(new IOException("")).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
+        doThrow(new IOException("")).when(tenantFolder).getTempFile(any(String.class));
 
 
         // When

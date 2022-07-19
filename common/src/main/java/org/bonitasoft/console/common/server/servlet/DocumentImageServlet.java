@@ -71,7 +71,7 @@ public class DocumentImageServlet extends DocumentDownloadServlet {
         if (filePath != null) {
             final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
             try {
-                final File file = tempFolderAccessor.getTempFile(FilenameUtils.separatorsToSystem(filePath), apiSession.getTenantId());
+                final File file = tempFolderAccessor.getTempFile(FilenameUtils.separatorsToSystem(filePath));
                 if (fileName == null) {
                     fileName = file.getName();
                 }

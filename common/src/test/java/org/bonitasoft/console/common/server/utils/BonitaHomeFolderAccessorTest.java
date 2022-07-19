@@ -24,11 +24,6 @@ public class BonitaHomeFolderAccessorTest {
     @Spy
     private final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     @Test
     public void should_authorized_a_file_in_temp_folder() throws Exception {
         given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
@@ -81,10 +76,10 @@ public class BonitaHomeFolderAccessorTest {
     public void should_complete_file_path() throws Exception {
         final String fileName = "fileName.txt";
 
-        given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
+        given(tenantFolder.getBonitaTenantConstantUtil()).willReturn(webBonitaConstantsUtils);
         given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
-        final String completedPath = tenantFolder.getCompleteTempFilePath(fileName, 1L);
+        final String completedPath = tenantFolder.getCompleteTenantTempFilePath(fileName);
 
         assertThat(new File(completedPath).getCanonicalPath()).isEqualTo(
                 new File("." + File.separator + "tempFolder" + File.separator + "fileName.txt").getCanonicalPath());
@@ -94,10 +89,10 @@ public class BonitaHomeFolderAccessorTest {
     public void should_verifyAuthorization_file_path() throws Exception {
         final String fileName = "c:" + File.separator + "tempFolder" + File.separator + "fileName.txt";
 
-        given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
+        given(tenantFolder.getBonitaTenantConstantUtil()).willReturn(webBonitaConstantsUtils);
         given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
-        final String completedPath = tenantFolder.getCompleteTempFilePath(fileName, 1L);
+        final String completedPath = tenantFolder.getCompleteTenantTempFilePath(fileName);
 
         assertThat(completedPath).isEqualTo("c:" + File.separator + "tempFolder" + File.separator + "fileName.txt");
     }
@@ -106,20 +101,20 @@ public class BonitaHomeFolderAccessorTest {
     public void should_UnauthorizedFolder() throws Exception {
         final String fileName = "c:" + File.separator + "UnauthorizedFolder" + File.separator + "tempFolder" + File.separator + "fileName.txt";
 
-        given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
+        given(tenantFolder.getBonitaTenantConstantUtil()).willReturn(webBonitaConstantsUtils);
         given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("c:" + File.separator + "tempFolder"));
 
-        tenantFolder.getCompleteTempFilePath(fileName, 1L);
+        tenantFolder.getCompleteTenantTempFilePath(fileName);
     }
 
     @Test
     public void should_return_completed_temp_file() throws Exception {
         final String fileName = "fileName.txt";
 
-        given(tenantFolder.getBonitaConstantUtil(1L)).willReturn(webBonitaConstantsUtils);
+        given(tenantFolder.getBonitaTenantConstantUtil()).willReturn(webBonitaConstantsUtils);
         given(webBonitaConstantsUtils.getTempFolder()).willReturn(new File("." + File.separator + "tempFolder"));
 
-        final File completedFile = tenantFolder.getTempFile(fileName, 1L);
+        final File completedFile = tenantFolder.getTempFile(fileName);
 
         assertThat(completedFile.getCanonicalPath()).isEqualTo(
                 new File("." + File.separator + "tempFolder" + File.separator + "fileName.txt").getCanonicalPath());

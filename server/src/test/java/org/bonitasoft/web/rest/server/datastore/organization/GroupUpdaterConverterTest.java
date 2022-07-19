@@ -15,7 +15,6 @@
 package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -74,9 +73,9 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
         attributes.put(GroupItem.ATTRIBUTE_NAME, "aNewName");
         attributes.put(GroupItem.ATTRIBUTE_DISPLAY_NAME, "aNewDisplayName");
         byte[] content = { 1, 2, 3 };
-        doReturn(new IconDescriptor("aNewIcon.png", content)).when(bonitaHomeFolderAccessor).getIconFromFileSystem("aNewIcon", 12L);
+        doReturn(new IconDescriptor("aNewIcon.png", content)).when(bonitaHomeFolderAccessor).getIconFromFileSystem("aNewIcon");
 
-        GroupUpdater updater = groupUpdaterConverter.convert(attributes, 12L);
+        GroupUpdater updater = groupUpdaterConverter.convert(attributes);
 
         assertThat(getFieldValue(updater, GroupField.DESCRIPTION)).isEqualTo("aNewDescription");
         assertThat(getFieldValue(updater, GroupField.ICON_FILENAME)).isEqualTo("aNewIcon.png");
@@ -93,14 +92,14 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
         attributes.put(GroupItem.ATTRIBUTE_NAME, "aNewName");
 
         //when
-        GroupUpdater updater = groupUpdaterConverter.convert(attributes, 12L);
+        GroupUpdater updater = groupUpdaterConverter.convert(attributes);
 
         //then
         assertThat(getFieldValue(updater, GroupField.ICON_FILENAME)).isNull();
         assertThat(getFieldValue(updater, GroupField.ICON_CONTENT)).isNull();
         assertThat(getFieldValue(updater, GroupField.NAME)).isEqualTo("aNewName");
 
-        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString());
 
     }
 
@@ -109,7 +108,7 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
         String unexpectedName = " ";
         HashMap<String, String> attribute = buildSimpleAttribute(GroupItem.ATTRIBUTE_NAME, unexpectedName);
 
-        GroupUpdater updater = groupUpdaterConverter.convert(attribute, 12L);
+        GroupUpdater updater = groupUpdaterConverter.convert(attribute);
 
         assertThat(getFieldValue(updater, GroupField.NAME)).isNull();
     }
@@ -119,7 +118,7 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
         HashMap<String, String> attributes = buildSimpleAttribute(GroupItem.ATTRIBUTE_PARENT_GROUP_ID, "101");
         when(groupEngineClient.getPath("101")).thenReturn("/Expected/Parent/Path");
 
-        GroupUpdater updater = groupUpdaterConverter.convert(attributes, 12L);
+        GroupUpdater updater = groupUpdaterConverter.convert(attributes);
 
         assertThat(getFieldValue(updater, GroupField.PARENT_PATH)).isEqualTo("/Expected/Parent/Path");
     }
@@ -128,7 +127,7 @@ public class GroupUpdaterConverterTest extends APITestWithMock {
     public void convert_set_parent_path_to_empty_if_parentGroupId_is_an_empty_string() throws Exception {
         HashMap<String, String> attributes = buildSimpleAttribute(GroupItem.ATTRIBUTE_PARENT_GROUP_ID, "");
 
-        GroupUpdater updater = groupUpdaterConverter.convert(attributes, 12L);
+        GroupUpdater updater = groupUpdaterConverter.convert(attributes);
 
         assertThat(getFieldValue(updater, GroupField.PARENT_PATH)).isEqualTo("");
     }

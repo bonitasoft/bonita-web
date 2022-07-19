@@ -71,8 +71,6 @@ public class ContractTypeConverter {
 
     private long maxSizeForTenant;
 
-    private long tenantId;
-
     public ContractTypeConverter(final String[] datePatterns) {
         convertUtilsBean = new ConvertUtilsBean();
         convertUtilsBean.register(true, false, 0);
@@ -99,7 +97,6 @@ public class ContractTypeConverter {
     public Map<String, Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs,
             final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
-        this.tenantId = tenantId;
         final Map<String, Serializable> processedInputs = new HashMap<>();
         final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.<String, Serializable> emptyMap()
                 : createContractInputMap(processContract.getInputs());
@@ -113,33 +110,31 @@ public class ContractTypeConverter {
         return processedInputs;
     }
 
-    public void deleteTemporaryFiles(Map<String, Serializable> inputs,
-            long tenantId) {
+    public void deleteTemporaryFiles(Map<String, Serializable> inputs) {
         if (inputs != null) {
-            deleteTemporaryFilesInternal((Serializable) inputs, tenantId);
+            deleteTemporaryFilesInternal((Serializable) inputs);
         }
     }
 
-    private void deleteTemporaryFilesInternal(Serializable inputValue,
-            long tenantId) {
+    private void deleteTemporaryFilesInternal(Serializable inputValue) {
         if (inputValue == null) {
             return;
         }
         if (inputValue instanceof List) {
             for (Object element : ((List) inputValue)) {
-                deleteTemporaryFilesInternal(((Serializable) element), tenantId);
+                deleteTemporaryFilesInternal(((Serializable) element));
             }
         } else if (inputValue instanceof Map) {
             for (Map.Entry<String, Serializable> element : ((Map<String, Serializable>) inputValue).entrySet()) {
                 if (element.getKey().equals(FILE_TEMP_PATH) && element.getValue() != null) {
                     String path = (String) element.getValue();
                     try {
-                        deleteFile(bonitaHomeFolderAccessor.getTempFile(path, tenantId));
+                        deleteFile(bonitaHomeFolderAccessor.getTempFile(path));
                     } catch (IOException e) {
                        LOGGER.info("Cannot delete " + path + "in the tenant temp directory.", e);
                     }
                 } else {
-                    deleteTemporaryFilesInternal(element.getValue(), tenantId);
+                    deleteTemporaryFilesInternal(element.getValue());
                 }
             }
         }
@@ -231,7 +226,7 @@ public class ContractTypeConverter {
         byte[] fileContent = null;
         if (fileTempPath != null) {
             try {
-                final File sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath, tenantId);
+                final File sourceFile = bonitaHomeFolderAccessor.getTempFile(fileTempPath);
                 if (sourceFile.exists()) {
                     fileContent = getFileContent(sourceFile);
                 } else {

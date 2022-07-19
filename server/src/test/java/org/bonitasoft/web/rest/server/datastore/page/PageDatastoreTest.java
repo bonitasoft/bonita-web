@@ -154,8 +154,8 @@ public class PageDatastoreTest extends APITestWithMock {
 
         when(engineSession.getTenantId()).thenReturn(TENANT_ID);
 
-        when(tenantFolder.getTempFile(PAGE_ZIP, TENANT_ID)).thenReturn(pageZipFile);
-        when(tenantFolder.getTempFile(PAGE_REST_API_ZIP, TENANT_ID)).thenReturn(pageZipFile);
+        when(tenantFolder.getTempFile(PAGE_ZIP)).thenReturn(pageZipFile);
+        when(tenantFolder.getTempFile(PAGE_REST_API_ZIP)).thenReturn(pageZipFile);
 
         when(constantsValue.getTempFolder()).thenReturn(pageZipFile.getParentFile());
         when(constantsValue.getPagesFolder()).thenReturn(pagesDir);
@@ -301,7 +301,7 @@ public class PageDatastoreTest extends APITestWithMock {
         doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(any(Page.class));
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
-        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
+        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()));
 
         // When
         final Map<String, String> attributes = new HashMap<>();
@@ -325,7 +325,7 @@ public class PageDatastoreTest extends APITestWithMock {
         doThrow(new UpdateException("")).when(pageAPI).updatePageContent(eq(PAGE_ID), any());
 
         final File apiExtensionZipFile = deployZipFileToTarget(PAGE_REST_API_ZIP);
-        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()), anyLong());
+        doReturn(apiExtensionZipFile).when(tenantFolder).getTempFile(eq(apiExtensionZipFile.getAbsolutePath()));
 
         // When
         final Map<String, String> attributes = new HashMap<>();
@@ -345,7 +345,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // Given
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
 
-        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", TENANT_ID);
+        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip");
 
         // When
         pageDatastore.add(pageToBeAdded);
@@ -356,7 +356,7 @@ public class PageDatastoreTest extends APITestWithMock {
     public void it_throws_an_exception_when_cannot_write_file_on_add() throws IOException {
         // Given
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
-        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", TENANT_ID);
+        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip");
 
         // When
         try {
@@ -375,7 +375,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "unauthorized_page.zip");
         doReturn(mockedPage).when(pageAPI).getPage(TENANT_ID);
-        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip", TENANT_ID);
+        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile("unauthorized_page.zip");
 
         // When
         pageDatastore.update(APIID.makeAPIID(TENANT_ID), attributes);
@@ -390,7 +390,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         pageToBeAdded.setAttribute(PageDatastore.UNMAPPED_ATTRIBUTE_ZIP_FILE, "error_page.zip");
         doReturn(mockedPage).when(pageAPI).getPage(TENANT_ID);
-        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip", TENANT_ID);
+        doThrow(new IOException("error")).when(tenantFolder).getTempFile("error_page.zip");
 
         // When
 

@@ -114,8 +114,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
         try {
             final APISession engineSession = getEngineSession();
-            final long tenantId = engineSession.getTenantId();
-            final File zipFile = tenantFolder.getTempFile(filename, tenantId);
+            final File zipFile = tenantFolder.getTempFile(filename);
             final File unzipPageTempFolder = unzipContentFile(zipFile);
             pageContentValidator.validate(unzipPageTempFolder);
             final Page page = createEnginePage(pageItem, zipFile);
@@ -306,8 +305,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     final String filename = filenames[0];
                     String originalFileName = getOriginalFilename(filenames, filename, attributes);
                     final APISession engineSession = getEngineSession();
-                    final long tenantId = engineSession.getTenantId();
-                    zipFile = tenantFolder.getTempFile(filename, tenantId);
+                    zipFile = tenantFolder.getTempFile(filename);
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     pageContentValidator.validate(unzipPageTempFolder);
                     try {

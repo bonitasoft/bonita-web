@@ -8,7 +8,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 
 public class UserCreatorConverter {
 
-    public UserCreator convert(UserItem user, long tenantId) {
+    public UserCreator convert(UserItem user) {
         if (user == null) {
             return null;
         }
@@ -21,7 +21,7 @@ public class UserCreatorConverter {
                 .setEnabled(user.isEnabled());
 
         if (user.getIcon() != null && !user.getIcon().isEmpty()) {
-            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(user.getIcon(), tenantId);
+            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(user.getIcon());
             userCreator.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
 

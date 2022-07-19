@@ -160,7 +160,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         assertThat(response)
         .hasJsonEntityEqualTo(
                 "{\"exception\":\"class org.bonitasoft.engine.bpm.contract.ContractViolationException\",\"message\":\"aMessage\",\"explanations\":[\"first explanation\",\"second explanation\"]}");
-        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap());
     }
 
     @Test
@@ -171,7 +171,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post(VALID_POST_BODY);
 
         assertThat(response).hasStatus(Status.SERVER_ERROR_INTERNAL);
-        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap());
     }
 
     @Test
@@ -179,7 +179,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         final Response response = request(URL_API_PROCESS_INSTANTIATION_TEST).post("invalid json string");
 
         assertThat(response).hasStatus(Status.CLIENT_ERROR_BAD_REQUEST);
-        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap());
     }
 
     @Test
@@ -213,7 +213,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
         // then
         assertThat(systemOutRule.getLog()).contains(message + "\nExplanations:\nexplanation1explanation2");
-        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap(), anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(0)).deleteTemporaryFiles(anyMap());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         //when
         processInstantiationResource.instantiateProcess(inputs);
 
-        verify(processInstantiationResource.typeConverterUtil, times(1)).deleteTemporaryFiles(anyMap(), anyLong());
+        verify(processInstantiationResource.typeConverterUtil, times(1)).deleteTemporaryFiles(anyMap());
     }
 
     @Test

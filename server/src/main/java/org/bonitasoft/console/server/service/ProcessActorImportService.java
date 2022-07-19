@@ -41,8 +41,7 @@ public class ProcessActorImportService extends ConsoleService {
     public Object run() {
         try {
             final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
-            final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter(),
-                    getTenantId());
+            final File xmlFile = tenantFolder.getTempFile(getFileUploadParameter());
 
             if (!xmlFile.exists()) {
                 throw new Exception("File: " + getFileUploadParameter() + " does not exist.");

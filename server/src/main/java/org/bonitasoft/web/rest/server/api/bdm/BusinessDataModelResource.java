@@ -98,7 +98,7 @@ public class BusinessDataModelResource extends CommonResource {
     }
     
     public String getCompleteTempFilePath(final String path) throws IOException {
-        return bonitaHomeFolderAccessor.getCompleteTempFilePath(path, apiSession.getTenantId());
+        return bonitaHomeFolderAccessor.getCompleteTenantTempFilePath(path);
     }
 
 }

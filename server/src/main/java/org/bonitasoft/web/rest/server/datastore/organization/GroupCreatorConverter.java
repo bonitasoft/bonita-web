@@ -33,7 +33,7 @@ public class GroupCreatorConverter {
         this.groupEngineClient = groupEngineClient;
     }
 
-    public GroupCreator convert(GroupItem item, long tenantId) {
+    public GroupCreator convert(GroupItem item) {
         if (item == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class GroupCreatorConverter {
         }
 
         if (!isBlank(item.getIcon())) {
-            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(item.getIcon(), tenantId);
+            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(item.getIcon());
             builder.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
 

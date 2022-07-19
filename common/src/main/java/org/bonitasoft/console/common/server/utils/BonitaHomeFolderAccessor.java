@@ -19,17 +19,13 @@ public class BonitaHomeFolderAccessor {
     public BonitaHomeFolderAccessor() {
     }
 
-    public File getTempFile(final String filePath, final Long tenantId) throws IOException {
-        return new File(getCompleteTempFilePath(filePath, tenantId));
+    public File getTempFile(final String filePath) throws IOException {
+        return new File(getCompleteTenantTempFilePath(filePath));
     }
 
-    public String getCompleteTempFilePath(final String filePath) throws IOException {
-        return getCompleteTempFilePath(filePath, null);
-    }
-
-    public String getCompleteTempFilePath(final String filePath, final Long tenantId) throws IOException {
+    public String getCompleteTenantTempFilePath(final String filePath) throws IOException {
         String tempFilePath = filePath;
-        final File tempFolder = getBonitaConstantUtil(tenantId).getTempFolder();
+        final File tempFolder = getBonitaTenantConstantUtil().getTempFolder();
 
         if (!tempFilePath.contains(File.separator)) {
             tempFilePath = tempFolder.getAbsolutePath() + File.separator + tempFilePath;
@@ -40,12 +36,25 @@ public class BonitaHomeFolderAccessor {
         return tempFilePath;
     }
 
-    public WebBonitaConstantsUtils getBonitaConstantUtil(final Long tenantId) {
-        if (tenantId != null) {
-            return WebBonitaConstantsUtils.getTenantInstance();
+    public String getCompletePlatformTempFilePath(final String filePath) throws IOException {
+        String tempFilePath = filePath;
+        final File tempFolder = getBonitaPlatformConstantUtil().getTempFolder();
+
+        if (!tempFilePath.contains(File.separator)) {
+            tempFilePath = tempFolder.getAbsolutePath() + File.separator + tempFilePath;
         } else {
-            return WebBonitaConstantsUtils.getPlatformInstance();
+            verifyFolderAuthorization(new File(filePath), tempFolder);
         }
+
+        return tempFilePath;
+    }
+
+    public WebBonitaConstantsUtils getBonitaTenantConstantUtil() {
+        return WebBonitaConstantsUtils.getTenantInstance();
+    }
+
+    public WebBonitaConstantsUtils getBonitaPlatformConstantUtil() {
+        return WebBonitaConstantsUtils.getPlatformInstance();
     }
 
     public boolean isInTempFolder(final File file, final WebBonitaConstantsUtils webBonitaConstantsUtils) throws IOException {
@@ -78,9 +87,9 @@ public class BonitaHomeFolderAccessor {
         }
     }
 
-    public IconDescriptor getIconFromFileSystem(String iconPath, long tenantId) {
+    public IconDescriptor getIconFromFileSystem(String iconPath) {
         try {
-            String completeTempFilePath = getCompleteTempFilePath(iconPath, tenantId);
+            String completeTempFilePath = getCompleteTenantTempFilePath(iconPath);
             File tempFile = new File(completeTempFilePath);
             return new IconDescriptor(tempFile.getName(), FileUtils.readFileToByteArray(tempFile));
         } catch (IOException e) {

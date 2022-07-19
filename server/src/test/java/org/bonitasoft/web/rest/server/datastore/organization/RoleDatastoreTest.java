@@ -127,7 +127,7 @@ public class RoleDatastoreTest {
     public void should_update_icon_of_role_give_content_to_engine() throws Exception {
         doReturn(new RoleImpl(123, "newName")).when(identityAPI).updateRole(anyLong(), any(RoleUpdater.class));
         IconDescriptor iconDescriptor = new IconDescriptor("iconName", "content".getBytes());
-        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"), eq(TENANT_ID));
+        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"));
         //when
         roleDatastore.update(APIID.makeAPIID(123L), Collections.singletonMap("icon", "temp_icon_on_fs"));
         //then
@@ -151,14 +151,14 @@ public class RoleDatastoreTest {
         assertThat(roleUpdater.getFields().get(RoleUpdater.RoleField.ICON_FILENAME)).isNull();
         assertThat(roleUpdater.getFields().get(RoleUpdater.RoleField.ICON_CONTENT)).isNull();
 
-        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString());
     }
 
     @Test
     public void should_add_role_with_icon_give_content_to_engine() throws Exception {
         doReturn(new RoleImpl(123, "newName")).when(identityAPI).createRole(any(RoleCreator.class));
         IconDescriptor iconDescriptor = new IconDescriptor("iconName", "content".getBytes());
-        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"), eq(TENANT_ID));
+        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"));
         RoleItem roleItem = new RoleItem();
         roleItem.setIcon("temp_icon_on_fs");
         roleItem.setName("name");
@@ -181,7 +181,7 @@ public class RoleDatastoreTest {
         //when
         roleDatastore.add(roleItem);
         //then
-        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString(), anyLong());
+        verify(bonitaHomeFolderAccessor, never()).getIconFromFileSystem(anyString());
         verify(identityAPI).createRole(any(RoleCreator.class));
     }
 

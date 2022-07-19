@@ -95,7 +95,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
         item.setFileUpload(bdmFile.getName());
         final TenantResource tenantResource = new TenantResource(1L, "bizdatamodel", TenantResourceType.BDM, 1L, 1L, TenantResourceState.INSTALLED);
         final String jsonResponse = "{\"id\":\"1\",\"name\":\"bizdatamodel\",\"type\":\"BDM\",\"state\":\"INSTALLED\",\"lastUpdatedBy\":\"1\",\"lastUpdateDate\":\"1970-01-01T00:00:00.001Z\",\"fileUpload\":\"bizdatamodel.zip\"}";
-        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTempFilePath(bdmFile.getName(), 1L);
+        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath(bdmFile.getName());
         when(tenantAdministrationAPI.updateBusinessDataModel(bdmFileContent)).thenReturn("1.0");
         when(tenantAdministrationAPI.getBusinessDataModelResource()).thenReturn(tenantResource);
 
@@ -123,7 +123,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
     public void should_throws_an_exception_adding_a_document_with_unauthorized_path() throws Exception {
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload("../../../bdmFile.zip");
-        doThrow(new APIForbiddenException("")).when(bonitaHomeFolderAccessor).getCompleteTempFilePath("../../../bdmFile.zip", 1L);
+        doThrow(new APIForbiddenException("")).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath("../../../bdmFile.zip");
 
         final Response response = request("/tenant/bdm").post(new ObjectMapper().writeValueAsString(item));
         
@@ -134,7 +134,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
     public void should_throws_an_exception_when_cannot_write_file_on_add() throws Exception {
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload("../../../bdmFile.zip");
-        doThrow(new APIException("")).when(bonitaHomeFolderAccessor).getCompleteTempFilePath("../../../bdmFile.zip", 1L);
+        doThrow(new APIException("")).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath("../../../bdmFile.zip");
 
         final Response response = request("/tenant/bdm").post(new ObjectMapper().writeValueAsString(item));
         
@@ -146,7 +146,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
         final File bdmFile = testBDMFile();
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload(bdmFile.getName());
-        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTempFilePath(bdmFile.getName(), 1L);
+        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath(bdmFile.getName());
         doThrow(new InvalidBusinessDataModelException(new Exception("invalid model"))).when(tenantAdministrationAPI).updateBusinessDataModel(any(byte[].class));
 
         final Response response = request("/tenant/bdm").post(new ObjectMapper().writeValueAsString(item));
@@ -159,7 +159,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
         final File bdmFile = testBDMFile();
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload(bdmFile.getName());
-        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTempFilePath(bdmFile.getName(), 1L);
+        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath(bdmFile.getName());
         doThrow(new BusinessDataRepositoryDeploymentException("repository deployment exception")).when(tenantAdministrationAPI)
         .installBusinessDataModel(any(byte[].class));
 
@@ -173,7 +173,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
         final File bdmFile = testBDMFile();
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload(bdmFile.getName());
-        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTempFilePath(bdmFile.getName(), 1L);
+        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath(bdmFile.getName());
         doThrow(new BusinessDataRepositoryDeploymentException(new NullPointerException())).when(tenantAdministrationAPI).uninstallBusinessDataModel();
 
         final Response response = request("/tenant/bdm").post(new ObjectMapper().writeValueAsString(item));
@@ -186,7 +186,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
         final File bdmFile = testBDMFile();
         final BusinessDataModelItem item = new BusinessDataModelItem();
         item.setFileUpload(bdmFile.getName());
-        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTempFilePath(bdmFile.getName(), 1L);
+        doReturn(bdmFile.getAbsolutePath()).when(bonitaHomeFolderAccessor).getCompleteTenantTempFilePath(bdmFile.getName());
         doReturn(false).when(tenantAdministrationAPI).isPaused();
 
         final Response response = request("/tenant/bdm").post(new ObjectMapper().writeValueAsString(item));

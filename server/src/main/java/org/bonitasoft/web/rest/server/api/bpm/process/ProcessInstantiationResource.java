@@ -75,7 +75,7 @@ public class ProcessInstantiationResource extends CommonResource {
                 processInstanceId = processAPI.startProcessWithInputs(Long.parseLong(userId), processDefinitionId, processedInputs).getId();
             }
             //clean temp files
-            typeConverterUtil.deleteTemporaryFiles(inputs, tenantId);
+            typeConverterUtil.deleteTemporaryFiles(inputs);
 
             final JsonNodeFactory factory = JsonNodeFactory.instance;
             final ObjectNode returnedObject = factory.objectNode();

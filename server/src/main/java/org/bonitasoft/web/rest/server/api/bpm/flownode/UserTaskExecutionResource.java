@@ -72,7 +72,7 @@ public class UserTaskExecutionResource extends CommonResource {
             } else {
                 processAPI.executeUserTask(userId, taskId, processedInputs);
             }
-            typeConverterUtil.deleteTemporaryFiles(inputs, tenantId);
+            typeConverterUtil.deleteTemporaryFiles(inputs);
 
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");

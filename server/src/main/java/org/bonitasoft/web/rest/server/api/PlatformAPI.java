@@ -44,6 +44,6 @@ public abstract class PlatformAPI<T extends IItem> extends API<T> {
     @Override
     protected String getCompleteTempFilePath(final String path) throws IOException {
         final BonitaHomeFolderAccessor tempFolderAccessor = new BonitaHomeFolderAccessor();
-        return tempFolderAccessor.getCompleteTempFilePath(path);
+        return tempFolderAccessor.getCompletePlatformTempFilePath(path);
     }
 }

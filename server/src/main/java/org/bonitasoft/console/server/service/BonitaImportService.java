@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.server.service;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,8 +52,7 @@ abstract class BonitaImportService extends ConsoleService {
     public Object run() {
         File xmlFile;
         try {
-            xmlFile = getTenantFolder().getTempFile(getFileUploadParamValue(),
-                    getTenantId());
+            xmlFile = getTenantFolder().getTempFile(getFileUploadParamValue());
         } catch (final IOException e) {
             throw new ServiceException(getToken(), e.getMessage(), e);
         }
@@ -122,10 +119,6 @@ abstract class BonitaImportService extends ConsoleService {
 
     protected String getFileUploadParamValue() {
         return getParameter(getFileUploadParamName());
-    }
-
-    protected long getTenantId() {
-        return getSession().getTenantId();
     }
 
     protected abstract String getFileReadingError();

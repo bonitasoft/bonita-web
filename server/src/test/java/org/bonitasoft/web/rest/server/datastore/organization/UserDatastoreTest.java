@@ -128,7 +128,7 @@ public class UserDatastoreTest {
         //given
         doReturn(new UserImpl(12L, "john", "bpm")).when(identityAPI).updateUser(eq(12L), any(UserUpdater.class));
         IconDescriptor iconDescriptor = new IconDescriptor("iconName", "content".getBytes());
-        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"), eq(TENANT_ID));
+        doReturn(iconDescriptor).when(bonitaHomeFolderAccessor).getIconFromFileSystem(eq("temp_icon_on_fs"));
         //when
         datastore.update(APIID.makeAPIID(12L), Collections.singletonMap("icon", "temp_icon_on_fs"));
         //then
@@ -164,8 +164,6 @@ public class UserDatastoreTest {
         when(engineSearchResults.getResult()).thenReturn(userList);
         when(processAPI.searchUsersWhoCanExecutePendingHumanTask(eq(18L), any(SearchOptions.class))).thenReturn(engineSearchResults);
         UserItem userItem = mock(UserItem.class);
-        // when(userItem.getAttributeValue("firstname")).thenReturn(firstname);
-        // when(userItem.getAttributeValue("lastname")).thenReturn(lastname);
         List<UserItem> userItemList = Collections.singletonList(userItem);
         when(userItemConverter.convert(userList)).thenReturn(userItemList);
         int page = 1;

@@ -94,14 +94,14 @@ public class GroupDatastore extends CommonDatastore<GroupItem, Group> implements
 
     @Override
     public GroupItem update(final APIID id, final Map<String, String> attributes) {
-        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes, getEngineSession().getTenantId());
+        GroupUpdater updater = new GroupUpdaterConverter(getGroupEngineClient()).convert(attributes);
         Group group = getGroupEngineClient().update(id.toLong(), updater);
         return new GroupItemConverter().convert(group);
     }
 
     @Override
     public GroupItem add(final GroupItem group) {
-        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group, getEngineSession().getTenantId());
+        GroupCreator creator = new GroupCreatorConverter(getGroupEngineClient()).convert(group);
         Group result = getGroupEngineClient().create(creator);
         return new GroupItemConverter().convert(result);
     }

@@ -108,7 +108,7 @@ public class ApplicationItemConverter {
             applicationUpdater.setVersion(attributes.get(ApplicationItem.ATTRIBUTE_VERSION));
         }
         if (!MapUtil.isBlank(attributes, ItemHasIcon.ATTRIBUTE_ICON) && !attributes.get(ItemHasIcon.ATTRIBUTE_ICON).startsWith(ApplicationItem.ICON_PATH_API_PREFIX)) {
-            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(ItemHasIcon.ATTRIBUTE_ICON), tenantId);
+            IconDescriptor iconDescriptor = new BonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(ItemHasIcon.ATTRIBUTE_ICON));
             applicationUpdater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
 

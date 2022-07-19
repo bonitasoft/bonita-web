@@ -123,7 +123,7 @@ public class ContractTypeConverterTest {
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath);
         final Map<String, Serializable> input = generateInputMap(tempFilePath);
 
         final Map<String, Serializable> processedInput = contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
@@ -142,7 +142,7 @@ public class ContractTypeConverterTest {
         final Map<String, Serializable> input = new HashMap<>();
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath);
         final Map<String, Serializable> complexInput = generateInputMap(tempFilePath);
         input.put("inputComplex", (Serializable) complexInput);
 
@@ -244,7 +244,7 @@ public class ContractTypeConverterTest {
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath);
         final Map<String, Serializable> input = generateInputMap(tempFilePath);
 
         contractTypeConverter.getProcessedInput(contractDefinition, input, maxSizeForTenant, tenantId);
@@ -259,10 +259,10 @@ public class ContractTypeConverterTest {
         when(contractDefinition.getInputs()).thenReturn(inputDefinition);
         final String tempFilePath = "tempFile";
         final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath);
         final Map<String, Serializable> input = generateInputMap(tempFilePath);
 
-        contractTypeConverter.deleteTemporaryFiles(input, tenantId);
+        contractTypeConverter.deleteTemporaryFiles(input);
 
         verify(contractTypeConverter).deleteFile(tempFile);
     }
@@ -306,7 +306,7 @@ public class ContractTypeConverterTest {
 
     private Map<String, Serializable> generateInputMapWithFile(final String tempFilePath) throws IOException {
         final File tempFile = generateTempFile();
-        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath, tenantId);
+        doReturn(tempFile).when(bonitaHomeFolderAccessor).getTempFile(tempFilePath);
         return generateInputMap(tempFilePath);
     }
 

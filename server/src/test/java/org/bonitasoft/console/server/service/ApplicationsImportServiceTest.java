@@ -123,8 +123,7 @@ public class ApplicationsImportServiceTest {
 
         doReturn(tenantFolder).when(spiedApplicationImportService).getTenantFolder();
         doReturn("../../../file.xml").when(spiedApplicationImportService).getFileUploadParamValue();
-        doReturn(1L).when(spiedApplicationImportService).getTenantId();
-        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile(any(String.class), any(Long.class));
+        doThrow(new UnauthorizedFolderException("error")).when(tenantFolder).getTempFile(any(String.class));
 
         try {
             spiedApplicationImportService.run();

@@ -34,13 +34,13 @@ public class GroupUpdaterConverter {
         this.groupEngineClient = groupEngineClient;
     }
 
-    public GroupUpdater convert(Map<String, String> attributes, long tenantId) {
+    public GroupUpdater convert(Map<String, String> attributes) {
         GroupUpdater updater = new GroupUpdater();
         if (attributes.containsKey(GroupItem.ATTRIBUTE_DESCRIPTION)) {
             updater.updateDescription(attributes.get(GroupItem.ATTRIBUTE_DESCRIPTION));
         }
         if (!MapUtil.isBlank(attributes, GroupItem.ATTRIBUTE_ICON)) {
-            IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(GroupItem.ATTRIBUTE_ICON), tenantId);
+            IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(GroupItem.ATTRIBUTE_ICON));
             updater.updateIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
         }
         if (!MapUtil.isBlank(attributes, GroupItem.ATTRIBUTE_NAME)) {

@@ -215,7 +215,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     }
 
     private void writeIconInBonitaHome() throws IOException {
-        File tempFolder = new BonitaHomeFolderAccessor().getBonitaConstantUtil(TENANT_ID).getTempFolder();
+        File tempFolder = new BonitaHomeFolderAccessor().getBonitaTenantConstantUtil().getTempFolder();
         File file = new File(tempFolder, ICON);
         Files.write(file.toPath(), "theContent".getBytes());
     }

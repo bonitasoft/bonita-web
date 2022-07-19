@@ -60,13 +60,13 @@ public class UserDatastore extends CommonDatastore<UserItem, User>
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public UserItem add(final UserItem user) {
-        UserCreator userCreator = new UserCreatorConverter().convert(user, getEngineSession().getTenantId());
+        UserCreator userCreator = new UserCreatorConverter().convert(user);
         User createdUser = getUserEngineClient().create(userCreator);
         return userItemConverter.convert(createdUser);
     }
 
     public UserItem update(final APIID id, final Map<String, String> attributes) {
-        UserUpdater userUpdater = new UserUpdaterConverter().convert(attributes, getEngineSession().getTenantId(), getBonitaHomeFolderAccessor());
+        UserUpdater userUpdater = new UserUpdaterConverter().convert(attributes, getBonitaHomeFolderAccessor());
         User user = getUserEngineClient().update(id.toLong(), userUpdater);
         return userItemConverter.convert(user);
     }

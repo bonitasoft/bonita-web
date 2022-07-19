@@ -188,7 +188,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
         byte[] fileContent = null;
 
         if (uploadPath != null) {
-            final File theSourceFile = tenantFolder.getTempFile(uploadPath, getEngineSession().getTenantId());
+            final File theSourceFile = tenantFolder.getTempFile(uploadPath);
 
             if (theSourceFile.exists()) {
                 if (theSourceFile.length() > maxSizeForTenant * 1048576) {

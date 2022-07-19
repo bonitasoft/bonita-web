@@ -39,7 +39,7 @@ public class DocumentDatastoreTest {
         documentDatastore = spy(new DocumentDatastore(session));
         doReturn(1L).when(session).getTenantId();
         doReturn(processAPI).when(documentDatastore).getProcessAPI();
-        doReturn(new File("doc.txt")).when(tenantFolder).getTempFile("docPath", 1L);
+        doReturn(new File("doc.txt")).when(tenantFolder).getTempFile("docPath");
 
         final DocumentItem item = documentDatastore.createDocument(1L, "docName", "docType", "docPath", tenantFolder);
         assertNotNull(item);

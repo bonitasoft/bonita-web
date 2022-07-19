@@ -44,6 +44,6 @@ public abstract class ConsoleAPI<T extends IItem> extends API<T> {
     @Override
     public String getCompleteTempFilePath(final String path) throws IOException {
         final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
-        return tenantFolder.getCompleteTempFilePath(path, getEngineSession().getTenantId());
+        return tenantFolder.getCompleteTenantTempFilePath(path);
     }
 }

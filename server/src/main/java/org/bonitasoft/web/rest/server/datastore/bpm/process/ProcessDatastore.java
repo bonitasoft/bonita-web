@@ -88,7 +88,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
 
         File processFile;
         try {
-            processFile = getTenantFolder().getTempFile(process.getAttributes().get(FILE_UPLOAD), getEngineSession().getTenantId());
+            processFile = getTenantFolder().getTempFile(process.getAttributes().get(FILE_UPLOAD));
         } catch (final UnauthorizedFolderException e) {
             throw new APIForbiddenException(e.getMessage());
         } catch (final IOException e) {

@@ -93,8 +93,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
                 updater.setDescription(attributes.get(RoleItem.ATTRIBUTE_DESCRIPTION));
             }
             if (!MapUtil.isBlank(attributes, RoleItem.ATTRIBUTE_ICON)) {
-                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(RoleItem.ATTRIBUTE_ICON),
-                        getEngineSession().getTenantId());
+                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(attributes.get(RoleItem.ATTRIBUTE_ICON));
                 updater.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
             }
 
@@ -121,8 +120,7 @@ public class RoleDatastore extends CommonDatastore<RoleItem, Role> implements
                 creator.setDescription(role.getDescription());
             }
             if (!StringUtil.isBlank(role.getIcon())) {
-                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(role.getIcon(),
-                        getEngineSession().getTenantId());
+                IconDescriptor iconDescriptor = getBonitaHomeFolderAccessor().getIconFromFileSystem(role.getIcon());
                 creator.setIcon(iconDescriptor.getFilename(), iconDescriptor.getContent());
             }
 
