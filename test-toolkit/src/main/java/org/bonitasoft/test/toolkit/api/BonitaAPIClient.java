@@ -58,7 +58,6 @@ public interface BonitaAPIClient {
     /**
      * Login.
      * 
-     * @param pTenantId
      * @param pUserName
      * @param pPassword
      * @param pRedirect
@@ -66,7 +65,7 @@ public interface BonitaAPIClient {
      */
     @POST
     @Path("loginservice")
-    ClientResponse<String> login(@FormParam("tenant") String pTenantId, @FormParam("username") String pUserName, @FormParam("password") String pPassword, @FormParam("redirect") String pRedirect);
+    ClientResponse<String> login(@FormParam("username") String pUserName, @FormParam("password") String pPassword, @FormParam("redirect") String pRedirect);
 
     /**
      * Logout.
@@ -257,7 +256,6 @@ public interface BonitaAPIClient {
     /**
      * Get processes.
      * 
-     * @param pStart
      * @return
      */
     @GET
@@ -336,8 +334,7 @@ public interface BonitaAPIClient {
 
     /**
      * get actors for a process.
-     * 
-     * @param pBody
+     *
      * @return
      */
     @GET

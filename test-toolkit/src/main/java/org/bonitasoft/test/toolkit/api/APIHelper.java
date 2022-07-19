@@ -54,8 +54,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unchecked")
 public class APIHelper {
 
-    public static final long DEFAULT_TENANT_ID = 1;
-
     public static final String TECHUSER_LOGIN = "install";
 
     public static final String TECHUSER_PASSWORD = "install";
@@ -96,14 +94,13 @@ public class APIHelper {
     /**
      * Constructor.
      * 
-     * @param pTenantId
      * @param pSiteUrl
      * @param pUserName
      * @param pPassword
      */
-    public APIHelper(final long pTenantId, final String pSiteUrl, final String pUserName, final String pPassword) {
+    public APIHelper(final String pSiteUrl, final String pUserName, final String pPassword) {
         this.logger = LoggerFactory.getLogger(APIHelper.class);
-        this.logger.info("Login on tenant [{}] with user [{}]", pTenantId, pUserName);
+        this.logger.info("Login with user [{}]", pUserName);
 
         RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
         CookieStore cookieStore = new BasicCookieStore();
@@ -122,7 +119,7 @@ public class APIHelper {
         };
         setSiteUrl(pSiteUrl);
         this.client = ProxyFactory.create(BonitaAPIClient.class, pSiteUrl, this.executor);
-        final ClientResponse<String> res = this.client.login(String.valueOf(pTenantId), pUserName, pPassword, Boolean.FALSE.toString());
+        final ClientResponse<String> res = this.client.login(pUserName, pPassword, Boolean.FALSE.toString());
         consumeResponse(res);
         
         this.apiToken = fetchAPIToken(cookieStore);
@@ -141,32 +138,12 @@ public class APIHelper {
     }
 
     /**
-     * Constructor (using default tenant id).
-     * 
-     * @param siteUrl
-     * @param pUserName
-     * @param pPassword
-     */
-    public APIHelper(final String siteUrl, final String pUserName, final String pPassword) {
-        this(DEFAULT_TENANT_ID, siteUrl, pUserName, pPassword);
-    }
-
-    /**
      * Constructor using technical user credentials.
      * 
      * @param siteUrl
      */
     public APIHelper(final String siteUrl) {
         this(siteUrl, TECHUSER_LOGIN, TECHUSER_PASSWORD);
-    }
-
-    /**
-     * Constructor using technical user credentials.
-     * 
-     * @param siteUrl
-     */
-    public APIHelper(final String siteUrl, final long pTenantId) {
-        this(pTenantId, siteUrl, TECHUSER_LOGIN, TECHUSER_PASSWORD);
     }
 
     /**
@@ -775,7 +752,6 @@ public class APIHelper {
     /**
      * Update a process state given its id.
      * 
-     * @param pProcessName
      * @param pState
      * @return
      */
@@ -894,9 +870,7 @@ public class APIHelper {
     /**
      * Map user to actor.
      * 
-     * @param pProfileName
      * @param pMemberyType
-     * @param pMemberName
      * @return
      */
     public final String mapUserToActor(final String pProcessId, final String pActorName, final MemberType pMemberyType, final String pUserName) {
