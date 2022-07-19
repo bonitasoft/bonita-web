@@ -42,11 +42,6 @@ public class User implements Serializable {
     protected String locale;
 
     /**
-     * the tenant id
-     */
-    private long tenantId;
-
-    /**
      * Indicates whether this user correspond to an anonymous login
      */
     private boolean isAnonymous;
@@ -85,20 +80,12 @@ public class User implements Serializable {
         return locale;
     }
 
-    public long getTenantId() {
-        return tenantId;
-    }
-
     private void setUsername(final String username) {
         this.username = username;
     }
 
     private void setLocale(final String locale) {
         this.locale = locale;
-    }
-
-    public void setTenantId(final long tenantId) {
-        this.tenantId = tenantId;
     }
 
     public boolean isAnonymous() {
