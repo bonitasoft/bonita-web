@@ -45,8 +45,6 @@ public class CommentItem extends Item implements ItemHasUniqueId {
     // ATTRIBUTES NAMES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String ATTRIBUTE_TENANT_ID = "tenantId";
-
     public static final String ATTRIBUTE_USER_ID = "userId";
 
     public static final String ATTRIBUTE_PROCESS_INSTANCE_ID = "processInstanceId";
@@ -79,10 +77,6 @@ public class CommentItem extends Item implements ItemHasUniqueId {
 
     // GETTERS
 
-    public APIID getTenantId() {
-        return APIID.makeAPIID(this.getAttributeValue(ATTRIBUTE_TENANT_ID));
-    }
-
     public APIID getUserId() {
         return APIID.makeAPIID(this.getAttributeValue(ATTRIBUTE_USER_ID));
     }
@@ -109,18 +103,6 @@ public class CommentItem extends Item implements ItemHasUniqueId {
     @Override
     public void setId(final Long id) {
         this.setAttribute(ATTRIBUTE_ID, APIID.makeAPIID(id));
-    }
-
-    public void setTenantId(final String id) {
-        this.setAttribute(ATTRIBUTE_TENANT_ID, id);
-    }
-
-    public void setTenantId(final Long id) {
-        this.setAttribute(ATTRIBUTE_TENANT_ID, APIID.makeAPIID(id));
-    }
-
-    public void setTenantId(final APIID id) {
-        this.setAttribute(ATTRIBUTE_TENANT_ID, id);
     }
 
     public void setUserId(final String id) {

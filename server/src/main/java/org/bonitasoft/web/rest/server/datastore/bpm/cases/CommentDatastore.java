@@ -130,7 +130,6 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
      * Search comments managed by specified user (ex administrator)
      * 
      * @param builder
-     * @param categorized
      * @return
      */
     private SearchResult<Comment> runTeamManagerSearch(final long teamManagerId, final SearchOptionsBuilder builder) {
@@ -149,8 +148,6 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
      * 
      * @param userId
      * @param builder
-     * @param categorized
-     * @param recent
      * @return
      */
     private SearchResult<Comment> runUserSearch(final long userId, final SearchOptionsBuilder builder) {
@@ -186,7 +183,6 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
      * 
      * @param supervisorId
      * @param builder
-     * @param categorized
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -240,7 +236,6 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
 
         final CommentItem consoleItem = new CommentItem();
         consoleItem.setId(engineItem.getId());
-        consoleItem.setTenantId(engineItem.getTenantId());
         consoleItem.setUserId(engineItem.getUserId());
         consoleItem.setProcessInstanceId(engineItem.getProcessInstanceId());
         consoleItem.setPostDate(engineItem.getPostDate());

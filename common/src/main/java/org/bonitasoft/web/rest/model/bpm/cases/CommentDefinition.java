@@ -58,7 +58,6 @@ public class CommentDefinition extends ItemDefinition<CommentItem> {
     @Override
     protected void defineAttributes() {
         createAttribute(CommentItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
-        createAttribute(CommentItem.ATTRIBUTE_TENANT_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CommentItem.ATTRIBUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(CommentItem.ATTRIBUTE_POST_DATE, ItemAttribute.TYPE.DATETIME);

@@ -58,7 +58,6 @@ public class ArchivedCommentDefinition extends ItemDefinition<ArchivedCommentIte
     @Override
     protected void defineAttributes() {
         createAttribute(ArchivedCommentItem.ATTRIBUTE_ID, ItemAttribute.TYPE.ITEM_ID);
-        createAttribute(ArchivedCommentItem.ATTRIBUTE_TENANT_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCommentItem.ATTRIBUTE_USER_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, ItemAttribute.TYPE.ITEM_ID);
         createAttribute(ArchivedCommentItem.ATTRIBUTE_POST_DATE, ItemAttribute.TYPE.DATETIME);
