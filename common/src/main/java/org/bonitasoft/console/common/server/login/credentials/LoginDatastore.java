@@ -38,7 +38,7 @@ public class LoginDatastore {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginDatastore.class.getName());
 
     public APISession login(final String username, final String password) throws BonitaException {
-        APISession apiSession = null;
+        APISession apiSession;
         final String errorMessage = "Error while logging in the engine API.";
         try {
             if (username == null || password == null) {
@@ -66,7 +66,7 @@ public class LoginDatastore {
      * @throws BonitaException
      */
     public APISession login(final Map<String, Serializable> credentials) throws BonitaException {
-        APISession apiSession = null;
+        APISession apiSession;
         try {
             if (credentials == null) {
                 final String errorMessage = "Error while logging in on the engine API.";
