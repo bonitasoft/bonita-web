@@ -37,7 +37,6 @@ public class DocumentDatastoreTest {
     public void should_verify_authorisation_for_the_given_document_path() throws
     Exception {
         documentDatastore = spy(new DocumentDatastore(session));
-        doReturn(1L).when(session).getTenantId();
         doReturn(processAPI).when(documentDatastore).getProcessAPI();
         doReturn(new File("doc.txt")).when(tenantFolder).getTempFile("docPath");
 

@@ -46,7 +46,6 @@ public class TenantAdminDatastore extends Datastore implements DatastoreHasUpdat
         final TenantAdminItem tenantAdminItem = new TenantAdminItem();
         try {
             final boolean doPause = Boolean.parseBoolean(attributes.get(TenantAdminItem.ATTRIBUTE_IS_PAUSED));
-            tenantAdminItem.setId(apiSession.getTenantId());
             if (!doPause) {
                 getTenantManagementEngineClient().resumeTenant();
             } else if (doPause) {
@@ -65,7 +64,6 @@ public class TenantAdminDatastore extends Datastore implements DatastoreHasUpdat
         try {
             final boolean tenantPaused = getTenantManagementEngineClient().isTenantPaused();
             tenantAdminItem.setIsPaused(tenantPaused);
-            tenantAdminItem.setId(apiSession.getTenantId());
             return tenantAdminItem;
         } catch (final Exception e) {
             throw new APIException(e);

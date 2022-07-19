@@ -3,11 +3,9 @@ package org.bonitasoft.web.rest.server.datastore.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,9 +54,6 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Mock
     private ApplicationItemConverter converter;
 
-    @Mock
-    private APISession session;
-
     @InjectMocks
     private ApplicationDataStore dataStore;
 
@@ -67,11 +62,9 @@ public class ApplicationDataStoreTest extends APITestWithMock {
 
     @Mock
     private Page homePage;
-    private long TENANT_ID = 42L;
 
     @Before
     public void setUp() throws Exception {
-        doReturn(TENANT_ID).when(session).getTenantId();
         ItemDefinitionFactory.setDefaultFactory(new ItemDefinitionFactory() {
             @Override
             public ItemDefinition<?> defineItemDefinitions(final String token) {
@@ -133,7 +126,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         attributesToUpDate.put(ApplicationItem.ATTRIBUTE_TOKEN, "app_name");
         attributesToUpDate.put(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, "App display name");
         final ApplicationUpdater applicationUpdater = new ApplicationUpdater();
-        given(converter.toApplicationUpdater(attributesToUpDate, TENANT_ID)).willReturn(applicationUpdater);
+        given(converter.toApplicationUpdater(attributesToUpDate)).willReturn(applicationUpdater);
 
         final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desc", 2L, 3L);
         given(applicationAPI.updateApplication(1, applicationUpdater)).willReturn(application);
@@ -148,7 +141,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final ApplicationItem createdItem = dataStore.update(APIID.makeAPIID(1L), attributesToUpDate);
 
         //then
-        verify(converter, times(1)).toApplicationUpdater(attributesToUpDate, TENANT_ID);
+        verify(converter, times(1)).toApplicationUpdater(attributesToUpDate);
         verify(applicationAPI, times(1)).updateApplication(1, applicationUpdater);
         verify(converter, times(1)).toApplicationItem(application);
         assertThat(createdItem).isEqualTo(new ApplicationItem());

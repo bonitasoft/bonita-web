@@ -78,7 +78,7 @@ public class ApplicationItemConverter {
         return creator;
     }
 
-    public ApplicationUpdater toApplicationUpdater(final Map<String, String> attributes, long tenantId) {
+    public ApplicationUpdater toApplicationUpdater(final Map<String, String> attributes) {
         final ApplicationUpdater applicationUpdater = getApplicationUpdater();
 
         if (attributes.containsKey(ApplicationItem.ATTRIBUTE_TOKEN)) {

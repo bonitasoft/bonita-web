@@ -52,12 +52,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class RoleDatastoreTest {
 
-    private static final long TENANT_ID = 67534L;
     @InjectMocks
     @Spy
     private RoleDatastore roleDatastore;
-    @Mock
-    private APISession apiSession;
     @Mock
     private IdentityAPI identityAPI;
     @Mock
@@ -77,7 +74,6 @@ public class RoleDatastoreTest {
         Item.setApplyValidatorMandatoryByDefault(false);
         doReturn(identityAPI).when(roleDatastore).getIdentityAPI();
         doReturn(bonitaHomeFolderAccessor).when(roleDatastore).getBonitaHomeFolderAccessor();
-        doReturn(TENANT_ID).when(apiSession).getTenantId();
     }
 
     @Test

@@ -152,8 +152,6 @@ public class PageDatastoreTest extends APITestWithMock {
         when(mockedApiExtension.getLastModificationDate()).thenReturn(mockedDate);
         when(mockedApiExtension.getInstalledBy()).thenReturn(1L);
 
-        when(engineSession.getTenantId()).thenReturn(TENANT_ID);
-
         when(tenantFolder.getTempFile(PAGE_ZIP)).thenReturn(pageZipFile);
         when(tenantFolder.getTempFile(PAGE_REST_API_ZIP)).thenReturn(pageZipFile);
 

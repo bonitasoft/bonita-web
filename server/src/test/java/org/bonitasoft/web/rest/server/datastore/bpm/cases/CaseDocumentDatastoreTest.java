@@ -72,7 +72,6 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        when(engineSession.getTenantId()).thenReturn(1L);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
         documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI, tenantFolder));

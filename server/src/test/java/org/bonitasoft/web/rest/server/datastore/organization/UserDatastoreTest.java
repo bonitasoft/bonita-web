@@ -66,7 +66,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class UserDatastoreTest {
 
-    private static final long TENANT_ID = 123532L;
     @Mock
     private ProcessAPI processAPI;
     @Mock
@@ -80,8 +79,6 @@ public class UserDatastoreTest {
     @Spy
     @InjectMocks
     private UserDatastore datastore = new UserDatastore(null);
-    @Mock
-    private APISession apiSession;
     @Captor
     private ArgumentCaptor<UserUpdater> userUpdaterArgumentCaptor;
 
@@ -92,7 +89,6 @@ public class UserDatastoreTest {
         doReturn(processEngineClient).when(datastore).getProcessEngineClient();
         when(processEngineClient.getProcessApi()).thenReturn(processAPI);
         doReturn(bonitaHomeFolderAccessor).when(datastore).getBonitaHomeFolderAccessor();
-        doReturn(TENANT_ID).when(apiSession).getTenantId();
     }
 
     @Test

@@ -35,7 +35,6 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     private static final long HOME_PAGE_ID = 2L;
     private static final long LAYOUT_ID = 3L;
     private static final long THEME_ID = 4L;
-    private static final long TENANT_ID = 43L;
     private static final ApplicationVisibility APPLICATION_VISIBILITY = ApplicationVisibility.RESTRICTED;
 
     private ApplicationItemConverter converter;
@@ -199,7 +198,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         writeIconInBonitaHome();
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, TENANT_ID);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
 
         //then
         assertThat(updater).isNotNull();
@@ -228,7 +227,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
 
         //then
         assertThat(updater).isNotNull();
@@ -244,7 +243,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
 
         //then
         assertThat(updater).isNotNull();
@@ -260,7 +259,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
         fields.put(ApplicationItem.ATTRIBUTE_THEME_ID, "-1");
 
         //when
-        final ApplicationUpdater updater = converter.toApplicationUpdater(fields, 1L);
+        final ApplicationUpdater updater = converter.toApplicationUpdater(fields);
 
         //then
         assertThat(updater).isNotNull();
