@@ -112,7 +112,7 @@ public class DocumentDatastore {
         byte[] fileContent = null;
         final File theSourceFile = tenantFolder.getTempFile(path);
         if (theSourceFile.exists()) {
-            final long maxSize = PropertiesFactory.getConsoleProperties(apiSession.getTenantId()).getMaxSize();
+            final long maxSize = PropertiesFactory.getConsoleProperties().getMaxSize();
             if (theSourceFile.length() > maxSize * 1048576) {
                 final String errorMessage = "This document is exceeded " + maxSize + "Mo";
                 throw new DocumentException(errorMessage);

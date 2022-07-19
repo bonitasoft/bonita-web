@@ -41,13 +41,7 @@ public class ConsoleProperties {
 
     private static final String PROPERTIES_FILE = "console-config.properties";
     
-    private static Map<Long, Map<String, Optional<String>>> consoleProperties = new ConcurrentHashMap<Long, Map<String, Optional<String>>>();
-    
-    private final long tenantId;
-
-    ConsoleProperties(long tenantId) {
-        this.tenantId = tenantId;
-    }
+    private static Map<String, Optional<String>> consoleProperties;
 
     public Properties getProperties() {
         return ConfigurationFilesManager.getInstance().getTenantProperties(PROPERTIES_FILE);
@@ -75,15 +69,13 @@ public class ConsoleProperties {
     }
     
     public String getProperty(String propertyName) {
-        Map<String, Optional<String>> tenantConsoleProperties = consoleProperties.get(tenantId);
-        if (tenantConsoleProperties == null) {
-            tenantConsoleProperties = new ConcurrentHashMap<String, Optional<String>>();
-            consoleProperties.put(tenantId, tenantConsoleProperties);
+        if (consoleProperties == null) {
+            consoleProperties = new ConcurrentHashMap<String, Optional<String>>();
         }
-        Optional<String> propertyValue = tenantConsoleProperties.get(propertyName);
+        Optional<String> propertyValue = consoleProperties.get(propertyName);
         if (propertyValue == null) {
             propertyValue = Optional.ofNullable(getProperties().getProperty(propertyName));
-            tenantConsoleProperties.put(propertyName, propertyValue);
+            consoleProperties.put(propertyName, propertyValue);
         }
         return propertyValue.orElse(null);
     }

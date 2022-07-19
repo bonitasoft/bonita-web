@@ -23,8 +23,8 @@ public class PropertiesFactory {
         return new SecurityProperties();
     }
 
-    public static ConsoleProperties getConsoleProperties(final long tenantId) {
-        return new ConsoleProperties(tenantId);
+    public static ConsoleProperties getConsoleProperties() {
+        return new ConsoleProperties();
     }
 
     public static PlatformTenantConfigProperties getPlatformTenantConfigProperties() {

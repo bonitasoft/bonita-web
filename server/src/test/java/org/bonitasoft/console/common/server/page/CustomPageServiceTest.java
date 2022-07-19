@@ -103,7 +103,7 @@ public class CustomPageServiceTest {
         customPageService = spy(new CustomPageService());
         CustomPageService.clearCachedClassloaders();
         when(apiSession.getTenantId()).thenReturn(1L);
-        doReturn(consoleProperties).when(customPageService).getConsoleProperties(apiSession);
+        doReturn(consoleProperties).when(customPageService).getConsoleProperties();
         doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         doReturn(permissionAPI).when(customPageService).getPermissionAPI(apiSession);

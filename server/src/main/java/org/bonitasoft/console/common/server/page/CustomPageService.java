@@ -207,7 +207,7 @@ public class CustomPageService {
         GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
         final BDMClientDependenciesResolver bdmDependenciesResolver = new BDMClientDependenciesResolver(apiSession);
         if (pageClassLoader == null
-                || getConsoleProperties(apiSession).isPageInDebugMode()
+                || getConsoleProperties().isPageInDebugMode()
                 || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
             synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
                 pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
@@ -229,8 +229,8 @@ public class CustomPageService {
         return !cachedClassloader.hasVersion(bdmDependenciesResolver.getBusinessDataModelVersion());
     }
 
-    protected ConsoleProperties getConsoleProperties(final APISession apiSession) {
-        return PropertiesFactory.getConsoleProperties(apiSession.getTenantId());
+    protected ConsoleProperties getConsoleProperties() {
+        return PropertiesFactory.getConsoleProperties();
     }
 
     protected WebBonitaConstantsUtils getWebBonitaConstantsUtils() {

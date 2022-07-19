@@ -65,7 +65,7 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
         super(engineSession);
         constants = constantsValue;
         this.processAPI = processAPI;
-        maxSizeForTenant = PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
+        maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();
     }
 
     // GET Method

@@ -82,7 +82,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
         constants = constantsValue;
         this.processAPI = processAPI;
         this.tenantFolder = tenantFolder;
-        maxSizeForTenant = PropertiesFactory.getConsoleProperties(engineSession.getTenantId()).getMaxSize();
+        maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();
         mimetypesFileTypeMap = new MimetypesFileTypeMap();
     }
 

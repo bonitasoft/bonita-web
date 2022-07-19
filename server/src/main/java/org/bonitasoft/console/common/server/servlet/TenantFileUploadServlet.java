@@ -36,7 +36,6 @@ public class TenantFileUploadServlet extends FileUploadServlet {
 
     @Override
     protected void defineUploadDirectoryPath(final HttpServletRequest request) {
-        final long tenantId = getAPISession(request).getTenantId();
         setUploadDirectoryPath(WebBonitaConstantsUtils.getTenantInstance().getTempFolder().getPath());
     }
 
@@ -48,14 +47,14 @@ public class TenantFileUploadServlet extends FileUploadServlet {
     @Override
     protected void setUploadMaxSize(final ServletFileUpload serviceFileUpload, final HttpServletRequest request) {
         if (checkUploadedImageSize) {
-            serviceFileUpload.setFileSizeMax(getConsoleProperties(getAPISession(request).getTenantId()).getImageMaxSizeInKB() * KILOBYTE);
+            serviceFileUpload.setFileSizeMax(getConsoleProperties().getImageMaxSizeInKB() * KILOBYTE);
         } else if (checkUploadedFileSize) {
-            serviceFileUpload.setFileSizeMax(getConsoleProperties(getAPISession(request).getTenantId()).getMaxSize() * MEGABYTE);
+            serviceFileUpload.setFileSizeMax(getConsoleProperties().getMaxSize() * MEGABYTE);
         }
     }
 
-    protected ConsoleProperties getConsoleProperties(final long tenantId) {
-        return PropertiesFactory.getConsoleProperties(tenantId);
+    protected ConsoleProperties getConsoleProperties() {
+        return PropertiesFactory.getConsoleProperties();
     }
 
 }

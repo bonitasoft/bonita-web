@@ -30,12 +30,11 @@ import static org.mockito.Mockito.spy;
  */
 public class ConsolePropertiesTest {
 
-    private static final long TENANT_ID = 236L;
     private ConsoleProperties properties;
 
     @Before
     public void setUp() throws IOException {
-        properties = spy(new ConsoleProperties(TENANT_ID));
+        properties = spy(new ConsoleProperties());
         doReturn(getProperties("aProperty=aValue".getBytes())).when(properties).getProperties();
     }
 
