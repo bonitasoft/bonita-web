@@ -23,25 +23,12 @@
     JSPI18n i18n = new JSPI18n(JSP);
 
     // Build Action URL
-    final String tenantId = StringEscapeUtils.escapeHtml4(JSP.getParameter("tenant"));
     String redirectUrl = JSP.getParameter("redirectUrl");
 
     StringBuffer actionUrl = new StringBuffer("loginservice?redirect=true");
     StringBuffer styleUrl = new StringBuffer("portal-theme");
-    if (tenantId != null) {
-        actionUrl.append("&tenant=").append(tenantId).append("&");
-    }
 
     if (redirectUrl != null) {
-    	if (tenantId != null) {
-    		redirectUrl = redirectUrl.replaceAll("[\\?&]tenant=\\d+$", "").replaceAll("tenant=\\d+&", "");
-    		if (redirectUrl.contains("?")) {
-    			redirectUrl += "&";
-    		} else {
-    			redirectUrl += "?";
-    		}
-    		redirectUrl += "tenant=" + tenantId;
-    	}
         actionUrl.append("&redirectUrl=" + URLEncoder.encode(redirectUrl, "UTF-8"));
     }
 
