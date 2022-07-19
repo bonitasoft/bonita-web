@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
@@ -32,8 +31,8 @@ import org.bonitasoft.web.rest.model.user.User;
 public class AlreadyLoggedInRule extends AuthenticationRule {
 
     @Override
-    public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) throws ServletException {
-        if (isUserAlreadyLoggedIn(request, tenantIdAccessor)) {
+    public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response) throws ServletException {
+        if (isUserAlreadyLoggedIn(request)) {
             ensureUserSession(request.asHttpServletRequest(),
                     request.getHttpSession(),
                     request.getApiSession());
@@ -45,7 +44,7 @@ public class AlreadyLoggedInRule extends AuthenticationRule {
     /**
      * Overridden is Subscription
      */
-    protected boolean isUserAlreadyLoggedIn(final HttpServletRequestAccessor request, final TenantIdAccessor tenantIdAccessor) throws ServletException {
+    protected boolean isUserAlreadyLoggedIn(final HttpServletRequestAccessor request) throws ServletException {
         return request.getApiSession() != null;
     }
 

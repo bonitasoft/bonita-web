@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginManager;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 
 /**
  * Created by Vincent Elcrin
@@ -40,7 +39,7 @@ public abstract class AuthenticationRule {
     /*
      * @return whether the process needs to be aborted or not
      */
-    public abstract boolean doAuthorize(HttpServletRequestAccessor request, HttpServletResponse response, TenantIdAccessor tenantIdAccessor) throws ServletException;
+    public abstract boolean doAuthorize(HttpServletRequestAccessor request, HttpServletResponse response) throws ServletException;
 
     protected LoginManager getLoginManager() {
         if (loginManager == null) {
@@ -49,7 +48,7 @@ public abstract class AuthenticationRule {
         return loginManager;
     }
 
-    public void proceedWithRequest(FilterChain chain, HttpServletRequest request, HttpServletResponse response, long tenantId) throws IOException, ServletException {
+    public void proceedWithRequest(FilterChain chain, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         chain.doFilter(request, response);
     }
 

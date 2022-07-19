@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.user.User;
@@ -52,9 +51,6 @@ public class AlreadyLoggedInRuleTest {
 
     @Mock
     private HttpServletRequestAccessor request;
-
-    @Mock
-    private TenantIdAccessor tenantAccessor;
 
     @Mock
     private APISession apiSession;
@@ -84,7 +80,7 @@ public class AlreadyLoggedInRuleTest {
         // ensure we won't recreate user session
         doReturn("").when(httpSession).getAttribute(SessionUtil.USER_SESSION_PARAM_KEY);
 
-        final boolean authorization = rule.doAuthorize(request, response, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, response);
 
         assertThat(authorization, is(true));
     }
@@ -93,7 +89,7 @@ public class AlreadyLoggedInRuleTest {
     public void testIfRuleDoesntAuthorizeNullSession() throws Exception {
         doReturn(null).when(request).getApiSession();
 
-        final boolean authorization = rule.doAuthorize(request, response, tenantAccessor);
+        final boolean authorization = rule.doAuthorize(request, response);
 
         assertFalse(authorization);
     }
@@ -106,7 +102,7 @@ public class AlreadyLoggedInRuleTest {
         doReturn(new Locale("en")).when(httpServletRequest).getLocale();
         doReturn("myUser").when(apiSession).getUserName();
 
-        rule.doAuthorize(request, response, tenantAccessor);
+        rule.doAuthorize(request, response);
 
         verify(httpSession).setAttribute(
                 eq(SessionUtil.USER_SESSION_PARAM_KEY),

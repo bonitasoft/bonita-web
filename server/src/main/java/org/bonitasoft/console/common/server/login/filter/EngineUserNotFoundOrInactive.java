@@ -18,15 +18,8 @@ public class EngineUserNotFoundOrInactive extends RuntimeException {
 
     private static final long serialVersionUID = 4735182063504328575L;
 
-    private final long tenantId;
-
-    public EngineUserNotFoundOrInactive(final String message, final long tenantId) {
+    public EngineUserNotFoundOrInactive(final String message) {
         super(message);
-        this.tenantId = tenantId;
-    }
-
-    public long getTenantId() {
-        return tenantId;
     }
 
 }

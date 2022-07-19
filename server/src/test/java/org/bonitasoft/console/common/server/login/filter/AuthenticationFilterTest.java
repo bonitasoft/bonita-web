@@ -36,10 +36,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Condition;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
-import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -61,9 +58,6 @@ public class AuthenticationFilterTest {
     private HttpSession httpSession;
 
     @Mock
-    private APISession apiSession;
-
-    @Mock
     private FilterConfig filterConfig;
 
     @Mock
@@ -77,9 +71,6 @@ public class AuthenticationFilterTest {
 
     HttpServletRequestAccessor request;
 
-    @Mock
-    TenantIdAccessor tenantIdAccessor;
-
     @Before
     public void setUp() throws Exception {
         initMocks(this);
@@ -92,7 +83,6 @@ public class AuthenticationFilterTest {
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
 
         request = spy(new HttpServletRequestAccessor(httpRequest));
-        doReturn(1L).when(tenantIdAccessor).getDefaultTenantId();
 
         //remove default rules (already logged in) as they have their own tests
         authenticationFilter.getRules().clear();
@@ -105,9 +95,9 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(passingRule);
         authenticationFilter.addRule(createFailingRule());
 
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
-        verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(passingRule).proceedWithRequest(chain, httpRequest, httpResponse);
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
 
@@ -116,7 +106,7 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createPassingRule());
 
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(httpResponse, never()).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         verify(httpResponse, never()).sendRedirect(anyString());
@@ -130,10 +120,10 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(secondFailingRule);
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
-        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
-        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
+        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
         verify(httpResponse).sendRedirect(anyString());
     }
 
@@ -154,10 +144,10 @@ public class AuthenticationFilterTest {
         authenticationFilterWithConfig.addRule(secondFailingRule);
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilterWithConfig.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilterWithConfig.doAuthenticationFiltering(request, httpResponse, chain);
 
-        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
-        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
+        verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
         verify(httpResponse, never()).sendRedirect(anyString());
         verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
@@ -169,7 +159,7 @@ public class AuthenticationFilterTest {
 
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         verify(httpResponse, never()).sendRedirect(anyString());
@@ -181,7 +171,7 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(createFailingRule());
         when(httpRequest.getContextPath()).thenReturn("/bonita");
         when(httpRequest.getPathInfo()).thenReturn("/portal");
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
@@ -190,19 +180,18 @@ public class AuthenticationFilterTest {
     public void testFilter() throws Exception {
         when(httpRequest.getSession()).thenReturn(httpSession);
         doAnswer((Answer<Object>) invocation -> null).when(authenticationFilter).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
-                any(TenantIdAccessor.class), any(FilterChain.class));
+                any(FilterChain.class));
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
         verify(authenticationFilter, times(1)).doAuthenticationFiltering(any(HttpServletRequestAccessor.class), any(HttpServletResponse.class),
-                any(TenantIdAccessor.class), any(FilterChain.class));
+                any(FilterChain.class));
     }
 
     @Test
     public void testFailedLoginOnDoFiltering() throws Exception {
-        EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed", 1L);
+        EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed");
         authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
-        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
 
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
         verify(chain, never()).doFilter(httpRequest, httpResponse);
@@ -212,11 +201,10 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testTenantIsPausedOnDoFiltering() throws Exception {
-        TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed", 1L);
+        TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed");
         authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
-        doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor();
 
-        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(authenticationManager, never()).getLoginPageURL(eq(request), anyString());
         verify(chain, never()).doFilter(httpRequest, httpResponse);
@@ -228,7 +216,6 @@ public class AuthenticationFilterTest {
     public void testRedirectTo() throws Exception {
         final String context = "/bonita";
         when(httpRequest.getContextPath()).thenReturn(context);
-        final long tenantId = 0L;
         authenticationFilter.redirectTo(request, httpResponse, AuthenticationFilter.MAINTENANCE_JSP);
         verify(httpResponse, times(1)).sendRedirect(context + AuthenticationFilter.MAINTENANCE_JSP);
         verify(httpRequest, times(1)).getContextPath();
@@ -240,7 +227,7 @@ public class AuthenticationFilterTest {
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer(url));
         doReturn(true).when(authenticationFilter).matchExcludePatterns(url);
         authenticationFilter.doFilter(httpRequest, httpResponse, chain);
-        verify(authenticationFilter, times(0)).doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+        verify(authenticationFilter, times(0)).doAuthenticationFiltering(request, httpResponse, chain);
         verify(chain, times(1)).doFilter(httpRequest, httpResponse);
     }
 
@@ -314,7 +301,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response) {
                 return true;
             }
         };
@@ -324,7 +311,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response) {
                 return false;
             }
         };
@@ -334,7 +321,7 @@ public class AuthenticationFilterTest {
         return new AuthenticationRule() {
 
             @Override
-            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response, final TenantIdAccessor tenantIdAccessor) {
+            public boolean doAuthorize(final HttpServletRequestAccessor request, HttpServletResponse response) {
                 throw e;
             }
         };

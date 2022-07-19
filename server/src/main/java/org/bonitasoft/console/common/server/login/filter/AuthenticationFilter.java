@@ -32,13 +32,11 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
 import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.TenantIdAccessor;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.LoginUrlException;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.engine.session.APISession;
 
 /**
  * @author Vincent Elcrin
@@ -61,7 +59,7 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class.getName());
 
-    private final LinkedList<AuthenticationRule> rules = new LinkedList<AuthenticationRule>();
+    private final LinkedList<AuthenticationRule> rules = new LinkedList<>();
 
     public AuthenticationFilter() {
         addRules();
@@ -90,20 +88,15 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     @Override
     public void proceedWithFiltering(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws ServletException, IOException {
         final HttpServletRequestAccessor requestAccessor = new HttpServletRequestAccessor((HttpServletRequest) request);
-        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, getTenantAccessor(), chain);
-    }
-
-    protected TenantIdAccessor getTenantAccessor() {
-        return TenantIdAccessor.getInstance();
+        doAuthenticationFiltering(requestAccessor, (HttpServletResponse) response, chain);
     }
 
     protected void doAuthenticationFiltering(final HttpServletRequestAccessor requestAccessor,
             final HttpServletResponse response,
-            final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
 
         try {
-            if (!isAuthorized(requestAccessor, response, tenantIdAccessor, chain)) {
+            if (!isAuthorized(requestAccessor, response, chain)) {
                 cleanHttpSession(requestAccessor.getHttpSession());
                 if (redirectWhenUnauthorized && requestAccessor.asHttpServletRequest().getMethod().equals("GET")) {
                     response.sendRedirect(createLoginPageUrl(requestAccessor).getLocation());
@@ -123,32 +116,15 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
      */
     protected boolean isAuthorized(final HttpServletRequestAccessor requestAccessor,
             final HttpServletResponse response,
-            final TenantIdAccessor tenantIdAccessor,
             final FilterChain chain) throws ServletException, IOException {
 
         for (final AuthenticationRule rule : getRules()) {
-            if (rule.doAuthorize(requestAccessor, response, tenantIdAccessor)) {
-                long tenantId = getTenantId(requestAccessor, tenantIdAccessor, rule);
-                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response, tenantId);
+            if (rule.doAuthorize(requestAccessor, response)) {
+                rule.proceedWithRequest(chain, requestAccessor.asHttpServletRequest(), response);
                 return true;
             }
         }
         return false;
-    }
-
-    protected long getTenantId(final HttpServletRequestAccessor requestAccessor,
-            final TenantIdAccessor tenantIdAccessor, final AuthenticationRule rule) throws ServletException {
-        APISession apiSession = requestAccessor.getApiSession();
-        long tenantId;
-        if (apiSession != null) {
-            tenantId = apiSession.getTenantId();
-        } else {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn( "API session was not found in HTTP session. Rule " + rule.getClass().getName() + " may be missing the engine login.");
-            }
-            tenantId = tenantIdAccessor.getDefaultTenantId();
-        }
-        return tenantId;
     }
 
     protected void handleUserNotFoundOrInactiveException(final HttpServletRequestAccessor requestAccessor, final HttpServletResponse response,

@@ -18,15 +18,8 @@ public class TenantIsPausedException extends RuntimeException {
 
     private static final long serialVersionUID = 4836182063504328577L;
 
-    private final long tenantId;
-
-    public TenantIsPausedException(final String message, final long tenantId) {
+    public TenantIsPausedException(final String message) {
         super(message);
-        this.tenantId = tenantId;
-    }
-
-    public long getTenantId() {
-        return tenantId;
     }
 
 }
