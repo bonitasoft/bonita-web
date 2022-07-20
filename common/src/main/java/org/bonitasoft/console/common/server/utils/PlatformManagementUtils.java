@@ -99,7 +99,7 @@ public class PlatformManagementUtils {
     private void retrieveTenantsConfiguration(final PlatformAPI platformAPI) throws IOException {
         final Map<Long, Map<String, byte[]>> clientTenantConfigurations = platformAPI.getClientTenantConfigurations();
         for (final Entry<Long, Map<String, byte[]>> tenantConfiguration : clientTenantConfigurations.entrySet()) {
-            configurationFilesManager.setTenantConfigurationFiles(tenantConfiguration.getValue(), tenantConfiguration.getKey());
+            configurationFilesManager.setTenantConfigurationFiles(tenantConfiguration.getValue());
         }
     }
 
@@ -116,11 +116,15 @@ public class PlatformManagementUtils {
         platformLogout(platformSession);
     }
 
-    public void updateConfigurationFile(final long tenantId, final String file, final byte[] content) throws IOException, BonitaException {
+    public void updateConfigurationFile(final String file, final byte[] content) throws IOException, BonitaException {
         final PlatformSession platformSession = platformLogin();
         final PlatformAPI platformAPI = getPlatformAPI(platformSession);
-        platformAPI.updateClientTenantConfigurationFile(tenantId, file, content);
+        platformAPI.updateClientTenantConfigurationFile(getDefaultTenantId(), file, content);
         platformLogout(platformSession);
+    }
+
+    long getDefaultTenantId() {
+        return TenantsManagementUtils.getDefaultTenantId();
     }
 
     public void retrieveTenantsConfiguration() throws BonitaException, IOException {
@@ -130,12 +134,12 @@ public class PlatformManagementUtils {
         platformLogout(platformSession);
     }
 
-    public byte[] getTenantConfiguration(long tenantId, String configurationFileName) {
+    public byte[] getTenantConfiguration(String configurationFileName) {
         final PlatformSession platformSession;
         try {
             platformSession = platformLogin();
             try {
-                return getPlatformAPI(platformSession).getClientTenantConfiguration(tenantId, configurationFileName);
+                return getPlatformAPI(platformSession).getClientTenantConfiguration(TenantsManagementUtils.getDefaultTenantId(), configurationFileName);
             } finally {
                 platformLogout(platformSession);
             }

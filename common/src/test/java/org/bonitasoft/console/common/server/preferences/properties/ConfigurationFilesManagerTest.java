@@ -40,7 +40,6 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ConfigurationFilesManagerTest {
 
-    private static final long TENANT_ID = 543892L;
     private static final String MY_PROP_PROPERTIES = "myProp.properties";
     private static final String MY_PROP_INTERNAL_PROPERTIES = "myProp-internal.properties";
     @Mock
@@ -64,10 +63,10 @@ public class ConfigurationFilesManagerTest {
         doReturn(configurationFiles).when(configurationFilesManager).getResources();
 //        assertThat(configurationFilesManager.getTenantProperties(MY_PROP_PROPERTIES, TENANT_ID)).contains(entry("propToRemove", "willBeRemoved"));
         //when
-        configurationFilesManager.removeProperty(MY_PROP_PROPERTIES, TENANT_ID, "propToRemove");
+        configurationFilesManager.removeProperty(MY_PROP_PROPERTIES, "propToRemove");
         //then
 //        assertThat(configurationFilesManager.getTenantProperties(MY_PROP_INTERNAL_PROPERTIES, TENANT_ID)).doesNotContainKey("propToRemove");
-        verify(platformManagementUtils).updateConfigurationFile(eq(TENANT_ID), eq(MY_PROP_INTERNAL_PROPERTIES), contentCaptor.capture());
+        verify(platformManagementUtils).updateConfigurationFile(eq(MY_PROP_INTERNAL_PROPERTIES), contentCaptor.capture());
         assertThat(new String(contentCaptor.getValue())).doesNotContain("propToRemove").contains("testProperty", "testValue");
     }
 
@@ -79,9 +78,9 @@ public class ConfigurationFilesManagerTest {
         configurationFiles.put(MY_PROP_INTERNAL_PROPERTIES, getProperties("testProperty=testValue\npropToRemove=willBeRemoved".getBytes()));
         doReturn(configurationFiles).when(configurationFilesManager).getResources();
         //when
-        configurationFilesManager.setProperty(MY_PROP_PROPERTIES, TENANT_ID, "testProperty", "new Value");
+        configurationFilesManager.setProperty(MY_PROP_PROPERTIES, "testProperty", "new Value");
         //then
-        verify(platformManagementUtils).updateConfigurationFile(eq(TENANT_ID), eq(MY_PROP_INTERNAL_PROPERTIES), contentCaptor.capture());
+        verify(platformManagementUtils).updateConfigurationFile(eq(MY_PROP_INTERNAL_PROPERTIES), contentCaptor.capture());
         assertThat(new String(contentCaptor.getValue())).doesNotContain("testValue").contains("testProperty", "new Value");
     }
 
@@ -176,7 +175,7 @@ public class ConfigurationFilesManagerTest {
         doReturn(propertiesMap).when(configurationFilesManager).getResources();
 
         // when:
-        configurationFilesManager.removeProperty("my_resources.properties", TENANT_ID, "toBeRemoved");
+        configurationFilesManager.removeProperty("my_resources.properties", "toBeRemoved");
 
         // then:
         verify(propertiesMap).get("my_resources-internal.properties");

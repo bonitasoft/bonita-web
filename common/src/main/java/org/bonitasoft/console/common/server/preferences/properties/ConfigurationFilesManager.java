@@ -126,7 +126,7 @@ public class ConfigurationFilesManager {
         }
     }
 
-    public void setTenantConfigurationFiles(Map<String, byte[]> configurationFiles, long tenantId) throws IOException {
+    public void setTenantConfigurationFiles(Map<String, byte[]> configurationFiles) throws IOException {
         Map<String, File> tenantFiles = new HashMap<>();
         for (Map.Entry<String, byte[]> entry : configurationFiles.entrySet()) {
             if (!entry.getKey().endsWith(".properties")) {
@@ -138,14 +138,14 @@ public class ConfigurationFilesManager {
         tenantsConfigurationFiles = tenantFiles;
     }
 
-    public void removeProperty(String propertiesFilename, long tenantId, String propertyName) throws IOException {
+    public void removeProperty(String propertiesFilename, String propertyName) throws IOException {
         // Now internal behavior stores and removes from -internal file:
         final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
         Map<String, Properties> resources = getResources();
         Properties properties = resources.get(internalFilename);
         if (properties != null) {
             properties.remove(propertyName);
-            update(tenantId, internalFilename, properties);
+            update(internalFilename, properties);
         } else {
              if (LOGGER.isDebugEnabled()){
                 LOGGER.debug("File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");
@@ -157,10 +157,10 @@ public class ConfigurationFilesManager {
         return propertiesFilename.replaceAll("\\.properties$", suffix + ".properties");
     }
 
-    private void update(long tenantId, String propertiesFilename, Properties properties) throws IOException {
+    private void update(String propertiesFilename, Properties properties) throws IOException {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             properties.store(byteArrayOutputStream, "");
-            getPlatformManagementUtils().updateConfigurationFile(tenantId, propertiesFilename, byteArrayOutputStream.toByteArray());
+            getPlatformManagementUtils().updateConfigurationFile(propertiesFilename, byteArrayOutputStream.toByteArray());
         } catch (BonitaException e) {
             throw new IOException(e);
         }
@@ -174,14 +174,14 @@ public class ConfigurationFilesManager {
         return getPlatformManagementUtils().getTenantConfigurations().get(TenantsManagementUtils.getDefaultTenantId());
     }
 
-    public void setProperty(String propertiesFilename, long tenantId, String propertyName, String propertyValue) throws IOException {
+    public void setProperty(String propertiesFilename, String propertyName, String propertyValue) throws IOException {
         Map<String, Properties> resources = getResources();
         // Now internal behavior stores and removes from -internal file:
         final String internalFilename = getSuffixedPropertyFilename(propertiesFilename, "-internal");
         Properties properties = resources.get(internalFilename);
         if (properties != null) {
             properties.setProperty(propertyName, propertyValue);
-            update(tenantId, internalFilename, properties);
+            update(internalFilename, properties);
         } else {
              if (LOGGER.isDebugEnabled()){
                 LOGGER.debug("File " + internalFilename + " not found. Cannot remove property '" + propertyName + "'.");

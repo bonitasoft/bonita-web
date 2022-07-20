@@ -43,7 +43,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class PlatformManagementUtilsTest {
 
-    private static final long TENANT_ID = 6543L;
     @Mock
     private PlatformAPI platformAPI;
     @Mock
@@ -66,11 +65,12 @@ public class PlatformManagementUtilsTest {
     public void should_updateConfigurationFile_call_engine() throws Exception {
         //when
         doReturn(new PlatformSessionImpl(1231, new Date(), 54325423, "testUser", 75463)).when(platformManagementUtils).platformLogin();
-        platformManagementUtils.updateConfigurationFile(TENANT_ID, "myFile", "theNewContent".getBytes());
+        doReturn(1L).when(platformManagementUtils).getDefaultTenantId();
+        platformManagementUtils.updateConfigurationFile("myFile", "theNewContent".getBytes());
         //then
         InOrder inOrder = inOrder(platformManagementUtils, platformAPI);
         inOrder.verify(platformManagementUtils).platformLogin();
-        inOrder.verify(platformAPI).updateClientTenantConfigurationFile(TENANT_ID, "myFile", "theNewContent".getBytes());
+        inOrder.verify(platformAPI).updateClientTenantConfigurationFile(1L, "myFile", "theNewContent".getBytes());
         inOrder.verify(platformManagementUtils).platformLogout(any(PlatformSession.class));
     }
 
