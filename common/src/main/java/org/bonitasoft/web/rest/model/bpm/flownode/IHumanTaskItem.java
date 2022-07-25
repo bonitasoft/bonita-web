@@ -19,7 +19,6 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import java.util.Date;
 
 import org.bonitasoft.web.rest.model.bpm.process.ActorItem;
-import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
@@ -85,6 +84,8 @@ public interface IHumanTaskItem extends ITaskItem {
     public static final String FILTER_HIDDEN_TO_USER_ID = "hidden_user_id";
 
     public static final String FILTER_IS_ASSIGNED = "is_claimed";
+
+    public static final String FILTER_SHOW_ASSIGNED_TO_OTHERS = "show_assigned_to_others";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES

@@ -31,7 +31,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.Sort;
-import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
@@ -145,8 +144,14 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             // Available tasks for a specific user (pending + assigned)
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_USER_ID));
             if (id != null) {
-                // ATTRIBUTE_ASSIGNED_USER_ID explicitly passed as NULL
-                if (filters.containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)
+                // Show also assigned to other users
+                if(filters.containsKey(HumanTaskItem.FILTER_SHOW_ASSIGNED_TO_OTHERS)
+                        && Boolean.parseBoolean(filters.get(HumanTaskItem.FILTER_SHOW_ASSIGNED_TO_OTHERS))){
+                    final SearchResult<ENGINE_ITEM> searchPendingTasks = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingOrAssignedToUserOrAssignedToOthersTasks(
+                            id.toLong(), builder.done());
+                    return searchPendingTasks;
+                } // ATTRIBUTE_ASSIGNED_USER_ID explicitly passed as NULL
+                else if (filters.containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)
                         && APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) == null)
                 {
                     @SuppressWarnings("unchecked")
