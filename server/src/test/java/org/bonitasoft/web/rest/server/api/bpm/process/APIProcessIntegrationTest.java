@@ -52,9 +52,6 @@ public class APIProcessIntegrationTest extends AbstractConsoleTest {
     public void testAddProcessItem() throws Exception {
         final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(TestUserFactory.getJohnCarpenter().getSession());
         final List<ProcessDeploymentInfo> before = processAPI.getProcessDeploymentInfos(0, 10, ProcessDeploymentInfoCriterion.DEFAULT);
-        //final upload process archive
-        final String targetDirPath = WebBonitaConstantsUtils.getPlatformInstance().getTenantsFolder().getPath() + File.separator
-                + TestUserFactory.getJohnCarpenter().getSession().getTenantId();
 
         final BusinessArchive businessArchive = new BusinessArchiveBuilder().createNewBusinessArchive()
                 .setProcessDefinition(new ProcessDefinitionBuilder().createNewInstance("Test process", "1.0").done()).done();

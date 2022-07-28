@@ -50,14 +50,12 @@ public class OrganizationImportServiceTest {
     public void before() throws Exception {
         organizationImportService = spy(new OrganizationImportService());
         doReturn(httpServletResponse).when(organizationImportService).getHttpResponse();
-        doReturn(1L).when(organizationImportService).getTenantId();
         doReturn(identityAPI).when(organizationImportService).getIdentityAPI();
     }
 
     @Test
     public void should_verify_authorisation_for_the_given_location_param() {
         doReturn(".." + File.separator + ".." + File.separator + ".." + File.separator + "file.txt").when(organizationImportService).getFileUploadParameter();
-        doReturn(1L).when(organizationImportService).getTenantId();
 
         try {
             organizationImportService.run();

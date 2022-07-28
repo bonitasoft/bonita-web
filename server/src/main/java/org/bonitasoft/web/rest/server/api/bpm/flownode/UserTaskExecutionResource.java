@@ -63,10 +63,9 @@ public class UserTaskExecutionResource extends CommonResource {
         boolean assign = Boolean.parseBoolean(getRequestParameter(ASSIGN));
         try {
             final ContractDefinition taskContract = processAPI.getUserTaskContract(taskId);
-            final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();
             final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(taskContract, inputs,
-                    maxSizeForTenant, tenantId);
+                    maxSizeForTenant);
             if (assign) {
                 processAPI.assignAndExecuteUserTask(userId, taskId, processedInputs);
             } else {

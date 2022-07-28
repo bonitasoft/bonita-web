@@ -66,8 +66,4 @@ public class ProcessActorImportService extends ConsoleService {
     protected String getFileUploadParameter() {
         return getParameter("file");
     }
-
-    protected long getTenantId() {
-        return getSession().getTenantId();
-    }
 }

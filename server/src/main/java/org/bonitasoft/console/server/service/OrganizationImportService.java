@@ -110,10 +110,6 @@ public class OrganizationImportService extends ConsoleService {
         return TenantAPIAccessor.getIdentityAPI(getSession());
     }
 
-    protected long getTenantId() {
-        return getSession().getTenantId();
-    }
-
     protected String getFileUploadParameter() {
         return getParameter(FILE_UPLOAD);
     }

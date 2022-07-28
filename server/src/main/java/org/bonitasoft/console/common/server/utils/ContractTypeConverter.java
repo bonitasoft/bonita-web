@@ -95,7 +95,7 @@ public class ContractTypeConverter {
     }
 
     public Map<String, Serializable> getProcessedInput(final ContractDefinition processContract, final Map<String, Serializable> inputs,
-            final long maxSizeForTenant, final long tenantId) throws FileNotFoundException {
+                                                       final long maxSizeForTenant) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         final Map<String, Serializable> processedInputs = new HashMap<>();
         final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.<String, Serializable> emptyMap()

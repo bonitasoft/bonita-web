@@ -65,9 +65,8 @@ public class ProcessInstantiationResource extends CommonResource {
         final long processDefinitionId = getProcessDefinitionIdParameter();
         try {
             final ContractDefinition processContract = processAPI.getProcessContract(processDefinitionId);
-            final long tenantId = apiSession.getTenantId();
             final long maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();
-            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant, tenantId);
+            final Map<String, Serializable> processedInputs = typeConverterUtil.getProcessedInput(processContract, inputs, maxSizeForTenant);
             long processInstanceId;
             if (userId == null) {
                 processInstanceId = processAPI.startProcessWithInputs(processDefinitionId, processedInputs).getId();

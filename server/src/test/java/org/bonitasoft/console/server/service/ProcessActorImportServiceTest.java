@@ -23,8 +23,6 @@ public class ProcessActorImportServiceTest {
         final ProcessActorImportService processActorImportService = spy(new ProcessActorImportService());
         doReturn(".." + File.separator + ".." + File.separator + ".." + File.separator + "file.txt").when(processActorImportService).getFileUploadParameter();
 
-        doReturn(1L).when(processActorImportService).getTenantId();
-
         try {
             processActorImportService.run();
         } catch (final ServiceException e) {
