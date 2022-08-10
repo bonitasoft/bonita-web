@@ -14,14 +14,12 @@
  */
 package org.bonitasoft.web.rest.server.framework;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
+
 import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

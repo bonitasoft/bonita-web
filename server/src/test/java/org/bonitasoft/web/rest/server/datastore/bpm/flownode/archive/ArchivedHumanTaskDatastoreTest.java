@@ -14,9 +14,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedAutomaticTaskInstanceImpl;
-import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedCallActivityInstanceImpl;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedActivityItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;

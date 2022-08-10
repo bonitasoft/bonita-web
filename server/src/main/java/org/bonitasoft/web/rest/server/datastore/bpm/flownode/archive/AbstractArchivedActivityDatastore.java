@@ -17,9 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ArchivedActivityInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;

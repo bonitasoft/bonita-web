@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.contrib.java.lang.system.SystemOutRule;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -38,9 +37,6 @@ import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeExecutionException;
 import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessActivationException;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.exception.UpdateException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.utils.RestletTest;

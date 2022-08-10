@@ -18,7 +18,6 @@ import java.util.Map;
 
 import org.junit.Rule;
 import org.junit.contrib.java.lang.system.SystemOutRule;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.i18n.I18n;

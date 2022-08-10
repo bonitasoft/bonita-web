@@ -13,7 +13,6 @@ import java.util.Map;
 import junit.framework.Assert;
 
 import org.bonitasoft.engine.bpm.category.Category;
-import org.bonitasoft.engine.bpm.category.CategoryNotFoundException;
 import org.bonitasoft.test.toolkit.bpm.TestCategory;
 import org.bonitasoft.test.toolkit.bpm.TestCategoryFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;

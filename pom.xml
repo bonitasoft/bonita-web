@@ -25,7 +25,6 @@
     <modules>
         <module>bonita-web-bom</module>
         <module>test-toolkit</module>
-        <module>common</module>
         <module>server</module>
         <module>i18n</module>
     </modules>

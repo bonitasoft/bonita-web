@@ -17,7 +17,6 @@
 package org.bonitasoft.web.rest.server;
 
 import java.io.UnsupportedEncodingException;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
