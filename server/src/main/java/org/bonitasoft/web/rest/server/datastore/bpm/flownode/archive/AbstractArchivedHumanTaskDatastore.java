@@ -26,12 +26,10 @@ import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.A
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 
 /**
  * @author Séverin Moussel

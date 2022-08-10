@@ -30,7 +30,6 @@ import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.identity.RoleCreator;
 import org.bonitasoft.engine.identity.RoleUpdater;
 import org.bonitasoft.engine.identity.impl.RoleImpl;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
 import org.bonitasoft.web.rest.model.identity.RoleItem;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;

@@ -13,15 +13,9 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
-import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedCallActivityInstanceImpl;
-import org.bonitasoft.engine.bpm.flownode.impl.internal.ArchivedGatewayInstanceImpl;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedUserTaskDefinition;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -29,7 +23,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 /**

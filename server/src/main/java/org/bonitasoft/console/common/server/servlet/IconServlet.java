@@ -1,11 +1,9 @@
 package org.bonitasoft.console.common.server.servlet;
 
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
-import org.restlet.Server;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

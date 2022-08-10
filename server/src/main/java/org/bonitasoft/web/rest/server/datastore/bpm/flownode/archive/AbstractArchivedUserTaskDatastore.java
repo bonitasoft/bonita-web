@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive;
 
-import org.bonitasoft.engine.bpm.flownode.ArchivedFlowNodeInstance;
 import org.bonitasoft.engine.bpm.flownode.ArchivedUserTaskInstance;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;

@@ -20,6 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager.getProperties;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doReturn;
@@ -47,6 +48,17 @@ public class AuthenticationManagerPropertiesTest {
         loginManagerProperties = null;
     }
 
+    @Test
+    public void isLogoutDisabled_should_return_FALSE_if_not_set() {
+        // given:
+        final AuthenticationManagerProperties properties = AuthenticationManagerProperties.getProperties();
+
+        // when:
+        final boolean isLogoutDisabled = properties.isLogoutDisabled();
+
+        // then:
+        assertThat(isLogoutDisabled).isFalse();
+    }
     @Test
     public void testGetOAuthServiceProviderName() {
         assertNotNull("Cannot get OAuth service provider name", loginManagerProperties.getOAuthServiceProviderName());
