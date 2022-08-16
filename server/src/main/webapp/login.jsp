@@ -118,13 +118,12 @@
 
 				<div class="formentries">
 
-					<div class="formentry" title="<%=i18n.t_("Enter your login (username)")%>">
+					<div class="formentry">
 						<div class="label">
 							<label for="username"><%=i18n.t_("User")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n.t_("Username")%>"
-                                   id="username"
+							<input id="username"
                                    name="username"
                                    value="<%= StringEscapeUtils.escapeHtml4(JSP.getSessionOrCookie("username", "")) %>"
                                    placeholder="<%=i18n.t_("User")%>"
@@ -136,13 +135,12 @@
 						</div>
 					</div>
 
-					<div class="formentry" title="<%=i18n.t_("Enter your password")%>">
+					<div class="formentry">
 						<div class="label">
 							<label for="password"><%=i18n.t_("Password")%></label>
 						</div>
 						<div class="input">
-							<input title="<%=i18n.t_("Password")%>"
-                                   id="password"
+							<input id="password"
                                    name="password"
                                    type="password"
                                    tabindex="2"
