@@ -103,7 +103,6 @@ public class LivingApplicationPageServletTest {
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
         doReturn(applicationAPI).when(servlet).getApplicationApi(apiSession);
         doReturn(pageAPI).when(servlet).getPageApi(apiSession);
-        doReturn(1L).when(apiSession).getTenantId();
         doReturn(customPageAuthorizationsHelper).when(servlet).getCustomPageAuthorizationsHelper(apiSession);
     }
 

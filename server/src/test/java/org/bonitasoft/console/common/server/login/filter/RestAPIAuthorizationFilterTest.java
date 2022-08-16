@@ -79,7 +79,6 @@ public class RestAPIAuthorizationFilterTest {
         doReturn(httpSession).when(request).getSession();
         doReturn("").when(request).getQueryString();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        doReturn(1L).when(apiSession).getTenantId();
         doReturn(9L).when(apiSession).getUserId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn("john").when(apiSession).getUserName();

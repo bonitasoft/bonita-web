@@ -65,7 +65,6 @@ public class APIProcessTest {
         I18n.getInstance();
         given(caller.getHttpSession()).willReturn(session);
         given(session.getAttribute("apiSession")).willReturn(engineSession);
-        given(engineSession.getTenantId()).willReturn(1L);
 
         apiProcess = spy(new APIProcess());
         apiProcess.setCaller(caller);

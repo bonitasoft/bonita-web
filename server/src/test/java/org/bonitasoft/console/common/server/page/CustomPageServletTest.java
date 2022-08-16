@@ -64,7 +64,6 @@ public class CustomPageServletTest {
     public void beforeEach() throws Exception {
         hsRequest.setSession(httpSession);
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
-        doReturn(1L).when(apiSession).getTenantId();
         doReturn(customPageAuthorizationsHelper).when(servlet).getCustomPageAuthorizationsHelper(apiSession);
     }
 

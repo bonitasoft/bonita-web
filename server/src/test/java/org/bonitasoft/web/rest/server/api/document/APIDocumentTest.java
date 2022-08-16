@@ -65,7 +65,6 @@ public class APIDocumentTest {
         given(factory.defineItemDefinitions("theme")).willReturn(null);
         given(caller.getHttpSession()).willReturn(session);
         given(session.getAttribute("apiSession")).willReturn(engineSession);
-        given(engineSession.getTenantId()).willReturn(1L);
 
         ItemDefinitionFactory.setDefaultFactory(factory);
         I18n.getInstance();

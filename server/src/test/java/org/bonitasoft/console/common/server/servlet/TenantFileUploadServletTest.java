@@ -67,7 +67,6 @@ public class TenantFileUploadServletTest {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("apiSession")).thenReturn(apiSession);
         doReturn(consoleProperties).when(fileUploadServlet).getConsoleProperties();
-        when(apiSession.getTenantId()).thenReturn(123L);
         fileUploadServlet.checkUploadedFileSize = false;
         fileUploadServlet.checkUploadedImageSize = false;
     }

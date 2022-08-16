@@ -72,7 +72,6 @@ public class BusinessDataModelResourceTest extends RestletTest {
     @Before
     public void init() {
         doReturn(true).when(tenantAdministrationAPI).isPaused();
-        doReturn(1L).when(apiSession).getTenantId();
     }
     
     @Test

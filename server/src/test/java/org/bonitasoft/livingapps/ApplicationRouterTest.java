@@ -67,7 +67,6 @@ public class ApplicationRouterTest {
 
     @Before
     public void beforeEach() throws Exception {
-        given(apiSession.getTenantId()).willReturn(1L);
         given(hsRequest.getMethod()).willReturn("GET");
         given(hsRequest.getContextPath()).willReturn("/bonita");
         given(hsRequest.getServletPath()).willReturn("/apps");

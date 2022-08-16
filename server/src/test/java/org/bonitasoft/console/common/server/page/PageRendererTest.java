@@ -80,7 +80,6 @@ public class PageRendererTest {
     public void beforeEach() {
         hsRequest.setSession(httpSession);
         doReturn(apiSession).when(httpSession).getAttribute("apiSession");
-        doReturn(1L).when(apiSession).getTenantId();
     }
 
     @Test

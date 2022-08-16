@@ -102,7 +102,6 @@ public class CustomPageServiceTest {
     public void before() throws IOException, BonitaException {
         customPageService = spy(new CustomPageService());
         CustomPageService.clearCachedClassloaders();
-        when(apiSession.getTenantId()).thenReturn(1L);
         doReturn(consoleProperties).when(customPageService).getConsoleProperties();
         doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils();
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
@@ -135,7 +134,6 @@ public class CustomPageServiceTest {
     @Test
     public void should_load_rest_api_page_return_api_impl() throws Exception {
         // Given
-        when(apiSession.getTenantId()).thenReturn(0L);
         final File pageFile = new File(getClass().getResource("/IndexRestApi.groovy").toURI());
         final File pageDir = pageFile.getParentFile();
         assertThat(pageFile).as("no file " + pageFile.getAbsolutePath()).exists().canRead();
@@ -167,7 +165,6 @@ public class CustomPageServiceTest {
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getId()).thenReturn(1L);
         when(mockedPage.getName()).thenReturn("page1");
-        when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("page.zip"));
         when(pageAPI.getPageContent(1L)).thenReturn(zipFile);
@@ -337,7 +334,6 @@ public class CustomPageServiceTest {
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getId()).thenReturn(1l);
         when(mockedPage.getName()).thenReturn("page1");
-        when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("page.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
@@ -360,7 +356,6 @@ public class CustomPageServiceTest {
         final Page mockedPage = mock(Page.class);
         when(mockedPage.getId()).thenReturn(1l);
         when(mockedPage.getName()).thenReturn("page2");
-        when(apiSession.getTenantId()).thenReturn(0L);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("pageApiExtension.zip"));
         when(pageAPI.getPageContent(1l)).thenReturn(zipFile);

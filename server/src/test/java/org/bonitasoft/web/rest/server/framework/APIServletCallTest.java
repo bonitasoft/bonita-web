@@ -60,7 +60,6 @@ public class APIServletCallTest {
     public void before() {
         doReturn(httpSession).when(request).getSession();
         doReturn(apiSession).when(httpSession).getAttribute(SessionUtil.API_SESSION_PARAM_KEY);
-        doReturn(1l).when(apiSession).getTenantId();
         doReturn(false).when(apiSession).isTechnicalUser();
         doReturn("john").when(apiSession).getUserName();
         apiServletCall.api = api;

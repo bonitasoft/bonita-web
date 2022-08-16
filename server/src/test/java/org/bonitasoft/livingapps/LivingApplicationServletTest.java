@@ -74,7 +74,6 @@ public class LivingApplicationServletTest {
         doReturn(httpSession).when(hsRequest).getSession();
         doReturn(session).when(servlet).getSession(hsRequest);
         doReturn("/appToken/pageToken/").when(hsRequest).getPathInfo();
-        doReturn(1L).when(session).getTenantId();
         doReturn(authenticationManager).when(servlet).getAuthenticationManager();
         servlet.customPageRequestModifier = customPageRequestModifier;
     }

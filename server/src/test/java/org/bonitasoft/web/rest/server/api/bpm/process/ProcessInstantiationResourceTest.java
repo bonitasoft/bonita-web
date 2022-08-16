@@ -93,7 +93,6 @@ public class ProcessInstantiationResourceTest extends RestletTest {
         // this allows us to track method calls on this internal dependency
         processInstantiationResource.typeConverterUtil = spy(processInstantiationResource.typeConverterUtil);
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
-        when(apiSession.getTenantId()).thenReturn(1L);
     }
 
     @Override

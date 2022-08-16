@@ -24,7 +24,6 @@ public class StandardAuthenticationManagerImplTest {
     public void setUp() throws Exception {
         request = new MockHttpServletRequest();
         request.setContextPath("bonita");
-        doReturn(1L).when(standardLoginManagerImpl).getDefaultTenantId();
 
         requestAccessor = new HttpServletRequestAccessor(request);
     }
