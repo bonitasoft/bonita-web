@@ -57,8 +57,4 @@ public class ApplicationPageDeployer implements Deployer {
         return getter.get(applicationPageId);
     }
 
-    protected final boolean isDeployable(final String attribute, final IItem item) {
-        return item.getAttributeValueAsAPIID(attribute) != null;
-    }
-
 }
