@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 10:28+0200\n"
-"PO-Revision-Date: 2022-03-01 02:29\n"
+"POT-Creation-Date: 2022-07-28 12:05+0200\n"
+"PO-Revision-Date: 2022-08-18 07:58\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -424,9 +424,6 @@ msgstr "O administrador pode instalar um processo, gerenciar a organização e m
 
 msgid "The only mandatory filter is %name%"
 msgstr "O único filtro obrigatório é %name%"
-
-msgid "The platform already exist !"
-msgstr "A plataforma já existe!"
 
 msgid "The server is not available"
 msgstr "O servidor não está disponível"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-28 10:28+0200\n"
-"PO-Revision-Date: 2022-03-01 02:29\n"
+"POT-Creation-Date: 2022-07-28 12:05+0200\n"
+"PO-Revision-Date: 2022-08-18 07:57\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -424,9 +424,6 @@ msgstr "システム管理者は、プロセスのインストール、組織の
 
 msgid "The only mandatory filter is %name%"
 msgstr "唯一の必須のフィルターは、%name% です。"
-
-msgid "The platform already exist !"
-msgstr "プラットフォームは既に存在します！"
 
 msgid "The server is not available"
 msgstr "サーバーは利用できません。"
