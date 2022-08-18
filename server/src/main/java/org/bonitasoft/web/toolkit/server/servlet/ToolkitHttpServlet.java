@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,6 +18,7 @@ package org.bonitasoft.web.toolkit.server.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -43,7 +44,7 @@ import org.bonitasoft.web.toolkit.server.utils.ServerDateFormater;
 
 /**
  * @author Séverin Moussel
- * 
+ *
  */
 public abstract class ToolkitHttpServlet extends HttpServlet {
 
@@ -65,7 +66,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
 
     /**
      * Initialize
-     * 
+     *
      * @see HttpServlet#service(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
      */
     @Override
@@ -89,7 +90,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
 
     /**
      * Output an exception in JSon.
-     * 
+     *
      * @param e
      *            The exception to output
      * @param resp
@@ -106,7 +107,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
 
         try {
             final PrintWriter output = resp.getWriter();
-            if(e instanceof APIException) {
+            if (e instanceof APIException) {
                 setLocalization((APIException) e, LocaleUtils.getUserLocaleAsString(req));
             }
 
@@ -116,10 +117,10 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
             throw new APIException(e2);
         }
     }
-    
+
     /**
      * Output an exception in JSon. Expect the status code to be already set
-     * 
+     *
      * @param e
      *            The exception to output
      * @param resp
@@ -131,7 +132,7 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     }
 
     private void setLocalization(APIException localizable, String locale) {
-        if(locale != null && !locale.isEmpty()) {
+        if (locale != null && !locale.isEmpty()) {
             localizable.setLocale(LOCALE.valueOf(locale));
         }
     }
@@ -158,17 +159,17 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
     protected void catchAllExceptions(final Throwable exception, final HttpServletRequest req, final HttpServletResponse resp) {
         if (exception instanceof APIMethodNotAllowedException) {
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info( exception.getMessage(), exception);
+                LOGGER.info(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         } else if (exception instanceof APINotFoundException) {
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info( exception.getMessage(), exception);
+                LOGGER.info(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof ServiceNotFoundException) {
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info( exception.getMessage(), exception);
+                LOGGER.info(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_NOT_FOUND);
         } else if (exception instanceof APIItemNotFoundException) {
@@ -185,18 +186,18 @@ public abstract class ToolkitHttpServlet extends HttpServlet {
                 outputException(exception, req, resp);
             }
         } else if (exception instanceof APIIncorrectIdException) {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info( exception.getMessage(), exception);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_BAD_REQUEST);
         } else if (exception instanceof APIItemIdMalformedException) {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info( exception.getMessage(), exception);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } else {
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( exception.getMessage(), exception);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(exception.getMessage(), exception);
             }
             outputException(exception, req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

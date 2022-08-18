@@ -58,8 +58,4 @@ public class BonitaPageDeployer implements Deployer {
         return getter.get(pageId);
     }
 
-    protected final boolean isDeployable(final String attribute, final IItem item) {
-        return item.getAttributeValueAsAPIID(attribute) != null;
-    }
-
 }

@@ -59,9 +59,64 @@ public class UserDeployerTest extends APITestWithMock {
     }
 
     @Test
+    public void testStringValueIsDeployed() {
+        prepareGetterToReturnAUser();
+        GroupItem group = spy(aGroupInstalledBy(APIID.makeAPIID("unusedId")));
+
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
+
+        verify(group, times(1)).setDeploy(any(), any());
+    }
+
+    @Test
+    public void testCompoundLongValueIsDeployed() {
+        prepareGetterToReturnAUser();
+        GroupItem group = spy(aGroupInstalledBy(APIID.makeAPIID(3L, -1L, null)));
+
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
+
+        verify(group, times(1)).setDeploy(any(), any());
+    }
+
+    @Test
+    public void testCompoundStringValueIsDeployed() {
+        prepareGetterToReturnAUser();
+        GroupItem group = spy(aGroupInstalledBy(APIID.makeAPIID("3", "-1", null, "unusedId")));
+
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
+
+        verify(group, times(1)).setDeploy(any(), any());
+    }
+
+    @Test
     public void testNotDeployableAttributeIsNotDeployed() {
         prepareGetterToReturnAUser();
         GroupItem group = spy(aGroupInstalledBy(null));
+
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
+
+        verify(group, never()).setDeploy(any(), any());
+    }
+
+    @Test
+    public void testNegativeStringValueIsNotDeployed() {
+        prepareGetterToReturnAUser();
+        GroupItem group = spy(aGroupInstalledBy(APIID.makeAPIID("-1")));
+
+        UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
+        nameDeployer.deployIn(group);
+
+        verify(group, never()).setDeploy(any(), any());
+    }
+
+    @Test
+    public void testNegativeLongValueIsNotDeployed() {
+        prepareGetterToReturnAUser();
+        GroupItem group = spy(aGroupInstalledBy(APIID.makeAPIID(-1L)));
 
         UserDeployer nameDeployer = new UserDeployer(getter, GroupItem.ATTRIBUTE_CREATED_BY_USER_ID);
         nameDeployer.deployIn(group);

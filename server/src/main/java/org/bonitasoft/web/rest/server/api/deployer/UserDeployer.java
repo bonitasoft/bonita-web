@@ -57,8 +57,4 @@ public class UserDeployer implements Deployer {
         return getter.get(userId);
     }
 
-    protected final boolean isDeployable(final String attribute, final IItem item) {
-        return item.getAttributeValueAsAPIID(attribute) != null;
-    }
-
 }

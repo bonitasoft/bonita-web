@@ -27,4 +27,20 @@ public interface Deployer {
     String getDeployedAttribute();
 
     void deployIn(IItem item);
+
+    default boolean isDeployable(final String attributeName, final IItem item) {
+        final String attributeValue = item.getAttributeValue(attributeName);
+
+        if (attributeValue != null && !attributeValue.isEmpty()) {
+            try {
+                final long longAttrValue = Long.valueOf(attributeValue);
+                //only positive numeric Ids are supported
+                return longAttrValue > 0L;
+            } catch (final NumberFormatException e) {
+                //non numeric Id are supported
+                return true;
+            }
+        }
+        return false;
+    }
 }
