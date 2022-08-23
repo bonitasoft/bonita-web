@@ -83,7 +83,7 @@
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Bonita Applications</title>
-<link rel="icon" type="image/png" href="images/favicon2.ico" />
+<link rel="icon" type="image/png" href="<%= styleUrl %>/images/favicon2.ico" />
 <link rel="stylesheet" type="text/css" href="<%= styleUrl %>/css/login.css"/>
 
 <script>
