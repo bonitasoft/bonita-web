@@ -32,10 +32,6 @@ public abstract class AbstractJUnitWebTest extends AbstractJUnitTest {
 
     public static final String API_SESSION_PARAM_KEY = "apiSession";
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.AbstractJUnitTest#testSetUp()
-     */
     @Override
     protected void testSetUp() throws Exception {
         // toolkit initialization
@@ -49,19 +45,14 @@ public abstract class AbstractJUnitWebTest extends AbstractJUnitTest {
         return TestToolkitCtx.getInstance();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.AbstractJUnitTest#testTearDown()
-     */
     @Override
-    protected void testTearDown() throws Exception {
+    protected void testTearDown() {
         webTestTearDown();
     }
 
     public abstract void webTestSetUp() throws Exception;
 
-    protected void webTestTearDown() throws Exception {
-
+    protected void webTestTearDown() {
     }
 
     protected boolean areEquals(Item item1, Item item2) {

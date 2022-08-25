@@ -105,10 +105,6 @@
             <artifactId>jettison</artifactId>
         </dependency>
         <dependency>
-            <groupId>ro.isdc.wro4j</groupId>
-            <artifactId>wro4j-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
@@ -346,6 +342,7 @@
                         <configuration>
                             <artifacts>
                                 <artifact>
+                                    <!-- allows to install / deploy jar file along with war file in M2 repo -->
                                     <file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
                                     <type>jar</type>
                                 </artifact>

@@ -1,5 +1,8 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +43,9 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
     }
 
     private void checkSearchResults(final ItemSearchResult<MembershipItem> membershipItems, final int nbResultsByPageExpected, final int nbTotalResultsExpected) {
-        Assert.assertTrue("Empty search results", membershipItems.getLength() > 0);
-        Assert.assertTrue("Wrong page size", membershipItems.getLength() == nbResultsByPageExpected);
-        Assert.assertTrue("Wrong Total size", membershipItems.getTotal() == nbTotalResultsExpected);
+        assertTrue("Empty search results", membershipItems.getLength() > 0);
+        assertEquals("Wrong page size", membershipItems.getLength(), nbResultsByPageExpected);
+        assertEquals("Wrong Total size", membershipItems.getTotal(), nbTotalResultsExpected);
     }
 
     @Test
@@ -56,9 +59,9 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
         final MembershipItem output = apiMembership.runAdd(input);
 
         Assert.assertNotNull("Failed to add a new membership", input);
-        Assert.assertEquals("Wrong membership inserted", input.getUserId(), output.getUserId());
-        Assert.assertEquals("Wrong membership inserted", input.getGroupId(), output.getGroupId());
-        Assert.assertEquals("Wrong membership inserted", input.getRoleId(), output.getRoleId());
+        assertEquals("Wrong membership inserted", input.getUserId(), output.getUserId());
+        assertEquals("Wrong membership inserted", input.getGroupId(), output.getGroupId());
+        assertEquals("Wrong membership inserted", input.getRoleId(), output.getRoleId());
     }
 
     private void beforeSearch() {
@@ -80,7 +83,7 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
     public void testSearch() {
         beforeSearch();
 
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(MembershipItem.ATTRIBUTE_USER_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<MembershipItem> searchResults = apiMembership.runSearch(0, 12, null, null, filters, null, null);
@@ -92,7 +95,7 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
     public void testDeploys() {
         beforeSearch();
 
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(MembershipItem.ATTRIBUTE_USER_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<MembershipItem> searchResults = apiMembership.runSearch(
@@ -113,7 +116,7 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
         final MembershipItem firstMembership = searchResults.getResults().get(0);
 
         Assert.assertNotNull("Failed to deploy user_id", firstMembership.getUser());
-        Assert.assertEquals("Wrong user deployed", getInitiator().getUser().getUserName(), firstMembership.getUser().getUserName());
+        assertEquals("Wrong user deployed", getInitiator().getUser().getUserName(), firstMembership.getUser().getUserName());
         Assert.assertNotNull("Failed to deploy role_id", firstMembership.getRole());
         Assert.assertNotNull("Failed to deploy group_id", firstMembership.getGroup());
         Assert.assertNotNull("Failed to deploy assigned_by_user_id", firstMembership.getAssignedByUser());
@@ -124,26 +127,26 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
 
         // INIT
         final TestRole roleManager = TestRoleFactory.getManager();
-        final TestRole roleDevelopper = TestRoleFactory.getDeveloper();
+        final TestRole roleDeveloper = TestRoleFactory.getDeveloper();
         final TestGroup groupWeb = TestGroupFactory.createRandomGroups(1).get(0);
 
         final TestUser user = getInitiator();
 
         TestMembershipFactory.assignMembership(user, groupWeb, roleManager);
-        TestMembershipFactory.assignMembership(user, groupWeb, roleDevelopper);
+        TestMembershipFactory.assignMembership(user, groupWeb, roleDeveloper);
 
         // ACTION
         apiMembership.runDelete(
-                Arrays.asList(APIID.makeAPIID(
-                        getInitiator().getId(),
-                        groupWeb.getId(),
-                        roleManager.getId()
+                List.of(APIID.makeAPIID(
+                                getInitiator().getId(),
+                                groupWeb.getId(),
+                                roleManager.getId()
                         )
-                        ));
+                ));
 
         // CHECK RESULT
 
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(MembershipItem.ATTRIBUTE_USER_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<MembershipItem> searchResults = apiMembership.runSearch(0, 12, null, null, filters, null, null);
@@ -152,7 +155,7 @@ public class APIMembershipIntegrationTest extends AbstractConsoleTest {
     }
     
     @Test(expected = APIForbiddenException.class)
-    public void addingTwiceSameMembershipIsForbidden() throws Exception {
+    public void addingTwiceSameMembershipIsForbidden() {
         MembershipItem input = new MembershipItem();
         input.setUserId(getInitiator().getId());
         input.setGroupId(TestGroupFactory.getWeb().getId());

@@ -61,8 +61,7 @@ public abstract class AbstractConsoleTest extends AbstractJUnitWebTest {
         httpSession.setAttribute(API_SESSION_PARAM_KEY, apiSession);
 
         // Initialize APIUser for HTTP requests of the API
-        final APIServletCall caller = new APIServletCall(mockHttpServletRequest, mockHttpServletResponse);
-        return caller;
+        return new APIServletCall(mockHttpServletRequest, mockHttpServletResponse);
     }
 
     public abstract void consoleTestSetUp() throws Exception;

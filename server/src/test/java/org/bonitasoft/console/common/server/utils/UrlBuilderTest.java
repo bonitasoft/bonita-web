@@ -2,7 +2,6 @@ package org.bonitasoft.console.common.server.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void appendParameter_should_add_service_param_to_URL() throws URISyntaxException {
+    public void appendParameter_should_add_service_param_to_URL() {
         urlBuilder = new UrlBuilder("http://www.cas-service.com/login");
         urlBuilder.appendParameter("service", "http://www.bonitasoft.com/bonita");
 
@@ -34,7 +33,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void appendParameter_should_add_service_param_to_URL_with_hash() throws URISyntaxException {
+    public void appendParameter_should_add_service_param_to_URL_with_hash() {
         urlBuilder = new UrlBuilder("http://www.cas-service.com/login#_pf=2");
         urlBuilder.appendParameter("service", "http://www.bonitasoft.com/bonita");
 
@@ -42,7 +41,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void appendParameter_should_add_id_params_to_URL() throws URISyntaxException {
+    public void appendParameter_should_add_id_params_to_URL() {
         urlBuilder = new UrlBuilder("http://www.cas-service.com/login");
         urlBuilder.appendParameter("ids", new UrlValue("1", "2", "3").toString());
 
@@ -50,7 +49,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void appendParameter_should_add_params_to_URL() throws URISyntaxException {
+    public void appendParameter_should_add_params_to_URL() {
         Map<String, String[]> params = new HashMap<>();
         params.put("service", new String[] { "http://www.bonitasoft.com/bonita" });
         params.put("ids", new String[] { "4", "5", "6" });
@@ -62,7 +61,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void appendParameter_should_not_add_params_already_defined_to_URL() throws Exception {
+    public void appendParameter_should_not_add_params_already_defined_to_URL() {
         urlBuilder = new UrlBuilder("http://www.cas-service.com/login?service=http://www.bonitasoft.com");
         urlBuilder.appendParameter("service", "http://www.bonitasoft.com/bonita");
 
@@ -70,7 +69,7 @@ public class UrlBuilderTest {
     }
     
     @Test
-    public void should_add_params_to_URL_with_special_chars_in_hash() throws Exception {
+    public void should_add_params_to_URL_with_special_chars_in_hash() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita?param=value#?form=l" + specialULRCharactersEncoded + "f");
         urlBuilder.appendParameter("param2", "value2");
 
@@ -78,7 +77,7 @@ public class UrlBuilderTest {
     }
     
     @Test
-    public void should_add_params_to_URL_with_hash() throws Exception {
+    public void should_add_params_to_URL_with_hash() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita?param=value#path/with/slash?hashparam=1&hashparam2=2");
         urlBuilder.appendParameter("param2", "value2");
 
@@ -86,7 +85,7 @@ public class UrlBuilderTest {
     }
     
     @Test
-    public void should_add_params_to_URL_with_v6_form_id_in_hash() throws Exception {
+    public void should_add_params_to_URL_with_v6_form_id_in_hash() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita?param=value#form=proc%C3%A9with%23+in%20name--2.0--taskwith+%24$entry&task=25&assignTask=true");
         urlBuilder.appendParameter("param2", "value2");
 
@@ -94,7 +93,7 @@ public class UrlBuilderTest {
     }
     
     @Test
-    public void should_add_params_to_URL_with_special_chars_in_query() throws Exception {
+    public void should_add_params_to_URL_with_special_chars_in_query() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita?param=value&form=l" + specialULRCharactersEncoded + "f");
         urlBuilder.appendParameter("param2", "value" + specialULRCharacters + "2");
 
@@ -102,28 +101,28 @@ public class UrlBuilderTest {
     }
     
     @Test
-    public void should_leave_path_unchanged() throws Exception {
+    public void should_leave_path_unchanged() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita+soft?param=value");
 
         assertThat(urlBuilder.build()).isEqualTo("http://localhost:8080/bonita+soft?param=value");
     }
     
     @Test
-    public void should_leave_path_unchanged2() throws Exception {
+    public void should_leave_path_unchanged2() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita%2Bsoft?param=value");
 
         assertThat(urlBuilder.build()).isEqualTo("http://localhost:8080/bonita%2Bsoft?param=value");
     }
     
     @Test
-    public void should_leave_path_with_space_unchanged() throws Exception {
+    public void should_leave_path_with_space_unchanged() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita%20soft?param=value");
 
         assertThat(urlBuilder.build()).isEqualTo("http://localhost:8080/bonita%20soft?param=value");
     }
     
     @Test
-    public void should_leave_URL_without_querystring_unchanged() throws Exception {
+    public void should_leave_URL_without_querystring_unchanged() {
         urlBuilder = new UrlBuilder("http://localhost:8080/bonita/homepage");
 
         assertThat(urlBuilder.build()).isEqualTo("http://localhost:8080/bonita/homepage");

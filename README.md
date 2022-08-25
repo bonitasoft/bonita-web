@@ -1,5 +1,4 @@
-# Bonita Web #
-
+# Bonita Web
 
 ## Requirements
 
@@ -15,30 +14,20 @@ If you build a tag, you don't need to build the bonita-engine as its artifacts a
 
 ## Contribution
 
-I you want to contribute, ask questions about the project, report bug, see the [contributing guide](https://github.com/bonitasoft/bonita-developer-resources/blob/master/CONTRIBUTING.MD).
+If you want to contribute, ask questions about the project, report bug, see the [contributing guide](https://github.com/bonitasoft/bonita-developer-resources/blob/master/CONTRIBUTING.MD).
 
 
 ## Build the project ##
 
 At root level (same location as the parent pom.xml) :
-    
+
     ./mvnw clean install
 
-## Execution in hosted mode
-In server module, to build and launch a tomcat hosting the app :
-
-    ./mvnw clean verify org.codehaus.cargo:cargo-maven2-plugin:run -DskipTests
-
-H2 database is created (if it does not already exist) in ${user.home}/bonita/community/database
-When you checkout a different branch you need to clean this directory because the database schema may have changed.
-
-Hot reload is not supported, but when you update a class in portal/, server/ or common/ in your IDE all you need to do is to restart the tomcat with the previous command (classes will be retrieved from the projects target/classes directory)
-    
 ## Structure ##
 
 ### Parent pom.xml ###
 Contains the common maven configuration such as:
-- the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, gwt.version, ...
+- the definition of all the dependencies version, e.g., junit.version, bonita.engine.version, ...
 - the maven repositories
 
 ### common module ###

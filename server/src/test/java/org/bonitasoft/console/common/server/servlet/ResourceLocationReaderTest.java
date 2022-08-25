@@ -24,7 +24,7 @@ public class ResourceLocationReaderTest {
     private final ResourceLocationReader resourceLocationReader = new ResourceLocationReader();
 
     @Test
-    public void should_use_infopath_if_location_param_is_not_defined() throws Exception {
+    public void should_use_infopath_if_location_param_is_not_defined() {
 
         when(req.getParameter("location")).thenReturn(null);
         when(req.getPathInfo()).thenReturn("/bonita.css");

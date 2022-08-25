@@ -84,18 +84,18 @@ public class APIActorIntegrationIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testGetWithDeploys() throws Exception {
+    public void testGetWithDeploys() {
         final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(TestUserFactory.getJohnCarpenter());
         final long actorId = process.getActors().get(0).getId();
 
-        final ActorItem fetchedActorItem = apiActor.runGet(makeAPIID(actorId), asList(ATTRIBUTE_PROCESS_ID), null);
+        final ActorItem fetchedActorItem = apiActor.runGet(makeAPIID(actorId), List.of(ATTRIBUTE_PROCESS_ID), null);
 
         assertNotNull(fetchedActorItem.getProcess());
         assertEquals(fetchedActorItem.getProcess().getId(), process.getId());
     }
 
     @Test
-    public void testGetWithCounters() throws Exception {
+    public void testGetWithCounters() {
         //given
         final TestUser johnCarpenter = TestUserFactory.getJohnCarpenter();
         final TestProcess process = TestProcessFactory.getDefaultHumanTaskProcess().addActor(johnCarpenter);
@@ -116,7 +116,7 @@ public class APIActorIntegrationIT extends AbstractConsoleTest {
     public void getCanCountNumberOfMembershipForActor() throws Exception {
         final ActorInstance actor = TestProcessFactory.getDefaultHumanTaskProcess().addActor(TestUserFactory.getJohnCarpenter()).getActors().get(0);
         TestActorMemberFactory.createMembershipActorMember(actor.getId(), TestGroupFactory.getRAndD(), TestRoleFactory.getDeveloper());
-        final List<String> counters = asList(COUNTER_MEMBERSHIPS);
+        final List<String> counters = List.of(COUNTER_MEMBERSHIPS);
 
         final ActorItem fetchedActorItem = apiActor.runGet(makeAPIID(actor.getId()), null, counters);
 
@@ -137,19 +137,16 @@ public class APIActorIntegrationIT extends AbstractConsoleTest {
     }
 
     private Map<String, String> buildUpdateAttributes(final String description, final String displayName) {
-        final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put(ATTRIBUTE_DESCRIPTION, description);
-        attributes.put(ATTRIBUTE_DISPLAY_NAME, displayName);
-        return attributes;
+        return Map.of(ATTRIBUTE_DESCRIPTION, description, ATTRIBUTE_DISPLAY_NAME, displayName);
     }
 
     @Test
-    public void testSearchCanBePaginatedAndOrderd() throws Exception {
+    public void testSearchCanBePaginatedAndOrdered() {
         final TestProcess process = TestProcessFactory.createProcessWith3Actors()
                 .addActor(TestUserFactory.getJohnCarpenter())
                 .addActor(TestGroupFactory.getRAndD())
                 .addActor(TestRoleFactory.getDeveloper());
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_PROCESS_ID, String.valueOf(process.getId()));
         final String order = ATTRIBUTE_NAME + " ASC";
 

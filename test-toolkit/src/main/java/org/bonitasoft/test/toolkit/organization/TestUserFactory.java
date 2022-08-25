@@ -18,7 +18,6 @@ package org.bonitasoft.test.toolkit.organization;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import org.bonitasoft.engine.identity.ContactDataCreator;
 import org.bonitasoft.engine.identity.UserCreator;
@@ -45,7 +44,7 @@ public class TestUserFactory {
      * Default Constructor.
      */
     public TestUserFactory() {
-        this.userList = new HashMap<String, TestUser>();
+        this.userList = new HashMap<>();
     }
 
     public static TestUserFactory getInstance() {
@@ -62,18 +61,8 @@ public class TestUserFactory {
     /**
      * @return the userList
      */
-    private Map<String, TestUser> getUserList() {
+    public Map<String, TestUser> getUserList() {
         return userList;
-    }
-
-    public void createRandomUsers(final int nbOfUsers) {
-        for (int i = 0; i < nbOfUsers; i++) {
-            new TestUser(TestToolkitCtx.getInstance().getAdminUser().getSession(), getRandomString(), getRandomString());
-        }
-    }
-
-    private static String getRandomString() {
-        return String.valueOf(new Random().nextLong());
     }
 
     // ////////////////////////////////////////////////////////////////////////////////

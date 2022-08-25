@@ -5,24 +5,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.test.toolkit.organization;
 
-import java.util.List;
-
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.LoginAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
-import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -36,13 +30,11 @@ import org.bonitasoft.engine.platform.LogoutException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.engine.session.SessionNotFoundException;
-import org.bonitasoft.test.toolkit.TestToolkitUtils;
 import org.bonitasoft.test.toolkit.bpm.TestActor;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 
 /**
  * @author Vincent Elcrin
- * 
  */
 public class TestUser implements TestActor {
 
@@ -66,16 +58,12 @@ public class TestUser implements TestActor {
         this.userName = userName;
         this.password = password;
         /*
-        System.err.println("\n\n");
-        System.err.println("Building user: " + user.getUserName());
-        Thread.dumpStack();
-        System.err.println("\n\n");
-        */
+         * System.err.println("\n\n");
+         * System.err.println("Building user: " + user.getUserName());
+         * Thread.dumpStack();
+         * System.err.println("\n\n");
+         */
     }
-
-    // //////////////////////////////////////////////////////////////////////////////////
-    // / Constructors using builders
-    // //////////////////////////////////////////////////////////////////////////////////
 
     public TestUser(final APISession apiSession, UserCreator userCreator, final ContactDataCreator personalInfoCreator,
             final ContactDataCreator professionalInfoCreator) {
@@ -83,27 +71,23 @@ public class TestUser implements TestActor {
         this.userName = (String) userCreator.getFields().get(UserCreator.UserField.NAME);
         this.password = (String) userCreator.getFields().get(UserCreator.UserField.PASSWORD);
         /*
-        System.err.println("\n\n");
-        System.err.println("Building user: " + user.getUserName());
-        Thread.dumpStack();
-        System.err.println("\n\n");
-        */
+         * System.err.println("\n\n");
+         * System.err.println("Building user: " + user.getUserName());
+         * Thread.dumpStack();
+         * System.err.println("\n\n");
+         */
     }
 
     public TestUser(final APISession apiSession, final UserCreator userBuilder) {
         this(apiSession, userBuilder, new ContactDataCreator(), new ContactDataCreator());
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
-    // / Logging
-    // //////////////////////////////////////////////////////////////////////////////////
-
     private APISession logIn(final String userName, final String password) {
         // need to create the platform if we want to log onto it
         TestToolkitCtx.getInstance().getPlatform();
 
         LoginAPI loginAPI;
-        APISession apiSession = null;
+        APISession apiSession;
         try {
             loginAPI = TenantAPIAccessor.getLoginAPI();
             apiSession = loginAPI.login(userName, password);
@@ -125,7 +109,7 @@ public class TestUser implements TestActor {
         } catch (final ServerAPIException e) {
             throw new TestToolkitException("Can't get api to log out. Server api exception", e);
         } catch (final UnknownAPITypeException e) {
-            throw new TestToolkitException("Can't get api to log out. Unkwown api type", e);
+            throw new TestToolkitException("Can't get api to log out. Unknown api type", e);
         } catch (final LogoutException e) {
             throw new TestToolkitException("Can't get log out user <" + apiSession.getUserName() + ">", e);
         } catch (SessionNotFoundException e) {
@@ -145,13 +129,6 @@ public class TestUser implements TestActor {
         }
     }
 
-    /**
-     * @return the loggedIn
-     */
-    public boolean isLoggedIn() {
-        return this.loggedIn;
-    }
-
     public APISession getSession() {
         if (!this.loggedIn) {
             logIn();
@@ -159,24 +136,18 @@ public class TestUser implements TestActor {
         return this.apiSession;
     }
 
-    /**
-     * Get identity API session
-     * 
-     * @param apiSession
-     * @return
-     */
     protected static IdentityAPI getIdentityAPI(final APISession apiSession) {
-        IdentityAPI identityAPI = null;
+        IdentityAPI identityAPI;
         try {
             identityAPI = TenantAPIAccessor.getIdentityAPI(apiSession);
         } catch (final InvalidSessionException e) {
-            throw new TestToolkitException("Can't get identy api. Invalid session", e);
+            throw new TestToolkitException("Can't get identity api. Invalid session", e);
         } catch (final BonitaHomeNotSetException e) {
-            throw new TestToolkitException("Can't get identy api. Bonita home not set", e);
+            throw new TestToolkitException("Can't get identity api. Bonita home not set", e);
         } catch (final ServerAPIException e) {
-            throw new TestToolkitException("Can't get identy api. Server api exception", e);
+            throw new TestToolkitException("Can't get identity api. Server api exception", e);
         } catch (final UnknownAPITypeException e) {
-            throw new TestToolkitException("Can't get identy api. Unknown api type", e);
+            throw new TestToolkitException("Can't get identity api. Unknown api type", e);
         }
         return identityAPI;
     }
@@ -187,15 +158,10 @@ public class TestUser implements TestActor {
 
     /**
      * Create user with only username & password
-     * 
-     * @param apiSession
-     * @param userName
-     * @param password
-     * @return
      */
     private User createUser(final APISession apiSession, final String userName, final String password) {
         final IdentityAPI identityAPI = getIdentityAPI(apiSession);
-        User newUser = null;
+        User newUser;
         try {
             newUser = identityAPI.createUser(userName, password);
         } catch (final AlreadyExistsException e) {
@@ -211,16 +177,13 @@ public class TestUser implements TestActor {
     }
 
     /**
-     * Create user name with user engine's builder
-     * 
-     * @param apiSession
-     * @param userBuilder
-     * @return
+     * Create user with user engine's builder
      */
-    private User createUser(final APISession apiSession, final UserCreator creator, final ContactDataCreator personalInfoCreator,
+    private User createUser(final APISession apiSession, final UserCreator creator,
+            final ContactDataCreator personalInfoCreator,
             final ContactDataCreator professionalInfoBuilder) {
         final IdentityAPI identityAPI = getIdentityAPI(apiSession);
-        User newUser = null;
+        User newUser;
         try {
             try {
                 creator.setPersonalContactData(personalInfoCreator);
@@ -237,18 +200,12 @@ public class TestUser implements TestActor {
                 throw new TestToolkitException("Can't create user", e);
             }
         } catch (final InvalidSessionException e) {
-            throw new TestToolkitException("Can't get identy api to create user. Invalid session", e);
+            throw new TestToolkitException("Can't get identity api to create user. Invalid session", e);
         }
 
         return newUser;
     }
 
-    /**
-     * Create user
-     * 
-     * @param userBuilder
-     * @return
-     */
     public TestUser createUser(final UserCreator userBuilder) {
         return new TestUser(getSession(), userBuilder);
     }
@@ -256,10 +213,6 @@ public class TestUser implements TestActor {
     public TestUser createUser(final String userName, final String password) {
         return new TestUser(getSession(), userName, password);
     }
-
-    // //////////////////////////////////////////////////////////////////////////////////
-    // / Deletion
-    // //////////////////////////////////////////////////////////////////////////////////
 
     public void delete(final TestUser testUser) {
         final IdentityAPI identityAPI = getIdentityAPI(getSession());
@@ -280,21 +233,10 @@ public class TestUser implements TestActor {
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
-    // / Getter
-    // //////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @return the user
-     */
     public User getUser() {
         return this.user;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.bpm.TestActor#getId()
-     */
     public long getId() {
         return this.user.getId();
     }
@@ -305,23 +247,6 @@ public class TestUser implements TestActor {
 
     public String getPassword() {
         return password;
-    }
-
-    /**
-     * Get task assigned to the user
-     * 
-     * @param pageIndex
-     * @param numberPerPage
-     * @param criterion
-     * @return
-     */
-    public List<HumanTaskInstance> getAssignedTasks(int pageIndex, int numberPerPage,
-            ActivityInstanceCriterion criterion) {
-        return TestToolkitUtils.getInstance().getAssignedHumanTaskInstances(getSession(), pageIndex, numberPerPage, criterion);
-    }
-
-    public List<HumanTaskInstance> getAssignedTasks() {
-        return getAssignedTasks(0, 100, ActivityInstanceCriterion.DEFAULT);
     }
 
     protected APISession getApiSession() {

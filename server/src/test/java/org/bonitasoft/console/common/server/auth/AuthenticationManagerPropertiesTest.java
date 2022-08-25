@@ -14,17 +14,17 @@
  */
 package org.bonitasoft.console.common.server.auth;
 
-import java.io.IOException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager.getProperties;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+
+import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Rohart Bastien
@@ -36,8 +36,7 @@ public class AuthenticationManagerPropertiesTest {
     @Before
     public void setUp() throws IOException {
         loginManagerProperties = spy(new AuthenticationManagerProperties());
-        doReturn(getProperties(("login.LoginManager = org.bonitasoft.console.common.server.login.impl.standard.StandardLoginManagerImpl\n" +
-                "OAuth.serviceProvider = LinkedIn\n" +
+        doReturn(getProperties(("OAuth.serviceProvider = LinkedIn\n" +
                 "OAuth.consumerKey = ove2vcdjptar\n" +
                 "OAuth.consumerSecret = vdaBrCmHvkgJoYz1\n" +
                 "OAuth.callbackURL = http://127.0.0.1:8888/loginservice").getBytes())).when(loginManagerProperties).getTenantPropertiesOfScope();

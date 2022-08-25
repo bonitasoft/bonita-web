@@ -50,7 +50,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
     }
 
     @Override
-    protected void testTearDown() throws Exception {
+    protected void testTearDown() {
     }
 
     @Test
@@ -66,6 +66,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
 
         final FormsResourcesUtils formsResourcesUtilsInstance = new FormsResourcesUtils();
         assertNull(formsResourcesUtilsInstance.getProcessClassLoader(getSession(), processDefinition.getId()));
+        processAPI.deleteProcessDefinition(processDefinition.getId());
     }
 
     @Test
@@ -87,6 +88,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
 
         final FormsResourcesUtils formsResourcesUtilsInstance = new FormsResourcesUtils();
         assertNotNull(formsResourcesUtilsInstance.getProcessClassLoader(getSession(), processDefinition.getId()));
+        processAPI.deleteProcessDefinition(processDefinition.getId());
     }
 
     @Test
@@ -115,6 +117,8 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
         assertNotNull(processClassloader2);
 
         assertEquals(processClassloader, processClassloader2);
+
+        processAPI.deleteProcessDefinition(processDefinition.getId());
     }
 
     @Test
@@ -128,7 +132,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
         final byte[] zip = converter.zip(createBusinessObjectModel());
         tenantAdministrationAPI.pause();
         tenantAdministrationAPI.cleanAndUninstallBusinessDataModel();
-        tenantAdministrationAPI.installBusinessDataModel(zip);
+        tenantAdministrationAPI.updateBusinessDataModel(zip);
         tenantAdministrationAPI.resume();
         loginAPI.logout(technicalUserSession);
 
@@ -160,6 +164,7 @@ public class FormsResourcesUtilsIT extends AbstractJUnitTest {
             assertThat(processClassloader2).as("should retrieve class loader").isNotNull().isEqualTo(processClassloader2);
             assertThat(processClassloader2.loadClass(PERSON_QUALIFIED_NAME)).as("should load BDM class").isNotNull();
 
+            processAPI.deleteProcessDefinition(processDefinition.getId());
         } finally {
             technicalUserSession = loginAPI.login(TenantsManagementUtils.getTechnicalUserUsername(),
                     TenantsManagementUtils.getTechnicalUserPassword());

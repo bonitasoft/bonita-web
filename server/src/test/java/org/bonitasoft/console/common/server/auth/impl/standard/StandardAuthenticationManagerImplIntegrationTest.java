@@ -38,8 +38,7 @@ public class StandardAuthenticationManagerImplIntegrationTest extends AbstractJU
     private static final String TECHNICAL_USER_PASSWORD = "install";
 
     @Override
-    public void webTestSetUp() throws Exception {
-
+    public void webTestSetUp() {
     }
 
     @Override

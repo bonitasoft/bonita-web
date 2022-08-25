@@ -40,19 +40,15 @@ public class APIGroupIntegrationTest extends AbstractConsoleTest {
 
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_adding_icon_with_unauthorized_path() {
-
         GroupItem input = new GroupItem();
         input.setName("Developper");
         input.setDescription("The guys who drink a lot of coffee");
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
-
-        input = apiGroup.runAdd(input);
-
+        apiGroup.runAdd(input);
     }
 
     @Test(expected = APIForbiddenException.class)
     public void it_throws_an_exception_updating_icon_with_unauthorized_path() {
-
         GroupItem input = new GroupItem();
         input.setName("Developper");
         input.setDescription("The guys who drink a lot of coffee");
@@ -61,9 +57,7 @@ public class APIGroupIntegrationTest extends AbstractConsoleTest {
         Assert.assertNotNull("Failed to add a new role", input);
         input = new GroupItem();
         input.setIcon(".." + File.separator + ".." + File.separator + ".." + File.separator + "icon.jpg");
-
-        input = apiGroup.runUpdate(id, input.getAttributes());
-
+        apiGroup.runUpdate(id, input.getAttributes());
     }
 
 }
