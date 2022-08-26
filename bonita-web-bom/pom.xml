@@ -43,7 +43,7 @@
         <restlet-version>2.3.12</restlet-version>
         <jackson-ext-modules-version>2.10.1</jackson-ext-modules-version>
         <!-- Keycloak version cannot be updated without also updating the ovewritten code in server-sp/src/main/java/org/bonitasoft/console/common/server/auth/impl/oidc -->
-        <keycloak.version>17.0.1</keycloak.version>
+        <keycloak.version>18.0.2</keycloak.version>
         <spnego.version>r9</spnego.version>
     </properties>
 
