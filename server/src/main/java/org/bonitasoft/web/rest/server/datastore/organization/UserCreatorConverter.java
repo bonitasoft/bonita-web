@@ -26,7 +26,7 @@ public class UserCreatorConverter {
         }
 
         final APIID managerId = user.getManagerId();
-        if (managerId != null) {
+        if (managerId != null && managerId.isValidLongID()) {
             userCreator.setManagerUserId(managerId.toLong());
         }
         return userCreator;

@@ -51,17 +51,17 @@ public class ApplicationMenuItemConverter {
     public ApplicationMenuCreator toApplicationMenuCreator(final ApplicationMenuItem item) {
 
         Long applicationId = null;
-        if (item.getApplicationId() != null) {
+        if (item.getApplicationId() != null && item.getApplicationId().isValidLongID()) {
             applicationId = item.getApplicationId().toLong();
         }
         Long applicationPageId = null;
-        if (item.getApplicationPageId() != null) {
+        if (item.getApplicationPageId() != null && item.getApplicationPageId().isValidLongID()) {
             applicationPageId = item.getApplicationPageId().toLong();
         }
 
         final ApplicationMenuCreator menuCreator = new ApplicationMenuCreator(applicationId, item.getDisplayName(), applicationPageId);
 
-        if (item.getParentMenuId() != null) {
+        if (item.getParentMenuId() != null && item.getParentMenuId().isValidLongID()) {
             menuCreator.setParentId(item.getParentMenuId().toLong());
         }
 

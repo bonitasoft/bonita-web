@@ -31,7 +31,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ActivityAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.utils.Sort;
-import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.framework.utils.SearchOptionsBuilderUtil;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
@@ -111,14 +110,14 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
             // Tasks of all users using a specific supervisor's processes.
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_SUPERVISOR_ID));
-            if (id != null) {
+            if (id != null && id.isValidLongID()) {
                 filters.remove(HumanTaskItem.FILTER_SUPERVISOR_ID);
                 return runSupervisorSearch(filters, builder, id.toLong());
             }
 
             // Tasks of all members of a specific team manager's team.
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_TEAM_MANAGER_ID));
-            if (id != null) {
+            if (id != null && id.isValidLongID()) {
                 return runTeamManagerSearch(filters, builder, id.toLong());
             }
 
@@ -136,7 +135,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
             // Tasks claimed by a specific user
             id = APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
-            if (id != null) {
+            if (id != null && id.isValidLongID()) {
                 @SuppressWarnings("unchecked")
                 final SearchResult<ENGINE_ITEM> searchHumanTaskInstances = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingTasksAssignedToUser(id.toLong(), builder.done());
                 return searchHumanTaskInstances;
@@ -144,7 +143,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
             // Available tasks for a specific user (pending + assigned)
             id = APIID.makeAPIID(filters.get(HumanTaskItem.FILTER_USER_ID));
-            if (id != null) {
+            if (id != null && id.isValidLongID()) {
                 // ATTRIBUTE_ASSIGNED_USER_ID explicitly passed as NULL
                 if (filters.containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)
                         && APIID.makeAPIID(filters.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) == null)
@@ -275,7 +274,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
             if (attributes.containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) {
 
                 final APIID userId = APIID.makeAPIID(attributes.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID));
-                if (userId == null) {
+                if (userId == null || !userId.isValidLongID()) {
                     getProcessAPI().releaseUserTask(id.toLong());
                 } else {
                     getProcessAPI().assignUserTask(id.toLong(), userId.toLong());
