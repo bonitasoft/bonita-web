@@ -32,6 +32,7 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
+import org.bonitasoft.web.toolkit.client.data.APIID;
 
 public class CaseSarter {
 
@@ -49,7 +50,12 @@ public class CaseSarter {
         this.caseItem = caseItem;
         processId = caseItem.getProcessId().toLong();
         if (caseItem.hasAttribute(CaseItem.ATTRIBUTE_STARTED_BY_SUBSTITUTE_USER_ID) && caseItem.getStartedBySubstituteUserId() != null) {
-            delegateUserId = caseItem.getStartedBySubstituteUserId().toLong();
+            APIID startedBySubstituteUserId = caseItem.getStartedBySubstituteUserId();
+            if (startedBySubstituteUserId.isValidLongID()) {
+                delegateUserId = startedBySubstituteUserId.toLong();
+            } else {
+                delegateUserId = -1L;
+            }
         } else {
             delegateUserId = -1L;
         }

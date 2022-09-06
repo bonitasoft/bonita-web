@@ -103,6 +103,28 @@ public class ApplicationMenuItemConverterTest extends APITestWithMock {
         assertThat(fields.get(ApplicationMenuField.APPLICATION_PAGE_ID)).isEqualTo(APPLICATION_PAGE_ID);
         assertThat(fields.get(ApplicationMenuField.PARENT_ID)).isEqualTo(PARENT_MENU_ID);
     }
+    
+    @Test
+    public void toApplicationMenuCreator_should_not_map_negativeId() throws Exception {
+        //given
+        final ApplicationMenuItem item = new ApplicationMenuItem();
+        item.setDisplayName(DISPLAY_NAME);
+        item.setApplicationId(APPLICATION_ID);
+        item.setApplicationPageId(-1L);
+        item.setMenuIndex(INDEX);
+        item.setParentMenuId(-1L);
+
+        //when
+        final ApplicationMenuCreator creator = converter.toApplicationMenuCreator(item);
+
+        //then
+        assertThat(creator).isNotNull();
+        final Map<ApplicationMenuField, Serializable> fields = creator.getFields();
+        assertThat(fields.get(ApplicationMenuField.DISPLAY_NAME)).isEqualTo(DISPLAY_NAME);
+        assertThat(fields.get(ApplicationMenuField.APPLICATION_ID)).isEqualTo(APPLICATION_ID);
+        assertThat(fields.get(ApplicationMenuField.APPLICATION_PAGE_ID)).isNull();
+        assertThat(fields.get(ApplicationMenuField.PARENT_ID)).isNull();
+    }
 
     @Test
     public void toApplicationMenuUpdater_should_map_all_fields() {
