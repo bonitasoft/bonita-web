@@ -242,7 +242,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
 
             final SearchResult<Document> engineSearchResults;
-            if (supervisorAPIID != null) {
+            if (supervisorAPIID != null && supervisorAPIID.isValidLongID()) {
                 engineSearchResults = processAPI.searchDocumentsSupervisedBy(supervisorAPIID.toLong(), searchOptionsCreator.create());
             } else {
                 engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());

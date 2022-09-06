@@ -101,11 +101,11 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
         final APIID supervisorAPIID = APIID.makeAPIID(filters.get(CommentItem.FILTER_SUPERVISOR_ID));
         final APIID userAPIID = APIID.makeAPIID(filters.get(CommentItem.FILTER_USER_ID));
 
-        if (teamManagerAPIID != null) {
+        if (teamManagerAPIID != null && teamManagerAPIID.isValidLongID()) {
             engineSearchResults = runTeamManagerSearch(teamManagerAPIID.toLong(), builder);
-        } else if (supervisorAPIID != null) {
+        } else if (supervisorAPIID != null && supervisorAPIID.isValidLongID()) {
             engineSearchResults = runSupervisorSearch(supervisorAPIID.toLong(), builder);
-        } else if (userAPIID != null) {
+        } else if (userAPIID != null && userAPIID.isValidLongID()) {
             engineSearchResults = runUserSearch(userAPIID.toLong(), builder);
         } else {
             engineSearchResults = runCustomSearch(builder);

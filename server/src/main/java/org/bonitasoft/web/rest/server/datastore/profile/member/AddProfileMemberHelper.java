@@ -50,7 +50,7 @@ public class AddProfileMemberHelper implements DatastoreHasAdd<ProfileMemberItem
     }
 
     private Long toLong(APIID apiId) {
-        if (apiId == null) {
+        if (apiId == null || !apiId.isValidLongID()) {
             return UNSET;
         }
         return apiId.toLong();

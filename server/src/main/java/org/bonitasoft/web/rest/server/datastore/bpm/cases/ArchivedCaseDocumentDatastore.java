@@ -96,7 +96,7 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
                 filters.remove(ArchivedCaseDocumentItem.FILTER_SUPERVISOR_ID);
             }
 
-            if (archivedCaseId != null) {
+            if (archivedCaseId != null && archivedCaseId.isValidLongID()) {
                 filters.remove(ArchivedCaseDocumentItem.FILTER_ARCHIVED_CASE_ID);
                 final ArchivedProcessInstance archivedProcessInstance = processAPI.getArchivedProcessInstance(archivedCaseId.toLong());
                 if (archivedProcessInstance != null) {
@@ -108,7 +108,7 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
             searchOptionsCreator = buildSearchOptionCreator(page, resultsByPage, search, filters, orders);
 
             final SearchResult<ArchivedDocument> engineSearchResults;
-            if (supervisorAPIID != null) {
+            if (supervisorAPIID != null && supervisorAPIID.isValidLongID()) {
                 engineSearchResults = processAPI.searchArchivedDocumentsSupervisedBy(supervisorAPIID.toLong(), searchOptionsCreator.create());
             } else {
                 engineSearchResults = processAPI.searchArchivedDocuments(searchOptionsCreator.create());

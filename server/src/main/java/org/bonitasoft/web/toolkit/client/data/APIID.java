@@ -35,6 +35,8 @@ public class APIID implements JsonSerializable {
     private final List<String> ids = new ArrayList<String>();
 
     private ItemDefinition<?> itemDefinition = null;
+    
+    private static final Logger LOGGER = Logger.getLogger(APIID.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -146,13 +148,37 @@ public class APIID implements JsonSerializable {
         return resourceId;
     }
 
+    public boolean isValidLongID() {
+        if (this.ids.size() == 1) {
+            try {
+                final long lid = Long.parseLong(this.ids.get(0));
+                if (lid > 0L) {
+                    return true;
+                }
+            } catch (final NumberFormatException e) {
+                LOGGER.fine(this.ids.get(0) + " is not a valid long ID. ID must be non-zero positive number.");
+            }
+        } else {
+            LOGGER.fine("ID is not a valid long ID. ID must not be multiple.");
+        }
+        return false;
+    }
+    
     public Long toLong() {
         if (this.ids.size() > 1) {
             throw new IllegalArgumentException("Can't convert compound ID to long");
         }
 
         try {
-            return Long.parseLong(this.ids.get(0));
+            final long lid = Long.parseLong(this.ids.get(0));
+            if (lid > 0L) {
+                return lid;
+            } else {
+                //zero or negative ids are not allowed
+                String errorMessage = lid + " is not a valid long ID. ID must be non-zero positive.";
+                LOGGER.fine(errorMessage);
+                throw new APIIncorrectIdException(errorMessage);
+            }
         } catch (final NumberFormatException e) {
             throw new APIItemIdMalformedException("APIID", "Can't convert non numeric ID to long");
         }
