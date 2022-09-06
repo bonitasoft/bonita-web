@@ -14,16 +14,19 @@
  */
 package org.bonitasoft.web.toolkit.client.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIIncorrectIdException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemIdMalformedException;
 import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
 import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Julien Mege
@@ -35,8 +38,8 @@ public class APIID implements JsonSerializable {
     private final List<String> ids = new ArrayList<String>();
 
     private ItemDefinition<?> itemDefinition = null;
-    
-    private static final Logger LOGGER = Logger.getLogger(APIID.class.getName());
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIID.class.getName());
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -156,14 +159,14 @@ public class APIID implements JsonSerializable {
                     return true;
                 }
             } catch (final NumberFormatException e) {
-                LOGGER.fine(this.ids.get(0) + " is not a valid long ID. ID must be non-zero positive number.");
+                LOGGER.debug(this.ids.get(0) + " is not a valid long ID. ID must be non-zero positive number.");
             }
         } else {
-            LOGGER.fine("ID is not a valid long ID. ID must not be multiple.");
+            LOGGER.debug("ID is not a valid long ID. ID must not be multiple.");
         }
         return false;
     }
-    
+
     public Long toLong() {
         if (this.ids.size() > 1) {
             throw new IllegalArgumentException("Can't convert compound ID to long");
@@ -176,7 +179,7 @@ public class APIID implements JsonSerializable {
             } else {
                 //zero or negative ids are not allowed
                 String errorMessage = lid + " is not a valid long ID. ID must be non-zero positive.";
-                LOGGER.fine(errorMessage);
+                LOGGER.debug(errorMessage);
                 throw new APIIncorrectIdException(errorMessage);
             }
         } catch (final NumberFormatException e) {
