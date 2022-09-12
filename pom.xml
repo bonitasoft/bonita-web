@@ -23,7 +23,7 @@
     </properties>
     <modules>
         <module>bonita-web-bom</module>
-        <module>test-toolkit</module>
+        <module>bonita-integration-tests-web</module>
         <module>server</module>
     </modules>
 

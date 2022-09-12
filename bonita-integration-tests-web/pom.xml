@@ -6,9 +6,8 @@
         <artifactId>bonita-console</artifactId>
         <version>7.16-SNAPSHOT</version>
     </parent>
-    <artifactId>test-toolkit</artifactId>
+    <artifactId>bonita-integration-tests-web</artifactId>
     <packaging>jar</packaging>
-    <name>Test toolkit</name>
 
     <dependencies>
         <dependency>

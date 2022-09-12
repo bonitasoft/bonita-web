@@ -200,7 +200,7 @@
         <!--Test-->
         <dependency>
             <groupId>org.bonitasoft.console</groupId>
-            <artifactId>test-toolkit</artifactId>
+            <artifactId>bonita-integration-tests-web</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
