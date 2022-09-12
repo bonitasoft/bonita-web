@@ -356,7 +356,6 @@
                             <includes>
                                 <!--the following are failsafe conventions -->
                                 <include>**/*IT.java</include>
-                                <include>**/*IntegrationTest.java</include>
                             </includes>
                         </configuration>
                     </execution>
@@ -375,7 +374,6 @@
                     <excludes>
                         <!--the following are failsafe conventions -->
                         <exclude>**/*IT.java</exclude>
-                        <exclude>**/*IntegrationTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
