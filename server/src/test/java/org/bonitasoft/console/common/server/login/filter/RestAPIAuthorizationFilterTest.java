@@ -243,10 +243,10 @@ public class RestAPIAuthorizationFilterTest {
         final RestAPIAuthorizationFilter restAPIAuthorizationFilterSpy = spy(restAPIAuthorizationFilter);
         doReturn("API/bpm/case/15").when(request).getRequestURI();
         doReturn("/bpm/case/15").when(request).getPathInfo();
-        doReturn(true).when(restAPIAuthorizationFilterSpy).checkPermissions(request);
+        doReturn(true).when(restAPIAuthorizationFilterSpy).checkPermissions(any(HttpServletRequest.class));
 
         //when
-        restAPIAuthorizationFilter.proceedWithFiltering(request, response, chain);
+        restAPIAuthorizationFilterSpy.proceedWithFiltering(request, response, chain);
 
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
