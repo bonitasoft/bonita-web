@@ -58,6 +58,7 @@ import org.bonitasoft.engine.page.PageUpdater;
 import org.bonitasoft.engine.search.SearchFilterOperation;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.extension.page.PageResourceProvider;
 import org.bonitasoft.web.rest.model.portal.page.PageItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
@@ -245,8 +246,8 @@ public class PageDatastoreTest extends APITestWithMock {
         final Throwable throwable = catchThrowable(() -> pageDatastore.delete(singletonList(makeAPIID(1L))));
 
         assertThat(throwable).isInstanceOf(APIException.class);
-        verify(pageAPI, never()).deletePage(1L);
-        verify(customPageService, never()).removePageLocally(any(), anyString());
+        verify(pageAPI, never()).deletePage(1l);
+        verify(customPageService, never()).removePageLocally(any(APISession.class), any(PageResourceProvider.class));
     }
 
 
@@ -274,7 +275,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService, never()).removePageLocally(any(), anyString());
+        verify(customPageService, never()).removePageLocally(any(APISession.class), any(PageResourceProvider.class));
     }
 
     @Test
@@ -288,7 +289,7 @@ public class PageDatastoreTest extends APITestWithMock {
 
         // then
         verify(pageAPI).deletePage(mockedApiExtension.getId());
-        verify(customPageService).removePageLocally(engineSession, mockedApiExtension.getName());
+        verify(customPageService).removePageLocally(engineSession, pageResourceProvider);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
     }
 
@@ -312,7 +313,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         verify(pageAPI).updatePage(eq(PAGE_ID), any());
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService).removePageLocally(any(APISession.class), any(Page.class));
         verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 
@@ -336,7 +337,7 @@ public class PageDatastoreTest extends APITestWithMock {
         // then
         assertThat(throwable).isInstanceOf(APIException.class);
         verify(customPageService).ensurePageFolderIsUpToDate(any(), any());
-        verify(customPageService, never()).removePageLocally(any(), eq("custompage_apiExt"));
+        verify(customPageService, never()).removePageLocally(any(APISession.class), any(Page.class));
         verify(customPageService).writePageToPageDirectory(any(Page.class), eq(pageResourceProvider), any(File.class), eq(engineSession));
     }
 

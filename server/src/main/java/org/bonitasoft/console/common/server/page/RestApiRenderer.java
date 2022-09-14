@@ -53,9 +53,7 @@ public class RestApiRenderer {
         final Long pageId = resourceExtensionResolver.resolvePageId(apiSession);
         final Page page = customPageService.getPage(apiSession, pageId);
         final PageResourceProviderImpl pageResourceProvider = new PageResourceProviderImpl(page, apiSession.getTenantId());
-        synchronized (RestApiRenderer.class) {
-            customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-        }
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         final ControllerClassName restApiControllerClassName = resourceExtensionResolver
                 .resolveRestApiControllerClassName(pageResourceProvider);
         final String mappingKey = resourceExtensionResolver.generateMappingKey();
