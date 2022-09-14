@@ -232,7 +232,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                             customPageService.getPageResourceProvider(page, engineSession.getTenantId()),
                             engineSession);
                     pageAPI.deletePage(id.toLong());
-                    customPageService.removePage(engineSession, page.getName());
+                    customPageService.removePageLocally(engineSession, page);
                     compoundPermissionsMapping.removeProperty(page.getName());
                 }
             }
@@ -334,8 +334,8 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     final File unzipPageTempFolder = unzipContentFile(zipFile);
                     pageContentValidator.validate(unzipPageTempFolder);
                     pageUpdater.setContentName(originalFileName);
-                    updatePageContent(id, zipFile, oldURLToken);
                     final Page page = pageAPI.updatePage(id.toLong(), pageUpdater);
+                    updatePageContent(id, zipFile, page);
                     updatedPage = convertEngineToConsoleItem(page);
                     if (!Objects.equals(oldURLToken, updatedPage.getUrlToken())) {
                         compoundPermissionsMapping.removeProperty(oldURLToken);
@@ -354,7 +354,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         return updatedPage;
     }
 
-    protected void updatePageContent(final APIID id, final File zipFile, final String oldURLToken) throws IOException,
+    protected void updatePageContent(final APIID id, final File zipFile, final Page page) throws IOException,
             CompilationFailedException, BonitaException {
         if (zipFile != null) {
             final Long pageId = id.toLong();
@@ -365,7 +365,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             pageAPI.updatePageContent(pageId, FileUtils.readFileToByteArray(zipFile));
             zipFile.delete();
         }
-        customPageService.removePage(getEngineSession(), oldURLToken);
+        customPageService.removePageLocally(getEngineSession(), page);
     }
 
     @Override

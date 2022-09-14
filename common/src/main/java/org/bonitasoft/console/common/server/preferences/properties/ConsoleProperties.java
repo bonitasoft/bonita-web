@@ -27,9 +27,17 @@ public class ConsoleProperties {
     private static final String ATTACHMENT_MAX_SIZE = "form.attachment.max.size";
 
     /**
-     * Custom page debug mode
+     * Custom page and rest api ext debug mode
      */
     private static final String CUSTOM_PAGE_DEBUG = "custom.page.debug";
+
+    /**
+     * time between two database check of custom page and rest api last update date in milliseconds
+     */
+    private static final String PAGE_LAST_UPDATE_CHECK_INTERVAL_MILLIS = "custom.page.lastupdate.database.check.interval.milliseconds";
+    
+    //Default time between two database check of custom page and rest api last update date in milliseconds
+    private static final int DEFAULT_PAGE_LAST_UPDATE_CHECK_INTERVAL_MILLIS = 3000;
 
     private static final String PROPERTIES_FILE = "console-config.properties";
 
@@ -62,5 +70,13 @@ public class ConsoleProperties {
     public boolean isPageInDebugMode() {
         final String debugMode = this.getProperty(CUSTOM_PAGE_DEBUG);
         return Boolean.parseBoolean(debugMode);
+    }
+
+    public long getPageLastUpdateCheckInterval() {
+        final String pageLastUpdateCheckInterval = this.getProperty(PAGE_LAST_UPDATE_CHECK_INTERVAL_MILLIS);
+        if (pageLastUpdateCheckInterval != null) {
+            return Long.valueOf(pageLastUpdateCheckInterval);
+        }
+        return DEFAULT_PAGE_LAST_UPDATE_CHECK_INTERVAL_MILLIS;
     }
 }

@@ -264,7 +264,7 @@ public class PageDatastoreTest extends APITestWithMock {
         pageDatastore.delete(ids);
 
         // Validate
-        verify(customPageService).removePage(engineSession, mockedPage.getName());
+        verify(customPageService).removePageLocally(engineSession, mockedPage);
     }
 
     @Test(expected = APIException.class)
