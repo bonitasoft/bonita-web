@@ -133,7 +133,16 @@
                     <groupId>org.restlet.jse</groupId>
                     <artifactId>org.restlet</artifactId>
                 </exclusion>
+                <exclusion>
+                	<groupId>org.yaml</groupId>
+                	<artifactId>snakeyaml</artifactId>
+                </exclusion>
             </exclusions>
+        </dependency>
+        <!-- use version of engine BOM of snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
         </dependency>
         <!-- specify this jackson dependencies to override the ones pulled by Restlet -->
         <dependency>
@@ -151,6 +160,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.yaml</groupId>
+            		<artifactId>snakeyaml</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
