@@ -18,16 +18,15 @@ import static java.util.Collections.emptySet;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -35,7 +34,6 @@ import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesWithSet;
 import org.bonitasoft.console.common.server.utils.UnzipUtil;
@@ -58,11 +56,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 public class CustomPageService {
 
-    /**
-     * Logger
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageService.class.getName());
-
     private static final String PAGE_LIB_DIRECTORY = "lib";
 
     public static final String PAGE_CONTROLLER_FILENAME = "Index.groovy";
@@ -71,14 +64,20 @@ public class CustomPageService {
 
     public static final String PAGE_INDEX_FILENAME = "index.html";
 
-    public static final String LASTUPDATE_FILENAME = ".lastupdate";
-
-    private static final Map<String, GroovyClassLoader> PAGES_CLASSLOADERS = new HashMap<>();
+    private static final ConcurrentMap<String, GroovyClassLoader> PAGES_CLASSLOADERS = new ConcurrentHashMap<>();
+    
+    private static final ConcurrentMap<String, Long> PAGES_UPDATE_TIMESTAMPS = new ConcurrentHashMap<>();
+    
+    private static final ConcurrentMap<String, Long> PAGES_LAST_UPDATE_DB_CHECK = new ConcurrentHashMap<>();
+    
+    private static final ConcurrentMap<String, Object> PAGES_LOCKS = new ConcurrentHashMap<>();
 
     public static final String RESOURCES_PROPERTY = "resources";
     public static final String PROPERTY_CONTENT_TYPE = "contentType";
 
     public static final String NAME_PROPERTY = "name";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageService.class.getName());
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws IOException, CompilationFailedException, BonitaException {
@@ -96,23 +95,43 @@ public class CustomPageService {
 
     public void ensurePageFolderIsUpToDate(final APISession apiSession, final PageResourceProvider pageResourceProvider)
             throws BonitaException, IOException {
-        final File pageFolder = pageResourceProvider.getPageDirectory();
-        if (!pageFolder.exists() || pageFolder.list().length == 0) {
-            retrievePageZipContent(apiSession, pageResourceProvider);
-        } else {
-            final File timestampFile = getPageFile(pageFolder, LASTUPDATE_FILENAME);
-            final long lastUpdateTimestamp = getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
-            if (timestampFile.exists()) {
-                final String timestampString = FileUtils.readFileToString(timestampFile);
-                final long timestamp = Long.parseLong(timestampString);
-                if (lastUpdateTimestamp != timestamp) {
-                    removePageLocally(pageResourceProvider.getPageName());
-                    retrievePageZipContent(apiSession, pageResourceProvider);
+        final String fullPageName = pageResourceProvider.getFullPageName();
+        synchronized (getPageLock(fullPageName)) {
+            final Long pageTimestampFromCache = getPageTimestampFromMemoryCache(fullPageName);
+            if (pageTimestampFromCache != null) {
+                if (shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(apiSession, fullPageName)) {
+                    //if it has been less than a certain time since the last database check do not check again
+                    final long databaseLastUpdateTimestamp = getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
+                    if (databaseLastUpdateTimestamp != pageTimestampFromCache) {
+                        removePage(pageResourceProvider, true);
+                        retrievePageZipContent(apiSession, pageResourceProvider);
+                    } else {
+                        //make sure the page temp directory has not been altered
+                        ensurePageTempFolderIsHealthy(apiSession, pageResourceProvider);
+                    }
                 }
             } else {
-                FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+                //if the last update date is not in the cache, the page has not been retrieved yet
+                retrievePageZipContent(apiSession, pageResourceProvider);
             }
         }
+    }
+
+    protected void ensurePageTempFolderIsHealthy(final APISession apiSession,
+            final PageResourceProvider pageResourceProvider) throws IOException, BonitaException {
+        final File pageFolder = pageResourceProvider.getPageDirectory();
+        if (!pageFolder.exists() || pageFolder.list().length == 0) {
+            removePage(pageResourceProvider, true);
+            retrievePageZipContent(apiSession, pageResourceProvider);
+        }
+    }
+
+    protected boolean shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(final APISession apiSession, final String fullPageName) {
+        Long lastTimePageUpdateWasCheckedInDB = getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        if (lastTimePageUpdateWasCheckedInDB != null) {
+            return System.currentTimeMillis() - lastTimePageUpdateWasCheckedInDB > getPageLastUpdateCheckInterval();
+        }
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -178,19 +197,56 @@ public class CustomPageService {
         return restApiControllerClass.newInstance();
     }
 
-    public void removePageLocally(final String pageName) throws IOException {
-        closeClassloader(pageName);
-        final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(pageName);
-        removePageZipContent(pageResourceProvider);
-        CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
+    protected void removePage(final PageResourceProvider pageResourceProvider, final boolean ignoreErrorOnPageDirectoryDelete) throws IOException {
+        String fullPageName = pageResourceProvider.getFullPageName();
+        closeClassloader(fullPageName);
+        removePageZipContent(pageResourceProvider.getPageDirectory(), ignoreErrorOnPageDirectoryDelete);
+        CustomPageDependenciesResolver.removePageLibTempFolder(fullPageName);
+        removePageTimestampsFromMemoryCache(fullPageName);
     }
 
     public void removePageLocally(final Page page) throws IOException {
         final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(page);
-        final String pageName = pageResourceProvider.getFullPageName();
-        closeClassloader(pageName);
-        removePageZipContent(pageResourceProvider);
-        CustomPageDependenciesResolver.removePageLibTempFolder(pageName);
+        removePageLocally(pageResourceProvider);
+    }
+    
+    public void removePageLocally(final PageResourceProvider pageResourceProvider) throws IOException {
+        removePage(pageResourceProvider, false);
+        removePageLock(pageResourceProvider.getFullPageName());
+    }
+
+    protected Object getPageLock(final String fullPageName) {
+        return PAGES_LOCKS.computeIfAbsent(fullPageName, k -> new Object());
+    }
+    
+    protected void removePageLock(final String fullPageName) {
+        PAGES_LOCKS.remove(fullPageName);
+    }
+    
+    protected void addPageTimestampToMemoryCache(final String fullPageName, long timestamp) {
+        PAGES_UPDATE_TIMESTAMPS.put(fullPageName, timestamp);
+    }
+    
+    protected void setTimePageUpdateWasCheckedInDB(final String fullPageName) {
+        PAGES_LAST_UPDATE_DB_CHECK.put(fullPageName, System.currentTimeMillis());
+    }
+
+    protected Long getPageTimestampFromMemoryCache(final String fullPageName) {
+        return PAGES_UPDATE_TIMESTAMPS.get(fullPageName);
+    }
+
+    protected Long getLastTimePageUpdateWasCheckedInDB(final String fullPageName) {
+        return PAGES_LAST_UPDATE_DB_CHECK.get(fullPageName);
+    }
+    
+    protected void removePageTimestampsFromMemoryCache(final String fullPageName) {
+        PAGES_LAST_UPDATE_DB_CHECK.remove(fullPageName);
+        PAGES_UPDATE_TIMESTAMPS.remove(fullPageName);
+    }
+    
+    protected void clearPageTimestampsMemoryCache() {
+        PAGES_UPDATE_TIMESTAMPS.clear();
+        PAGES_LAST_UPDATE_DB_CHECK.clear();
     }
 
     private static void closeClassloader(final String pageName) throws IOException {
@@ -204,19 +260,42 @@ public class CustomPageService {
     protected GroovyClassLoader buildPageClassloader(final APISession apiSession, final String pageName,
                                                      final File pageDirectory)
             throws CompilationFailedException, IOException {
-        GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
         final BDMClientDependenciesResolver bdmDependenciesResolver = new BDMClientDependenciesResolver(apiSession);
-        if (pageClassLoader == null
-                || getConsoleProperties().isPageInDebugMode()
-                || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
+        if (isPageInDebugMode()) {
             synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
-                pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
-                        new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils()),
-                        bdmDependenciesResolver));
-                pageClassLoader.addClasspath(pageDirectory.getPath());
-                PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+                return createPageClassloader(pageName, pageDirectory, bdmDependenciesResolver);
             }
+        } else {
+            //not putting the get in the synchronized block to avoid performance cost when the classloader is already in the map
+            GroovyClassLoader pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
+            if (pageClassLoader == null || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
+                synchronized (CustomPageService.class) {//Handle multiple queries to create several classloaders at the same time
+                    if (pageClassLoader == null) {
+                        //double check in synchronize block to avoid creating the classloader twice if a creation is already in progress in another thread
+                        pageClassLoader = PAGES_CLASSLOADERS.get(pageName);
+                        if (pageClassLoader == null || isOutdated(pageClassLoader, bdmDependenciesResolver)) {
+                            pageClassLoader = createPageClassloader(pageName, pageDirectory, bdmDependenciesResolver);
+                            PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+                        }
+                    } else {
+                        //classloader is outdated
+                        pageClassLoader.clearCache();
+                        pageClassLoader.close();
+                        pageClassLoader = createPageClassloader(pageName, pageDirectory, bdmDependenciesResolver);
+                        PAGES_CLASSLOADERS.put(pageName, pageClassLoader);
+                    }
+                }
+            }
+            return pageClassLoader;
         }
+    }
+
+    private GroovyClassLoader createPageClassloader(final String pageName, final File pageDirectory,
+            final BDMClientDependenciesResolver bdmDependenciesResolver) throws IOException {
+        GroovyClassLoader pageClassLoader = new GroovyClassLoader(getParentClassloader(pageName,
+                new CustomPageDependenciesResolver(pageName, pageDirectory, getWebBonitaConstantsUtils()),
+                bdmDependenciesResolver));
+        pageClassLoader.addClasspath(pageDirectory.getPath());
         return pageClassLoader;
     }
 
@@ -229,8 +308,12 @@ public class CustomPageService {
         return !cachedClassloader.hasVersion(bdmDependenciesResolver.getBusinessDataModelVersion());
     }
 
-    protected ConsoleProperties getConsoleProperties() {
-        return PropertiesFactory.getConsoleProperties();
+    public boolean isPageInDebugMode() {
+        return PropertiesFactory.getConsoleProperties().isPageInDebugMode();
+    }
+    
+    public long getPageLastUpdateCheckInterval() {
+        return PropertiesFactory.getConsoleProperties().getPageLastUpdateCheckInterval();
     }
 
     protected WebBonitaConstantsUtils getWebBonitaConstantsUtils() {
@@ -259,14 +342,15 @@ public class CustomPageService {
         final File tempPageFile = ((PageResourceProviderImpl) pageResourceProvider).getTempPageFile();
         FileUtils.writeByteArrayToFile(tempPageFile, pageContent);
         UnzipUtil.unzip(tempPageFile, pageResourceProvider.getPageDirectory().getPath(), true);
-        final File timestampFile = getPageFile(pageResourceProvider.getPageDirectory(), LASTUPDATE_FILENAME);
         long lastUpdateTimestamp = 0L;
         if (page.getLastModificationDate() != null) {
             lastUpdateTimestamp = page.getLastModificationDate().getTime();
         }
-        FileUtils.writeStringToFile(timestampFile, String.valueOf(lastUpdateTimestamp), false);
+        String fullPageName = pageResourceProvider.getFullPageName();
+        addPageTimestampToMemoryCache(fullPageName, lastUpdateTimestamp);
+        setTimePageUpdateWasCheckedInDB(fullPageName);
     }
-
+    
     protected PageAPI getPageAPI(final APISession apiSession) throws BonitaException {
         return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }
@@ -275,8 +359,22 @@ public class CustomPageService {
         return TenantAPIAccessor.getPermissionAPI(apiSession);
     }
 
-    protected void removePageZipContent(final PageResourceProvider pageResourceProvider) throws IOException {
-        FileUtils.deleteDirectory(pageResourceProvider.getPageDirectory());
+    protected void removePageZipContent(final File pageDirectory, final boolean ignoreErrorOnPageDirectoryDelete) throws IOException {
+        try {
+            FileUtils.deleteDirectory(pageDirectory);
+        } catch (IOException e) {
+            //in some circumstances with java 8 page directory cannot be removed.
+            //this catch and the method ignoreErrorOnPageDirectoryDelete can probably be removed in 7.13.x
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Unable delete page folder. " + e.getMessage());
+            }
+            if (!ignoreErrorOnPageDirectoryDelete) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Page folder will be removed when jvm shuts down.");
+                }
+                pageDirectory.deleteOnExit();
+            }
+        }
     }
 
     public File getGroovyPageFile(final File pageDirectory) {
@@ -289,18 +387,20 @@ public class CustomPageService {
 
     protected long getPageLastUpdateDateFromEngine(final APISession apiSession,
                                                    final PageResourceProvider pageResourceProvider) throws BonitaException {
+        long lastUpdate = 0L;
         try {
             final PageAPI pageAPI = getPageAPI(apiSession);
             final Date lastUpdateDate = pageResourceProvider.getPage(pageAPI).getLastModificationDate();
             if (lastUpdateDate != null) {
-                return lastUpdateDate.getTime();
+                lastUpdate = lastUpdateDate.getTime();
             }
         } catch (final PageNotFoundException e) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Unable to find the page " + pageResourceProvider);
             }
         }
-        return 0L;
+        setTimePageUpdateWasCheckedInDB(pageResourceProvider.getFullPageName());
+        return lastUpdate;
     }
 
     public Properties getPageProperties(final APISession apiSession, final byte[] zipContent,
@@ -376,7 +476,9 @@ public class CustomPageService {
         if (page.getLastModificationDate() != null) {
             lastUpdateTimestamp = page.getLastModificationDate().getTime();
         }
-        Files.write(Paths.get(pageDirectory.getPath(), LASTUPDATE_FILENAME), String.valueOf(lastUpdateTimestamp).getBytes());
+        String fullPageName = pageResourceProvider.getFullPageName();
+        addPageTimestampToMemoryCache(fullPageName, lastUpdateTimestamp);
+        setTimePageUpdateWasCheckedInDB(fullPageName);
     }
 
 }

@@ -108,29 +108,31 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     protected File pageDirectory;
 
-    private final File pageTempDirectory;
+    private File pageTempDirectory = null;
 
     private ClassLoader resourceClassLoader;
 
-    private final File pageTempFile;
+    private File pageTempFile = null;
 
     private final Long pageId;
 
     public PageResourceProviderImpl(final String pageName) {
-        this(pageName, null, null);
+        this(pageName, null, null, true);
     }
 
     public PageResourceProviderImpl(final Page page) {
-        this(page.getName(), page.getId(), page.getProcessDefinitionId());
+        this(page.getName(), page.getId(), page.getProcessDefinitionId(), true);
     }
 
-    private PageResourceProviderImpl(final String pageName, final Long pageId, final Long processDefinitionId) {
+    private PageResourceProviderImpl(final String pageName, final Long pageId, final Long processDefinitionId, final boolean buildPageTempFile) {
         this.pageName = pageName;
         this.pageId = pageId;
         fullPageName = buildFullPageName(pageName, processDefinitionId);
         pageDirectory = buildPageDirectory(fullPageName);
-        pageTempDirectory = buildPageTempDirectory(fullPageName);
-        pageTempFile = buildPageTempFile(fullPageName);
+        if (buildPageTempFile) {
+            pageTempDirectory = buildPageTempDirectory(fullPageName);
+            pageTempFile = buildPageTempFile(fullPageName);
+        }
     }
 
     private String buildFullPageName(final String pageName, final Long processDefinitionId) {

@@ -24,12 +24,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.engine.api.PageAPI;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
+import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,6 +87,15 @@ public class PageRendererTest {
 
     @Test
     public void should_display_html_page() throws Exception {
+        final File indexFile = initializeHTMLFilePage();
+
+        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
+
+        verify(customPageService, times(1)).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, true);
+    }
+
+    protected File initializeHTMLFilePage() throws URISyntaxException, BonitaException, PageNotFoundException {
         final String pageName = "my_html_page_v_7";
         final File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
         final File indexFile = new File(pageDir, "resources" + File.separator + "index.html");
@@ -94,10 +106,7 @@ public class PageRendererTest {
         doReturn(pageName).when(page).getName();
         when(customPageService.getPage(apiSession, 42L)).thenReturn(page);
         when(customPageService.getGroovyPageFile(any(File.class))).thenReturn(new File("none_existing_file"));
-
-        pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
-
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, true);
+        return indexFile;
     }
 
     @Test
