@@ -24,6 +24,7 @@ import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
@@ -220,14 +221,13 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 final APISession engineSession = getEngineSession();
-                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
+                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId(), false);
                 customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
                 pageAPI.deletePage(id.toLong());
                 customPageService.removeRestApiExtensionPermissions(resourcesPermissionsMapping,
                         pageResourceProvider);
-                customPageService.removePage(engineSession,page.getName());
+                customPageService.removePageLocally(engineSession, pageResourceProvider);
                 compoundPermissionsMapping.removeProperty(page.getName());
-
             }
         } catch (final Exception e) {
             throw new APIException(e);
@@ -372,7 +372,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
                     pageResourceProvider);
             pageAPI.updatePageContent(page.getId(), FileUtils.readFileToByteArray(zipFile));
         }
-        customPageService.removePage(getEngineSession(), page.getName());
+        customPageService.removePageLocally(getEngineSession(), page);
     }
 
     @Override

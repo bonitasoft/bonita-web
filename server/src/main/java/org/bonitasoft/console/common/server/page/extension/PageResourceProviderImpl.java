@@ -108,33 +108,38 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     protected String pageName;
 
-
     protected File pageDirectory;
 
-    private final File pageTempDirectory;
+    private File pageTempDirectory = null;
 
     private ClassLoader resourceClassLoader;
 
-    private final File pageTempFile;
+    private File pageTempFile = null;
 
     private final Long pageId;
 
     public PageResourceProviderImpl(final String pageName, final long tenantId) {
-        this(pageName, tenantId, null, null);
+        this(pageName, tenantId, null, null, true);
     }
 
     public PageResourceProviderImpl(final Page page, final long tenantId) {
-        this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId());
+        this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId(), true);
+    }
+    
+    public PageResourceProviderImpl(final Page page, final long tenantId, final boolean buildPageTempFile) {
+        this(page.getName(), tenantId, page.getId(), page.getProcessDefinitionId(), buildPageTempFile);
     }
 
-    private PageResourceProviderImpl(final String pageName, final long tenantId, final Long pageId, final Long processDefinitionId) {
+    private PageResourceProviderImpl(final String pageName, final long tenantId, final Long pageId, final Long processDefinitionId, final boolean buildPageTempFile) {
         this.tenantId = tenantId;
         this.pageName = pageName;
         this.pageId = pageId;
         fullPageName = buildFullPageName(pageName, processDefinitionId);
         pageDirectory = buildPageDirectory(fullPageName, tenantId);
-        pageTempDirectory = buildPageTempDirectory(fullPageName, tenantId);
-        pageTempFile = buildPageTempFile(fullPageName, tenantId);
+        if (buildPageTempFile) {
+            pageTempDirectory = buildPageTempDirectory(fullPageName, tenantId);
+            pageTempFile = buildPageTempFile(fullPageName, tenantId);
+        }
     }
 
     private String buildFullPageName(final String pageName, final Long processDefinitionId) {

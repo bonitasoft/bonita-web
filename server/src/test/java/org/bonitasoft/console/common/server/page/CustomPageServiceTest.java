@@ -28,6 +28,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -35,10 +36,12 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -48,10 +51,10 @@ import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.CompoundPermissionsMapping;
-import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.console.common.server.preferences.properties.ResourcesPermissionsMapping;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -107,20 +110,25 @@ public class CustomPageServiceTest {
     @Mock
     private Page mockedPage;
     @Mock
-    private ConsoleProperties consoleProperties;
-    @Mock
     private WebBonitaConstantsUtils webBonitaConstantUtils;
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    
+    private Date databaseLastUpdateDate;
+    
+    private String fullPageName = "page1";
 
     @Before
     public void before() throws IOException {
         customPageService = spy(new CustomPageService());
         CustomPageService.clearCachedClassloaders();
         when(apiSession.getTenantId()).thenReturn(1L);
-        doReturn(consoleProperties).when(customPageService).getConsoleProperties(apiSession);
+        doReturn(false).when(customPageService).isPageInDebugMode(apiSession);
         doReturn(webBonitaConstantUtils).when(customPageService).getWebBonitaConstantsUtils(apiSession);
+        when(pageResourceProvider.getFullPageName()).thenReturn(fullPageName);
+        databaseLastUpdateDate = new Date();
+        customPageService.clearPageTimestampsMemoryCache();
     }
 
     @Test
@@ -414,20 +422,8 @@ public class CustomPageServiceTest {
     @Test
     public void should_register_restApiPage() throws Exception {
         // Given
-        final Page mockedPage = mock(Page.class);
-        when(mockedPage.getId()).thenReturn(1l);
-        when(mockedPage.getName()).thenReturn("page2");
-        when(apiSession.getTenantId()).thenReturn(0L);
-        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
-        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("pageApiExtension.zip"));
-        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
-        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
-        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
-        final File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
-        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDirectory);
-        when(consoleProperties.isPageInDebugMode()).thenReturn(true);
-
-        final GroovyClassLoader pageClassloader = customPageService.getPageClassloader(apiSession, pageResourceProvider);
+        File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        final GroovyClassLoader pageClassloader = initializePageMocks(pageDirectory);
         ControllerClassName controllerClassName = new ControllerClassName("RestResource.groovy", true);
 
         // When
@@ -443,7 +439,100 @@ public class CustomPageServiceTest {
         RestApiResponseAssert.assertThat(restApiResponse).as("should return result").hasResponse("RestResource.groovy!")
                 .hasNoAdditionalCookies().hasHttpStatus(200);
     }
+   
+    @Test
+    public void should_ensure_page_is_up_to_date_with_empty_cache() throws Exception {
+        // Given
+        File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        initializePageMocks(pageDirectory);
+        
+        // When
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+ 
+        verify(customPageService, times(1)).getPageTimestampFromMemoryCache(fullPageName);
+        verify(customPageService, times(1)).retrievePageZipContent(apiSession, pageResourceProvider);
+        verify(customPageService, never()).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+    }
+    
+    
+    @Test
+    public void should_ensure_page_is_up_to_date_with_empty_folder() throws Exception {
+        // Given
+        File pageDirectory = spy(new File("target/bonita/home/client/tenants/1/pages/page2"));
+        when(pageDirectory.list()).thenReturn(new String[0]);
+        initializePageMocks(pageDirectory);
+        customPageService.addPageTimestampToMemoryCache(fullPageName, databaseLastUpdateDate.getTime());
+        
+        // When
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+ 
+        verify(customPageService, times(1)).getPageTimestampFromMemoryCache(fullPageName);
+        verify(customPageService, times(1)).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        verify(customPageService, times(1)).retrievePageZipContent(apiSession, pageResourceProvider);
+        verify(customPageService, times(1)).getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
+    }
+    
+    @Test
+    public void should_verify_last_update_date_in_database() throws Exception {
+        File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        initializePageMocks(pageDirectory);
+        customPageService.addPageTimestampToMemoryCache(fullPageName, databaseLastUpdateDate.getTime());
+        
+        // When
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+ 
+        verify(customPageService, times(1)).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        verify(customPageService, times(1)).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        verify(customPageService, never()).retrievePageZipContent(apiSession, pageResourceProvider);
+    }
+    
+    @Test
+    public void should_verify_last_update_date_in_database_and_update_page() throws Exception {
+        File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        initializePageMocks(pageDirectory);
+        customPageService.addPageTimestampToMemoryCache(fullPageName, databaseLastUpdateDate.getTime() - 1000);
+        
+        // When
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+ 
+        verify(customPageService, times(1)).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        verify(customPageService, times(1)).retrievePageZipContent(apiSession, pageResourceProvider);
+        verify(customPageService, times(1)).getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
+    }
+    
+    @Test
+    public void should_not_verify_last_update_date_in_database_more_often_than_authorized_interval() throws Exception {
+        // Given
+        File pageDirectory = new File("target/bonita/home/client/tenants/1/pages/page2");
+        initializePageMocks(pageDirectory);
+        customPageService.setTimePageUpdateWasCheckedInDB(fullPageName);
+        customPageService.addPageTimestampToMemoryCache(fullPageName, databaseLastUpdateDate.getTime() - 1000);
+        
+        // When
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+ 
+        verify(customPageService, times(1)).getLastTimePageUpdateWasCheckedInDB(fullPageName);
+        verify(customPageService, never()).retrievePageZipContent(apiSession, pageResourceProvider);
+        verify(customPageService, never()).getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
+    }
 
+    protected GroovyClassLoader initializePageMocks(File pageDirectory) throws BonitaException, IOException, PageNotFoundException {
+        final Page mockedPage = mock(Page.class);
+        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getName()).thenReturn("page2");
+        when(mockedPage.getLastModificationDate()).thenReturn(databaseLastUpdateDate);
+        when(apiSession.getTenantId()).thenReturn(1L);
+        doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
+        final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("pageApiExtension.zip"));
+        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
+        when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
+        when(pageResourceProvider.getPageDirectory()).thenReturn(pageDirectory);
+        when(customPageService.isPageInDebugMode(apiSession)).thenReturn(true);
+
+        return customPageService.getPageClassloader(apiSession, pageResourceProvider);
+    }
+    
     @Test
     public void should_add_api_extension_permission() throws Exception {
         //given
@@ -548,6 +637,32 @@ public class CustomPageServiceTest {
         customPageService.registerRestApiPage(loader, pageResourceProvider, compiledController, "");
         verify(loader).parseClass(file);
         verify(loader).loadClass(compiledController.getName());
+    }
+
+    @Test
+    public void should_generate_thread_safe_page_lock_objects() throws Exception {
+        //given
+        int nbOfThreads = 300;
+        List<Object> pageLocks = new ArrayList<>();
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < nbOfThreads; i++) {
+            // All threads try to get the lock for the same page ('fullPageName' each time)
+            threads.add(new Thread(() -> pageLocks.add(customPageService.getPageLock(fullPageName))));
+        }
+        
+        //when
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        for (Thread thread : threads) {
+            thread.join(1000);
+        }
+        
+        //then
+        //make sure that with many thread in parallel that ask a lock on a page , we have one single unique object created once by page to be used for the lock
+        Object pageLock = customPageService.getPageLock(fullPageName);
+        assertThat(pageLocks).hasSize(300);
+        assertThat(pageLocks).containsOnly(pageLock);
     }
 
 }
