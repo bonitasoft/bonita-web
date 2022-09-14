@@ -211,7 +211,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 final APISession engineSession = getEngineSession();
-                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId(), false);
+                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
                 customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
                 pageAPI.deletePage(id.toLong());
                 customPageService.removePageLocally(engineSession, pageResourceProvider);

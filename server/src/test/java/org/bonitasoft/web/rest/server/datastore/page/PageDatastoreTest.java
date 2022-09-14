@@ -282,7 +282,7 @@ public class PageDatastoreTest extends APITestWithMock {
     public void should_deletePage_and_remove_all_dependencies_when_deleting_page() throws Exception {
         // Given
         when(pageAPI.getPage(PAGE_ID)).thenReturn(mockedApiExtension);
-        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong(), anyBoolean());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedApiExtension), anyLong());
 
         // When
         pageDatastore.delete(singletonList(makeAPIID(PAGE_ID)));
