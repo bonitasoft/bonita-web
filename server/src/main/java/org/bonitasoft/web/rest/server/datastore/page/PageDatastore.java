@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
+import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -210,10 +211,10 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             for (final APIID id : ids) {
                 final Page page = pageAPI.getPage(id.toLong());
                 final APISession engineSession = getEngineSession();
-                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId());
+                PageResourceProvider pageResourceProvider = customPageService.getPageResourceProvider(page, engineSession.getTenantId(), false);
                 customPageService.ensurePageFolderIsUpToDate(engineSession, pageResourceProvider);
                 pageAPI.deletePage(id.toLong());
-                customPageService.removePageLocally(engineSession, page.getName());
+                customPageService.removePageLocally(engineSession, pageResourceProvider);
             }
         } catch (final Exception e) {
             throw new APIException(e);
@@ -354,7 +355,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
             customPageService.ensurePageFolderIsUpToDate(getEngineSession(), pageResourceProvider);
             pageAPI.updatePageContent(page.getId(), FileUtils.readFileToByteArray(zipFile));
         }
-        customPageService.removePageLocally(getEngineSession(), page.getName());
+        customPageService.removePageLocally(getEngineSession(), page);
     }
 
     @Override

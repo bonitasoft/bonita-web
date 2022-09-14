@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import groovy.lang.GroovyClassLoader;
 import org.bonitasoft.console.common.server.page.extension.PageContextImpl;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
@@ -29,6 +28,8 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
 import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
+
+import groovy.lang.GroovyClassLoader;
 
 /**
  * Class used by servlets to display a custom page
@@ -87,9 +88,7 @@ public class PageRenderer {
     private void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
                                    final PageResourceProviderImpl pageResourceProvider, final Locale currentLocale) throws BonitaException, IOException, InstantiationException,
             IllegalAccessException {
-        synchronized (PageRenderer.class) {
-            customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-        }
+        customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         enforceLocaleCookieIfPresentInURLOrBrowser(request, response, currentLocale);
         if (isGroovyPage(pageResourceProvider)) {
             displayGroovyPage(request, response, apiSession, pageResourceProvider, currentLocale);
