@@ -568,10 +568,6 @@ public class CustomPageService {
     public PageResourceProvider getPageResourceProvider(final Page page, final long tenantId) {
         return new PageResourceProviderImpl(page, tenantId);
     }
-    
-    public PageResourceProvider getPageResourceProvider(final Page page, final long tenantId, final boolean buildPageTempFile) {
-        return new PageResourceProviderImpl(page, tenantId, buildPageTempFile);
-    }
 
     public static void clearCachedClassloaders() throws IOException {
         for (final String page : PAGES_CLASSLOADERS.keySet()) {
