@@ -56,8 +56,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testGetHumanTaskItem() throws Exception {
-
+    public void testGetHumanTaskItem() {
         final ArrayList<String> deploys = new ArrayList<>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
         final ArrayList<String> counters = new ArrayList<>();
@@ -68,7 +67,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testUpdateHumanTaskItem() throws Exception {
+    public void testUpdateHumanTaskItem() {
 
         final APIID apiId = APIID.makeAPIID(testHumanTask.getId());
 
@@ -84,7 +83,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testSearch() throws Exception {
+    public void testSearch() {
         // Set the filters
         final HashMap<String, String> filters = new HashMap<>();
         filters.put(HumanTaskItem.ATTRIBUTE_ID, String.valueOf(testHumanTask.getId()));
@@ -99,7 +98,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
 
     @Test
     @Ignore("To be fixed")
-    public void testSearchFailedTask() throws Exception {
+    public void testSearchFailedTask() {
         // Test for failed tasks
         final TestCase failedTestCase = TestProcessFactory.getMisconfiguredProcess()
                 .addActor(getInitiator())
@@ -122,7 +121,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     /**
      * Check that the paging system works fine
      */
-    public void testHumanTaskItemSearchPaging() throws InterruptedException {
+    public void testHumanTaskItemSearchPaging() {
 
         final long before = apiHumanTask.runSearch(0, 10, null,
                 apiHumanTask.defineDefaultSearchOrder(),
@@ -158,7 +157,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
      * Check when assigned a task to me this task is in available list
      * @throws Exception
      */
-    public void testAssignedTaskInAvailable() throws Exception {
+    public void testAssignedTaskInAvailable() {
         testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
 
         final ArrayList<String> deploys = new ArrayList<>();
@@ -175,9 +174,8 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     /**
      * Initialize APIHumanTask
      *
-     * @throws Exception
      */
-    private void createAPIHumanTask() throws Exception {
+    private void createAPIHumanTask() {
         apiHumanTask = new APIHumanTask();
         apiHumanTask.setCaller(getAPICaller(TestUserFactory.getJohnCarpenter().getSession(),
                 "API/bpm/humanTask"));

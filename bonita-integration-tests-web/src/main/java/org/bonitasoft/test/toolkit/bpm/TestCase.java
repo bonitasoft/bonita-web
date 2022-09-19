@@ -41,7 +41,7 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
  */
 public class TestCase {
 
-    private ProcessInstance processInstance;
+    private final ProcessInstance processInstance;
 
     public final static int GET_NEXT_NB_ATTEMPT = 30;
 
@@ -56,9 +56,6 @@ public class TestCase {
     /**
      * Wait until the process return the state in parameter
      *
-     * @param apiSession
-     * @param state
-     * @throws Exception
      */
     public void waitProcessState(final APISession apiSession, final String state) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
@@ -82,16 +79,13 @@ public class TestCase {
     /**
      * Search and get next human task
      *
-     * @param apiSession
-     * @return
-     * @throws Exception
      */
     public TestHumanTask getNextHumanTask(final APISession apiSession) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         final SearchOptionsBuilder searchOptBuilder = new SearchOptionsBuilder(0, 1);
         searchOptBuilder.filter(HumanTaskInstanceSearchDescriptor.STATE_NAME, ActivityStates.READY_STATE);
 
-        /**
+        /*
          * Get next workable human task. (e.g not in initialization state)
          */
         HumanTaskInstance humanTask = null;
@@ -116,7 +110,7 @@ public class TestCase {
         if (humanTask != null) {
             return new TestHumanTask(humanTask);
         } else {
-            if (result != null && result.getResult().size() > 0) {
+            if (result.getResult().size() > 0) {
                 throw new NextActivityIsNotAllowedStateException(result.getResult().get(0));
             } else {
                 throw new NoActivityLeftException();
@@ -124,39 +118,8 @@ public class TestCase {
         }
     }
 
-    /**
-     * Check if state is allowed to be returned
-     *
-     * @param humanTask
-     * @return
-     */
-    private boolean isAllowedState(final HumanTaskInstance humanTask) {
-        if (humanTask != null && !ActivityStates.INITIALIZING_STATE.equals(humanTask.getState())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public TestHumanTask getNextHumanTask() {
         return getNextHumanTask(TestToolkitCtx.getInstance().getInitiator().getSession());
-    }
-
-    /**
-     * @return the processInstance
-     */
-    private ProcessInstance fetchProcessInstance(final APISession apiSession) {
-        final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
-        try {
-            return processAPI.getProcessInstance(getId());
-        } catch (final Exception e) {
-            throw new TestToolkitException("Can't get process instance for <" + getId() + ">. Not found", e);
-        }
-    }
-
-    public TestCase refreshProcessInstance() {
-        processInstance = fetchProcessInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
-        return this;
     }
 
     public ProcessInstance getProcessInstance() {
@@ -168,7 +131,7 @@ public class TestCase {
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 1);
         searchOptionsBuilder.filter(ArchivedProcessInstancesSearchDescriptor.SOURCE_OBJECT_ID, getId());
         searchOptionsBuilder.sort(ArchivedProcessInstancesSearchDescriptor.ARCHIVE_DATE, Order.DESC);
-        SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances = null;
+        SearchResult<ArchivedProcessInstance> searchArchivedProcessInstances;
         try {
             searchArchivedProcessInstances = processAPI.searchArchivedProcessInstancesInAllStates(searchOptionsBuilder.done());
         } catch (final SearchException se) {

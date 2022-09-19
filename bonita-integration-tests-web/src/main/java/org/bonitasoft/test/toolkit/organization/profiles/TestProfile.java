@@ -48,13 +48,11 @@ public class TestProfile {
      */
     private static final String COMMAND_ADD = "addProfile";
 
-    private static final String COMMAND_DELETE = "deleteProfile";
-
     private static final String COMMAND_GET = "getProfile";
 
     private long profileId = -1L;
 
-    private CommandCaller commandCaller;
+    private final CommandCaller commandCaller;
 
     TestProfile(CommandCaller commandCaller) {
         this.commandCaller = commandCaller;
@@ -90,22 +88,6 @@ public class TestProfile {
 
     public long getId() {
         return profileId;
-    }
-
-    public String getName() {
-        return MapUtils.getString(fetchItem(), PROFILE_NAME);
-    }
-
-    public String getDescription() {
-        return MapUtils.getString(fetchItem(), PROFILE_DESCRITION);
-    }
-
-    public String getIcon() {
-        return MapUtils.getString(fetchItem(), PROFILE_ICON);
-    }
-
-    public void delete() {
-        commandCaller.run(COMMAND_DELETE, createGetCommandParameters());
     }
 
     public TestProfileMember addMember(TestUser user) {

@@ -20,13 +20,10 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceCriterion;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
 
@@ -60,7 +57,7 @@ public final class TestToolkitUtils {
     }
 
     private ProcessAPI getProcessAPI(final APISession apiSession) {
-        ProcessAPI processAPI = null;
+        ProcessAPI processAPI;
         try {
             processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         } catch (Exception e) {
@@ -76,10 +73,6 @@ public final class TestToolkitUtils {
     /**
      * Search pending tasks for user defined by the api session
      * 
-     * @param apiSession
-     * @param pageIndex
-     * @param numberOfResults
-     * @return
      */
     public List<HumanTaskInstance> searchPendingTasksForUser(final APISession apiSession, int pageIndex, int numberOfResults) {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
@@ -101,49 +94,9 @@ public final class TestToolkitUtils {
     /**
      * Search pending tasks for the initiator
      * 
-     * @param pageIndex
-     * @param numberOfResults
-     * @return
      */
     public List<HumanTaskInstance> searchPendingTasksForUser(int pageIndex, int numberOfResults) {
         return searchPendingTasksForUser(TestToolkitCtx.getInstance().getInitiator().getSession(), pageIndex, numberOfResults);
-    }
-
-    /**
-     * Get tasks assigned to the user defined by api session
-     * 
-     * @param apiSession
-     * @param pageIndex
-     * @param numberPerPage
-     * @param criterion
-     * @return
-     */
-    public List<HumanTaskInstance> getAssignedHumanTaskInstances(final APISession apiSession, int pageIndex, int numberPerPage,
-            ActivityInstanceCriterion criterion) {
-        final ProcessAPI processAPI = getProcessAPI(apiSession);
-
-        List<HumanTaskInstance> result;
-        try {
-            result = processAPI.getAssignedHumanTaskInstances(apiSession.getUserId(), pageIndex, numberPerPage,
-                    criterion);
-        } catch (Exception e) {
-            throw new TestToolkitException("Can't search task assigned to <" + apiSession.getUserId() + ">", e);
-        }
-
-        return result;
-    }
-
-    /**
-     * Get tasks assigned to the initiator
-     * 
-     * @param pageIndex
-     * @param numberPerPage
-     * @param criterion
-     * @return
-     */
-    public List<HumanTaskInstance> getAssignedHumanTaskInstances(int pageIndex, int numberPerPage,
-            ActivityInstanceCriterion criterion) {
-        return getAssignedHumanTaskInstances(TestToolkitCtx.getInstance().getInitiator().getSession(), pageIndex, numberPerPage, criterion);
     }
 
 }

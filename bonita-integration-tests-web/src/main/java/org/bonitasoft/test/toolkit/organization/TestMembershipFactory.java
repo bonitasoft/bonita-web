@@ -36,36 +36,9 @@ public class TestMembershipFactory {
         this.membershipList = new HashMap<>();
     }
 
-    public static TestMembershipFactory getInstance() {
-        if (instance == null) {
-            instance = new TestMembershipFactory();
-        }
-        return instance;
-    }
-
-    public void clear() {
-        this.membershipList.clear();
-    }
-
-    /**
-     * @return the userList
-     */
-    private Map<String, TestMembership> getMembershipList() {
-        return this.membershipList;
-    }
-
     // ////////////////////////////////////////////////////////////////////////////////
     // / Membership's creation
     // ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @param name
-     * @param description
-     * @return
-     */
-    public static TestMembership assignMembership(final long userId, final long groupId, final long roleId) {
-        return new TestMembership(userId, groupId, roleId);
-    }
 
     /**
      * @param name

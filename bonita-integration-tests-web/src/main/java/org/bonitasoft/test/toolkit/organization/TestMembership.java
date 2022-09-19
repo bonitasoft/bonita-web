@@ -56,22 +56,7 @@ public class TestMembership implements TestActor {
         }
     }
 
-    // //////////////////////////////////////////////////////////////////////////////////
-    // / Getter
-    // //////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @return the membership
-     */
-    public UserMembership getMembership() {
-        return this.membership;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.test.bpm.TestActor#getId()
-     */
     public long getId() {
-        return this.membership.getId();
+        throw new IllegalStateException("Never called!");
     }
 }

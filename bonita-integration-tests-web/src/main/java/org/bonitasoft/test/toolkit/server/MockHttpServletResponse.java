@@ -17,41 +17,22 @@ package org.bonitasoft.test.toolkit.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Rohart Bastien
  */
 public class MockHttpServletResponse implements HttpServletResponse {
 
-    HttpSession session = null;
-
-    Map<String, Object> parametersMap = null;
-
-    Map<String, Object> attributesMap = null;
-
     HttpServletResponse res = null;
 
-    public MockHttpServletResponse(HttpServletResponse httpServletResponse) {
-        this.res = httpServletResponse;
-    }
-
     public MockHttpServletResponse() {
-        attributesMap = new HashMap<>();
-        parametersMap = new HashMap<>();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.ServletResponse#getCharacterEncoding()
-     */
     @Override
     public String getCharacterEncoding() {
         if (res != null) {
@@ -60,10 +41,6 @@ public class MockHttpServletResponse implements HttpServletResponse {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.ServletResponse#getContentType()
-     */
     @Override
     public String getContentType() {
         if (res != null) {

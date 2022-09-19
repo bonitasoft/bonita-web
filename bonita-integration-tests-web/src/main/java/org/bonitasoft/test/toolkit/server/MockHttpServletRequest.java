@@ -46,28 +46,19 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     HttpSession session = null;
 
-    Map<String, String[]> parametersMap = null;
+    Map<String, String[]> parametersMap;
 
-    Map<String, Object> attributesMap = null;
+    Map<String, Object> attributesMap;
 
     HttpServletRequest req = null;
 
     String pathInfo = null;
-
-    public MockHttpServletRequest(final HttpServletRequest req) {
-        this.req = req;
-        this.parametersMap = req.getParameterMap();
-    }
 
     public MockHttpServletRequest() {
         parametersMap = new HashMap<>();
         attributesMap = new HashMap<>();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.http.HttpServletRequest#getAuthType()
-     */
     @Override
     public String getAuthType() {
         if (this.req != null) {
@@ -76,10 +67,6 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.http.HttpServletRequest#getContextPath()
-     */
     @Override
     public String getContextPath() {
         if (this.req != null) {
@@ -88,10 +75,6 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.http.HttpServletRequest#getCookies()
-     */
     @Override
     public Cookie[] getCookies() {
         if (this.req != null) {
@@ -100,10 +83,6 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.http.HttpServletRequest#getDateHeader(java.lang.String)
-     */
     @Override
     public long getDateHeader(final String anName) {
         if (this.req != null) {

@@ -28,8 +28,6 @@ import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
  */
 public class TestToolkitCtx {
 
-    protected static final String PLATFORM = "platform";
-
     protected static final String ADMIN_USER = "adminuser";
 
     protected static final String INITIATOR = "initiator";
@@ -60,11 +58,6 @@ public class TestToolkitCtx {
         clearFactories();
 
         /*
-         * Clear platform from its tenants
-         */
-        //getPlatform().destroy();
-
-        /*
          * Clear session's variables
          */
         this.sessionsVariables.clear();
@@ -78,35 +71,18 @@ public class TestToolkitCtx {
         TestCategoryFactory.getInstance().clear();
     }
 
-    protected void checkFactories() throws Exception {
+    protected void checkFactories() {
         TestUserFactory.getInstance().check();
         TestProcessFactory.getInstance().check();
         TestGroupFactory.getInstance().check();
         TestRoleFactory.getInstance().check();
         TestCategoryFactory.getInstance().check();
     }
-    
-    // ///////////////////////////////////////////////////////
-    // / Session's variables
-    // ///////////////////////////////////////////////////////
-
-    /**
-     * Get the unique platform of the session
-     * 
-     * @return
-     */
-    protected TestPlatform getPlatform() {
-        if (!this.sessionsVariables.containsKey(PLATFORM)) {
-            this.sessionsVariables.put(PLATFORM, new TestPlatform());
-        }
-        return (TestPlatform) this.sessionsVariables.get(PLATFORM);
-    }
 
     /**
      * Admin user use login and password used during default tenant creation
      * 
      * @return The Admin user
-     * @throws Exception
      */
     public AdminUser getAdminUser() {
         if (!this.sessionsVariables.containsKey(ADMIN_USER)) {

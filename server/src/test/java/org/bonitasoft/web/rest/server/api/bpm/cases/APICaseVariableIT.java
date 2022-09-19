@@ -1,11 +1,6 @@
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createBooleanVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createDateVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createDoubleVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createIntVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createLongVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.createStringVariable;
+import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.*;
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +19,6 @@ import org.bonitasoft.web.rest.model.bpm.cases.CaseVariableItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -130,19 +124,6 @@ public class APICaseVariableIT extends AbstractConsoleTest {
         assertEquals(newDoubleValue, variable.getValue());
     }
     
-    @Test
-    @Ignore("until ENGINE-1099 is resolved") // also need to implement ProcessVariable.createDateVariable and DateConverter / add converter to converterFactory
-    public void weCanUpdateADateValue() throws Exception {
-        ProcessVariable expectedVariable = createDateVariable(new Date());
-        TestCase aCase = createCaseWithVariable(expectedVariable);
-        String newDateValue = "2012/01/01";
-        Map<String, String> attributes = buildUpdateAttributes(newDateValue, Date.class.getName());
-        
-        CaseVariableItem variable = apiCaseVariable.runUpdate(buildAPIID(aCase, expectedVariable), attributes);
-        
-        assertEquals(newDateValue, variable.getValue());
-    }
-
     @Test
     public void search() throws Exception {
         TestCase aCase = createCaseWithVariable(createLongVariable(1L), createIntVariable(1), createStringVariable("hello")); 

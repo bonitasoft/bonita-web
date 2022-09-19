@@ -15,14 +15,11 @@
 package org.bonitasoft.test.toolkit.bpm;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.contract.ContractDefinition;
 import org.bonitasoft.engine.bpm.data.DataInstance;
 import org.bonitasoft.engine.bpm.data.DataNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.ActivityExecutionException;
 import org.bonitasoft.engine.bpm.flownode.ActivityInstance;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
-import org.bonitasoft.engine.bpm.flownode.UserTaskNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
@@ -62,9 +59,8 @@ public class TestHumanTask extends AbstractManualTask {
         }
     }
 
-    public TestHumanTask refreshHumanTaskInstanceInstance() {
+    public void refreshHumanTaskInstanceInstance() {
         humanTaskInstance = fetchHumanTaskInstance(TestToolkitCtx.getInstance().getInitiator().getSession());
-        return this;
     }
 
     public DataInstance getDataInstance(final String dataName) {
@@ -76,15 +72,6 @@ public class TestHumanTask extends AbstractManualTask {
         }
     }
 
-    public ContractDefinition getContractDefinition() {
-        try {
-            return TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession())
-                    .getUserTaskContract(humanTaskInstance.getId());
-        } catch (final UserTaskNotFoundException e) {
-            throw new TestToolkitException("Unable to find humanTaskInstance with ID " + humanTaskInstance.getId(), e);
-        }
-    }
-
     /*
      * (non-Javadoc)
      * @see org.bonitasoft.test.AbstractManualTask#getId()
@@ -92,10 +79,6 @@ public class TestHumanTask extends AbstractManualTask {
     @Override
     public long getId() {
         return humanTaskInstance.getId();
-    }
-
-    public long getCaseId() {
-        return humanTaskInstance.getParentProcessInstanceId();
     }
 
     /*
@@ -125,14 +108,13 @@ public class TestHumanTask extends AbstractManualTask {
         try {
             processAPI.assignUserTask(humanTaskInstance.getId(), user.getId());
         } catch (final Exception e) {
-            throw new TestToolkitException("Can't assgin user", e);
+            throw new TestToolkitException("Can't assign user", e);
         }
         return this;
     }
 
     public TestHumanTask assignTo(final TestUser initiator, final TestUser user) {
-        assignTo(initiator.getSession(), user);
-        return this;
+        return assignTo(initiator.getSession(), user);
     }
 
     public TestHumanTask assignTo(final TestUser user) {
@@ -202,19 +184,4 @@ public class TestHumanTask extends AbstractManualTask {
         return this;
     }
 
-    public TestHumanTask waitFinished() {
-        for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
-            try {
-                TestProcess.getProcessAPI(TestToolkitCtx.getInstance().getInitiator().getSession()).getHumanTaskInstance(getId());
-            } catch (final ActivityInstanceNotFoundException e) {
-                return this;
-            }
-            try {
-                Thread.sleep(SLEEP_TIME_MS);
-            } catch (final InterruptedException e) {
-                throw new TestToolkitException("Problem while waiting for human task<" + getId() + "> to be finished. Interrupted", e);
-            }
-        }
-        throw new TestToolkitException("Timeout while waiting for human task<" + getId() + "> to be finished.");
-    }
 }

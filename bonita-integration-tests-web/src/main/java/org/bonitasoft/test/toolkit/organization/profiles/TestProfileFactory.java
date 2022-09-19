@@ -27,31 +27,16 @@ import org.bonitasoft.test.toolkit.utils.CommandCaller;
  */
 public class TestProfileFactory {
 
-    private String name = "profile";
+    private final String name = "profile";
 
-    private String description = "description";
+    private final String description = "description";
 
-    private String icon = "icon";
+    private final String icon = "icon";
 
-    private APISession session;
+    private final APISession session;
 
     private TestProfileFactory(APISession session) {
         this.session = session;
-    }
-
-    public TestProfileFactory withName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public TestProfileFactory withDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public TestProfileFactory withIcon(String icon) {
-        this.icon = icon;
-        return this;
     }
 
     public static TestProfileFactory newProfile(APISession session) {

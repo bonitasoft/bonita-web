@@ -28,11 +28,11 @@ import org.bonitasoft.engine.expression.InvalidExpressionException;
  */
 public class ProcessVariable {
 
-    private String name;
+    private final String name;
 
-    private Class<?> classe;
+    private final Class<?> clazz;
 
-    private Expression defaultValue;
+    private final Expression defaultValue;
     
     public static ProcessVariable aStringVariable(String name, String defaultValue) throws InvalidExpressionException {
         return new ProcessVariable(name, String.class, 
@@ -49,9 +49,9 @@ public class ProcessVariable {
                 new ExpressionBuilder().createConstantDateExpression(defaultValue));
     }
     
-    public ProcessVariable(String name, Class<?> classe, Expression defaultValue) {
+    public ProcessVariable(String name, Class<?> clazz, Expression defaultValue) {
         this.name = name;
-        this.classe = classe;
+        this.clazz = clazz;
         this.defaultValue = defaultValue;
     }
 
@@ -60,7 +60,7 @@ public class ProcessVariable {
     }
 
     public String getClassName() {
-        return classe.getName();
+        return clazz.getName();
     }
 
     public Expression getDefaultValue() {
@@ -87,8 +87,4 @@ public class ProcessVariable {
         return new ProcessVariable("aDoubleVariable", Double.class, new ExpressionBuilder().createConstantDoubleExpression(value));
     }
 
-    // FIXME : implement when ENGINE-1099 is resolved
-    public static ProcessVariable createDateVariable(Date value) throws InvalidExpressionException {
-        throw new RuntimeException("not implemented yet");
-    }
 }

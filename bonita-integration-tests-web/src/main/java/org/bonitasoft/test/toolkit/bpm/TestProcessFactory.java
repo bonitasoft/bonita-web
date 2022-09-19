@@ -15,10 +15,8 @@
 package org.bonitasoft.test.toolkit.bpm;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -42,18 +40,6 @@ import org.bonitasoft.test.toolkit.organization.TestUser;
  * @author Vincent Elcrin
  */
 public class TestProcessFactory {
-
-    public static final String CONTRACT_RULE_EXPLANATION = "explanation";
-
-    public static final String CONTRACT_RULE_EXPRESSION = " 1 == 1 ";
-
-    public static final String CONTRACT_RULE_NAME = "ruleName";
-
-    public static final String CONTRACT_INPUT_DESCRIPTION = "description";
-
-    public static final String CONTRACT_INPUT_TYPE = String.class.getName();
-
-    public static final String CONTRACT_INPUT_NAME = "inputName";
 
     protected static final String DEFAULT_HUMAN_TASK_PROCESS_NAME = "Default human task process";
 
@@ -152,13 +138,9 @@ public class TestProcessFactory {
         }
     }
 
-    /**
-     * @param processCallActivty
-     * @return
-     */
     private static ProcessDefinitionBuilder getCallActivityProcessDefinitionBuilder(final ProcessDefinition processToStartViaCallActivity) {
-        Expression expressionName = null;
-        Expression expressionVersion = null;
+        Expression expressionName;
+        Expression expressionVersion;
         try {
             expressionName = new ExpressionBuilder().createNewInstance("process name")
                     .setExpressionType(ExpressionType.TYPE_CONSTANT)
@@ -244,14 +226,6 @@ public class TestProcessFactory {
         }
     }
 
-    public static List<TestProcess> getHumanTaskProcesses(final int count) {
-        final List<TestProcess> results = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            results.add(getHumanTaskProcess(getRandomString()));
-        }
-        return results;
-    }
-
     public static TestProcess getProcessWithDocumentAttached() {
         if (getInstance().getProcessList().get(PROCESS_WITH_DOCUMENT_ATTACHED) == null) {
             final TestProcess testProcess = new TestProcess(getBusinessArchiveWithDocumentBuilder(PROCESS_WITH_DOCUMENT_ATTACHED));
@@ -282,20 +256,6 @@ public class TestProcessFactory {
 
     public static TestProcess getRandomHumanTaskProcess() {
         return getHumanTaskProcess(getRandomString());
-    }
-
-    /**
-     * This process contains only a human task
-     *
-     * @return
-     */
-    public static TestProcess getHumanTaskProcess(final String processName, final String version) {
-        if (getInstance().getProcessList().get(processName) == null) {
-            final TestProcess testProcess = new TestProcess(getDefaultProcessDefinitionBuilder(processName, version));
-            getInstance().getProcessList().put(processName, testProcess);
-        }
-
-        return getInstance().getProcessList().get(processName);
     }
 
     /**

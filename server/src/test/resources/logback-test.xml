@@ -11,7 +11,7 @@
 
 	<logger name="org.bonitasoft.web.rest.server.api.bpm.flownode" level="INFO" />
 	<logger name="org.bonitasoft.console.common.server.utils" level="DEBUG" />
-	<logger name=" org.bonitasoft.web.rest.server.api.bpm.process" level="INFO" />
+	<logger name="org.bonitasoft.web.rest.server.api.bpm.process" level="INFO" />
 	<logger name="org.bonitasoft.web.rest.server.api.resource" level="INFO" />
 	<logger name="org.bonitasoft.console.common.server.login.servlet" level="TRACE" />
 

@@ -42,7 +42,7 @@ public class CommandCaller {
         } catch (final InvalidSessionException e) {
             throw new TestToolkitException("Invalid session", e);
         } catch (final Exception e) {
-            throw new TestToolkitException("Unkown exception while executing command <" + command + ">", e);
+            throw new TestToolkitException("Unknown exception while executing command <" + command + ">", e);
         }
     }
 }

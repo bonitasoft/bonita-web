@@ -83,9 +83,6 @@ public class TestUser implements TestActor {
     }
 
     private APISession logIn(final String userName, final String password) {
-        // need to create the platform if we want to log onto it
-        TestToolkitCtx.getInstance().getPlatform();
-
         LoginAPI loginAPI;
         APISession apiSession;
         try {
@@ -220,16 +217,6 @@ public class TestUser implements TestActor {
             identityAPI.deleteUser(testUser.getUser().getId());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't delete user", e);
-        }
-    }
-
-    public void destroy() {
-        final IdentityAPI identityAPI = getIdentityAPI(TestToolkitCtx.getInstance().getAdminUser().logIn());
-        try {
-            identityAPI.deleteUser(this.user.getId());
-            TestToolkitCtx.getInstance().getAdminUser().logOut();
-        } catch (final Exception e) {
-            throw new TestToolkitException("Can't destroy user", e);
         }
     }
 

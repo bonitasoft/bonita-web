@@ -34,15 +34,6 @@ public interface BonitaAPIClient {
     /** Process. */
     String PROCESS_API_PATH = "API/bpm/process";
 
-    /** Case. */
-    String CASE_API_PATH = "API/bpm/case";
-
-    /** Activity. */
-    String ACTIVITY_API_PATH = "API/bpm/activity";
-
-    /** Human task. */
-    String HUMAN_TASK_API_PATH = "API/bpm/humanTask";
-
     /** Actor. */
     String ACTOR_API_PATH = "API/bpm/actor";
 

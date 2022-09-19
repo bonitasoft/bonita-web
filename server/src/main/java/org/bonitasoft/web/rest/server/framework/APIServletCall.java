@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +40,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidatorEngine;
 import org.bonitasoft.web.toolkit.server.ServletCall;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -81,7 +80,7 @@ public class APIServletCall extends ServletCall {
 
     private APIID id;
 
-    private static Logger LOGGER = LoggerFactory.getLogger(APIServletCall.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIServletCall.class.getName());
 
     public APIServletCall(final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);

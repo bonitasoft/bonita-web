@@ -24,7 +24,7 @@ import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
  */
 public final class TestProcessConnectorFactory {
 
-    public static final TestProcessConnector getDefaultConnector() {
+    public static TestProcessConnector getDefaultConnector() {
         TestProcessConnector testProcessConnector = new TestProcessConnector("aConnector",
                 "org.bonitasoft.test.toolkit.connector.TestConnector", "1.0",
                 "org.bonitasoft.test.toolkit.connector.TestConnector",

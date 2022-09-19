@@ -16,8 +16,9 @@
  */
 package org.bonitasoft.test.toolkit.bpm;
 
+import static java.util.stream.IntStream.range;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -34,12 +35,9 @@ import org.bonitasoft.engine.bpm.form.FormMappingDefinitionBuilder;
 import org.bonitasoft.engine.bpm.process.DesignProcessDefinition;
 import org.bonitasoft.engine.bpm.process.InvalidProcessDefinitionException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
-import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
-import org.bonitasoft.engine.bpm.process.ProcessDeploymentInfo;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceSearchDescriptor;
 import org.bonitasoft.engine.bpm.process.impl.ProcessDefinitionBuilder;
-import org.bonitasoft.engine.bpm.supervisor.ProcessSupervisor;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.DeletionException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -67,23 +65,10 @@ public class TestProcess {
 
     private boolean enabled = false;
 
-    private ProcessSupervisor processSupervisor;
-
     private final List<ActorInstance> actors = new ArrayList<>();
 
-    /**
-     * Default Constructor.
-     * 
-     * @throws Exception
-     */
     public TestProcess(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         this.processDefinition = createProcessDefinition(apiSession, processDefinitionBuilder);
-        /*
-        System.err.println("\n\n");
-        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
-        Thread.dumpStack();
-        System.err.println("\n\n");
-        */
     }
 
     public TestProcess(final ProcessDefinitionBuilder processDefinitionBuilder) {
@@ -92,31 +77,18 @@ public class TestProcess {
 
     public TestProcess(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         this.processDefinition = deployProcessDefinition(apiSession, businessArchiveBuilder);
-        /*
-        System.err.println("\n\n");
-        System.err.println("Building process: " + processDefinition.getName() + " - " + processDefinition.getId());
-        Thread.dumpStack();
-        System.err.println("\n\n");
-        */
     }
 
     public TestProcess(final BusinessArchiveBuilder businessArchiveBuilder) {
         this(getSession(), businessArchiveBuilder);
     }
 
-    /**
-     * @return
-     */
     private static APISession getSession() {
         return TestToolkitCtx.getInstance().getInitiator().getSession();
     }
 
     /**
      * Create an archive and deploy process
-     * 
-     * @param apiSession
-     * @param processDefinitionBuilder
-     * @return
      */
     private ProcessDefinition createProcessDefinition(final APISession apiSession, final ProcessDefinitionBuilder processDefinitionBuilder) {
         try {
@@ -144,9 +116,6 @@ public class TestProcess {
     /**
      * Deploy process from the archive
      * 
-     * @param apiSession
-     * @param businessArchiveBuilder
-     * @return
      */
     private ProcessDefinition deployProcessDefinition(final APISession apiSession, final BusinessArchiveBuilder businessArchiveBuilder) {
         try {
@@ -157,7 +126,7 @@ public class TestProcess {
     }
 
     protected static ProcessAPI getProcessAPI(final APISession apiSession) {
-        ProcessAPI processAPI = null;
+        ProcessAPI processAPI;
         try {
             processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
         } catch (final InvalidSessionException e) {
@@ -179,21 +148,10 @@ public class TestProcess {
     public long getId() {
         return this.processDefinition.getId();
     }
-    
-    public ProcessDeploymentInfo getProcessDeploymentInfo() {
-        try {
-            return getProcessAPI(getSession()).getProcessDeploymentInfo(getId());
-        } catch (ProcessDefinitionNotFoundException e) {
-            throw new TestToolkitException("Unable to get process deployement info", e);
-        }
-    }
 
     /**
      * Set process enablement
      * 
-     * @param apiSession
-     * @param enabled
-     * @return
      */
     protected TestProcess setEnable(final APISession apiSession, final boolean enabled) {
         if (enabled && !this.enabled) {
@@ -273,15 +231,10 @@ public class TestProcess {
      * Add actors to enable process
      * <p/>
      * TODO: Need to evolve to choose on which Actors category the actor will be added
-     * 
-     * @param apiSession
-     * @param actor
-     * @return
-     * @throws Exception
      */
-    private TestProcess addActor(final APISession apiSession, final TestUser actor) {
+    private void addActor(final APISession apiSession, final TestUser actor) {
         final ProcessAPI processAPI = getProcessAPI(apiSession);
-        ActorInstance processActor = null;
+        ActorInstance processActor;
         try {
             processActor = processAPI.getActors(this.processDefinition.getId(), 0, Integer.MAX_VALUE, ActorCriterion.NAME_ASC).get(this.actors.size());
             processAPI.addUserToActor(processActor.getId(), actor.getUser().getId());
@@ -290,7 +243,6 @@ public class TestProcess {
             throw new TestToolkitException("Can't get actors for <" + this.processDefinition.getId() + ">.", e);
         }
 
-        return this;
     }
 
     public TestProcess addActor(final TestGroup actor) {
@@ -348,12 +300,12 @@ public class TestProcess {
 
     private TestCase startCase(final APISession apiSession) {
         setEnable(apiSession, true);
-        TestCase testCase = new TestCase(createProcesInstance(apiSession));
+        TestCase testCase = new TestCase(createProcessInstance(apiSession));
         testCase.waitProcessState(apiSession, TestCase.READY_STATE);
         return testCase;
     }
     
-    protected ProcessInstance createProcesInstance(final APISession apiSession) {
+    protected ProcessInstance createProcessInstance(final APISession apiSession) {
         try {
             return getProcessAPI(apiSession).startProcess(apiSession.getUserId(), processDefinition.getId());
         } catch (final Exception e) {
@@ -370,17 +322,10 @@ public class TestProcess {
     }
 
     /**
-     * Start several cases and return them as a list
-     * 
-     * @param number
-     * @return
+     * Start several cases
      */
-    public List<TestCase> startCases(final int number) {
-        final List<TestCase> result = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            result.add(startCase());
-        }
-        return result;
+    public void startCases(final int number) {
+        range(0, number).forEach(i -> startCase());
     }
 
     // /////////////////////////////////////////////////////////////////////////////////////////
@@ -389,58 +334,46 @@ public class TestProcess {
 
     /**
      * Add a user as process supervisor
-     * 
-     * @param apiSession
-     * @param user
-     * @return
+     *
      */
-    private TestProcess addSupervisor(final APISession apiSession, final TestUser user) {
+    private void addSupervisor(final APISession apiSession, final TestUser user) {
         try {
-            this.processSupervisor = getProcessAPI(apiSession).createProcessSupervisorForUser(this.processDefinition.getId(), user.getId());
+            getProcessAPI(apiSession).createProcessSupervisorForUser(this.processDefinition.getId(), user.getId());
         } catch (final Exception e) {
             throw new TestToolkitException("Unable to add supervisor", e);
         }
-        return this;
     }
 
-    public TestProcess addSupervisor(final TestUser initiator, final TestUser user) {
-        return addSupervisor(initiator.getSession(), user);
+    public void addSupervisor(final TestUser initiator, final TestUser user) {
+        addSupervisor(initiator.getSession(), user);
     }
 
-    public TestProcess addSupervisor(final TestUser user) {
-        return addSupervisor(TestToolkitCtx.getInstance().getInitiator(), user);
+    public void addSupervisor(final TestUser user) {
+        addSupervisor(TestToolkitCtx.getInstance().getInitiator(), user);
     }
 
     /**
      * Add a role as process supervisor
-     * 
-     * @param apiSession
-     * @param role
-     * @return
      */
-    private TestProcess addSupervisor(final APISession apiSession, final TestRole role) {
+    private void addSupervisor(final APISession apiSession, final TestRole role) {
         try {
             getProcessAPI(apiSession).createProcessSupervisorForRole(this.processDefinition.getId(), role.getId());
         } catch (final Exception e) {
             throw new TestToolkitException("Unable to add supervisor", e);
         }
-        return this;
     }
 
-    public TestProcess addSupervisor(final TestUser initiator, final TestRole role) {
-        return addSupervisor(initiator.getSession(), role);
+    public void addSupervisor(final TestUser initiator, final TestRole role) {
+        addSupervisor(initiator.getSession(), role);
     }
 
-    public TestProcess addSupervisor(final TestRole role) {
-        return addSupervisor(TestToolkitCtx.getInstance().getInitiator(), role);
+    public void addSupervisor(final TestRole role) {
+        addSupervisor(TestToolkitCtx.getInstance().getInitiator(), role);
     }
 
     /**
      * Add a group as process supervisor
      * 
-     * @param apiSession
-     * @param group
-     * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group) {
         try {
@@ -462,10 +395,6 @@ public class TestProcess {
     /**
      * Add a memebership as process supervisor
      * 
-     * @param apiSession
-     * @param group
-     * @param role
-     * @return
      */
     private TestProcess addSupervisor(final APISession apiSession, final TestGroup group, final TestRole role) {
         try {
@@ -476,22 +405,17 @@ public class TestProcess {
         return this;
     }
 
-    public TestProcess addSupervisor(final TestUser initiator, final TestGroup group, final TestRole role) {
-        return addSupervisor(initiator.getSession(), group, role);
+    public void addSupervisor(final TestUser initiator, final TestGroup group, final TestRole role) {
+        addSupervisor(initiator.getSession(), group, role);
     }
 
-    public TestProcess addSupervisor(final TestGroup group, final TestRole role) {
-        return addSupervisor(TestToolkitCtx.getInstance().getInitiator(), group, role);
+    public void addSupervisor(final TestGroup group, final TestRole role) {
+        addSupervisor(TestToolkitCtx.getInstance().getInitiator(), group, role);
     }
 
-    public TestProcess addCategory(final TestCategory category) {
-        return addCategory(category.getId());
-    }
-
-    public TestProcess addCategory(final long categoryId) {
+    public void addCategory(final long categoryId) {
         try {
-            TenantAPIAccessor.getProcessAPI(getSession()).addCategoriesToProcess(getId(), Arrays.asList(categoryId));
-            return this;
+            TenantAPIAccessor.getProcessAPI(getSession()).addCategoriesToProcess(getId(), List.of(categoryId));
         } catch (final Exception e) {
             throw new TestToolkitException("Can't add this process to this category. " + e.getMessage(), e);
         }
@@ -514,10 +438,6 @@ public class TestProcess {
             throw new TestToolkitException("Can't get categories", e);
         }
 
-    }
-
-    public ProcessSupervisor getProcessSupervisor() {
-        return this.processSupervisor;
     }
 
     public List<ActorInstance> getActors() {
@@ -573,7 +493,7 @@ public class TestProcess {
             }
             Thread.sleep(sleep);
         } while (repeat && repeatNb > 0);
-        if (repeat && latestException != null) {
+        if (repeat) {
             throw latestException;
         }
 

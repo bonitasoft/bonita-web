@@ -29,7 +29,7 @@ import org.bonitasoft.test.toolkit.exception.TestToolkitException;
 public class TestRole extends IdentityAccessor implements TestActor  {
 
     private final Role role;
-    private APISession apiSession;
+    private final APISession apiSession;
 
     public TestRole(RoleCreator creator) {
         this(TestToolkitCtx.getInstance().getInitiator().getSession(), creator);

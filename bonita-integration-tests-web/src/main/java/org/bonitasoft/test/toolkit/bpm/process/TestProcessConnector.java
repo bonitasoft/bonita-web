@@ -27,17 +27,17 @@ import org.bonitasoft.engine.bpm.connector.ConnectorEvent;
  */
 public class TestProcessConnector {
 
-    private String name;
-    private String id;
-    private String version;
-    private String implementationClassname;
-    private String implementationId;
-    private ConnectorEvent connectorEvent;
+    private final String name;
+    private final String id;
+    private final String version;
+    private final String implementationClassname;
+    private final String implementationId;
+    private final ConnectorEvent connectorEvent;
 
-    private String resourceFileName;
-    private String resourceFilePath;
+    private final String resourceFileName;
+    private final String resourceFilePath;
     
-    private List<String> dependencies = new ArrayList<>();
+    private final List<String> dependencies = new ArrayList<>();
 
     public TestProcessConnector(String name, String id, String version, String implementationClassname, String implementationId, 
             ConnectorEvent connectorEvent, String resourceFileName, String resourceFilePath) {

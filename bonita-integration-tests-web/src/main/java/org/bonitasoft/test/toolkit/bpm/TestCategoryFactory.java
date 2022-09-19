@@ -30,14 +30,6 @@ import org.bonitasoft.engine.session.APISession;
  */
 public class TestCategoryFactory {
 
-    private static String HUMAN_RESOURCES_NAME = "Human resources";
-
-    private static String HUMAN_RESOURCES_DESCRIPTION = "Holidays, declare expenses, ...";
-
-    private static String CLIENT_OPERATIONS_NAME = "Client operations";
-
-    private static String CLIENT_OPERATIONS_DESCRIPTION = "Execute operations on behalf of clients";
-
     private final Map<String, TestCategory> categories = new HashMap<>();
 
     private TestCategory _getCategory(final String name, final String description) {
@@ -51,7 +43,7 @@ public class TestCategoryFactory {
         return String.valueOf(new Random().nextLong());
     }
 
-    private static TestCategoryFactory instance = new TestCategoryFactory();
+    private static final TestCategoryFactory instance = new TestCategoryFactory();
 
     public static TestCategoryFactory getInstance() {
         return instance;
@@ -80,14 +72,6 @@ public class TestCategoryFactory {
 
     public static TestCategory getRandomCategory() {
         return getCategory(getRandomString(), getRandomString());
-    }
-
-    public static TestCategory getClientOperations() {
-        return getCategory(CLIENT_OPERATIONS_NAME, CLIENT_OPERATIONS_DESCRIPTION);
-    }
-
-    public static TestCategory getHumanResources() {
-        return getCategory(HUMAN_RESOURCES_NAME, HUMAN_RESOURCES_DESCRIPTION);
     }
 
     public void clear() {

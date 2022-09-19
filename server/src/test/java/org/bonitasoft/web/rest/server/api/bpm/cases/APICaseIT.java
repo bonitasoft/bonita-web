@@ -124,7 +124,7 @@ public class APICaseIT extends AbstractConsoleTest {
      * Test search for user (Initiator)
      */
     @Test
-    public void testSearchByInitiator() throws Exception {
+    public void testSearchByInitiator() {
 
         initCasesForSearch();
 
@@ -157,7 +157,7 @@ public class APICaseIT extends AbstractConsoleTest {
      * Test search for user by process
      */
     @Test
-    public void testSearchByProcess() throws Exception {
+    public void testSearchByProcess() {
 
         initCasesForSearch();
 
@@ -179,7 +179,7 @@ public class APICaseIT extends AbstractConsoleTest {
      * Admin test cases
      */
     @Test
-    public void testSearchAdministrator() throws Exception {
+    public void testSearchAdministrator() {
 
         initCasesForSearch();
 
@@ -193,7 +193,7 @@ public class APICaseIT extends AbstractConsoleTest {
      * Process Owner test cases
      */
     @Test
-    public void testSearchProcessOwner() throws Exception {
+    public void testSearchProcessOwner() {
 
         initCasesForSearch();
 
@@ -211,11 +211,8 @@ public class APICaseIT extends AbstractConsoleTest {
         checkSearchResults(caseItems, 10, 5);
     }
 
-    /**
-     * Process Owner test cases
-     */
-    public void testSearchTeamManager() throws Exception {
-
+    // @Test This test needs to be fixed. Has it ever passed?
+    public void testSearchTeamManager() {
         final Map<String, TestUser> managedList = TestUserFactory.getManagedUsers(1);
 
         final TestProcess testProcess4 = TestProcessFactory.getHumanTaskProcess("ProcessTeamManager");
@@ -280,7 +277,7 @@ public class APICaseIT extends AbstractConsoleTest {
         assertThat((Date) getProcessDataInstanceValue("dateVariable", instance.getId()), equalTo(new Date(349246800000L)));
     }
 
-    private TestProcess createProcessWithVariables(final ProcessVariable... processVariables) throws Exception {
+    private TestProcess createProcessWithVariables(final ProcessVariable... processVariables) {
         return TestProcessFactory.createProcessWithVariables("processWithVariables", processVariables).addActor(getInitiator()).setEnable(true);
     }
 

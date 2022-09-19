@@ -17,7 +17,6 @@
 package org.bonitasoft.test.toolkit.organization.profiles;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +33,6 @@ public class TestProfileMember {
 
     private static final String COMMAND_ADD = "addProfileMember";
 
-    private static final String COMMAND_DELETE = "deleteProfileMember";
-
     public static final String PROFILE_ID = "profileId";
 
     private static final String ROLE_ID = "roleId";
@@ -50,13 +47,13 @@ public class TestProfileMember {
 
     private long userId = -1L;
 
-    private long roleId = -1L;
+    private final long roleId = -1L;
 
     private long groupId = -1L;
 
     private long membershipId = -1L;
 
-    private CommandCaller commandCaller;
+    private final CommandCaller commandCaller;
 
     TestProfileMember(CommandCaller commandCaller, TestProfile profile) {
         this.commandCaller = commandCaller;
@@ -82,34 +79,13 @@ public class TestProfileMember {
         return parameters;
     }
 
-    public void delete() {
-        commandCaller.run(COMMAND_DELETE, Collections.singletonMap(PROFILE_MEMBER_ID, membershipId));
-    }
-
     /*
      * GETTER & SETTERS
      */
 
-    public long getUserId() {
-        return userId;
-    }
-
     public TestProfileMember setUserId(long userId) {
         this.userId = userId;
         return this;
-    }
-
-    public long getRoleId() {
-        return roleId;
-    }
-
-    public TestProfileMember setRoleId(long roleId) {
-        this.roleId = roleId;
-        return this;
-    }
-
-    public long getGroupId() {
-        return groupId;
     }
 
     public TestProfileMember setGroupId(long groupId) {

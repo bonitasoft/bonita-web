@@ -17,7 +17,6 @@
 package org.bonitasoft.test.toolkit.bpm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -42,12 +41,6 @@ public class TestCategory {
      */
     public TestCategory(final Category category) {
         this.category = category;
-        /*
-        System.err.println("\n\n");
-        System.err.println("Building category: " + category.getName());
-        Thread.dumpStack();
-        System.err.println("\n\n");
-        */
     }
 
     /**
@@ -83,19 +76,6 @@ public class TestCategory {
             delete(TestToolkitCtx.getInstance().getInitiator().getSession());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't delete category", e);
-        }
-    }
-
-    public TestCategory addProcess(final APISession apiSession, final TestProcess process) {
-        return addProcess(apiSession, process.getId());
-    }
-
-    public TestCategory addProcess(final APISession apiSession, final long processId) {
-        try {
-            TenantAPIAccessor.getProcessAPI(apiSession).addCategoriesToProcess(processId, Arrays.asList(getId()));
-            return this;
-        } catch (final Exception e) {
-            throw new TestToolkitException("Can't add this process to this category.", e);
         }
     }
 

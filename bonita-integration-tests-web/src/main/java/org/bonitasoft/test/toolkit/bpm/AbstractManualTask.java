@@ -19,7 +19,6 @@ package org.bonitasoft.test.toolkit.bpm;
 import java.util.List;
 
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.TestToolkitUtils;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
 
@@ -39,13 +38,8 @@ public abstract class AbstractManualTask {
     // / Test state
     // /////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Using engine's process api, check that the human task is pending
-     * 
-     * @param apiSession
-     * @return
-     */
-    private boolean isPending(final APISession apiSession) {
+    public boolean isPending() {
+        TestToolkitCtx.getInstance().getInitiator().getSession();
         boolean pending = false;
         List<HumanTaskInstance> result = TestToolkitUtils.getInstance().searchPendingTasksForUser(0, 100);
         for (HumanTaskInstance instance : result) {
@@ -56,10 +50,6 @@ public abstract class AbstractManualTask {
         }
 
         return pending;
-    }
-
-    public boolean isPending() {
-        return isPending(TestToolkitCtx.getInstance().getInitiator().getSession());
     }
 
 }
