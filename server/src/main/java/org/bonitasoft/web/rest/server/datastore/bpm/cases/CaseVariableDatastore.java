@@ -56,7 +56,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
     }
 
     private List<CaseVariableItem> convert(final List<DataInstance> dataInstances) {
-        final List<CaseVariableItem> caseVariables = new ArrayList<CaseVariableItem>();
+        final List<CaseVariableItem> caseVariables = new ArrayList<>();
         for (final DataInstance dataInstance : dataInstances) {
             caseVariables.add(convertEngineToConsoleItem(dataInstance));
         }
@@ -95,7 +95,7 @@ public class CaseVariableDatastore extends CommonDatastore<CaseVariableItem, Dat
         try {
             final List<DataInstance> processDataInstances =
                     getEngineProcessAPI().getProcessDataInstances(caseId, computeIndex(page, resultsByPage), resultsByPage);
-            return new ItemSearchResult<CaseVariableItem>(page, resultsByPage,
+            return new ItemSearchResult<>(page, resultsByPage,
                     countByCaseId(caseId), convert(processDataInstances));
         } catch (final Exception e) {
             throw new APIException("Error when getting case variables", e);

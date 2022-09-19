@@ -46,11 +46,11 @@ public class DeployerFactory {
     }
 
     public Deployer createProfileDeployer(final String attribute) {
-        return new GenericDeployer<ProfileItem>(createProfileGetter(), attribute);
+        return new GenericDeployer<>(createProfileGetter(), attribute);
     }
 
     public Deployer createBonitaPageDeployer(final String attribute) {
-        return new GenericDeployer<BonitaPageItem>(new GetBonitaPageHelper(), attribute);
+        return new GenericDeployer<>(new GetBonitaPageHelper(), attribute);
     }
 
     private GetProfileHelper createProfileGetter() {

@@ -28,7 +28,7 @@ public class TreeNode<VALUE_CLASS> extends Tree<VALUE_CLASS> {
 
     @Override
     public TreeNode<VALUE_CLASS> copy() {
-        final TreeNode<VALUE_CLASS> result = new TreeNode<VALUE_CLASS>();
+        final TreeNode<VALUE_CLASS> result = new TreeNode<>();
 
         for (final AbstractTreeNode<VALUE_CLASS> child : this.children) {
             result.addNode(child.copy());

@@ -62,7 +62,7 @@ public class APIConnectorInstanceTest {
         final int resultsByPage = 2;
         final String search = "search";
         final String orders = "orders";
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
 
         this.spiedAPIConnectorInstance.search(page, resultsByPage, search, orders, filters);
 

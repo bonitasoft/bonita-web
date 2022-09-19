@@ -35,7 +35,7 @@ public class APIID implements JsonSerializable {
 
     private static final String SEPARATOR = "/";
 
-    private final List<String> ids = new ArrayList<String>();
+    private final List<String> ids = new ArrayList<>();
 
     private ItemDefinition<?> itemDefinition = null;
 
@@ -224,7 +224,7 @@ public class APIID implements JsonSerializable {
     }
 
     public static final List<Long> toLongList(final List<APIID> ids) {
-        final List<Long> results = new ArrayList<Long>();
+        final List<Long> results = new ArrayList<>();
         for (final APIID id : ids) {
             results.add(id.toLong());
         }

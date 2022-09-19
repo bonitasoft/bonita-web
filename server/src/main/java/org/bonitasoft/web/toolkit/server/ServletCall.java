@@ -54,7 +54,7 @@ public abstract class ServletCall {
      * The parameters of the URL.<br />
      * Result of the parsing of the query string : "?a=b&c=d&..."
      */
-    protected Map<String, String[]> parameters = new HashMap<String, String[]>();
+    protected Map<String, String[]> parameters = new HashMap<>();
 
     /**
      * The request made to access this servletCall.
@@ -199,7 +199,7 @@ public abstract class ServletCall {
             return Arrays.asList(parameters.get(name));
         }
         if (defaultValue != null) {
-            final List<String> results = new ArrayList<String>();
+            final List<String> results = new ArrayList<>();
             results.add(defaultValue);
             return results;
         }

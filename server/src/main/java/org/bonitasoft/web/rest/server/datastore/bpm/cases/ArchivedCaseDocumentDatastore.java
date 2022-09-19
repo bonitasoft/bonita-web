@@ -113,7 +113,7 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
             } else {
                 engineSearchResults = processAPI.searchArchivedDocuments(searchOptionsCreator.create());
             }
-            return new ItemSearchResult<ArchivedCaseDocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
+            return new ItemSearchResult<>(page, resultsByPage, engineSearchResults.getCount(),
                     convertEngineToConsoleItem(engineSearchResults.getResult()));
         } catch (final ArchivedProcessInstanceNotFoundException e) {
             throw new APIException("archivedCaseId not found. Request with bad param value.");

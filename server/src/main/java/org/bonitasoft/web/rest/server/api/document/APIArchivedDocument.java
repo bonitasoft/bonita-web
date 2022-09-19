@@ -72,7 +72,7 @@ public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
             final Map<String, String> filters) {
 
         final APISession apiSession = getEngineSession();
-        final List<ArchivedDocumentItem> items = new ArrayList<ArchivedDocumentItem>();
+        final List<ArchivedDocumentItem> items = new ArrayList<>();
         long nbOfDocument = 0;
         String caseId = null;
         String viewType = null;
@@ -119,7 +119,7 @@ public class APIArchivedDocument extends ConsoleAPI<ArchivedDocumentItem> {
         } catch (final Exception e) {
             throw new APIException(e);
         }
-        return new ItemSearchResult<ArchivedDocumentItem>(page, resultsByPage, nbOfDocument, items);
+        return new ItemSearchResult<>(page, resultsByPage, nbOfDocument, items);
 
     }
 

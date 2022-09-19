@@ -46,7 +46,7 @@ public class PageListerTest extends APITestWithMock {
     }
 
     private List<BonitaPageItem> buildExpectedPagesList(final BonitaPageItem pageToSkip1, final BonitaPageItem pageToSkip2) {
-        final List<BonitaPageItem> expectedPages = new ArrayList<BonitaPageItem>(PageLister.pages);
+        final List<BonitaPageItem> expectedPages = new ArrayList<>(PageLister.pages);
         expectedPages.remove(pageToSkip1);
         expectedPages.remove(pageToSkip2);
         return expectedPages;

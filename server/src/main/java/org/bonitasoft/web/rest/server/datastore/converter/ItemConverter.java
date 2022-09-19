@@ -31,7 +31,7 @@ public abstract class ItemConverter<I extends IItem, E extends Serializable> {
     public abstract I convert(E engineItem);
     
     public List<I> convert(List<E> profiles) {
-        ArrayList<I> profileItems = new ArrayList<I>();
+        ArrayList<I> profileItems = new ArrayList<>();
         for (E profile : profiles) {
             profileItems.add(convert(profile));
         }

@@ -28,7 +28,7 @@ public class ArchivedUserTaskContextResource extends CommonResource {
 
     @Get("json")
     public Map<String, Serializable> getArchivedUserTaskContext() throws UserTaskNotFoundException, ExpressionEvaluationException {
-        final Map<String, Serializable> resultMap = new HashMap<String, Serializable>();
+        final Map<String, Serializable> resultMap = new HashMap<>();
 
         Map<String, Serializable> archivedUserTaskExecutionContext = processAPI.getArchivedUserTaskExecutionContext(getArchivedTaskIdParameter());
 

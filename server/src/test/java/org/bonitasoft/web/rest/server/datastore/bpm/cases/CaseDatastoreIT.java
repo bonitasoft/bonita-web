@@ -33,7 +33,7 @@ public class CaseDatastoreIT extends AbstractConsoleTest {
 
     @Test
     public void twoPoolsWithOneWithACallActivityCaseTest() throws Exception {
-        final long before = caseDatastore.search(0, 100, null, null, new HashMap<String, String>()).getTotal();
+        final long before = caseDatastore.search(0, 100, null, null, new HashMap<>()).getTotal();
         final TestProcess process2 = TestProcessFactory.getDefaultHumanTaskProcess();
         process2.addActor(getInitiator());
         process2.enable();
@@ -45,7 +45,7 @@ public class CaseDatastoreIT extends AbstractConsoleTest {
         //wait for process instance to be in a "stable" state
         parentCase.getNextHumanTask();
         // Filters for Opened Cases
-        final ItemSearchResult<CaseItem> itemSearchResult = caseDatastore.search(0, 100, null, null, new HashMap<String, String>());
+        final ItemSearchResult<CaseItem> itemSearchResult = caseDatastore.search(0, 100, null, null, new HashMap<>());
 
         assertEquals("2 cases started but one via call activity so only 1 should be opened", 1, itemSearchResult.getResults().size() - before);
 

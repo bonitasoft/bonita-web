@@ -48,7 +48,7 @@ public class SearchProfileMembersHelper implements DatastoreHasSearch<ProfileMem
         SearchOptionsCreator options = makeSearchOptions(page, resultsByPage, search, orders, filters);
         SearchResult<ProfileMember> searchResult = 
                 profileMemberClient.searchProfileMembers(getMemberType(filters).getType(), options.create());
-        return new ItemSearchResultConverter<ProfileMemberItem, ProfileMember>(page, resultsByPage, searchResult, 
+        return new ItemSearchResultConverter<>(page, resultsByPage, searchResult,
                 new ProfileMemberItemConverter()).toItemSearchResult();
     }
 

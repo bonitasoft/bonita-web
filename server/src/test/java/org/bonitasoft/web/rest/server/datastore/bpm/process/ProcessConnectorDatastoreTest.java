@@ -74,7 +74,7 @@ public class ProcessConnectorDatastoreTest extends APITestWithMock {
     }
 
     private HashMap<String, String> aProcessIdFilter(final String processId) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_PROCESS_ID, processId);
         return filters;
     }

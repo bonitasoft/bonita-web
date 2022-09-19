@@ -247,7 +247,7 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
             } else {
                 engineSearchResults = processAPI.searchDocuments(searchOptionsCreator.create());
             }
-            return new ItemSearchResult<CaseDocumentItem>(page, resultsByPage, engineSearchResults.getCount(),
+            return new ItemSearchResult<>(page, resultsByPage, engineSearchResults.getCount(),
                     convertEngineToConsoleItem(engineSearchResults.getResult()));
         } catch (final Exception e) {
             e.printStackTrace();

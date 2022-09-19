@@ -39,7 +39,7 @@ public class TestToolkitCtx {
     protected final Map<String, Object> sessionsVariables;
 
     protected TestToolkitCtx() {
-        this.sessionsVariables = new HashMap<String, Object>();
+        this.sessionsVariables = new HashMap<>();
     }
 
     /**

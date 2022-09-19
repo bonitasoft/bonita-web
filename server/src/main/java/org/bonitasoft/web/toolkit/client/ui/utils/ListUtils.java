@@ -93,7 +93,7 @@ public class ListUtils {
     }
 
     public static <E, O> List<O> transform(List<E> list, Transformer<E, O> transformer) {
-        List<O> newList = new ArrayList<O>();
+        List<O> newList = new ArrayList<>();
         for (E entry : list) {
             newList.add(transformer.transform(entry));
         }

@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
  */
 public class ModifiersList {
 
-    private final List<Modifier> modifiers = new LinkedList<Modifier>();
+    private final List<Modifier> modifiers = new LinkedList<>();
 
     public List<Modifier> getModifiers() {
         return this.modifiers;

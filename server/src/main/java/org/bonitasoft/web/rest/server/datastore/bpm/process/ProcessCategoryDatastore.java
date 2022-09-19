@@ -59,7 +59,7 @@ public class ProcessCategoryDatastore extends CommonDatastore<ProcessCategoryIte
     public void delete(final List<APIID> ids) {
         MapUtil.iterate(
                 buildCategoriesIdByProcessIdMapping(ids),
-                new MapUtil.ForEach<Long, List<Long>>() {
+                new MapUtil.ForEach<>() {
 
                     @Override
                     protected void apply(Long processId, List<Long> categoriesId) {
@@ -77,14 +77,14 @@ public class ProcessCategoryDatastore extends CommonDatastore<ProcessCategoryIte
     }
 
     private Map<Long, List<Long>> buildCategoriesIdByProcessIdMapping(List<APIID> ids) {
-        Map<Long, List<Long>> categoriesIdByProcessId = new HashMap<Long, List<Long>>();
+        Map<Long, List<Long>> categoriesIdByProcessId = new HashMap<>();
         for (APIID apiid : ids) {
             Long processId = apiid.getPartAsLong(ProcessCategoryItem.ATTRIBUTE_PROCESS_ID);
             Long categoryId = apiid.getPartAsLong(ProcessCategoryItem.ATTRIBUTE_CATEGORY_ID);
             if (categoriesIdByProcessId.containsKey(processId)) {
                 categoriesIdByProcessId.get(processId).add(categoryId);
             } else {
-                ArrayList<Long> categoryIds = new ArrayList<Long>();
+                ArrayList<Long> categoryIds = new ArrayList<>();
                 categoryIds.add(categoryId);
                 categoriesIdByProcessId.put(processId, categoryIds);
             }

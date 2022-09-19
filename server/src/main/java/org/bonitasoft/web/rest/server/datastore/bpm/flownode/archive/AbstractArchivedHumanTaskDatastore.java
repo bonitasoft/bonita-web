@@ -78,7 +78,7 @@ public abstract class AbstractArchivedHumanTaskDatastore<CONSOLE_ITEM extends Ar
 
             final SearchResult<ENGINE_ITEM> results = runSearch(creator, filters);
 
-            return new ItemSearchResult<CONSOLE_ITEM>(
+            return new ItemSearchResult<>(
                     page,
                     resultsByPage,
                     results.getCount(),

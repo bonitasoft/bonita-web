@@ -213,7 +213,7 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
     @Override
     protected Class<?> findClass(final String className) throws ClassNotFoundException {
         try {
-            return (Class<?>) AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+            return (Class<?>) AccessController.doPrivileged(new PrivilegedExceptionAction<>() {
 
                 @Override
                 public Object run() throws ClassNotFoundException {

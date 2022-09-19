@@ -46,14 +46,14 @@ public class APICaseVariableTest extends APITestWithMock {
     }
 
     private Map<String, String> buildUpdateParameters(String newValue, String className) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put(CaseVariableItem.ATTRIBUTE_VALUE, newValue);
         map.put(CaseVariableItem.ATTRIBUTE_TYPE, className);
         return map;
     }
 
     private Map<String, String> buildCaseIdFilter(long caseId) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(CaseVariableItem.ATTRIBUTE_CASE_ID, String.valueOf(caseId));
         return filters;
     }

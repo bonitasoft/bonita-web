@@ -51,7 +51,7 @@ public class APIPersonalContactDataIT extends AbstractConsoleTest {
     @Test
     public void updatePersonalContactData() {
 
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
 
         // Set all the fields.
         attributes.put(PersonalContactDataItem.ATTRIBUTE_EMAIL, "email");

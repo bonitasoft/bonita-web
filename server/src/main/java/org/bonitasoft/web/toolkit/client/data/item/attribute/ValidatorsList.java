@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.ui.utils.ListUtils;
  */
 public class ValidatorsList implements Validable {
 
-    private final List<Validator> validators = new LinkedList<Validator>();
+    private final List<Validator> validators = new LinkedList<>();
 
     @Override
     public List<Validator> getValidators() {

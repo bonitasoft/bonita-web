@@ -29,7 +29,7 @@ public class ServerException extends HttpException {
 
     protected String originalClassName = null;
 
-    protected List<String> originalStackTrace = new ArrayList<String>();
+    protected List<String> originalStackTrace = new ArrayList<>();
 
     public ServerException() {
         super();

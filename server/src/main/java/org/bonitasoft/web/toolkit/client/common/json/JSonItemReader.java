@@ -111,14 +111,14 @@ public class JSonItemReader {
         }
 
         if (!(tree instanceof Tree<?>)) {
-            return new ArrayList<E>();
+            return new ArrayList<>();
         }
 
         return parseItems((Tree<String>) tree, itemDefinition, applyValidators);
     }
 
     private static <E extends IItem> List<E> parseItems(final Tree<String> tree, final ItemDefinition<E> itemDefinition, final boolean applyValidators) {
-        final List<E> itemList = new LinkedList<E>();
+        final List<E> itemList = new LinkedList<>();
         for (final AbstractTreeNode<String> node : tree.getNodes()) {
             if (!(node instanceof TreeIndexed<?>)) {
                 throw new IllegalArgumentException("JSon format error");
@@ -137,7 +137,7 @@ public class JSonItemReader {
         final AbstractTreeNode<String> tree = UNSERIALIZER._unserializeTree(json);
 
         if (!(tree instanceof TreeIndexed<?>)) {
-            return new HashMap<String, String>();
+            return new HashMap<>();
         }
 
         return parseMap((TreeIndexed<String>) tree);
@@ -149,7 +149,7 @@ public class JSonItemReader {
      * @param tree
      */
     private static Map<String, String> parseMap(final TreeIndexed<String> tree) {
-        final Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<>();
 
         for (final Entry<String, String> entry : tree.getValues().entrySet()) {
             result.put(entry.getKey(), entry.getValue());

@@ -54,7 +54,7 @@ public class APIProcessConnectorDependencyTest extends APITestWithMock {
     }
 
     private Map<String, String> buildFilters(String processId, String connectorName, String connectorVersion) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_PROCESS_ID, processId);
         filters.put(ATTRIBUTE_CONNECTOR_NAME, connectorName);
         filters.put(ATTRIBUTE_CONNECTOR_VERSION, connectorVersion);

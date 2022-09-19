@@ -64,7 +64,7 @@ public class ProfileMemberDatastoreIT extends AbstractConsoleTest {
     }
 
     private Map<String, String> createSearchFilters(TestProfile profile, String memberType) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, String.valueOf(profile.getId()));
         filters.put(ProfileMemberItem.FILTER_MEMBER_TYPE, memberType);
         return filters;

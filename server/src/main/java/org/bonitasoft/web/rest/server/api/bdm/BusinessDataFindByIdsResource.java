@@ -39,7 +39,7 @@ public class BusinessDataFindByIdsResource extends CommonResource {
 
     @Get("json")
     public String getBusinessData() throws CommandNotFoundException, CommandExecutionException, CommandParameterizationException {
-        final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+        final Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("entityClassName", getPathParam("className"));
         parameters.put("businessDataIds", (Serializable) getParameterAsLongList("ids"));
         parameters.put("businessDataURIPattern", BusinessDataFieldValue.URI_PATTERN);

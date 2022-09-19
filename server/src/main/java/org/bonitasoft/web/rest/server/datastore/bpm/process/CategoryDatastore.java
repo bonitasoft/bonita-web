@@ -114,7 +114,7 @@ public class CategoryDatastore extends CommonDatastore<CategoryItem, Category> i
         List<Category> searchResult = getProcessAPI().getCategories(SearchOptionsBuilderUtil.computeIndex(page, resultsByPage),
                 resultsByPage,
                 orderCrit);
-        return new ItemSearchResult<CategoryItem>(page, resultsByPage, getNumberOfCategories(), convertEngineToConsoleItemsList(searchResult));
+        return new ItemSearchResult<>(page, resultsByPage, getNumberOfCategories(), convertEngineToConsoleItemsList(searchResult));
     }
 
     private ItemSearchResult<CategoryItem> searchProcessCategories(final int page, final int resultsByPage, final Map<String, String> filters,
@@ -124,7 +124,7 @@ public class CategoryDatastore extends CommonDatastore<CategoryItem, Category> i
                 SearchOptionsBuilderUtil.computeIndex(page, resultsByPage),
                 resultsByPage,
                 orderCrit);
-        return new ItemSearchResult<CategoryItem>(page, resultsByPage, getNumberOfCategories(processId), convertEngineToConsoleItemsList(searchResult));
+        return new ItemSearchResult<>(page, resultsByPage, getNumberOfCategories(processId), convertEngineToConsoleItemsList(searchResult));
     }
 
     private CategoryCriterion getOrder(final String orders) {

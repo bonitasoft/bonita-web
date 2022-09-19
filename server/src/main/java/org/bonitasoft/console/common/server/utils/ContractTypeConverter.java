@@ -307,7 +307,7 @@ public class ContractTypeConverter {
         childInputDefinitions = new ArrayList<>();
         for (final InputDefinition childInputDefinition : inputDefinition.getInputs()) {
             if (Type.BYTE_ARRAY.equals(childInputDefinition.getType())) {
-                childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION, false, Type.TEXT, new ArrayList<InputDefinition>()));
+                childInputDefinitions.add(new InputDefinitionImpl(FILE_TEMP_PATH, TEMP_PATH_DESCRIPTION, false, Type.TEXT, new ArrayList<>()));
             } else {
                 childInputDefinitions.add(childInputDefinition);
             }

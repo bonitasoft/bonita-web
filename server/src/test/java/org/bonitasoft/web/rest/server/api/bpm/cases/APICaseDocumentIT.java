@@ -85,7 +85,7 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
 
     @Test
     public void testAPISearch() {
-        final ItemSearchResult<CaseDocumentItem> res = apiCaseDocument.search(0, 10, null, null, new HashMap<String, String>());
+        final ItemSearchResult<CaseDocumentItem> res = apiCaseDocument.search(0, 10, null, null, new HashMap<>());
         Assert.assertNotNull(res);
         Assert.assertNotNull(res.getResults());
         Assert.assertTrue(res.getResults().size() > 0);
@@ -94,7 +94,7 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
 
     @Test
     public void testAPISearchSupervisedResultEmpty() {
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(CaseDocumentItem.FILTER_SUPERVISOR_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<CaseDocumentItem> res = apiCaseDocument.search(0, 10, null, null, filters);
@@ -109,7 +109,7 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
         TestProcessFactory.getProcessWithDocumentAttached()
         .addSupervisor(getInitiator());
 
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(CaseDocumentItem.FILTER_SUPERVISOR_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<CaseDocumentItem> res = apiCaseDocument.search(0, 10, null, null, filters);
@@ -126,7 +126,7 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
 
     @Test
     public void testAPICaseDocumentUpdateUrl() {
-        final HashMap<String, String> attributes = new HashMap<String, String>();
+        final HashMap<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_CASE_ID, String.valueOf(expectedDocument.getProcessInstanceId()));
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, expectedDocument.getName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
@@ -139,7 +139,7 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
 
     @Test
     public void testAPICaseDocumentUpdateFile() throws Exception {
-        final HashMap<String, String> attributes = new HashMap<String, String>();
+        final HashMap<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_CASE_ID, String.valueOf(expectedDocument.getProcessInstanceId()));
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, expectedDocument.getName());
         attributes.put(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, expectedDocument.getContentFileName());
@@ -156,6 +156,6 @@ public class APICaseDocumentIT extends AbstractConsoleTest {
 
     @Test(expected = APIException.class)
     public void testMalformedUpdate() {
-        apiCaseDocument.update(APIID.makeAPIID(expectedDocument.getId()), new HashMap<String, String>());
+        apiCaseDocument.update(APIID.makeAPIID(expectedDocument.getId()), new HashMap<>());
     }
 }

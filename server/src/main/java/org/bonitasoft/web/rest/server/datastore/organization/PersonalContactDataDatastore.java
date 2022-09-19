@@ -133,7 +133,7 @@ public class PersonalContactDataDatastore extends CommonDatastore<PersonalContac
     }
 
     private ContactDataConverter<PersonalContactDataItem> createContactDataItemConverter(final APIID id) {
-        return new ContactDataConverter<PersonalContactDataItem>() {
+        return new ContactDataConverter<>() {
 
             @Override
             public PersonalContactDataItem createContactDataItem() {

@@ -37,7 +37,7 @@ public class APIPreconditions {
         if(map == null) {
             return false;
         }
-        HashMap<String, String> clone = new HashMap<String, String>(map);
+        HashMap<String, String> clone = new HashMap<>(map);
         return clone.remove(key) != null && clone.isEmpty();
     }
 }

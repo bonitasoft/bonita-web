@@ -52,7 +52,7 @@ public class BusinessDataResourceTest extends RestletTest {
 
     @Test
     public void should_return_the_business_data_based_on_its_id() throws Exception {
-        final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+        final Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("entityClassName", "org.bonitasoft.pojo.Employee");
         parameters.put("businessDataId", 1983L);
         parameters.put("businessDataURIPattern", "/API/bdm/businessData/{className}/{id}/{field}");
@@ -102,7 +102,7 @@ public class BusinessDataResourceTest extends RestletTest {
 
     @Test
     public void should_fetch_business_data_child_if_it_is_specified() throws Exception {
-        final Map<String, Serializable> parameters = new HashMap<String, Serializable>();
+        final Map<String, Serializable> parameters = new HashMap<>();
         parameters.put("entityClassName", "org.bonitasoft.pojo.Employee");
         parameters.put("businessDataId", 1983L);
         parameters.put("businessDataChildName", "child");

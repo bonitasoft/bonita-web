@@ -28,7 +28,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
  */
 public class ArchivedHumanTaskSearchDescriptorConverter extends ArchivedActivitySearchDescriptorConverter {
 
-    private static Map<String, String> mapping = new HashMap<String, String>();
+    private static Map<String, String> mapping = new HashMap<>();
 
     static {
         mapping.put(ArchivedFlowNodeItem.ATTRIBUTE_CASE_ID, ArchivedHumanTaskInstanceSearchDescriptor.PROCESS_INSTANCE_ID);

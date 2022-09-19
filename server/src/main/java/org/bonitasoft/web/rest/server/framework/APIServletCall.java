@@ -241,7 +241,7 @@ public class APIServletCall extends ServletCall {
 
             final String inputStream = getInputStream();
             if (inputStream.length() == 0) {
-                api.runUpdate(id, new HashMap<String, String>());
+                api.runUpdate(id, new HashMap<>());
                 return;
             }
 
@@ -262,7 +262,7 @@ public class APIServletCall extends ServletCall {
      * You have to unserialize them to be able to use them in java representation
      */
     private HashMap<String, String> getAttributesWithDeploysAsJsonString(final IItem item) {
-        final HashMap<String, String> map = new HashMap<String, String>();
+        final HashMap<String, String> map = new HashMap<>();
         map.putAll(item.getAttributes());
         for (final Entry<String, IItem> deploy : item.getDeploys().entrySet()) {
             map.put(deploy.getKey(), deploy.getValue().toJson());
@@ -276,7 +276,7 @@ public class APIServletCall extends ServletCall {
     @Override
     public final void doDelete() {
         try {
-            final List<APIID> ids = new ArrayList<APIID>();
+            final List<APIID> ids = new ArrayList<>();
 
             // Using ids in json input stream
             if (id == null) {
@@ -327,7 +327,7 @@ public class APIServletCall extends ServletCall {
         if (parameters == null) {
             return null;
         }
-        final Map<String, String> results = new HashMap<String, String>();
+        final Map<String, String> results = new HashMap<>();
         for (final String parameter : parameters) {
             final String[] split = parameter.split("=");
             if (split.length < 2) {

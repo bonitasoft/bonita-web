@@ -30,7 +30,7 @@ import org.bonitasoft.web.rest.server.datastore.converter.StringValueConverter;
  */
 public class Filters {
 
-    private final List<Filter<?>> filters = new ArrayList<Filter<?>>();
+    private final List<Filter<?>> filters = new ArrayList<>();
 
     public Filters(final Map<String, String> filters, final FilterCreator filterCreator) {
         if (filters != null) {
@@ -49,8 +49,8 @@ public class Filters {
             while (it.hasNext()) {
                 final Entry<String, String> filterEntry = it.next();
                 final Field field = new Field(filterEntry.getKey());
-                final Value<String> fieldValue = new Value<String>(filterEntry.getValue(), new StringValueConverter());
-                final Filter<String> filter = new Filter<String>(field, fieldValue);
+                final Value<String> fieldValue = new Value<>(filterEntry.getValue(), new StringValueConverter());
+                final Filter<String> filter = new Filter<>(field, fieldValue);
 
                 this.filters.add(filter);
             }

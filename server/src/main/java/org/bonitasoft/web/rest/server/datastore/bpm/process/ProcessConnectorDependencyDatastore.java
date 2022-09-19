@@ -72,7 +72,7 @@ public class ProcessConnectorDependencyDatastore extends CommonDatastore<Process
 
             // If connector definition doesn't exists returns an empty resultset
             if (connectorImplementation == null) {
-                return new ItemSearchResult<ProcessConnectorDependencyItem>(page, 0, 0, new ArrayList<ProcessConnectorDependencyItem>());
+                return new ItemSearchResult<>(page, 0, 0, new ArrayList<>());
             }
 
             // Get Jar from definition and Simulate pagination
@@ -83,7 +83,7 @@ public class ProcessConnectorDependencyDatastore extends CommonDatastore<Process
             final List<ProcessConnectorDependencyItem> results = 
                     convertEngineToConsoleItems(processId, connectorName, connectorVersion, dependencies);
 
-            return new ItemSearchResult<ProcessConnectorDependencyItem>(page, results.size(), jarDependencies.size(), results);
+            return new ItemSearchResult<>(page, results.size(), jarDependencies.size(), results);
 
         } catch (final Exception e) {
             throw new APIException(e);
@@ -93,7 +93,7 @@ public class ProcessConnectorDependencyDatastore extends CommonDatastore<Process
 
     private List<ProcessConnectorDependencyItem> convertEngineToConsoleItems(final Long processId, 
             final String connectorName, final String connectorVersion, final List<String> dependencies) {
-        final List<ProcessConnectorDependencyItem> results = new ArrayList<ProcessConnectorDependencyItem>();
+        final List<ProcessConnectorDependencyItem> results = new ArrayList<>();
         
         for (final String filename : dependencies) {
             final ProcessConnectorDependencyItem dependencyItem = 

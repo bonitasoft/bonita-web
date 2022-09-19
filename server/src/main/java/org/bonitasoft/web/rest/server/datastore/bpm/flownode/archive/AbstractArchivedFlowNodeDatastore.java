@@ -134,7 +134,7 @@ public abstract class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends Arc
 
             final SearchResult<ENGINE_ITEM> results = runSearch(creator, filters);
 
-            return new ItemSearchResult<CONSOLE_ITEM>(
+            return new ItemSearchResult<>(
                     page,
                     resultsByPage,
                     results.getCount(),

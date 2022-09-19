@@ -56,7 +56,7 @@ public class APIArchivedCommentIT extends AbstractConsoleTest {
         aCase.execute();
 
         final ItemSearchResult<ArchivedCommentItem> mesResultats = 
-                this.apiArchivedComment.search(0, 12, "", "", new HashMap<String, String>());
+                this.apiArchivedComment.search(0, 12, "", "", new HashMap<>());
         
         assertEquals(mesResultats.getLength(), 12);
     }

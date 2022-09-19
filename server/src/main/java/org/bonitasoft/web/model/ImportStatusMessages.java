@@ -31,11 +31,11 @@ public class ImportStatusMessages implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<ImportStatusMessage> errors = new ArrayList<ImportStatusMessage>();
+    private final List<ImportStatusMessage> errors = new ArrayList<>();
 
-    private final List<ImportStatusMessage> imported = new ArrayList<ImportStatusMessage>();
+    private final List<ImportStatusMessage> imported = new ArrayList<>();
 
-    private final List<ImportStatusMessage> skipped = new ArrayList<ImportStatusMessage>();
+    private final List<ImportStatusMessage> skipped = new ArrayList<>();
 
     public ImportStatusMessages(final List<ImportStatus> statusMessages) {
         setImportStatus(statusMessages);

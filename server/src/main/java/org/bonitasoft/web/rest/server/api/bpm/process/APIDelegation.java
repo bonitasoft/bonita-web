@@ -61,7 +61,7 @@ public class APIDelegation extends ConsoleAPI<DelegationItem> {
     {
         try {
             final List<DelegationItem> items = this.delegateDatastore.getDelegates(search, filters, orders, page, resultsByPage);
-            return new ItemSearchResult<DelegationItem>(page, resultsByPage, this.delegateDatastore.getDelegateCount(), items);
+            return new ItemSearchResult<>(page, resultsByPage, this.delegateDatastore.getDelegateCount(), items);
 
         } catch (final Exception e) {
             throw new APIException(e);
@@ -118,7 +118,7 @@ public class APIDelegation extends ConsoleAPI<DelegationItem> {
     @Override
     public void delete(final List<APIID> ids) {
         try {
-            final ArrayList<String> idList = new ArrayList<String>();
+            final ArrayList<String> idList = new ArrayList<>();
             for (final APIID appiId : ids) {
                 idList.add(appiId.toString());
             }

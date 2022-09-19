@@ -83,7 +83,7 @@ public class ProcessFormServiceTest {
         final ArchivedProcessInstance archivedProcessInstance = mock(ArchivedProcessInstance.class);
         when(archivedProcessInstance.getProcessDefinitionId()).thenReturn(1L);
         when(processAPI.getProcessInstance(42L)).thenThrow(ProcessInstanceNotFoundException.class);
-        final List<ArchivedProcessInstance> result = new ArrayList<ArchivedProcessInstance>();
+        final List<ArchivedProcessInstance> result = new ArrayList<>();
         result.add(archivedProcessInstance);
         final SearchResult<ArchivedProcessInstance> searchResult = mock(SearchResult.class);
         when(searchResult.getCount()).thenReturn(1L);
@@ -130,7 +130,7 @@ public class ProcessFormServiceTest {
     public void getTaskInstanceId_with_taskInstanceId() throws Exception {
         final HumanTaskInstance humanTaskInstance = mock(HumanTaskInstance.class);
         when(humanTaskInstance.getId()).thenReturn(1L);
-        final List<HumanTaskInstance> result = new ArrayList<HumanTaskInstance>();
+        final List<HumanTaskInstance> result = new ArrayList<>();
         result.add(humanTaskInstance);
         final SearchResult<HumanTaskInstance> searchResult = mock(SearchResult.class);
         when(searchResult.getCount()).thenReturn(1L);
@@ -144,7 +144,7 @@ public class ProcessFormServiceTest {
         when(processAPI.searchMyAvailableHumanTasks(anyLong(), any(SearchOptions.class))).thenReturn(mock(SearchResult.class));
         final ArchivedHumanTaskInstance archivedHumanTaskInstance = mock(ArchivedHumanTaskInstance.class);
         when(archivedHumanTaskInstance.getSourceObjectId()).thenReturn(1L);
-        final List<ArchivedHumanTaskInstance> result = new ArrayList<ArchivedHumanTaskInstance>();
+        final List<ArchivedHumanTaskInstance> result = new ArrayList<>();
         result.add(archivedHumanTaskInstance);
         final SearchResult<ArchivedHumanTaskInstance> searchResult = mock(SearchResult.class);
         when(searchResult.getCount()).thenReturn(1L);

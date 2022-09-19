@@ -186,7 +186,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     public void toApplicationUpdater_should_map_all_fields() throws Exception {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationItem.ATTRIBUTE_TOKEN, TOKEN);
         fields.put(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, DISPLAY_NAME);
         fields.put(ApplicationItem.ATTRIBUTE_DESCRIPTION, DESCRIPTION);
@@ -223,7 +223,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     public void update_with_no_homePageId_should_send_null() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationItem.ATTRIBUTE_HOME_PAGE_ID, "-1");
 
         //when
@@ -239,7 +239,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     public void update_with_no_layout_page_should_send_null() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationItem.ATTRIBUTE_LAYOUT_ID, "-1");
 
         //when
@@ -255,7 +255,7 @@ public class ApplicationItemConverterTest extends APITestWithMock {
     public void update_with_no_Theme_page_should_send_null() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationItem.ATTRIBUTE_THEME_ID, "-1");
 
         //when

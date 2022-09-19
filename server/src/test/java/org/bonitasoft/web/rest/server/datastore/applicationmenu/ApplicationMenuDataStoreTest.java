@@ -102,7 +102,7 @@ public class ApplicationMenuDataStoreTest extends APITestWithMock {
     @Test
     public void should_return_application_menu_updated_by_ApplicationAPI_and_converted_to_ApplicationItem_on_update() throws Exception {
         //given
-        final HashMap<String, String> attributesToUpDate = new HashMap<String, String>();
+        final HashMap<String, String> attributesToUpDate = new HashMap<>();
         given(converter.toApplicationMenuUpdater(any(Map.class))).willReturn(applicationMenuUpdater);
 
         final ApplicationMenuImpl applicationMenu = new ApplicationMenuImpl("menu name", 1L, 1L, 2);
@@ -176,7 +176,7 @@ public class ApplicationMenuDataStoreTest extends APITestWithMock {
         appMenu.setParentId(-1L);
 
         given(applicationAPI.searchApplicationMenus(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationMenu>(2, Arrays.<ApplicationMenu> asList(appMenu)));
+                new SearchResultImpl<>(2, Arrays.<ApplicationMenu>asList(appMenu)));
 
         //when
         final ItemSearchResult<ApplicationMenuItem> retrievedItems = dataStore.search(0, 1, null, orders,
@@ -198,13 +198,13 @@ public class ApplicationMenuDataStoreTest extends APITestWithMock {
         final int resultsByPage = 1;
         final String search = "string to Match";
         final String orders = ApplicationMenuItem.ATTRIBUTE_DISPLAY_NAME + " DESC";
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_PAGE_ID, "1");
         final ApplicationMenuImpl appPage = new ApplicationMenuImpl("MyMenu", 11L, 1L, 2);
         appPage.setParentId(-1L);
 
         given(applicationAPI.searchApplicationMenus(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationMenu>(2, Arrays.<ApplicationMenu> asList(appPage)));
+                new SearchResultImpl<>(2, Arrays.<ApplicationMenu>asList(appPage)));
 
         //when
         dataStore.search(page, resultsByPage, search, orders, filters);

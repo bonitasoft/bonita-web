@@ -147,9 +147,9 @@ public class APICaseTest {
         final int resultsByPage = 10;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
 
-        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<CaseItem>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
+        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
         doReturn(searchResult).when(caseDatastore).search(page, resultsByPage, search, orders, filters);
 
         // When
@@ -171,7 +171,7 @@ public class APICaseTest {
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
         final Map<String, String> filters = Collections.singletonMap(CaseItem.FILTER_SUPERVISOR_ID, "3");
 
-        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<CaseItem>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
+        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
         doReturn(searchResult).when(caseDatastore).search(page, resultsByPage, search, orders, filters);
 
         // When
@@ -193,7 +193,7 @@ public class APICaseTest {
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
         final Map<String, String> filters = Collections.singletonMap(CaseItem.FILTER_TEAM_MANAGER_ID, "9");
 
-        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<CaseItem>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
+        final ItemSearchResult<CaseItem> searchResult = new ItemSearchResult<>(page, resultsByPage, resultsByPage, Arrays.asList(new CaseItem()));
         doReturn(searchResult).when(caseDatastore).search(page, resultsByPage, search, orders, filters);
 
         // When
@@ -213,7 +213,7 @@ public class APICaseTest {
         final int resultsByPage = 10;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_TEAM_MANAGER_ID, "9");
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, "3");
 
@@ -253,7 +253,7 @@ public class APICaseTest {
     public final void fillDeploys_should_do_nothing_when_deploy_of_started_by_is_not_active() {
         // Given
         final CaseItem item = mock(CaseItem.class);
-        final List<String> deploys = new ArrayList<String>();
+        final List<String> deploys = new ArrayList<>();
 
         // When
         apiCase.fillDeploys(item, deploys);
@@ -294,7 +294,7 @@ public class APICaseTest {
     public final void fillDeploys_should_do_nothing_when_deploy_of_started_by_substitute_is_not_active() {
         // Given
         final CaseItem item = mock(CaseItem.class);
-        final List<String> deploys = new ArrayList<String>();
+        final List<String> deploys = new ArrayList<>();
 
         // When
         apiCase.fillDeploys(item, deploys);
@@ -335,7 +335,7 @@ public class APICaseTest {
     public final void fillDeploys_should_do_nothing_when_deploy_of_process_is_not_active() {
         // Given
         final CaseItem item = mock(CaseItem.class);
-        final List<String> deploys = new ArrayList<String>();
+        final List<String> deploys = new ArrayList<>();
 
         // When
         apiCase.fillDeploys(item, deploys);
@@ -377,7 +377,7 @@ public class APICaseTest {
 
         final List<String> counters = Arrays.asList(CaseItem.COUNTER_FAILED_FLOW_NODES);
 
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeItem.ATTRIBUTE_STATE, FlowNodeItem.VALUE_STATE_FAILED);
         filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(id.toLong()));
         final long numberOfFailedFlowNodes = 2L;
@@ -398,7 +398,7 @@ public class APICaseTest {
     public final void fillCounters_should_do_nothing_when_counter_of_failed_flow_nodes_is_not_active() {
         // Given
         final CaseItem item = mock(CaseItem.class);
-        final List<String> counters = new ArrayList<String>();
+        final List<String> counters = new ArrayList<>();
 
         // When
         apiCase.fillCounters(item, counters);
@@ -420,7 +420,7 @@ public class APICaseTest {
 
         final List<String> counters = Arrays.asList(CaseItem.COUNTER_ACTIVE_FLOW_NODES);
 
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID, String.valueOf(id.toLong()));
         final long numberOfFailedFlowNodes = 2L;
         doReturn(numberOfFailedFlowNodes).when(flowNodeDatastore).count(null, null, filters);

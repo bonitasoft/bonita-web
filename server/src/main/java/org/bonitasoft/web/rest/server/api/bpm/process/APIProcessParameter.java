@@ -96,8 +96,8 @@ public class APIProcessParameter extends ConsoleAPI<ProcessParameterItem> {
     @Override
     public ItemSearchResult<ProcessParameterItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        final List<ProcessParameterItem> items = new ArrayList<ProcessParameterItem>();
-        List<ParameterInstance> parameters = new ArrayList<ParameterInstance>();
+        final List<ProcessParameterItem> items = new ArrayList<>();
+        List<ParameterInstance> parameters = new ArrayList<>();
         int parametersCount = 0;
         long processId = -1;
 
@@ -117,7 +117,7 @@ public class APIProcessParameter extends ConsoleAPI<ProcessParameterItem> {
                 final String paramValue = p.getValue() == null ? "" : p.getValue().toString();
                 items.add(new ProcessParameterItem(String.valueOf(processId), p.getName(), p.getType(), paramValue, p.getDescription(), "", ""));
             }
-            return new ItemSearchResult<ProcessParameterItem>(page, resultsByPage, parametersCount, items);
+            return new ItemSearchResult<>(page, resultsByPage, parametersCount, items);
         } catch (final Exception e) {
             throw new APIException(e);
         }

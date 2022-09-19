@@ -117,7 +117,7 @@ public class AbstractFlowNodeDatastore<CONSOLE_ITEM extends FlowNodeItem, ENGINE
         final SearchOptionsBuilder builder = makeSearchOptionBuilder(page, resultsByPage, search, orders, filters);
         final SearchResult<ENGINE_ITEM> results = runSearch(builder, filters);
 
-        return new ItemSearchResult<CONSOLE_ITEM>(
+        return new ItemSearchResult<>(
                 page,
                 resultsByPage,
                 results.getCount(),

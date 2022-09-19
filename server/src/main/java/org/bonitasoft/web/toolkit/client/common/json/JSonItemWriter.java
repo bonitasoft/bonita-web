@@ -32,7 +32,7 @@ public class JSonItemWriter<T extends IItem> {
     /**
      * The items to write
      */
-    private final List<IItem> itemList = new LinkedList<IItem>();
+    private final List<IItem> itemList = new LinkedList<>();
 
     public JSonItemWriter(final List<T> datas) {
         this();

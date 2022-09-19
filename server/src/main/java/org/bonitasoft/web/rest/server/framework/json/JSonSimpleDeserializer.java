@@ -69,13 +69,13 @@ public class JSonSimpleDeserializer implements JSonUnserializer {
         } else if (object instanceof JSONArray) {
             return unserializeTreeNode((JSONArray) object);
         } else if (object instanceof Boolean) {
-            return new TreeLeaf<String>(((Boolean) object).booleanValue() ? "1" : "0");
+            return new TreeLeaf<>(((Boolean) object).booleanValue() ? "1" : "0");
         }
-        return new TreeLeaf<String>(object.toString());
+        return new TreeLeaf<>(object.toString());
     }
 
     private TreeIndexed<String> unserializeTreeNode(final JSONObject object) {
-        final TreeIndexed<String> result = new TreeIndexed<String>();
+        final TreeIndexed<String> result = new TreeIndexed<>();
 
         @SuppressWarnings("rawtypes")
         final Iterator iter = object.entrySet().iterator();
@@ -88,7 +88,7 @@ public class JSonSimpleDeserializer implements JSonUnserializer {
     }
 
     private Tree<String> unserializeTreeNode(final JSONArray array) {
-        final Tree<String> result = new Tree<String>();
+        final Tree<String> result = new Tree<>();
         final int size = array.size();
         for (int i = 0; i < size; i++) {
             result.addNode(unserializeTreeNode(array.get(i)));

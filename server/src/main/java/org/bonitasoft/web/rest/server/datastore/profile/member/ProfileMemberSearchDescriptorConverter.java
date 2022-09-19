@@ -31,7 +31,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  */
 public class ProfileMemberSearchDescriptorConverter implements AttributeConverter {
 
-    private static Map<String, String> mapping = new HashMap<String, String>();
+    private static Map<String, String> mapping = new HashMap<>();
 
     static {
         mapping.put(ProfileMemberItem.ATTRIBUTE_ID, ProfileMemberSearchDescriptor.ID);

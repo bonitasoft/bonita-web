@@ -25,12 +25,12 @@ public class AbstractFlowNodeDatastoreTest {
     @Before
     public void setUp() throws Exception {
         final APISession engineSession = mock(APISession.class);
-        datastore = new AbstractFlowNodeDatastore<FlowNodeItem, FlowNodeInstance>(engineSession);
+        datastore = new AbstractFlowNodeDatastore<>(engineSession);
     }
 
     @Test
     public void makeSearchOptionBuilder_state_Filter_Pending_Adds_multiple_entries_in_SearchOption() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "pending");
         final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
         assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(
@@ -47,7 +47,7 @@ public class AbstractFlowNodeDatastoreTest {
 
     @Test
     public void makeSearchOptionBuilder_state_Filter_Ongoing_Adds_multiple_entries_in_SearchOption() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "ongoing");
         final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
         assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(
@@ -66,7 +66,7 @@ public class AbstractFlowNodeDatastoreTest {
 
     @Test
     public void makeSearchOptionBuilder_state_Filter_Ready_Adds_single_entries_in_SearchOption() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "ready");
         final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
         assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(
@@ -79,7 +79,7 @@ public class AbstractFlowNodeDatastoreTest {
 
     @Test
     public void makeSearchOptionBuilder_without_state_Filter_Adds_only_Unwanted_state_SearchOption() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(FlowNodeInstanceSearchDescriptor.STATE_NAME, "ready");
         final SearchOptionsBuilder makeSearchOptionBuilder = datastore.makeSearchOptionBuilder(0, 10, "", "", filters);
         assertThat(makeSearchOptionBuilder.done().getFilters()).extracting("field", "operation", "value").contains(

@@ -63,7 +63,7 @@ public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
                 search,
                 new Sorts(orders),
                 new Filters(filters, new GenericFilterCreator(new CustomUserInfoAttributeConverter()))).create());
-        return new ItemSearchResultConverter<CustomUserInfoItem, CustomUserInfoValue>(
+        return new ItemSearchResultConverter<>(
                 page,
                 resultsByPage,
                 result,

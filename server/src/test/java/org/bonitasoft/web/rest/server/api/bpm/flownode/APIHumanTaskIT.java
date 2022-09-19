@@ -58,9 +58,9 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     @Test
     public void testGetHumanTaskItem() throws Exception {
 
-        final ArrayList<String> deploys = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
-        final ArrayList<String> counters = new ArrayList<String>();
+        final ArrayList<String> counters = new ArrayList<>();
         final APIID apiId = APIID.makeAPIID(testHumanTask.getId());
         final HumanTaskItem humanTaskItem = apiHumanTask.runGet(apiId, deploys, counters);
         assertEquals("Not possible to get the APIHUmanTaskItem ", humanTaskItem.getName(), testHumanTask.getName());
@@ -73,7 +73,7 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
         final APIID apiId = APIID.makeAPIID(testHumanTask.getId());
 
         // Update the humanTaskItem attributes
-        final HashMap<String, String> attributes = new HashMap<String, String>();
+        final HashMap<String, String> attributes = new HashMap<>();
         attributes.put(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID,
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
         apiHumanTask.update(apiId, attributes);
@@ -86,13 +86,13 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     @Test
     public void testSearch() throws Exception {
         // Set the filters
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(HumanTaskItem.ATTRIBUTE_ID, String.valueOf(testHumanTask.getId()));
 
         // Search the humanTaskItem
-        final ArrayList<String> deploys = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
-        final ArrayList<String> counters = new ArrayList<String>();
+        final ArrayList<String> counters = new ArrayList<>();
         final HumanTaskItem foundHumanTaskItem = apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults().get(0);
         assertEquals("Can't search the humanTaskItem", testHumanTask.getName(), foundHumanTaskItem.getName());
     }
@@ -110,12 +110,12 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
                 .execute()
                 .waitState(HumanTaskItem.VALUE_STATE_FAILED);
 
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_FAILED);
         filters.put(HumanTaskItem.ATTRIBUTE_ROOT_CASE_ID, String.valueOf(failedTestCase.getId()));
 
         assertEquals("No Failed tasks" + failedTestHumanTask.getHumanTaskInstance().getState(), 1,
-                apiHumanTask.runSearch(0, 1, null, null, filters, new ArrayList<String>(), new ArrayList<String>()).getResults().size());
+                apiHumanTask.runSearch(0, 1, null, null, filters, new ArrayList<>(), new ArrayList<>()).getResults().size());
     }
 
     @Test
@@ -126,8 +126,8 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
 
         final long before = apiHumanTask.runSearch(0, 10, null,
                 apiHumanTask.defineDefaultSearchOrder(),
-                new HashMap<String, String>(),
-                new ArrayList<String>(), new ArrayList<String>()).getTotal();
+                new HashMap<>(),
+                new ArrayList<>(), new ArrayList<>()).getTotal();
 
         // Setup : insert enough tasks to have 2 pages
         for (int i = 0; i < 15; i++) {
@@ -146,8 +146,8 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
         // Search for page 2 (1 in zero based)
         final ItemSearchResult<HumanTaskItem> search = apiHumanTask.runSearch(1, 10, null,
                 apiHumanTask.defineDefaultSearchOrder(),
-                new HashMap<String, String>(),
-                new ArrayList<String>(), new ArrayList<String>());
+                new HashMap<>(),
+                new ArrayList<>(), new ArrayList<>());
 
         assertThat(search.getResults().size()).isGreaterThan(2);
         assertThat(search.getTotal()).isGreaterThan(before);
@@ -161,10 +161,10 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
     public void testAssignedTaskInAvailable() throws Exception {
         testHumanTask.assignTo(TestUserFactory.getJohnCarpenter());
 
-        final ArrayList<String> deploys = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
-        final ArrayList<String> counters = new ArrayList<String>();
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final ArrayList<String> counters = new ArrayList<>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(HumanTaskItem.FILTER_USER_ID,
                 String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
 

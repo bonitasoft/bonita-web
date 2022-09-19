@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
  */
 public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
-    protected Map<String, AbstractTreeNode<VALUE_CLASS>> children = new HashMap<String, AbstractTreeNode<VALUE_CLASS>>();
+    protected Map<String, AbstractTreeNode<VALUE_CLASS>> children = new HashMap<>();
 
     public TreeIndexed() {
     }
@@ -61,7 +61,7 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
     public TreeIndexed<VALUE_CLASS> addValue(final String key, final VALUE_CLASS value) {
         if (value != null) {
-            this.addNode(key, new TreeLeaf<VALUE_CLASS>(this, value));
+            this.addNode(key, new TreeLeaf<>(this, value));
         }
         return this;
     }
@@ -69,13 +69,13 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
     public TreeIndexed<VALUE_CLASS> addValue(final String key, final VALUE_CLASS... values) {
         if (values != null) {
             if (values.length > 1) {
-                final Tree<VALUE_CLASS> node = new Tree<VALUE_CLASS>();
+                final Tree<VALUE_CLASS> node = new Tree<>();
                 for (int i = 0; i < values.length; i++) {
                     node.addValue(values[i]);
                 }
                 this.addNode(key, node);
             } else {
-                this.addNode(key, new TreeLeaf<VALUE_CLASS>(values[0]));
+                this.addNode(key, new TreeLeaf<>(values[0]));
             }
         }
         return this;
@@ -97,7 +97,7 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
     }
 
     public TreeIndexed<VALUE_CLASS> addValueByPath(final String[] path, final VALUE_CLASS value) {
-        final LinkedList<String> pathArray = new LinkedList<String>();
+        final LinkedList<String> pathArray = new LinkedList<>();
         for (int i = 0; i < path.length; i++) {
             pathArray.add(path[i]);
         }
@@ -110,14 +110,14 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
         if (currentNode == null) {
             if (path.size() == 0) {
-                currentNode = new TreeLeaf<VALUE_CLASS>(value);
+                currentNode = new TreeLeaf<>(value);
             } else {
-                currentNode = new TreeIndexed<VALUE_CLASS>();
+                currentNode = new TreeIndexed<>();
             }
             this.addNode(key, currentNode);
         } else if (currentNode instanceof TreeLeaf<?>) {
             final TreeLeaf<VALUE_CLASS> oldNode = (TreeLeaf<VALUE_CLASS>) currentNode;
-            currentNode = new Tree<VALUE_CLASS>();
+            currentNode = new Tree<>();
             ((Tree<VALUE_CLASS>) currentNode).addNode(oldNode);
             this.addNode(key, currentNode);
         }
@@ -132,7 +132,7 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
     }
 
     public LinkedHashMap<String, VALUE_CLASS> getValues() {
-        final LinkedHashMap<String, VALUE_CLASS> values = new LinkedHashMap<String, VALUE_CLASS>();
+        final LinkedHashMap<String, VALUE_CLASS> values = new LinkedHashMap<>();
         for (final String key : this.children.keySet()) {
             final AbstractTreeNode<VALUE_CLASS> node = this.children.get(key);
             if (node instanceof TreeLeaf) {
@@ -184,7 +184,7 @@ public class TreeIndexed<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
     @Override
     public TreeIndexed<VALUE_CLASS> copy() {
-        final TreeIndexed<VALUE_CLASS> result = new TreeIndexed<VALUE_CLASS>();
+        final TreeIndexed<VALUE_CLASS> result = new TreeIndexed<>();
 
         for (final String key : this.children.keySet()) {
             result.addNode(key, this.children.get(key).copy());

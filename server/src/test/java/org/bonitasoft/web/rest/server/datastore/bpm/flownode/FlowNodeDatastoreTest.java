@@ -81,7 +81,7 @@ public class FlowNodeDatastoreTest {
         final String orders = FlowNodeItem.ATTRIBUTE_PARENT_CASE_ID;
         final Map<String, String> filters = Collections.emptyMap();
         final List<FlowNodeInstance> flowNodeInstances = Arrays.asList((FlowNodeInstance) new UserTaskInstanceImpl("name", 9L, 18L));
-        final SearchResult<FlowNodeInstance> searchResult = new SearchResultImpl<FlowNodeInstance>(1L, flowNodeInstances);
+        final SearchResult<FlowNodeInstance> searchResult = new SearchResultImpl<>(1L, flowNodeInstances);
         doReturn(searchResult).when(processAPI).searchFlowNodeInstances(any(SearchOptions.class));
 
         // When
@@ -105,7 +105,7 @@ public class FlowNodeDatastoreTest {
         final Map<String, String> filters = Collections.emptyMap();
         final FlowNodeInstance flowNodeInstance = new UserTaskInstanceImpl("name", 9L, 18L);
         final List<FlowNodeInstance> flowNodeInstances = Arrays.asList(flowNodeInstance);
-        final SearchResult<FlowNodeInstance> searchResult = new SearchResultImpl<FlowNodeInstance>(1L, flowNodeInstances);
+        final SearchResult<FlowNodeInstance> searchResult = new SearchResultImpl<>(1L, flowNodeInstances);
         doReturn(searchResult).when(processAPI).searchFlowNodeInstances(any(SearchOptions.class));
         final FlowNodeItem flowNodeItem = new FlowNodeItem();
         doReturn(flowNodeItem).when(converter)._convertEngineToConsoleItem(flowNodeInstance);

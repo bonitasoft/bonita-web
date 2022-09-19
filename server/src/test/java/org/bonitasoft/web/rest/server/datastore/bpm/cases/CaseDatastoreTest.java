@@ -78,7 +78,7 @@ public class CaseDatastoreTest {
         final Map<String, String> filters = Collections.emptyMap();
 
         final ProcessInstance processInstance = new ProcessInstanceImpl("name");
-        doReturn(new SearchResultImpl<ProcessInstance>(1L, Arrays.asList(processInstance))).when(processAPI).searchProcessInstances(
+        doReturn(new SearchResultImpl<>(1L, Arrays.asList(processInstance))).when(processAPI).searchProcessInstances(
                 any(SearchOptions.class));
         final CaseItem caseItem = new CaseItem();
         doReturn(caseItem).when(caseDatastore).convertEngineToConsoleItem(processInstance);
@@ -171,7 +171,7 @@ public class CaseDatastoreTest {
         final Map<String, String> filters = Collections.singletonMap(CaseItem.FILTER_STATE, state);
 
         final ProcessInstance processInstance = new ProcessInstanceImpl("name");
-        doReturn(new SearchResultImpl<ProcessInstance>(1L, Arrays.asList(processInstance))).when(processAPI).searchFailedProcessInstances(
+        doReturn(new SearchResultImpl<>(1L, Arrays.asList(processInstance))).when(processAPI).searchFailedProcessInstances(
                 any(SearchOptions.class));
         final CaseItem caseItem = new CaseItem();
         doReturn(caseItem).when(caseDatastore).convertEngineToConsoleItem(processInstance);
@@ -220,12 +220,12 @@ public class CaseDatastoreTest {
         final int resultsByPage = 1;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_ID;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_USER_ID, "9");
         filters.put(CaseItem.ATTRIBUTE_STATE, "plop");
 
         final ProcessInstance processInstance = new ProcessInstanceImpl("name");
-        doReturn(new SearchResultImpl<ProcessInstance>(1L, Arrays.asList(processInstance))).when(processAPI).searchOpenProcessInstancesInvolvingUser(eq(9L),
+        doReturn(new SearchResultImpl<>(1L, Arrays.asList(processInstance))).when(processAPI).searchOpenProcessInstancesInvolvingUser(eq(9L),
                 any(SearchOptions.class));
         final CaseItem caseItem = new CaseItem();
         doReturn(caseItem).when(caseDatastore).convertEngineToConsoleItem(processInstance);
@@ -251,7 +251,7 @@ public class CaseDatastoreTest {
         final int resultsByPage = 1;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_USER_ID, "9");
         filters.put(CaseItem.ATTRIBUTE_STATE, "plop");
 
@@ -281,12 +281,12 @@ public class CaseDatastoreTest {
         final int resultsByPage = 1;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_ID;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, "9");
         filters.put(CaseItem.ATTRIBUTE_STATE, "plop");
 
         final ProcessInstance processInstance = new ProcessInstanceImpl("name");
-        doReturn(new SearchResultImpl<ProcessInstance>(1L, Arrays.asList(processInstance))).when(processAPI).searchOpenProcessInstancesSupervisedBy(eq(9L),
+        doReturn(new SearchResultImpl<>(1L, Arrays.asList(processInstance))).when(processAPI).searchOpenProcessInstancesSupervisedBy(eq(9L),
                 any(SearchOptions.class));
         final CaseItem caseItem = new CaseItem();
         doReturn(caseItem).when(caseDatastore).convertEngineToConsoleItem(processInstance);
@@ -312,7 +312,7 @@ public class CaseDatastoreTest {
         final int resultsByPage = 1;
         final String search = "plop";
         final String orders = CaseItem.ATTRIBUTE_END_DATE;
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, "9");
         filters.put(CaseItem.ATTRIBUTE_STATE, "plop");
 
@@ -396,7 +396,7 @@ public class CaseDatastoreTest {
         final String orders = CaseItem.ATTRIBUTE_ID;
         final Map<String, String> filters = Collections.emptyMap();
         final long total = 7L;
-        final ItemSearchResult<IItem> itemSearchResult = new ItemSearchResult<IItem>(0, 0, total, null);
+        final ItemSearchResult<IItem> itemSearchResult = new ItemSearchResult<>(0, 0, total, null);
         doReturn(itemSearchResult).when(caseDatastore).search(0, 0, search, orders, filters);
 
         // When
@@ -410,7 +410,7 @@ public class CaseDatastoreTest {
     @Test
     public void searchProcessInstances_With_PM_Filter_And_Failed_State_should_call_API() throws Exception {
         // Given
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         final SearchOptions searchOptions = mock(SearchOptions.class);
         final long userId = 9L;
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, String.valueOf(userId));

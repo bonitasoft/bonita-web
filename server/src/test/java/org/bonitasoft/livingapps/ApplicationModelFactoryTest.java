@@ -49,7 +49,7 @@ public class ApplicationModelFactoryTest {
     @Test(expected = CreationException.class)
     public void should_throw_create_error_exception_when_application_is_not_found() throws Exception {
         given(applicationApi.searchApplications(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<Application>(0, Collections.<Application> emptyList()));
+                new SearchResultImpl<>(0, Collections.<Application>emptyList()));
 
         factory.createApplicationModel("foo");
     }
@@ -59,7 +59,7 @@ public class ApplicationModelFactoryTest {
         final ApplicationImpl application = new ApplicationImpl("foobar", "1.0", "bazqux");
         application.setId(3);
         given(applicationApi.searchApplications(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<Application>(1, asList((Application) application)));
+                new SearchResultImpl<>(1, asList((Application) application)));
         given(applicationApi.getApplicationHomePage(3)).willReturn(new ApplicationPageImpl(1, 1, "home"));
 
         final ApplicationModel model = factory.createApplicationModel("foo");
@@ -71,7 +71,7 @@ public class ApplicationModelFactoryTest {
     public void should_filter_search_using_given_name() throws Exception {
         final ArgumentCaptor<SearchOptions> captor = ArgumentCaptor.forClass(SearchOptions.class);
         given(applicationApi.searchApplications(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<Application>(1, asList(mock(Application.class))));
+                new SearchResultImpl<>(1, asList(mock(Application.class))));
 
         factory.createApplicationModel("bar");
         verify(applicationApi).searchApplications(captor.capture());

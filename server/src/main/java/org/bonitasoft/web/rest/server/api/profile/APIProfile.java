@@ -54,7 +54,7 @@ public class APIProfile extends ConsoleAPI<ProfileItem> implements APIHasGet<Pro
 
         final ProfileEngineClient profileClient = createProfileEngineClient();
 
-        final ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<ProfileItem>();
+        final ComposedDatastore<ProfileItem> datastore = new ComposedDatastore<>();
         datastore.setGetHelper(new GetProfileHelper(profileClient));
         datastore.setSearchHelper(new SearchProfilesHelper(profileClient));
         return datastore;

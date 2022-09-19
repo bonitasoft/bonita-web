@@ -297,7 +297,7 @@ public class RestAPIAuthorizationFilterTest {
     @Test
     public void testCompileSimplePattern() throws Exception {
         final String patternToCompile = "test";
-        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -309,7 +309,7 @@ public class RestAPIAuthorizationFilterTest {
     @Test
     public void testCompileExcludePattern() throws Exception {
         final String patternToCompile = RestAPIAuthorizationFilter.AUTHORIZATION_FILTER_EXCLUDED_PAGES_PATTERN;
-        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(restAPIAuthorizationFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {

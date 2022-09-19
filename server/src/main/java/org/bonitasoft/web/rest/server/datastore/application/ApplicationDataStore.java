@@ -132,7 +132,7 @@ DatastoreHasGet<ApplicationItem>,DatastoreHasSearch<ApplicationItem>, DatastoreH
             searchResult = runSearch(creator);
 
             // Convert to ConsoleItems
-            return new ItemSearchResult<ApplicationItem>(page, resultsByPage, searchResult.getCount(), convertEngineToConsoleItemsList(searchResult.getResult()));
+            return new ItemSearchResult<>(page, resultsByPage, searchResult.getCount(), convertEngineToConsoleItemsList(searchResult.getResult()));
         } catch (final SearchException e) {
             throw new APIException(e);
         }

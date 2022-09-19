@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.data.item.Item;
 public class SearchUtils {
 
     public static <S extends Serializable> SearchResultImpl<S> createEngineSearchResult(S... items) {
-        return new SearchResultImpl<S>(items.length, Arrays.<S> asList(items));
+        return new SearchResultImpl<>(items.length, Arrays.<S>asList(items));
     }
 
     private static boolean areEquals(Item item1, Item item2) {

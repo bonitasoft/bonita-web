@@ -48,7 +48,7 @@ public class DelegateDatastore {
      * Default constructor.
      */
     public DelegateDatastore() {
-        this.USERS = new LinkedHashMap<String, DelegationItem>();
+        this.USERS = new LinkedHashMap<>();
 
         final String iconPath = "http://www.veryicon.com/icon/png/System/Scrap/User.png";
 
@@ -74,7 +74,7 @@ public class DelegateDatastore {
     public List<DelegationItem> getDelegates(final String search, final Map<String, String> filters, final String order, final int pageIndex,
             final int itemPerPage)
             throws Exception {
-        final ArrayList<DelegationItem> userList = new ArrayList<DelegationItem>(this.USERS.values());
+        final ArrayList<DelegationItem> userList = new ArrayList<>(this.USERS.values());
 
         if (search != null) {
             final String searchRef = search.toLowerCase();
@@ -101,7 +101,7 @@ public class DelegateDatastore {
         }
 
         if (userList.size() < pageIndex * itemPerPage) {
-            return new ArrayList<DelegationItem>();
+            return new ArrayList<>();
         }
 
         return userList.subList(pageIndex * itemPerPage, Math.min(userList.size(), pageIndex * itemPerPage + itemPerPage));

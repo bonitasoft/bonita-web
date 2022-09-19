@@ -46,7 +46,7 @@ public class TestGroupFactory {
      * Default Constructor.
      */
     public TestGroupFactory() {
-        this.groupList = new HashMap<String, TestGroup>();
+        this.groupList = new HashMap<>();
     }
 
     public static TestGroupFactory getInstance() {
@@ -71,7 +71,7 @@ public class TestGroupFactory {
     }
 
     public static List<TestGroup> createRandomGroups(final int nbOfGroups) {
-        final List<TestGroup> results = new ArrayList<TestGroup>();
+        final List<TestGroup> results = new ArrayList<>();
 
         for (int i = 0; i < nbOfGroups; i++) {
             results.add(createGroup(getRandomString(), getRandomString()));

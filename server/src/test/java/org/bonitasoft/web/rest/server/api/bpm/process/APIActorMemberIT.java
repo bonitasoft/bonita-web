@@ -86,7 +86,7 @@ public class APIActorMemberIT extends AbstractConsoleTest {
     }
 
     private HashMap<String, String> buildActorIdFilter(final long actorId) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_ACTOR_ID, String.valueOf(actorId));
         return filters;
     }

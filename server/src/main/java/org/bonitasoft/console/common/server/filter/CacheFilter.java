@@ -42,7 +42,7 @@ public class CacheFilter extends ExcludingPatternFilter {
     
     protected static final String CACHE_FILTER_EXCLUDED_RESOURCES_PATTERN = "^/(bonita/)?(apps/.+/$)|(portal/resource/.+/content/$)|(portal/custom-page/.+/$)|(portal/custom-page/API/)";
     
-    protected Map<String, String> paramMap = new HashMap<String, String>();
+    protected Map<String, String> paramMap = new HashMap<>();
 
     private final String DURATION = "duration";
 

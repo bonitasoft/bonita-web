@@ -33,7 +33,7 @@ public class TestMembershipFactory {
      * Default Constructor.
      */
     public TestMembershipFactory() {
-        this.membershipList = new HashMap<String, TestMembership>();
+        this.membershipList = new HashMap<>();
     }
 
     public static TestMembershipFactory getInstance() {

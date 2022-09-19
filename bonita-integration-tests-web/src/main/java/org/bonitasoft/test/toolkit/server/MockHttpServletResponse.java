@@ -44,8 +44,8 @@ public class MockHttpServletResponse implements HttpServletResponse {
     }
 
     public MockHttpServletResponse() {
-        attributesMap = new HashMap<String, Object>();
-        parametersMap = new HashMap<String, Object>();
+        attributesMap = new HashMap<>();
+        parametersMap = new HashMap<>();
     }
 
     /*

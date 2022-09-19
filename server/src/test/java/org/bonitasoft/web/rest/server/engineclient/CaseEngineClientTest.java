@@ -51,7 +51,7 @@ public class CaseEngineClientTest extends APITestWithMock {
     }
 
     private Map<String, Serializable> someVariables() {
-        final Map<String, Serializable> map = new HashMap<String, Serializable>();
+        final Map<String, Serializable> map = new HashMap<>();
         map.put("variable", 1L);
         return map;
     }

@@ -115,11 +115,11 @@ public class CommentDatastore extends CommonDatastore<CommentItem, Comment> impl
             /*
              * Process result to convert engine items into console items
              */
-            final List<CommentItem> consoleSearchResults = new ArrayList<CommentItem>();
+            final List<CommentItem> consoleSearchResults = new ArrayList<>();
             for (final Comment comment : engineSearchResults.getResult()) {
                 consoleSearchResults.add(convertEngineToConsoleItem(comment));
             }
-            return new ItemSearchResult<CommentItem>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
+            return new ItemSearchResult<>(page, resultsByPage, engineSearchResults.getCount(), consoleSearchResults);
         } else {
             throw new APIException("Search failed for the following parameters <page: " + page + " - resulsByPage: " + resultsByPage + " - search: " + search
                     + " - filters: " + filters + " - orders: " + orders + ">");

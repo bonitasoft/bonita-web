@@ -107,7 +107,7 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
     protected abstract C convertEngineToConsoleItem(E item);
 
     protected ItemSearchResult<C> convertEngineToConsoleSearch(final int page, final int resultsByPage, final SearchResult<E> engineSearchResults) {
-        return new ItemSearchResult<C>(
+        return new ItemSearchResult<>(
                 page,
                 resultsByPage,
                 engineSearchResults.getCount(),
@@ -116,7 +116,7 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
 
     protected List<C> convertEngineToConsoleItemsList(final List<E> engineSearchResults) {
 
-        final List<C> consoleSearchResults = new ArrayList<C>();
+        final List<C> consoleSearchResults = new ArrayList<>();
 
         for (final E engineItem : engineSearchResults) {
             consoleSearchResults.add(convertEngineToConsoleItem(engineItem));

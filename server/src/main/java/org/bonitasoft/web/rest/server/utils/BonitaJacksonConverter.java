@@ -32,7 +32,7 @@ public class BonitaJacksonConverter extends JacksonConverter {
     @Override
     protected <T> JacksonRepresentation<T> create(MediaType mediaType, T source) {
         ObjectMapper mapper = createMapper();
-        JacksonRepresentation jr = new JacksonRepresentation<T>(mediaType, source);
+        JacksonRepresentation jr = new JacksonRepresentation<>(mediaType, source);
         jr.setObjectMapper(mapper);
         return jr;
     }
@@ -40,7 +40,7 @@ public class BonitaJacksonConverter extends JacksonConverter {
     @Override
     protected <T> JacksonRepresentation<T> create(Representation source, Class<T> objectClass) {
         ObjectMapper mapper = createMapper();
-        JacksonRepresentation jr = new JacksonRepresentation<T>(source, objectClass);
+        JacksonRepresentation jr = new JacksonRepresentation<>(source, objectClass);
         jr.setObjectMapper(mapper);
         return jr;
     }

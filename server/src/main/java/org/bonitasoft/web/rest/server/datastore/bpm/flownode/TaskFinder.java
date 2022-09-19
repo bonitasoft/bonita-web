@@ -33,7 +33,7 @@ public class TaskFinder {
         try {
             return journal.get(taskId);
         } catch (final APIItemNotFoundException e) {
-            final Map<String, String> filters = new HashMap<String, String>();
+            final Map<String, String> filters = new HashMap<>();
             filters.put(ArchivedActivityItem.ATTRIBUTE_SOURCE_OBJECT_ID, taskId.toString());
             final ItemSearchResult<ArchivedTaskItem> result = archives.search(0, 1, null, ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE + " "
                     + Order.DESC, filters);

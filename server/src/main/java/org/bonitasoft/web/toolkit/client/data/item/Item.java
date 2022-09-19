@@ -55,9 +55,9 @@ public abstract class Item implements IItem {
     // DEFAULT FILTERS SUPERVISOR AND TEAM MANAGER
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final Map<String, String> attributes = new HashMap<String, String>();
+    private final Map<String, String> attributes = new HashMap<>();
 
-    private final Map<String, IItem> deploys = new HashMap<String, IItem>();
+    private final Map<String, IItem> deploys = new HashMap<>();
 
     // private final Map<String, Long> counters = new HashMap<String, Long>();
 
@@ -75,7 +75,7 @@ public abstract class Item implements IItem {
             apiid = getAttributeValueAsAPIID(ItemHasUniqueId.ATTRIBUTE_ID);
         } else {
 
-            final List<String> primaryKeysValues = new ArrayList<String>();
+            final List<String> primaryKeysValues = new ArrayList<>();
 
             // Filling values
             final List<String> primaryKeys = itemDefinition.getPrimaryKeys();
@@ -556,7 +556,7 @@ public abstract class Item implements IItem {
 
     @Override
     public final Map<String, String> getAttributes(final boolean applyModifiers) {
-        final Map<String, String> results = new HashMap<String, String>();
+        final Map<String, String> results = new HashMap<>();
 
         for (final String attributeName : attributes.keySet()) {
             results.put(attributeName, this.getAttributeValue(attributeName, applyModifiers));
@@ -590,7 +590,7 @@ public abstract class Item implements IItem {
 
     @Override
     public final ArrayList<String> getAttributeNames() {
-        return new ArrayList<String>(attributes.keySet());
+        return new ArrayList<>(attributes.keySet());
     }
 
     @Override

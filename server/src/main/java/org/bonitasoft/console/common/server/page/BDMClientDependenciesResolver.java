@@ -127,7 +127,7 @@ public class BDMClientDependenciesResolver {
     }
 
     private URL[] getBDMLibrariesURLs(final File bdmFolder) throws IOException {
-        final List<URL> urls = new ArrayList<URL>();
+        final List<URL> urls = new ArrayList<>();
         for(final File file :  bdmFolder.listFiles()){
             if(file.getName().endsWith(".jar")){
                 dependenciesNames.add(file.getName());

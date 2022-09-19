@@ -53,14 +53,14 @@ public class ItemSearchResultConverterTest {
     public void testTotalCanBeRetrieved() {
         when(result.getCount()).thenReturn(5L);
 
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<IItem, String>(3, 2, result, converter);
+        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(3, 2, result, converter);
 
         assertEquals(5L, itemSearchResult.toItemSearchResult().getTotal());
     }
 
     @Test
     public void testTotalSettedCanBeRetrieved() {
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<IItem, String>(3, 2, result, 8L, converter);
+        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(3, 2, result, 8L, converter);
 
         assertEquals(8L, itemSearchResult.toItemSearchResult().getTotal());
     }
@@ -70,7 +70,7 @@ public class ItemSearchResultConverterTest {
     public void testNumberOfResultCanBeRetrieved() {
         when(result.getResult()).thenReturn(asList("item1", "item2", "item3"));
 
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<IItem, String>(3, 10, result, 4L, converter);
+        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(3, 10, result, 4L, converter);
 
         assertEquals(3, itemSearchResult.toItemSearchResult().getLength());
     }
@@ -79,12 +79,12 @@ public class ItemSearchResultConverterTest {
     public void testPageOutOfResultNumberThrowsExecption() throws Exception {
         when(result.getCount()).thenReturn(1L);
 
-        new ItemSearchResultConverter<IItem, String>(2, 10, result, converter).toItemSearchResult();
+        new ItemSearchResultConverter<>(2, 10, result, converter).toItemSearchResult();
     }
 
     @Test
     public void testPageNumberCanBeRetrieved() {
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<IItem, String>(5, 10, result, 8L, converter);
+        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(5, 10, result, 8L, converter);
 
         assertEquals(5, itemSearchResult.toItemSearchResult().getPage());
     }
@@ -96,7 +96,7 @@ public class ItemSearchResultConverterTest {
         when(result.getResult()).thenReturn(asList("item1", "item2"));
         when(converter.convert(result.getResult())).thenReturn(asList(item1, item2));
 
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<IItem, String>(1, 10, result, 2, converter);
+        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(1, 10, result, 2, converter);
 
         assertEquals(item1, itemSearchResult.toItemSearchResult().getResults().get(0));
         assertEquals(item2, itemSearchResult.toItemSearchResult().getResults().get(1));

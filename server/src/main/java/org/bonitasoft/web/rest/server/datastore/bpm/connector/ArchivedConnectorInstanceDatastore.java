@@ -68,7 +68,7 @@ public class ArchivedConnectorInstanceDatastore extends CommonDatastore<Archived
 
         if (searchConnectorInstances != null) {
             final List<ArchivedConnectorInstanceItem> convertedResult = convertEngineItemsIntoConsoleItems(searchConnectorInstances.getResult());
-            return new ItemSearchResult<ArchivedConnectorInstanceItem>(page, convertedResult.size(), searchConnectorInstances.getCount(),
+            return new ItemSearchResult<>(page, convertedResult.size(), searchConnectorInstances.getCount(),
                     convertedResult);
         } else {
             throw new APIException("Search failed for the following parameters <page: " + page + " - resulsByPage: " + resultsByPage + " - search: " + search
@@ -112,7 +112,7 @@ public class ArchivedConnectorInstanceDatastore extends CommonDatastore<Archived
      */
     protected List<ArchivedConnectorInstanceItem> convertEngineItemsIntoConsoleItems(final List<ArchivedConnectorInstance> engineItemList) {
         if (engineItemList != null) {
-            final List<ArchivedConnectorInstanceItem> consoleItemList = new ArrayList<ArchivedConnectorInstanceItem>();
+            final List<ArchivedConnectorInstanceItem> consoleItemList = new ArrayList<>();
             for (final ArchivedConnectorInstance engineItem : engineItemList) {
                 consoleItemList.add(convertEngineToConsoleItem(engineItem));
             }

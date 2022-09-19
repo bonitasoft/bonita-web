@@ -115,7 +115,7 @@ public class MembershipDatastore extends CommonDatastore<MembershipItem, UserMem
             final long total = getIdentityAPI().getNumberOfUserMemberships(MapUtil.getValueAsLong(filters, MembershipItem.ATTRIBUTE_USER_ID));
 
             // Return search object
-            return new ItemSearchResult<MembershipItem>(
+            return new ItemSearchResult<>(
                     page,
                     resultsByPage,
                     total,

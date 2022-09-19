@@ -35,8 +35,8 @@ public class BonitaPageDatastore {
     }
 
     public List<IItem> fromBonitaPageItemToIItem() {
-        List<IItem> pageListDest = new ArrayList<IItem>();
-        List<BonitaPageItem> pageListSource = new ArrayList<BonitaPageItem>(new PageLister().getPages());
+        List<IItem> pageListDest = new ArrayList<>();
+        List<BonitaPageItem> pageListSource = new ArrayList<>(new PageLister().getPages());
         for (BonitaPageItem page : pageListSource) {
             pageListDest.add((IItem) page);
         }
@@ -45,7 +45,7 @@ public class BonitaPageDatastore {
 
     public ItemSearchResult<BonitaPageItem> search(int page, int resultsByPage, String search, Map<String, String> filters, String orders) {
         List<BonitaPageItem> pages = new PageLister().getPages();
-        return new ItemSearchResult<BonitaPageItem>(page, resultsByPage, pages.size(), new ArrayList<BonitaPageItem>(pages));
+        return new ItemSearchResult<>(page, resultsByPage, pages.size(), new ArrayList<>(pages));
     }
 
     /**

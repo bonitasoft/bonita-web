@@ -47,6 +47,6 @@ public class ItemSearchResultConverter<I extends IItem, E extends Serializable> 
     }
 
     public ItemSearchResult<I> toItemSearchResult() {
-        return new ItemSearchResult<I>(page, nbResultsByPage, total, converter.convert(result.getResult()));
+        return new ItemSearchResult<>(page, nbResultsByPage, total, converter.convert(result.getResult()));
     }
 }

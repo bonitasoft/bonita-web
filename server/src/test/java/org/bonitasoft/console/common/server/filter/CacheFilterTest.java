@@ -118,7 +118,7 @@ public class CacheFilterTest {
         cacheFilter.init(filterConfig);
     	
         final String patternToCompile = "test";
-        assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -133,7 +133,7 @@ public class CacheFilterTest {
         cacheFilter.init(filterConfig);
     	
         final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/scripts)|(/bonita/?$)|(logoutservice)";
-        assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -145,7 +145,7 @@ public class CacheFilterTest {
     @Test
     public void empty_excludePattern_init_param_should_override_default_excludePattern() throws Exception {
         final String url = "test";
-        List<String> initParamsList = new ArrayList<String>();
+        List<String> initParamsList = new ArrayList<>();
         initParamsList.add("excludePattern");
         Enumeration<String> initParamsEnum = Collections.enumeration(initParamsList);
         when(filterConfig.getInitParameterNames()).thenReturn(initParamsEnum);

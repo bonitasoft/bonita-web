@@ -57,7 +57,7 @@ public class APICommentIT extends AbstractConsoleTest {
         testCase.addComments(getInitiator(), 3, this.content);
 
         // Set the filters
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(CommentItem.ATTRIBUTE_USER_ID, String.valueOf(getInitiator().getId()));
         filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(testCase.getId()));
 

@@ -70,7 +70,7 @@ public class APIRoleIT extends AbstractConsoleTest {
         Assert.assertNotNull("Failed to add a new role", input);
 
         // Get
-        final RoleItem output = getAPIRole().runGet(input.getId(), new ArrayList<String>(), new ArrayList<String>());
+        final RoleItem output = getAPIRole().runGet(input.getId(), new ArrayList<>(), new ArrayList<>());
 
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
@@ -105,7 +105,7 @@ public class APIRoleIT extends AbstractConsoleTest {
         final RoleItem output = getAPIRole().runGet(
                 input.getId(),
                 Arrays.asList(RoleItem.ATTRIBUTE_CREATED_BY_USER_ID),
-                new ArrayList<String>());
+                new ArrayList<>());
 
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
@@ -190,7 +190,7 @@ public class APIRoleIT extends AbstractConsoleTest {
         getAPIRole().runUpdate(input.getId(), updates);
 
         // Get
-        final RoleItem output = getAPIRole().runGet(input.getId(), new ArrayList<String>(), new ArrayList<String>());
+        final RoleItem output = getAPIRole().runGet(input.getId(), new ArrayList<>(), new ArrayList<>());
 
         Assert.assertNotNull("Role not found", output);
         Assert.assertEquals("Update of role failed", newDescription, output.getDescription());

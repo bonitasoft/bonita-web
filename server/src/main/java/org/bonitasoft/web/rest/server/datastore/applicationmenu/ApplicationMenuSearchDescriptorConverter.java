@@ -38,7 +38,7 @@ public class ApplicationMenuSearchDescriptorConverter implements AttributeConver
     }
 
     private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<>();
         mapping.put(ApplicationMenuItem.ATTRIBUTE_ID, ApplicationMenuSearchDescriptor.ID);
         mapping.put(ApplicationMenuItem.ATTRIBUTE_DISPLAY_NAME, ApplicationMenuSearchDescriptor.DISPLAY_NAME);
         mapping.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_ID, ApplicationMenuSearchDescriptor.APPLICATION_ID);

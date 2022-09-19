@@ -80,11 +80,11 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
         check(orders.equals(FIX_ORDER), new T_("Sorting is not supported by this API"));
 
         CustomUserInfoEngineClient client = engineClientCreator.create(getEngineSession());
-        List<CustomUserInfoDefinitionItem> result = new ArrayList<CustomUserInfoDefinitionItem>();
+        List<CustomUserInfoDefinitionItem> result = new ArrayList<>();
         for (CustomUserInfoDefinition definition : client.listDefinitions(page * resultsByPage, resultsByPage)) {
             result.add(converter.convert(definition));
         }
-        return new ItemSearchResult<CustomUserInfoDefinitionItem>(page, resultsByPage, client.countDefinitions(), result);
+        return new ItemSearchResult<>(page, resultsByPage, client.countDefinitions(), result);
     }
 
     @Override

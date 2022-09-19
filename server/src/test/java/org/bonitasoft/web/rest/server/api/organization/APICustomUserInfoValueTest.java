@@ -75,7 +75,7 @@ public class APICustomUserInfoValueTest {
     @Test
     public void should_retrieve_custom_user_info() throws Exception {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<CustomUserInfoValue>(3, Arrays.<CustomUserInfoValue> asList(
+                new SearchResultImpl<>(3, Arrays.<CustomUserInfoValue>asList(
                         createValue("foo"),
                         createValue("bar"))));
 
@@ -97,7 +97,7 @@ public class APICustomUserInfoValueTest {
     @Test
     public void should_retrieve_custom_user_info_sorted() throws Exception {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<CustomUserInfoValue>(0, Collections.<CustomUserInfoValue> emptyList()));
+                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
         api.search(0, 2, null, "userId ASC", Collections.<String, String> emptyMap());
@@ -110,7 +110,7 @@ public class APICustomUserInfoValueTest {
     @Test
     public void should_retrieve_custom_user_info_filtered() throws Exception {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<CustomUserInfoValue>(0, Collections.<CustomUserInfoValue> emptyList()));
+                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
         api.search(0, 2, null, null, Collections.singletonMap(CustomUserInfoItem.ATTRIBUTE_VALUE, "bar"));
@@ -123,7 +123,7 @@ public class APICustomUserInfoValueTest {
     @Test
     public void should_retrieve_custom_user_info_term_filtered() throws Exception {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<CustomUserInfoValue>(0, Collections.<CustomUserInfoValue> emptyList()));
+                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
         api.search(0, 2, "foo", null, Collections.<String, String>emptyMap());

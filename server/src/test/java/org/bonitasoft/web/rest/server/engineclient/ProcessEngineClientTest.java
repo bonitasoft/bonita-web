@@ -61,7 +61,7 @@ public class ProcessEngineClientTest extends APITestWithMock {
         when(processAPI.deleteArchivedProcessInstances(1L, 0, BUNCH_SIZE))
                 .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
 
-        final List<Long> processList = new ArrayList<Long>();
+        final List<Long> processList = new ArrayList<>();
         processList.add(1L);
         processEngineClient.deleteArchivedProcessInstancesByBunch(1L, 10, processList);
 
@@ -73,7 +73,7 @@ public class ProcessEngineClientTest extends APITestWithMock {
         when(processAPI.deleteProcessInstances(1L, 0, BUNCH_SIZE))
                 .thenReturn(BUNCH_SIZE.longValue(), BUNCH_SIZE.longValue(), 0L);
 
-        final List<Long> processList = new ArrayList<Long>();
+        final List<Long> processList = new ArrayList<>();
         processList.add(1L);
         processEngineClient.deleteProcessInstancesByBunch(1L, 10, processList);
 

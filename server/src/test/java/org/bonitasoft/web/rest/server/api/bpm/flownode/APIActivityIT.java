@@ -62,7 +62,7 @@ public class APIActivityIT extends AbstractConsoleTest {
     @Test
     public void api_can_update_activity_variables() throws Exception {
         final TestHumanTask activity = TestProcessFactory.createActivityWithVariables(getInitiator());
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ActivityItem.ATTRIBUTE_VARIABLES, JSON_UPDATE_VARIABLES);
 
         apiActivity.runUpdate(makeAPIID(activity.getId()), attributes);
@@ -75,7 +75,7 @@ public class APIActivityIT extends AbstractConsoleTest {
     @Test
     public void api_can_update_variables_and_terminate_activity() throws Exception {
         final TestHumanTask activity = TestProcessFactory.createActivityWithVariables(getInitiator());
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ActivityItem.ATTRIBUTE_VARIABLES, JSON_UPDATE_VARIABLES);
         attributes.put(ActivityItem.ATTRIBUTE_STATE, ActivityItem.VALUE_STATE_COMPLETED);
 

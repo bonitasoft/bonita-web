@@ -56,7 +56,7 @@ public class TreeLeaf<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
     @Override
     public TreeLeaf<VALUE_CLASS> copy() {
-        return new TreeLeaf<VALUE_CLASS>(this.value);
+        return new TreeLeaf<>(this.value);
     }
 
     @Override

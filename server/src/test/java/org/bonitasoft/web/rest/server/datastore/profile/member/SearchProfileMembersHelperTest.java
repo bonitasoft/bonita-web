@@ -80,7 +80,7 @@ public class SearchProfileMembersHelperTest extends APITestWithMock {
 
     }
     private HashMap<String, String> filterOnProfileIdAndMemberType(long id, MemberType type) {
-        HashMap<String, String> filters = new HashMap<String, String>();
+        HashMap<String, String> filters = new HashMap<>();
         filters.put(ProfileMemberItem.ATTRIBUTE_PROFILE_ID, String.valueOf(id));
         filters.put(ProfileMemberItem.FILTER_MEMBER_TYPE, type.getType());
         return filters;

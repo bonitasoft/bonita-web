@@ -43,7 +43,7 @@ public class EnumValidator extends AbstractStringValidator {
      * Default Constructor.
      */
     public EnumValidator(final String... listString) {
-        this(new ArrayList<String>(Arrays.asList(listString)));
+        this(new ArrayList<>(Arrays.asList(listString)));
     }
 
     /*

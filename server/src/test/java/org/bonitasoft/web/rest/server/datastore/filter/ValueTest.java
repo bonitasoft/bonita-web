@@ -36,7 +36,7 @@ public class ValueTest {
         ValueConverter<Long> converter = mock(ValueConverter.class);
         doReturn(5L).when(converter).convert("12");
 
-        Value<Long> value = new Value<Long>("12", converter);
+        Value<Long> value = new Value<>("12", converter);
 
         assertEquals(Long.valueOf(5), value.cast());
     }

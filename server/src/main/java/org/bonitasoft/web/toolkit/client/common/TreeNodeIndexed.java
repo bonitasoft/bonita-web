@@ -34,7 +34,7 @@ public class TreeNodeIndexed<VALUE_CLASS> extends TreeIndexed<VALUE_CLASS> {
 
     @Override
     public TreeNodeIndexed<VALUE_CLASS> copy() {
-        final TreeNodeIndexed<VALUE_CLASS> result = new TreeNodeIndexed<VALUE_CLASS>();
+        final TreeNodeIndexed<VALUE_CLASS> result = new TreeNodeIndexed<>();
 
         for (final String key : this.children.keySet()) {
             result.addNode(key, this.children.get(key).copy());

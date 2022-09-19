@@ -52,6 +52,6 @@ public class ErrorMessage {
     }
 
     public JacksonRepresentation<ErrorMessage> toEntity() {
-        return new JacksonRepresentation<ErrorMessage>(this);
+        return new JacksonRepresentation<>(this);
     }
 }

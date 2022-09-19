@@ -58,7 +58,7 @@ public class ProcessConnectorDependencyDatastoreTest extends APITestWithMock {
     }
 
     private Map<String, String> buildFilters(final Long processId, final String connectorName, final String connectorVersion) {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_PROCESS_ID, String.valueOf(processId));
         filters.put(ATTRIBUTE_CONNECTOR_NAME, connectorName);
         filters.put(ATTRIBUTE_CONNECTOR_VERSION, connectorVersion);

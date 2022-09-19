@@ -76,7 +76,7 @@ public class APICaseIT extends AbstractConsoleTest {
     public void testGetCase() {
         final TestCase testCase = TestProcessFactory.getDefaultHumanTaskProcess().addActor(getInitiator()).startCase();
 
-        final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<String>(), new ArrayList<String>());
+        final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()), new ArrayList<>(), new ArrayList<>());
 
         Assert.assertNotNull("Case not found", caseItem);
         assertEquals("Wrong case found", testCase.getProcessInstance(), caseItem);
@@ -88,7 +88,7 @@ public class APICaseIT extends AbstractConsoleTest {
         final TestCase testCase = testProcess.startCase();
 
         final CaseItem caseItem = apiCase.runGet(APIID.makeAPIID(testCase.getId()),
-                Arrays.asList(CaseItem.ATTRIBUTE_PROCESS_ID, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<String>());
+                Arrays.asList(CaseItem.ATTRIBUTE_PROCESS_ID, CaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<>());
 
         Assert.assertNotNull("Failed to deploy process", caseItem.getProcess());
         Assert.assertEquals("Wrong process deployed", testCase.getProcessInstance().getName(), caseItem.getProcess().getName());
@@ -129,7 +129,7 @@ public class APICaseIT extends AbstractConsoleTest {
         initCasesForSearch();
 
         // Search for current User
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.ATTRIBUTE_STARTED_BY_USER_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
@@ -145,7 +145,7 @@ public class APICaseIT extends AbstractConsoleTest {
         initCasesForSearch();
 
         // Search for current User
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_USER_ID, String.valueOf(getInitiator().getId()));
 
         final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
@@ -166,7 +166,7 @@ public class APICaseIT extends AbstractConsoleTest {
         testProcess3.startCases(5);
 
         // Search for current User
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.ATTRIBUTE_PROCESS_ID, String.valueOf(testProcess3.getId()));
 
         final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 3, null, null, filters, null, null);
@@ -203,7 +203,7 @@ public class APICaseIT extends AbstractConsoleTest {
         testProcess3.startCases(5);
 
         // Search for current User
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_SUPERVISOR_ID, String.valueOf(TestUserFactory.getRidleyScott().getId()));
 
         final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 10, null, null, filters, null, null);
@@ -227,7 +227,7 @@ public class APICaseIT extends AbstractConsoleTest {
         testProcess5.startCases(10);
 
         // Search for current User
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(CaseItem.FILTER_TEAM_MANAGER_ID, String.valueOf(TestUserFactory.getTeamManagerUser().getId()));
 
         final ItemSearchResult<CaseItem> caseItems = apiCase.runSearch(0, 100, null, null, filters, null, null);

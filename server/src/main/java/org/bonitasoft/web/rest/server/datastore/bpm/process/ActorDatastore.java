@@ -107,7 +107,7 @@ public class ActorDatastore extends CommonDatastore<ActorItem, ActorInstance> im
             final List<ActorInstance> actors = getProcessAPI().getActors(processId, SearchOptionsBuilderUtil.computeIndex(page, resultsByPage), resultsByPage,
                     ActorCriterion.valueOf(orders.toUpperCase().replace(" ", "_")));
 
-            return new ItemSearchResult<ActorItem>(
+            return new ItemSearchResult<>(
                     page,
                     resultsByPage,
                     getProcessAPI().getNumberOfActors(processId),

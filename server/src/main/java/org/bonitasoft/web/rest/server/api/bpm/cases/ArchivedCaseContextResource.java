@@ -44,7 +44,7 @@ public class ArchivedCaseContextResource extends CommonResource {
 
     @Get("json")
     public Map<String, Serializable> getArchivedCaseContext() throws ExpressionEvaluationException, ProcessInstanceNotFoundException {
-        final Map<String, Serializable> resultMap = new HashMap<String, Serializable>();
+        final Map<String, Serializable> resultMap = new HashMap<>();
 
         Map<String, Serializable> caseExecutionContext = processAPI.getArchivedProcessInstanceExecutionContext(getArchivedCaseIdParameter());
 

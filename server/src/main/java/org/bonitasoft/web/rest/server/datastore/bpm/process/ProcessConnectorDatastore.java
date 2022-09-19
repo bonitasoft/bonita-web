@@ -93,7 +93,7 @@ public class ProcessConnectorDatastore extends CommonDatastore<ProcessConnectorI
                     resultsByPage,
                     ConnectorCriterion.valueOf(orders.toUpperCase().replace(" ", "_")));
 
-            final List<ProcessConnectorItem> results = new ArrayList<ProcessConnectorItem>();
+            final List<ProcessConnectorItem> results = new ArrayList<>();
             for (final ConnectorImplementationDescriptor connector : connectors) {
                 final ProcessConnectorItem result = convertEngineToConsoleItem(connector);
                 // Correct missing element in engine object
@@ -104,7 +104,7 @@ public class ProcessConnectorDatastore extends CommonDatastore<ProcessConnectorI
 
             final long numtotalConnectorImplem = getProcessAPI().getNumberOfConnectorImplementations(processId);
 
-            return new ItemSearchResult<ProcessConnectorItem>(page, resultsByPage, numtotalConnectorImplem, results);
+            return new ItemSearchResult<>(page, resultsByPage, numtotalConnectorImplem, results);
 
         } catch (final Exception e) {
             throw new APIException(e);

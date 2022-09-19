@@ -86,7 +86,7 @@ public class ConsoleProperties {
 
     public String getProperty(String propertyName) {
         if (consoleProperties == null) {
-            consoleProperties = new ConcurrentHashMap<String, Optional<String>>();
+            consoleProperties = new ConcurrentHashMap<>();
         }
         Optional<String> propertyValue = consoleProperties.get(propertyName);
         if (propertyValue == null) {

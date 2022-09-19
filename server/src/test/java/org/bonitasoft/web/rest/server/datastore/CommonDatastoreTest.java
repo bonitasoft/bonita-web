@@ -60,7 +60,7 @@ public class CommonDatastoreTest {
     @Test
     public void addStringFilterToSearchBuilder_should_do_nothing_when_filters_is_empty() {
         // given:
-        final Map<String, String> filters = new HashMap<String, String>(0);
+        final Map<String, String> filters = new HashMap<>(0);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
         commonDatastore.addStringFilterToSearchBuilder(filters, searchOptionsBuilder, null, null);
@@ -76,7 +76,7 @@ public class CommonDatastoreTest {
         // given:
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, "> someNumericValue ");
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -96,7 +96,7 @@ public class CommonDatastoreTest {
     public void addStringFilterToSearchBuilder_should_do_nothing_when_filter_value_is_null() {
         // given:
         final String filterName = "someFilterKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, null);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -113,7 +113,7 @@ public class CommonDatastoreTest {
         // given:
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, "< someNumericValue ");
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -135,7 +135,7 @@ public class CommonDatastoreTest {
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
         final String filterValue = "174";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, filterValue);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -167,7 +167,7 @@ public class CommonDatastoreTest {
     @Test
     public void addLongFilterToSearchBuilder_should_do_nothing_when_filters_is_empty() {
         // given:
-        final Map<String, String> filters = new HashMap<String, String>(0);
+        final Map<String, String> filters = new HashMap<>(0);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
         commonDatastore.addLongFilterToSearchBuilder(filters, searchOptionsBuilder, null, null);
@@ -183,7 +183,7 @@ public class CommonDatastoreTest {
         // given:
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, "> 2 ");
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -203,7 +203,7 @@ public class CommonDatastoreTest {
     public void addLongFilterToSearchBuilder_should_do_nothing_when_filter_value_is_null() {
         // given:
         final String filterName = "someFilterKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, null);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -220,7 +220,7 @@ public class CommonDatastoreTest {
         // given:
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, "< 8 ");
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:
@@ -242,7 +242,7 @@ public class CommonDatastoreTest {
         final String filterName = "someFilterKey";
         final String engineAttributeName = "EngineNumericKey";
         final String filterValue = "174";
-        final Map<String, String> filters = new HashMap<String, String>(1);
+        final Map<String, String> filters = new HashMap<>(1);
         filters.put(filterName, filterValue);
         final SearchOptionsBuilder searchOptionsBuilder = new SearchOptionsBuilder(0, 10);
         // when:

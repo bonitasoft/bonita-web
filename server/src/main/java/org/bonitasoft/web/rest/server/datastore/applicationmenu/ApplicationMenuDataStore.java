@@ -118,7 +118,7 @@ DatastoreHasGet<ApplicationMenuItem>, DatastoreHasSearch<ApplicationMenuItem>, D
         try {
             final SearchResult<ApplicationMenu> searchResult = runSearch(creator);
             final List<ApplicationMenuItem> appMenuItems = convertEngineToConsoleItemsList(searchResult.getResult());
-            return new ItemSearchResult<ApplicationMenuItem>(page, resultsByPage, searchResult.getCount(),
+            return new ItemSearchResult<>(page, resultsByPage, searchResult.getCount(),
                     appMenuItems);
         } catch (final SearchException e) {
             throw new APIException(e);

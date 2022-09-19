@@ -248,7 +248,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     }
 
     protected String generateResponseJson(final HttpServletRequest request, final String fileName, String contentType, final File uploadedFile) throws Exception {
-        final Map<String, String> responseMap = new HashMap<String, String>();
+        final Map<String, String> responseMap = new HashMap<>();
         if (alsoReturnOriginalFilename) {
             responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
         }

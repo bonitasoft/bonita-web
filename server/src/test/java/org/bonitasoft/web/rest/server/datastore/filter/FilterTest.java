@@ -41,7 +41,7 @@ public class FilterTest {
     @Test
     public void testFilterField() throws Exception {
         Mockito.doReturn("field").when(field).toString();
-        Filter<String> filter = new Filter<String>(field, value);
+        Filter<String> filter = new Filter<>(field, value);
 
         Assert.assertEquals("field", filter.getField());
     }
@@ -49,7 +49,7 @@ public class FilterTest {
     @Test
     public void testFilterValue() throws Exception {
         Mockito.doReturn("value").when(value).cast();
-        Filter<String> filter = new Filter<String>(field, value);
+        Filter<String> filter = new Filter<>(field, value);
 
         Assert.assertEquals("value", filter.getValue());
     }

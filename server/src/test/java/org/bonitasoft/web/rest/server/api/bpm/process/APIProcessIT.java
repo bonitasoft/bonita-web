@@ -95,7 +95,7 @@ public class APIProcessIT extends AbstractConsoleTest {
         assertEquals("Process should start enabled", ProcessItem.VALUE_ACTIVATION_STATE_ENABLED, expectedState);
 
         // use process api to update the state
-        final Map<String, String> attributes = new HashMap<String, String>();
+        final Map<String, String> attributes = new HashMap<>();
         attributes.put(ProcessItem.ATTRIBUTE_ACTIVATION_STATE, ProcessItem.VALUE_ACTIVATION_STATE_DISABLED);
         final ProcessItem processItem = apiProcess.update(processDefinitionId, attributes);
 
@@ -116,8 +116,8 @@ public class APIProcessIT extends AbstractConsoleTest {
                 .addActor(getInitiator())
                 .getId());
 
-        final ArrayList<String> deploys = new ArrayList<String>();
-        final ArrayList<String> counters = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
+        final ArrayList<String> counters = new ArrayList<>();
 
         assertEquals("Can't get a processItem with APIProcess", apiProcess.runGet(processDefinitionId, deploys, counters).getName(),
                 TestProcessFactory.getDefaultHumanTaskProcess().getProcessDefinition().getName());
@@ -138,12 +138,12 @@ public class APIProcessIT extends AbstractConsoleTest {
                 .getId());
 
         // Set the filters
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ProcessItem.FILTER_USER_ID, String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
 
         // Search the ProcessItem
-        final ArrayList<String> deploys = new ArrayList<String>();
-        final ArrayList<String> counters = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
+        final ArrayList<String> counters = new ArrayList<>();
         final ProcessItem processItem = apiProcess.runSearch(0, 10, null, ProcessItem.ATTRIBUTE_DISPLAY_NAME + " ASC", filters, deploys, counters)
                 .getResults().get(0);
         assertEquals("Can't search a processItem with APIProcess <" + processDefinitionId + " - " + processItem.getId().toLong() + ">", processDefinitionId,
@@ -192,7 +192,7 @@ public class APIProcessIT extends AbstractConsoleTest {
         p3.addActor(TestUserFactory.getJohnCarpenter()).setEnable(true);
 
         // Set the filters
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ProcessItem.FILTER_USER_ID, String.valueOf(TestUserFactory.getJohnCarpenter().getId()));
         filters.put(ProcessItem.ATTRIBUTE_DISPLAY_NAME, "multipleVersionsProcess");
 

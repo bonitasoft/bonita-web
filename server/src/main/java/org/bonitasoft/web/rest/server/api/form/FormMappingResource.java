@@ -62,7 +62,7 @@ public class FormMappingResource extends CommonResource {
     }
 
     private List<FormMappingItem> convertMapping(List<FormMapping> result) {
-        List<FormMappingItem> convertedResult = new ArrayList<FormMappingItem>();
+        List<FormMappingItem> convertedResult = new ArrayList<>();
         for (FormMapping item: result) {
             convertedResult.add(new FormMappingItem(item));
         }

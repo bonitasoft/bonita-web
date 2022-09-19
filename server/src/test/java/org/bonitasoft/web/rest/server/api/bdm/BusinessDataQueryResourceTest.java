@@ -60,7 +60,7 @@ public class BusinessDataQueryResourceTest extends RestletTest {
 
     @Test
     public void should_call_custom_query() throws Exception {
-        final Answer<Serializable> answer = new Answer<Serializable>() {
+        final Answer<Serializable> answer = new Answer<>() {
 
             @Override
             public Serializable answer(final InvocationOnMock invocation) throws Throwable {
@@ -80,7 +80,7 @@ public class BusinessDataQueryResourceTest extends RestletTest {
                 assertThat(queryParameters).containsEntry("name", "John");
                 assertThat(queryParameters).containsEntry("country", "US");
 
-                return new BusinessDataQueryResultImpl( JSON_RESPONSE, new BusinessDataQueryMetadataImpl(1,2,4L));
+                return new BusinessDataQueryResultImpl(JSON_RESPONSE, new BusinessDataQueryMetadataImpl(1, 2, 4L));
             }
         };
         when(commandAPI.execute(anyString(), anyMapOf(String.class, Serializable.class))).then(answer);

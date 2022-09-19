@@ -76,13 +76,13 @@ public class APIArchivedHumanTaskIT extends AbstractConsoleTest {
     }
 
     private ArrayList<String> getProcessIdDeploy() {
-        final ArrayList<String> deploys = new ArrayList<String>();
+        final ArrayList<String> deploys = new ArrayList<>();
         deploys.add(HumanTaskItem.ATTRIBUTE_PROCESS_ID);
         return deploys;
     }
 
     private HashMap<String, String> getNameFilter(final HumanTaskInstance humanTaskInstance) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
         return filters;
     }
@@ -146,7 +146,7 @@ public class APIArchivedHumanTaskIT extends AbstractConsoleTest {
         final ArchivedActivityInstance archivedActivityInstance = getProcessAPI().searchArchivedActivities(searchOptionsBuilder.done()).getResult().get(0);
 
         final ArchivedHumanTaskItem archivedHumanTaskItem =
-                apiArchivedHumanTask.runGet(makeAPIID(archivedActivityInstance.getId()), deploys, new ArrayList<String>());
+                apiArchivedHumanTask.runGet(makeAPIID(archivedActivityInstance.getId()), deploys, new ArrayList<>());
 
         assertEquals("Can't get the good archivedTaskItem", archivedHumanTaskItem.getName(), humanTaskInstance.getName());
     }
@@ -158,7 +158,7 @@ public class APIArchivedHumanTaskIT extends AbstractConsoleTest {
         final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
 
         final ArchivedHumanTaskItem archivedHumanTaskItem = apiArchivedHumanTask.runSearch(0, 1, null, null,
-                filters, deploys, new ArrayList<String>()).getResults().get(0);
+                filters, deploys, new ArrayList<>()).getResults().get(0);
 
         assertNotNull("Can't find the good archivedTaskItem", archivedHumanTaskItem);
     }

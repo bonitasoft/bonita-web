@@ -43,7 +43,7 @@ public class VariablesMapper {
     }
 
     private List<VariableMapper> convertToMappers(List<Variable> list, JacksonDeserializer deserializer) {
-        ArrayList<VariableMapper> mappers = new ArrayList<VariableMapper>();
+        ArrayList<VariableMapper> mappers = new ArrayList<>();
         for (Variable variable : list) {
             if (!StringUtil.isBlank(variable.getName())) {
                 mappers.add(new VariableMapper(variable, deserializer));

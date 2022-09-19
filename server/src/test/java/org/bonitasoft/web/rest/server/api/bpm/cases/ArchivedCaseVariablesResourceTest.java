@@ -97,8 +97,8 @@ public class ArchivedCaseVariablesResourceTest extends RestletTest {
 		assertThat(response.getHeaders().getFirst("Content-range").getValue()).isEqualTo("1-2/4");
 
 		List<ArchivedCaseVariable> archivedVariables = objectMapper.readValue(response.getEntityAsText(),
-				new TypeReference<List<ArchivedCaseVariable>>() {
-				});
+                new TypeReference<>() {
+                });
 		assertThat(archivedVariables).hasSize(2).extracting(ArchivedVariable::getName).containsOnly("myVar3", "myVar4");
 	}
 

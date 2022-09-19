@@ -38,7 +38,7 @@ public class TestCategoryFactory {
 
     private static String CLIENT_OPERATIONS_DESCRIPTION = "Execute operations on behalf of clients";
 
-    private final Map<String, TestCategory> categories = new HashMap<String, TestCategory>();
+    private final Map<String, TestCategory> categories = new HashMap<>();
 
     private TestCategory _getCategory(final String name, final String description) {
         if (!this.categories.containsKey(name)) {
@@ -62,7 +62,7 @@ public class TestCategoryFactory {
     }
 
     public static List<TestCategory> getCategories(final int count) {
-        final List<TestCategory> results = new ArrayList<TestCategory>(count);
+        final List<TestCategory> results = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             results.add(getRandomCategory());
         }

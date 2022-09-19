@@ -38,14 +38,14 @@ public class APICaseVariableAttributeCheckerTest {
     }
 
     private Map<String, String> buildSuitableUpdateAttributes() {
-        Map<String, String> attributes = new HashMap<String, String>();
+        Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseVariableItem.ATTRIBUTE_TYPE, String.class.getName());
         attributes.put(CaseVariableItem.ATTRIBUTE_VALUE, "aValue");
         return attributes;
     }
 
     private Map<String, String> buildSuitableSearchFilters() {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(CaseVariableItem.ATTRIBUTE_CASE_ID, "1");
         return filters;
     }

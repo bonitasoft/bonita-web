@@ -35,7 +35,7 @@ public class AbstractHumanTaskDatastoreTest {
     @Mock
     private ProcessAPI processAPI;
     private APISession session = new APISessionImpl(55L, new Date(), 5000, "john", 44L, "default", 1L);
-    private AbstractHumanTaskDatastore<HumanTaskItem, HumanTaskInstance> datastore = new AbstractHumanTaskDatastore<HumanTaskItem, HumanTaskInstance>(session) {
+    private AbstractHumanTaskDatastore<HumanTaskItem, HumanTaskInstance> datastore = new AbstractHumanTaskDatastore<>(session) {
         @Override
         protected ProcessAPI getProcessAPI() {
             return processAPI;
@@ -51,7 +51,7 @@ public class AbstractHumanTaskDatastoreTest {
 
     @Test
     public void should_use_searchPendingOrAssignedToUserOrAssignedToOthersTasks_when_filtering_show_assigned_to_others_tasks() throws SearchException {
-        HashMap<String, String> filters = new HashMap<String, String>();
+        HashMap<String, String> filters = new HashMap<>();
         filters.put(FILTER_USER_ID, "44");
         filters.put(FILTER_SHOW_ASSIGNED_TO_OTHERS, "true");
         datastore.runSearch(new SearchOptionsBuilder(1, 100), filters);
@@ -68,7 +68,7 @@ public class AbstractHumanTaskDatastoreTest {
 
     @Test
     public void should_SearchOptionBuilderConvertSortParameter() throws SearchException {
-        SearchOptionsBuilder builder = datastore.makeSearchOptionBuilder(0, 10, null, ActivityItem.ATTRIBUTE_ROOT_CASE_ID + " " +  Order.DESC, new HashMap<String, String>());
+        SearchOptionsBuilder builder = datastore.makeSearchOptionBuilder(0, 10, null, ActivityItem.ATTRIBUTE_ROOT_CASE_ID + " " +  Order.DESC, new HashMap<>());
 
         Assert.assertEquals(builder.done().getSorts().size(),1);
         Assert.assertEquals(builder.done().getSorts().get(0).getField(), ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID);

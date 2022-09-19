@@ -37,7 +37,7 @@ public class TestProcessConnector {
     private String resourceFileName;
     private String resourceFilePath;
     
-    private List<String> dependencies = new ArrayList<String>();
+    private List<String> dependencies = new ArrayList<>();
 
     public TestProcessConnector(String name, String id, String version, String implementationClassname, String implementationId, 
             ConnectorEvent connectorEvent, String resourceFileName, String resourceFilePath) {

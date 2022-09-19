@@ -88,8 +88,8 @@ public class APIArchivedCaseIT extends AbstractConsoleTest {
         final TestCase testCase = initArchivedCaseForGet();
         final ArchivedProcessInstance archivedProcessInstance = testCase.getArchive();
 
-        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()), new ArrayList<String>(),
-                new ArrayList<String>());
+        final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()), new ArrayList<>(),
+                new ArrayList<>());
 
         Assert.assertNotNull("ArchivedCase not found", caseItem);
 
@@ -102,7 +102,7 @@ public class APIArchivedCaseIT extends AbstractConsoleTest {
         final ArchivedProcessInstance archivedProcessInstance = testCase.getArchive();
 
         final ArchivedCaseItem caseItem = getAPIArchivedCase().runGet(APIID.makeAPIID(archivedProcessInstance.getId()),
-                Arrays.asList(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<String>());
+                Arrays.asList(ArchivedCaseItem.ATTRIBUTE_PROCESS_ID, ArchivedCaseItem.ATTRIBUTE_STARTED_BY_USER_ID), new ArrayList<>());
 
         Assert.assertNotNull("Failed to deploy process", caseItem.getProcess());
         Assert.assertEquals("Wrong process deployed", testCase.getProcessInstance().getName(), caseItem.getProcess().getName());

@@ -58,14 +58,14 @@ public class ProcessResolutionProblemDatastore extends CommonDatastore<ProcessRe
                     MapUtil.getValueAsLong(filters, ProcessResolutionProblemItem.FILTER_PROCESS_ID));
 
             final int startIndex = page * resultsByPage;
-            return new ItemSearchResult<ProcessResolutionProblemItem>(
+            return new ItemSearchResult<>(
                     page,
                     resultsByPage,
                     errors.size(),
                     convertEngineToConsoleItemsList(
-                    errors.subList(
-                            startIndex,
-                            Math.min(startIndex + resultsByPage, errors.size())
+                            errors.subList(
+                                    startIndex,
+                                    Math.min(startIndex + resultsByPage, errors.size())
                             )
                     ));
 

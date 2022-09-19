@@ -75,8 +75,8 @@ public class APICategoryIT extends AbstractConsoleTest {
         final List<TestCategory> catList = TestCategoryFactory.getCategories(3);
 
         // Search the CommentItem
-        final List<CategoryItem> actualCatList = api.runSearch(0, 10, null, null, new HashMap<String, String>(), new ArrayList<String>(),
-                new ArrayList<String>()).getResults();
+        final List<CategoryItem> actualCatList = api.runSearch(0, 10, null, null, new HashMap<>(), new ArrayList<>(),
+                new ArrayList<>()).getResults();
         Assert.assertNotNull("Categories not found", actualCatList);
         Assert.assertTrue(catList.size() == 3);
     }
@@ -113,12 +113,12 @@ public class APICategoryIT extends AbstractConsoleTest {
         final TestCategory category = TestCategoryFactory.getRandomCategory();
 
         // Update
-        final Map<String, String> updates = new HashMap<String, String>();
+        final Map<String, String> updates = new HashMap<>();
         updates.put(CategoryItem.ATTRIBUTE_DESCRIPTION, newDescription);
         api.runUpdate(APIID.makeAPIID(category.getCategory().getId()), updates);
 
         // Get
-        final CategoryItem output = api.runGet(APIID.makeAPIID(category.getCategory().getId()), new ArrayList<String>(), new ArrayList<String>());
+        final CategoryItem output = api.runGet(APIID.makeAPIID(category.getCategory().getId()), new ArrayList<>(), new ArrayList<>());
 
         Assert.assertNotNull("Category not found", output);
         Assert.assertEquals("Update of category failed", newDescription, output.getDescription());
@@ -131,7 +131,7 @@ public class APICategoryIT extends AbstractConsoleTest {
         final TestCategory category = TestCategoryFactory.getRandomCategory();
 
         // API Call
-        final CategoryItem catItem = api.runGet(APIID.makeAPIID(category.getId()), new ArrayList<String>(), new ArrayList<String>());
+        final CategoryItem catItem = api.runGet(APIID.makeAPIID(category.getId()), new ArrayList<>(), new ArrayList<>());
 
         Assert.assertNotNull("Category not found", category);
         Assert.assertEquals("Wrong category description found", category.getCategory().getDescription(), catItem.getDescription());

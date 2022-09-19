@@ -34,7 +34,7 @@ public class PageUploadServletTest {
 
         doReturn(apiSession).when(pageUploadServlet).getAPISession(request);
         doReturn("edit").when(request).getParameter("action");
-        final Set<String> permissionsSet = new HashSet<String>();
+        final Set<String> permissionsSet = new HashSet<>();
         permissionsSet.add("Organisation visualization");
         permissionsSet.add("Organisation management");
         doReturn(permissionsSet).when(pageUploadServlet).getPagePermissions(request, zipFile, false);
@@ -52,7 +52,7 @@ public class PageUploadServletTest {
 
         doReturn(apiSession).when(pageUploadServlet).getAPISession(request);
         doReturn("add").when(request).getParameter("action");
-        final Set<String> permissionsSet = new HashSet<String>();
+        final Set<String> permissionsSet = new HashSet<>();
         doReturn(permissionsSet).when(pageUploadServlet).getPagePermissions(request, zipFile, true);
 
         final String permissions = pageUploadServlet.getPermissions(request, zipFile);

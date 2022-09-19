@@ -25,7 +25,7 @@ public class UserTaskContextResource extends CommonResource {
 
     @Get("json")
     public Map<String, Serializable> getUserTaskContext() throws UserTaskNotFoundException, ExpressionEvaluationException {
-        final Map<String, Serializable> resultMap = new HashMap<String, Serializable>();
+        final Map<String, Serializable> resultMap = new HashMap<>();
 
         Map<String, Serializable> userTaskExecutionContext = processAPI.getUserTaskExecutionContext(getTaskIdParameter());
 

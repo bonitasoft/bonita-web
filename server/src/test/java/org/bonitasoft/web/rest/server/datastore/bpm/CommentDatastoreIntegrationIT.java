@@ -50,7 +50,7 @@ public class CommentDatastoreIntegrationIT extends AbstractConsoleTest {
     }
 
     private HashMap<String, String> filterByCaseId(long caseId) {
-        HashMap<String, String> filters = new HashMap<String, String>();
+        HashMap<String, String> filters = new HashMap<>();
         filters.put(CommentItem.ATTRIBUTE_PROCESS_INSTANCE_ID, String.valueOf(caseId));
         return filters;
     }

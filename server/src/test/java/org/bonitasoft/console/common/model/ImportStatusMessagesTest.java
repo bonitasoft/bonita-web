@@ -59,7 +59,7 @@ public class ImportStatusMessagesTest {
         final ImportStatus statusAdded2 = new ImportStatus("statusAdded2");
         statusAdded2.setStatus(ImportStatus.Status.REPLACED);
 
-        final List<ImportStatus> importStatus = new ArrayList<ImportStatus>(Arrays.asList(statusAdded1, statusAdded2));
+        final List<ImportStatus> importStatus = new ArrayList<>(Arrays.asList(statusAdded1, statusAdded2));
 
         //when
         final ImportStatusMessages importStatusMessages = new ImportStatusMessages(importStatus);
@@ -83,7 +83,7 @@ public class ImportStatusMessagesTest {
         final ImportStatus status2 = new ImportStatus("statusSkipped2");
         status2.setStatus(ImportStatus.Status.SKIPPED);
 
-        final List<ImportStatus> importStatus = new ArrayList<ImportStatus>(Arrays.asList(status1, status2));
+        final List<ImportStatus> importStatus = new ArrayList<>(Arrays.asList(status1, status2));
 
         //when
         final ImportStatusMessages importStatusMessages = new ImportStatusMessages(importStatus);
@@ -110,7 +110,7 @@ public class ImportStatusMessagesTest {
         final ImportStatus status2 = new ImportStatus("statusError2");
         status2.addError(new ImportError("Error1", Type.PAGE));
 
-        final List<ImportStatus> importStatus = new ArrayList<ImportStatus>(Arrays.asList(status1, status2));
+        final List<ImportStatus> importStatus = new ArrayList<>(Arrays.asList(status1, status2));
 
         //when
         final ImportStatusMessages importStatusMessages = new ImportStatusMessages(importStatus);

@@ -37,7 +37,7 @@ public class BusinessDataReferencesResourceTest extends RestletTest {
     }
 
     private MultipleBusinessDataReference buildMultipleEmployeeReference(final String name, final long... businessDataIds) {
-        final List<Long> ids = new ArrayList<Long>();
+        final List<Long> ids = new ArrayList<>();
         for (final long businessDataId : businessDataIds) {
             ids.add(businessDataId);
         }
@@ -87,7 +87,7 @@ public class BusinessDataReferencesResourceTest extends RestletTest {
 
     @Test
     public void should_return_the_references_of_the_business_data_of_the_process_instance() throws Exception {
-        final List<BusinessDataReference> references = new ArrayList<BusinessDataReference>();
+        final List<BusinessDataReference> references = new ArrayList<>();
         references.add(buildSimpleEmployeeReference("john", 487467354L));
         references.add(buildMultipleEmployeeReference("Ateam", 687646784L, 2313213874354L));
         when(bdmAPI.getProcessBusinessDataReferences(486L, 10, 10)).thenReturn(references);

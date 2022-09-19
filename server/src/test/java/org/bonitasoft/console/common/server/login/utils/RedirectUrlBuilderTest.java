@@ -41,7 +41,7 @@ public class RedirectUrlBuilderTest {
 
     @Test
     public void testPostParamsAreNotAddedToTheUrl() {
-        final Map<String, String[]> parameters = new HashMap<String, String[]>();
+        final Map<String, String[]> parameters = new HashMap<>();
         parameters.put("postParam", someValues("true"));
 
         final RedirectUrlBuilder redirectUrlBuilder = new RedirectUrlBuilder("myredirecturl?someparam=value#hashparam=true");

@@ -112,7 +112,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
                 actorMemberItem.setActorId(actorId);
             }
 
-            return new ItemSearchResult<ActorMemberItem>(
+            return new ItemSearchResult<>(
                     page, resultsByPage,
                     filteredResults.size(),
                     finalResults);
@@ -127,7 +127,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
      *            We accept filter value or {@link MemberType} enum value. Better use MemberType enum value
      */
     private List<ActorMember> applyTypeFilter(final String filterType, final List<ActorMember> unfilteredResults) {
-        final List<ActorMember> filteredResults = new ArrayList<ActorMember>();
+        final List<ActorMember> filteredResults = new ArrayList<>();
         if (StringUtil.isBlank(filterType)) {
             filteredResults.addAll(unfilteredResults);
         } else {

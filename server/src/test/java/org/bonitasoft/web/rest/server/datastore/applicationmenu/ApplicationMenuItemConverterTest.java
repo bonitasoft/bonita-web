@@ -130,7 +130,7 @@ public class ApplicationMenuItemConverterTest extends APITestWithMock {
     public void toApplicationMenuUpdater_should_map_all_fields() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_ID, String.valueOf(APPLICATION_ID));
         fields.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_PAGE_ID, String.valueOf(APPLICATION_PAGE_ID));
         fields.put(ApplicationMenuItem.ATTRIBUTE_DISPLAY_NAME, DISPLAY_NAME);
@@ -155,7 +155,7 @@ public class ApplicationMenuItemConverterTest extends APITestWithMock {
     public void update_with_no_pageId_should_send_null() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_ID, "-1");
 
         //when
@@ -171,7 +171,7 @@ public class ApplicationMenuItemConverterTest extends APITestWithMock {
     public void update_with_no_parent_menu_should_send_null() {
 
         //given
-        final HashMap<String, String> fields = new HashMap<String, String>();
+        final HashMap<String, String> fields = new HashMap<>();
         fields.put(ApplicationMenuItem.ATTRIBUTE_APPLICATION_PAGE_ID, "-1");
 
         //when

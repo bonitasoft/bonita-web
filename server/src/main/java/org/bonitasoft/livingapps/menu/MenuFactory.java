@@ -35,7 +35,7 @@ public class MenuFactory {
 
     private List<Menu> collect(final List<ApplicationMenu> items, final Collector collector)
             throws ApplicationPageNotFoundException, SearchException {
-        final List<Menu> menuList = new ArrayList<Menu>();
+        final List<Menu> menuList = new ArrayList<>();
         for (final ApplicationMenu item : items) {
             if(collector.isCollectible(item)) {
                 menuList.add(create(item, items));

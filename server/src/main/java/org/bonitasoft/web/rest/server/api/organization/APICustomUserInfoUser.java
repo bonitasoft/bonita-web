@@ -63,11 +63,11 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
                 page * resultsByPage,
                 resultsByPage);
 
-        List<CustomUserInfoItem> information = new ArrayList<CustomUserInfoItem>();
+        List<CustomUserInfoItem> information = new ArrayList<>();
         for (CustomUserInfo item : items) {
             information.add(converter.convert(item));
         }
-        return new ItemSearchResult<CustomUserInfoItem>(page, information.size(), client.countDefinitions(), information);
+        return new ItemSearchResult<>(page, information.size(), client.countDefinitions(), information);
     }
 
     @Override

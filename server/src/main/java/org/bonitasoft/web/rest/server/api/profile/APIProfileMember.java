@@ -48,7 +48,7 @@ public class APIProfileMember extends AbstractAPIMember<ProfileMemberItem> {
 
         ProfileMemberEngineClient engineClient = createProfileMemberEngineClient();
 
-        ComposedDatastore<ProfileMemberItem> datastore = new ComposedDatastore<ProfileMemberItem>();
+        ComposedDatastore<ProfileMemberItem> datastore = new ComposedDatastore<>();
         datastore.setAddHelper(new AddProfileMemberHelper(engineClient));
         datastore.setDeleteHelper(new DeleteProfileMemberHelper(engineClient));
         datastore.setSearchHelper(new SearchProfileMembersHelper(engineClient));

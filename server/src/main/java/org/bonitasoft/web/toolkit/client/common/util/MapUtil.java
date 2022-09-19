@@ -134,7 +134,7 @@ public class MapUtil {
     }
 
     public static Map<String, String> asMap(final Arg... args) {
-        final Map<String, String> results = new HashMap<String, String>();
+        final Map<String, String> results = new HashMap<>();
         for (final Arg arg : args) {
             results.put(arg.getName(), arg.getValue());
         }

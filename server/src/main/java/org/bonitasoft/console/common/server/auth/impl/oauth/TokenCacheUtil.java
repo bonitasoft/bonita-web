@@ -25,7 +25,7 @@ import org.scribe.model.Token;
 
 public class TokenCacheUtil {
 
-    static Map<String, Token> map = new HashMap<String, Token>();
+    static Map<String, Token> map = new HashMap<>();
 
     public static void addRequestToken(final Token requestToken) {
         map.put(requestToken.getToken(), requestToken);

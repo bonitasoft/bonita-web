@@ -58,7 +58,7 @@ public class APIProcessConnectorDependencyIT extends AbstractConsoleTest {
     }
 
     private Map<String, String> buildFilters(long processId, String connectorId, String connectorVersion) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(ATTRIBUTE_PROCESS_ID, String.valueOf(processId));
         filters.put(ATTRIBUTE_CONNECTOR_NAME, connectorId);
         filters.put(ATTRIBUTE_CONNECTOR_VERSION, connectorVersion);

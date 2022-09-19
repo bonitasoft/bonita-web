@@ -39,7 +39,7 @@ public class TestRoleFactory {
     private static TestRoleFactory instance;
 
     private TestRoleFactory() {
-        this.roleList = new HashMap<String, TestRole>();
+        this.roleList = new HashMap<>();
     }
 
     public static TestRoleFactory getInstance() {
@@ -64,7 +64,7 @@ public class TestRoleFactory {
     }
 
     public List<TestRole> createRandomRoles(final int nbOfRoles) {
-        final List<TestRole> results = new ArrayList<TestRole>();
+        final List<TestRole> results = new ArrayList<>();
 
         for (int i = 0; i < nbOfRoles; i++) {
             final String name = getRandomString();

@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public class CompoundAttributeReader extends AbstractAttributeReader implements HasReaders {
 
-    private final Map<String, AbstractAttributeReader> readers = new HashMap<String, AbstractAttributeReader>();
+    private final Map<String, AbstractAttributeReader> readers = new HashMap<>();
 
     private String template;
 
@@ -71,7 +71,7 @@ public class CompoundAttributeReader extends AbstractAttributeReader implements 
     }
 
     private Map<String, String> getTemplateArgs(final IItem item) {
-        final Map<String, String> args = new HashMap<String, String>();
+        final Map<String, String> args = new HashMap<>();
         for (final Entry<String, AbstractAttributeReader> reader : this.readers.entrySet()) {
             final String read = reader.getValue().read(item);
             if (read != null) {

@@ -45,7 +45,7 @@ public final class CommandCaller {
     public CommandCaller(APISession session, final String command) {
         this.session = session;
         this.command = command;
-        parameters = new HashMap<String, Serializable>();
+        parameters = new HashMap<>();
     }
 
     public CommandCaller addParameter(final String key, final Serializable value) {

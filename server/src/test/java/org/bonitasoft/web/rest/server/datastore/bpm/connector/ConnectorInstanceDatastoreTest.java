@@ -79,7 +79,7 @@ public class ConnectorInstanceDatastoreTest {
      */
     @Test
     public void searchBuildRightParameters() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(ConnectorInstanceItem.ATTRIBUTE_CONTAINER_ID, "1");
         filters.put(ConnectorInstanceItem.ATTRIBUTE_STATE, "2");
 
@@ -102,12 +102,12 @@ public class ConnectorInstanceDatastoreTest {
     public void searchReturnAllItems() throws Exception {
         final ConnectorInstance connectorInstance1 = createConnectorInstanceImpl(1L, "instance 1");
         final ConnectorInstance connectorInstance2 = createConnectorInstanceImpl(1L, "instance 2");
-        final SearchResult<ConnectorInstance> expected = new SearchResultImpl<ConnectorInstance>(2,
+        final SearchResult<ConnectorInstance> expected = new SearchResultImpl<>(2,
                 Arrays.asList(connectorInstance1, connectorInstance2));
 
         Mockito.when(this.mockedProcessAPI.searchConnectorInstances(Mockito.any(SearchOptions.class))).thenReturn(expected);
 
-        final ItemSearchResult<ConnectorInstanceItem> searchResult = this.spiedDatastore.search(0, 10, null, null, new HashMap<String, String>());
+        final ItemSearchResult<ConnectorInstanceItem> searchResult = this.spiedDatastore.search(0, 10, null, null, new HashMap<>());
 
         Mockito.verify(this.mockedProcessAPI).searchConnectorInstances(Mockito.any(SearchOptions.class));
         Assert.assertTrue(areEquals(new ConnectorInstanceItemWrapper(expected.getResult().get(0)), searchResult.getResults().get(0)));

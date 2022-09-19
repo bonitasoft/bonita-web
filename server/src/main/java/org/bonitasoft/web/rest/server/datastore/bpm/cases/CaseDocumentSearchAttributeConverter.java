@@ -39,7 +39,7 @@ public class CaseDocumentSearchAttributeConverter implements AttributeConverter 
     }
 
     private Map<String, String> createMapping() {
-        final Map<String, String> mapping = new HashMap<String, String>();
+        final Map<String, String> mapping = new HashMap<>();
         mapping.put(CaseDocumentItem.ATTRIBUTE_ID, CaseDocumentItem.ATTRIBUTE_ID);
         mapping.put(CaseDocumentItem.ATTRIBUTE_SUBMITTED_BY_USER_ID, DocumentsSearchDescriptor.DOCUMENT_AUTHOR);
         mapping.put(CaseDocumentItem.ATTRIBUTE_NAME, DocumentsSearchDescriptor.DOCUMENT_NAME);

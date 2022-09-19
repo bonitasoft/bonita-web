@@ -195,7 +195,7 @@ public class JSonUtil {
     }
 
     public static HashMap<String, String> unescape(final HashMap<String, String> values) {
-        final HashMap<String, String> unescapeMap = new HashMap<String, String>();
+        final HashMap<String, String> unescapeMap = new HashMap<>();
         for (final String valueName : values.keySet()) {
             unescapeMap.put(valueName, unquote(values.get(valueName)));
         }

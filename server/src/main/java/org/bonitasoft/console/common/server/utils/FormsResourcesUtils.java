@@ -76,7 +76,7 @@ public class FormsResourcesUtils {
     /**
      * A map used to store the classloaders that are used to load some libraries extracted from the business archive
      */
-    private final static Map<Long, ClassLoader> PROCESS_CLASSLOADERS = new HashMap<Long, ClassLoader>();
+    private final static Map<Long, ClassLoader> PROCESS_CLASSLOADERS = new HashMap<>();
 
     /**
      * Util class allowing to work with the BPM engine API
@@ -183,7 +183,7 @@ public class FormsResourcesUtils {
      * @throws java.io.IOException
      */
     private static URL[] getLibrariesURLs(final File processApplicationsResourcesDir) throws IOException {
-        final List<URL> urls = new ArrayList<URL>();
+        final List<URL> urls = new ArrayList<>();
         final File libDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.LIB_DIRECTORY_IN_BAR + File.separator);
         if (libDirectory.exists()) {
             final File[] libFiles = libDirectory.listFiles();
@@ -531,7 +531,7 @@ public class FormsResourcesUtils {
     }
 
     protected static URL[] getBDMLibrariesURLs(final File bdmFolder) throws IOException {
-        final List<URL> urls = new ArrayList<URL>();
+        final List<URL> urls = new ArrayList<>();
         if (bdmFolder.exists()) {
             final File[] bdmFiles = bdmFolder.listFiles(new FilenameFilter() {
 

@@ -68,7 +68,7 @@ public class TaskFinderTest {
         final ArchivedTaskItem task = new ArchivedTaskItem();
         task.setId(id);
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
         final ItemSearchResult<ArchivedTaskItem> result = mock(ItemSearchResult.class);
         when(result.getResults()).thenReturn(Arrays.asList(task));
@@ -83,7 +83,7 @@ public class TaskFinderTest {
     @Test(expected = APIItemNotFoundException.class)
     public void should_throw_an_exception_when_the_task_does_not_exist() throws Exception {
         when(journal.get(id)).thenThrow(new APIItemNotFoundException("type", id));
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(ArchivedActivityInstanceSearchDescriptor.SOURCE_OBJECT_ID, id.toString());
         when(archives.search(0, 1, null, ArchivedActivityItem.ATTRIBUTE_ARCHIVED_DATE + " "
                 + Order.DESC, filters)).thenThrow(new APIItemNotFoundException("type", id));

@@ -28,7 +28,7 @@ import org.bonitasoft.console.common.server.api.token.*;
  */
 public class MappingTokenUserSession {
 
-    private static Map<String, APIToken> MappingTokenUserSessionMap = new HashMap<String, APIToken>();
+    private static Map<String, APIToken> MappingTokenUserSessionMap = new HashMap<>();
     
     public static void addSessionIdAndToken(String name, APIToken value) {
         removeSessionId(name);

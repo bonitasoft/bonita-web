@@ -66,7 +66,7 @@ public class ConnectorInstanceDatastore extends CommonDatastore<ConnectorInstanc
 
         if (searchConnectorInstances != null) {
             final List<ConnectorInstanceItem> convertedResult = convertEngineItemsIntoConsoleItems(searchConnectorInstances.getResult());
-            return new ItemSearchResult<ConnectorInstanceItem>(page, resultsByPage, searchConnectorInstances.getCount(),
+            return new ItemSearchResult<>(page, resultsByPage, searchConnectorInstances.getCount(),
                     convertedResult);
         } else {
             throw new APIException("Search failed for the following parameters <page: " + page + " - resulsByPage: " + resultsByPage + " - search: " + search
@@ -110,7 +110,7 @@ public class ConnectorInstanceDatastore extends CommonDatastore<ConnectorInstanc
      */
     protected List<ConnectorInstanceItem> convertEngineItemsIntoConsoleItems(final List<ConnectorInstance> engineItemList) {
         if (engineItemList != null) {
-            final List<ConnectorInstanceItem> consoleItemList = new ArrayList<ConnectorInstanceItem>();
+            final List<ConnectorInstanceItem> consoleItemList = new ArrayList<>();
             for (final ConnectorInstance engineItem : engineItemList) {
                 consoleItemList.add(convertEngineToConsoleItem(engineItem));
             }

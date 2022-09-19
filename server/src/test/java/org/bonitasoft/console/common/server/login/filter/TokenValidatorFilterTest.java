@@ -201,7 +201,7 @@ public class TokenValidatorFilterTest {
     @Test
     public void testCompileSimplePattern() throws Exception {
         final String patternToCompile = "test";
-        assertThat(filter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(filter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {
@@ -213,7 +213,7 @@ public class TokenValidatorFilterTest {
     @Test
     public void testCompileExcludePattern() throws Exception {
         final String patternToCompile = TokenValidatorFilter.TOKEN_VALIDATOR_FILTER_EXCLUDED_PAGES_PATTERN;
-        assertThat(filter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
+        assertThat(filter.compilePattern(patternToCompile)).isNotNull().has(new Condition<>() {
 
             @Override
             public boolean matches(final Pattern pattern) {

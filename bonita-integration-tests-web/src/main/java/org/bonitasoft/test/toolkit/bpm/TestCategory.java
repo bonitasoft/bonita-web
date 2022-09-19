@@ -108,7 +108,7 @@ public class TestCategory {
             final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
             final int nbCat = (int) processAPI.getNumberOfCategories();
             final List<Category> catList = processAPI.getCategories(0, nbCat, CategoryCriterion.NAME_ASC);
-            final List<TestCategory> testCatList = new ArrayList<TestCategory>();
+            final List<TestCategory> testCatList = new ArrayList<>();
             for (final Category cat : catList) {
                 testCatList.add(new TestCategory(cat));
             }

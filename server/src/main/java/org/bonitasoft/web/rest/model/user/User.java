@@ -49,7 +49,7 @@ public class User implements Serializable {
     /**
      * the user rights
      */
-    private List<String> availableFeatures = new ArrayList<String>();
+    private List<String> availableFeatures = new ArrayList<>();
 
     /**
      *

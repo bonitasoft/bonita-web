@@ -80,13 +80,13 @@ public class ArchivedCommentDatastore extends CommonDatastore<ArchivedCommentIte
 
             final SearchResult<ArchivedComment> result = TenantAPIAccessor.getProcessAPI(getEngineSession()).searchArchivedComments(builder.done());
 
-            final List<ArchivedCommentItem> archivedCommentList = new ArrayList<ArchivedCommentItem>();
+            final List<ArchivedCommentItem> archivedCommentList = new ArrayList<>();
             for (final ArchivedComment item : result.getResult()) {
                 final ArchivedCommentItem resultArchivedCommentItem = convertEngineToConsoleItem(item);
                 archivedCommentList.add(resultArchivedCommentItem);
             }
 
-            return new ItemSearchResult<ArchivedCommentItem>(page, resultsByPage,
+            return new ItemSearchResult<>(page, resultsByPage,
                     result.getCount(), archivedCommentList);
 
         } catch (final InvalidSessionException e) {

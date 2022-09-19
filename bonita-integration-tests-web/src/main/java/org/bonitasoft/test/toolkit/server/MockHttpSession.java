@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSessionContext;
  */
 public class MockHttpSession implements HttpSession {
 
-    Map<String, Object> attributesMap = new HashMap<String, Object>();
+    Map<String, Object> attributesMap = new HashMap<>();
 
     String id = new Date().getTime() + "";
 

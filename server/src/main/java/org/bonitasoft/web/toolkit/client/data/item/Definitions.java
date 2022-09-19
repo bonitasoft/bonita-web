@@ -24,7 +24,7 @@ import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
  */
 public class Definitions {
 
-    private final Map<String, ItemDefinition<?>> itemDefinitions = new HashMap<String, ItemDefinition<?>>();
+    private final Map<String, ItemDefinition<?>> itemDefinitions = new HashMap<>();
 
     private static final Definitions INSTANCE = new Definitions();
 

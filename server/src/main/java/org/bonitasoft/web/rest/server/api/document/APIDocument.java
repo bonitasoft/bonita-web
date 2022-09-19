@@ -79,7 +79,7 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
             final Map<String, String> filters) {
 
         final APISession apiSession = getEngineSession();
-        final List<DocumentItem> items = new ArrayList<DocumentItem>();
+        final List<DocumentItem> items = new ArrayList<>();
         long nbOfDocument = 0;
         String caseId = null;
         String viewType = null;
@@ -127,7 +127,7 @@ public class APIDocument extends ConsoleAPI<DocumentItem> {
         } catch (final Exception e) {
             throw new APIException(e);
         }
-        return new ItemSearchResult<DocumentItem>(page, resultsByPage, nbOfDocument, items);
+        return new ItemSearchResult<>(page, resultsByPage, nbOfDocument, items);
 
     }
 

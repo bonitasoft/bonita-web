@@ -58,7 +58,7 @@ public class APIProcessConnectorIT extends AbstractConsoleTest {
     public void testSearch() {
         TestProcessConnector defaultConnector = TestProcessConnectorFactory.getDefaultConnector();
         TestProcess processWithConnector = TestProcessFactory.createProcessWithConnector(defaultConnector);
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(ProcessConnectorItem.ATTRIBUTE_PROCESS_ID, String.valueOf(processWithConnector.getId()));
 
         ItemSearchResult<ProcessConnectorItem> search = apiProcessConnector.runSearch(0, 10, "", null, filters, null, null);

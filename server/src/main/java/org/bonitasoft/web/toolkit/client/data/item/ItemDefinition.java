@@ -103,9 +103,9 @@ public abstract class ItemDefinition<E extends IItem> {
     // ATTRIBUTES
     // ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final LinkedHashMap<String, ItemAttribute> attributes = new LinkedHashMap<String, ItemAttribute>();
+    private final LinkedHashMap<String, ItemAttribute> attributes = new LinkedHashMap<>();
 
-    private final ArrayList<String> primaryKeys = new ArrayList<String>();
+    private final ArrayList<String> primaryKeys = new ArrayList<>();
 
     /**
      * Create and save a new attribute for the current item type.
@@ -149,7 +149,7 @@ public abstract class ItemDefinition<E extends IItem> {
     protected abstract void defineAttributes();
 
     public final ArrayList<ItemAttribute> getAttributes() {
-        return new ArrayList<ItemAttribute>(this.attributes.values());
+        return new ArrayList<>(this.attributes.values());
     }
 
     protected abstract void definePrimaryKeys();
@@ -189,7 +189,7 @@ public abstract class ItemDefinition<E extends IItem> {
     // DEPLOYS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final Map<String, ItemDefinition<?>> deploys = new HashMap<String, ItemDefinition<?>>();
+    private final Map<String, ItemDefinition<?>> deploys = new HashMap<>();
 
     protected void defineDeploys() {
         // No deploys by default
@@ -221,7 +221,7 @@ public abstract class ItemDefinition<E extends IItem> {
      * Get the validators in a map <attribute name, list of validators>
      */
     public final Map<String, List<Validator>> getValidators() {
-        final Map<String, List<Validator>> validators = new HashMap<String, List<Validator>>();
+        final Map<String, List<Validator>> validators = new HashMap<>();
         for (final ItemAttribute attribute : getAttributes()) {
             validators.put(attribute.getName(), attribute.getValidators());
         }
@@ -232,7 +232,7 @@ public abstract class ItemDefinition<E extends IItem> {
      * Get the Modifiers in a map <attribute name, list of modifiers>
      */
     public final Map<String, List<Modifier>> getInputModifiers() {
-        final Map<String, List<Modifier>> modifiers = new HashMap<String, List<Modifier>>();
+        final Map<String, List<Modifier>> modifiers = new HashMap<>();
         for (final ItemAttribute attribute : getAttributes()) {
             modifiers.put(attribute.getName(), attribute.getInputModifiers());
         }
@@ -243,7 +243,7 @@ public abstract class ItemDefinition<E extends IItem> {
      * Get the Modifiers in a map <attribute name, list of modifiers>
      */
     public final Map<String, List<Modifier>> getOutputModifiers() {
-        final Map<String, List<Modifier>> modifiers = new HashMap<String, List<Modifier>>();
+        final Map<String, List<Modifier>> modifiers = new HashMap<>();
         for (final ItemAttribute attribute : getAttributes()) {
             modifiers.put(attribute.getName(), attribute.getOutputModifiers());
         }

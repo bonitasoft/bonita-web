@@ -62,7 +62,7 @@ public class ValidatorEngine {
             final boolean applyMandatory)
             throws ValidationException {
 
-        final List<ValidationError> errors = new LinkedList<ValidationError>();
+        final List<ValidationError> errors = new LinkedList<>();
 
         // Get validators
         if (validators != null) {
@@ -149,7 +149,7 @@ public class ValidatorEngine {
      */
     public static void validate(final Map<String, String> values, final Map<String, List<Validator>> validators, final boolean applyMandatory)
             throws ValidationException {
-        final List<ValidationError> errors = new LinkedList<ValidationError>();
+        final List<ValidationError> errors = new LinkedList<>();
         for (final String attributeName : values.keySet()) {
             try {
                 validateAttribute(attributeName, values, validators.get(attributeName), applyMandatory);

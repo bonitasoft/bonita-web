@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
  */
 public class PageLister {
 
-    protected final static List<BonitaPageItem> pages = new ArrayList<BonitaPageItem>();
+    protected final static List<BonitaPageItem> pages = new ArrayList<>();
     static {
         pages.add(new BonitaPageItem("tasklistinguser", AbstractI18n.t_("For user-type of profiles. To view and do tasks  if he is a candidate"), AbstractI18n.t_("For user-type of profiles. To view and do tasks  if he is a candidate"), AbstractI18n.t_("Tasks")));
         pages.add(new BonitaPageItem("tasklistingadmin", AbstractI18n.t_("For administrator-type of profiles. To monitor task completion for all processes"), AbstractI18n.t_("For administrator-type of profiles. To monitor task completion for all processes"), AbstractI18n.t_("Tasks")));
@@ -70,7 +70,7 @@ public class PageLister {
     }
 
     public List<BonitaPageItem> getPages(final List<String> pagesTokenToSkip) {
-        final List<BonitaPageItem> pagelist = new ArrayList<BonitaPageItem>();
+        final List<BonitaPageItem> pagelist = new ArrayList<>();
 
         for (final BonitaPageItem page : pages) {
             if (!pagesTokenToSkip.contains(page.getToken())) {

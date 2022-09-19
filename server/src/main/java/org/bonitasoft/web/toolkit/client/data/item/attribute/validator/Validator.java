@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationError;
  */
 public abstract class Validator {
 
-    private final ArrayList<ValidationError> errors = new ArrayList<ValidationError>();
+    private final ArrayList<ValidationError> errors = new ArrayList<>();
 
     private String attributeName = null;
 

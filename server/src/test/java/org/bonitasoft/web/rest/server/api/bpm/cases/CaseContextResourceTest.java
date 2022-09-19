@@ -47,7 +47,7 @@ public class CaseContextResourceTest extends RestletTest  {
     @Test
     public void should_return_a_context_of_type_SingleBusinessDataRef_for_a_given_case() throws Exception {
         //given
-        final Map<String, Serializable> context = new HashMap<String, Serializable>();
+        final Map<String, Serializable> context = new HashMap<>();
         String engineResult = "object returned by engine";
 
         context.put("Ticket", engineResult);

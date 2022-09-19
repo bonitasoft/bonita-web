@@ -42,7 +42,7 @@ public class ProcessDefinitionDesignResource extends CommonResource {
     @Get("json")
     public String getDesign() throws ProcessDefinitionNotFoundException, IOException {
         final DesignProcessDefinition design = processAPI.getDesignProcessDefinition(getProcessDefinitionIdParameter());
-        final JacksonRepresentation<DesignProcessDefinition> jacksonRepresentation = new JacksonRepresentation<DesignProcessDefinition>(design);
+        final JacksonRepresentation<DesignProcessDefinition> jacksonRepresentation = new JacksonRepresentation<>(design);
         jacksonRepresentation.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         jacksonRepresentation.setCharacterSet(CharacterSet.UTF_8);
         return replaceLongIdToString(jacksonRepresentation.getText());

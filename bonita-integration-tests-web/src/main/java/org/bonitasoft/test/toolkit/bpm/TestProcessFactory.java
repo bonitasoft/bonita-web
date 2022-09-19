@@ -71,7 +71,7 @@ public class TestProcessFactory {
      * Default Constructor.
      */
     public TestProcessFactory() {
-        processList = new HashMap<String, TestProcess>();
+        processList = new HashMap<>();
     }
 
     public static TestProcessFactory getInstance() {
@@ -245,7 +245,7 @@ public class TestProcessFactory {
     }
 
     public static List<TestProcess> getHumanTaskProcesses(final int count) {
-        final List<TestProcess> results = new ArrayList<TestProcess>(count);
+        final List<TestProcess> results = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             results.add(getHumanTaskProcess(getRandomString()));
         }

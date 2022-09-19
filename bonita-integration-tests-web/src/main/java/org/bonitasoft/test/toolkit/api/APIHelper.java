@@ -405,7 +405,7 @@ public class APIHelper {
      * @return
      */
     public final List<String> getProcessIds(final String pProcessName, final String pVersion) {
-        final List<String> ids = new ArrayList<String>();
+        final List<String> ids = new ArrayList<>();
         final JSONArray processes = getAllProcesses();
         for (final Object obj : processes) {
             final JSONObject jsonObj = (JSONObject) obj;
@@ -741,7 +741,7 @@ public class APIHelper {
      */
     public final List<APIResponse> setProcessState(final String pProcessName, final ProcessActivationState pState) {
         System.out.println("[INFO]setProcessState( " + pProcessName + " , " + pState.toString() + ")");
-        final List<APIResponse> responses = new ArrayList<APIResponse>();
+        final List<APIResponse> responses = new ArrayList<>();
         final List<String> ids = getProcessIds(pProcessName, null);
         for (final String processId : ids) {
             responses.add(setProcessStateById(processId, pState));
@@ -805,7 +805,7 @@ public class APIHelper {
      */
     public final JSONArray getActorMembers(final String pActorId, final MemberType pMemberType) {
         System.out.println("[INFO]getActorMembers( " + pActorId + "," + pMemberType.toString() + ")");
-        final List<String> filterExpressions = new ArrayList<String>();
+        final List<String> filterExpressions = new ArrayList<>();
         filterExpressions.add("actor_id=" + pActorId);
         filterExpressions.add("MEMBER_TYPE=" + pMemberType.toString());
         final ClientResponse<String> res = this.client.getActorMembers(0, SEARCH_COUNT, "name ASC", filterExpressions);
@@ -937,7 +937,7 @@ public class APIHelper {
     public final Map<String, String> getI18nTranslation(final String pLanguageCode) {
         this.logger.info("Loading i18n translation for language [{}]", pLanguageCode);
         final JSONArray jsonArray = search(BonitaAPIClient.TRANSLATION_API_PATH, 0, SEARCH_COUNT, null, "locale=" + pLanguageCode, null, null);
-        final Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
         JSONObject jo;
         String cleanKey;
         String cleanValue;

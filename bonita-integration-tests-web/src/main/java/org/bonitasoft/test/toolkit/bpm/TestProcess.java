@@ -376,7 +376,7 @@ public class TestProcess {
      * @return
      */
     public List<TestCase> startCases(final int number) {
-        final List<TestCase> result = new ArrayList<TestCase>();
+        final List<TestCase> result = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             result.add(startCase());
         }
@@ -503,7 +503,7 @@ public class TestProcess {
         try {
             final List<Category> categories = TenantAPIAccessor.getProcessAPI(getSession())
                     .getCategoriesOfProcessDefinition(getId(), 0, 100, CategoryCriterion.NAME_ASC);
-            final List<TestCategory> results = new ArrayList<TestCategory>(categories.size());
+            final List<TestCategory> results = new ArrayList<>(categories.size());
 
             for (final Category category : categories) {
                 results.add(new TestCategory(category));
@@ -530,7 +530,7 @@ public class TestProcess {
     }
 
     private List<TestCase> convertToCasesList(List<ProcessInstance> processInstances) {
-        List<TestCase> cases = new ArrayList<TestCase>();
+        List<TestCase> cases = new ArrayList<>();
         for (ProcessInstance instance : processInstances) {
             cases.add(new TestCase(instance));
         }

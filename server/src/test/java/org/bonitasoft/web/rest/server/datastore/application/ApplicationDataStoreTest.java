@@ -121,7 +121,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
     @Test
     public void should_return_application_updated_by_ApplicationAPI_converted_to_ApplicationItem_on_update() throws Exception {
         //given
-        final HashMap<String, String> attributesToUpDate = new HashMap<String, String>();
+        final HashMap<String, String> attributesToUpDate = new HashMap<>();
         attributesToUpDate.put(ApplicationItem.ATTRIBUTE_TOKEN, "app_name");
         attributesToUpDate.put(ApplicationItem.ATTRIBUTE_DISPLAY_NAME, "App display name");
         final ApplicationUpdater applicationUpdater = new ApplicationUpdater();
@@ -164,7 +164,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         given(applicationAPI.updateApplication(anyLong(), any(ApplicationUpdater.class))).willThrow(new UpdateException(""));
 
         //when
-        dataStore.update(APIID.makeAPIID(1L), new HashMap<String, String>());
+        dataStore.update(APIID.makeAPIID(1L), new HashMap<>());
 
         //then exception
     }
@@ -225,7 +225,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final int resultsByPage = 1;
         final String search = "string to Match";
         final String orders = ApplicationItem.ATTRIBUTE_TOKEN + " DESC";
-        final HashMap<String,String> filters = new HashMap<String,String>();
+        final HashMap<String,String> filters = new HashMap<>();
         filters.put(ApplicationItem.ATTRIBUTE_CREATED_BY, "1");
         filters.put(ApplicationItem.ATTRIBUTE_VERSION, "1.0");
         filters.put(ApplicationItem.FILTER_USER_ID, "4");
@@ -238,7 +238,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);
 
-        given(applicationAPI.searchApplications(any(SearchOptions.class))).willReturn(new SearchResultImpl<Application>(2, Arrays.<Application>asList(application)));
+        given(applicationAPI.searchApplications(any(SearchOptions.class))).willReturn(new SearchResultImpl<>(2, Arrays.<Application>asList(application)));
 
 
         //when
@@ -269,7 +269,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final int resultsByPage = 1;
         final String search = "string to Match";
         final String orders = ApplicationItem.ATTRIBUTE_TOKEN + " DESC";
-        final HashMap<String,String> filters = new HashMap<String,String>();
+        final HashMap<String,String> filters = new HashMap<>();
         filters.put(ApplicationItem.ATTRIBUTE_CREATED_BY, "1");
         filters.put(ApplicationItem.ATTRIBUTE_VERSION, "1.0");
         final ApplicationImpl application = new ApplicationImpl("app", "1.0", "app desccription");
@@ -280,7 +280,7 @@ public class ApplicationDataStoreTest extends APITestWithMock {
         final ApplicationItem item = new ApplicationItem();
         given(converter.toApplicationItem(application)).willReturn(item);
 
-        given(applicationAPI.searchApplications(any(SearchOptions.class))).willReturn(new SearchResultImpl<Application>(2, Arrays.<Application>asList(application)));
+        given(applicationAPI.searchApplications(any(SearchOptions.class))).willReturn(new SearchResultImpl<>(2, Arrays.<Application>asList(application)));
 
 
         //when

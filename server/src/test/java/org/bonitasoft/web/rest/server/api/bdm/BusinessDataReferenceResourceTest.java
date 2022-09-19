@@ -52,7 +52,7 @@ public class BusinessDataReferenceResourceTest extends RestletTest {
     }
 
     private MultipleBusinessDataReference buildMultipleEmployeeReference(final String name, final long... businessDataIds) {
-        final List<Long> ids = new ArrayList<Long>();
+        final List<Long> ids = new ArrayList<>();
         for (final long businessDataId : businessDataIds) {
             ids.add(businessDataId);
         }

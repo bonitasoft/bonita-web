@@ -228,7 +228,7 @@ public class APIUserAnotherIT extends AbstractConsoleTest {
         final Iterator<UserItem> it = this.expectedUsers.values().iterator();
         while (it.hasNext()) {
             final UserItem expectedUser = it.next();
-            final UserItem anUser = this.apiUser.runGet(expectedUser.getId(), new ArrayList<String>(), new ArrayList<String>());
+            final UserItem anUser = this.apiUser.runGet(expectedUser.getId(), new ArrayList<>(), new ArrayList<>());
 
             // tests
             Assert.assertNotNull(anUser);
@@ -242,8 +242,8 @@ public class APIUserAnotherIT extends AbstractConsoleTest {
         while (it.hasNext()) {
             final UserItem expectedUser = it.next();
             for (final String attribute : searchableAttributesList) {
-                final List<UserItem> results = this.apiUser.runSearch(0, 10, expectedUser.getAttributeValue(attribute), null, new HashMap<String, String>(),
-                        new ArrayList<String>(), new ArrayList<String>()).getResults();
+                final List<UserItem> results = this.apiUser.runSearch(0, 10, expectedUser.getAttributeValue(attribute), null, new HashMap<>(),
+                        new ArrayList<>(), new ArrayList<>()).getResults();
 
                 // tests
                 Assert.assertNotNull(results);

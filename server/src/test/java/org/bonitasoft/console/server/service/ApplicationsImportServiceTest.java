@@ -71,7 +71,7 @@ public class ApplicationsImportServiceTest {
 
     @Test
     public void should_importFileContent_return_ImportStatusMessages() throws Exception {
-        final ArrayList<ImportStatus> statusList = new ArrayList<ImportStatus>();
+        final ArrayList<ImportStatus> statusList = new ArrayList<>();
         statusList.add(new ImportStatus("status"));
         doReturn(statusList).when(applicationAPI).importApplications(new byte[0], ApplicationImportPolicy.FAIL_ON_DUPLICATES);
 

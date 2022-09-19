@@ -495,7 +495,7 @@ public abstract class AbstractI18n {
 
     public LOCALE defaultLocale = LOCALE.en;
 
-    private final Map<LOCALE, Map<String, String>> locales = new HashMap<LOCALE, Map<String, String>>();
+    private final Map<LOCALE, Map<String, String>> locales = new HashMap<>();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SINGLETON
@@ -512,7 +512,7 @@ public abstract class AbstractI18n {
     }
 
     protected final Map<String, String> _getLocales() {
-        final Map<String, String> locales = new LinkedHashMap<String, String>();
+        final Map<String, String> locales = new LinkedHashMap<>();
 
         locales.put("en_US", "U.S. English");
         locales.put("en", "English");

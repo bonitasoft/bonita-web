@@ -167,7 +167,7 @@ APIHasSearch<ITEM> {
                     new UserDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)));
         }
 
-        addDeployer(new GenericDeployer<IItem>(new DatastoreHasGet<IItem>() {
+        addDeployer(new GenericDeployer<>(new DatastoreHasGet<>() {
 
             @Override
             public IItem get(final APIID id) {
@@ -203,7 +203,7 @@ APIHasSearch<ITEM> {
 
     @Override
     protected List<String> defineReadOnlyAttributes() {
-        final List<String> attributes = new ArrayList<String>();
+        final List<String> attributes = new ArrayList<>();
 
         attributes.add(FlowNodeItem.ATTRIBUTE_CASE_ID);
         attributes.add(FlowNodeItem.ATTRIBUTE_ROOT_CASE_ID);

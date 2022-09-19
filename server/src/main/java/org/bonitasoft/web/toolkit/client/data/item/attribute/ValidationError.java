@@ -38,7 +38,7 @@ public class ValidationError {
     }
 
     public String getMessage() {
-        final List<Arg> args = new ArrayList<Arg>();
+        final List<Arg> args = new ArrayList<>();
         for (final String parameterName : this.template.getExpectedParameters()) {
             args.add(new Arg(parameterName, parameterName));
         }

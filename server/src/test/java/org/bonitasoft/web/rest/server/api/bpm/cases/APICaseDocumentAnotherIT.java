@@ -60,7 +60,7 @@ public class APICaseDocumentAnotherIT extends AbstractConsoleTest {
     }
 
     private Map<String, String> buildCaseIdFilter(long caseId) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(CaseDocumentItem.ATTRIBUTE_CASE_ID, String.valueOf(caseId));
         return filters;
     }

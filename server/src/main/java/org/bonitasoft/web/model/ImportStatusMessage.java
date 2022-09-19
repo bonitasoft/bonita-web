@@ -46,14 +46,14 @@ public class ImportStatusMessage implements Serializable {
     private final String statusType;
 
     public ImportStatusMessage(final String name, final String statusType) {
-        errors = new HashMap<String, List<String>>();
+        errors = new HashMap<>();
         this.name = name;
         this.statusType = statusType;
     }
 
     public void addError(final String elementType, final String errorMessage) {
         if (!errors.containsKey(elementType)) {
-            errors.put(elementType, new ArrayList<String>());
+            errors.put(elementType, new ArrayList<>());
         }
         errors.get(elementType).add(errorMessage);
     }

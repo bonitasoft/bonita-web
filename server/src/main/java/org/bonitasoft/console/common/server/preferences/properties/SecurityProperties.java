@@ -51,7 +51,7 @@ public class SecurityProperties {
      */
     public static final String API_AUTHORIZATIONS_CHECK = "security.rest.api.authorizations.check.enabled";
 
-    private static final Map<String, Optional<String>> securityProperties = new ConcurrentHashMap<String, Optional<String>>();
+    private static final Map<String, Optional<String>> securityProperties = new ConcurrentHashMap<>();
 
     /**
      * @return the password validator property

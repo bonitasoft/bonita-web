@@ -129,7 +129,7 @@ public class ProfessionalContactDataDatastore extends CommonDatastore<Profession
     }
 
     private ContactDataConverter<ProfessionalContactDataItem> createContactDataItemConverter(final APIID id) {
-        return new ContactDataConverter<ProfessionalContactDataItem>() {
+        return new ContactDataConverter<>() {
 
             @Override
             public ProfessionalContactDataItem createContactDataItem() {

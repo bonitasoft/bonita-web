@@ -16,7 +16,7 @@ public class ProfileImportStatusMessageFake {
     private String status;
 
     public ProfileImportStatusMessageFake(String profileName, String status) {
-        errors = new ArrayList<String>();
+        errors = new ArrayList<>();
         this.profileName = profileName;
         this.status = status;
     }

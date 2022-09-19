@@ -132,7 +132,7 @@ public class AbstractActivityDatastore<CONSOLE_ITEM extends ActivityItem, ENGINE
     }
 
     private HashMap<String, Serializable> buildVariablesMap(final long activityId, final String jsonValue, final ActivityEngineClient client) {
-        final HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        final HashMap<String, Serializable> map = new HashMap<>();
         for (final VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
             final DataInstance data = client.getDataInstance(var.getName(), activityId);
             map.put(var.getName(), var.getSerializableValue(data.getClassName()));

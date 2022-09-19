@@ -45,7 +45,7 @@ public class Sorts {
 
     private List<Sort> parseOrders(final String orders, final AttributeConverter converter) {
         if (StringUtil.isBlank(orders)) {
-            return new ArrayList<Sort>();
+            return new ArrayList<>();
         } else {
             return buildSortList(orders, converter);
         }
@@ -59,7 +59,7 @@ public class Sorts {
      * @param converter
      */
     private List<Sort> buildSortList(final String orders, final AttributeConverter converter) {
-        final List<Sort> sorts = new ArrayList<Sort>();
+        final List<Sort> sorts = new ArrayList<>();
         for (String order : Arrays.asList(orders.split(","))) {
             sorts.add(new Sort(order, converter));
         }

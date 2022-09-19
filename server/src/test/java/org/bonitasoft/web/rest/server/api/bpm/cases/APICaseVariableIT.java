@@ -58,14 +58,14 @@ public class APICaseVariableIT extends AbstractConsoleTest {
     }
 
     private Map<String, String> buildUpdateAttributes(String newValue, String type) {
-        Map<String, String> attributes = new HashMap<String, String>();
+        Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseVariableItem.ATTRIBUTE_VALUE, newValue);
         attributes.put(CaseVariableItem.ATTRIBUTE_TYPE, type);
         return attributes;
     }
 
     private Map<String, String> buildCaseIdFilter(TestCase aCase) {
-        Map<String, String> filters = new HashMap<String, String>();
+        Map<String, String> filters = new HashMap<>();
         filters.put(CaseVariableItem.ATTRIBUTE_CASE_ID, String.valueOf(aCase.getId()));
         return filters;
     }

@@ -160,7 +160,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(converter.toApplicationPageItem(appPage)).willReturn(item);
 
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationPage>(2, Arrays.<ApplicationPage> asList(appPage)));
+                new SearchResultImpl<>(2, Arrays.<ApplicationPage>asList(appPage)));
 
         //when
         final ItemSearchResult<ApplicationPageItem> retrievedItems = dataStore.search(0, 1, null, orders,
@@ -182,7 +182,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         final int resultsByPage = 1;
         final String search = "string to Match";
         final String orders = ApplicationPageItem.ATTRIBUTE_TOKEN + " DESC";
-        final HashMap<String, String> filters = new HashMap<String, String>();
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ApplicationPageItem.ATTRIBUTE_APPLICATION_ID, "1");
         final ApplicationPageImpl appPage = new ApplicationPageImpl(1, 11, "MyAppPage");
         appPage.setId(1);
@@ -190,7 +190,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(converter.toApplicationPageItem(appPage)).willReturn(item);
 
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<ApplicationPage>(2, Arrays.<ApplicationPage> asList(appPage)));
+                new SearchResultImpl<>(2, Arrays.<ApplicationPage>asList(appPage)));
 
         //when
         dataStore.search(page, resultsByPage, search, orders, filters);

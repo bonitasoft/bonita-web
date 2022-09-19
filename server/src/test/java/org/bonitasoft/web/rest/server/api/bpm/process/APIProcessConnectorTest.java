@@ -61,7 +61,7 @@ public class APIProcessConnectorTest extends APITestWithMock {
 
     @Test
     public void searchIsDoneWhenProcessIdFilterIsSet() throws Exception {
-        final Map<String, String> filters = new HashMap<String, String>();
+        final Map<String, String> filters = new HashMap<>();
         filters.put(ProcessConnectorItem.ATTRIBUTE_PROCESS_ID, "1");
 
         this.apiProcessConnector.search(0, 10, null, null, filters);

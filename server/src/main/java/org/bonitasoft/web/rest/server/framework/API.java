@@ -201,8 +201,8 @@ public abstract class API<ITEM extends IItem> {
             throw new APIItemNotFoundException(getItemDefinition().getToken(), id);
         }
 
-        fillDeploys(item, deploys != null ? deploys : new ArrayList<String>());
-        fillCounters(item, counters != null ? counters : new ArrayList<String>());
+        fillDeploys(item, deploys != null ? deploys : new ArrayList<>());
+        fillCounters(item, counters != null ? counters : new ArrayList<>());
 
         return item;
     }
@@ -237,11 +237,11 @@ public abstract class API<ITEM extends IItem> {
             }
         }
 
-        final ItemSearchResult<ITEM> searchResult = search(page, resultsByPage, search, realOrders, filters != null ? filters : new HashMap<String, String>());
+        final ItemSearchResult<ITEM> searchResult = search(page, resultsByPage, search, realOrders, filters != null ? filters : new HashMap<>());
 
         for (final ITEM item : searchResult.getResults()) {
-            fillDeploys(item, deploys != null ? deploys : new ArrayList<String>());
-            fillCounters(item, counters != null ? counters : new ArrayList<String>());
+            fillDeploys(item, deploys != null ? deploys : new ArrayList<>());
+            fillCounters(item, counters != null ? counters : new ArrayList<>());
         }
 
         return searchResult;

@@ -75,7 +75,7 @@ public class CaseSarter {
     private HashMap<String, Serializable> getVariables(final CaseItem caseItem) {
         final String jsonVariables = caseItem.getAttributeValue(CaseItem.ATTRIBUTE_VARIABLES);
         if (StringUtil.isBlank(jsonVariables)) {
-            return new HashMap<String, Serializable>();
+            return new HashMap<>();
         }
         return buildVariablesMap(jsonVariables);
     }
@@ -83,7 +83,7 @@ public class CaseSarter {
     private HashMap<String, Serializable> buildVariablesMap(final String jsonValue) {
         final List<DataDefinition> dataDefinitions = processEngineClient.getProcessDataDefinitions(processId);
 
-        final HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        final HashMap<String, Serializable> map = new HashMap<>();
         for (final VariableMapper var : VariablesMapper.fromJson(jsonValue).getVariables()) {
             final DataDefinition data = getDataDefinitionByName(var.getName(), dataDefinitions);
             map.put(var.getName(), var.getSerializableValue(data.getClassName()));

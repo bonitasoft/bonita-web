@@ -209,7 +209,7 @@ public class ConsoleIdentityLoginModule implements LoginModule {
      * @return
      */
     protected Map<String, Callback> getPromptCallbacks(final Map<String, Object> loggingsArgs) {
-        final Map<String, Callback> callbacks = new HashMap<String, Callback>();
+        final Map<String, Callback> callbacks = new HashMap<>();
 
         // login
         if (!loggingsArgs.containsKey(JAVAX_SECURITY_AUTH_LOGIN_NAME)) {
@@ -315,7 +315,7 @@ public class ConsoleIdentityLoginModule implements LoginModule {
                 System.err.println("[" + ConsoleIdentityLoginModule.class.getName() + "] logout() - removing principals");
             }
             // Remove only principals added by our commit method
-            final Set<Principal> principals = new HashSet<Principal>(this.subject.getPrincipals());
+            final Set<Principal> principals = new HashSet<>(this.subject.getPrincipals());
             for (final Principal p : principals) {
                 if (p instanceof ConsolePrincipal) {
                     if (this.debug) {
@@ -328,7 +328,7 @@ public class ConsoleIdentityLoginModule implements LoginModule {
                 System.err.println("[" + ConsoleIdentityLoginModule.class.getName() + "] logout() - destroying/removing credentials");
             }
             // Remove/destroy only credentials added by our commit method
-            final Set<Object> credentials = new HashSet<Object>(this.subject.getPublicCredentials());
+            final Set<Object> credentials = new HashSet<>(this.subject.getPublicCredentials());
             for (final Object o : credentials) {
                 if (o instanceof Destroyable) {
                     if (this.debug) {
