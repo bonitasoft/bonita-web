@@ -55,7 +55,7 @@ public class APIProcessConnectorIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testSearch() throws Exception {
+    public void testSearch() {
         TestProcessConnector defaultConnector = TestProcessConnectorFactory.getDefaultConnector();
         TestProcess processWithConnector = TestProcessFactory.createProcessWithConnector(defaultConnector);
         Map<String, String> filters = new HashMap<String, String>();
@@ -69,7 +69,7 @@ public class APIProcessConnectorIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testGet() {
         TestProcessConnector defaultConnector = TestProcessConnectorFactory.getDefaultConnector();
         TestProcess processWithConnector = TestProcessFactory.createProcessWithConnector(defaultConnector);
 

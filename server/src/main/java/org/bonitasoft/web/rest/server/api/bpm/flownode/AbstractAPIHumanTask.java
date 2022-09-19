@@ -16,6 +16,8 @@
  */
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
+import static org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem.VALUE_TYPE_MANUAL_TASK;
+
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +63,7 @@ public class AbstractAPIHumanTask<ITEM extends IHumanTaskItem> extends AbstractA
         final String assignedUserId = attributes.get(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID);
         if (assignedUserId != null && assignedUserId.length() > 0) {
             final ITEM humanTask = get(id);
-            if (humanTask.isManualTask() && StringUtil.isBlank(assignedUserId)) {
+            if (VALUE_TYPE_MANUAL_TASK.equals(humanTask.getType()) && StringUtil.isBlank(assignedUserId)) {
                 throw new APIForbiddenException("Can't unassigned a manual task.");
             }
             if (humanTask.getAttributes().containsKey(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)) {

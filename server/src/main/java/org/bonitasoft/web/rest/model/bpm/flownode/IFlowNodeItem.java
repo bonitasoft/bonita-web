@@ -32,135 +32,123 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
     // ATTRIBUTES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String ATTRIBUTE_PROCESS_ID = "processId";
+    String ATTRIBUTE_PROCESS_ID = "processId";
 
     /**
-     * @deprecated since 6.4.0
      * @see IFlowNodeItem#ATTRIBUTE_ROOT_CASE_ID
+     * @deprecated since 6.4.0
      */
     @Deprecated
-    public final static String ATTRIBUTE_CASE_ID = "caseId";
+    String ATTRIBUTE_CASE_ID = "caseId";
 
     /**
      * @since 6.4.0
      */
-    public final static String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
+    String ATTRIBUTE_ROOT_CASE_ID = "rootCaseId";
 
     /**
      * @since 6.4.0
      */
-    public final static String ATTRIBUTE_PARENT_CASE_ID = "parentCaseId";
+    String ATTRIBUTE_PARENT_CASE_ID = "parentCaseId";
 
-    public final static String ATTRIBUTE_PARENT_ACTIVITY_INSTANCE_ID = "parentActivityInstanceId";
+    String ATTRIBUTE_PARENT_ACTIVITY_INSTANCE_ID = "parentActivityInstanceId";
 
-    public final static String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
+    String ATTRIBUTE_ROOT_CONTAINER_ID = "rootContainerId";
 
-    public final static String ATTRIBUTE_STATE = "state";
+    String ATTRIBUTE_STATE = "state";
 
-    public final static String ATTRIBUTE_TYPE = "type";
+    String ATTRIBUTE_TYPE = "type";
 
-    public final static String ATTRIBUTE_EXECUTED_BY_USER_ID = "executedBy";
+    String ATTRIBUTE_EXECUTED_BY_USER_ID = "executedBy";
 
-    public final static String ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID = "executedBySubstitute";
+    String ATTRIBUTE_EXECUTED_BY_SUBSTITUTE_USER_ID = "executedBySubstitute";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String VALUE_STATE_FAILED = "failed";
+    String VALUE_STATE_FAILED = "failed";
 
-    public static final String VALUE_STATE_READY = "ready";
+    String VALUE_STATE_READY = "ready";
 
-    public static final String VALUE_STATE_COMPLETED = "completed";
+    String VALUE_STATE_COMPLETED = "completed";
 
-    public static final String VALUE_STATE_SKIPPED = "skipped";
-
-    public static final String VALUE_STATE_ABORTED = "aborted";
+    String VALUE_STATE_SKIPPED = "skipped";
 
     // TODO replay is the SP feature only
-    public static final String VALUE_STATE_REPLAY = "replay";
+    String VALUE_STATE_REPLAY = "replay";
 
-    public static final String VALUE_TYPE_TASK = "TASK";
+    String VALUE_TYPE_AUTOMATIC_TASK = "AUTOMATIC_TASK";
 
-    public static final String VALUE_TYPE_AUTOMATIC_TASK = "AUTOMATIC_TASK";
+    String VALUE_TYPE_USER_TASK = "USER_TASK";
 
-    public static final String VALUE_ICON_AUTOMATIC_TASK = "icons/default/icon_automaticTask.png";
+    String VALUE_TYPE_MANUAL_TASK = "MANUAL_TASK";
 
-    public static final String VALUE_TYPE_USER_TASK = "USER_TASK";
+    String VALUE_TYPE_CALL_ACTIVITY = "CALL_ACTIVITY";
 
-    public static final String VALUE_TYPE_MANUAL_TASK = "MANUAL_TASK";
+    String VALUE_TYPE_LOOP_ACTIVITY = "LOOP_ACTIVITY";
 
-    public static final String VALUE_TYPE_CALL_ACTIVITY = "CALL_ACTIVITY";
+    String VALUE_TYPE_MULTI_INSTANCE_ACTIVITY = "MULTI_INSTANCE_ACTIVITY";
 
-    public static final String VALUE_ICON_CALL_ACTIVITY = "icons/default/icon_call_activity_task.png";
+    String VALUE_TYPE_SUB_PROCESS_ACTIVITY = "SUB_PROCESS_ACTIVITY";
 
-    public static final String VALUE_TYPE_LOOP_ACTIVITY = "LOOP_ACTIVITY";
+    String VALUE_TYPE_GATEWAY = "GATEWAY";
 
-    public static final String VALUE_ICON_LOOP_ACTIVITY = "icons/default/icon_loop_task.png";
+    String VALUE_TYPE_START_EVENT = "EVENT";
 
-    public static final String VALUE_TYPE_MULTI_INSTANCE_ACTIVITY = "MULTI_INSTANCE_ACTIVITY";
+    String VALUE_TYPE_INTERMEDIATE_CATCH_EVENT = "INTERMEDIATE_CATCH_EVENT";
 
-    public static final String VALUE_ICON_MULTI_INSTANCE_ACTIVITY = "icons/default/icon_multi_instance_task.png";
+    String VALUE_TYPE_BOUNDARY_EVENT = "BOUNDARY_EVENT";
 
-    public static final String VALUE_TYPE_SUB_PROCESS_ACTIVITY = "SUB_PROCESS_ACTIVITY";
+    String VALUE_TYPE_INTERMEDIATE_THROW_EVENT = "";
 
-    public static final String VALUE_TYPE_GATEWAY = "GATEWAY";
+    String VALUE_TYPE_END_EVENT = "END_EVENT";
 
-    public static final String VALUE_TYPE_START_EVENT = "EVENT";
+    String FILTER_IS_FAILED = "isFailed";
 
-    public static final String VALUE_TYPE_INTERMEDIATE_CATCH_EVENT = "INTERMEDIATE_CATCH_EVENT";
+    void setProcessId(final APIID id);
 
-    public static final String VALUE_TYPE_BOUNDARY_EVENT = "BOUNDARY_EVENT";
+    void setProcessId(final String id);
 
-    public static final String VALUE_TYPE_INTERMEDIATE_THROW_EVENT = "";
+    void setProcessId(final Long id);
 
-    public static final String VALUE_TYPE_END_EVENT = "END_EVENT";
-    
-    public static final String FILTER_IS_FAILED = "isFailed";
-
-    public void setProcessId(final APIID id);
-
-    public void setProcessId(final String id);
-
-    public void setProcessId(final Long id);
-
-    public APIID getProcessId();
+    APIID getProcessId();
 
     /**
      * @param id
-     * @deprecated Since 6.4.0
      * @see IFlowNodeItem#setRootCaseId(APIID)
+     * @deprecated Since 6.4.0
      */
     @Deprecated
-    public void setCaseId(final APIID id);
+    void setCaseId(final APIID id);
 
     /**
      * @param id
-     * @deprecated Since 6.4.0
      * @see IFlowNodeItem#setRootCaseId(String)
+     * @deprecated Since 6.4.0
      */
     @Deprecated
-    public void setCaseId(final String id);
+    void setCaseId(final String id);
 
     /**
      * @param id
-     * @deprecated Since 6.4.0
      * @see IFlowNodeItem#setRootCaseId(Long)
+     * @deprecated Since 6.4.0
      */
     @Deprecated
-    public void setCaseId(final Long id);
+    void setCaseId(final Long id);
 
-    public void setRootCaseId(final APIID id);
+    void setRootCaseId(final APIID id);
 
-    public void setRootCaseId(final String id);
+    void setRootCaseId(final String id);
 
-    public void setRootCaseId(final Long id);
+    void setRootCaseId(final Long id);
 
-    public void setParentCaseId(final APIID id);
+    void setParentCaseId(final APIID id);
 
-    public void setParentCaseId(final String id);
+    void setParentCaseId(final String id);
 
-    public void setParentCaseId(final Long id);
+    void setParentCaseId(final Long id);
 
     /**
      * @return
@@ -168,106 +156,61 @@ public interface IFlowNodeItem extends IItem, ItemHasUniqueId, ItemHasDualName, 
      * @see IFlowNodeItem#getRootCaseId()
      */
     @Deprecated
-    public APIID getCaseId();
+    APIID getCaseId();
 
-    public APIID getRootCaseId();
+    APIID getRootCaseId();
 
-    public APIID getParentCaseId();
+    APIID getParentCaseId();
 
-    public void setRootContainerId(final APIID rootContainerId);
+    void setRootContainerId(final APIID rootContainerId);
 
-    public void setRootContainerId(final String rootContainerId);
+    void setRootContainerId(final String rootContainerId);
 
-    public void setRootContainerId(final Long rootContainerId);
+    void setRootContainerId(final Long rootContainerId);
 
-    public APIID getRootContainerId();
+    APIID getRootContainerId();
 
-    public void setState(final String state);
+    void setState(final String state);
 
-    public String getState();
+    String getState();
 
-    public void setType(final String type);
+    void setType(final String type);
 
-    public String getType();
+    String getType();
 
-    public void setExecutedByUserId(final APIID id);
+    void setExecutedByUserId(final APIID id);
 
-    public void setExecutedByUserId(final String id);
+    void setExecutedByUserId(final String id);
 
-    public void setExecutedByUserId(final Long id);
+    void setExecutedByUserId(final Long id);
 
-    public APIID getExecutedByUserId();
+    APIID getExecutedByUserId();
 
-    public UserItem getExecutedByUser();
+    UserItem getExecutedByUser();
 
-    public void setExecutedBySubstituteUserId(final APIID id);
+    void setExecutedBySubstituteUserId(final APIID id);
 
-    public void setExecutedBySubstituteUserId(final String id);
+    void setExecutedBySubstituteUserId(final String id);
 
-    public void setExecutedBySubstituteUserId(final Long id);
+    void setExecutedBySubstituteUserId(final Long id);
 
-    public APIID getExecutedBySubstituteUserId();
+    APIID getExecutedBySubstituteUserId();
 
-    public UserItem getExecutedBySubstituteUser();
+    UserItem getExecutedBySubstituteUser();
 
-    public ProcessItem getProcess();
+    ProcessItem getProcess();
 
     /**
      * @return
-     * @deprecated since 6.4.0
      * @see IFlowNodeItem#getCase()
+     * @deprecated since 6.4.0
      */
     @Deprecated
-    public CaseItem getCase();
+    CaseItem getCase();
 
-    public CaseItem getRootCase();
+    CaseItem getRootCase();
 
-    public CaseItem getParentCase();
+    CaseItem getParentCase();
 
-    public ProcessItem getRootContainerProcess();
-
-    public boolean isUserTask();
-
-    public boolean isAutomaticTask();
-
-    public boolean isBoundaryEvent();
-
-    public boolean isCallActivity();
-
-    public boolean isEndEvent();
-
-    public boolean isGateway();
-
-    public boolean isHumanTask();
-
-    public boolean isActivity();
-
-    public boolean isIntermediateCatchEvent();
-
-    public boolean isIntermediateThrowEvent();
-
-    public boolean isLoopActivity();
-
-    public boolean isManualTask();
-
-    public boolean isStartEvent();
-
-    public boolean isArchived();
-
-    public boolean isAborted();
-
-    /**
-     * @return
-     */
-    boolean isSubProcessActivity();
-
-    /**
-     * @return
-     */
-    boolean isMultiInsatnceActivity();
-
-    public String ensureName();
-
-    public String ensureDescription();
-
+    ProcessItem getRootContainerProcess();
 }

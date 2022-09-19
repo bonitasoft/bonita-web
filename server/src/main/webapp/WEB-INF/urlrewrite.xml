@@ -205,10 +205,6 @@
         <to>/APIToolkit/portal/profile$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/portal/profileEntry([\?/]|$)</from>
-        <to>/APIToolkit/portal/profileEntry$2</to>
-    </rule>
-    <rule>
         <from>^(/portal/custom-page)?/API/portal/profileMember([\?/]|$)</from>
         <to>/APIToolkit/portal/profileMember$2</to>
     </rule>
@@ -252,16 +248,6 @@
             using a &amp;.
             Therefor the ?fix=true is used to fix that issue.
         </note>
-        <from>^/portal/custom-page/(.*)/themeResource$</from>
-        <to qsappend="true" type="redirect">%{context-path}/portal/themeResource?fix=true</to>
-    </rule>
-    <rule>
-        <note>
-            Deal with custom page resources URL backward compatibility.
-            Also there is a bug with qsappend="true" which always append query string
-            using a &amp;.
-            Therefor the ?fix=true is used to fix that issue.
-        </note>
         <from>^/portal/custom-page/(.*)/pageResource$</from>
         <to qsappend="true" type="redirect">%{context-path}/portal/pageResource?fix=true</to>
     </rule>
@@ -272,10 +258,6 @@
     <rule>
         <from>^/portal/custom-page/(.*)/documentDownload?(.*)$</from>
         <to qsappend="true">/portal/documentDownload?$2</to>
-    </rule>
-    <rule>
-        <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/themeResource?(.*)$</from>
-        <to qsappend="true">/portal/themeResource?$3</to>
     </rule>
     <rule>
         <from>^/portal/resource/app/([^\/]+)/([^\/]+)/content/pageResource?(.*)$</from>

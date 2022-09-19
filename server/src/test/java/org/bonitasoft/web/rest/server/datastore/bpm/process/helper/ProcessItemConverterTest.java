@@ -1,5 +1,11 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.process.helper;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
+
+import java.util.Date;
+
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.actor.ActorInstance;
@@ -20,12 +26,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessItemConverterTest {
 
@@ -40,11 +40,9 @@ public class ProcessItemConverterTest {
     @Mock
     private ActorInstance actorInstance2;
 
-    private I18n i18n;
-
     @Before
     public void setUp() throws Exception {
-        i18n = I18n.getInstance();
+        I18n.getInstance();
         CommonDateFormater.setDateFormater(new ServerDateFormater());
         ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
         processItemConverter = spy(new ProcessItemConverter(processAPI));

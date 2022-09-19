@@ -92,7 +92,6 @@ public class CacheFilterTest {
         matchExcludePattern("/apps/home/css/style.css", false);
         matchExcludePattern("http://localhost:8080/bonita/portal/resource/page/content/", true);
         matchExcludePattern("http://localhost:8080/bonita/portal/resource/page/content/image/logo.png", false);
-        matchExcludePattern("http://localhost:8080/portal/themeResource/resource", false);
         matchExcludePattern("http://localhost:8080/portal/custom-page/API/identity/user/1", true);
         matchExcludePattern("http://localhost:8080/bonita/portal/custom-page/custompage_cacheBustingBug1/?locale=en&profile=101&_f=allpagesfilter&_id=22", true);
     }
@@ -133,7 +132,7 @@ public class CacheFilterTest {
     	
         cacheFilter.init(filterConfig);
     	
-        final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/themeResource$)|(portal/scripts)|(/bonita/?$)|(logoutservice)";
+        final String patternToCompile = "^/(bonita/)?(login.jsp$)|(images/)|(redirectCasToCatchHash.jsp)|(loginservice)|(serverAPI)|(maintenance.jsp$)|(API/platform/)|(platformloginservice$)|(portal/scripts)|(/bonita/?$)|(logoutservice)";
         assertThat(cacheFilter.compilePattern(patternToCompile)).isNotNull().has(new Condition<Pattern>() {
 
             @Override

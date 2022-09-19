@@ -25,6 +25,7 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileItem;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
+import org.bonitasoft.web.rest.server.datastore.filter.GenericFilterCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
 import org.bonitasoft.web.rest.server.engineclient.ProfileEngineClient;
@@ -55,18 +56,18 @@ public class SearchProfilesHelper implements DatastoreHasSearch<ProfileItem> {
     private ItemSearchResult<ProfileItem> searchProfiles(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
         SearchOptionsCreator options = makeSearchOptions(page, resultsByPage, search, orders, filters);
         SearchResult<Profile> searchProfiles = profileClient.searchProfiles(options.create());
-        return new ItemSearchResultConverter<ProfileItem, Profile>(page, resultsByPage, searchProfiles, new ProfileItemConverter()).toItemSearchResult();
+        return new ItemSearchResultConverter<>(page, resultsByPage, searchProfiles, new ProfileItemConverter()).toItemSearchResult();
     }
 
     private ItemSearchResult<ProfileItem> searchProfilesForUser(int page, Map<String, String> filters) {
         long userId = Long.parseLong(filters.get(ProfileItem.FILTER_USER_ID));
-        List<Profile> profiles = profileClient.listProfilesForUser(userId, isFilteredBy(filters, ProfileItem.FILTER_HAS_NAVIGATION));
-        return new ItemSearchResult<ProfileItem>(page, profiles.size(), profiles.size(), new ProfileItemConverter().convert(profiles));
+        List<Profile> profiles = profileClient.listProfilesForUser(userId);
+        return new ItemSearchResult<>(page, profiles.size(), profiles.size(), new ProfileItemConverter().convert(profiles));
     }
 
     private SearchOptionsCreator makeSearchOptions(int page, int resultsByPage, String search, String orders, Map<String, String> filters) {
         return new SearchOptionsCreator(page, resultsByPage, search,
                 new Sorts(orders, new ProfileSearchDescriptorConverter()),
-                new Filters(filters, new ProfileFilterCreator(new ProfileSearchDescriptorConverter())));
+                new Filters(filters, new GenericFilterCreator(new ProfileSearchDescriptorConverter())));
     }
 }

@@ -26,28 +26,21 @@ import org.junit.Test;
 public class ProfileSearchDescriptorConverterTest {
 
     @Test
-    public void testWeCanConvertTheProfileId() throws Exception {
+    public void testWeCanConvertTheProfileId() {
         String descriptor = new ProfileSearchDescriptorConverter().convert(ProfileItem.ATTRIBUTE_ID);
 
         assertEquals(ProfileSearchDescriptor.ID, descriptor);
     }
 
     @Test
-    public void testWeCanConvertTheProfileName() throws Exception {
+    public void testWeCanConvertTheProfileName() {
         String descriptor = new ProfileSearchDescriptorConverter().convert(ProfileItem.ATTRIBUTE_NAME);
 
         assertEquals(ProfileSearchDescriptor.NAME, descriptor);
     }
 
-    @Test
-    public void testWeCanConvertHasNavigation() throws Exception {
-        String descriptor = new ProfileSearchDescriptorConverter().convert(ProfileItem.FILTER_HAS_NAVIGATION);
-
-        assertEquals(ProfileSearchDescriptor.PROFILE_ENTRY_NAME, descriptor);
-    }
-
     @Test(expected = RuntimeException.class)
-    public void testTryingToConvertUnexistingDescriptorThrowAnException() {
+    public void testTryingToConvertNonExistingDescriptorThrowAnException() {
         new ProfileSearchDescriptorConverter().convert("someUnsupportedAttribute");
     }
 }

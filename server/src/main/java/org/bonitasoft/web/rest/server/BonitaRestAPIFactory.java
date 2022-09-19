@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server;
 
-import org.slf4j.Logger;
-
 import org.bonitasoft.web.rest.server.api.application.APIApplication;
 import org.bonitasoft.web.rest.server.api.applicationmenu.APIApplicationMenu;
 import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
@@ -65,7 +63,6 @@ import org.bonitasoft.web.rest.server.api.organization.APIUser;
 import org.bonitasoft.web.rest.server.api.page.APIPage;
 import org.bonitasoft.web.rest.server.api.platform.APIPlatform;
 import org.bonitasoft.web.rest.server.api.profile.APIProfile;
-import org.bonitasoft.web.rest.server.api.profile.APIProfileEntry;
 import org.bonitasoft.web.rest.server.api.profile.APIProfileMember;
 import org.bonitasoft.web.rest.server.api.system.APII18nLocale;
 import org.bonitasoft.web.rest.server.api.system.APISession;
@@ -77,6 +74,7 @@ import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -129,9 +127,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
             if ("profile".equals(resourceToken)) {
                 LOGGER.warn("Deprecated API path, please use /API/portal/profile instead");
                 return new APIProfile();
-            } else if ("profileEntry".equals(resourceToken)) {
-                LOGGER.warn("Deprecated API path, please use /API/portal/profileEntry instead");
-                return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 LOGGER.warn("Deprecated API path, please use /API/portal/profileMember instead");
                 return new APIProfileMember();
@@ -143,8 +138,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
         } else if ("portal".equals(apiToken)) {
             if ("profile".equals(resourceToken)) {
                 return new APIProfile();
-            } else if ("profileEntry".equals(resourceToken)) {
-                return new APIProfileEntry();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
             } else if ("bonitaPage".equals(resourceToken)) {

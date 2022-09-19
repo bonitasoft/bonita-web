@@ -48,8 +48,6 @@ public class ProfileItem extends Item implements ItemHasUniqueId, ItemHasIcon {
     
     public static final String ATTRIBUTE_UPDATED_BY_USER_ID = "updatedBy";
     
-    public static final String FILTER_HAS_NAVIGATION = "hasNavigation";
-
     public ProfileItem() {
         super();
     }

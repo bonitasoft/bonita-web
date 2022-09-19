@@ -69,35 +69,20 @@ public class SearchProfilesHelperTest extends APITestWithMock {
     }
 
     @Test
-    public void testWeCanListUserProfiles() throws Exception {
+    public void testWeCanListUserProfiles() {
         final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
         final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
         when(profileAPI.getProfilesForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC)).thenReturn(aKnownSearchResult.getResult());
 
-        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L, false));
+        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L));
 
         verify(profileAPI).getProfilesForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
         assertThat(SearchUtils.areEquals(expectedProfiles, searchResult.getResults())).isTrue();
     }
     
-    @Test
-    public void testWeCanListUserProfilesWithNavigation() throws Exception {
-        final SearchResultImpl<Profile> aKnownSearchResult = aKnownSearchResult();
-        final List<ProfileItem> expectedProfiles = new ProfileItemConverter().convert(aKnownSearchResult.getResult());
-        when(profileAPI.getProfilesWithNavigationForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC)).thenReturn(aKnownSearchResult.getResult());
-
-        final ItemSearchResult<ProfileItem> searchResult = searchProfilesHelper.search(0, 10, null, null, filterOnUserId(2L, true));
-
-        verify(profileAPI).getProfilesWithNavigationForUser(2L, 0, Integer.MAX_VALUE, ProfileCriterion.ID_ASC);
-        assertThat(SearchUtils.areEquals(expectedProfiles, searchResult.getResults())).isTrue();
-    }
-
-    private HashMap<String, String> filterOnUserId(final long id, boolean hasNavigation) {
-        final HashMap<String, String> filters = new HashMap<String, String>();
+    private HashMap<String, String> filterOnUserId(final long id) {
+        final HashMap<String, String> filters = new HashMap<>();
         filters.put(ProfileItem.FILTER_USER_ID, String.valueOf(id));
-        if(hasNavigation) {
-            filters.put(ProfileItem.FILTER_HAS_NAVIGATION, Boolean.TRUE.toString());
-        }
         return filters;
     }
 

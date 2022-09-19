@@ -17,7 +17,6 @@ package org.bonitasoft.web.rest.model.bpm.flownode;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
@@ -57,14 +56,6 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     }
 
     @Override
-    public String ensureDescription() {
-        if (StringUtil.isBlank(getDisplayDescription())) {
-            return getDescription();
-        }
-        return getDisplayDescription();
-    }
-
-    @Override
     public final void setName(final String name) {
         this.setAttribute(ATTRIBUTE_NAME, name);
     }
@@ -82,14 +73,6 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     @Override
     public final String getDisplayName() {
         return getAttributeValue(ATTRIBUTE_DISPLAY_NAME);
-    }
-
-    @Override
-    public String ensureName() {
-        if (StringUtil.isBlank(getDisplayName())) {
-            return getName();
-        }
-        return getDisplayName();
     }
 
     @Override
@@ -308,97 +291,6 @@ public class FlowNodeItem extends Item implements IFlowNodeItem {
     @Override
     public ItemDefinition getItemDefinition() {
         return FlowNodeDefinition.get();
-    }
-
-    @Override
-    public final boolean isUserTask() {
-        return VALUE_TYPE_USER_TASK.equals(getType());
-    }
-
-    @Override
-    public boolean isAutomaticTask() {
-        return VALUE_TYPE_AUTOMATIC_TASK.equals(getType());
-    }
-
-    @Override
-    public final boolean isBoundaryEvent() {
-        return VALUE_TYPE_BOUNDARY_EVENT.equals(getType());
-    }
-
-    @Override
-    public final boolean isCallActivity() {
-        return VALUE_TYPE_CALL_ACTIVITY.equals(getType());
-    }
-
-    @Override
-    public final boolean isEndEvent() {
-        return VALUE_TYPE_END_EVENT.equals(getType());
-    }
-
-    @Override
-    public final boolean isGateway() {
-        return VALUE_TYPE_GATEWAY.equals(getType());
-    }
-
-    @Override
-    public final boolean isHumanTask() {
-        return isManualTask() || isUserTask();
-    }
-
-    @Override
-    public final boolean isIntermediateCatchEvent() {
-        return VALUE_TYPE_INTERMEDIATE_CATCH_EVENT.equals(getType());
-    }
-
-    @Override
-    public final boolean isIntermediateThrowEvent() {
-        return VALUE_TYPE_INTERMEDIATE_THROW_EVENT.equals(getType());
-    }
-
-    @Override
-    public final boolean isLoopActivity() {
-        return VALUE_TYPE_LOOP_ACTIVITY.equals(getType());
-    }
-
-    @Override
-    public final boolean isSubProcessActivity() {
-        return VALUE_TYPE_SUB_PROCESS_ACTIVITY.equals(getType());
-    }
-
-    @Override
-    public final boolean isMultiInsatnceActivity() {
-        return VALUE_TYPE_MULTI_INSTANCE_ACTIVITY.equals(getType());
-    }
-
-    @Override
-    public final boolean isManualTask() {
-        return VALUE_TYPE_MANUAL_TASK.equals(getType());
-    }
-
-    @Override
-    public final boolean isStartEvent() {
-        return VALUE_TYPE_START_EVENT.equals(getType());
-    }
-
-    @Override
-    public boolean isArchived() {
-        // Override this in archived activities to return true
-        return false;
-    }
-
-    @Override
-    public boolean isAborted() {
-        return VALUE_STATE_ABORTED.equals(getState());
-    }
-
-    @Override
-    public boolean isActivity() {
-        return isAutomaticTask()
-                || isCallActivity()
-                || isHumanTask()
-                || isLoopActivity()
-                || isSubProcessActivity()
-                || isMultiInsatnceActivity();
     }
 
 }

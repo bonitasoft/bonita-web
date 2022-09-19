@@ -64,7 +64,6 @@ public class ArchivedFlowNodeItem extends FlowNodeItem implements ArchivedFlowNo
         return new ArchivedFlowNodeDefinition();
     }
 
-    @Override
     public final boolean isArchived() {
         return true;
     }
