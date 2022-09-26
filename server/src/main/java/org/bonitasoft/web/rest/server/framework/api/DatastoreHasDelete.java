@@ -26,5 +26,5 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public interface DatastoreHasDelete {
 
-    public abstract void delete(final List<APIID> ids);
+    void delete(final List<APIID> ids);
 }

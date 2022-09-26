@@ -34,32 +34,32 @@ public interface AuthenticationManager {
     /**
      * Redirection URL parameter name
      */
-    static final String REDIRECT_URL = "redirectUrl";
+    String REDIRECT_URL = "redirectUrl";
     
     /**
      * the URL param for the login page after logout
      */
-    public static final String LOGIN_URL_PARAM_NAME = "loginUrl";
+    String LOGIN_URL_PARAM_NAME = "loginUrl";
 
     /**
      * the URL param to indicate if we should redirect after login/logout (true by default)
      */
-    static final String REDIRECT_AFTER_LOGIN_PARAM_NAME = "redirect";
+    String REDIRECT_AFTER_LOGIN_PARAM_NAME = "redirect";
 
     /**
      * the URL of the default login page
      */
-    static final String LOGIN_PAGE = "/login.jsp";
+    String LOGIN_PAGE = "/login.jsp";
 
     /**
      * The default redirect URL.
      */
-    static final String DEFAULT_DIRECT_URL = "apps/appDirectoryBonita";
+    String DEFAULT_DIRECT_URL = "apps/appDirectoryBonita";
     
     /**
      * indicate wheather the HTTP session should be invalidated and re created upon login
      */
-    public static final String INVALIDATE_SESSION = "authentication.session.invalidate";
+    String INVALIDATE_SESSION = "authentication.session.invalidate";
 
     /**
      * Get Login Page URL

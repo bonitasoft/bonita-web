@@ -24,16 +24,16 @@ package org.bonitasoft.web.toolkit.client.data.item.template;
  */
 public interface ItemHasDualName {
 
-    public static final String ATTRIBUTE_NAME = "name";
+    String ATTRIBUTE_NAME = "name";
 
-    public static final String ATTRIBUTE_DISPLAY_NAME = "displayName";
+    String ATTRIBUTE_DISPLAY_NAME = "displayName";
 
-    public void setName(final String name);
+    void setName(final String name);
 
-    public void setDisplayName(final String displayName);
+    void setDisplayName(final String displayName);
 
-    public String getName();
+    String getName();
 
-    public String getDisplayName();
+    String getDisplayName();
 
 }

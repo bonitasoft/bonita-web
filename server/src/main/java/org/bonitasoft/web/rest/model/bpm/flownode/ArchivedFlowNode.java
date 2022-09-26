@@ -26,29 +26,29 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public interface ArchivedFlowNode  {
     
-    public static final String ATTRIBUTE_SOURCE_OBJECT_ID = "sourceObjectId";
+    String ATTRIBUTE_SOURCE_OBJECT_ID = "sourceObjectId";
     
-    public static final String FILTER_IS_TERMINAL = "isTerminal";
+    String FILTER_IS_TERMINAL = "isTerminal";
     
-    public static final String VALUE_IS_TERMINAL_TRUE = "true";
-    public static final String VALUE_IS_TERMINAL_FALSE = "false";
+    String VALUE_IS_TERMINAL_TRUE = "true";
+    String VALUE_IS_TERMINAL_FALSE = "false";
     
-    public final static String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
+    String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
 
-    public abstract void setArchivedDate(final String date);
+    void setArchivedDate(final String date);
 
-    public abstract void setArchivedDate(final Date date);
+    void setArchivedDate(final Date date);
 
-    public abstract Date getArchivedDate();
+    Date getArchivedDate();
 
-    public abstract boolean isArchived();
+    boolean isArchived();
     
-    public void setSourceObjectId(final APIID id);
+    void setSourceObjectId(final APIID id);
 
-    public void setSourceObjectId(final String id);
+    void setSourceObjectId(final String id);
 
-    public void setSourceObjectId(final Long id);
+    void setSourceObjectId(final Long id);
 
-    public APIID getSourceObjectId();
+    APIID getSourceObjectId();
 
 }

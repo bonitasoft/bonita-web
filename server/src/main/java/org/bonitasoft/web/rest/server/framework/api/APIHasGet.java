@@ -25,5 +25,5 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface APIHasGet<T extends IItem> {
 
-    public abstract T get(final APIID id);
+    T get(final APIID id);
 }

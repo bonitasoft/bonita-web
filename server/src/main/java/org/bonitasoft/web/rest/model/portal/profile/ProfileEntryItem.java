@@ -66,7 +66,7 @@ public class ProfileEntryItem extends Item implements ItemHasUniqueId {
     // VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static enum VALUE_TYPE {
+    public enum VALUE_TYPE {
         link, folder
     }
 

@@ -24,12 +24,12 @@ import java.util.Date;
  */
 public interface ItemHasLastUpdateDate {
 
-    public static final String ATTRIBUTE_LAST_UPDATE_DATE = "last_update_date";
+    String ATTRIBUTE_LAST_UPDATE_DATE = "last_update_date";
 
-    public abstract void setLastUpdateDate(String date);
+    void setLastUpdateDate(String date);
 
-    public abstract void setLastUpdateDate(Date date);
+    void setLastUpdateDate(Date date);
 
-    public abstract Date getLastUpdateDate();
+    Date getLastUpdateDate();
 
 }

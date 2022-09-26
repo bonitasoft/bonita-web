@@ -24,13 +24,13 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public interface ItemHasUniqueId {
 
-    public static final String ATTRIBUTE_ID = "id";
+    String ATTRIBUTE_ID = "id";
 
-    public abstract void setId(String id);
+    void setId(String id);
 
-    public abstract void setId(APIID id);
+    void setId(APIID id);
 
-    public abstract void setId(Long id);
+    void setId(Long id);
 
-    public abstract APIID getId();
+    APIID getId();
 }

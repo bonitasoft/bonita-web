@@ -27,8 +27,8 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface APIHasSearch<T extends IItem> {
 
-    public abstract ItemSearchResult<T> search(final int page, final int resultsByPage, final String search, final String orders,
+    ItemSearchResult<T> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters);
 
-    public abstract String defineDefaultSearchOrder();
+    String defineDefaultSearchOrder();
 }

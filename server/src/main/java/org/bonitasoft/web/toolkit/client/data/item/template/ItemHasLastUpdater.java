@@ -25,14 +25,14 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface ItemHasLastUpdater extends ItemHasLastUpdateDate {
 
-    public static final String ATTRIBUTE_LAST_UPDATE_USER_ID = "last_update_user_id";
+    String ATTRIBUTE_LAST_UPDATE_USER_ID = "last_update_user_id";
 
-    public abstract void setLastUpdateUserId(String id);
+    void setLastUpdateUserId(String id);
 
-    public abstract void setLastUpdateUserId(APIID id);
+    void setLastUpdateUserId(APIID id);
 
-    public abstract APIID getLastUpdateUserId();
+    APIID getLastUpdateUserId();
 
-    public abstract IItem getLastUpdateUser();
+    IItem getLastUpdateUser();
 
 }

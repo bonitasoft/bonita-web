@@ -26,16 +26,16 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator
  */
 public interface Validable {
 
-    public List<Validator> getValidators();
+    List<Validator> getValidators();
 
-    public Validable addValidator(final Validator validator);
+    Validable addValidator(final Validator validator);
 
-    public Validable addValidators(final List<Validator> validators);
+    Validable addValidators(final List<Validator> validators);
 
-    public Validable removeValidator(final String validatorClassName);
+    Validable removeValidator(final String validatorClassName);
 
-    public boolean hasValidator(final String validatorClassName);
+    boolean hasValidator(final String validatorClassName);
 
-    public Validator getValidator(final String validatorClassName);
+    Validator getValidator(final String validatorClassName);
 
 }

@@ -32,60 +32,60 @@ public interface IHumanTaskItem extends ITaskItem {
     // ATTRIBUTES NAMES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String ATTRIBUTE_ASSIGNED_USER_ID = "assigned_id";
+    String ATTRIBUTE_ASSIGNED_USER_ID = "assigned_id";
 
-    public static final String ATTRIBUTE_ASSIGNED_DATE = "assigned_date";
+    String ATTRIBUTE_ASSIGNED_DATE = "assigned_date";
 
-    public static final String ATTRIBUTE_PRIORITY = "priority";
+    String ATTRIBUTE_PRIORITY = "priority";
 
-    public static final String ATTRIBUTE_DUE_DATE = "dueDate";
+    String ATTRIBUTE_DUE_DATE = "dueDate";
 
-    public static final String ATTRIBUTE_ACTOR_ID = "actorId";
+    String ATTRIBUTE_ACTOR_ID = "actorId";
     
     
     /*
      * Same as ATTRIBUTE_PARENT_CONTAINER_ID
      * Should be in manual task but lives there because of deploy restrictions
      */
-    public static final String ATTRIBUTE_PARENT_TASK_ID = "parentTaskId";
+    String ATTRIBUTE_PARENT_TASK_ID = "parentTaskId";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String VALUE_PRIORITY_HIGHEST = "highest";
+    String VALUE_PRIORITY_HIGHEST = "highest";
 
-    public static final String VALUE_PRIORITY_ABOVE_NORMAL = "above_normal";
+    String VALUE_PRIORITY_ABOVE_NORMAL = "above_normal";
 
-    public static final String VALUE_PRIORITY_NORMAL = "normal";
+    String VALUE_PRIORITY_NORMAL = "normal";
 
-    public static final String VALUE_PRIORITY_UNDER_NORMAL = "under_normal";
+    String VALUE_PRIORITY_UNDER_NORMAL = "under_normal";
 
-    public static final String VALUE_PRIORITY_LOWEST = "lowest";
+    String VALUE_PRIORITY_LOWEST = "lowest";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // COUNTS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String COUNT_ATTACHMENT_NUMBER = "nb_of_attachment";
+    String COUNT_ATTACHMENT_NUMBER = "nb_of_attachment";
 
-    public static final String COUNT_ACTOR_USER_NUMBER = "nb_of_actor_user";
+    String COUNT_ACTOR_USER_NUMBER = "nb_of_actor_user";
 
-    public static final String COUNT_COMMENT_NUMBER = "nb_of_comment";
+    String COUNT_COMMENT_NUMBER = "nb_of_comment";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FILTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String FILTER_TEAM_MANAGER_ID = "team_manager_id";
+    String FILTER_TEAM_MANAGER_ID = "team_manager_id";
 
-    public static final String FILTER_USER_ID = "user_id";
+    String FILTER_USER_ID = "user_id";
 
-    public static final String FILTER_HIDDEN_TO_USER_ID = "hidden_user_id";
+    String FILTER_HIDDEN_TO_USER_ID = "hidden_user_id";
 
-    public static final String FILTER_IS_ASSIGNED = "is_claimed";
+    String FILTER_IS_ASSIGNED = "is_claimed";
 
-    public static final String FILTER_SHOW_ASSIGNED_TO_OTHERS = "show_assigned_to_others";
+    String FILTER_SHOW_ASSIGNED_TO_OTHERS = "show_assigned_to_others";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES
@@ -93,74 +93,74 @@ public interface IHumanTaskItem extends ITaskItem {
 
     // SETTERS
 
-    public void setAssignedId(final String id);
+    void setAssignedId(final String id);
 
-    public void setAssignedId(final APIID id);
+    void setAssignedId(final APIID id);
 
-    public void setAssignedId(final Long id);
+    void setAssignedId(final Long id);
 
-    public void setAssignedDate(final String date);
+    void setAssignedDate(final String date);
 
-    public void setAssignedDate(final Date date);
+    void setAssignedDate(final Date date);
 
-    public void setPriority(final String priority);
+    void setPriority(final String priority);
 
-    public void setDueDate(final String date);
+    void setDueDate(final String date);
 
-    public void setDueDate(final Date date);
+    void setDueDate(final Date date);
 
-    public void setActorId(final APIID id);
+    void setActorId(final APIID id);
 
-    public void setActorId(final String actorId);
+    void setActorId(final String actorId);
 
-    public void setActorId(final Long actorId);
+    void setActorId(final Long actorId);
 
     // Counters
-    public void setNbOfAttachment(final String count);
+    void setNbOfAttachment(final String count);
 
-    public void setNbOfAttachment(final int count);
+    void setNbOfAttachment(final int count);
 
-    public void setNbOfComment(final String count);
+    void setNbOfComment(final String count);
 
-    public void setNbOfComment(final int count);
+    void setNbOfComment(final int count);
 
-    public void setNbOfActorUser(final String count);
+    void setNbOfActorUser(final String count);
 
-    public void setNbOfActorUser(final int count);
+    void setNbOfActorUser(final int count);
 
     // GETTERS
 
-    public APIID getActorId();
+    APIID getActorId();
 
-    public String getPriority();
+    String getPriority();
 
-    public String getDueDate();
+    String getDueDate();
 
-    public APIID getAssignedId();
+    APIID getAssignedId();
 
-    public String getAssignedDate();
+    String getAssignedDate();
 
     // Counters
-    public Integer getNbOfAttachment();
+    Integer getNbOfAttachment();
 
-    public Integer getNbOfComment();
+    Integer getNbOfComment();
 
-    public Integer getNbOfActorUser();
+    Integer getNbOfActorUser();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DEPLOYS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public UserItem getAssignedUser();
+    UserItem getAssignedUser();
 
-    public ActorItem getActor();
+    ActorItem getActor();
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UTILS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean isAssigned();
+    boolean isAssigned();
 
-    public boolean isUnassigned();
+    boolean isUnassigned();
 
 }

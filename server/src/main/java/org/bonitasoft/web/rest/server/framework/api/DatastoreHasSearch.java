@@ -27,7 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface DatastoreHasSearch<C extends IItem> {
 
-    public abstract ItemSearchResult<C> search(final int page, final int resultsByPage, final String search, final String orders,
+    ItemSearchResult<C> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters);
 
 }

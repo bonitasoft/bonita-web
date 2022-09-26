@@ -30,30 +30,30 @@ public interface IActivityItem extends ItemHasLastUpdateDate, IFlowNodeItem {
     // ATTRIBUTES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String ATTRIBUTE_REACHED_STATE_DATE = "reached_state_date";
+    String ATTRIBUTE_REACHED_STATE_DATE = "reached_state_date";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FILTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String FILTER_SUPERVISOR_ID = "supervisor_id";
+    String FILTER_SUPERVISOR_ID = "supervisor_id";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SETTERS AND GETTERS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void setReachStateDate(final String reachedStateDate);
+    void setReachStateDate(final String reachedStateDate);
 
-    public void setReachStateDate(final Date reachedStateDate);
+    void setReachStateDate(final Date reachedStateDate);
 
-    public Date getReachStateDate();
-
-    @Override
-    public void setLastUpdateDate(final String date);
+    Date getReachStateDate();
 
     @Override
-    public void setLastUpdateDate(final Date date);
+    void setLastUpdateDate(final String date);
 
     @Override
-    public Date getLastUpdateDate();
+    void setLastUpdateDate(final Date date);
+
+    @Override
+    Date getLastUpdateDate();
 }

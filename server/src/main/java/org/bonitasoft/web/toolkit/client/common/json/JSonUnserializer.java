@@ -24,6 +24,6 @@ import org.bonitasoft.web.toolkit.client.common.AbstractTreeNode;
  */
 public interface JSonUnserializer {
 
-    public AbstractTreeNode<String> _unserializeTree(final String json);
+    AbstractTreeNode<String> _unserializeTree(final String json);
 
 }

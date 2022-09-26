@@ -21,5 +21,5 @@ package org.bonitasoft.web.toolkit.client.common.json;
  */
 public interface JsonSerializable {
 
-    public String toJson();
+    String toJson();
 }

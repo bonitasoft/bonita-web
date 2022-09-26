@@ -24,5 +24,5 @@ import java.io.Serializable;
  */
 public interface Converter<E extends Serializable> {
 
-    public E convert(String convert) throws ConversionException;
+    E convert(String convert) throws ConversionException;
 }

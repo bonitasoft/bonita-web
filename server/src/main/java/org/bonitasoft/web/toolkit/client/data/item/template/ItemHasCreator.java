@@ -27,23 +27,23 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface ItemHasCreator {
 
-    public static final String ATTRIBUTE_CREATION_DATE = "creation_date";
+    String ATTRIBUTE_CREATION_DATE = "creation_date";
 
-    public static final String ATTRIBUTE_CREATED_BY_USER_ID = "created_by_user_id";
+    String ATTRIBUTE_CREATED_BY_USER_ID = "created_by_user_id";
 
-    public abstract void setCreationDate(String date);
+    void setCreationDate(String date);
 
-    public abstract void setCreationDate(Date date);
+    void setCreationDate(Date date);
 
-    public abstract Date getCreationDate();
+    Date getCreationDate();
 
-    public abstract void setCreatedByUserId(String id);
+    void setCreatedByUserId(String id);
 
-    public abstract void setCreatedByUserId(Long id);
+    void setCreatedByUserId(Long id);
 
-    public abstract void setCreatedByUserId(APIID id);
+    void setCreatedByUserId(APIID id);
 
-    public abstract APIID getCreatedByUserId();
+    APIID getCreatedByUserId();
 
-    public IItem getCreatedByUser();
+    IItem getCreatedByUser();
 }

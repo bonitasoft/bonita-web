@@ -31,6 +31,6 @@ public interface HasDeploys {
      * 
      * @return List of string
      */
-    public List<String> getDeploys();
+    List<String> getDeploys();
 
 }

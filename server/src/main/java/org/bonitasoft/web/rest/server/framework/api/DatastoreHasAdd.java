@@ -24,5 +24,5 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface DatastoreHasAdd<T extends IItem> {
 
-    public abstract T add(final T item);
+    T add(final T item);
 }

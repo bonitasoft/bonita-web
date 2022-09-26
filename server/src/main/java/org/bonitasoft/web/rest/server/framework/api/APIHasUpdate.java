@@ -27,6 +27,6 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public interface APIHasUpdate<T extends IItem> {
 
-    public abstract T update(final APIID id, final Map<String, String> attributes);
+    T update(final APIID id, final Map<String, String> attributes);
 
 }

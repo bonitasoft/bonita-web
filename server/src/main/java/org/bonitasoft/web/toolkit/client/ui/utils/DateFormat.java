@@ -45,11 +45,11 @@ public abstract class DateFormat {
 
     private static RelativeStringDateFormatter relativeStringDateFormatter = new RelativeStringDateFormatter();
     
-    public static enum UNIT {
+    public enum UNIT {
         YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, MILLISECOND
     };
 
-    public static enum FORMAT {
+    public enum FORMAT {
         SQL("yyyy-MM-dd HH:mm:ss.SSS"),
         FORM(AbstractI18n.t_("MM/dd/yyyy")),
         DISPLAY(AbstractI18n.t_("MM/dd/yyyy h:mm a")),
@@ -59,11 +59,11 @@ public abstract class DateFormat {
 
         private final String formatString;
 
-        private FORMAT() {
+        FORMAT() {
             this("");
         }
 
-        private FORMAT(final String formatString) {
+        FORMAT(final String formatString) {
             this.formatString = formatString;
         }
 

@@ -22,15 +22,15 @@ package org.bonitasoft.web.toolkit.client.data.item.template;
  */
 public interface ItemHasDualDescription {
 
-    public static final String ATTRIBUTE_DESCRIPTION = "description";
+    String ATTRIBUTE_DESCRIPTION = "description";
 
-    public static final String ATTRIBUTE_DISPLAY_DESCRIPTION = "displayDescription";
+    String ATTRIBUTE_DISPLAY_DESCRIPTION = "displayDescription";
 
-    public void setDescription(final String description);
+    void setDescription(final String description);
 
-    public void setDisplayDescription(final String displayDescription);
+    void setDisplayDescription(final String displayDescription);
 
-    public String getDescription();
+    String getDescription();
 
-    public String getDisplayDescription();
+    String getDisplayDescription();
 }

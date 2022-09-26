@@ -12,7 +12,7 @@ public class MenuFactory {
 
     public interface Collector {
 
-        public boolean isCollectible(ApplicationMenu item);
+        boolean isCollectible(ApplicationMenu item);
     }
 
     private final ApplicationAPI applicationApi;

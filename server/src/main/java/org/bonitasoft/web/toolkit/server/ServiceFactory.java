@@ -27,6 +27,6 @@ public interface ServiceFactory {
      * @param calledToolToken
      *            The token as a path. For example if the tool url is ".../TOOLS/actors/import", the token will be "actors/import".
      */
-    public Service getService(String calledToolToken);
+    Service getService(String calledToolToken);
 
 }

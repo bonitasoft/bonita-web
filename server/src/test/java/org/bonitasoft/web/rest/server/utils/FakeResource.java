@@ -24,8 +24,8 @@ public class FakeResource extends CommonResource {
         return fakeService.saySomething();
     }
 
-    public static interface FakeService {
+    public interface FakeService {
 
-        public String saySomething() throws Exception;
+        String saySomething() throws Exception;
     }
 }
