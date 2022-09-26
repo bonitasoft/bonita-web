@@ -6,7 +6,7 @@ import org.bonitasoft.web.rest.server.api.bdm.BusinessDataQueryResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferenceResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataReferencesResource;
 import org.bonitasoft.web.rest.server.api.bdm.BusinessDataResource;
-import org.bonitasoft.web.rest.server.api.system.I18nTanslationResource;
+import org.bonitasoft.web.rest.server.api.system.I18nTranslationResource;
 import org.bonitasoft.web.rest.server.utils.BonitaJacksonConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,7 +60,7 @@ public class BonitaRestletApplicationTest {
         bonitaRestletApplication.buildRouter();
 
         //then
-        Mockito.verify(finderFactory).create(I18nTanslationResource.class);
+        Mockito.verify(finderFactory).create(I18nTranslationResource.class);
     }
 
 }

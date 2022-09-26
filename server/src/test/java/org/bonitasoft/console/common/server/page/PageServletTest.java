@@ -112,7 +112,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(pageServlet, times(1)).displayExternalPage(hsRequest, hsResponse, "/externalPage");
+        verify(pageServlet, times(1)).displayExternalPage(hsResponse, "/externalPage");
         verify(hsResponse, times(1)).encodeRedirectURL("/externalPage");
         verify(hsResponse, times(1)).sendRedirect(anyString());
     }
@@ -150,7 +150,7 @@ public class PageServletTest {
         verify(pageServlet, times(1)).displayPageOrResource(hsRequest, hsResponse, apiSession, PAGE_ID, "path/of/resource.css", locale);
         verify(pageServlet, times(1)).getResourceFile(hsResponse, apiSession, PAGE_ID, "path/of/resource.css");
         verify(pageRenderer, times(1)).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
     }
 
     @Test
@@ -273,7 +273,7 @@ public class PageServletTest {
 
         pageServlet.service(hsRequest, hsResponse);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
     }
     
     @Test
@@ -305,7 +305,7 @@ public class PageServletTest {
         pageServlet.service(hsRequest, hsResponse);
 
         verify(hsResponse, never()).sendRedirect("?app=myApp");
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile, apiSession);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, resourceFile);
     }
     
     @Test

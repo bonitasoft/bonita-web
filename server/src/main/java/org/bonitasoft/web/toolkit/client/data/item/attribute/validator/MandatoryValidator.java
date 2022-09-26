@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
@@ -26,21 +24,16 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
  */
 public class MandatoryValidator extends AbstractCollectionValidator {
 
-    private String message = AbstractI18n.t_("%attribute% is mandatory");
+    private final String message = AbstractI18n.t_("%attribute% is mandatory");
 
     public MandatoryValidator() {
         super();
     }
 
-    public MandatoryValidator(final String message) {
-        super();
-        this.message = message;
-    }
-
     @Override
     protected final void _check(final String[] attributeValue) {
-        for (int i = 0; i < attributeValue.length; i++) {
-            this.check(attributeValue[i]);
+        for (String s : attributeValue) {
+            this.check(s);
         }
     }
 

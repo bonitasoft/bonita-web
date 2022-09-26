@@ -83,19 +83,9 @@ public class PageResourceProviderImpl implements PageResourceProvider {
     protected final static String VERSION_PARAM = "v";
 
     /**
-     * tenant request parameter
-     */
-    protected final static String TENANT_PARAM = "tenant";
-
-    /**
      * file name
      */
     protected final static String LOCATION_PARAM = "location";
-
-    /**
-     * theme name : the page folder's name
-     */
-    protected final static String PAGE_PARAM = "page";
 
     /**
      * theme name : the theme folder's name
@@ -107,8 +97,6 @@ public class PageResourceProviderImpl implements PageResourceProvider {
     protected String pageName;
 
     protected File pageDirectory;
-
-    private File pageTempDirectory = null;
 
     private ClassLoader resourceClassLoader;
 
@@ -130,7 +118,7 @@ public class PageResourceProviderImpl implements PageResourceProvider {
         fullPageName = buildFullPageName(pageName, processDefinitionId);
         pageDirectory = buildPageDirectory(fullPageName);
         if (buildPageTempFile) {
-            pageTempDirectory = buildPageTempDirectory(fullPageName);
+            buildPageTempDirectory(fullPageName);
             pageTempFile = buildPageTempFile(fullPageName);
         }
     }
@@ -144,12 +132,12 @@ public class PageResourceProviderImpl implements PageResourceProvider {
         return builder.toString();
     }
 
-    protected File buildPageTempDirectory(final String fullPageName) {
-        return new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), fullPageName);
+    protected void buildPageTempDirectory(final String fullPageName) {
+        new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), fullPageName);
     }
 
     protected File buildPageTempFile(final String fullPageName) {
-        return new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), new StringBuilder().append(fullPageName).append(".zip").toString());
+        return new File(WebBonitaConstantsUtils.getTenantInstance().getTempFolder(), fullPageName + ".zip");
     }
 
     protected File buildPageDirectory(final String fullPageName) {
@@ -168,15 +156,14 @@ public class PageResourceProviderImpl implements PageResourceProvider {
 
     @Override
     public String getResourceURL(final String resourceName) {
-        return new StringBuilder(resourceName).append("?").append(VERSION_PARAM).append("=")
-                .append(productVersion).toString();
+        return resourceName + "?" + VERSION_PARAM + "=" + productVersion;
     }
 
     @Override
     public String getBonitaThemeCSSURL() {
-        return new StringBuilder(THEME_RESOURCE_SERVLET_NAME).append("?").append(THEME_PARAM)
-                .append("=").append(PORTAL_THEME_NAME).append("&").append(LOCATION_PARAM).append("=").append(BONITA_THEME_CSS_FILENAME).append("&")
-                .append(VERSION_PARAM).append("=").append(productVersion).toString();
+        return THEME_RESOURCE_SERVLET_NAME + "?" + THEME_PARAM +
+                "=" + PORTAL_THEME_NAME + "&" + LOCATION_PARAM + "=" + BONITA_THEME_CSS_FILENAME + "&" +
+                VERSION_PARAM + "=" + productVersion;
     }
 
     @Override

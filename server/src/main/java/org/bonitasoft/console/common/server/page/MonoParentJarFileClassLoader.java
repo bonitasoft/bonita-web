@@ -46,20 +46,6 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
     private final AccessControlContext acc;
 
     /**
-     * Creates a JarFileClassLoader that is a child of the system class loader.
-     * 
-     * @param name
-     *            the name of this class loader
-     * @param urls
-     *            a list of URLs from which classes and resources should be loaded
-     */
-    public MonoParentJarFileClassLoader(final String name, final URL[] urls) {
-        super(name, EMPTY_URLS);
-        acc = AccessController.getContext();
-        addURLs(urls);
-    }
-
-    /**
      * Creates a JarFileClassLoader that is a child of the specified class loader.
      * 
      * @param name
@@ -88,13 +74,9 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
      */
     @Override
     public void addURL(final URL url) {
-        AccessController.doPrivileged(new PrivilegedAction() {
-
-            @Override
-            public Object run() {
-                resourceFinder.addUrl(url);
-                return null;
-            }
+        AccessController.doPrivileged((PrivilegedAction) () -> {
+            resourceFinder.addUrl(url);
+            return null;
         }, acc);
     }
 
@@ -105,17 +87,13 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
      *            the URLs to add
      */
     protected void addURLs(final URL[] urls) {
-        AccessController.doPrivileged(new PrivilegedAction() {
-
-            @Override
-            public Object run() {
-                if (urls != null && urls.length > 0) {
-                    for (final URL url : urls) {
-                        resourceFinder.addUrl(url);
-                    }
+        AccessController.doPrivileged((PrivilegedAction) () -> {
+            if (urls != null && urls.length > 0) {
+                for (final URL url : urls) {
+                    resourceFinder.addUrl(url);
                 }
-                return null;
             }
+            return null;
         }, acc);
     }
 
@@ -133,13 +111,7 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
      */
     @Override
     public URL findResource(final String resourceName) {
-        return (URL) AccessController.doPrivileged(new PrivilegedAction() {
-
-            @Override
-            public Object run() {
-                return resourceFinder.findResource(resourceName);
-            }
-        }, acc);
+        return (URL) AccessController.doPrivileged((PrivilegedAction) () -> resourceFinder.findResource(resourceName), acc);
     }
 
     /**
@@ -152,13 +124,7 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
         final Enumeration<?> parentResources = super.findResources(resourceName);
 
         // get the classes from my urls
-        final Enumeration myResources = (Enumeration) AccessController.doPrivileged(new PrivilegedAction() {
-
-            @Override
-            public Object run() {
-                return resourceFinder.findResources(resourceName);
-            }
-        }, acc);
+        final Enumeration myResources = (Enumeration) AccessController.doPrivileged((PrivilegedAction) () -> resourceFinder.findResources(resourceName), acc);
 
         // join the two together
         return new UnionEnumeration(parentResources, myResources);
@@ -186,13 +152,7 @@ public class MonoParentJarFileClassLoader extends NamedClassLoader {
         }
 
         // get a resource handle to the library
-        final ResourceHandle resourceHandle = (ResourceHandle) AccessController.doPrivileged(new PrivilegedAction() {
-
-            @Override
-            public Object run() {
-                return resourceFinder.getResource(resourceName);
-            }
-        }, acc);
+        final ResourceHandle resourceHandle = (ResourceHandle) AccessController.doPrivileged((PrivilegedAction) () -> resourceFinder.getResource(resourceName), acc);
 
         if (resourceHandle == null) {
             return null;

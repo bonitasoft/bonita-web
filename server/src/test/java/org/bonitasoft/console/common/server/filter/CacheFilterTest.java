@@ -44,9 +44,6 @@ public class CacheFilterTest {
     private HttpServletResponse httpResponse;
 
     @Mock
-    private HttpServletResponse response;
-
-    @Mock
     private HttpSession httpSession;
     
     @Mock

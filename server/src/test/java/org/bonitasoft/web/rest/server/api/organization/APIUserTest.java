@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.rest.server.datastore.organization.UserDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
@@ -31,8 +30,6 @@ public class APIUserTest {
     private APIUser apiUser;
     @Mock
     private UserDatastore userDatastore;
-    @Mock
-    private APISession apiSession;
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 

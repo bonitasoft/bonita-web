@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -27,9 +26,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.WaitUntil;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -85,10 +81,6 @@ public class APIArchivedHumanTaskIT extends AbstractConsoleTest {
         final HashMap<String, String> filters = new HashMap<>();
         filters.put(ArchivedHumanTaskItem.ATTRIBUTE_NAME, humanTaskInstance.getName());
         return filters;
-    }
-
-    private Map<String, String> buildArchivedHumanTaskStateCompletedForCaseIdFilter(final APIID caseId) {
-        return MapUtil.asMap(new Arg(ArchivedHumanTaskItem.ATTRIBUTE_CASE_ID, caseId));
     }
 
     /**
@@ -182,7 +174,6 @@ public class APIArchivedHumanTaskIT extends AbstractConsoleTest {
     private void shouldSearchArchivedHumaTaskWithOrder(final String orders) throws Exception {
         //given
         final HumanTaskInstance humanTaskInstance = initArchivedHumanTaskInstance();
-        final ArrayList<String> deploys = getProcessIdDeploy();
         final HashMap<String, String> filters = getNameFilter(humanTaskInstance);
 
         //when

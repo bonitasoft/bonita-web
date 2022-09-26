@@ -2,8 +2,6 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.slf4j.LoggerFactory;
-
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -18,7 +16,6 @@ import org.restlet.Server;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
-import org.restlet.engine.Engine;
 import org.restlet.resource.Get;
 import org.restlet.routing.Router;
 
@@ -91,7 +88,7 @@ public class AttributeEncodingTest {
     }
 
     protected static Application createApplication() {
-        final Application application = new Application() {
+        return new Application() {
 
             @Override
             public Restlet createInboundRoot() {
@@ -101,6 +98,5 @@ public class AttributeEncodingTest {
                 return router;
             }
         };
-        return application;
     }
 }

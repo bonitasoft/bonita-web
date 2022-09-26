@@ -2,17 +2,15 @@ package org.bonitasoft.web.rest.server.datastore.applicationpage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
@@ -22,7 +20,6 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageDefinition;
 import org.bonitasoft.web.rest.model.applicationpage.ApplicationPageItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -45,13 +42,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class ApplicationPageDataStoreTest extends APITestWithMock {
 
     @Mock
-    private APISession session;
-
-    @Mock
     private ApplicationAPI applicationAPI;
-
-    @Mock
-    private PageAPI pageAPI;
 
     @Mock
     private ApplicationPageItemConverter converter;
@@ -110,11 +101,11 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(converter.toApplicationPageItem(applicationPage)).willReturn(item);
 
         //when
-        final ApplicationPageItem retrivedItem = dataStore.get(APIID.makeAPIID("1"));
+        final ApplicationPageItem retrievedItem = dataStore.get(APIID.makeAPIID("1"));
 
         //then
-        assertThat(retrivedItem).isNotNull();
-        assertThat(retrivedItem).isEqualTo(item);
+        assertThat(retrievedItem).isNotNull();
+        assertThat(retrievedItem).isEqualTo(item);
     }
 
     @Test(expected = APIException.class)
@@ -133,7 +124,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         //given
 
         //when
-        dataStore.delete(Arrays.<APIID> asList(APIID.makeAPIID("1"), APIID.makeAPIID("2")));
+        dataStore.delete(Arrays.asList(APIID.makeAPIID("1"), APIID.makeAPIID("2")));
 
         //then
         verify(applicationAPI, times(1)).deleteApplicationPage(1);
@@ -145,7 +136,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         doThrow(new DeletionException("")).when(applicationAPI).deleteApplicationPage(1);
 
         //when
-        dataStore.delete(Arrays.<APIID> asList(APIID.makeAPIID("1")));
+        dataStore.delete(List.of(APIID.makeAPIID("1")));
 
         //then exception
     }
@@ -160,11 +151,11 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(converter.toApplicationPageItem(appPage)).willReturn(item);
 
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(2, Arrays.<ApplicationPage>asList(appPage)));
+                new SearchResultImpl<>(2, List.of(appPage)));
 
         //when
         final ItemSearchResult<ApplicationPageItem> retrievedItems = dataStore.search(0, 1, null, orders,
-                Collections.<String, String> emptyMap());
+                Collections.emptyMap());
 
         //then
         assertThat(retrievedItems).isNotNull();
@@ -190,7 +181,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(converter.toApplicationPageItem(appPage)).willReturn(item);
 
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(2, Arrays.<ApplicationPage>asList(appPage)));
+                new SearchResultImpl<>(2, List.of(appPage)));
 
         //when
         dataStore.search(page, resultsByPage, search, orders, filters);
@@ -219,7 +210,7 @@ public class ApplicationPageDataStoreTest extends APITestWithMock {
         given(applicationAPI.searchApplicationPages(any(SearchOptions.class))).willThrow(new SearchException(null));
 
         //when
-        dataStore.search(0, 1, null, orders, Collections.<String, String> emptyMap());
+        dataStore.search(0, 1, null, orders, Collections.emptyMap());
 
         //then exception
 

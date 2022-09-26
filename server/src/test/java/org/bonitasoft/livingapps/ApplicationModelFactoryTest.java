@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 import java.util.Collections;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.Application;
 import org.bonitasoft.engine.business.application.impl.ApplicationImpl;
 import org.bonitasoft.engine.business.application.impl.ApplicationPageImpl;
@@ -32,9 +31,6 @@ public class ApplicationModelFactoryTest {
 
     @Mock(answer = Answers.RETURNS_MOCKS)
     ApplicationAPI applicationApi;
-
-    @Mock
-    PageAPI customPageApi;
 
     @InjectMocks
     ApplicationModelFactory factory;

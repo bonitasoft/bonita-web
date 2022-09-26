@@ -55,7 +55,7 @@ public class ProcessEngineClient {
 
     private static Logger LOGGER = LoggerFactory.getLogger(ProcessEngineClient.class.getName());
 
-    private static int DELETE_PROCESS_BUNCH_SIZE = 100;
+    private static final int DELETE_PROCESS_BUNCH_SIZE = 100;
 
     protected ProcessAPI processAPI;
 
@@ -137,9 +137,6 @@ public class ProcessEngineClient {
 
     /**
      * Delete archived process instances by bunch for a given processId
-     *
-     * @throws ProcessDefinitionNotFoundException
-     * @throws DeletionException
      */
     public void deleteArchivedProcessInstancesByBunch(final long processId, final int bunchSize, final List<Long> processesAllowedToBeDeletedIds)
             throws DeletionException, ProcessDefinitionNotFoundException {
@@ -162,9 +159,6 @@ public class ProcessEngineClient {
 
     /**
      * Delete process instances by bunch for a given processId
-     *
-     * @throws ProcessDefinitionNotFoundException
-     * @throws DeletionException
      */
     public void deleteProcessInstancesByBunch(final long processId, final int bunchSize, final List<Long> processesAllowedToBeDeletedIds)
             throws DeletionException, ProcessDefinitionNotFoundException {
@@ -190,14 +184,6 @@ public class ProcessEngineClient {
             return getProcessApi().searchProcessDeploymentInfos(searchOptions);
         } catch (final Exception e) {
             throw new APIException("Error when searching process definition", e);
-        }
-    }
-
-    public SearchResult<ProcessDeploymentInfo> searchUncategorizedProcessDefinitionsSupervisedBy(final long userId, final SearchOptions searchOptions) {
-        try {
-            return getProcessApi().searchUncategorizedProcessDeploymentInfosSupervisedBy(userId, searchOptions);
-        } catch (final Exception e) {
-            throw new APIException("Error when searching uncategorized process definition supervised by user " + userId, e);
         }
     }
 

@@ -40,27 +40,4 @@ public class ModifiersList {
         return this;
     }
 
-    public ModifiersList addModifiers(final List<Modifier> modifiers) {
-        for (final Modifier modifier : modifiers) {
-            addModifier(modifier);
-        }
-        return this;
-    }
-
-    public ModifiersList removeModifier(final String modifierClassName) {
-        ListUtils.removeFromListByClass(this.modifiers, modifierClassName);
-        return this;
-    }
-
-    public boolean hasModifier(final String modifierClassName) {
-        return getModifier(modifierClassName) != null;
-    }
-
-    public Modifier getModifier(final String modifierClassName) {
-        return (Modifier) ListUtils.getFromListByClass(this.modifiers, modifierClassName);
-    }
-
-    public String apply(final String value) {
-        return ModifierEngine.modify(value, this.modifiers);
-    }
 }

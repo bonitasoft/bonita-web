@@ -67,7 +67,7 @@ public class AuthenticationFilterTest {
     AuthenticationFilter authenticationFilter;
 
     @Spy
-    AuthenticationManager authenticationManager = new FakeAuthenticationManager(1L);
+    AuthenticationManager authenticationManager = new FakeAuthenticationManager();
 
     HttpServletRequestAccessor request;
 

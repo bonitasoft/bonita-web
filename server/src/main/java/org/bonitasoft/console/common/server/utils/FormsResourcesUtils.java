@@ -16,9 +16,7 @@ package org.bonitasoft.console.common.server.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,8 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -47,6 +43,8 @@ import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Anthony Birembaut
@@ -95,18 +93,14 @@ public class FormsResourcesUtils {
      *            the engine API session
      * @param processDefinitionID
      *            the process definition ID
-     * @param processDeployementDate
-     *            the process deployement date
-     * @throws java.io.IOException
-     * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
-     * @throws org.bonitasoft.engine.session.InvalidSessionException
-     * @throws org.bonitasoft.engine.exception.RetrieveException
+     * @param processDeploymentDate
+     *            the process deployment date
      */
-    public static synchronized void retrieveApplicationFiles(final APISession session, final long processDefinitionID, final Date processDeployementDate)
+    public static synchronized void retrieveApplicationFiles(final APISession session, final long processDefinitionID, final Date processDeploymentDate)
             throws IOException, ProcessDefinitionNotFoundException, InvalidSessionException, RetrieveException, BPMEngineException {
 
         final ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
-        final File formsDir = getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
+        final File formsDir = getApplicationResourceDir(session, processDefinitionID, processDeploymentDate);
         if (!formsDir.exists()) {
             formsDir.mkdirs();
         }
@@ -139,7 +133,7 @@ public class FormsResourcesUtils {
             }
         }
 
-        final File processApplicationsResourcesDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, processDeployementDate);
+        final File processApplicationsResourcesDir = FormsResourcesUtils.getApplicationResourceDir(session, processDefinitionID, processDeploymentDate);
         final ClassLoader processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
         PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
     }
@@ -152,7 +146,6 @@ public class FormsResourcesUtils {
      * @param processApplicationsResourcesDir
      *            the process application resources directory
      * @return a Classloader
-     * @throws java.io.IOException
      */
     private static ClassLoader createProcessClassloader(final long processDefinitionID, final File processApplicationsResourcesDir) throws IOException {
         ClassLoader processClassLoader = null;
@@ -180,22 +173,21 @@ public class FormsResourcesUtils {
      * @param processApplicationsResourcesDir
      *            the process application resources directory
      * @return an array of URL
-     * @throws java.io.IOException
      */
     private static URL[] getLibrariesURLs(final File processApplicationsResourcesDir) throws IOException {
         final List<URL> urls = new ArrayList<>();
         final File libDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.LIB_DIRECTORY_IN_BAR + File.separator);
         if (libDirectory.exists()) {
             final File[] libFiles = libDirectory.listFiles();
-            for (int i = 0; i < libFiles.length; i++) {
-                urls.add(libFiles[i].toURI().toURL());
+            for (File libFile : libFiles) {
+                urls.add(libFile.toURI().toURL());
             }
         }
         final File validatorsDirectory = new File(processApplicationsResourcesDir, FormsResourcesUtils.VALIDATORS_DIRECTORY_IN_BAR + File.separator);
         if (validatorsDirectory.exists()) {
             final File[] validatorsFiles = validatorsDirectory.listFiles();
-            for (int i = 0; i < validatorsFiles.length; i++) {
-                urls.add(validatorsFiles[i].toURI().toURL());
+            for (File validatorsFile : validatorsFiles) {
+                urls.add(validatorsFile.toURI().toURL());
             }
         } else {
             if (LOGGER.isDebugEnabled()) {
@@ -254,8 +246,8 @@ public class FormsResourcesUtils {
             final String processPath = WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder() + File.separator;
             final File processDir = new File(processPath, processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion());
             if (processDir.exists()) {
-                final long lastDeployementDate = getLastDeployementDate(processDir);
-                final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastDeployementDate));
+                final long lastdeploymentDate = getLastDeploymentDate(processDir);
+                final File processApplicationsResourcesDir = new File(processDir, Long.toString(lastdeploymentDate));
                 processClassLoader = createProcessClassloader(processDefinitionID, processApplicationsResourcesDir);
             }
         } catch (final Exception e) {
@@ -267,36 +259,30 @@ public class FormsResourcesUtils {
         return processClassLoader;
     }
 
-    private static long getLastDeployementDate(final File processDir) {
-        final File[] directories = processDir.listFiles(new FileFilter() {
-
-            @Override
-            public boolean accept(final File pathname) {
-                return pathname.isDirectory();
-            }
-        });
-        long lastDeployementDate = 0L;
+    private static long getLastDeploymentDate(final File processDir) {
+        final File[] directories = processDir.listFiles(File::isDirectory);
+        long lastDeploymentDate = 0L;
         for (final File directory : directories) {
             try {
-                final long deployementDate = Long.parseLong(directory.getName());
-                if (deployementDate > lastDeployementDate) {
-                    lastDeployementDate = deployementDate;
+                final long deploymentDate = Long.parseLong(directory.getName());
+                if (deploymentDate > lastDeploymentDate) {
+                    lastDeploymentDate = deploymentDate;
                 }
             } catch (final Exception e) {
                 if (LOGGER.isWarnEnabled()) {
                     LOGGER.warn(
-                            "Process application resources deployment folder contains a directory that does not match a process deployement timestamp: "
+                            "Process application resources deployment folder contains a directory that does not match a process deployment timestamp: "
                                     + directory.getName(), e);
                 }
             }
         }
-        if (lastDeployementDate == 0L) {
+        if (lastDeploymentDate == 0L) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn(
-                        "Process application resources deployment folder contains no directory that match a process deployement timestamp.");
+                        "Process application resources deployment folder contains no directory that match a process deployment timestamp.");
             }
         }
-        return lastDeployementDate;
+        return lastDeploymentDate;
     }
 
     /**
@@ -331,24 +317,14 @@ public class FormsResourcesUtils {
 
     /**
      * Get the process resource directory
-     *
-     * @param session
-     *            the API session
-     * @param processDefinitionID
-     * @param processDeployementDate
-     * @return
-     * @throws java.io.IOException
-     * @throws org.bonitasoft.engine.session.InvalidSessionException
-     * @throws org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException
-     * @throws org.bonitasoft.engine.exception.RetrieveException
      */
-    public static File getApplicationResourceDir(final APISession session, final long processDefinitionID, final Date processDeployementDate)
-            throws IOException, InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException, BPMEngineException {
+    public static File getApplicationResourceDir(final APISession session, final long processDefinitionID, final Date processDeploymentDate)
+            throws InvalidSessionException, ProcessDefinitionNotFoundException, RetrieveException, BPMEngineException {
         final ProcessAccessor process = new ProcessAccessor(bpmEngineAPIUtil.getProcessAPI(session));
         final ProcessDefinition processDefinition = process.getDefinition(processDefinitionID);
         final String processUUID = processDefinition.getName() + UUID_SEPARATOR + processDefinition.getVersion();
         return new File(WebBonitaConstantsUtils.getTenantInstance().getFormsWorkFolder(), processUUID + File.separator
-                + processDeployementDate.getTime());
+                + processDeploymentDate.getTime());
     }
 
     /**
@@ -415,17 +391,7 @@ public class FormsResourcesUtils {
             final TenantAdministrationAPI tenantAdministrationAPI = TenantAPIAccessor.getTenantAdministrationAPI(session);
             final byte[] clientBDMZip = tenantAdministrationAPI.getClientBDMZip();
             unzipContentToFolder(clientBDMZip, bdmWorkDir);
-        } catch (final BonitaHomeNotSetException e) {
-            final String message = "Unable to create the class loader for the bdm libraries";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-        } catch (final ServerAPIException e) {
-            final String message = "Unable to create the class loader for the bdm libraries";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-        } catch (final UnknownAPITypeException e) {
+        } catch (final BonitaHomeNotSetException | UnknownAPITypeException | IOException | ServerAPIException e) {
             final String message = "Unable to create the class loader for the bdm libraries";
              if (LOGGER.isErrorEnabled()) {
                 LOGGER.error( message, e);
@@ -434,11 +400,6 @@ public class FormsResourcesUtils {
             final String message = "Unable to create the class loader for the bdm libraries, maybe no bdm has been installed";
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(message, e);
-            }
-        } catch (final IOException e) {
-            final String message = "Unable to create the class loader for the bdm libraries";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
             }
         }
     }
@@ -460,7 +421,7 @@ public class FormsResourcesUtils {
                     }
                     file.createNewFile();
                     out = new FileOutputStream(file);
-                    int len = 0;
+                    int len;
                     final byte[] buffer = new byte[1024];
                     while ((len = zis.read(buffer)) > 0) {
                         out.write(buffer, 0, len);
@@ -484,8 +445,7 @@ public class FormsResourcesUtils {
     public static String getBusinessDataModelVersion(final APISession session) {
         try {
             final TenantAdministrationAPI tenantAdministrationAPI = TenantAPIAccessor.getTenantAdministrationAPI(session);
-            final String lastBDMDeployementId = tenantAdministrationAPI.getBusinessDataModelVersion();
-            return lastBDMDeployementId;
+            return tenantAdministrationAPI.getBusinessDataModelVersion();
         } catch (final Exception e) {
             final String message = "Unable to retrieve business data model version";
              if (LOGGER.isErrorEnabled()) {
@@ -503,7 +463,6 @@ public class FormsResourcesUtils {
      * @param bdmFolder
      *            the process application resources directory
      * @return a Classloader
-     * @throws java.io.IOException
      */
     protected static ClassLoader createProcessClassloaderWithBDM(final long processDefinitionID, final File bdmFolder, final ClassLoader parentClassloader)
             throws IOException {
@@ -533,16 +492,10 @@ public class FormsResourcesUtils {
     protected static URL[] getBDMLibrariesURLs(final File bdmFolder) throws IOException {
         final List<URL> urls = new ArrayList<>();
         if (bdmFolder.exists()) {
-            final File[] bdmFiles = bdmFolder.listFiles(new FilenameFilter() {
-
-                @Override
-                public boolean accept(final File arg0, final String arg1) {
-                    return arg1.endsWith(".jar");
-                }
-            });
+            final File[] bdmFiles = bdmFolder.listFiles((arg0, arg1) -> arg1.endsWith(".jar"));
             if (bdmFiles != null) {
-                for (int i = 0; i < bdmFiles.length; i++) {
-                    urls.add(bdmFiles[i].toURI().toURL());
+                for (File bdmFile : bdmFiles) {
+                    urls.add(bdmFile.toURI().toURL());
                 }
             }
         } else {
@@ -555,8 +508,8 @@ public class FormsResourcesUtils {
         return urlArray;
     }
 
-    protected static synchronized ClassLoader createAndSaveProcessClassloader(final APISession session, final long processDefinitionID,
-            final File currentBDMFolder) {
+    protected static synchronized void createAndSaveProcessClassloader(final APISession session, final long processDefinitionID,
+                                                                       final File currentBDMFolder) {
 
         final ClassLoader parentClassLoader = createProcessClassloader(session, processDefinitionID);
         ClassLoader processClassLoader = null;
@@ -575,6 +528,5 @@ public class FormsResourcesUtils {
             }
         }
         PROCESS_CLASSLOADERS.put(processDefinitionID, processClassLoader);
-        return processClassLoader;
     }
 }

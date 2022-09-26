@@ -66,14 +66,6 @@ public class JSonSerializer extends JSonUtil {
         return quoteInternal(object.toString());
     }
 
-    public static String serialize(final Object key, final Object value) {
-        return serializeInternal(key, value).toString();
-    }
-
-    private static StringBuilder serializeInternal(Object key, Object value) {
-        return quoteInternal(key.toString()).append(":").append(serialize(value));
-    }
-
     public static String serializeCollection(final Collection<? extends Object> list) {
         return serializeCollectionInternal(list).toString();
     }

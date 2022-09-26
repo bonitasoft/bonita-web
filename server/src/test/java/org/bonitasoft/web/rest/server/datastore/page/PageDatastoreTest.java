@@ -244,7 +244,7 @@ public class PageDatastoreTest extends APITestWithMock {
         final Throwable throwable = catchThrowable(() -> pageDatastore.delete(singletonList(makeAPIID(1L))));
 
         assertThat(throwable).isInstanceOf(APIException.class);
-        verify(pageAPI, never()).deletePage(1l);
+        verify(pageAPI, never()).deletePage(1L);
         verify(customPageService, never()).removePageLocally(any(PageResourceProvider.class));
     }
 
@@ -399,9 +399,6 @@ public class PageDatastoreTest extends APITestWithMock {
 
     }
 
-    /**
-     * @param pagesDir
-     */
     private void deleteDir(final File pagesDir) {
         if (pagesDir.exists()) {
             try {
@@ -433,7 +430,6 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_not_set_the_process_definition_id_on_creation() throws Exception {
         final byte[] zipContent = new byte[1];
-        final APIID processId = APIID.makeAPIID(2555L);
         doReturn("contentName").when(pageItem).getContentName();
         doReturn(null).when(pageItem).getProcessId();
         doReturn(zipContent).when(pageDatastore).readZipFile(mockedZipFile);
@@ -471,7 +467,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
 
         // When
-        final PageItem addedPage = pageDatastore.add(pageToBeAdded);
+        pageDatastore.add(pageToBeAdded);
 
         final ArgumentCaptor<PageItem> argumentCaptor = ArgumentCaptor.forClass(PageItem.class);
 
@@ -491,7 +487,7 @@ public class PageDatastoreTest extends APITestWithMock {
         when(pageAPI.createPage(any(String.class), any(byte[].class))).thenReturn(mockedPage);
 
         // When
-        final PageItem addedPage = pageDatastore.add(pageToBeAdded);
+        pageDatastore.add(pageToBeAdded);
 
         final ArgumentCaptor<PageItem> argumentCaptor = ArgumentCaptor.forClass(PageItem.class);
 
@@ -557,7 +553,7 @@ public class PageDatastoreTest extends APITestWithMock {
     @Test
     public void testRunSearch() throws Exception {
         final SearchOptionsCreator creator = new SearchOptionsCreator(0, 1, null, new Sorts(null), new Filters(null));
-        pageDatastore.runSearch(null, creator);
+        pageDatastore.runSearch(creator);
         verify(pageAPI, times(1)).searchPages(creator.create());
     }
 

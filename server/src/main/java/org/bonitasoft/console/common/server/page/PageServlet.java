@@ -20,8 +20,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Locale;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,12 +43,14 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
 import org.bonitasoft.livingapps.ApplicationModelFactory;
 import org.bonitasoft.livingapps.exception.CreationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet allowing to display a page or the resource of a page with an URL like /portal/resource/<page-mapping-key>/content/
  * (it can be a custom page or an external page)
  * This servlet is used to display process forms/overview pages
- * 
+ *
  * Note: whenever there is an InvalidSessionException from the engine it performs an HTTP session logout and send a 401 error. since we are in a iframe, we cannot redirect to the login page.
  * However, the page should handle the 401 and refresh the top window.
  *
@@ -139,7 +139,7 @@ public class PageServlet extends HttpServlet {
 
     protected void renderThemeResource(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, String resourcePath)
             throws BonitaException, CreationException, IllegalAccessException, IOException, ServletException {
-        
+
         String appToken = request.getParameter(APPLICATION_PARAM);
         if (appToken != null) {
             renderThemeResource(request, response, apiSession, resourcePath, appToken);
@@ -171,7 +171,7 @@ public class PageServlet extends HttpServlet {
             String appToken) throws BonitaException, CreationException, IllegalAccessException, IOException {
         // Try to get requested resource from the current Living application theme
         Long themeId = getThemeId(apiSession, appToken);
-        resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, themeId, resourcePath), apiSession);
+        resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, themeId, resourcePath));
     }
 
     protected String getResourcePath(final String[] pathInfoSegments) {
@@ -216,14 +216,14 @@ public class PageServlet extends HttpServlet {
     protected void resolveAndDisplayPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
             final String mappingKey, final String resourcePath)
                     throws BonitaException, IOException, InstantiationException, IllegalAccessException {
-        
+
         boolean isNotResourcePath = isNotResourcePath(resourcePath);
         try {
             Locale currentLocale = pageRenderer.getCurrentLocale(request);
             final PageReference pageReference = pageMappingService.getPage(request, apiSession, mappingKey, currentLocale,
                     isNotResourcePath);
             if (pageReference.getURL() != null) {
-                displayExternalPage(request, response, pageReference.getURL());
+                displayExternalPage(response, pageReference.getURL());
             } else if (pageReference.getPageId() != null) {
                 displayPageOrResource(request, response, apiSession, pageReference.getPageId(), resourcePath, currentLocale);
             } else {
@@ -254,7 +254,7 @@ public class PageServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 response.flushBuffer();
             }
-            
+
         }
     }
 
@@ -266,7 +266,7 @@ public class PageServlet extends HttpServlet {
             if (isNotResourcePath) {
                 pageRenderer.displayCustomPage(request, response, apiSession, pageId, currentLocale);
             } else {
-                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath), apiSession);
+                resourceRenderer.renderFile(request, response, getResourceFile(response, apiSession, pageId, resourcePath));
             }
         } catch (final PageNotFoundException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -302,8 +302,7 @@ public class PageServlet extends HttpServlet {
         return resourceFile;
     }
 
-    protected void displayExternalPage(final HttpServletRequest request, final HttpServletResponse response, final String url)
-            throws IOException {
+    protected void displayExternalPage(final HttpServletResponse response, final String url) throws IOException {
         response.sendRedirect(response.encodeRedirectURL(url));
     }
 

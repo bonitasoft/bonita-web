@@ -24,9 +24,9 @@ package org.bonitasoft.console.common.server.login.credentials;
  */
 public class StandardCredentials implements Credentials {
 
-    private String name;
+    private final String name;
 
-    private String password;
+    private final String password;
 
     public StandardCredentials(final String name, final String password) {
         this.name = name;
@@ -49,19 +49,4 @@ public class StandardCredentials implements Credentials {
         return password;
     }
 
-    /**
-     * @param name
-     *            the name to set
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * @param password
-     *            the password to set
-     */
-    public void setPassword(final String password) {
-        this.password = password;
-    }
 }

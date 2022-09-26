@@ -41,12 +41,6 @@ public class PageRenderer {
 
     public static final String PROFILE_PARAM = "profile";
 
-    public static final String LOCALE_PARAM = "locale";
-
-    public static final String DEFAULT_LOCALE = "en";
-
-    public static final String LOCALE_COOKIE_NAME = "BOS_Locale";
-
     protected CustomPageService customPageService = new CustomPageService();
 
     protected ResourceRenderer resourceRenderer;
@@ -60,13 +54,6 @@ public class PageRenderer {
 
         final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName);
         displayCustomPage(request, response, apiSession, pageResourceProvider, getCurrentLocale(request));
-    }
-
-    public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final String pageName, final Locale currentLocale)
-            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
-
-        final PageResourceProviderImpl pageResourceProvider = getPageResourceProvider(pageName);
-        displayCustomPage(request, response, apiSession, pageResourceProvider, currentLocale);
     }
 
     public void displayCustomPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession, final long pageId)
@@ -91,9 +78,9 @@ public class PageRenderer {
         customPageService.ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
         enforceLocaleCookieIfPresentInURLOrBrowser(request, response, currentLocale);
         if (isGroovyPage(pageResourceProvider)) {
-            displayGroovyPage(request, response, apiSession, pageResourceProvider, currentLocale);
+            displayGroovyPage(request, response, apiSession, pageResourceProvider);
         } else {
-            displaySimpleHtmlPage(request, response, apiSession, pageResourceProvider);
+            displaySimpleHtmlPage(request, response, pageResourceProvider);
         }
     }
 
@@ -103,15 +90,15 @@ public class PageRenderer {
         return indexGroovy.exists();
     }
 
-    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
+    private void displaySimpleHtmlPage(final HttpServletRequest request, final HttpServletResponse response,
                                        final PageResourceProviderImpl pageResourceProvider)
-            throws IOException, InstantiationException, BonitaException, IllegalAccessException {
+            throws IOException, BonitaException, IllegalAccessException {
 
         final File resourceFile = getIndexFile(pageResourceProvider);
-        resourceRenderer.renderFile(request, response, resourceFile, apiSession, true);
+        resourceRenderer.renderFile(request, response, resourceFile, true);
     }
 
-    private File getIndexFile(final PageResourceProviderImpl pageResourceProvider) throws IOException, BonitaException {
+    private File getIndexFile(final PageResourceProviderImpl pageResourceProvider) {
         final File indexHtml = new File(getResourceFolder(pageResourceProvider), CustomPageService.PAGE_INDEX_FILENAME);
         if (indexHtml.exists()) {
             return indexHtml;
@@ -125,8 +112,8 @@ public class PageRenderer {
     }
 
     private void displayGroovyPage(final HttpServletRequest request, final HttpServletResponse response, final APISession apiSession,
-                                   final PageResourceProviderImpl pageResourceProvider, final Locale currentLocale)
-            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException, BonitaException {
+                                   final PageResourceProviderImpl pageResourceProvider)
+            throws CompilationFailedException, InstantiationException, IllegalAccessException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         final ClassLoader originalClassloader = Thread.currentThread().getContextClassLoader();

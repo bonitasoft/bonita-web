@@ -29,10 +29,7 @@ public interface ArchivedFlowNode  {
     String ATTRIBUTE_SOURCE_OBJECT_ID = "sourceObjectId";
     
     String FILTER_IS_TERMINAL = "isTerminal";
-    
-    String VALUE_IS_TERMINAL_TRUE = "true";
-    String VALUE_IS_TERMINAL_FALSE = "false";
-    
+
     String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
 
     void setArchivedDate(final String date);

@@ -28,27 +28,13 @@ public class ForbiddenAttributesException extends APIAttributesException {
 
     private static final long serialVersionUID = 8320315567291339726L;
 
-    public ForbiddenAttributesException(final List<String> attributeName, final String message, final Throwable cause) {
-        super(attributeName, message, cause);
-    }
-
-    public ForbiddenAttributesException(final List<String> attributeName, final String message) {
-        super(attributeName, message);
-    }
-
-    public ForbiddenAttributesException(final List<String> attributeName, final Throwable cause) {
-        super(attributeName, cause);
-    }
-
     public ForbiddenAttributesException(final List<String> attributeName) {
         super(attributeName);
     }
 
     @Override
     protected String defaultMessage() {
-        return new StringBuilder()
-                .append("Manual set of following attributes is forbidden : ")
-                .append(ListUtils.join(getAttributesNames(), ", "))
-                .toString();
+        return "Manual set of following attributes is forbidden : " +
+                ListUtils.join(getAttributesNames(), ", ");
     }
 }

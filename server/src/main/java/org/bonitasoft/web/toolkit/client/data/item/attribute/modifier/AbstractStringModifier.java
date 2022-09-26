@@ -21,14 +21,12 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute.modifier;
  * @author Séverin Moussel
  * 
  */
-public abstract class AbstractStringModifier extends AbstractCollectionModifier {
+public abstract class AbstractStringModifier extends Modifier {
 
-    @Override
     public String[] clean(final String[] values) {
         for (int i = 0; i < values.length; i++) {
             values[i] = this.clean(values[i]);
         }
-
         return values;
     }
 

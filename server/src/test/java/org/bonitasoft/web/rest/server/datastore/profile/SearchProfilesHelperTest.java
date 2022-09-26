@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.profile;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bonitasoft.web.rest.model.builder.profile.EngineProfileBuilder.anEngineProfile;
+import static org.bonitasoft.web.rest.server.datastore.profile.EngineProfileBuilder.anEngineProfile;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;

@@ -133,7 +133,7 @@ public class LivingApplicationPageServlet extends HttpServlet {
                         } else {
                             final File resourceFile = getResourceFile(resourcePath, customPageName);
                             pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(customPageName));
-                            resourceRenderer.renderFile(request, response, resourceFile, apiSession);
+                            resourceRenderer.renderFile(request, response, resourceFile);
                         }
                     } else {
                         if (isNotResourcePath) {

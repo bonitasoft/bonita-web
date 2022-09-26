@@ -18,8 +18,6 @@ package org.bonitasoft.web.toolkit.client.common.json;
 
 import static java.lang.Integer.toHexString;
 
-import java.util.HashMap;
-
 /**
  * @author Séverin Moussel
  * 
@@ -40,14 +38,14 @@ public class JSonUtil {
 
     private static StringBuilder escapeInternal(String string) {
         if (string == null || string.length() == 0) {
-            return new StringBuilder("");
+            return new StringBuilder();
         }
 
         char b;
         char c = 0;
         int i;
         final int len = string.length();
-        final StringBuffer sb = new StringBuffer(len + 4);
+        final StringBuilder sb = new StringBuilder(len + 4);
 
         for (i = 0; i < len; i += 1) {
             b = c;
@@ -93,113 +91,9 @@ public class JSonUtil {
         return new StringBuilder(sb);
     }
 
-    private static String convertToUnicode(char character) {
-        return convertToUnicodeInternal(character).toString();
-    }
-
     private static StringBuffer convertToUnicodeInternal(char character) {
-        StringBuffer hexString = new StringBuffer("000").append(toHexString(character));
+        StringBuilder hexString = new StringBuilder("000").append(toHexString(character));
         return new StringBuffer("\\u").append(hexString.substring(hexString.length() - 4));
-    }
-
-    private static Character next(final String string, int currentPos) {
-        currentPos++;
-        if (string.length() > currentPos) {
-            return string.charAt(currentPos);
-        }
-        return null;
-    }
-
-    private static String next(final String string, Integer currentPos, final int length) {
-        currentPos++;
-        if (string.length() > currentPos + length) {
-            return string.substring(currentPos, length);
-        }
-        return null;
-    }
-
-    public static String unquote(final String string) {
-        if (string == null) {
-            return string;
-        }
-
-        String result = string.trim();
-        if (result.startsWith("\"") && result.endsWith("\"")) {
-            result = result.substring(1, result.length() - 1);
-        }
-
-        return unescape(result);
-    }
-
-    public static String unescape(final String string) {
-        final int len = string.length();
-        final StringBuffer sb = new StringBuffer(len);
-        int i = -1;
-        while (i < len - 1) {
-            Character c = next(string, i);
-            i++;
-            switch (c) {
-                case 0:
-                case '\n':
-                case '\r':
-                    // TODO log "Unterminated string";
-                    return null;
-                case '\\':
-                    c = next(string, i);
-                    if (c == null) {
-                        // TODO log "Unterminated escape";
-                        return null;
-                    }
-                    i++;
-                    switch (c) {
-                        case 'b':
-                            sb.append('\b');
-                            break;
-                        case 't':
-                            sb.append('\t');
-                            break;
-                        case 'n':
-                            sb.append('\n');
-                            break;
-                        case 'f':
-                            sb.append('\f');
-                            break;
-                        case 'r':
-                            sb.append('\r');
-                            break;
-                        case 'u':
-                            final String cc = next(string, i, 4);
-                            if (cc == null) {
-                                // TODO log "Unterminated unicode escape";
-                                return null;
-                            }
-                            i += 4;
-                            sb.append(Integer.parseInt(cc, 16));
-                            break;
-                        case '"':
-                        case '\'':
-                        case '\\':
-                        case '/':
-                            sb.append(c);
-                            break;
-                        default:
-                            // TODO log "Illegal escape character.";
-                            return null;
-                    }
-                    break;
-                default:
-                    sb.append(c);
-            }
-        }
-        return sb.toString();
-    }
-
-    public static HashMap<String, String> unescape(final HashMap<String, String> values) {
-        final HashMap<String, String> unescapeMap = new HashMap<>();
-        for (final String valueName : values.keySet()) {
-            unescapeMap.put(valueName, unquote(values.get(valueName)));
-        }
-        return unescapeMap;
     }
 
 }

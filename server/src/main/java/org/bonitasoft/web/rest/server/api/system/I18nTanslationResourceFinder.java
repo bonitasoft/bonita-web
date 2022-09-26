@@ -27,6 +27,6 @@ public class I18nTanslationResourceFinder extends ResourceFinder {
 
     @Override
     public ServerResource create(final Request request, final Response response) {
-        return new I18nTanslationResource(I18n.getInstance());
+        return new I18nTranslationResource(I18n.getInstance());
     }
 }

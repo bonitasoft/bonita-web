@@ -16,46 +16,36 @@
  */
 package org.bonitasoft.console.common.server.login.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
-import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
-import org.bonitasoft.console.common.server.login.localization.Locator;
 
 /**
  * @author Vincent Elcrin
  *
  */
-public class LoginUrl implements Locator {
+public class LoginUrl {
 
     private final String location;
 
     /**
      * @throws ServletException
-     * @throws LoginUrlException
-     *         If the login page Url couldn't be retrieved
      */
-    public LoginUrl(final AuthenticationManager authenticationManager, final String redirectUrl, final HttpServletRequestAccessor request) throws LoginUrlException,
-            ServletException {
+    public LoginUrl(final AuthenticationManager authenticationManager, final String redirectUrl, final HttpServletRequestAccessor request) throws ServletException {
         location = getLoginPageUrl(authenticationManager, redirectUrl, request);
     }
 
-    @Override
     public String getLocation() {
         return location;
     }
 
     private String getLoginPageUrl(final AuthenticationManager authenticationManager, final String redirectURL, final HttpServletRequestAccessor request)
-            throws LoginUrlException, ServletException {
-        try {
-            return authenticationManager.getLoginPageURL(request, URLEncoder.encode(redirectURL, "UTF-8"));
-        } catch (final UnsupportedEncodingException | ConsumerNotFoundException e) {
-            throw new LoginUrlException(e);
-        }
+            throws ServletException {
+        return authenticationManager.getLoginPageURL(request, URLEncoder.encode(redirectURL, StandardCharsets.UTF_8));
     }
 
 }

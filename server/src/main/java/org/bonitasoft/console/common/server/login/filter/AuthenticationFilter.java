@@ -33,7 +33,6 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundEx
 import org.bonitasoft.console.common.server.filter.ExcludingPatternFilter;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.utils.LoginUrl;
-import org.bonitasoft.console.common.server.login.utils.LoginUrlException;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -192,12 +191,8 @@ public class AuthenticationFilter extends ExcludingPatternFilter {
     }
 
     protected LoginUrl createLoginPageUrl(final HttpServletRequestAccessor requestAccessor) throws ServletException {
-        try {
-            return new LoginUrl(getAuthenticationManager(),
-                    makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
-        } catch (final LoginUrlException e) {
-            throw new ServletException(e);
-        }
+        return new LoginUrl(getAuthenticationManager(),
+                makeRedirectUrl(requestAccessor).getUrl(), requestAccessor);
     }
 
     protected void cleanHttpSession(final HttpSession session) {

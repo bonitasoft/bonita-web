@@ -22,7 +22,6 @@ import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringComparisonValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractStringValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.MandatoryValidator;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator;
@@ -32,31 +31,6 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator
  * 
  */
 public class ValidatorEngine {
-
-    public static void validateAttribute(final String attributeName, final IItem item) throws ValidationException {
-        validateAttribute(attributeName, item, true);
-    }
-
-    public static void validateAttribute(final String attributeName, final IItem item, final boolean applyMandatory) throws ValidationException {
-        validateAttribute(attributeName, item.getAttributes(), item.getItemDefinition().getAttribute(attributeName).getValidators(), applyMandatory);
-    }
-
-    public static void validateAttribute(final String attributeName, final TreeIndexed<String> values, final List<Validator> validators)
-            throws ValidationException {
-        validateAttribute(attributeName, values, validators, true);
-
-    }
-
-    public static void validateAttribute(final String attributeName, final TreeIndexed<String> values, final List<Validator> validators,
-            final boolean applyMandatory)
-            throws ValidationException {
-        validateAttribute(attributeName, values.getValues(), validators, applyMandatory);
-
-    }
-
-    public static void validateAttribute(final String attributeName, final Map<String, String> values, final List<Validator> validators) {
-        validateAttribute(attributeName, values, validators, true);
-    }
 
     public static void validateAttribute(final String attributeName, final Map<String, String> values, final List<Validator> validators,
             final boolean applyMandatory)
@@ -81,13 +55,6 @@ public class ValidatorEngine {
                 else if (validator instanceof AbstractStringValidator) {
                     ((AbstractStringValidator) validator).check(values.get(attributeName));
                 }
-                // Check Comparison validator
-                else if (validator instanceof AbstractStringComparisonValidator) {
-                    ((AbstractStringComparisonValidator) validator).check(
-                            values.get(attributeName),
-                            values.get(((AbstractStringComparisonValidator) validator).getSecondAttributeName())
-                            );
-                }
                 errors.addAll(validator.getErrors());
             }
         }
@@ -98,8 +65,6 @@ public class ValidatorEngine {
 
     /**
      * Validate an Item
-     * 
-     * @throws ValidationException
      */
     public static void validate(final IItem item) throws ValidationException {
         validate(item, true);
@@ -107,8 +72,6 @@ public class ValidatorEngine {
 
     /**
      * Validate an Item
-     * 
-     * @throws ValidationException
      */
     public static void validate(final IItem item, final boolean applyMandatory) throws ValidationException {
         validate(item.getAttributes(), item.getItemDefinition().getValidators(), applyMandatory);
@@ -116,17 +79,6 @@ public class ValidatorEngine {
 
     /**
      * Validate a Tree
-     * 
-     * @throws ValidationException
-     */
-    public static void validate(final TreeIndexed<String> tree, final Map<String, List<Validator>> validators) throws ValidationException {
-        validate(tree, validators, true);
-    }
-
-    /**
-     * Validate a Tree
-     * 
-     * @throws ValidationException
      */
     public static void validate(final TreeIndexed<String> tree, final Map<String, List<Validator>> validators, final boolean applyMandatory)
             throws ValidationException {
@@ -135,17 +87,6 @@ public class ValidatorEngine {
 
     /**
      * Validate a Map
-     * 
-     * @throws ValidationException
-     */
-    public static void validate(final Map<String, String> values, final Map<String, List<Validator>> validators) throws ValidationException {
-        validate(values, validators, true);
-    }
-
-    /**
-     * Validate a Map
-     * 
-     * @throws ValidationException
      */
     public static void validate(final Map<String, String> values, final Map<String, List<Validator>> validators, final boolean applyMandatory)
             throws ValidationException {

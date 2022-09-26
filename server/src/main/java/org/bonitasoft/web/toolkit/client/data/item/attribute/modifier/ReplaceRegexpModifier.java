@@ -32,10 +32,6 @@ public class ReplaceRegexpModifier extends AbstractStringModifier {
         this.replace = replace;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.bonitasoft.console.client.toolkit.item.attribute.modifier.AbstractStringModifier#clean(java.lang.String)
-     */
     @Override
     public String clean(final String value) {
         return value.replaceAll(this.regexp, this.replace);

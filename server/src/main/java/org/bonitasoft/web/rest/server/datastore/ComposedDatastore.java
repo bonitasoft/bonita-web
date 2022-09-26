@@ -105,10 +105,6 @@ public class ComposedDatastore<T extends IItem> extends Datastore
         this.addHelper = addHelper;
     }
 
-    public void setUpdateHelper(DatastoreHasUpdate<T> updateHelper) {
-        this.updateHelper = updateHelper;
-    }
-
     public void setDeleteHelper(DatastoreHasDelete deleteHelper) {
         this.deleteHelper = deleteHelper;
     }

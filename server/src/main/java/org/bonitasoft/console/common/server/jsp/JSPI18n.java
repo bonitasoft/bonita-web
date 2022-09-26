@@ -20,6 +20,9 @@ import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
 
+/**
+ * Used in JSP. Do not delete.
+ */
 public class JSPI18n {
 
     private LOCALE locale;

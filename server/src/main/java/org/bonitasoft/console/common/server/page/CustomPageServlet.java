@@ -86,7 +86,7 @@ public class CustomPageServlet extends HttpServlet {
                 } else {
                     final File resourceFile = getResourceFile(request.getPathInfo(), pageName);
                     pageRenderer.ensurePageFolderIsPresent(apiSession, pageRenderer.getPageResourceProvider(pageName));
-                    resourceRenderer.renderFile(request, response, resourceFile, apiSession);
+                    resourceRenderer.renderFile(request, response, resourceFile);
                 }
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");

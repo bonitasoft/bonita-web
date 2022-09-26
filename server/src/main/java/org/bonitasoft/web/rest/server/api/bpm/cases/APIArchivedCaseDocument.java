@@ -92,6 +92,6 @@ public class APIArchivedCaseDocument extends ConsoleAPI<ArchivedCaseDocumentItem
         }
          final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getTenantInstance();
 
-        return new ArchivedCaseDocumentDatastore(getEngineSession(), constants, processAPI);
+        return new ArchivedCaseDocumentDatastore(getEngineSession(), processAPI);
     }
 }

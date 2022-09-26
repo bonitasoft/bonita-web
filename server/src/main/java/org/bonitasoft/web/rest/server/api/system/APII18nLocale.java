@@ -14,7 +14,6 @@
  */
 package org.bonitasoft.web.rest.server.api.system;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -48,12 +47,12 @@ public class APII18nLocale extends API<I18nLocaleItem> {
         for (final String locale : availableLocales.keySet()) {
             final String name = availableLocales.get(locale);
 
-            if (search == null || search.length() == 0 || locale.indexOf(search) > -1 || name.indexOf(search) > -1) {
+            if (search == null || search.length() == 0 || locale.contains(search) || name.contains(search)) {
                 items.add(new I18nLocaleItem(locale, availableLocales.get(locale)));
             }
         }
 
-        return new ItemSearchResult<>(page * resultsByPage, resultsByPage, new Long(items.size()).longValue(), items);
+        return new ItemSearchResult<>(page * resultsByPage, resultsByPage, items.size(), items);
 
     }
 
@@ -63,7 +62,7 @@ public class APII18nLocale extends API<I18nLocaleItem> {
     }
 
     @Override
-    protected String getCompleteTempFilePath(final String path) throws IOException {
+    protected String getCompleteTempFilePath(final String path) {
         return path;
     }
 }

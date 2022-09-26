@@ -26,16 +26,8 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier;
  */
 public interface ModifiableInput {
 
-    public List<Modifier> getInputModifiers();
+    List<Modifier> getInputModifiers();
 
-    public ModifiableInput addInputModifier(final Modifier modifier);
-
-    public ModifiableInput addInputModifiers(final List<Modifier> modifiers);
-
-    public ModifiableInput removeInputModifier(final String modifierClassName);
-
-    public boolean hasInputModifier(final String modifierClassName);
-
-    public Modifier getInputModifier(final String modifierClassName);
+    void addInputModifier(final Modifier modifier);
 
 }

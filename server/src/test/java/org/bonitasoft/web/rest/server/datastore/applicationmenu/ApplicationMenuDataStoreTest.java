@@ -3,9 +3,7 @@ package org.bonitasoft.web.rest.server.datastore.applicationmenu;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,7 +22,6 @@ import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuDefinition;
 import org.bonitasoft.web.rest.model.applicationmenu.ApplicationMenuItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
@@ -44,9 +41,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationMenuDataStoreTest extends APITestWithMock {
-
-    @Mock
-    private APISession session;
 
     @Mock
     private ApplicationAPI applicationAPI;

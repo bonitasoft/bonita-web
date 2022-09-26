@@ -57,10 +57,6 @@ public class ArchivedCaseDocumentSearchAttributeConverter implements AttributeCo
         return MapUtil.getMandatory(mapping, attribute);
     }
 
-    protected final void extendsMapping(final Map<String, String> extension) {
-        mapping.putAll(extension);
-    }
-
     @Override
     public Map<String, ItemAttribute.TYPE> getValueTypeMapping() {
         return Collections.emptyMap();

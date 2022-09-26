@@ -22,12 +22,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasAdd;
 import org.bonitasoft.web.rest.server.framework.api.DatastoreHasDelete;
@@ -37,21 +34,15 @@ import org.bonitasoft.web.rest.server.framework.api.DatastoreHasUpdate;
 import org.bonitasoft.web.rest.server.framework.exception.APIFileUploadNotFoundException;
 import org.bonitasoft.web.rest.server.framework.exception.ForbiddenAttributesException;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
-import org.bonitasoft.web.rest.server.framework.utils.FilePathBuilder;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIForbiddenException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIMethodNotAllowedException;
 import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.item.DummyItem;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdater;
-import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Séverin Moussel
@@ -92,13 +83,6 @@ public abstract class API<ITEM extends IItem> {
     }
 
     /**
-     * Get the caller.
-     */
-    protected final APIServletCall getCaller() {
-        return this.caller;
-    }
-
-    /**
      * @return the itemDefinition
      */
     public final ItemDefinition<ITEM> getItemDefinition() {
@@ -125,14 +109,6 @@ public abstract class API<ITEM extends IItem> {
     }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // INPUT / OUTPUT
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    protected final String getParameterAsString(final String parameterName) {
-        return parameterName;
-    }
-
-    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ENTRY POINTS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -154,7 +130,7 @@ public abstract class API<ITEM extends IItem> {
     public ITEM add(final ITEM item) {
         final Datastore datastore = getDefaultDatastore();
 
-        if (datastore == null || !(datastore instanceof DatastoreHasAdd<?>)) {
+        if (!(datastore instanceof DatastoreHasAdd<?>)) {
             throw new APIMethodNotAllowedException("POST method not allowed.");
         }
 
@@ -323,40 +299,6 @@ public abstract class API<ITEM extends IItem> {
     abstract protected String getCompleteTempFilePath(String path) throws IOException;
 
     /**
-     * Upload the file to the defined directory and rename it to make sure its filename is unique.<br>
-     * The original filename will be kept.
-     *
-     * @param attributeName
-     *        The name of the attribute representing the file.
-     * @param attributeValue
-     *        The value of the attribute representing the file.
-     * @param newDirectory
-     *        The destination directory path.
-     * @return This method return the file in the destination directory.
-     */
-    protected final File uploadAutoRename(final String attributeName, final String attributeValue, final String newDirectory) {
-        try {
-
-            final File destinationDirectory = new File(newDirectory);
-            String destinationFilename = getUploadedFile(attributeName, attributeValue).getName();
-
-            if (!destinationDirectory.exists()) {
-                destinationDirectory.mkdirs();
-            }
-            final String extension = this.getFileExtension(destinationFilename);
-            final File destinationFile = File.createTempFile("avatar", extension, destinationDirectory);
-            destinationFilename = destinationFile.getName().substring(0, destinationFile.getName().length() - extension.length());
-
-            return upload(attributeName, attributeValue, newDirectory, destinationFilename);
-
-        } catch (final UnauthorizedFolderException e) {
-            throw new APIForbiddenException(e.getMessage());
-        } catch (final IOException e) {
-            throw new APIException(e);
-        }
-    }
-
-    /**
      * Rename and upload the file to the defined directory.
      *
      * @param attributeName
@@ -460,7 +402,7 @@ public abstract class API<ITEM extends IItem> {
 
         if (deploys.contains(attributeName) && attributeValue != null && !attributeValue.isEmpty()) {
             try {
-                final long longAttrValue = Long.valueOf(attributeValue);
+                final long longAttrValue = Long.parseLong(attributeValue);
                 //only positive numeric Ids are supported
                 return longAttrValue > 0L;
             } catch (final NumberFormatException e) {
@@ -475,61 +417,6 @@ public abstract class API<ITEM extends IItem> {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UPLOADS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private List<String> getFileAttributes() {
-        final List<String> results = new ArrayList<>();
-
-        for (final ItemAttribute attribute : getItemDefinition().getAttributes()) {
-            if (attribute.getType().equals(ItemAttribute.TYPE.IMAGE) || attribute.getType().equals(ItemAttribute.TYPE.FILE)) {
-                results.add(attribute.getName());
-            }
-        }
-
-        return results;
-    }
-
-    /**
-     * Upload and replace a file in an item<br />
-     * The resulted path will be "subFolder/filename.ext"
-     *
-     * @param attributeName
-     *        The name of the attribute that contains a file to upload
-     * @param item
-     *        The item containing the attribute to upload
-     * @param targetPath
-     *        The path of the directory where the uploaded file will be stored
-     * @param prefix
-     *        The specific folder under targetFolderPath
-     */
-    protected final void uploadForAdd(final String attributeName, final IItem item, final String targetPath, final String prefix) {
-
-        if (item.getAttributeValue(attributeName) == null || item.getAttributeValue(attributeName).isEmpty()) {
-            return;
-        }
-
-        final String filename = uploadAutoRename(attributeName, item.getAttributeValue(attributeName), targetPath).getName();
-
-        item.setAttribute(attributeName, new FilePathBuilder(prefix).append(filename).toString());
-    }
-
-    /**
-     * @param attributeName
-     * @param item
-     * @param targetPath
-     * @param prefix
-     */
-    private void deleteFile(final String attributeName, final IItem item, final String targetPath, final String prefix) {
-        if (item == null || item.getAttributeValue(attributeName) == null || item.getAttributeValue(attributeName).isEmpty()) {
-            return;
-        }
-
-        final String filePath = item.getAttributeValue(attributeName);
-        filePath.substring(prefix.length());
-
-        if (filePath != null && !filePath.isEmpty()) {
-            new File(new FilePathBuilder(targetPath).append(filePath).toString()).delete();
-        }
-    }
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FORBIDDEN ATTRIBUTES
@@ -552,10 +439,9 @@ public abstract class API<ITEM extends IItem> {
         if (definedForbiddenAttributes != null) {
             forbiddenAttributes.addAll(definedForbiddenAttributes);
         }
-        forbiddenAttributes.addAll(getForbiddenAttributesByInterfaces());
 
         // No forbidden attributes defined, no need to go further in the check process.
-        if (forbiddenAttributes == null || forbiddenAttributes.size() == 0) {
+        if (forbiddenAttributes.size() == 0) {
             return;
         }
 
@@ -571,37 +457,6 @@ public abstract class API<ITEM extends IItem> {
         if (errorAttributes.size() > 0) {
             throw new ForbiddenAttributesException(errorAttributes);
         }
-    }
-
-    /**
-     * @return
-     */
-    private List<String> getForbiddenAttributesByInterfaces() {
-        final List<String> forbiddenAttributes = new ArrayList<>();
-
-        @SuppressWarnings("unchecked")
-        // final T modelItem = (T) getItemDefinition().createItem();
-        final ITEM modelItem = (ITEM) new DummyItem();
-
-        if (modelItem instanceof ItemHasLastUpdateDate) {
-            forbiddenAttributes.add(ItemHasLastUpdateDate.ATTRIBUTE_LAST_UPDATE_DATE);
-        }
-
-        if (modelItem instanceof ItemHasLastUpdater) {
-            forbiddenAttributes.add(ItemHasLastUpdater.ATTRIBUTE_LAST_UPDATE_DATE);
-            forbiddenAttributes.add(ItemHasLastUpdater.ATTRIBUTE_LAST_UPDATE_USER_ID);
-        }
-
-        if (modelItem instanceof ItemHasCreator) {
-            forbiddenAttributes.add(ItemHasCreator.ATTRIBUTE_CREATED_BY_USER_ID);
-            forbiddenAttributes.add(ItemHasCreator.ATTRIBUTE_CREATION_DATE);
-        }
-
-        if (modelItem instanceof ItemHasUniqueId) {
-            forbiddenAttributes.add(ItemHasUniqueId.ATTRIBUTE_ID);
-        }
-
-        return forbiddenAttributes;
     }
 
 }

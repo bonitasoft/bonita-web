@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**
@@ -29,7 +27,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
  */
 public class FileIsImageOrServletPathValidator extends AbstractStringFormatValidator {
 
-    private static final String IMAGE_EXTENSIONS[] = {"png", "jpg", "jpeg", "bmp", "wbmp", "tga", "gif", "PNG", "JPG", "JPEG", "BMP", "WBMP", "TGA", "GIF"};
+    private static final String[] IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "bmp", "wbmp", "tga", "gif", "PNG", "JPG", "JPEG", "BMP", "WBMP", "TGA", "GIF"};
 
     public FileIsImageOrServletPathValidator(final String servletPath) {
         super(makeRegexp(IMAGE_EXTENSIONS, servletPath));
@@ -43,7 +41,7 @@ public class FileIsImageOrServletPathValidator extends AbstractStringFormatValid
 
         String preparedServletPath = servletPath.replace(".", "\\.").replace("/", "\\/");
 
-        return "^" + preparedServletPath + "|\\.(" + sb.toString().substring(0, sb.length() - 1) + ")$";
+        return "^" + preparedServletPath + "|\\.(" + sb.substring(0, sb.length() - 1) + ")$";
     }
 
     @Override

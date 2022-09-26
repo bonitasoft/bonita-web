@@ -60,14 +60,6 @@ public class EngineClientFactory {
         return new GroupEngineClient(apiAccessor.getGroupAPI());
     }
 
-    public FlowNodeEngineClient createFlowNodeEngineClient() {
-        return new FlowNodeEngineClient(apiAccessor.getProcessAPI());
-    }
-
-    public PageEngineClient createPageEngineClient() {
-        return new PageEngineClient(apiAccessor.getPageAPI());
-    }
-
     public TenantManagementEngineClient createTenantManagementEngineClient() {
         return new TenantManagementEngineClient(apiAccessor.getTenantAdministrationAPI());
     }

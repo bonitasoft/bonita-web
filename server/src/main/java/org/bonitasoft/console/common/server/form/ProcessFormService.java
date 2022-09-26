@@ -107,7 +107,7 @@ public class ProcessFormService {
         return -1L;
     }
 
-    public String getTaskName(final APISession apiSession, final long taskInstanceId) throws ActivityInstanceNotFoundException, BonitaException {
+    public String getTaskName(final APISession apiSession, final long taskInstanceId) throws BonitaException {
         if (taskInstanceId != -1L) {
             final ProcessAPI processAPI = getProcessAPI(apiSession);
             try {

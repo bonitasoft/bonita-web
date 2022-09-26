@@ -1,12 +1,11 @@
 package org.bonitasoft.web.rest.server.api.bpm.cases;
 
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aDateVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aLongVariable;
-import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.aStringVariable;
+import static org.bonitasoft.test.toolkit.bpm.ProcessVariable.*;
 import static org.bonitasoft.web.rest.model.builder.bpm.cases.CaseItemBuilder.aCaseItem;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,7 +61,6 @@ public class APICaseIT extends AbstractConsoleTest {
     }
 
     private void assertEquals(final String message, final ProcessInstance engineItem, final CaseItem consoleItem) {
-
         Assert.assertEquals(message, engineItem.getId(), consoleItem.getId().toLong().longValue());
         Assert.assertEquals(message, engineItem.getLastUpdate(), consoleItem.getLastUpdateDate());
         Assert.assertEquals(message, engineItem.getState(), consoleItem.getState());
@@ -231,13 +229,10 @@ public class APICaseIT extends AbstractConsoleTest {
         checkSearchResults(caseItems, 100, 25);
     }
 
-    /**
-     * @param caseItems
-     */
     private void checkSearchResults(final ItemSearchResult<CaseItem> caseItems, final int nbResultsByPageExpected, final int nbTotalResultsExpected) {
-        Assert.assertTrue("Empty search results", caseItems.getLength() > 0);
-        Assert.assertTrue("Wrong page size", caseItems.getLength() == nbResultsByPageExpected);
-        Assert.assertTrue("Wrong Total size", caseItems.getTotal() == nbTotalResultsExpected);
+        assertTrue("Empty search results", caseItems.getLength() > 0);
+        Assert.assertEquals("Wrong page size", caseItems.getLength(), nbResultsByPageExpected);
+        Assert.assertEquals("Wrong Total size", caseItems.getTotal(), nbTotalResultsExpected);
     }
 
     @Test

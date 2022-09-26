@@ -30,7 +30,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 /**
@@ -52,7 +51,7 @@ public class OrganizationIconServlet extends IconServlet {
     }
 
     @Override
-    protected void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request, HttpServletResponse response) throws ServerException {
+    protected void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request) throws ServerException {
         String entityType = request.getParameter("type");
         if (entityType == null || !entityType.equals("user")) {
             throw new APIMalformedUrlException(request.getRequestURL().toString(),

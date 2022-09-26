@@ -27,13 +27,13 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public class ItemSearchResult<T extends IItem> {
 
-    private int page;
+    private final int page;
 
-    private int length;
+    private final int length;
 
-    private long total;
+    private final long total;
 
-    private List<T> results;
+    private final List<T> results;
 
     public ItemSearchResult(final int page, final int length, final long total, final List<T> results) {
         this.page = page;
@@ -72,38 +72,6 @@ public class ItemSearchResult<T extends IItem> {
      */
     public List<T> getResults() {
         return this.results;
-    }
-
-    /**
-     * @param page
-     *            the page to set
-     */
-    public void setPage(final int page) {
-        this.page = page;
-    }
-
-    /**
-     * @param length
-     *            the length to set
-     */
-    public void setLength(final int length) {
-        this.length = length;
-    }
-
-    /**
-     * @param total
-     *            the total to set
-     */
-    public void setTotal(final long total) {
-        this.total = total;
-    }
-
-    /**
-     * @param results
-     *            the results to set
-     */
-    public void setResults(final List<T> results) {
-        this.results = results;
     }
 
 }

@@ -33,32 +33,32 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
 import org.junit.Test;
 
-/** extends APITestWithMock to avoid nullpointerException on I18n */
+/** extends APITestWithMock to avoid NullPointerException on I18n */
 public class JacksonDeserializerTest extends APITestWithMock {
 
     private JacksonDeserializer jacksonDeserializer;
 
     @Before
-    public void intializedeserializer() {
+    public void initializeDeserializer() {
         jacksonDeserializer = new JacksonDeserializer();
     }
 
     @Test(expected = APIException.class)
-    public void deserialize_throw_exception_if_json_is_non_well_formed() throws Exception {
+    public void deserialize_throw_exception_if_json_is_non_well_formed() {
         String nonWellFormedJson = "someJsonNonWellFormedJson";
 
         jacksonDeserializer.deserialize(nonWellFormedJson, String.class);
     }
 
     @Test(expected = APIException.class)
-    public void deserialize_throw_exception_if_mapping_bettween_class_and_json_is_incorrect() throws Exception {
+    public void deserialize_throw_exception_if_mapping_between_class_and_json_is_incorrect() {
         String notUserJson = "{\"unknownUserAttribute\": \"unknownAttributeValue\"}";
 
         jacksonDeserializer.deserialize(notUserJson, User.class);
     }
 
     @Test
-    public void deserialize_can_deserialize_primitives_types() throws Exception {
+    public void deserialize_can_deserialize_primitives_types() {
 
         Long deserializedLong = jacksonDeserializer.deserialize("1", Long.class);
 
@@ -66,7 +66,7 @@ public class JacksonDeserializerTest extends APITestWithMock {
     }
 
     @Test
-    public void deserialize_can_deserialize_complex_types() throws Exception {
+    public void deserialize_can_deserialize_complex_types() {
         User expectedUser = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnecles"));
         String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnecles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
 
@@ -76,14 +76,14 @@ public class JacksonDeserializerTest extends APITestWithMock {
     }
 
     @Test(expected = APIException.class)
-    public void deserializeList_throw_exception_if_json_is_not_a_list() throws Exception {
+    public void deserializeList_throw_exception_if_json_is_not_a_list() {
         String json = "{\"address\":{\"street\":\"310 La Gouterie\",\"city\":\"Charnecles\"},\"id\":1,\"firstName\":\"Colin\",\"lastName\":\"Puy\",\"birthday\":428558400000}";
 
         jacksonDeserializer.deserializeList(json, User.class);
     }
 
     @Test
-    public void deserializeList_can_deserialize_primitives_types() throws Exception {
+    public void deserializeList_can_deserialize_primitives_types() {
 
         List<Long> longs = jacksonDeserializer.deserializeList("[1, 2, 3]", Long.class);
 
@@ -91,7 +91,7 @@ public class JacksonDeserializerTest extends APITestWithMock {
     }
 
     @Test
-    public void deserializeList_can_deserialize_list_of_complex_type() throws Exception {
+    public void deserializeList_can_deserialize_list_of_complex_type() {
         User expectedUser1 = new User(1, "Colin", "Puy", new Date(428558400000L), new Address("310 La Gouterie", "Charnecles"));
         User expectedUser2 = new User(2, "Clara", "Morgan", new Date(349246800000L), new Address("somewhere i don't know", "Paris"));
         String json = "["

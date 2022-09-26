@@ -268,14 +268,14 @@ public class UserItem extends Item implements ItemHasUniqueId, ItemHasLastUpdate
 
     public static final String DEPLOY_PROFESSIONAL_DATA = "professional_data";
 
-    public static final String DEPLOY_PERSONNAL_DATA = "personnal_data";
+    public static final String DEPLOY_PERSONAL_DATA = "personnal_data";
 
     public ProfessionalContactDataItem getProfessionalData() {
         return new ProfessionalContactDataItem(getDeploy(DEPLOY_PROFESSIONAL_DATA));
     }
 
-    public PersonalContactDataItem getPersonnalData() {
-        return new PersonalContactDataItem(getDeploy(DEPLOY_PERSONNAL_DATA));
+    public PersonalContactDataItem getPersonalData() {
+        return new PersonalContactDataItem(getDeploy(DEPLOY_PERSONAL_DATA));
     }
 
     public UserItem getManager() {

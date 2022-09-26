@@ -40,10 +40,6 @@ import org.restlet.resource.ServerResource;
 @RunWith(MockitoJUnitRunner.class)
 public class UserTaskContractResourceTest extends RestletTest {
 
-    private static final String VALID_COMPLEX_POST_BODY = "{\"aBoolean\":true, \"aString\":\"hello world\", \"a_complex_type\":{\"aNumber\":2, \"aBoolean\":false}}";
-
-    private static final String VALID_POST_BODY = "{ \"key\": \"value\", \"key2\": \"value2\" }";
-
     @Mock
     private ProcessAPI processAPI;
 
@@ -99,7 +95,7 @@ public class UserTaskContractResourceTest extends RestletTest {
     }
 
     @Test
-    public void should_getTaskIDParameter_throws_an_exception_when_task_id_parameter_is_null() throws Exception {
+    public void should_getTaskIDParameter_throws_an_exception_when_task_id_parameter_is_null() {
         //given
         doReturn(null).when(taskContractResource).getAttribute(UserTaskContractResource.TASK_ID);
 

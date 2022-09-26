@@ -37,7 +37,7 @@ public class ProfileImportStatusMessageFake {
         return errors;
     }
 
-    public String getProfielName() {
+    public String getProfileName() {
         return profileName;
     }
 }

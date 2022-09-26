@@ -11,7 +11,7 @@ public class JacksonSerializerTest {
     public void testSerialize() throws Exception {
         // Given
         JacksonSerializer serializer = new JacksonSerializer();
-        ProfileImportStatusMessageFake message = new ProfileImportStatusMessageFake("profile1", "repalce");
+        ProfileImportStatusMessageFake message = new ProfileImportStatusMessageFake("profile1", "will be replaced");
         message.addError("Organization: skks");
         message.addError("Page: page1");
        
@@ -19,7 +19,7 @@ public class JacksonSerializerTest {
         String serialize = serializer.serialize(message);
         
         // Then
-        assertThat(serialize).isEqualTo("{\"errors\":[\"Organization: skks\",\"Page: page1\"],\"profielName\":\"profile1\"}");
+        assertThat(serialize).isEqualTo("{\"errors\":[\"Organization: skks\",\"Page: page1\"],\"profileName\":\"profile1\"}");
         
     }
 

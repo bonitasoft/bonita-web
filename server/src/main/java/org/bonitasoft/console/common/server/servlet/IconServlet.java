@@ -1,21 +1,22 @@
 package org.bonitasoft.console.common.server.servlet;
 
-import org.bonitasoft.engine.session.APISession;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
-import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Optional;
-import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
+import org.bonitasoft.web.toolkit.client.common.exception.api.APIMalformedUrlException;
+import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class IconServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(IconServlet.class.getName());
@@ -67,7 +68,7 @@ public abstract class IconServlet extends HttpServlet {
             return;
         }
         try {
-            deleteIcon(entityId, (APISession) request.getSession().getAttribute("apiSession"), request, response);
+            deleteIcon(entityId, (APISession) request.getSession().getAttribute("apiSession"), request);
         } catch (APIItemNotFoundException e) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -88,7 +89,7 @@ public abstract class IconServlet extends HttpServlet {
 
     protected abstract Optional<IconContent> retrieveIcon(Long iconId, APISession apiSession);
 
-    protected abstract void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request, HttpServletResponse response) throws ServerException;
+    protected abstract void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request) throws ServerException;
 
     private Long parseLong(String iconIdPath) {
         try {

@@ -65,7 +65,7 @@ public class BusinessDataModelResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        businessDataModelResource = new BusinessDataModelResource(tenantAdministrationAPI, bonitaHomeFolderAccessor, apiSession);
+        businessDataModelResource = new BusinessDataModelResource(tenantAdministrationAPI, bonitaHomeFolderAccessor);
         return businessDataModelResource;
     }
     

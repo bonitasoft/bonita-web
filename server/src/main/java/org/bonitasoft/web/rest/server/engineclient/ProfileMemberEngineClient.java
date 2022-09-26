@@ -17,9 +17,6 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -67,16 +64,6 @@ public class ProfileMemberEngineClient {
         } catch (AlreadyExistsException e) {
             throw new APIForbiddenException(new T_("Profile member already exists"), e);
         } catch (CreationException e) {
-            throw new APIException(e);
-        }
-    }
-
-    public Map<Long, Long> countProfileMembers(List<Long> profileIds) {
-        try {
-            return profileApi.getNumberOfProfileMembers(profileIds);
-        } catch (InvalidSessionException e) {
-            throw new APISessionInvalidException(e);
-        } catch (Exception e) {
             throw new APIException(e);
         }
     }

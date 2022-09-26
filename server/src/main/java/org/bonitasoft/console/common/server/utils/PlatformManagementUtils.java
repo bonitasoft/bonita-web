@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import java.util.stream.Collectors;
 
 import org.bonitasoft.console.common.server.preferences.properties.ConfigurationFilesManager;
@@ -36,6 +34,8 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.platform.InvalidPlatformCredentialsException;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.engine.util.APITypeManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Baptiste Mesta
@@ -125,28 +125,6 @@ public class PlatformManagementUtils {
 
     long getDefaultTenantId() {
         return TenantsManagementUtils.getDefaultTenantId();
-    }
-
-    public void retrieveTenantsConfiguration() throws BonitaException, IOException {
-        final PlatformSession platformSession = platformLogin();
-        final PlatformAPI platformAPI = getPlatformAPI(platformSession);
-        retrieveTenantsConfiguration(platformAPI);
-        platformLogout(platformSession);
-    }
-
-    public byte[] getTenantConfiguration(String configurationFileName) {
-        final PlatformSession platformSession;
-        try {
-            platformSession = platformLogin();
-            try {
-                return getPlatformAPI(platformSession).getClientTenantConfiguration(TenantsManagementUtils.getDefaultTenantId(), configurationFileName);
-            } finally {
-                platformLogout(platformSession);
-            }
-        } catch (BonitaException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**

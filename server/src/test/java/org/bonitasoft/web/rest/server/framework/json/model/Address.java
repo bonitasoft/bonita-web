@@ -25,6 +25,7 @@ public class Address implements Serializable {
     private String street;
     private String city;
 
+    // Do not remove. Used by Json Serialization.
     public Address() {
     }
     
@@ -33,18 +34,22 @@ public class Address implements Serializable {
         this.city = city;
     }
 
+    // Do not remove. Used by Json Serialization.
     public String getStreet() {
         return street;
     }
 
+    // Do not remove. Used by Json Serialization.
     public void setStreet(String street) {
         this.street = street;
     }
 
+    // Do not remove. Used by Json Serialization.
     public String getCity() {
         return city;
     }
 
+    // Do not remove. Used by Json Serialization.
     public void setCity(String city) {
         this.city = city;
     }

@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -47,9 +46,6 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     private CaseDocumentDatastore documentDatastore;
 
     @Mock
-    private WebBonitaConstantsUtils constantsValue;
-
-    @Mock
     private APISession engineSession;
 
     @Mock
@@ -74,7 +70,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         initMocks(this);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
-        documentDatastore = spy(new CaseDocumentDatastore(engineSession, constantsValue, processAPI, tenantFolder));
+        documentDatastore = spy(new CaseDocumentDatastore(engineSession, processAPI, tenantFolder));
     }
 
     // ---------- GET METHOD TESTS ------------------------------//
@@ -82,7 +78,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_call_engine_processAPI_getDocument() throws Exception {
         // Given
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
 
         // When
         documentDatastore.get(id);
@@ -94,7 +90,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_should_catch_and_throw_APIException_for_not_find_document() throws Exception {
         // Given
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
         when(processAPI.getDocument(id.toLong())).thenThrow(new DocumentNotFoundException("not found", new Exception()));
 
         // When
@@ -102,9 +98,9 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void it_should_call_convertEngineToConsole_method() throws Exception {
+    public void it_should_call_convertEngineToConsole_method() {
         // Given
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
 
         // When
         documentDatastore.get(id);
@@ -116,7 +112,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     // ---------- CONVERT ITEM TESTS ------------------------------//
 
     @Test
-    public void it_should_convert_item_return_item() throws Exception {
+    public void it_should_convert_item_return_item() {
         // When
         final CaseDocumentItem convertedEngineToConsoleItem = documentDatastore.convertEngineToConsoleItem(mockedDocument);
         // Then
@@ -160,7 +156,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_add_a_document_calling_addDocument_with_upload_Path() throws Exception {
         // Given
         final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
 
@@ -178,7 +174,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_add_a_document_calling_addDocument_with_upload_Path_and_fileName() throws Exception {
         // Given
         final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CONTENT_FILENAME, "doc_file_name.jpg");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
@@ -197,7 +193,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_should_add_a_document_calling_addDocument_with_upload_Path_with_index_and_description() throws Exception {
         // Given
         final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_DESCRIPTION, "This is a description");
@@ -216,7 +212,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test(expected = APIException.class)
     public void it_should_not_add_a_document_calling_addDocument_with_invalid_upload_Path() throws Exception {
         // Given
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "unexisting.document");
 
@@ -235,8 +231,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     @Test
     public void it_should_add_a_document_calling_addDocument_with_external_Url() throws Exception {
         // Given
-        final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_URL, "http://images/doc.jpg");
 
@@ -273,7 +268,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_throws_an_exception_adding_a_document_with_unauthorized_path() throws IOException {
         // Given
         final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
 
@@ -288,7 +283,7 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     public void it_throws_an_exception_when_cannot_write_file_on_add() throws IOException {
         // Given
         final URL docUrl = getClass().getResource("/doc.jpg");
-        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1l);
+        mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_CASE_ID, 1L);
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_NAME, "doc 1");
         mockedDocumentItem.setAttribute(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, docUrl.getPath());
 
@@ -359,9 +354,9 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         // Given
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, "Doc 1");
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
         try {
-            when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+            when(processAPI.getDocument(1L)).thenReturn(mockedDocument);
         } catch (final Exception e) {
             e.printStackTrace();
         }
@@ -375,10 +370,10 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CaseDocumentItem.ATTRIBUTE_NAME, "Doc 1");
         attributes.put(CaseDocumentItem.ATTRIBUTE_UPLOAD_PATH, "unexisting.document");
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
         try {
             when(tenantFolder.getTempFile("invalidDocument")).thenReturn(new File("unexisting.document"));
-            when(processAPI.getDocument(1l)).thenReturn(mockedDocument);
+            when(processAPI.getDocument(1L)).thenReturn(mockedDocument);
         } catch (final Exception e) {
             e.printStackTrace();
         }
@@ -479,12 +474,9 @@ public class CaseDocumentDatastoreTest extends APITestWithMock {
     }
 
     @Test
-    public void it_should_throw_an_exception_when_input_is_null() throws DocumentNotFoundException, DeletionException {
+    public void it_should_throw_an_exception_when_input_is_null() {
         expectedEx.expect(APIException.class);
         expectedEx.expectMessage("Error while deleting a document. Document id not specified in the request");
-
-        final List<APIID> docs = new ArrayList<>();
-        docs.add(APIID.makeAPIID(mockedDocument.getId()));
 
         // When
         documentDatastore.delete(null);

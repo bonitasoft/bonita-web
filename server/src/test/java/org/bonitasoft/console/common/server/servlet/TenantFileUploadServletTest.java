@@ -37,6 +37,7 @@ import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededExcepti
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.bonitasoft.console.common.server.preferences.properties.ConsoleProperties;
 import org.bonitasoft.engine.session.APISession;
+import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -169,9 +170,9 @@ public class TenantFileUploadServletTest {
         fileUploadServlet.doPost(request, response);
 
         verify(response).setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
-        final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        final ArgumentCaptor<JSONObject> captor = ArgumentCaptor.forClass(JSONObject.class);
         verify(printer).print(captor.capture());
-        assertThat(captor.getValue())
+        assertThat(captor.getValue().toString())
         .contains("\"statusCode\":413")
         .contains("\"message\":\"uploadedFile.zip is 20971520 large, limit is set to 0Mb\"")
         .contains("\"type\":\"EntityTooLarge\"");

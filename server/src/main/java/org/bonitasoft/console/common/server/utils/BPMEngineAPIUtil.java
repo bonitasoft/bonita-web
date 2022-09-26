@@ -16,24 +16,15 @@
  */
 package org.bonitasoft.console.common.server.utils;
 
-import java.io.Serializable;
-import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
-import org.bonitasoft.engine.api.CommandAPI;
-import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.command.CommandExecutionException;
-import org.bonitasoft.engine.command.CommandNotFoundException;
-import org.bonitasoft.engine.command.CommandParameterizationException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.ServerAPIException;
 import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Util class to work with the BPM engine API
@@ -49,46 +40,11 @@ public class BPMEngineAPIUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(BPMEngineAPIUtil.class.getName());
 
     /**
-     * Get the engine command API
-     *
-     * @param session
-     *            API session
-     * @return an instance of {@link CommandAPI}
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     */
-    public CommandAPI getCommandAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        try {
-            return TenantAPIAccessor.getCommandAPI(session);
-        } catch (final BonitaHomeNotSetException e) {
-            final String message = "Bonita home system variable is not defined";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final UnknownAPITypeException e) {
-            final String message = "The engine API Implementation is unknown.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final ServerAPIException e) {
-            final String message = "The engine client was not able to communicate with the engine server.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        }
-    }
-
-    /**
      * Get the engine process API
      *
      * @param session
      *            API session
      * @return an instance of {@link ProcessAPI}
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
      */
     public ProcessAPI getProcessAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
         try {
@@ -107,97 +63,6 @@ public class BPMEngineAPIUtil {
             throw new BPMEngineException(message);
         } catch (final ServerAPIException e) {
             final String message = "The engine client was not able to communicate with the engine server.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        }
-    }
-
-    /**
-     * Get the engine identity API
-     *
-     * @param session
-     *            API session
-     * @return an instance of {@link ProcessAPI}
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     */
-    public IdentityAPI getIdentityAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        try {
-            return TenantAPIAccessor.getIdentityAPI(session);
-        } catch (final BonitaHomeNotSetException e) {
-            final String message = "Bonita home system variable is not defined";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final UnknownAPITypeException e) {
-            final String message = "The engine API Implementation is unknown.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final ServerAPIException e) {
-            final String message = "The engine client was not able to communicate with the engine server.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        }
-    }
-
-    /**
-     * Get the engine profile API
-     *
-     * @param session
-     *        API session
-     * @return an instance of {@link ProfileAPI}
-     * @throws BPMEngineException
-     * @throws InvalidSessionException
-     */
-    public ProfileAPI getProfileAPI(final APISession session) throws BPMEngineException, InvalidSessionException {
-        try {
-            return TenantAPIAccessor.getProfileAPI(session);
-        } catch (final BonitaHomeNotSetException e) {
-            final String message = "Bonita home system variable is not defined";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final UnknownAPITypeException e) {
-            final String message = "The engine API Implementation is unknown.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final ServerAPIException e) {
-            final String message = "The engine client was not able to communicate with the engine server.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        }
-    }
-
-    public Serializable executeCommand(final CommandAPI commandAPI, final String name, final Map<String, Serializable> parameters) throws BPMEngineException,
-            InvalidSessionException {
-        try {
-            return commandAPI.execute(name, parameters);
-        } catch (final CommandNotFoundException e) {
-            final String message = "The command " + name + " could not be found.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final CommandParameterizationException e) {
-            final String message = "The command " + name + " expect different parameters types.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( message, e);
-            }
-            throw new BPMEngineException(message);
-        } catch (final CommandExecutionException e) {
-            final String message = "A error occured while executing the command.";
              if (LOGGER.isErrorEnabled()) {
                 LOGGER.error( message, e);
             }

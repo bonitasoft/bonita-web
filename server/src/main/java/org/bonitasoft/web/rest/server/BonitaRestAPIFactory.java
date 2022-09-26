@@ -20,7 +20,6 @@ import org.bonitasoft.web.rest.server.api.application.APIApplication;
 import org.bonitasoft.web.rest.server.api.applicationmenu.APIApplicationMenu;
 import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationDataStoreFactory;
 import org.bonitasoft.web.rest.server.api.applicationpage.APIApplicationPage;
-import org.bonitasoft.web.rest.server.api.bonitaPage.APIBonitaPage;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCase;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedCaseDocument;
 import org.bonitasoft.web.rest.server.api.bpm.cases.APIArchivedComment;
@@ -74,16 +73,12 @@ import org.bonitasoft.web.rest.server.framework.API;
 import org.bonitasoft.web.rest.server.framework.RestAPIFactory;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Séverin Moussel
  */
 public class BonitaRestAPIFactory extends RestAPIFactory {
-	
-    private static Logger LOGGER = LoggerFactory.getLogger(BonitaRestAPIFactory.class.getName());
-	
+
     @Override
     public API<? extends IItem> defineApis(final String apiToken, final String resourceToken) {
     	
@@ -118,30 +113,11 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APITenantAdmin();
             }
             
-            // FIXME : userXP deprecated    (BS-500)
-            //    - replaced by 'portal'
-            //    - Do not add any API here
-            //    - userXP section must be deleted in 6.4.0 version
-            //    - duplication not removed because userXp must stay like this
-        } else if ("userXP".equals(apiToken)) {
-            if ("profile".equals(resourceToken)) {
-                LOGGER.warn("Deprecated API path, please use /API/portal/profile instead");
-                return new APIProfile();
-            } else if ("profileMember".equals(resourceToken)) {
-                LOGGER.warn("Deprecated API path, please use /API/portal/profileMember instead");
-                return new APIProfileMember();
-            } else if ("bonitaPage".equals(resourceToken)) {
-                return new APIBonitaPage();
-            }
-            // --------------------------------------------------------
-            
         } else if ("portal".equals(apiToken)) {
             if ("profile".equals(resourceToken)) {
                 return new APIProfile();
             } else if ("profileMember".equals(resourceToken)) {
                 return new APIProfileMember();
-            } else if ("bonitaPage".equals(resourceToken)) {
-                return new APIBonitaPage();
             } else if ("page".equals(resourceToken)) {
                 return new APIPage();
             }
@@ -207,10 +183,6 @@ public class BonitaRestAPIFactory extends RestAPIFactory {
                 return new APIProcessConnectorDependency();
             } else if ("caseVariable".equals(resourceToken)) {
                 return new APICaseVariable();
-            } else if ("document".equals(resourceToken)) {
-                return new APIDocument();
-            } else if ("archiveddocument".equals(resourceToken)) {
-                return new APIArchivedDocument();
             } else if ("processParameter".equals(resourceToken)) {
                 return new APIProcessParameter();
            }

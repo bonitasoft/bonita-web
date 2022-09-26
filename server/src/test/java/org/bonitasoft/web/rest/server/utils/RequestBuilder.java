@@ -42,12 +42,6 @@ public class RequestBuilder {
         request.setEntity(value, MediaType.APPLICATION_JSON);
         return client.handle(request);
     }
-    
-    public Response post() {
-        final Client client = new Client(Protocol.HTTP);
-        request.setMethod(Method.POST);
-        return client.handle(request);
-    }
 
     public Response put(final String value) {
         final Client client = new Client(Protocol.HTTP);

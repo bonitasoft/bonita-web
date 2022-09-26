@@ -15,11 +15,10 @@
 package org.bonitasoft.console.common.server.page;
 
 import java.io.IOException;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import groovy.lang.GroovyClassLoader;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.page.extension.RestAPIContextImpl;
 import org.bonitasoft.engine.api.APIClient;
@@ -30,8 +29,8 @@ import org.bonitasoft.web.extension.rest.RestApiResponse;
 import org.bonitasoft.web.rest.server.api.extension.ControllerClassName;
 import org.bonitasoft.web.rest.server.api.extension.ResourceExtensionResolver;
 import org.codehaus.groovy.control.CompilationFailedException;
-
-import groovy.lang.GroovyClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class used by servlets to display a custom rest api
@@ -91,15 +90,15 @@ public class RestApiRenderer {
             final PageContextHelper pageContextHelper,
             final PageResourceProviderImpl pageResourceProvider,
             final Class<?> restApiControllerClass) throws InstantiationException, IllegalAccessException {
-        final org.bonitasoft.web.extension.rest.RestApiController restApiController = instantiate(restApiControllerClass,
-                org.bonitasoft.web.extension.rest.RestApiController.class);
+        final org.bonitasoft.web.extension.rest.RestApiController restApiController = instantiate(restApiControllerClass
+        );
         return restApiController.doHandle(request,
                 new org.bonitasoft.web.extension.rest.RestApiResponseBuilder(),
                 new RestAPIContextImpl(apiSession, new APIClient(apiSession), pageContextHelper.getCurrentLocale(),
                         pageResourceProvider));
     }
 
-    protected <T extends Object> T instantiate(Class<?> baseClass, Class<T> toClass)
+    protected <T extends Object> T instantiate(Class<?> baseClass)
             throws InstantiationException, IllegalAccessException {
         return (T) baseClass.newInstance();
     }

@@ -24,18 +24,6 @@ public class APIFilterEmptyException extends APIFilterException {
 
     private static final long serialVersionUID = -3372478894238466120L;
 
-    public APIFilterEmptyException(final String filterName, final String message, final Throwable cause) {
-        super(filterName, message, cause);
-    }
-
-    public APIFilterEmptyException(final String filterName, final String message) {
-        super(filterName, message);
-    }
-
-    public APIFilterEmptyException(final String filterName, final Throwable cause) {
-        super(filterName, cause);
-    }
-
     public APIFilterEmptyException(final String filterName) {
         super(filterName);
     }

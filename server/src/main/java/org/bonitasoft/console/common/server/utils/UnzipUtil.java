@@ -29,18 +29,11 @@ import org.bonitasoft.engine.io.IOUtil;
  */
 public class UnzipUtil {
 
-    static final int BUFFER = 2048;
-
     /**
      * Unzip a zip file from InputStream.
      * Client is responsible to close the input stream.
-     *
-     * @param sourceFile
-     * @param targetPath
-     * @throws IOException
-     * @throws FileNotFoundException
      */
-    public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws FileNotFoundException, IOException {
+    public static synchronized void unzip(final InputStream sourceFile, final String targetPath) throws IOException {
         IOUtil.unzipToFolder(sourceFile, new File(targetPath));
     }
 
@@ -66,15 +59,6 @@ public class UnzipUtil {
         if (deleteFileAfterZip) {
             zipFile.delete();
         }
-    }
-
-    public static synchronized String getZipNameWithoutExtention(final File zipFile) {
-        String zipName = zipFile.getName();
-        if (zipName.indexOf(".") > 0) {
-            zipName = zipName.substring(0, zipName.lastIndexOf("."));
-        }
-
-        return zipName;
     }
 
 }

@@ -35,11 +35,6 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
     public static final String LOGOUT_DISABLED = "logout.link.hidden";
 
     /**
-     * Logout Visible constant
-     */
-    public static final String LOGOUT_ENABLED = "logout.link.visible";
-
-    /**
      * Configuration of authentication manager implementation
      */
     protected static final String AUTHENTICATION_MANAGER = "auth.AuthenticationManager";

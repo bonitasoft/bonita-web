@@ -25,10 +25,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class MultipleBusinessDataReferenceClient extends BusinessDataReferenceClient {
 
-    private List<Long> storageIds;
+    private final List<Long> storageIds;
 
     @JsonProperty("storageIds_string")
-    private List<String> storageIdsAsString;
+    private final List<String> storageIdsAsString;
 
     public MultipleBusinessDataReferenceClient(String name, String type, String link, List<Long> storageIds) {
         super(name, type, link);
@@ -37,15 +37,10 @@ public class MultipleBusinessDataReferenceClient extends BusinessDataReferenceCl
         for (Long storageId : storageIds) {
             storageIdsAsString.add(storageId.toString());
         }
-
     }
 
     public List<Long> getStorageIds() {
         return storageIds;
-    }
-
-    public void setStorageIds(List<Long> storageIds) {
-        this.storageIds = storageIds;
     }
 
     public List<String> getStorageIdsAsString() {

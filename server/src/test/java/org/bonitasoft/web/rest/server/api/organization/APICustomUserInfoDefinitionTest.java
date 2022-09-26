@@ -22,12 +22,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.bonitasoft.engine.api.IdentityAPI;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoDefinitionCreator;
 import org.bonitasoft.engine.session.APISession;
@@ -68,9 +68,6 @@ public class APICustomUserInfoDefinitionTest {
 
     @Mock(answer = Answers.RETURNS_MOCKS)
     private CustomUserInfoEngineClientCreator engineClientCreator;
-
-    @Mock
-    private IdentityAPI identityApi;
 
     private APICustomUserInfoDefinition api;
 

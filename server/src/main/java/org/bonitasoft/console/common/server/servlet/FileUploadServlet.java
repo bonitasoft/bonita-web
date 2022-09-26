@@ -22,8 +22,6 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +36,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.bonitasoft.engine.session.SessionNotFoundException;
 import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet allowing to upload a File.
@@ -122,13 +122,10 @@ public abstract class FileUploadServlet extends HttpServlet {
         this.uploadDirectoryPath = uploadDirectoryPath;
     }
 
-    protected String getUploadDirectoryPath() {
-        return uploadDirectoryPath;
-    }
-
     @Override
     @SuppressWarnings("unchecked")
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/plain;charset=UTF-8");
         PrintWriter responsePW = null;
         try {
@@ -151,9 +148,7 @@ public abstract class FileUploadServlet extends HttpServlet {
             try {
                 items = serviceFileUpload.parseRequest(request);
             } catch (final OutOfMemoryError e) {
-                throw new SizeLimitExceededException("The file exceeds its maximum permitted size.",
-                        Long.valueOf(0),
-                        0);
+                throw new SizeLimitExceededException("The file exceeds its maximum permitted size.", 0L, 0);
             }
 
             for (final FileItem item : items) {
@@ -164,7 +159,7 @@ public abstract class FileUploadServlet extends HttpServlet {
                 final String fileName = item.getName();
 
                 // Check if extension is allowed
-                if (!isSupportedExtention(fileName)) {
+                if (!isSupportedExtension(fileName)) {
                     outputMediaTypeError(response, responsePW);
                     return;
                 }
@@ -174,19 +169,20 @@ public abstract class FileUploadServlet extends HttpServlet {
 
                 // Upload file
                 item.write(uploadedFile);
-                if (LOGGER.isTraceEnabled()){
-                    LOGGER.trace( "File uploaded : " + uploadedFile.getPath());
+                if (LOGGER.isTraceEnabled()) {
+                    LOGGER.trace("File uploaded : " + uploadedFile.getPath());
                 }
                 uploadedFile.deleteOnExit();
 
                 // Response
                 final String responseString;
                 if (JSON_CONTENT_TYPE.equals(responseContentType)) {
-                    responseString = generateResponseJson(request, fileName, item.getContentType(), uploadedFile);
+                    responseString = generateResponseJson(fileName, item.getContentType(), uploadedFile);
                 } else if (TEXT_CONTENT_TYPE.equals(responseContentType)) {
                     responseString = generateResponseString(request, fileName, uploadedFile);
                 } else {
-                    throw new ServletException("Unsupported content type in servlet configuration : " + responseContentType);
+                    throw new ServletException(
+                            "Unsupported content type in servlet configuration : " + responseContentType);
                 }
                 responsePW.print(responseString);
                 responsePW.flush();
@@ -196,16 +192,17 @@ public abstract class FileUploadServlet extends HttpServlet {
             LOGGER.debug(message);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         } catch (final SizeLimitExceededException e) {
-            LOGGER.error( "File is Too Big", e);
+            LOGGER.error("File is Too Big", e);
             generateFileTooBigError(response, responsePW, "Uploaded file is too large, server is unable to process it");
         } catch (final FileSizeLimitExceededException e) {
-            LOGGER.error( "File is Too Big", e);
-            generateFileTooBigError(response, responsePW, e.getFileName() + " is " + e.getActualSize() + " large, limit is set to " + e.getPermittedSize()
-                    / FileUploadServlet.MEGABYTE + "Mb");
+            LOGGER.error("File is Too Big", e);
+            generateFileTooBigError(response, responsePW,
+                    e.getFileName() + " is " + e.getActualSize() + " large, limit is set to " + e.getPermittedSize()
+                            / FileUploadServlet.MEGABYTE + "Mb");
         } catch (final Exception e) {
             final String theErrorMessage = "Exception while uploading file.";
-             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error( theErrorMessage, e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(theErrorMessage, e);
             }
             throw new ServletException(theErrorMessage, e);
         } finally {
@@ -215,14 +212,15 @@ public abstract class FileUploadServlet extends HttpServlet {
         }
     }
 
-    private void generateFileTooBigError(final HttpServletResponse response, final PrintWriter responsePW, final String message) {
+    private void generateFileTooBigError(final HttpServletResponse response, final PrintWriter responsePW,
+            final String message) {
         response.setStatus(HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
         if (JSON_CONTENT_TYPE.equals(responseContentType)) {
             final Map<String, Serializable> errorResponse = new HashMap<>();
             errorResponse.put("type", "EntityTooLarge");
             errorResponse.put("message", message);
             errorResponse.put("statusCode", HttpURLConnection.HTTP_ENTITY_TOO_LARGE);
-            responsePW.print(new JSONObject(errorResponse).toString());
+            responsePW.print(new JSONObject(errorResponse));
             responsePW.flush();
         }
     }
@@ -232,9 +230,8 @@ public abstract class FileUploadServlet extends HttpServlet {
         return new ServletFileUpload(fileItemFactory);
     }
 
-
-
-    protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
+    protected String generateResponseString(final HttpServletRequest request, final String fileName,
+            final File uploadedFile) throws Exception {
         String responseString;
         if (returnFullPathInResponse) {
             responseString = uploadedFile.getPath();
@@ -247,7 +244,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         return responseString;
     }
 
-    protected String generateResponseJson(final HttpServletRequest request, final String fileName, String contentType, final File uploadedFile) throws Exception {
+    protected String generateResponseJson(final String fileName, String contentType, final File uploadedFile) {
         final Map<String, String> responseMap = new HashMap<>();
         if (alsoReturnOriginalFilename) {
             responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
@@ -282,17 +279,16 @@ public abstract class FileUploadServlet extends HttpServlet {
         if (slashPos == -1) {
             slashPos = fileName.lastIndexOf("\\");
         }
-        return fileName.substring(slashPos+1);
+        return fileName.substring(slashPos + 1);
     }
 
     protected void outputMediaTypeError(final HttpServletResponse response, final PrintWriter responsePW) {
         response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-        responsePW.print("Exstention not supported.");
+        responsePW.print("Extension not supported.");
         responsePW.flush();
-        return;
     }
 
-    protected boolean isSupportedExtention(final String fileName) {
+    protected boolean isSupportedExtension(final String fileName) {
         if (fileName == null) {
             return false;
         }
@@ -302,8 +298,8 @@ public abstract class FileUploadServlet extends HttpServlet {
             return true;
         }
 
-        for (final String extention : supportedExtensionsList) {
-            if (fileName.toLowerCase().endsWith("." + extention.toLowerCase())) {
+        for (final String extension : supportedExtensionsList) {
+            if (fileName.toLowerCase().endsWith("." + extension.toLowerCase())) {
                 return true;
             }
         }

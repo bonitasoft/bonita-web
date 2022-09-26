@@ -41,8 +41,6 @@ public class ResourceExtensionResolverTest {
     public static final String API_EXTENSION_GET_MAPPING_KEY = "apiExtension|GET|helloWorld";
 
     public static final long PAGE_ID = 2L;
-    @Mock
-    private Request request;
 
     @Mock
     private PageResourceProviderImpl pageResourceProvider;

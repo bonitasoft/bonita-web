@@ -16,25 +16,13 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import java.util.List;
-
 /**
  * @author Paul AMAR
  * 
  */
 public class FileExtensionForbiddenValidator extends FileExtensionAllowedValidator {
 
-    public FileExtensionForbiddenValidator(final String extension) {
-        super(extension);
-        setExclude(true);
-    }
-
     public FileExtensionForbiddenValidator(final String... extensions) {
-        super(extensions);
-        setExclude(true);
-    }
-
-    public FileExtensionForbiddenValidator(final List<String> extensions) {
         super(extensions);
         setExclude(true);
     }

@@ -30,36 +30,11 @@ public class BPMEngineException extends Exception {
     private static final long serialVersionUID = -4812682510242412305L;
 
     /**
-     * constructor
-     */
-    public BPMEngineException() {
-        super();
-    }
-
-    /**
-     * @param message
-     *            message associated with the exception
-     * @param cause
-     *            cause of the exception
-     */
-    public BPMEngineException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
      * @param message
      *            message associated with the exception
      */
     public BPMEngineException(final String message) {
         super(message);
-    }
-
-    /**
-     * @param cause
-     *            cause of the exception
-     */
-    public BPMEngineException(final Throwable cause) {
-        super(cause);
     }
 
 }

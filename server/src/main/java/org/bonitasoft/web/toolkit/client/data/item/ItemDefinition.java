@@ -24,7 +24,6 @@ import java.util.Map;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidationException;
-import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator;
 
 /**
@@ -226,28 +225,6 @@ public abstract class ItemDefinition<E extends IItem> {
             validators.put(attribute.getName(), attribute.getValidators());
         }
         return validators;
-    }
-
-    /**
-     * Get the Modifiers in a map <attribute name, list of modifiers>
-     */
-    public final Map<String, List<Modifier>> getInputModifiers() {
-        final Map<String, List<Modifier>> modifiers = new HashMap<>();
-        for (final ItemAttribute attribute : getAttributes()) {
-            modifiers.put(attribute.getName(), attribute.getInputModifiers());
-        }
-        return modifiers;
-    }
-
-    /**
-     * Get the Modifiers in a map <attribute name, list of modifiers>
-     */
-    public final Map<String, List<Modifier>> getOutputModifiers() {
-        final Map<String, List<Modifier>> modifiers = new HashMap<>();
-        for (final ItemAttribute attribute : getAttributes()) {
-            modifiers.put(attribute.getName(), attribute.getOutputModifiers());
-        }
-        return modifiers;
     }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////

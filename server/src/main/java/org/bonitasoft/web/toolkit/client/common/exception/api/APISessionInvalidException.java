@@ -24,10 +24,6 @@ public class APISessionInvalidException extends APIException {
 
     private static final long serialVersionUID = -88365018117861938L;
 
-    public APISessionInvalidException() {
-        super();
-    }
-
     public APISessionInvalidException(final Throwable cause) {
         super(cause);
     }

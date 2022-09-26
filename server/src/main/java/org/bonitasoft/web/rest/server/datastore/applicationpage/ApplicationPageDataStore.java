@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ApplicationAPI;
-import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.business.application.ApplicationPage;
 import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.SearchException;
@@ -50,8 +49,8 @@ DatastoreHasGet<ApplicationPageItem>, DatastoreHasSearch<ApplicationPageItem>, D
     private final ApplicationAPI applicationAPI;
     private final ApplicationPageItemConverter converter;
 
-    public ApplicationPageDataStore(final APISession engineSession, final ApplicationAPI applicationAPI, final PageAPI pageAPI,
-            final ApplicationPageItemConverter converter) {
+    public ApplicationPageDataStore(final APISession engineSession, final ApplicationAPI applicationAPI,
+                                    final ApplicationPageItemConverter converter) {
         super(engineSession);
         this.applicationAPI = applicationAPI;
         this.converter = converter;

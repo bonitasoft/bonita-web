@@ -1,11 +1,16 @@
 package org.bonitasoft.web.rest.server.api.organization;
 
-import javax.servlet.http.HttpSession;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.identity.CustomUserInfoValue;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.identity.impl.CustomUserInfoValueImpl;
 import org.bonitasoft.engine.search.Order;
 import org.bonitasoft.engine.search.SearchOptions;
@@ -27,11 +32,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author Vincent Elcrin
@@ -58,9 +58,6 @@ public class APICustomUserInfoValueTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     private CustomUserInfoEngineClientCreator engineClientCreator;
 
-    @Mock
-    private IdentityAPI identityApi;
-
     @InjectMocks
     private APICustomUserInfoValue api;
 
@@ -73,13 +70,13 @@ public class APICustomUserInfoValueTest {
     }
 
     @Test
-    public void should_retrieve_custom_user_info() throws Exception {
+    public void should_retrieve_custom_user_info() {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(3, Arrays.<CustomUserInfoValue>asList(
+                new SearchResultImpl<>(3, Arrays.asList(
                         createValue("foo"),
                         createValue("bar"))));
 
-        ItemSearchResult<CustomUserInfoItem> result = api.search(0, 2, null, null, Collections.<String, String>emptyMap());
+        ItemSearchResult<CustomUserInfoItem> result = api.search(0, 2, null, null, Collections.emptyMap());
 
         assertThat(result.getPage()).isEqualTo(0);
         assertThat(result.getTotal()).isEqualTo(3);
@@ -95,12 +92,12 @@ public class APICustomUserInfoValueTest {
     }
 
     @Test
-    public void should_retrieve_custom_user_info_sorted() throws Exception {
+    public void should_retrieve_custom_user_info_sorted() {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
+                new SearchResultImpl<>(0, emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
-        api.search(0, 2, null, "userId ASC", Collections.<String, String> emptyMap());
+        api.search(0, 2, null, "userId ASC", Collections.emptyMap());
 
         verify(engine).searchCustomUserInfoValues(argument.capture());
         assertThat(argument.getValue().getSorts().get(0).getField()).isEqualTo("userId");
@@ -108,9 +105,9 @@ public class APICustomUserInfoValueTest {
     }
 
     @Test
-    public void should_retrieve_custom_user_info_filtered() throws Exception {
+    public void should_retrieve_custom_user_info_filtered() {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
+                new SearchResultImpl<>(0, emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
         api.search(0, 2, null, null, Collections.singletonMap(CustomUserInfoItem.ATTRIBUTE_VALUE, "bar"));
@@ -121,19 +118,19 @@ public class APICustomUserInfoValueTest {
     }
 
     @Test
-    public void should_retrieve_custom_user_info_term_filtered() throws Exception {
+    public void should_retrieve_custom_user_info_term_filtered() {
         given(engine.searchCustomUserInfoValues(any(SearchOptions.class))).willReturn(
-                new SearchResultImpl<>(0, Collections.<CustomUserInfoValue>emptyList()));
+                new SearchResultImpl<>(0, emptyList()));
         ArgumentCaptor<SearchOptions> argument = ArgumentCaptor.forClass(SearchOptions.class);
 
-        api.search(0, 2, "foo", null, Collections.<String, String>emptyMap());
+        api.search(0, 2, "foo", null, Collections.emptyMap());
 
         verify(engine).searchCustomUserInfoValues(argument.capture());
         assertThat(argument.getValue().getSearchTerm()).isEqualTo("foo");
     }
 
     @Test
-    public void should_update_a_given_custom_item_value() throws Exception {
+    public void should_update_a_given_custom_item_value() {
         CustomUserInfoValueImpl update = new CustomUserInfoValueImpl();
         update.setValue("foo");
         given(engine.setCustomUserInfoValue(1L, 2L, "foo")).willReturn(update);

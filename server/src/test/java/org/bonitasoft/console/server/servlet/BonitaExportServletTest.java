@@ -33,9 +33,6 @@ public class BonitaExportServletTest {
     HttpServletResponse hsResponse;
 
     @Mock
-    APISession session;
-
-    @Mock
     HttpSession httpSession;
 
     @Mock

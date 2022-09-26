@@ -32,9 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,36 +62,26 @@ public class ResourceRendererTest {
     @Mock
     HttpSession httpSession;
 
-    @Mock
-    BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
-
-    @Mock
-    private CustomPageService customPageService;
-
     @Spy
     @InjectMocks
     ResourceRenderer resourceRenderer;
 
-    @Mock
-    private APISession apiSession;
+    public ResourceRendererTest() {
+    }
 
     @Before
     public void setup() throws IOException {
-
-//        doReturn(customPageService).when(resourceRenderer).getCustomPageService();
-
         when(req.getSession()).thenReturn(httpSession);
         when(res.getOutputStream()).thenReturn(outputStream);
         when(httpSession.getServletContext()).thenReturn(servletContext);
     }
 
     @Test
-    public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException,
-            InstantiationException {
+    public void renderFile_should_build_a_valid_response() throws BonitaException, URISyntaxException, IOException, IllegalAccessException {
         final File resourceFile = getResourceFile();
         final long contentLength = resourceFile.length();
         when(servletContext.getMimeType("file.css")).thenReturn("text/css");
-        resourceRenderer.renderFile(req, res, resourceFile, apiSession);
+        resourceRenderer.renderFile(req, res, resourceFile);
 
         verify(res).setCharacterEncoding("UTF-8");
         verify(servletContext).getMimeType("file.css");
@@ -112,14 +100,14 @@ public class ResourceRendererTest {
     @Test(expected = BonitaException.class)
     public void getResourceFile_should_throw_BonitaException_on_passing_null_resources_folder() throws
             Exception {
-        resourceRenderer.renderFile(req, res, null, apiSession);
+        resourceRenderer.renderFile(req, res, null);
     }
 
     @Test
     public void getResourceFile_should_sendError404_on_passing_none_existing_resources() throws
             Exception {
         final File noneExistingFile = new File("NoneExistingFile.css");
-        resourceRenderer.renderFile(req, res, noneExistingFile, apiSession);
+        resourceRenderer.renderFile(req, res, noneExistingFile);
         verify(res).setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 

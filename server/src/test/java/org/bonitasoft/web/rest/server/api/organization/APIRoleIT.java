@@ -110,7 +110,7 @@ public class APIRoleIT extends AbstractConsoleTest {
         Assert.assertNotNull("Role not found", output);
         assertItemEquals("Wrong role found", input, output);
 
-        Assert.assertNotNull("Failed to deploy intiator user", output.getCreatedByUserId());
+        Assert.assertNotNull("Failed to deploy initiator user", output.getCreatedByUserId());
         Assert.assertEquals("Wrong process deployed", getInitiator().getUserName(), output.getCreatedByUser().getUserName());
 
         getAPIRole().runDelete(Arrays.asList(input.getId()));

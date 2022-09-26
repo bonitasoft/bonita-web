@@ -33,8 +33,6 @@ public interface WebBonitaConstants {
 
     String clientFolderName = "client";
 
-    String confFolderName = "conf";
-
     String tmpFolderName = "bonita_portal_";
 
     // We use a tempFolder specific to the running JVM, so that 2 JVMs running on the same machine are isolated:
@@ -64,25 +62,11 @@ public interface WebBonitaConstants {
     String getTempFolderPath();
 
     /**
-     * Get Tenant ConfFolder Path
-     *
-     * @return path
-     */
-    String getConfFolderPath();
-
-    /**
      * Get Tenant FormsTempFolder Path
      *
      * @return path
      */
     String getFormsTempFolderPath();
-
-    /**
-     * Get reportsConsoleTempFolder Path
-     *
-     * @return path
-     */
-    String getReportsTempFolderPath();
 
     /**
      * Get pagesConsoleTempFolder Path

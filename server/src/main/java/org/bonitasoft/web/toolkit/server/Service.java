@@ -17,8 +17,6 @@
 package org.bonitasoft.web.toolkit.server;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -87,73 +85,10 @@ public abstract class Service {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getRequestURL()
-     */
-    public String getRequestURL() {
-        return caller.getRequestURL();
-    }
-
-    /**
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getInputStream()
-     */
-    public String getInputStream() {
-        return caller.getInputStream();
-    }
-
-    /**
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#countParameters()
-     */
-    public int countParameters() {
-        return caller.countParameters();
-    }
-
-    /**
-     * @param name
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String)
-     */
-    public List<String> getParameterAsList(final String name) {
-        return caller.getParameterAsList(name);
-    }
-
-    /**
-     * @param name
-     * @param defaultValue
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameterAsList(java.lang.String, java.lang.String)
-     */
-    public List<String> getParameterAsList(final String name, final String defaultValue) {
-        return caller.getParameterAsList(name, defaultValue);
-    }
-
-    /**
-     * @param name
-     * @return
      * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String)
      */
     public String getParameter(final String name) {
         return caller.getParameter(name);
-    }
-
-    /**
-     * @param name
-     * @param defaultValue
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameter(java.lang.String, java.lang.String)
-     */
-    public String getParameter(final String name, final String defaultValue) {
-        return caller.getParameter(name, defaultValue);
-    }
-
-    /**
-     * @return
-     * @see org.bonitasoft.web.toolkit.server.ServletCall#getParameters()
-     */
-    public Map<String, String[]> getParameters() {
-        return caller.getParameters();
     }
 
     public LOCALE getLocale() {

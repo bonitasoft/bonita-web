@@ -3,9 +3,7 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyMapOf;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.FileNotFoundException;
@@ -15,10 +13,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Rule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
-import org.slf4j.Logger;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.engine.api.ProcessAPI;
@@ -35,7 +29,9 @@ import org.bonitasoft.web.rest.server.utils.RestletTest;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -65,9 +61,6 @@ public class ProcessInstantiationResourceTest extends RestletTest {
     @Mock
     ProcessAPI processAPI;
 
-    @Mock
-    Logger logger;
-
     ProcessInstantiationResource processInstantiationResource;
 
     @Mock
@@ -89,7 +82,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Before
     public void initializeMocks() {
-        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI, apiSession));
+        processInstantiationResource = spy(new ProcessInstantiationResource(processAPI));
         // this allows us to track method calls on this internal dependency
         processInstantiationResource.typeConverterUtil = spy(processInstantiationResource.typeConverterUtil);
         when(contractDefinition.getInputs()).thenReturn(Collections.<InputDefinition> emptyList());
@@ -97,7 +90,7 @@ public class ProcessInstantiationResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new ProcessInstantiationResource(processAPI, apiSession);
+        return new ProcessInstantiationResource(processAPI);
     }
 
     private Map<String, Serializable> aComplexInput() {

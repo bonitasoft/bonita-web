@@ -4,16 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.bonitasoft.web.rest.server.utils.ResponseAssert.assertThat;
 import static org.bonitasoft.web.rest.server.utils.RestletAppBuilder.aTestApp;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,14 +23,11 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.restlet.Application;
 import org.restlet.Response;
 import org.restlet.data.Form;
-import org.restlet.data.Header;
 import org.restlet.data.Status;
-import org.restlet.util.Series;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommonResourceTest extends RestletTest {
@@ -46,9 +35,6 @@ public class CommonResourceTest extends RestletTest {
     @Mock
     private FakeService fakeService;
 
-    @Spy
-    private final Series<Header> headers = new Series<>(Header.class);
-    
     @Mock
     HttpSession httpSession;
 

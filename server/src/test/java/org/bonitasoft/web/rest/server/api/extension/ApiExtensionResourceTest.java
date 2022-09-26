@@ -53,9 +53,6 @@ public class ApiExtensionResourceTest {
 
     private Method method;
 
-    @Mock
-    private ResourceExtensionResolver resourceExtensionResolver;
-
     @Before
     public void before() throws Exception {
         doReturn(request).when(apiExtensionResource).getRequest();

@@ -16,9 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.common.exception.http;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Séverin Moussel
  * 
@@ -26,10 +23,6 @@ import java.util.List;
 public class ServerException extends HttpException {
 
     private static final long serialVersionUID = -2822846735990124977L;
-
-    protected String originalClassName = null;
-
-    protected List<String> originalStackTrace = new ArrayList<>();
 
     public ServerException() {
         super();
@@ -45,22 +38,6 @@ public class ServerException extends HttpException {
 
     public ServerException(final Throwable cause) {
         super(cause);
-    }
-
-    /**
-     * @return the originalClassName
-     */
-    public String getOriginalClassName() {
-        return this.originalClassName;
-    }
-
-    /**
-     * @param originalClassName
-     *            the originalClassName to set
-     */
-    public ServerException setOriginalClassName(final String originalClassName) {
-        this.originalClassName = originalClassName;
-        return this;
     }
 
     @Override

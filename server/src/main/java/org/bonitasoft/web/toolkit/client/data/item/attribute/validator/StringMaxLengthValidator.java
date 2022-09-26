@@ -16,14 +16,39 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
+import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
+import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
+
 /**
  * @author Séverin Moussel
  * 
  */
-public class StringMaxLengthValidator extends StringMinMaxLengthValidator {
+public class StringMaxLengthValidator extends AbstractStringValidator {
+    private final Integer maxLength;
+    private final Boolean includeMax;
 
     public StringMaxLengthValidator(final Integer maxLength) {
-        super(null, false, maxLength, true);
+        this(maxLength, true);
+    }
+    public StringMaxLengthValidator(final Integer maxLength, final Boolean includeMax) {
+        this.maxLength = maxLength;
+        this.includeMax = includeMax;
     }
 
+    @Override
+    protected void _check(final String attributeValue) {
+        final int length = attributeValue.length();
+
+        // Checking for including the maxLength
+        if (includeMax) {
+            if (maxLength != null && length > maxLength) {
+                addError(AbstractI18n.t_("%attribute% must be less or equal than %value%", new Arg("value", maxLength)));
+            }
+        } else {
+            if (maxLength != null && length >= maxLength) {
+                addError(AbstractI18n.t_("%attribute% must be less than %value%", new Arg("value", maxLength)));
+            }
+        }
+
+    }
 }

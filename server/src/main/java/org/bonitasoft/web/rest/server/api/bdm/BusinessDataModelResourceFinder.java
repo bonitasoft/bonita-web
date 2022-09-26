@@ -31,6 +31,6 @@ public class BusinessDataModelResourceFinder extends ResourceFinder {
         final APISession apiSession = getAPISession(request);
         TenantAdministrationAPI tenantAdministrationAPI = getTenantAdministrationAPI(request);
         BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
-        return new BusinessDataModelResource(tenantAdministrationAPI, bonitaHomeFolderAccessor, apiSession);
+        return new BusinessDataModelResource(tenantAdministrationAPI, bonitaHomeFolderAccessor);
     }
 }

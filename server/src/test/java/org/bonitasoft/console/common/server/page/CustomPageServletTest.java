@@ -7,7 +7,6 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
@@ -131,7 +130,7 @@ public class CustomPageServletTest {
         servlet.doGet(hsRequest, hsResponse);
 
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse,
-                new File(pageDir, File.separator + "resources" + File.separator + "css" + File.separator + "file.css"), apiSession);
+                new File(pageDir, File.separator + "resources" + File.separator + "css" + File.separator + "file.css"));
     }
 
     @Test

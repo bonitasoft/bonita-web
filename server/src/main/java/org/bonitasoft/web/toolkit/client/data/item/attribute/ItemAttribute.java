@@ -37,7 +37,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.Validator
  * 
  * @author Séverin Moussel
  */
-public final class ItemAttribute implements Validable, ModifiableInput, ModifiableOutput {
+public final class ItemAttribute implements Validable, ModifiableInput {
 
     /**
      * The maximum length of a color string (#FDB975).
@@ -55,27 +55,6 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
     public static final int MAX_LENGTH_TEXT = 2000;
 
     /**
-     * The maximum length of a long in UI (arbitrary value)
-     * 
-     */
-    public static final int MAX_LENGTH_LONG = 2000;
-
-    /**
-     * The maximum length of a int in UI (arbitrary value)
-     */
-    public static final int MAX_LENGTH_INT = 2000;
-
-    /**
-     * The maximum length of a double in UI (arbitrary value)
-     */
-    public static final int MAX_LENGTH_DOUBLE = 2000;
-
-    /**
-     * The maximum length of a boolean in UI
-     */
-    public static final int MAX_LENGTH_BOOLEAN = 5;
-
-    /**
      * The maximum length of a URL
      */
     public static final int MAX_LENGTH_URL = 1024;
@@ -85,7 +64,7 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
      * 
      * @author Séverin Moussel
      */
-    public static enum TYPE {
+    public enum TYPE {
         /**
          * A single line String
          * <ul>
@@ -143,9 +122,9 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
         ITEM_ID
     };
 
-    private String name = null;
+    private String name;
 
-    private TYPE type = TYPE.STRING;
+    private TYPE type;
 
     private final String defaultValue = null;
 
@@ -241,8 +220,6 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
 
     private final ModifiersList inputModifiers = new ModifiersList();
 
-    private final ModifiersList outputModifiers = new ModifiersList();
-
     private final ValidatorsList validators = new ValidatorsList();
 
     /**
@@ -258,103 +235,8 @@ public final class ItemAttribute implements Validable, ModifiableInput, Modifiab
      * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#addModifier(org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier)
      */
     @Override
-    public ItemAttribute addInputModifier(final Modifier modifier) {
+    public void addInputModifier(final Modifier modifier) {
         this.inputModifiers.addModifier(modifier);
-        return this;
-    }
-
-    /**
-     * @param modifiers
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#addModifiers(java.util.List)
-     */
-    @Override
-    public ItemAttribute addInputModifiers(final List<Modifier> modifiers) {
-        this.inputModifiers.addModifiers(modifiers);
-        return this;
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#removeModifier(java.lang.String)
-     */
-    @Override
-    public ItemAttribute removeInputModifier(final String modifierClassName) {
-        this.inputModifiers.removeModifier(modifierClassName);
-        return this;
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#hasModifier(java.lang.String)
-     */
-    @Override
-    public boolean hasInputModifier(final String modifierClassName) {
-        return this.inputModifiers.hasModifier(modifierClassName);
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#getModifier(java.lang.String)
-     */
-    @Override
-    public Modifier getInputModifier(final String modifierClassName) {
-        return this.inputModifiers.getModifier(modifierClassName);
-    }
-
-    /**
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#getModifiers()
-     */
-    @Override
-    public List<Modifier> getOutputModifiers() {
-        return this.outputModifiers.getModifiers();
-    }
-
-    /**
-     * @param modifier
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#addModifier(org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier)
-     */
-    @Override
-    public ItemAttribute addOutputModifier(final Modifier modifier) {
-        this.outputModifiers.addModifier(modifier);
-        return this;
-    }
-
-    /**
-     * @param modifiers
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#addModifiers(java.util.List)
-     */
-    @Override
-    public ItemAttribute addOutputModifiers(final List<Modifier> modifiers) {
-        this.outputModifiers.addModifiers(modifiers);
-        return this;
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#removeModifier(java.lang.String)
-     */
-    @Override
-    public ItemAttribute removeOutputModifier(final String modifierClassName) {
-        this.outputModifiers.removeModifier(modifierClassName);
-        return this;
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#hasModifier(java.lang.String)
-     */
-    @Override
-    public boolean hasOutputModifier(final String modifierClassName) {
-        return this.outputModifiers.hasModifier(modifierClassName);
-    }
-
-    /**
-     * @param modifierClassName
-     * @see org.bonitasoft.web.toolkit.client.data.item.attribute.ModifiersList#getModifier(java.lang.String)
-     */
-    @Override
-    public Modifier getOutputModifier(final String modifierClassName) {
-        return this.outputModifiers.getModifier(modifierClassName);
     }
 
     /**

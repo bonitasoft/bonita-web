@@ -67,10 +67,8 @@ public interface AuthenticationManager {
      * @param redirectURL
      *        redirect url
      * @return new redirect url
-     * @throws ConsumerNotFoundException
-     * @throws ServletException
      */
-    String getLoginPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ConsumerNotFoundException, ServletException;
+    String getLoginPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ServletException;
 
     /**
      * Authenticate the user (If no exception is thrown, an engine login will then be performed with the credentials)
@@ -92,8 +90,6 @@ public interface AuthenticationManager {
      * @param redirectURL
      *        redirect url
      * @return new redirect url
-     * @throws ConsumerNotFoundException
-     * @throws ServletException
      */
-    String getLogoutPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ConsumerNotFoundException, ServletException;
+    String getLogoutPageURL(final HttpServletRequestAccessor requestAccessor, final String redirectURL) throws ServletException;
 }

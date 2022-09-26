@@ -38,12 +38,12 @@ public class VariableMapperTest extends APITestWithMock {
     }
     
     @Test(expected = APIException.class)
-    public void getSerializableValue_throw_exception_if_class_is_not_in_classpath() throws Exception {
+    public void getSerializableValue_throw_exception_if_class_is_not_in_classpath() {
         new VariableMapper(new Variable(), jacksonDeserializer).getSerializableValue("a.class.not.in.classpath");
     }
     
     @Test(expected = APIException.class)
-    public void getSerializableValue_throw_exception_if_classname_name_an_unserializable_object() throws Exception {
+    public void getSerializableValue_throw_exception_if_classname_name_an_unserializable_object() {
         Variable variable = new Variable();
         variable.set("value", new NotSerializableObject());
         
@@ -51,22 +51,22 @@ public class VariableMapperTest extends APITestWithMock {
     }
     
     @Test(expected = APIException.class)
-    public void getSerializableValue_cannot_convert_values_that_ont_fits_to_given_className() throws Exception {
+    public void getSerializableValue_cannot_convert_values_that_ont_fits_to_given_className() {
         Variable variable = new Variable();
         variable.set("value", "coucou");
         
         Serializable value = new VariableMapper(variable, jacksonDeserializer).getSerializableValue(Long.class.getName());
         
-        assertThat(value, is((Serializable) 1L));
+        assertThat(value, is(1L));
     }
 
     @Test
-    public void getSerializableValue_return_variable_value_converted_in_given_class_name_object() throws Exception {
+    public void getSerializableValue_return_variable_value_converted_in_given_class_name_object() {
         Variable variable = new Variable();
         variable.set("value", 1);
         
         Serializable value = new VariableMapper(variable, jacksonDeserializer).getSerializableValue(Long.class.getName());
         
-        assertThat(value, is((Serializable) 1L));
+        assertThat(value, is(1L));
     }
 }

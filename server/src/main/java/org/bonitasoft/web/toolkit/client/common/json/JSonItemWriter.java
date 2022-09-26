@@ -16,7 +16,6 @@ package org.bonitasoft.web.toolkit.client.common.json;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
@@ -33,16 +32,6 @@ public class JSonItemWriter<T extends IItem> {
      * The items to write
      */
     private final List<IItem> itemList = new LinkedList<>();
-
-    public JSonItemWriter(final List<T> datas) {
-        this();
-        this.append(datas);
-    }
-
-    public JSonItemWriter(final IItem data) {
-        this();
-        this.append(data);
-    }
 
     /**
      * If you use this constructor, you will have to use one of the append functions.
@@ -70,26 +59,4 @@ public class JSonItemWriter<T extends IItem> {
         return JSonSerializer.serialize(item);
     }
 
-    /**
-     * Generate the json corresponding to the list passed
-     * 
-     * @param items
-     *            The items to serialize
-     * @return Returns a valid json code
-     */
-    public static String itemsListToJSON(final List<? extends IItem> items) {
-        return JSonSerializer.serializeCollection(items);
-    }
-
-    /**
-     * Generate the json corresponding to the map passed
-     * 
-     * @param map
-     *            The map to serialize
-     * @return Returns a valid json code
-     */
-
-    public static String mapToJSON(final Map<String, String> map) {
-        return JSonSerializer.serializeStringMap(map);
-    }
 }

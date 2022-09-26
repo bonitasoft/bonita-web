@@ -18,8 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -29,6 +28,8 @@ import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.exception.InvalidPageTokenException;
 import org.bonitasoft.engine.exception.InvalidPageZipContentException;
 import org.bonitasoft.engine.session.APISession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PageUploadServlet extends TenantFileUploadServlet {
 
@@ -42,10 +43,6 @@ public class PageUploadServlet extends TenantFileUploadServlet {
     private static final String PROCESS_PARAM_NAME = "process";
 
     protected static final String ADD_ACTION = "add";
-
-    protected static final String EDIT_ACTION = "edit";
-
-    protected static final String PAGE_PROPERTIES = "page.properties";
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(PageUploadServlet.class.getName());
 

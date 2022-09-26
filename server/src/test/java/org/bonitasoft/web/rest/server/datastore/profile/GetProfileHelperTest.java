@@ -17,7 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.profile;
 
 import static junit.framework.Assert.assertTrue;
-import static org.bonitasoft.web.rest.model.builder.profile.EngineProfileBuilder.anEngineProfile;
+import static org.bonitasoft.web.rest.server.datastore.profile.EngineProfileBuilder.anEngineProfile;
 import static org.bonitasoft.web.rest.model.builder.profile.ProfileItemBuilder.aProfileItem;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;

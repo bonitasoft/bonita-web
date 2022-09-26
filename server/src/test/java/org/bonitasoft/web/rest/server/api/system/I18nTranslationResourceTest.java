@@ -46,7 +46,7 @@ public class I18nTranslationResourceTest extends RestletTest {
 
     @Override
     protected ServerResource configureResource() {
-        return new I18nTanslationResource(i18n);
+        return new I18nTranslationResource(i18n);
     }
 
 

@@ -32,24 +32,11 @@ public class APIItemException extends APIException {
         this.itemType = itemType.toLowerCase();
     }
 
-    public APIItemException(final String itemType, final String message, final Throwable cause) {
-        super(message, cause);
-        this.itemType = itemType.toLowerCase();
-    }
-
     public APIItemException(final String itemType, final String message) {
         super(message);
         this.itemType = itemType.toLowerCase();
     }
 
-    public APIItemException(final String itemType, final Throwable cause) {
-        super(cause);
-        this.itemType = itemType.toLowerCase();
-    }
-
-    /**
-     * @return the itemType
-     */
     public String getItemType() {
         return this.itemType;
     }
@@ -62,7 +49,7 @@ public class APIItemException extends APIException {
 
     @Override
     protected String defaultMessage() {
-        return "An iunknown error occured on item " + getItemType() + " for API " + getApi() + "#" + getResource();
+        return "An unknown error occurred on item " + getItemType() + " for API " + getApi() + "#" + getResource();
     }
 
 }

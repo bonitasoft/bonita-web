@@ -23,7 +23,6 @@ import org.bonitasoft.engine.search.SearchOptionsBuilder;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
-import org.bonitasoft.web.rest.server.framework.api.EnumConverter;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
@@ -51,16 +50,6 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
         return this.engineSession;
     }
 
-    public final void setEngineSession(final APISession engineSession) {
-        this.engineSession = engineSession;
-    }
-
-    /**
-     * @param filters
-     * @param builder
-     * @param filterName
-     * @param engineAttributeName
-     */
     protected void addStringFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
             final String engineAttributeName) {
         if (filters != null && filters.containsKey(filterName)) {
@@ -94,13 +83,6 @@ public abstract class CommonDatastore<C extends IItem, E extends Serializable> e
                     builder.filter(engineAttributeName, Long.valueOf(filterValue));
                 }
             }
-        }
-    }
-
-    protected void addFilterToSearchBuilder(final Map<String, String> filters, final SearchOptionsBuilder builder, final String filterName,
-            final String engineAttributeName, final EnumConverter<?> converter) {
-        if (filters.containsKey(filterName)) {
-            builder.filter(engineAttributeName, converter.convert(filters.get(filterName)));
         }
     }
 

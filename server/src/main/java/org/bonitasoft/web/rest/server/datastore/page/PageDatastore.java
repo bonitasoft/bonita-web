@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.page.CustomPageService;
-import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.servlet.FileUploadServlet;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
@@ -238,7 +237,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
         // Run search depending on filters passed
         SearchResult<Page> searchResult;
         try {
-            searchResult = runSearch(filters, creator);
+            searchResult = runSearch(creator);
             // Convert to ConsoleItems
             return new ItemSearchResult<>(page, resultsByPage, searchResult.getCount(),
                     convertEngineToConsoleItemsList(searchResult.getResult()));
@@ -282,12 +281,11 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
     }
 
     /**
-     * @param filters
      * @param creator
      * @return
      * @throws SearchException
      */
-    protected SearchResult<Page> runSearch(final Map<String, String> filters, final SearchOptionsCreator creator)
+    protected SearchResult<Page> runSearch(final SearchOptionsCreator creator)
             throws SearchException {
         return pageAPI.searchPages(creator.create());
     }

@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.rest.server;
 
-import static junit.framework.Assert.assertTrue;
-
 import org.bonitasoft.console.common.server.i18n.I18n;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.junit.BeforeClass;
@@ -34,7 +32,7 @@ public class APITestWithMock {
      * Initialise minimal environment for {@link Item}
      */
     @BeforeClass
-    public static void initEnvironement() {
+    public static void initEnvironment() {
         new BonitaRestAPIServlet();
         I18n.getInstance();
     }
@@ -42,8 +40,5 @@ public class APITestWithMock {
     protected boolean areEquals(Item item1, Item item2) {
         return item1.getAttributes().equals(item2.getAttributes());
     }
-    
-    protected void assertItemEquals(Item expectedItem, Item actual) {
-        assertTrue("expected { " + expectedItem + "} \n actual {" + actual + "}" , areEquals(expectedItem, actual));
-    }
+
 }

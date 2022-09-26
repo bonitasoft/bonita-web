@@ -19,7 +19,6 @@ package org.bonitasoft.web.toolkit.client.data.item.attribute;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.web.toolkit.client.common.TreeIndexed;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.AbstractStringModifier;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier;
 
@@ -29,18 +28,8 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.modifier.Modifier;
  */
 public class ModifierEngine {
 
-//    public static void modify(final Form form, final Map<String, List<Modifier>> modifiers) {
-//        modify(form.getValues(), modifiers);
-//    }
-
-    public static void modify(final TreeIndexed<String> values, final Map<String, List<Modifier>> modifiers) {
-        modify(values.getValues(), modifiers);
-    }
-
     public static void modify(final Map<String, String> values, final Map<String, List<Modifier>> modifiers) {
-        for (final String attributeName : values.keySet()) {
-            values.put(attributeName, modify(values.get(attributeName), modifiers.get(attributeName)));
-        }
+        values.replaceAll((n, v) -> modify(values.get(n), modifiers.get(n)));
     }
 
     public static String modify(final String value, final List<Modifier> modifiers) {

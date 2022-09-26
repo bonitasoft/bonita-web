@@ -12,7 +12,6 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
@@ -51,9 +50,6 @@ public class ApplicationRouterTest {
 
     @Mock
     PageResourceProviderImpl pageResourceProvider;
-
-    @Mock
-    CustomPageService customPageService;
 
     @Spy
     @InjectMocks
@@ -129,7 +125,7 @@ public class ApplicationRouterTest {
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
         verify(pageRenderer).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"), apiSession);
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("layout/resources/css/file.css"));
     }
 
     @Test
@@ -146,7 +142,7 @@ public class ApplicationRouterTest {
         applicationRouter.route(hsRequest, hsResponse, apiSession, pageRenderer, resourceRenderer, bonitaHomeFolderAccessor);
 
         verify(pageRenderer).ensurePageFolderIsPresent(apiSession, pageResourceProvider);
-        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"), apiSession);
+        verify(resourceRenderer).renderFile(hsRequest, hsResponse, new File("theme/resources/css/file.css"));
     }
 
     @Test

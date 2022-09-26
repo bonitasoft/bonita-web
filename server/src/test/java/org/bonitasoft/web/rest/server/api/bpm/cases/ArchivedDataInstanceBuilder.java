@@ -12,7 +12,7 @@ public class ArchivedDataInstanceBuilder {
 		return new ArchivedDataInstanceBuilder(name);
 	}
 
-	private String name;
+	private final String name;
 	private String description;
 	private String className;
 	private Serializable value;
@@ -22,11 +22,6 @@ public class ArchivedDataInstanceBuilder {
 
 	private ArchivedDataInstanceBuilder(String name) {
 		this.name = name;
-	}
-
-	public ArchivedDataInstanceBuilder withDescription(String description) {
-		this.description = description;
-		return this;
 	}
 
 	public ArchivedDataInstanceBuilder withType(String className) {
@@ -46,11 +41,6 @@ public class ArchivedDataInstanceBuilder {
 
 	public ArchivedDataInstanceBuilder withArchivedDate(Date archivedDate) {
 		this.archivedDate = archivedDate;
-		return this;
-	}
-
-	public ArchivedDataInstanceBuilder withSourceObjectId(long sourceObjectId) {
-		this.sourceObjectId = sourceObjectId;
 		return this;
 	}
 

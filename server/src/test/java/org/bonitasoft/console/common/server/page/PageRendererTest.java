@@ -92,7 +92,7 @@ public class PageRendererTest {
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
         verify(customPageService, times(1)).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, true);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, true);
     }
 
     protected File initializeHTMLFilePage() throws URISyntaxException, BonitaException, PageNotFoundException {
@@ -125,7 +125,7 @@ public class PageRendererTest {
 
         pageRenderer.displayCustomPage(hsRequest, hsResponse, apiSession, 42L);
 
-        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, apiSession, true);
+        verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, true);
     }
 
     @Test

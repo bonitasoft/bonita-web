@@ -28,13 +28,17 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.AbstractS
 
 
 /**
+ * Do not delete: this class can be used by reflection !
+ * See 'security.password.validator' in file 'security-config.properties'
+ * It is referenced in the documentation as an alternative Password Validation
+ *
  * @author Paul AMAR
  */
 public class RobustnessPasswordValidator extends AbstractStringValidator {
 
     @Override
     protected void _check(String password) {
-        String regex = "";
+        String regex;
         
         LOCALE Locale = AbstractI18n.stringToLocale(locale);
 

@@ -22,15 +22,14 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.session.APISession;
 import org.codehaus.groovy.control.CompilationFailedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class used by servlets to display serve a file
@@ -45,19 +44,19 @@ public class ResourceRenderer {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(ResourceRenderer.class.getName());
 
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession)
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile)
             throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
-        renderFile(request, response, resourceFile, apiSession, false);
+        renderFile(request, response, resourceFile, false);
     }
     
-    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final APISession apiSession, final boolean isPage)
+    public void renderFile(final HttpServletRequest request, final HttpServletResponse response, final File resourceFile, final boolean isPage)
             throws CompilationFailedException, IllegalAccessException, IOException, BonitaException {
 
         byte[] content;
         response.setCharacterEncoding("UTF-8");
 
         try {
-            content = getFileContent(resourceFile, response);
+            content = getFileContent(resourceFile);
 
             response.setContentType(request.getSession().getServletContext()
                     .getMimeType(resourceFile.getName()));
@@ -83,7 +82,7 @@ public class ResourceRenderer {
         }
     }
 
-    private byte[] getFileContent(final File resourceFile, final HttpServletResponse response) throws IOException, BonitaException {
+    private byte[] getFileContent(final File resourceFile) throws IOException, BonitaException {
         if (resourceFile == null) {
             final String errorMessage = "Resource file must not be null.";
             if (LOGGER.isWarnEnabled()) {

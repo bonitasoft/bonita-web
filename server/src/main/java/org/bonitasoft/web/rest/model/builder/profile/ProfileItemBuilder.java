@@ -83,18 +83,9 @@ public class ProfileItemBuilder {
         return this;
     }
 
-    public ProfileItemBuilder withDescription(final String description) {
-        this.description = description;
-        return this;
-    }
-
     public ProfileItemBuilder withIcon(final String iconPath) {
         this.iconPath = iconPath;
         return this;
     }
 
-    public ProfileItemBuilder isDefault(final boolean isDefault) {
-        this.isDefault = isDefault;
-        return this;
-    }
 }

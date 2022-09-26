@@ -52,10 +52,6 @@ public class ConnectorInstanceItem extends Item implements ItemHasUniqueId {
     // ATTRIBUTES VALUES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String VALUE_ACTIVATION_EVENT_ON_ENTER = "ON_ENTER";
-
-    public static final String VALUE_ACTIVATION_EVENT_ON_FINISH = "ON_FINISH";
-
     public static final String VALUE_STATE_TO_BE_EXECUTED = "TO_BE_EXECUTED";
 
     public static final String VALUE_STATE_TO_RE_EXECUTE = "TO_RE_EXECUTE";

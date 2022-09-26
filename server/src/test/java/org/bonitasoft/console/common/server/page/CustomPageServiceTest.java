@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import groovy.lang.GroovyClassLoader;
@@ -64,7 +64,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
 
-    public static final String PAGE_NO_API_EXTENSION_PROPERTIES = "pageNoApiExtension.properties";
     public static final String PAGE_PROPERTIES = "page.properties";
 
     private CustomPageService customPageService;
@@ -280,7 +279,7 @@ public class CustomPageServiceTest {
         try {
             customPageService.getPageProperties(apiSession, zipContent, checkIfItAlreadyExists, processDefinitionId);
             fail("AlreadyExistsException has not been thrown");
-        } catch (final AlreadyExistsException e) {
+        } catch (final AlreadyExistsException ignored) {
         }
 
         //then
@@ -340,11 +339,11 @@ public class CustomPageServiceTest {
     public void should_retrieve_class_file() throws Exception {
         // Given
         final Page mockedPage = mock(Page.class);
-        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getId()).thenReturn(1L);
         when(mockedPage.getName()).thenReturn("page1");
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("page.zip"));
-        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageAPI.getPageContent(1L)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
         when(pageResourceProvider.getPageDirectory())
@@ -455,14 +454,14 @@ public class CustomPageServiceTest {
         verify(customPageService, never()).getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
     }
 
-    protected GroovyClassLoader initializePageMocks(File pageDirectory) throws BonitaException, IOException, PageNotFoundException {
+    protected GroovyClassLoader initializePageMocks(File pageDirectory) throws BonitaException, IOException {
         final Page mockedPage = mock(Page.class);
-        when(mockedPage.getId()).thenReturn(1l);
+        when(mockedPage.getId()).thenReturn(1L);
         when(mockedPage.getName()).thenReturn("page2");
         when(mockedPage.getLastModificationDate()).thenReturn(databaseLastUpdateDate);
         doReturn(pageAPI).when(customPageService).getPageAPI(apiSession);
         final byte[] zipFile = IOUtils.toByteArray(getClass().getResourceAsStream("pageApiExtension.zip"));
-        when(pageAPI.getPageContent(1l)).thenReturn(zipFile);
+        when(pageAPI.getPageContent(1L)).thenReturn(zipFile);
         when(pageResourceProvider.getPage(pageAPI)).thenReturn(mockedPage);
         when(pageResourceProvider.getTempPageFile()).thenReturn(new File("target/bonita/home/client/tenant/1/temp"));
         when(pageResourceProvider.getPageDirectory()).thenReturn(pageDirectory);
@@ -527,7 +526,7 @@ public class CustomPageServiceTest {
             thread.start();
         }
         for (Thread thread : threads) {
-            thread.join(2000);
+            thread.join(5000);
         }
         
         //then

@@ -17,29 +17,20 @@
 package org.bonitasoft.web.rest.server.engineclient;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstance;
-import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessActivationException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.engine.bpm.process.ProcessInstance;
-import org.bonitasoft.engine.bpm.process.ProcessInstanceNotFoundException;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.identity.UserNotFoundException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseDefinition;
-import org.bonitasoft.web.rest.model.bpm.cases.CaseDefinition;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundException;
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Colin PUY
@@ -95,27 +86,4 @@ public class CaseEngineClient {
         }
     }
 
-    public List<ArchivedProcessInstance> searchArchivedCasesInAllStates(final SearchOptions searchOptions) {
-        try {
-            return processAPI.searchArchivedProcessInstancesInAllStates(searchOptions).getResult();
-        } catch (final SearchException e) {
-            throw new APIException("Error when searching cases in all state", e);
-        }
-    }
-
-    public ProcessInstance getProcessInstance(final long processInstanceId) {
-        try {
-            return processAPI.getProcessInstance(processInstanceId);
-        } catch (final ProcessInstanceNotFoundException e) {
-            throw new APIItemNotFoundException(CaseDefinition.TOKEN, APIID.makeAPIID(processInstanceId));
-        }
-    }
-
-    public ArchivedProcessInstance getArchivedProcessInstance(final long processInstanceId) {
-        try {
-            return processAPI.getArchivedProcessInstance(processInstanceId);
-        } catch (final ArchivedProcessInstanceNotFoundException e) {
-            throw new APIItemNotFoundException(ArchivedCaseDefinition.TOKEN, APIID.makeAPIID(processInstanceId));
-        }
-    }
 }

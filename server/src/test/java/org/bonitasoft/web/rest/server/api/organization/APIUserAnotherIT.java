@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
-import org.bonitasoft.engine.identity.User;
 import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.organization.TestUser;
@@ -191,35 +190,6 @@ public class APIUserAnotherIT extends AbstractConsoleTest {
             Assert.assertEquals(attribute + " isnt equals to the attribute setted previously", expected.getAttributeValue(attribute),
                     actual.getAttributeValue(attribute));
         }
-    }
-
-    /**
-     * Copied from UserDatastore
-     * 
-     * @param user
-     * @return
-     */
-    protected UserItem convertEngineToConsoleItem(final User user) {
-        if (user == null) {
-            return null;
-        }
-
-        final UserItem result = new UserItem();
-        result.setId(APIID.makeAPIID(user.getId()));
-        result.setFirstName(user.getFirstName());
-        result.setLastName(user.getLastName());
-        result.setPassword(null);
-        result.setUserName(user.getUserName());
-        result.setManagerId(user.getManagerUserId());
-        result.setIcon(user.getIconPath());
-        result.setCreationDate(user.getCreationDate());
-        result.setCreatedByUserId(user.getCreatedBy());
-        result.setLastUpdateDate(user.getLastUpdate());
-        result.setLastConnectionDate(user.getLastConnection());
-        result.setTitle(user.getTitle());
-        result.setJobTitle(user.getJobTitle());
-
-        return result;
     }
 
     @Test

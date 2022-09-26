@@ -21,14 +21,10 @@ import java.io.File;
  */
 public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
 
-    private static final String REPORTS_WORK_FOLDER_NAME = "reports";
     private static final String PAGES_WORK_FOLDER_NAME = "pages";
     private String tenantsFolderPath = null;
-    private String tenantFolderPath = null;
-    private String tempFolderPath = null;
-    private String confFolderPath = null;
+    private final String tempFolderPath;
     private String formsWorkFolderPath = null;
-    private String reportsWorkFolderPath = null;
     private String pagesWorkFolderPath = null;
     private String bdmWorkFolderPath;
 
@@ -37,7 +33,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
      *
      */
     WebBonitaConstantsTenancyImpl() {
-        tenantFolderPath = getTenantsFolderPath();
         tempFolderPath = rootTempDir + File.separator + tenantsFolderName + File.separator;
     }
 
@@ -55,28 +50,6 @@ public class WebBonitaConstantsTenancyImpl implements WebBonitaConstants {
     @Override
     public String getTempFolderPath() {
         return tempFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getConfFolderPath() {
-        if (confFolderPath == null) {
-            confFolderPath = tenantFolderPath + confFolderName + File.separator;
-        }
-        return confFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getReportsTempFolderPath() {
-        if (reportsWorkFolderPath == null) {
-            reportsWorkFolderPath = getTempFolderPath() + REPORTS_WORK_FOLDER_NAME + File.separator;
-        }
-        return reportsWorkFolderPath;
     }
 
     /**

@@ -28,41 +28,23 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
  */
 public class Tree<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> implements Iterable<AbstractTreeNode<VALUE_CLASS>> {
 
-    protected List<AbstractTreeNode<VALUE_CLASS>> children = new ArrayList<>();;
+    protected List<AbstractTreeNode<VALUE_CLASS>> children = new ArrayList<>();
 
     public Tree() {
     }
 
-    public Tree(final Tree<VALUE_CLASS> parent) {
-        super(parent);
-    }
-
-    public AbstractTreeNode<VALUE_CLASS> addNode(final AbstractTreeNode<VALUE_CLASS> node) {
+    public void addNode(final AbstractTreeNode<VALUE_CLASS> node) {
         if (node == null) {
-            return null;
+            return;
         }
-
         node.setParent(this);
-
         this.children.add(node);
-        return node;
     }
 
-    public Tree<VALUE_CLASS> addValue(final VALUE_CLASS value) {
+    public void addValue(final VALUE_CLASS value) {
         if (value != null && !this.contains(value)) {
             this.addNode(new TreeLeaf<>(this, value));
         }
-        return this;
-    }
-
-    public Tree<VALUE_CLASS> addValues(final List<VALUE_CLASS> values) {
-        if (values != null) {
-            for (final VALUE_CLASS value : values) {
-                this.addValue(value);
-            }
-        }
-
-        return this;
     }
 
     public List<VALUE_CLASS> getValues() {
@@ -74,10 +56,6 @@ public class Tree<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> implements 
         }
 
         return values;
-    }
-
-    public void clear() {
-        this.children.clear();
     }
 
     public AbstractTreeNode<VALUE_CLASS> get(final int index) {
@@ -123,7 +101,7 @@ public class Tree<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> implements 
         if (o == this) {
             return true;
         }
-        if (o == null || !(o instanceof Tree)) {
+        if (!(o instanceof Tree)) {
             return false;
         }
 

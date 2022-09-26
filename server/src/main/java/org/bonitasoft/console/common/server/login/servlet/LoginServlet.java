@@ -16,8 +16,6 @@ package org.bonitasoft.console.common.server.login.servlet;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +40,8 @@ import org.bonitasoft.engine.exception.UnknownAPITypeException;
 import org.bonitasoft.engine.session.APISession;
 import org.restlet.data.MediaType;
 import org.restlet.engine.header.ContentType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Anthony Birembaut, Ruiheng Fan, Chong Zhao, Haojie Yuan
@@ -115,7 +115,7 @@ public class LoginServlet extends HttpServlet {
             // if there a redirect=true or a redirectURL parameter in the request do nothing (API login), otherwise, redirect (Portal login)
             if (redirectAfterLogin) {
                 if (apiSession.isTechnicalUser() || hasProfile(apiSession)) {
-                    response.sendRedirect(createRedirectUrl(request, redirectURL, locale));
+                    response.sendRedirect(createRedirectUrl(redirectURL, locale));
                 } else {
                     request.setAttribute(LOGIN_FAIL_MESSAGE, "noProfileForUser");
                     getServletContext().getRequestDispatcher(AuthenticationManager.LOGIN_PAGE).forward(request, response);
@@ -159,7 +159,7 @@ public class LoginServlet extends HttpServlet {
                     loginURL = AuthenticationManager.LOGIN_PAGE;
                     getServletContext().getRequestDispatcher(loginURL).forward(request, response);
                 } else {
-                    getServletContext().getRequestDispatcher(createRedirectUrl(request, loginURL, locale)).forward(request, response);
+                    getServletContext().getRequestDispatcher(createRedirectUrl(loginURL, locale)).forward(request, response);
                 }
             } catch (final Exception e1) {
                  if (LOGGER.isErrorEnabled()) {
@@ -190,7 +190,7 @@ public class LoginServlet extends HttpServlet {
         return redirectURL;
     }
 
-    private String createRedirectUrl(final HttpServletRequest request, final String redirectURL, final String locale) {
+    private String createRedirectUrl(final String redirectURL, final String locale) {
         RedirectUrlBuilder redirectUrlBuilder = new RedirectUrlBuilder(redirectURL);
         redirectUrlBuilder.appendParameter(LocaleUtils.PORTAL_LOCALE_PARAM, locale);
         return redirectUrlBuilder.build().getUrl();

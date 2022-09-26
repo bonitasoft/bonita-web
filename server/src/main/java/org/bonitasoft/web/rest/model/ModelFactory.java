@@ -39,7 +39,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.UserTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ActorMemberDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.CategoryDefinition;
-import org.bonitasoft.web.rest.model.bpm.process.DelegationDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessConnectorDependencyDefinition;
@@ -48,12 +47,18 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessParameterDefinition;
 import org.bonitasoft.web.rest.model.bpm.process.ProcessResolutionProblemDefinition;
 import org.bonitasoft.web.rest.model.document.ArchivedDocumentDefinition;
 import org.bonitasoft.web.rest.model.document.DocumentDefinition;
-import org.bonitasoft.web.rest.model.identity.*;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionDefinition;
+import org.bonitasoft.web.rest.model.identity.CustomUserInfoValueDefinition;
+import org.bonitasoft.web.rest.model.identity.GroupDefinition;
+import org.bonitasoft.web.rest.model.identity.MembershipDefinition;
+import org.bonitasoft.web.rest.model.identity.PersonalContactDataDefinition;
+import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataDefinition;
+import org.bonitasoft.web.rest.model.identity.RoleDefinition;
+import org.bonitasoft.web.rest.model.identity.UserDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
 import org.bonitasoft.web.rest.model.portal.page.PageDefinition;
-import org.bonitasoft.web.rest.model.portal.profile.BonitaPageDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileDefinition;
-import org.bonitasoft.web.rest.model.portal.profile.ProfileEntryDefinition;
 import org.bonitasoft.web.rest.model.portal.profile.ProfileMemberDefinition;
 import org.bonitasoft.web.rest.model.system.TenantAdminDefinition;
 import org.bonitasoft.web.rest.model.tenant.BusinessDataModelDefinition;
@@ -105,8 +110,6 @@ public class ModelFactory extends ItemDefinitionFactory {
             return new ActorMemberDefinition();
         } else if (CategoryDefinition.TOKEN.equals(token)) {
             return new CategoryDefinition();
-        } else if (DelegationDefinition.TOKEN.equals(token)) {
-            return new DelegationDefinition();
         } else if (ProcessResolutionProblemDefinition.TOKEN.equals(token)) {
             return new ProcessResolutionProblemDefinition();
         }else if (ProcessParameterDefinition.TOKEN.equals(token)) {
@@ -163,10 +166,6 @@ public class ModelFactory extends ItemDefinitionFactory {
         // system
         else if (ProfileDefinition.TOKEN.equals(token)) {
             return new ProfileDefinition();
-        } else if (BonitaPageDefinition.TOKEN.equals(token)) {
-            return new BonitaPageDefinition();
-        } else if (ProfileEntryDefinition.TOKEN.equals(token)) {
-            return new ProfileEntryDefinition();
         } else if (ProfileMemberDefinition.TOKEN.equals(token)) {
             return new ProfileMemberDefinition();
         } else if (SessionDefinition.TOKEN.equals(token)) {

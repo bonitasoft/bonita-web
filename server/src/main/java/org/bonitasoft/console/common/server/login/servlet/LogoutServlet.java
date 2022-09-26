@@ -17,9 +17,7 @@
 package org.bonitasoft.console.common.server.login.servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +27,6 @@ import javax.servlet.http.HttpSession;
 import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerFactory;
 import org.bonitasoft.console.common.server.auth.AuthenticationManagerNotFoundException;
-import org.bonitasoft.console.common.server.auth.ConsumerNotFoundException;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.LoginFailedException;
 import org.bonitasoft.console.common.server.login.credentials.UserLogger;
@@ -37,8 +34,9 @@ import org.bonitasoft.console.common.server.login.utils.LoginUrl;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlBuilder;
 import org.bonitasoft.console.common.server.login.utils.RedirectUrlHandler;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
 import org.bonitasoft.engine.session.APISession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet used to logout from the applications
@@ -53,14 +51,6 @@ public class LogoutServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 739607235407639011L;
 
-    /**
-     * the URL of the login page
-     */
-    protected static final String LOGIN_PAGE = "login.jsp";
-
-    /**
-     * Logger
-     */
     private static final Logger LOGGER = LoggerFactory.getLogger(LogoutServlet.class.getName());
 
     /**
@@ -111,8 +101,7 @@ public class LogoutServlet extends HttpServlet {
         }
     }
 
-    protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor)
-            throws AuthenticationManagerNotFoundException, UnsupportedEncodingException, ConsumerNotFoundException, ServletException {
+    protected String getURLToRedirectTo(final HttpServletRequestAccessor requestAccessor) throws ServletException {
         final AuthenticationManager authenticationManager = getAuthenticationManager();
         final HttpServletRequest request = requestAccessor.asHttpServletRequest();
 

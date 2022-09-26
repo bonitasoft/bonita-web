@@ -66,7 +66,7 @@ public class ArchivedCaseDocumentDatastoreTest extends APITestWithMock {
         initMocks(this);
         when(mockedDocument.getName()).thenReturn("Doc 1");
         when(mockedDocument.getId()).thenReturn(1L);
-        documentDatastore = spy(new ArchivedCaseDocumentDatastore(engineSession, constantsValue, processAPI));
+        documentDatastore = spy(new ArchivedCaseDocumentDatastore(engineSession, processAPI));
     }
 
     // ---------- GET METHOD TESTS ------------------------------//

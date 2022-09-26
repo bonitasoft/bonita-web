@@ -96,7 +96,7 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
                 }
             } catch (final InstantiationException e) {
                  if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error( "Error while instanciating the class", e);
+                    LOGGER.error("Error while instantiating the class", e);
                 }
                 e.printStackTrace();
             } catch (final IllegalAccessException e) {
@@ -176,12 +176,12 @@ public class APIUser extends ConsoleAPI<UserItem> implements APIHasAdd<UserItem>
                     getUserDatastore().get(item.getCreatedByUserId()));
         }
 
-        if (deploys.contains(UserItem.DEPLOY_PERSONNAL_DATA)) {
-            item.setDeploy(UserItem.DEPLOY_PERSONNAL_DATA,
+        if (deploys.contains(UserItem.DEPLOY_PERSONAL_DATA)) {
+            item.setDeploy(UserItem.DEPLOY_PERSONAL_DATA,
                     new PersonalContactDataDatastore(getEngineSession()).get(item.getId()));
 
             // not a real deploy. force attribute to fix json conversion (Item#toJson)
-            item.setAttribute(UserItem.DEPLOY_PERSONNAL_DATA, (String) null);
+            item.setAttribute(UserItem.DEPLOY_PERSONAL_DATA, (String) null);
         }
 
         if (deploys.contains(UserItem.DEPLOY_PROFESSIONAL_DATA)) {

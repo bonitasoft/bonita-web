@@ -154,6 +154,7 @@ public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoade
         return c;
     }
 
+    // never called. Is it normal?
     public void release() {
         deleteQuietly(customPageDependenciesResolver.getTempFolder());
         isActive = false;

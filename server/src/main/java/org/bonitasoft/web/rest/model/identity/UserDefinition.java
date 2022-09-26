@@ -88,7 +88,7 @@ public class UserDefinition extends ItemDefinition<UserItem> {
     protected void defineDeploys() {
         super.defineDeploys();
         declareDeployable(UserItem.DEPLOY_PROFESSIONAL_DATA, Definitions.get(ProfessionalContactDataDefinition.TOKEN));
-        declareDeployable(UserItem.DEPLOY_PERSONNAL_DATA, Definitions.get(PersonalContactDataDefinition.TOKEN));
+        declareDeployable(UserItem.DEPLOY_PERSONAL_DATA, Definitions.get(PersonalContactDataDefinition.TOKEN));
     }
 
     @Override

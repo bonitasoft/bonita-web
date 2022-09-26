@@ -43,11 +43,6 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
         }
     }
 
-    public ResponseAssert hasStatus(int status) {
-        Objects.instance().assertEqual(info, actual.getStatus().getCode(), status);
-        return this;
-    }
-
     public ResponseAssert hasStatus(Status status) {
         Objects.instance().assertEqual(info, actual.getStatus(), status);
         return this;

@@ -122,12 +122,8 @@ public class LocaleUtilsTest {
     }
 
     @Test
-    public void testAnInvalidCookieResultsWithDefaultLocale() {
-        Cookie[] cookies = {
-                new Cookie(LocaleUtils.LOCALE_COOKIE_NAME, "weirdvalue"),
-        };
+    public void testDefaultLocaleIfNotProvided() {
         String locale = LocaleUtils.getUserLocaleAsString(request);
-
         assertEquals("en", locale);
     }
 

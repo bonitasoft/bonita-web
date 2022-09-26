@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,23 +31,9 @@ public class FileExtensionAllowedValidator extends AbstractStringFormatValidator
 
     private final List<String> extensions;
 
-    public FileExtensionAllowedValidator(final String extension) {
-        super(makeRegexp(extension));
-        this.extensions = Arrays.asList(extension);
-    }
-
     public FileExtensionAllowedValidator(final String... extensions) {
         super(makeRegexp(extensions));
         this.extensions = Arrays.asList(extensions);
-    }
-
-    public FileExtensionAllowedValidator(final List<String> extensions) {
-        super(makeRegexp(extensions));
-        this.extensions = extensions;
-    }
-
-    private static String makeRegexp(final String extension) {
-        return "\\.(" + extension + ")$";
     }
 
     private static String makeRegexp(final String[] extensions) {
@@ -57,15 +41,7 @@ public class FileExtensionAllowedValidator extends AbstractStringFormatValidator
         for (final String extension : extensions) {
             sb.append(extension).append("|");
         }
-        return "\\.(" + sb.toString().substring(0, sb.length() - 1) + ")$";
-    }
-
-    private static String makeRegexp(final List<String> extensions) {
-        final StringBuilder sb = new StringBuilder();
-        for (final String extension : extensions) {
-            sb.append(extension).append("|");
-        }
-        return "\\.(" + sb.toString().substring(0, sb.length() - 1) + ")$";
+        return "\\.(" + sb.substring(0, sb.length() - 1) + ")$";
     }
 
     @Override

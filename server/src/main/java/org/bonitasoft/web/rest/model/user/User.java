@@ -17,8 +17,6 @@
 package org.bonitasoft.web.rest.model.user;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Guo Yongtao
@@ -41,20 +39,6 @@ public class User implements Serializable {
      */
     protected String locale;
 
-    /**
-     * Indicates whether this user correspond to an anonymous login
-     */
-    private boolean isAnonymous;
-
-    /**
-     * the user rights
-     */
-    private List<String> availableFeatures = new ArrayList<>();
-
-    /**
-     *
-     * Default constructor.
-     */
     public User() {
         super();
         // Mandatory for serialization.
@@ -63,10 +47,6 @@ public class User implements Serializable {
     public User(final String username, final String locale) {
         this.username = username;
         this.locale = locale;
-    }
-
-    public void setFeatures(final List<String> featureList) {
-        availableFeatures = featureList;
     }
 
     /**
@@ -80,38 +60,4 @@ public class User implements Serializable {
         return locale;
     }
 
-    private void setUsername(final String username) {
-        this.username = username;
-    }
-
-    private void setLocale(final String locale) {
-        this.locale = locale;
-    }
-
-    public boolean isAnonymous() {
-        return isAnonymous;
-    }
-
-    public void setAnonymous(final boolean isAnonymous) {
-        this.isAnonymous = isAnonymous;
-    }
-
-    /**
-     * Update the user profile with the given values.
-     */
-    public void update(final User userProfile) {
-        setLocale(userProfile.getLocale());
-        setUsername(userProfile.getUsername());
-        setFeatures(userProfile.getFeatures());
-    }
-
-    public void addFeature(final String feature) {
-        if (availableFeatures != null) {
-            availableFeatures.add(feature);
-        }
-    }
-
-    public List<String> getFeatures() {
-        return availableFeatures;
-    }
 }

@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
@@ -61,8 +60,6 @@ public class CaseDocumentDatastore extends CommonDatastore<CaseDocumentItem, Doc
 DatastoreHasGet<CaseDocumentItem>,
 DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
-    protected final WebBonitaConstantsUtils constants;
-
     protected final ProcessAPI processAPI;
 
     final long maxSizeForTenant;
@@ -76,10 +73,9 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
     /**
      * Default constructor.
      */
-    public CaseDocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI,
-            final BonitaHomeFolderAccessor tenantFolder) {
+    public CaseDocumentDatastore(final APISession engineSession, final ProcessAPI processAPI,
+                                 final BonitaHomeFolderAccessor tenantFolder) {
         super(engineSession);
-        constants = constantsValue;
         this.processAPI = processAPI;
         this.tenantFolder = tenantFolder;
         maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();

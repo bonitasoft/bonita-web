@@ -16,18 +16,37 @@
  */
 package org.bonitasoft.web.rest.server.datastore.profile;
 
-import org.bonitasoft.web.rest.model.portal.profile.BonitaPageItem;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
-import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.engine.profile.Profile;
+import org.bonitasoft.engine.profile.impl.ProfileImpl;
 
 /**
- * @author Julien Mege
+ * @author Vincent Elcrin
  * 
  */
-public class GetBonitaPageHelper implements DatastoreHasGet<BonitaPageItem> {
+public class EngineProfileBuilder {
 
-    @Override
-    public BonitaPageItem get(APIID id) {
-        return new BonitaPageDatastore().get(id);
+    private String name;
+
+    private String description;
+
+    public static EngineProfileBuilder anEngineProfile() {
+        return new EngineProfileBuilder();
     }
+
+    public EngineProfileBuilder withName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public EngineProfileBuilder withDescription(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Profile build() {
+        final ProfileImpl profile = new ProfileImpl(name);
+        profile.setDescription(description);
+        return profile;
+    }
+
 }

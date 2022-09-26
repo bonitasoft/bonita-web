@@ -213,10 +213,6 @@
         <to>/APIToolkit/portal/page$2</to>
     </rule>
     <rule>
-        <from>^(/portal/custom-page)?/API/portal/bonitaPage([\?/]|$)</from>
-        <to>/APIToolkit/portal/bonitaPage$2</to>
-    </rule>
-    <rule>
         <from>^(/portal/custom-page)?/API/system/i18nlocale([\?/]|$)</from>
         <to>/APIToolkit/system/i18nlocale$2</to>
     </rule>
@@ -227,18 +223,6 @@
     <rule>
         <from>^(/portal/custom-page)?/API/system/tenant([\?/]|$)</from>
         <to>/APIToolkit/system/tenant$2</to>
-    </rule>
-    <rule>
-        <from>^(/portal/custom-page)?/API/userXP/profile([\?/]|$)</from>
-        <to>/APIToolkit/userXP/profile$2</to>
-    </rule>
-    <rule>
-        <from>^(/portal/custom-page)?/API/userXP/profileEntry([\?/]|$)</from>
-        <to>/APIToolkit/userXP/profileEntry$2</to>
-    </rule>
-    <rule>
-        <from>^(/portal/custom-page)?/API/userXP/profileMember([\?/]|$)</from>
-        <to>/APIToolkit/userXP/profileMember$2</to>
     </rule>
 
     <rule>

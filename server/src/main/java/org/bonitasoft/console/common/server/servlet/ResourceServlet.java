@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
@@ -32,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Anthony Birembaut
@@ -47,11 +47,6 @@ public abstract class ResourceServlet extends HttpServlet {
      * Logger
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(ResourceServlet.class.getName());
-
-    /**
-     * The engine API session param key name
-     */
-    public static final String API_SESSION_PARAM_KEY = "apiSession";
 
     protected abstract String getResourceParameterName();
 
@@ -77,7 +72,7 @@ public abstract class ResourceServlet extends HttpServlet {
             resourceName = getDefaultResourceName();
         }
         try {
-            getResourceFile(request, response, resourceName, fileName);
+            getResourceFile(response, resourceName, fileName);
         } catch (final UnsupportedEncodingException e) {
             final String errorMessage = "UnsupportedEncodingException :" + e;
              if (LOGGER.isErrorEnabled()) {
@@ -93,7 +88,7 @@ public abstract class ResourceServlet extends HttpServlet {
      * @throws ServletException
      * @throws UnsupportedEncodingException
      */
-    protected void getResourceFile(final HttpServletRequest request, final HttpServletResponse response, String resourceName, String fileName)
+    protected void getResourceFile(final HttpServletResponse response, String resourceName, String fileName)
             throws ServletException, IOException {
         if (resourceName == null) {
             final String errorMessage = "Error while using the servlet to get a resource: the parameter " + getResourceParameterName() + " is null.";

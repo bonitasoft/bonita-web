@@ -38,8 +38,6 @@ public class HttpServletRequestAccessor {
 
     public static final String PASSWORD_PARAM = "password";
 
-    public static final String PROCESS_DEFINITION_ID = "process";
-
     private final static String OAUTH_VERIFIER = "oauth_verifier";
 
     private final static String OAUTH_TOKEN = "oauth_token";

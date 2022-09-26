@@ -15,17 +15,17 @@
 
 package org.bonitasoft.console.common.server.i18n;
 
-import org.fedorahosted.tennera.jgettext.Catalog;
-import org.fedorahosted.tennera.jgettext.Message;
-import org.fedorahosted.tennera.jgettext.PoParser;
-import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.fedorahosted.tennera.jgettext.Catalog;
+import org.fedorahosted.tennera.jgettext.Message;
+import org.fedorahosted.tennera.jgettext.PoParser;
+import org.fedorahosted.tennera.jgettext.catalog.parse.ParseException;
 
 /**
  * @author Séverin Moussel
@@ -37,16 +37,8 @@ public class POParser {
     private POParser() {
     }
 
-    public static Map<String, String> parse(final String path) {
-        return new POParser().parseFile(path);
-    }
-
     public static Map<String, String> parse(final File file) {
         return new POParser().parseFile(file);
-    }
-
-    private Map<String, String> parseFile(final String path) {
-        return this.parseFile(new File(path));
     }
 
     private Map<String, String> parseFile(final File file) {

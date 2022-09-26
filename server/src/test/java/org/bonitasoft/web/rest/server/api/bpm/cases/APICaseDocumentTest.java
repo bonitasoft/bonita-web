@@ -4,12 +4,9 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Map;
-
 import org.bonitasoft.web.rest.model.bpm.cases.CaseDocumentItem;
 import org.bonitasoft.web.rest.server.APITestWithMock;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.CaseDocumentDatastore;
-import org.bonitasoft.web.rest.server.framework.APIServletCall;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +22,6 @@ public class APICaseDocumentTest extends APITestWithMock {
     private CaseDocumentDatastore datastore;
 
     @Mock
-    private APIServletCall caller;
-
-    @Mock
     private CaseDocumentItem documentItemMock;
 
     @Before
@@ -40,7 +34,7 @@ public class APICaseDocumentTest extends APITestWithMock {
     @Test
     public void it_should_call_the_datastore_get_method() {
         // Given
-        final APIID id = APIID.makeAPIID(1l);
+        final APIID id = APIID.makeAPIID(1L);
 
         // When
         apiDocument.get(id);
@@ -63,14 +57,13 @@ public class APICaseDocumentTest extends APITestWithMock {
     @Test
     public void it_should_call_the_datastore_update_method() {
         // Given
-        final APIID id = APIID.makeAPIID(1l);
-        final Map<String, String> attributes = null;
+        final APIID id = APIID.makeAPIID(1L);
 
         // When
-        apiDocument.update(id, attributes);
+        apiDocument.update(id, null);
 
         // Then
-        verify(datastore).update(id, attributes);
+        verify(datastore).update(id, null);
     }
 
     @Test

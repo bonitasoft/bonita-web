@@ -16,8 +16,7 @@ package org.bonitasoft.console.common.server.auth.impl.standard;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+
 import javax.servlet.ServletException;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
@@ -25,7 +24,8 @@ import org.bonitasoft.console.common.server.auth.AuthenticationManager;
 import org.bonitasoft.console.common.server.login.HttpServletRequestAccessor;
 import org.bonitasoft.console.common.server.login.credentials.Credentials;
 import org.bonitasoft.console.common.server.utils.LocaleUtils;
-import org.bonitasoft.console.common.server.utils.TenantsManagementUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Chong Zhao
@@ -49,13 +49,6 @@ public class StandardAuthenticationManagerImpl implements AuthenticationManager 
         }
         url.append(AuthenticationManager.REDIRECT_URL).append("=").append(redirectURL);
         return url.toString();
-    }
-
-    /**
-     * protected for test purpose
-     */
-    protected long getDefaultTenantId() {
-        return TenantsManagementUtils.getDefaultTenantId();
     }
 
     @Override

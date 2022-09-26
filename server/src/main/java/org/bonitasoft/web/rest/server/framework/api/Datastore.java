@@ -16,32 +16,10 @@
  */
 package org.bonitasoft.web.rest.server.framework.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Julien Mege
  * 
  */
 public class Datastore {
-
-    /**
-     * Logger
-     */
-    private Logger logger = null;
-
-    /**
-     * Default Constructor.
-     */
-    public Datastore() {
-        super();
-    }
-
-    protected final Logger getLogger() {
-        if (this.logger == null) {
-            this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        }
-        return this.logger;
-    }
 
 }

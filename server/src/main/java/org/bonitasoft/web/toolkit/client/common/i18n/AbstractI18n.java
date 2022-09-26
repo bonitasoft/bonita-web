@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
  */
 public abstract class AbstractI18n {
 
-    public static enum LOCALE {
+    public enum LOCALE {
         en,
         en_US,
         fr,
@@ -994,10 +994,6 @@ public abstract class AbstractI18n {
         this.locales.put(locale, map);
     }
 
-    public static void load(final LOCALE locale) {
-        I18N_instance.loadLocale(locale);
-    }
-
     public abstract void loadLocale(LOCALE locale);
 
     public static LOCALE getDefaultLocale() {
@@ -1006,14 +1002,6 @@ public abstract class AbstractI18n {
 
     public final LOCALE _getDefaultLocale() {
         return this.defaultLocale;
-    }
-
-    private void _setDefaultLocale(final LOCALE locale) {
-        this.defaultLocale = locale;
-    }
-
-    public static void setDefaultLocale(final LOCALE locale) {
-        I18N_instance._setDefaultLocale(locale);
     }
 
     public static LOCALE stringToLocale(final String localeString) {

@@ -27,22 +27,16 @@ public class APIAttributeException extends APIException {
 
     private static final long serialVersionUID = -4611825491187153300L;
 
-    private String attributeName;
+    private final String attributeName;
 
     public APIAttributeException(final String attributeName) {
         super((Exception) null);
-    }
-
-    public APIAttributeException(final String attributeName, final String message, final Throwable cause) {
-        super(message, cause);
+        this.attributeName = attributeName;
     }
 
     public APIAttributeException(final String attributeName, final String message) {
         super(message);
-    }
-
-    public APIAttributeException(final String attributeName, final Throwable cause) {
-        super(cause);
+        this.attributeName = attributeName;
     }
 
     /**

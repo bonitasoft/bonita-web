@@ -16,12 +16,16 @@
  */
 package org.bonitasoft.web.rest.server.api.organization;
 
-import javax.servlet.http.HttpSession;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.bonitasoft.engine.api.IdentityAPI;
+import javax.servlet.http.HttpSession;
+
 import org.bonitasoft.engine.identity.CustomUserInfo;
 import org.bonitasoft.engine.identity.impl.CustomUserInfoValueImpl;
 import org.bonitasoft.engine.session.APISession;
@@ -39,10 +43,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author Vincent Elcrin
@@ -64,9 +64,6 @@ public class APICustomUserInfoUserTest {
 
     @Mock(answer = Answers.RETURNS_MOCKS)
     private CustomUserInfoEngineClientCreator engineClientCreator;
-
-    @Mock
-    private IdentityAPI identityApi;
 
     private APICustomUserInfoUser api;
 

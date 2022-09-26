@@ -19,8 +19,6 @@ package org.bonitasoft.web.rest.server.datastore.bpm.cases;
 import java.util.List;
 import java.util.Map;
 
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.ArchivedDocument;
 import org.bonitasoft.engine.bpm.document.DocumentException;
@@ -50,22 +48,16 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
 public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseDocumentItem, ArchivedDocument> implements DatastoreHasGet<CaseDocumentItem>,
         DatastoreHasDelete {
 
-    protected final WebBonitaConstantsUtils constants;
-
     protected final ProcessAPI processAPI;
-
-    final long maxSizeForTenant;
 
     protected SearchOptionsCreator searchOptionsCreator;
 
     /**
      * Default constructor.
      */
-    public ArchivedCaseDocumentDatastore(final APISession engineSession, final WebBonitaConstantsUtils constantsValue, final ProcessAPI processAPI) {
+    public ArchivedCaseDocumentDatastore(final APISession engineSession, final ProcessAPI processAPI) {
         super(engineSession);
-        constants = constantsValue;
         this.processAPI = processAPI;
-        maxSizeForTenant = PropertiesFactory.getConsoleProperties().getMaxSize();
     }
 
     // GET Method

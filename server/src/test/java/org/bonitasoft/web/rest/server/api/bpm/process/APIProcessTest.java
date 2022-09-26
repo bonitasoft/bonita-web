@@ -15,7 +15,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
 import org.bonitasoft.engine.bpm.process.ProcessInstanceState;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.ModelFactory;
@@ -56,22 +55,6 @@ public class APIProcessTest {
     @Mock
     private CaseDatastore caseDatastore;
 
-    @Mock
-    private WebBonitaConstantsUtils webBonitaConstantsUtils;
-
-    @Before
-    public void consoleTestSetUp() throws IOException {
-        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
-        I18n.getInstance();
-        given(caller.getHttpSession()).willReturn(session);
-        given(session.getAttribute("apiSession")).willReturn(engineSession);
-
-        apiProcess = spy(new APIProcess());
-        apiProcess.setCaller(caller);
-        doReturn(processDatastore).when(apiProcess).getProcessDatastore();
-        doReturn(caseDatastore).when(apiProcess).getCaseDatastore();
-    }
-
     /**
      * Test method for {@link org.bonitasoft.web.rest.server.api.bpm.process.APIProcess#fillCounters(ProcessItem, List).
      */
@@ -96,6 +79,19 @@ public class APIProcessTest {
 
         // Then
         verify(item).setAttribute(ProcessItem.COUNTER_FAILED_CASES, numberOfFailedCases);
+    }
+
+    @Before
+    public void consoleTestSetUp() throws IOException {
+        ItemDefinitionFactory.setDefaultFactory(new ModelFactory());
+        I18n.getInstance();
+        given(caller.getHttpSession()).willReturn(session);
+        given(session.getAttribute("apiSession")).willReturn(engineSession);
+
+        apiProcess = spy(new APIProcess());
+        apiProcess.setCaller(caller);
+        doReturn(processDatastore).when(apiProcess).getProcessDatastore();
+        doReturn(caseDatastore).when(apiProcess).getCaseDatastore();
     }
 
     /**

@@ -14,19 +14,18 @@
 package org.bonitasoft.web.rest.server.api.resource;
 
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
 import org.bonitasoft.engine.bpm.contract.ContractViolationException;
 import org.bonitasoft.engine.exception.NotFoundException;
@@ -48,8 +47,8 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.Variant;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
-
-import com.fasterxml.jackson.core.JsonParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Emmanuel Duchastenier
@@ -221,13 +220,7 @@ public class CommonResource extends ServerResource {
     @Override
     public String getAttribute(final String name) {
         final String attribute = super.getAttribute(name);
-        try {
-            if (attribute != null) {
-                return URLDecoder.decode(attribute, "UTF-8");
-            }
-        } catch (final UnsupportedEncodingException e) {
-        }
-        return attribute;
+        return attribute != null ? URLDecoder.decode(attribute, StandardCharsets.UTF_8) : null;
     }
 
     public Long getPathParamAsLong(final String parameterName) {

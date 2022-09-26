@@ -15,7 +15,6 @@
 package org.bonitasoft.console.common.server.login.filter;
 
 import java.io.IOException;
-import org.slf4j.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -27,14 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bonitasoft.console.common.server.login.PortalCookies;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Paul AMAR
  */
 public class TokenGeneratorFilter implements Filter {
-
-    protected static final Logger LOGGER = LoggerFactory.getLogger(TokenGeneratorFilter.class.getName());
 
     protected TokenGenerator tokenGenerator = new TokenGenerator();
     protected PortalCookies portalCookies = new PortalCookies();

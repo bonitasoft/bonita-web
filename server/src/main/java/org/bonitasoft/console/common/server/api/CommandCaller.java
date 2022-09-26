@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.engine.api.CommandAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.engine.session.InvalidSessionException;
@@ -55,8 +54,7 @@ public final class CommandCaller {
 
     public Serializable run() {
         try {
-            final CommandAPI commandAPI = TenantAPIAccessor.getCommandAPI(this.session);
-            return commandAPI.execute(this.command, this.parameters);
+            return TenantAPIAccessor.getCommandAPI(this.session).execute(this.command, this.parameters);
         } catch (InvalidSessionException e) {
             throw new APISessionInvalidException(e);
         } catch (final Exception e) {

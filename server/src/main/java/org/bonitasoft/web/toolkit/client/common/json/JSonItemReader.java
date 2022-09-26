@@ -14,10 +14,7 @@
  */
 package org.bonitasoft.web.toolkit.client.common.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -56,79 +53,6 @@ public class JSonItemReader {
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Parse the JSon of a single Item.
-     * 
-     * @param json
-     *            The json as a string
-     * @param itemDefinition
-     *            The definition of the IItem to retrieve.
-     * @return This function returns an IItem corresponding to the definition.
-     */
-    public <E extends IItem> E getItem(final String json, final ItemDefinition<E> itemDefinition) {
-        return parseItem(json, itemDefinition);
-    }
-
-    /**
-     * Parse the JSon of a list of Items.
-     * 
-     * @param json
-     *            The json as a string
-     * @param itemDefinition
-     *            The definition of the Items to retrieve.
-     * @return This function returns a list of Items corresponding to the definition.
-     */
-    public <E extends IItem> List<E> getItems(final String json, final ItemDefinition<E> itemDefinition) {
-        return parseItems(json, itemDefinition);
-    }
-
-    /**
-     * Parse the JSon of a list of Items.
-     * 
-     * @param json
-     *            The json as a string
-     * @param itemDefinition
-     *            The definition of the Items to retrieve.
-     * @return This function returns a list of Items corresponding to the definition.
-     */
-    public static <E extends IItem> List<E> parseItems(final String json, final ItemDefinition<E> itemDefinition) {
-        return parseItems(json, itemDefinition, APPLY_VALIDATORS);
-    }
-
-    /**
-     * Parse the JSon of a list of Items.
-     * 
-     * @param json
-     *            The json as a string
-     * @param itemDefinition
-     *            The definition of the Items to retrieve.
-     * @return This function returns a list of Items corresponding to the definition.
-     */
-    public static <E extends IItem> List<E> parseItems(final String json, final ItemDefinition<E> itemDefinition, final boolean applyValidators) {
-        AbstractTreeNode<String> tree = UNSERIALIZER._unserializeTree(json);
-
-        if (tree instanceof TreeIndexed<?> && ((TreeIndexed<String>) tree).get("results") != null) {
-            tree = ((TreeIndexed<String>) tree).get("results");
-        }
-
-        if (!(tree instanceof Tree<?>)) {
-            return new ArrayList<>();
-        }
-
-        return parseItems((Tree<String>) tree, itemDefinition, applyValidators);
-    }
-
-    private static <E extends IItem> List<E> parseItems(final Tree<String> tree, final ItemDefinition<E> itemDefinition, final boolean applyValidators) {
-        final List<E> itemList = new LinkedList<>();
-        for (final AbstractTreeNode<String> node : tree.getNodes()) {
-            if (!(node instanceof TreeIndexed<?>)) {
-                throw new IllegalArgumentException("JSon format error");
-            }
-            itemList.add(parseItem((TreeIndexed<String>) node, itemDefinition, applyValidators));
-        }
-        return itemList;
-    }
-
-    /**
      * Parse a Map on a JSon String
      * 
      * @param json
@@ -165,16 +89,6 @@ public class JSonItemReader {
      * @param itemDefinition
      */
     public static <E extends IItem> E parseItem(final String json, final ItemDefinition<E> itemDefinition) {
-        return parseItem(json, itemDefinition, APPLY_VALIDATORS);
-    }
-
-    /**
-     * Parse an item based on a JSon String
-     * 
-     * @param json
-     * @param itemDefinition
-     */
-    public static <E extends IItem> E parseItem(final String json, final ItemDefinition<E> itemDefinition, final boolean applyValidators) {
         AbstractTreeNode<String> tree = UNSERIALIZER._unserializeTree(json);
 
         if (tree instanceof Tree<?>) {
@@ -190,9 +104,6 @@ public class JSonItemReader {
 
     /**
      * Parse an item based on a TreeIndexed
-     * 
-     * @param tree
-     * @param itemDefinition
      */
     private static <E extends IItem> E parseItem(final TreeIndexed<String> tree, final ItemDefinition<E> itemDefinition) {
         return parseItem(tree, itemDefinition, APPLY_VALIDATORS);

@@ -14,10 +14,19 @@
  */
 package org.bonitasoft.web.rest.server.engineclient;
 
+import java.util.List;
+
 import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.exception.*;
-import org.bonitasoft.engine.identity.*;
+import org.bonitasoft.engine.exception.AlreadyExistsException;
+import org.bonitasoft.engine.exception.CreationException;
+import org.bonitasoft.engine.exception.DeletionException;
+import org.bonitasoft.engine.exception.SearchException;
+import org.bonitasoft.engine.exception.UpdateException;
+import org.bonitasoft.engine.identity.User;
+import org.bonitasoft.engine.identity.UserCreator;
 import org.bonitasoft.engine.identity.UserCreator.UserField;
+import org.bonitasoft.engine.identity.UserNotFoundException;
+import org.bonitasoft.engine.identity.UserUpdater;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -26,11 +35,9 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APINotFoundExcepti
 import org.bonitasoft.web.toolkit.client.common.i18n.T_;
 import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
-import java.util.List;
-
 public class UserEngineClient {
 
-    private IdentityAPI identityAPI;
+    private final IdentityAPI identityAPI;
 
     public UserEngineClient(IdentityAPI identityAPI) {
         this.identityAPI = identityAPI;
@@ -80,8 +87,5 @@ public class UserEngineClient {
             throw new APIException(new T_("Error when searching users"), e);
         }
     }
-    
-    public List<User> getUsersInGroup(long groupId, int startIndex, int maxResults) {
-        return identityAPI.getUsersInGroup(groupId, startIndex, maxResults, UserCriterion.LAST_NAME_ASC);
-    }
+
 }

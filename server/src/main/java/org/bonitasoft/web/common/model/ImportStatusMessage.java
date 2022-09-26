@@ -28,15 +28,6 @@ import java.util.Map;
  */
 public class ImportStatusMessage implements Serializable {
 
-    public static String SKIPPED = "SKIPPED";
-
-    public static String IMPORTED = "IMPORTED";
-
-    public static String ERRORS = "ERRORS";
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     private Map<String, List<String>> errors;

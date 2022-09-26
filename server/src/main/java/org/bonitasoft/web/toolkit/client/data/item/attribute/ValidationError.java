@@ -46,31 +46,9 @@ public class ValidationError {
         return this.template.toString(args);
     }
 
-    public String getMessage(final Arg... templateValues) {
-        return this.template.toString(templateValues);
-    }
-
-    /**
-     * @param args
-     */
-    public String getMessage(final List<Arg> args) {
-        return this.template.toString(args);
-    }
-
-    /**
-     * @return the attributeName
-     */
-    public String getAttributeName() {
-        return this.attributeName;
-    }
-
     @Override
     public String toString() {
         return this.getMessage();
-    }
-
-    public TextTemplate getMessageTemplate() {
-        return this.template;
     }
 
 }

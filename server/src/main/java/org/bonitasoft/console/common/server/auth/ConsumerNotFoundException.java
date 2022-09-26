@@ -13,11 +13,14 @@
  **/
 package org.bonitasoft.console.common.server.auth;
 
+import javax.servlet.ServletException;
+
 /**
  * @author Chong Zhao
  * 
  */
-public class ConsumerNotFoundException extends Exception {
+@Deprecated
+public class ConsumerNotFoundException extends ServletException {
 
     /**
      * serial UID

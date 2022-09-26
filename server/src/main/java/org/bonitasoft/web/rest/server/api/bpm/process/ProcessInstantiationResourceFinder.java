@@ -25,6 +25,6 @@ public class ProcessInstantiationResourceFinder extends ResourceFinder {
     public ServerResource create(final Request request, final Response response) {
         final ProcessAPI processAPI = getProcessAPI(request);
         final APISession apiSession = getAPISession(request);
-        return new ProcessInstantiationResource(processAPI, apiSession);
+        return new ProcessInstantiationResource(processAPI);
     }
 }

@@ -26,8 +26,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedFlowNodeItem;
 import org.bonitasoft.web.rest.server.datastore.CommonDatastore;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.FlowNodeConverter;
 import org.bonitasoft.web.rest.server.datastore.bpm.flownode.archive.converter.ArchivedFlowNodeSearchDescriptorConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.EmptyAttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.filter.Filters;
 import org.bonitasoft.web.rest.server.datastore.utils.SearchOptionsCreator;
 import org.bonitasoft.web.rest.server.datastore.utils.Sorts;
@@ -171,10 +169,6 @@ public abstract class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends Arc
 
     protected ArchivedFlowNodeSearchDescriptorConverter getSearchDescriptorConverter() {
         return new ArchivedFlowNodeSearchDescriptorConverter();
-    }
-
-    protected AttributeConverter getSortAttributeConverter() {
-        return new EmptyAttributeConverter();
     }
 
 }

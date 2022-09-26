@@ -85,25 +85,6 @@ public class WebBonitaConstantsImpl implements WebBonitaConstants {
      * {@inheritDoc}
      */
     @Override
-    public String getConfFolderPath() {
-        if (confFolderPath == null) {
-            confFolderPath = getPlatformFolderPath() + confFolderName + File.separator;
-        }
-        return confFolderPath;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getReportsTempFolderPath() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getPagesTempFolderPath() {
         return null;
     }

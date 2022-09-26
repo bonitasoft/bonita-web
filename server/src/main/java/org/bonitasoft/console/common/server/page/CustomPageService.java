@@ -56,8 +56,6 @@ import org.codehaus.groovy.control.CompilationFailedException;
  */
 public class CustomPageService {
 
-    private static final String PAGE_LIB_DIRECTORY = "lib";
-
     public static final String PAGE_CONTROLLER_FILENAME = "Index.groovy";
 
     public static final String PAGE_INDEX_NAME = "index";
@@ -65,11 +63,11 @@ public class CustomPageService {
     public static final String PAGE_INDEX_FILENAME = "index.html";
 
     private static final ConcurrentMap<String, GroovyClassLoader> PAGES_CLASSLOADERS = new ConcurrentHashMap<>();
-    
+
     private static final ConcurrentMap<String, Long> PAGES_UPDATE_TIMESTAMPS = new ConcurrentHashMap<>();
-    
+
     private static final ConcurrentMap<String, Long> PAGES_LAST_UPDATE_DB_CHECK = new ConcurrentHashMap<>();
-    
+
     private static final ConcurrentMap<String, Object> PAGES_LOCKS = new ConcurrentHashMap<>();
 
     public static final String RESOURCES_PROPERTY = "resources";
@@ -80,7 +78,7 @@ public class CustomPageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageService.class.getName());
 
     public GroovyClassLoader getPageClassloader(final APISession apiSession, final PageResourceProvider pageResourceProvider)
-            throws IOException, CompilationFailedException, BonitaException {
+            throws IOException, CompilationFailedException {
         return buildPageClassloader(apiSession, pageResourceProvider.getFullPageName(),
                 pageResourceProvider.getPageDirectory());
     }
@@ -99,7 +97,7 @@ public class CustomPageService {
         synchronized (getPageLock(fullPageName)) {
             final Long pageTimestampFromCache = getPageTimestampFromMemoryCache(fullPageName);
             if (pageTimestampFromCache != null) {
-                if (shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(apiSession, fullPageName)) {
+                if (shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(fullPageName)) {
                     //if it has been less than a certain time since the last database check do not check again
                     final long databaseLastUpdateTimestamp = getPageLastUpdateDateFromEngine(apiSession, pageResourceProvider);
                     if (databaseLastUpdateTimestamp != pageTimestampFromCache) {
@@ -126,7 +124,7 @@ public class CustomPageService {
         }
     }
 
-    protected boolean shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(final APISession apiSession, final String fullPageName) {
+    protected boolean shouldVerifyLastUpdateDateInDatabaseAndFolderHealthy(final String fullPageName) {
         Long lastTimePageUpdateWasCheckedInDB = getLastTimePageUpdateWasCheckedInDB(fullPageName);
         if (lastTimePageUpdateWasCheckedInDB != null) {
             return System.currentTimeMillis() - lastTimePageUpdateWasCheckedInDB > getPageLastUpdateCheckInterval();
@@ -209,7 +207,7 @@ public class CustomPageService {
         final PageResourceProvider pageResourceProvider = new PageResourceProviderImpl(page);
         removePageLocally(pageResourceProvider);
     }
-    
+
     public void removePageLocally(final PageResourceProvider pageResourceProvider) throws IOException {
         removePage(pageResourceProvider, false);
         removePageLock(pageResourceProvider.getFullPageName());
@@ -218,15 +216,15 @@ public class CustomPageService {
     protected Object getPageLock(final String fullPageName) {
         return PAGES_LOCKS.computeIfAbsent(fullPageName, k -> new Object());
     }
-    
+
     protected void removePageLock(final String fullPageName) {
         PAGES_LOCKS.remove(fullPageName);
     }
-    
+
     protected void addPageTimestampToMemoryCache(final String fullPageName, long timestamp) {
         PAGES_UPDATE_TIMESTAMPS.put(fullPageName, timestamp);
     }
-    
+
     protected void setTimePageUpdateWasCheckedInDB(final String fullPageName) {
         PAGES_LAST_UPDATE_DB_CHECK.put(fullPageName, System.currentTimeMillis());
     }
@@ -238,12 +236,12 @@ public class CustomPageService {
     protected Long getLastTimePageUpdateWasCheckedInDB(final String fullPageName) {
         return PAGES_LAST_UPDATE_DB_CHECK.get(fullPageName);
     }
-    
+
     protected void removePageTimestampsFromMemoryCache(final String fullPageName) {
         PAGES_LAST_UPDATE_DB_CHECK.remove(fullPageName);
         PAGES_UPDATE_TIMESTAMPS.remove(fullPageName);
     }
-    
+
     protected void clearPageTimestampsMemoryCache() {
         PAGES_UPDATE_TIMESTAMPS.clear();
         PAGES_LAST_UPDATE_DB_CHECK.clear();
@@ -311,7 +309,7 @@ public class CustomPageService {
     public boolean isPageInDebugMode() {
         return PropertiesFactory.getConsoleProperties().isPageInDebugMode();
     }
-    
+
     public long getPageLastUpdateCheckInterval() {
         return PropertiesFactory.getConsoleProperties().getPageLastUpdateCheckInterval();
     }
@@ -350,7 +348,7 @@ public class CustomPageService {
         addPageTimestampToMemoryCache(fullPageName, lastUpdateTimestamp);
         setTimePageUpdateWasCheckedInDB(fullPageName);
     }
-    
+
     protected PageAPI getPageAPI(final APISession apiSession) throws BonitaException {
         return TenantAPIAccessor.getCustomPageAPI(apiSession);
     }

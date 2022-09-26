@@ -16,14 +16,8 @@ package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,7 +36,6 @@ import org.bonitasoft.engine.search.SearchResult;
 import org.bonitasoft.engine.search.impl.SearchFilter;
 import org.bonitasoft.engine.search.impl.SearchResultImpl;
 import org.bonitasoft.web.rest.model.identity.UserItem;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverterException;
 import org.bonitasoft.web.rest.server.engineclient.ProcessEngineClient;
 import org.bonitasoft.web.rest.server.engineclient.UserEngineClient;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
@@ -91,15 +84,13 @@ public class UserDatastoreTest {
     }
 
     @Test
-    public void testSearchWithMultipleSortOrderDontThrowException() throws Exception {
+    public void testSearchWithMultipleSortOrderDoesNotThrowException() throws Exception {
         final String sort = UserItem.ATTRIBUTE_FIRSTNAME + "," + UserItem.ATTRIBUTE_LASTNAME;
         Mockito.doReturn(new SearchResultImpl<>(0, Collections.<User> emptyList())).when(identityAPI).searchUsers(Mockito.any(SearchOptions.class));
-
         try {
-            datastore.search(0, 1, "search", Collections.<String, String> emptyMap(), sort);
-
-        } catch (AttributeConverterException e) {
-            Assert.fail("Search should be able to handle multple sort");
+            datastore.search(0, 1, "search", Collections.emptyMap(), sort);
+        } catch (Exception e) {
+            Assert.fail("Search should be able to handle multiple sort");
         }
     }
 
@@ -134,7 +125,7 @@ public class UserDatastoreTest {
     }
 
     @Test
-    public void testSearchUsersWhoCanPerformTask_with_should_return_nothing() throws Exception {
+    public void testSearchUsersWhoCanPerformTask_with_should_return_nothing() {
         when(processAPI.searchUsersWhoCanExecutePendingHumanTask(eq(0L), any(SearchOptions.class))).thenReturn(mock(SearchResult.class));
         ItemSearchResult<UserItem> results = datastore.searchUsersWhoCanPerformTask("0", 0, 10, "jan", Collections.EMPTY_MAP, "");
         verify(processAPI, times(1)).searchUsersWhoCanExecutePendingHumanTask(anyLong(), any(SearchOptions.class));
@@ -145,7 +136,7 @@ public class UserDatastoreTest {
     }
 
     @Test
-    public void testSearchUsersWhoCanPerformTask_with_should_return_one_result() throws Exception {
+    public void testSearchUsersWhoCanPerformTask_with_should_return_one_result() {
         @SuppressWarnings("rawtypes")
         SearchResult engineSearchResults = mock(SearchResult.class);
         long expected = 1;

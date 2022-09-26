@@ -15,11 +15,9 @@
 package org.bonitasoft.console.common.server.form;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.server.page.CustomPageRequestModifier;
-import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.PageServlet;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.utils.SessionUtil;
@@ -38,6 +34,8 @@ import org.bonitasoft.engine.bpm.process.ArchivedProcessInstanceNotFoundExceptio
 import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet allowing to display a form for a process or a task
@@ -74,10 +72,6 @@ public class ProcessFormServlet extends HttpServlet {
     protected ProcessFormService processFormService = new ProcessFormService();
 
     private final ResourceRenderer resourceRenderer = new ResourceRenderer();
-
-    protected PageRenderer pageRenderer = new PageRenderer(resourceRenderer);
-
-    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
@@ -164,8 +158,7 @@ public class ProcessFormServlet extends HttpServlet {
         return processInstanceId;
     }
 
-    protected long getTaskInstanceId(final APISession apiSession, final List<String> pathSegments, final long userId) throws BonitaException,
-            UnsupportedEncodingException {
+    protected long getTaskInstanceId(final APISession apiSession, final List<String> pathSegments, final long userId) throws BonitaException {
         if (TASK_INSTANCE_PATH_SEGMENT.equals(pathSegments.get(0))) {
             final String taskInstance = pathSegments.get(1);
             return convertToLong(TASK_INSTANCE_PATH_SEGMENT, taskInstance);
@@ -173,7 +166,7 @@ public class ProcessFormServlet extends HttpServlet {
             final String processInstance = pathSegments.get(1);
             final long processInstanceId = convertToLong(PROCESS_INSTANCE_PATH_SEGMENT, processInstance);
             if (pathSegments.size() > 2 && TASK_PATH_SEGMENT.equals(pathSegments.get(2))) {
-                final String taskName = URLDecoder.decode(pathSegments.get(3), "UTF-8");
+                final String taskName = URLDecoder.decode(pathSegments.get(3), StandardCharsets.UTF_8);
                 return processFormService.getTaskInstanceId(apiSession, processInstanceId, taskName, userId);
             }
         }

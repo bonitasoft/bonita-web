@@ -103,6 +103,6 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
         }
         final WebBonitaConstantsUtils constants = WebBonitaConstantsUtils.getTenantInstance();
 
-        return new CaseDocumentDatastore(getEngineSession(), constants, processAPI, new BonitaHomeFolderAccessor());
+        return new CaseDocumentDatastore(getEngineSession(), processAPI, new BonitaHomeFolderAccessor());
     }
 }

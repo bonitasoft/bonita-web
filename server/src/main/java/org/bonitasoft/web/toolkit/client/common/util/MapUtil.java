@@ -73,25 +73,6 @@ public class MapUtil {
      * 
      * @return This method returns the long value corresponding or NULL if the element doesn't exist or is empty.
      */
-    public static Integer getValueAsInteger(final Map<String, String> map, final String key) throws NumberFormatException {
-        final String value = map.get(key);
-        if (StringUtil.isBlank(value)) {
-            return null;
-        }
-
-        return Integer.valueOf(value);
-    }
-
-    /**
-     * Get a value in a Map<String, String> and convert it to an integer.
-     * 
-     * @param map
-     *            The map to search in
-     * @param key
-     *            The key of the element to get.
-     * 
-     * @return This method returns the long value corresponding or NULL if the element doesn't exist or is empty.
-     */
     public static Boolean getValueAsBoolean(final Map<String, String> map, final String key) throws IllegalArgumentException {
         final String value = map.get(key);
         if (StringUtil.isBlank(value)) {

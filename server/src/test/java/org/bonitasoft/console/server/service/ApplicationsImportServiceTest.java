@@ -51,7 +51,7 @@ public class ApplicationsImportServiceTest {
     private ApplicationsImportService spiedApplicationImportService;
 
     @BeforeClass
-    public static void initEnvironnement() {
+    public static void initEnvironment() {
         I18n.getInstance();
         new BonitaRestAPIServlet();
     }
@@ -85,34 +85,34 @@ public class ApplicationsImportServiceTest {
     }
 
     @Test
-    public void should_Logger_log_using_expected_class_name() throws Exception {
+    public void should_Logger_log_using_expected_class_name() {
         assertEquals(spiedApplicationImportService.getLogger().getName(), "org.bonitasoft.console.server.service.ApplicationsImportService");
     }
 
     @Test
-    public void should_FileReadingError_talk_about_application() throws Exception {
+    public void should_FileReadingError_talk_about_application() {
         assertEquals(spiedApplicationImportService.getFileReadingError(), "Error during Application import file reading.");
     }
 
     @Test
-    public void should_getFileFormatExceptionMessage_talk_about_application() throws Exception {
+    public void should_getFileFormatExceptionMessage_talk_about_application() {
         assertEquals(spiedApplicationImportService.getFileFormatExceptionMessage(), "Can't import Applications.");
     }
 
     @Test
-    public void should_AlreadyExistsExceptionMessage_talk_about_application() throws Exception {
+    public void should_AlreadyExistsExceptionMessage_talk_about_application() {
         final AlreadyExistsException alreadyExistsException = new AlreadyExistsException("name", "token");
         assertEquals(spiedApplicationImportService.getAlreadyExistsExceptionMessage(alreadyExistsException),
                 "Can't import applications. An application 'token' already exists");
     }
 
     @Test
-    public void should_getToken_return_expected_name() throws Exception {
+    public void should_getToken_return_expected_name() {
         assertEquals(spiedApplicationImportService.getToken(), "/application/import");
     }
 
     @Test
-    public void should_getFileUploadParamName_return_expected_name() throws Exception {
+    public void should_getFileUploadParamName_return_expected_name() {
         assertEquals(spiedApplicationImportService.getFileUploadParamName(), "applicationsDataUpload");
     }
 

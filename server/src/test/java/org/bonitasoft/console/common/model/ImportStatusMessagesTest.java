@@ -22,12 +22,10 @@ import org.junit.*;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-
-
 public class ImportStatusMessagesTest {
 
     @BeforeClass
-    public static void initEnvironnement() {
+    public static void initEnvironment() {
         HashMap<String, String> availableLocales;
         availableLocales = new HashMap<>();
         availableLocales.put("en", "English");

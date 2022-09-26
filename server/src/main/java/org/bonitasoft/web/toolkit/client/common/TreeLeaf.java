@@ -24,7 +24,7 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
  */
 public class TreeLeaf<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
-    protected VALUE_CLASS value = null;
+    protected VALUE_CLASS value;
 
     public TreeLeaf(final VALUE_CLASS value) {
         super();
@@ -38,10 +38,6 @@ public class TreeLeaf<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
 
     public VALUE_CLASS getValue() {
         return this.value;
-    }
-
-    public void setValue(final VALUE_CLASS value) {
-        this.value = value;
     }
 
     @Override
@@ -64,7 +60,7 @@ public class TreeLeaf<VALUE_CLASS> extends AbstractTreeNode<VALUE_CLASS> {
         if (o == this) {
             return true;
         }
-        if (o == null || !(o instanceof TreeLeaf)) {
+        if (!(o instanceof TreeLeaf)) {
             return false;
         }
 

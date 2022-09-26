@@ -3,9 +3,7 @@ package org.bonitasoft.web.rest.server.api.document;
 import static org.junit.Assert.fail;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
@@ -18,7 +16,6 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.document.DocumentItem;
 import org.bonitasoft.web.rest.server.api.document.api.impl.DocumentDatastore;
 import org.bonitasoft.web.rest.server.framework.APIServletCall;
-import org.bonitasoft.web.rest.server.framework.Deployer;
 import org.bonitasoft.web.toolkit.client.ItemDefinitionFactory;
 import org.bonitasoft.web.toolkit.client.common.CommonDateFormater;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
@@ -42,9 +39,6 @@ public class APIDocumentTest {
 
     @Mock
     private HttpSession session;
-
-    @Mock
-    Deployer deployer;
 
     @Mock
     DocumentItem item;

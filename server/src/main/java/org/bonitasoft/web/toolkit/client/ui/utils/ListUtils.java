@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.ui.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,10 +55,6 @@ public class ListUtils {
         return join(list, separator, separator, "", "");
     }
 
-    public static String join(final List<?> list, final String separator, final String lastSeparator) {
-        return join(list, separator, lastSeparator, "", "");
-    }
-
     public static String join(final List<?> list, final String separator, final String lastSeparator, final String itemPrefix, final String itemSuffix) {
         if (list == null || list.isEmpty()) {
             return "";
@@ -77,7 +72,7 @@ public class ListUtils {
                 if (itemPrefix != null) {
                     result.append(itemPrefix);
                 }
-                result.append(item.toString());
+                result.append(item);
                 if (itemSuffix != null) {
                     result.append(itemSuffix);
                 }
@@ -87,16 +82,4 @@ public class ListUtils {
         return result.toString();
     }
 
-    public static abstract class Transformer<E, O> {
-
-        public abstract O transform(E entry);
-    }
-
-    public static <E, O> List<O> transform(List<E> list, Transformer<E, O> transformer) {
-        List<O> newList = new ArrayList<>();
-        for (E entry : list) {
-            newList.add(transformer.transform(entry));
-        }
-        return newList;
-    }
 }

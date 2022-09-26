@@ -17,21 +17,12 @@
 package org.bonitasoft.web.rest.server.engineclient;
 
 
-import java.util.List;
-
 import org.bonitasoft.engine.api.ProcessAPI;
-import org.bonitasoft.engine.bpm.flownode.ActivityInstanceNotFoundException;
-import org.bonitasoft.engine.bpm.flownode.ArchivedHumanTaskInstance;
-import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
 import org.bonitasoft.engine.bpm.flownode.HumanTaskInstanceSearchDescriptor;
-import org.bonitasoft.engine.exception.SearchException;
 import org.bonitasoft.engine.search.SearchOptions;
 import org.bonitasoft.engine.search.SearchOptionsBuilder;
-import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskDefinition;
 import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
-import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
-import org.bonitasoft.web.toolkit.client.data.APIID;
 
 /**
  * @author Colin PUY
@@ -53,24 +44,6 @@ public class HumanTaskEngineClient {
             return processAPI.searchHumanTaskInstances(search).getCount();
         } catch (final Exception e) {
             throw new APIException("Error when counting opened cases", e);
-        }
-    }
-
-    public List<ArchivedHumanTaskInstance> searchArchivedHumanTasks(final SearchOptions searchOptions) {
-        try {
-            return processAPI.searchArchivedHumanTasks(searchOptions).getResult();
-        } catch (final SearchException e) {
-            throw new APIException("Error when searching archived human tasks", e);
-        }
-    }
-
-    public HumanTaskInstance getHumanTaskInstance(final long humanTaskInstanceId) {
-        try {
-            return processAPI.getHumanTaskInstance(humanTaskInstanceId);
-        } catch (final ActivityInstanceNotFoundException e) {
-            throw new APIItemNotFoundException(HumanTaskDefinition.TOKEN, APIID.makeAPIID(humanTaskInstanceId));
-        } catch (final Exception e) {
-            throw new APIException("Error when getting human task instance", e);
         }
     }
 

@@ -425,13 +425,7 @@ public abstract class Item implements IItem {
         // Read a local attribute
         else {
 
-            final ItemAttribute attribute = getItemDefinition().getAttribute(attributeName);
-
             String realValue = attributes.get(attributeName);
-
-            if (attribute != null && applyModifiers) {
-                realValue = ModifierEngine.modify(realValue, attribute.getOutputModifiers());
-            }
 
             if (this instanceof ItemHasDualName) {
                 if (ItemHasDualName.ATTRIBUTE_DISPLAY_NAME.equals(attributeName) && StringUtil.isBlank(realValue)) {

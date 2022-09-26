@@ -14,6 +14,10 @@
  */
 package org.bonitasoft.console.common.server.servlet;
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.bonitasoft.engine.api.APIClient;
 import org.bonitasoft.engine.api.ApplicationAPI;
 import org.bonitasoft.engine.business.application.Application;
@@ -28,10 +32,6 @@ import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIItemNotFoundException;
 import org.bonitasoft.web.toolkit.client.common.exception.http.ServerException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 public class ApplicationIconServlet extends IconServlet {
 
@@ -51,7 +51,7 @@ public class ApplicationIconServlet extends IconServlet {
     }
 
     @Override
-    protected void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request, HttpServletResponse response) throws ServerException {
+    protected void deleteIcon(Long entityId, APISession apiSession, HttpServletRequest request) throws ServerException {
         ApplicationAPI applicationApi = getApplicationApi(apiSession);
         ApplicationUpdater updater = new ApplicationUpdater();
         updater.setIcon(null, null);

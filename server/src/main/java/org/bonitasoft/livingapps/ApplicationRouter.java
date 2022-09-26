@@ -16,7 +16,6 @@ import org.bonitasoft.console.common.server.page.PageRenderer;
 import org.bonitasoft.console.common.server.page.ResourceRenderer;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
-import org.bonitasoft.engine.business.application.ApplicationPageNotFoundException;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
@@ -26,8 +25,6 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
 public class ApplicationRouter {
 
     private final ApplicationModelFactory applicationModelFactory;
-
-    protected BonitaHomeFolderAccessor bonitaHomeFolderAccessor = new BonitaHomeFolderAccessor();
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
@@ -66,7 +63,7 @@ public class ApplicationRouter {
     protected void displayPageOrResource(final HttpServletRequest hsRequest, final HttpServletResponse hsResponse, final APISession session,
             final PageRenderer pageRenderer, final ResourceRenderer resourceRenderer, final BonitaHomeFolderAccessor bonitaHomeFolderAccessor,
             final ParsedRequest parsedRequest, final List<String> pathSegments) throws IOException,
-            ApplicationPageNotFoundException, InstantiationException, IllegalAccessException, BonitaException, PageNotFoundException, CreationException {
+            InstantiationException, IllegalAccessException, BonitaException, CreationException {
         final ApplicationModel application = applicationModelFactory.createApplicationModel(parsedRequest.getApplicationName());
 
         if (!application.hasProfileMapped()) {
@@ -96,7 +93,7 @@ public class ApplicationRouter {
             final File resourceFile = getResourceFile(pageRenderer, hsRequest.getPathInfo(), pathSegments, application, bonitaHomeFolderAccessor);
             pageRenderer
                     .ensurePageFolderIsPresent(session, pageRenderer.getPageResourceProvider(getPageName(pathSegments, application)));
-            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile, session);
+            resourceRenderer.renderFile(hsRequest, hsResponse, resourceFile);
         }
     }
 

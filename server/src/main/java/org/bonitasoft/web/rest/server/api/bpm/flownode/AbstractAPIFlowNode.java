@@ -22,7 +22,12 @@ import java.util.Map;
 import org.bonitasoft.engine.bpm.flownode.FlowNodeInstanceSearchDescriptor;
 import org.bonitasoft.web.rest.model.bpm.cases.ArchivedCaseItem;
 import org.bonitasoft.web.rest.model.bpm.cases.CaseItem;
-import org.bonitasoft.web.rest.model.bpm.flownode.*;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedTaskDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeDefinition;
+import org.bonitasoft.web.rest.model.bpm.flownode.FlowNodeItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
+import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.server.api.ConsoleAPI;
 import org.bonitasoft.web.rest.server.api.deployer.GenericDeployer;
 import org.bonitasoft.web.rest.server.datastore.bpm.cases.ArchivedCaseDatastore;
@@ -38,12 +43,10 @@ import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasSearch;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.rest.server.framework.api.Datastore;
-import org.bonitasoft.web.rest.server.framework.api.DatastoreHasGet;
 import org.bonitasoft.web.rest.server.framework.search.ISearchDirection;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.bonitasoft.web.toolkit.client.data.item.IItem;
 
 /**
  * Contains all the implementation for a APIFlowNode and inherited APIs
@@ -167,15 +170,9 @@ APIHasSearch<ITEM> {
                     new UserDatastore(getEngineSession()).get(item.getAttributeValueAsAPIID(HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID)));
         }
 
-        addDeployer(new GenericDeployer<>(new DatastoreHasGet<>() {
-
-            @Override
-            public IItem get(final APIID id) {
-                return new TaskFinder(
-                        new TaskDatastore(getEngineSession()),
-                        new ArchivedTaskDatastore(getEngineSession(), ArchivedTaskDefinition.TOKEN)).find(id);
-            }
-        }, HumanTaskItem.ATTRIBUTE_PARENT_TASK_ID));
+        addDeployer(new GenericDeployer<>(id -> new TaskFinder(
+                new TaskDatastore(getEngineSession()),
+                new ArchivedTaskDatastore(getEngineSession(), ArchivedTaskDefinition.TOKEN)).find(id), HumanTaskItem.ATTRIBUTE_PARENT_TASK_ID));
 
         super.fillDeploys(item, deploys);
     }

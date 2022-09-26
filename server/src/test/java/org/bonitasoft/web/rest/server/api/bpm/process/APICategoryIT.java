@@ -5,13 +5,11 @@ import static org.bonitasoft.web.rest.model.builder.bpm.process.CategoryItemBuil
 import static org.bonitasoft.web.toolkit.client.data.APIID.makeAPIID;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import junit.framework.Assert;
-
 import org.bonitasoft.engine.bpm.category.Category;
 import org.bonitasoft.test.toolkit.bpm.TestCategory;
 import org.bonitasoft.test.toolkit.bpm.TestCategoryFactory;
@@ -71,7 +69,7 @@ public class APICategoryIT extends AbstractConsoleTest {
     }
 
     @Test
-    public void testSearchCategoryItem() throws Exception {
+    public void testSearchCategoryItem() {
         final List<TestCategory> catList = TestCategoryFactory.getCategories(3);
 
         // Search the CommentItem
@@ -142,7 +140,7 @@ public class APICategoryIT extends AbstractConsoleTest {
     public void deleteCategoryTest() {
         final TestCategory category = TestCategoryFactory.getRandomCategory();
 
-        api.runDelete(Arrays.asList(APIID.makeAPIID(category.getId())));
+        api.runDelete(List.of(makeAPIID(category.getId())));
 
         assertNull(getFromEngine(category.getId()));
 
@@ -150,10 +148,8 @@ public class APICategoryIT extends AbstractConsoleTest {
     }
 
     @Test(expected = APIForbiddenException.class)
-    public void addingTwiceSameCategoryIsForbidden() throws Exception {
+    public void addingTwiceSameCategoryIsForbidden() {
         //given
-        final String description = "aDescription";
-        final String name = "aCategory";
         final CategoryItem categoryItem = aCategoryItem().build();
 
         //when then exception

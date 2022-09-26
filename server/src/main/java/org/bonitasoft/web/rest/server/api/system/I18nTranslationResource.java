@@ -19,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.console.common.server.i18n.I18n;
-import org.bonitasoft.engine.command.CommandExecutionException;
-import org.bonitasoft.engine.command.CommandNotFoundException;
-import org.bonitasoft.engine.command.CommandParameterizationException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 import org.restlet.data.Status;
@@ -30,16 +27,16 @@ import org.restlet.resource.Get;
 /**
  * @author Julien Mege
  */
-public class I18nTanslationResource extends CommonResource {
+public class I18nTranslationResource extends CommonResource {
 
     private I18n i18n;
 
-    public I18nTanslationResource(I18n i18n) {
+    public I18nTranslationResource(I18n i18n) {
         this.i18n = i18n;
     }
 
     @Get("json")
-    public List<Translation> getI18nTanslation() throws CommandNotFoundException, CommandExecutionException, CommandParameterizationException {
+    public List<Translation> getI18nTranslation() {
         List<Translation> items = new ArrayList<>();
 
         String locale = getLocale();

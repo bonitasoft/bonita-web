@@ -18,13 +18,4 @@
 package org.bonitasoft.web.rest.server.datastore.utils;
 
 public class NotSerializableObject {
-    private String property;
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
-    }
 }

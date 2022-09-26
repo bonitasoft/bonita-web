@@ -61,8 +61,4 @@ public class CaseDocumentSearchAttributeConverter implements AttributeConverter 
         return Collections.emptyMap();
     }
 
-    protected final void extendsMapping(final Map<String, String> extension) {
-        mapping.putAll(extension);
-    }
-
 }

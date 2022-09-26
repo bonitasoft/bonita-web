@@ -40,8 +40,6 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.bonitasoft.web.toolkit.client.data.item.Item;
 import org.bonitasoft.web.toolkit.client.data.item.attribute.ValidatorEngine;
 import org.bonitasoft.web.toolkit.server.ServletCall;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Séverin Moussel
@@ -79,8 +77,6 @@ public class APIServletCall extends ServletCall {
     private String resourceName;
 
     private APIID id;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(APIServletCall.class.getName());
 
     public APIServletCall(final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);

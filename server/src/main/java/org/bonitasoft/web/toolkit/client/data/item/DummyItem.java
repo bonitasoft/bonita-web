@@ -26,17 +26,9 @@ public class DummyItem extends Item {
         super();
     }
 
-    public DummyItem(final IItem item) {
-        super(item);
-    }
-
     @Override
     public ItemDefinition<DummyItem> getItemDefinition() {
         return  DummyItemDefinition.get();
     }
 
-    public IItem copyInto(final IItem item) {
-        item.setAttributes(getAttributes());
-        return item;
-    }
 }

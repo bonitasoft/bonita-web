@@ -25,7 +25,6 @@ import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.business.data.BusinessDataRepositoryDeploymentException;
 import org.bonitasoft.engine.business.data.InvalidBusinessDataModelException;
 import org.bonitasoft.engine.io.IOUtil;
-import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bdm.BusinessDataModelItem;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.rest.server.api.tenant.TenantResourceItem;
@@ -44,11 +43,8 @@ public class BusinessDataModelResource extends CommonResource {
     private final TenantAdministrationAPI tenantAdministrationAPI;
     
     private final BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
-    
-    private final APISession apiSession;
-    
-    public BusinessDataModelResource(final TenantAdministrationAPI tenantAdministrationAPI, BonitaHomeFolderAccessor bonitaHomeFolderAccessor, APISession apiSession) {
-        this.apiSession = apiSession;
+
+    public BusinessDataModelResource(final TenantAdministrationAPI tenantAdministrationAPI, BonitaHomeFolderAccessor bonitaHomeFolderAccessor) {
         this.bonitaHomeFolderAccessor = bonitaHomeFolderAccessor;
         this.tenantAdministrationAPI = tenantAdministrationAPI;
     }

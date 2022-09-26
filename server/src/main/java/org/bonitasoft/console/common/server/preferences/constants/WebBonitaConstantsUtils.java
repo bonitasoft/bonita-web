@@ -75,13 +75,6 @@ public class WebBonitaConstantsUtils {
         return getFolder(webBonitaConstants.getBDMTempFolderPath());
     }
 
-    /**
-     * Get the folder of the tenants directories
-     */
-    public File getTenantsFolder() {
-        return getFolder(webBonitaConstants.getTenantsFolderPath());
-    }
-
     private File getFolder(final String folderPath) {
         final File folder = new File(folderPath);
         if (!folder.exists()) {
