@@ -23,12 +23,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.bonitasoft.engine.search.SearchResult;
-import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
-import org.bonitasoft.web.rest.server.datastore.converter.ItemSearchResultConverter;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APISearchIndexOutOfRange;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -45,7 +42,7 @@ public class ItemSearchResultConverterTest {
     ItemConverter<IItem, String> converter;
 
     @Before
-    public void initilizeMocks() {
+    public void initializeMocks() {
         initMocks(this);
     }
     
@@ -59,24 +56,14 @@ public class ItemSearchResultConverterTest {
     }
 
     @Test
-    public void testTotalSettedCanBeRetrieved() {
+    public void testTotalSetCanBeRetrieved() {
         ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(3, 2, result, 8L, converter);
 
         assertEquals(8L, itemSearchResult.toItemSearchResult().getTotal());
     }
 
-    @Test
-    @Ignore("itemSearchResult return nbResultsByPage for length, need to be fixed in ItemSearchResult")
-    public void testNumberOfResultCanBeRetrieved() {
-        when(result.getResult()).thenReturn(asList("item1", "item2", "item3"));
-
-        ItemSearchResultConverter<IItem, String> itemSearchResult = new ItemSearchResultConverter<>(3, 10, result, 4L, converter);
-
-        assertEquals(3, itemSearchResult.toItemSearchResult().getLength());
-    }
-
     @Test(expected = APISearchIndexOutOfRange.class)
-    public void testPageOutOfResultNumberThrowsExecption() throws Exception {
+    public void testPageOutOfResultNumberThrowsException() {
         when(result.getCount()).thenReturn(1L);
 
         new ItemSearchResultConverter<>(2, 10, result, converter).toItemSearchResult();

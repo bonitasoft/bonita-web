@@ -1,16 +1,12 @@
 package org.bonitasoft.web.rest.server.api.bpm.flownode;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bonitasoft.test.toolkit.bpm.TestCase;
 import org.bonitasoft.test.toolkit.bpm.TestHumanTask;
 import org.bonitasoft.test.toolkit.bpm.TestProcessFactory;
 import org.bonitasoft.test.toolkit.organization.TestUser;
@@ -19,7 +15,6 @@ import org.bonitasoft.web.rest.model.bpm.flownode.HumanTaskItem;
 import org.bonitasoft.web.rest.server.AbstractConsoleTest;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.data.APIID;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class APIHumanTaskIT extends AbstractConsoleTest {
@@ -94,27 +89,6 @@ public class APIHumanTaskIT extends AbstractConsoleTest {
         final ArrayList<String> counters = new ArrayList<>();
         final HumanTaskItem foundHumanTaskItem = apiHumanTask.runSearch(0, 1, null, null, filters, deploys, counters).getResults().get(0);
         assertEquals("Can't search the humanTaskItem", testHumanTask.getName(), foundHumanTaskItem.getName());
-    }
-
-    @Test
-    @Ignore("To be fixed")
-    public void testSearchFailedTask() {
-        // Test for failed tasks
-        final TestCase failedTestCase = TestProcessFactory.getMisconfiguredProcess()
-                .addActor(getInitiator())
-                .startCase();
-
-        final TestHumanTask failedTestHumanTask = failedTestCase.getNextHumanTask()
-                .assignTo(getInitiator())
-                .execute()
-                .waitState(HumanTaskItem.VALUE_STATE_FAILED);
-
-        final HashMap<String, String> filters = new HashMap<>();
-        filters.put(HumanTaskItem.ATTRIBUTE_STATE, HumanTaskItem.VALUE_STATE_FAILED);
-        filters.put(HumanTaskItem.ATTRIBUTE_ROOT_CASE_ID, String.valueOf(failedTestCase.getId()));
-
-        assertEquals("No Failed tasks" + failedTestHumanTask.getHumanTaskInstance().getState(), 1,
-                apiHumanTask.runSearch(0, 1, null, null, filters, new ArrayList<>(), new ArrayList<>()).getResults().size());
     }
 
     @Test

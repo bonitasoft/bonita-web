@@ -40,7 +40,6 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasCreator;
 import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasLastUpdateDate;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -258,45 +257,6 @@ public class APIUserAnotherIT extends AbstractConsoleTest {
                     assertUserEquals(userAttributesList, expectedUser, results.get(0));
                 }
             }
-        }
-    }
-
-    @Ignore
-    @Test
-    public void testAddUser() throws Exception {
-
-        // add user
-        final UserItem expectedUser = createCompleteUser(userAttributesList, 100);
-        final UserItem addedUser = this.apiUser.add(expectedUser);
-        Assert.assertNotNull(addedUser);
-        assertUserEquals(userAttributesList, expectedUser, addedUser);
-
-        // retrieve user added and check if equal
-        final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getInitiator().getSession());
-        final User retrievedUser = identityAPI.getUser(addedUser.getId().toLong());
-        assertUserEquals(userAttributesList, expectedUser, convertEngineToConsoleItem(retrievedUser));
-
-        // then clean
-        identityAPI.deleteUser(addedUser.getId().toLong());
-    }
-
-    @Ignore
-    @Test
-    public void testUpdateUser() throws Exception {
-        final UserItem expectedUser = this.expectedUsers.get(0);
-        for (final String attribute : userAttributesList) {
-
-            // update an attribute
-            final HashMap<String, String> changes = new HashMap<>();
-            changes.put(attribute, expectedUser.getAttributeValue(attribute) + "_");
-            expectedUser.setAttribute(attribute, changes.get(attribute));
-            final UserItem updatedUser = this.apiUser.update(expectedUser.getId(), changes);
-            assertUserEquals(userAttributesList, expectedUser, updatedUser);
-
-            // retrieve user and check it again
-            final IdentityAPI identityAPI = TenantAPIAccessor.getIdentityAPI(getInitiator().getSession());
-            final User retrievedUser = identityAPI.getUser(updatedUser.getId().toLong());
-            assertUserEquals(userAttributesList, expectedUser, convertEngineToConsoleItem(retrievedUser));
         }
     }
 

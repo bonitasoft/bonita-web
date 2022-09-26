@@ -18,20 +18,14 @@ package org.bonitasoft.web.rest.server.framework.utils.converter;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
-
 import javax.servlet.Servlet;
 
-import org.bonitasoft.web.rest.server.framework.utils.converter.Converter;
-import org.bonitasoft.web.rest.server.framework.utils.converter.ConverterFactory;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.BooleanConverter;
-import org.bonitasoft.web.rest.server.framework.utils.converter.typed.DateConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.DoubleConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.IntegerConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.LongConverter;
 import org.bonitasoft.web.rest.server.framework.utils.converter.typed.StringConverter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -50,24 +44,15 @@ public class ConverterFactoryTest {
     }
     
     @Test
-    public void factoryCreateABooleanConverterForBooleanClassName() throws Exception {
+    public void factoryCreateABooleanConverterForBooleanClassName() {
         
         Converter<?> createConverter = factory.createConverter(Boolean.class.getName());
         
         assertTrue(createConverter instanceof BooleanConverter);
     }
-    
+
     @Test
-    @Ignore("until ENGINE-1099 is resolved")
-    public void factoryCreateADateConverterForDateClassName() throws Exception {
-        
-        Converter<?> createConverter = factory.createConverter(Date.class.getName());
-        
-        assertTrue(createConverter instanceof DateConverter);
-    }
-    
-    @Test
-    public void factoryCreateADoubleConverterForDoubleClassName() throws Exception {
+    public void factoryCreateADoubleConverterForDoubleClassName() {
         
         Converter<?> createConverter = factory.createConverter(Double.class.getName());
         
@@ -75,7 +60,7 @@ public class ConverterFactoryTest {
     }
     
     @Test
-    public void factoryCreateALongConverterForLongClassName() throws Exception {
+    public void factoryCreateALongConverterForLongClassName() {
         
         Converter<?> createConverter = factory.createConverter(Long.class.getName());
         
@@ -83,7 +68,7 @@ public class ConverterFactoryTest {
     }
     
     @Test
-    public void factoryCreateAStringConverterForStringClassName() throws Exception {
+    public void factoryCreateAStringConverterForStringClassName() {
         
         Converter<?> createConverter = factory.createConverter(String.class.getName());
         
@@ -91,7 +76,7 @@ public class ConverterFactoryTest {
     }
     
     @Test
-    public void factoryCreateAnIntegerConverterForIntegerClassName() throws Exception {
+    public void factoryCreateAnIntegerConverterForIntegerClassName() {
         
         Converter<?> createConverter = factory.createConverter(Integer.class.getName());
         
@@ -99,7 +84,7 @@ public class ConverterFactoryTest {
     }
     
     @Test(expected = UnsupportedOperationException.class)
-    public void factoryThrowExceptionForUnsuportedConverter() throws Exception {
+    public void factoryThrowExceptionForUnsuportedConverter() {
         factory.createConverter(Servlet.class.getName());
     }
 
