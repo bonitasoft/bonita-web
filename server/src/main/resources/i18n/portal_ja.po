@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-28 12:05+0200\n"
-"PO-Revision-Date: 2022-08-18 09:24\n"
+"POT-Creation-Date: 2022-09-20 05:22+0200\n"
+"PO-Revision-Date: 2022-09-27 01:29\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -139,9 +139,6 @@ msgstr "BDM"
 
 msgid "Bonita Applications"
 msgstr ""
-
-msgid "Call activity"
-msgstr "コールアクティビティ"
 
 msgid "Can't create group. Group '%groupName%' already exists"
 msgstr "グループを作成することはできません。グループ  '%groupName%' が既に存在します。"
@@ -281,9 +278,6 @@ msgstr "高"
 msgid "Highest"
 msgstr "最高"
 
-msgid "Human task"
-msgstr "ヒューマン タスク"
-
 msgid "Install/Export"
 msgstr "インストール/エクスポート"
 
@@ -304,9 +298,6 @@ msgstr "ログイン フォーム"
 
 msgid "Look and Feel"
 msgstr "ルック＆フィール"
-
-msgid "Loop activity"
-msgstr "ループ・アクティビティ"
 
 msgid "Low"
 msgstr "低"
@@ -346,9 +337,6 @@ msgstr "ユーザーを管理"
 
 msgid "Monitoring"
 msgstr "モニタリング"
-
-msgid "Multi-instanciation activity"
-msgstr "マルチ インスタンス・アクティビティ"
 
 msgid "No description."
 msgstr "説明がありません。"
@@ -406,9 +394,6 @@ msgstr "役割"
 
 msgid "Search terms are not supported by this API"
 msgstr "その検索用語は、このAPI ではサポートされていません"
-
-msgid "Service task"
-msgstr "サービス タスク"
 
 msgid "Session expired. Please log in again."
 msgstr "セッションが切れました。再度ログインしてください。"

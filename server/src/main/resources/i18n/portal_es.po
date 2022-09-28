@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bonita\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-28 12:05+0200\n"
-"PO-Revision-Date: 2022-08-18 09:24\n"
+"POT-Creation-Date: 2022-09-20 05:22+0200\n"
+"PO-Revision-Date: 2022-09-27 01:28\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -139,9 +139,6 @@ msgstr "BDM"
 
 msgid "Bonita Applications"
 msgstr "Aplicaciones Bonita"
-
-msgid "Call activity"
-msgstr "Actividad de Llamada"
 
 msgid "Can't create group. Group '%groupName%' already exists"
 msgstr "No se puede crear el grupo. El grupo '%groupName%' ya existe"
@@ -281,9 +278,6 @@ msgstr "alto"
 msgid "Highest"
 msgstr "Mayor"
 
-msgid "Human task"
-msgstr "Tarea Humana"
-
 msgid "Install/Export"
 msgstr "Instalar/Exportar"
 
@@ -304,9 +298,6 @@ msgstr "Formulario de login"
 
 msgid "Look and Feel"
 msgstr "Apariencia"
-
-msgid "Loop activity"
-msgstr "Actividad de bucle"
 
 msgid "Low"
 msgstr "bajo"
@@ -346,9 +337,6 @@ msgstr "Administrar usuarios"
 
 msgid "Monitoring"
 msgstr "Monitorización"
-
-msgid "Multi-instanciation activity"
-msgstr "Actividad multi-instanciada"
 
 msgid "No description."
 msgstr "No hay descripción."
@@ -406,9 +394,6 @@ msgstr "Roles"
 
 msgid "Search terms are not supported by this API"
 msgstr "Los términos de búsqueda no son soportados por este API"
-
-msgid "Service task"
-msgstr "Tarea de Servicio"
 
 msgid "Session expired. Please log in again."
 msgstr "La sesión expiró. Por favor inicie sesión de nuevo."
