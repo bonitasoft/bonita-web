@@ -16,6 +16,10 @@ package org.bonitasoft.console.common.server.auth;
 import javax.servlet.ServletException;
 
 /**
+ * This class cannot be removed without the risk of breaking 
+ * old {@link AuthenticationManager} implementations that may still use it
+ * @deprecated since 7.16.0
+ * 
  * @author Chong Zhao
  * 
  */
