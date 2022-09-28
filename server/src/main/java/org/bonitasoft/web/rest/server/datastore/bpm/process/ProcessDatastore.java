@@ -179,6 +179,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
     public void delete(final List<APIID> ids) {
         for (final APIID id : ids) {
             removeProcessPagesFromHome(id);
+            FormsResourcesUtils.removeApplicationFiles(getEngineSession(), id.toLong());
         }
         final ProcessEngineClient engineClient = getProcessEngineClient();
         engineClient.deleteDisabledProcesses(APIID.toLongList(ids));
