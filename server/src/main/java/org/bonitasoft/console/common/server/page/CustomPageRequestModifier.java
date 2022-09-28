@@ -34,7 +34,7 @@ public class CustomPageRequestModifier {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(CustomPageRequestModifier.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPageRequestModifier.class.getName());
 
     public void redirectToValidPageUrl(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         final StringBuilder taskURLBuilder = new StringBuilder(request.getContextPath());

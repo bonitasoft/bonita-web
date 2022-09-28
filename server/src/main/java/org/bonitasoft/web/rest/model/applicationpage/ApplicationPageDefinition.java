@@ -53,7 +53,7 @@ public class ApplicationPageDefinition extends ItemDefinition<ApplicationPageIte
         return new ApplicationPageItem();
     }
 
-    public static final ApplicationPageDefinition get() {
+    public static ApplicationPageDefinition get() {
         return (ApplicationPageDefinition) Definitions.get(TOKEN);
     }
 

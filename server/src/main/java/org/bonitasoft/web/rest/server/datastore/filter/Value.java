@@ -26,9 +26,9 @@ import org.bonitasoft.web.rest.server.datastore.converter.ValueConverter;
  */
 public class Value<V extends Serializable> {
 
-    private String value;
+    private final String value;
 
-    private ValueConverter<V> converter;
+    private final ValueConverter<V> converter;
 
     public Value(String value, ValueConverter<V> converter) {
         this.value = value;

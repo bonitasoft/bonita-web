@@ -120,11 +120,11 @@ public final class ItemAttribute implements Validable, ModifiableInput {
         URL, 
         
         ITEM_ID
-    };
+    }
 
-    private String name;
+    private final String name;
 
-    private TYPE type;
+    private final TYPE type;
 
     private final String defaultValue = null;
 

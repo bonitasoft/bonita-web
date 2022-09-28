@@ -2,8 +2,6 @@ package org.bonitasoft.web.rest.server.framework.json;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -13,9 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JacksonSerializer {
     
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
     
-    public String serialize(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
+    public String serialize(Object obj) throws IOException {
         try{
             return mapper.writeValueAsString(obj);
         }catch(Throwable e){

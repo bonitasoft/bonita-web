@@ -136,8 +136,7 @@ public class DocumentDatastore {
     }
 
     protected ProcessAPI getProcessAPI() throws BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
-        final ProcessAPI processAPI = TenantAPIAccessor.getProcessAPI(apiSession);
-        return processAPI;
+        return TenantAPIAccessor.getProcessAPI(apiSession);
     }
 
     public DocumentItem createDocumentFromUrl(final long processInstanceId, final String documentName, final String documentCreationType, final String path)

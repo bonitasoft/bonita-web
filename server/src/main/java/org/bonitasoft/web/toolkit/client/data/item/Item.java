@@ -120,7 +120,7 @@ public abstract class Item implements IItem {
      * @param applyOutputModifiersByDefault
      *        the applyOutputModifiersByDefault to set
      */
-    public final static void setApplyOutputModifiersByDefault(final boolean applyOutputModifiersByDefault) {
+    public static void setApplyOutputModifiersByDefault(final boolean applyOutputModifiersByDefault) {
         Item.applyOutputModifiersByDefault = applyOutputModifiersByDefault;
     }
 
@@ -128,7 +128,7 @@ public abstract class Item implements IItem {
      * @param applyInputModifiersByDefault
      *        the applyInputModifiersByDefault to set
      */
-    public final static void setApplyInputModifiersByDefault(final boolean applyInputModifiersByDefault) {
+    public static void setApplyInputModifiersByDefault(final boolean applyInputModifiersByDefault) {
         Item.applyInputModifiersByDefault = applyInputModifiersByDefault;
     }
 
@@ -136,7 +136,7 @@ public abstract class Item implements IItem {
      * @param applyValidatorsByDefault
      *        the applyValidatorsByDefault to set
      */
-    public final static void setApplyValidatorsByDefault(final boolean applyValidatorsByDefault) {
+    public static void setApplyValidatorsByDefault(final boolean applyValidatorsByDefault) {
         Item.applyValidatorsByDefault = applyValidatorsByDefault;
     }
 
@@ -144,7 +144,7 @@ public abstract class Item implements IItem {
      * @param applyValidatorMandatoryByDefault
      *        the applyValidatorMandatoryByDefault to set
      */
-    public final static void setApplyValidatorMandatoryByDefault(final boolean applyValidatorMandatoryByDefault) {
+    public static void setApplyValidatorMandatoryByDefault(final boolean applyValidatorMandatoryByDefault) {
         Item.applyValidatorMandatoryByDefault = applyValidatorMandatoryByDefault;
     }
 
@@ -662,10 +662,6 @@ public abstract class Item implements IItem {
             }
             first = false;
         }
-        // for (final String counter : this.counters.keySet()) {
-        // json.append(!first ? "," : "").append(JSonSerializer.quote(counter)).append(":")
-        // .append(JSonSerializer.serialize(Long.toString(this.counters.get(counter))));
-        // }
 
         json.append("}");
 
@@ -734,13 +730,10 @@ public abstract class Item implements IItem {
             return false;
         }
         if (deploys == null) {
-            if (other.deploys != null) {
-                return false;
-            }
-        } else if (!deploys.equals(other.deploys)) {
-            return false;
+            return other.deploys == null;
+        } else {
+            return deploys.equals(other.deploys);
         }
-        return true;
     }
 
 }

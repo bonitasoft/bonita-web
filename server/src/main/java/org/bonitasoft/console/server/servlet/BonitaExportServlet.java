@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import org.slf4j.LoggerFactory;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
@@ -90,7 +91,7 @@ abstract class BonitaExportServlet extends HttpServlet {
     protected void setResponseHeaders(final HttpServletRequest request, final HttpServletResponse response) throws UnsupportedEncodingException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/octet-stream");
-        final String encodedfileName = URLEncoder.encode(getFileExportName(), "UTF-8");
+        final String encodedfileName = URLEncoder.encode(getFileExportName(), StandardCharsets.UTF_8);
         final String userAgent = request.getHeader("User-Agent");
         if (userAgent != null && userAgent.contains("Firefox")) {
             response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName);

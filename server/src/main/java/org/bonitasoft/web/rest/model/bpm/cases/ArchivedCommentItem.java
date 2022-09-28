@@ -34,7 +34,7 @@ public class ArchivedCommentItem extends CommentItem {
     // ATTRIBUTES NAMES
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
+    public static final String ATTRIBUTE_ARCHIVED_DATE = "archivedDate";
 
     // SETTERS
 

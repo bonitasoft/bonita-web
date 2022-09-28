@@ -118,10 +118,9 @@ public class ArchivedCaseDocumentDatastore extends CommonDatastore<ArchivedCaseD
 
     protected SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
             final String orders) {
-        final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
+        return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
                 getArchivedDocumentSearchAttributeConverter()), new Filters(filters, new ArchivedCaseDocumentFilterCreator(
                 getArchivedDocumentSearchAttributeConverter())));
-        return searchOptionsCreator;
     }
 
     private ArchivedCaseDocumentSearchAttributeConverter getArchivedDocumentSearchAttributeConverter() {

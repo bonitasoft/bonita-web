@@ -31,7 +31,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
  */
 public class ProcessSearchDescriptorConverter implements AttributeConverter {
 
-    protected static Map<String, String> mapping = new HashMap<>();
+    protected static final Map<String, String> mapping = new HashMap<>();
 
     @Override
     public Map<String, TYPE> getValueTypeMapping() {

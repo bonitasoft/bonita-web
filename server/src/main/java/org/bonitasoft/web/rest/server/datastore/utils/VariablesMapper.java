@@ -30,7 +30,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
  */
 public class VariablesMapper {
     
-    private List<VariableMapper> variables;
+    private final List<VariableMapper> variables;
     
     protected VariablesMapper(List<Variable> variables, JacksonDeserializer deserializer) {
         this.variables = convertToMappers(variables, deserializer);

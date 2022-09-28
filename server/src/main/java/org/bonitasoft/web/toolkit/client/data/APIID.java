@@ -92,14 +92,14 @@ public class APIID implements JsonSerializable {
     // STATIC CONSTRUCTORS
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final APIID makeAPIID(final String... id) {
+    public static APIID makeAPIID(final String... id) {
         if (id == null) {
             return null;
         }
         return makeAPIID(Arrays.asList(id));
     }
 
-    public static final APIID makeAPIID(final Long... ids) {
+    public static APIID makeAPIID(final Long... ids) {
         if (ids == null || ids.length == 0) {
             return null;
         }
@@ -114,7 +114,7 @@ public class APIID implements JsonSerializable {
         return null;
     }
 
-    public static final APIID makeAPIID(final List<String> ids) {
+    public static APIID makeAPIID(final List<String> ids) {
         if (ids == null || ids.size() == 0) {
             return null;
         }
@@ -223,7 +223,7 @@ public class APIID implements JsonSerializable {
         return APIID.makeAPIID(getPart(attributeName));
     }
 
-    public static final List<Long> toLongList(final List<APIID> ids) {
+    public static List<Long> toLongList(final List<APIID> ids) {
         final List<Long> results = new ArrayList<>();
         for (final APIID id : ids) {
             results.add(id.toLong());

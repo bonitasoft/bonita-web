@@ -16,6 +16,8 @@ package org.bonitasoft.console.common.server.form;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -60,11 +62,11 @@ public class ProcessFormService {
         //URLEncoder#encode encodes spaces to '+' but we want '%20' instead in the path part of the URL
         // '/' gets encoded to %2F whereas is should be left as it is since it in perfectly safe in the path part of the URL
         // '+' gets encoded to %2B whereas is should be left as it is since it in perfectly safe in the path part of the URL
-        return URLEncoder.encode(stringToEncode, "UTF-8").replaceAll("\\+", "%20").replaceAll("%2F", "/").replaceAll("%2B", "+");
+        return URLEncoder.encode(stringToEncode, StandardCharsets.UTF_8).replaceAll("\\+", "%20").replaceAll("%2F", "/").replaceAll("%2B", "+");
     }
 
     public long getProcessDefinitionId(final APISession apiSession, final String processName, final String processVersion)
-            throws ProcessDefinitionNotFoundException, BonitaException {
+            throws BonitaException {
         if (processName != null && processVersion != null) {
             try {
                 return getProcessAPI(apiSession).getProcessDefinitionId(processName, processVersion);
@@ -122,7 +124,7 @@ public class ProcessFormService {
     }
 
     public long ensureProcessDefinitionId(final APISession apiSession, final long processDefinitionId, final long processInstanceId, final long taskInstanceId)
-            throws ArchivedProcessInstanceNotFoundException, ActivityInstanceNotFoundException, BonitaException {
+            throws BonitaException {
         if (processDefinitionId != -1L) {
             return processDefinitionId;
         } else if (processInstanceId != -1L) {

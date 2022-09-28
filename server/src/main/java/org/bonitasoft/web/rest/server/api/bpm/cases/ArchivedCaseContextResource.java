@@ -35,7 +35,7 @@ public class ArchivedCaseContextResource extends CommonResource {
     static final String ARCHIVED_CASE_ID = "archivedCaseId";
 
     private final ProcessAPI processAPI;
-    private FinderFactory resourceHandler;
+    private final FinderFactory resourceHandler;
 
     public ArchivedCaseContextResource (final ProcessAPI processAPI, FinderFactory resourceHandler) {
         this.processAPI = processAPI;

@@ -29,7 +29,7 @@ public class CommentDefinition extends ItemDefinition<CommentItem> {
     /**
      * Singleton
      */
-    public static final CommentDefinition get() {
+    public static CommentDefinition get() {
         return (CommentDefinition) Definitions.get(TOKEN);
     }
 

@@ -39,7 +39,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class CustomUserInfoEngineClient {
 
-    private IdentityAPI identity;
+    private final IdentityAPI identity;
 
     public CustomUserInfoEngineClient(IdentityAPI identity) {
         this.identity = identity;

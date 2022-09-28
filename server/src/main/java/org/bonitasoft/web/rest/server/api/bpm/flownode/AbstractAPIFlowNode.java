@@ -47,6 +47,7 @@ import org.bonitasoft.web.rest.server.framework.search.ISearchDirection;
 import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.bonitasoft.web.toolkit.client.data.APIID;
+import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 
 /**
  * Contains all the implementation for a APIFlowNode and inherited APIs

@@ -45,7 +45,7 @@ public class LivingApplicationServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(LivingApplicationServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(LivingApplicationServlet.class.getName());
 
     protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 

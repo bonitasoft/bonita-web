@@ -37,7 +37,7 @@ import org.bonitasoft.web.rest.server.framework.search.ItemSearchResult;
  */
 public class SearchProfileMembersHelper implements DatastoreHasSearch<ProfileMemberItem> {
 
-    private ProfileMemberEngineClient profileMemberClient;
+    private final ProfileMemberEngineClient profileMemberClient;
 
     public SearchProfileMembersHelper(ProfileMemberEngineClient profileMemberClient) {
         this.profileMemberClient = profileMemberClient;

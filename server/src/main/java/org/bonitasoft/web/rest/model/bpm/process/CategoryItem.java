@@ -52,7 +52,7 @@ public class CategoryItem extends Item implements ItemHasUniqueId, ItemHasDualNa
     /**
      * created by
      */
-    public static String ATTRIBUTE_CREATED_BY_USER_ID = "createdBy";
+    public static final String ATTRIBUTE_CREATED_BY_USER_ID = "createdBy";
 
     /**
      * category name
@@ -62,7 +62,7 @@ public class CategoryItem extends Item implements ItemHasUniqueId, ItemHasDualNa
     /**
      * description about category
      */
-    public static String ATTRIBUTE_DESCRIPTION = "description";
+    public static final String ATTRIBUTE_DESCRIPTION = "description";
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // ATTRIBUTES VALUES

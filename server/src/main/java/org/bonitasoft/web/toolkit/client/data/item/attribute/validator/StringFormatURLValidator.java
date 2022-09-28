@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.web.toolkit.client.data.item.attribute.validator;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
 
 /**

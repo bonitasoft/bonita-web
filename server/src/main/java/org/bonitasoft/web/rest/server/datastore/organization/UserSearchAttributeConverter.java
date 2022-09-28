@@ -15,7 +15,6 @@
 package org.bonitasoft.web.rest.server.datastore.organization;
 
 import static org.bonitasoft.web.rest.model.identity.UserItem.*;
-import static org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId.ATTRIBUTE_ID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +28,8 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
  */
 public class UserSearchAttributeConverter implements AttributeConverter {
 
-    protected static Map<String, String> mapping = new HashMap<>();
-    private static Map<String, TYPE> valueTypeMapping = new HashMap<>();
+    protected static final Map<String, String> mapping = new HashMap<>();
+    private static final Map<String, TYPE> valueTypeMapping = new HashMap<>();
 
     static {
         addAttributeConverterItem(ATTRIBUTE_ID, UserSearchDescriptor.ID);

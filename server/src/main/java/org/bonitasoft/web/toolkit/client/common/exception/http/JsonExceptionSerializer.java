@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.common.json.JSonSerializer;
  */
 public class JsonExceptionSerializer {
 
-    private StringBuilder json;
+    private final StringBuilder json;
 
     public JsonExceptionSerializer(Throwable exception) {
         if (exception == null) {
@@ -52,11 +52,9 @@ public class JsonExceptionSerializer {
     }
 
     private String exceptionInnerJson(final Throwable e) {
-        final StringBuilder json = new StringBuilder();
-        json.append(quote("exception")).append(":").append(quote(e.getClass().toString()));
-        json.append(",");
-        json.append(quote("message")).append(":").append(quote(e.getMessage()));
-        return json.toString();
+        return quote("exception") + ":" + quote(e.getClass().toString()) +
+                "," +
+                quote("message") + ":" + quote(e.getMessage());
     }
 
     public String end() {

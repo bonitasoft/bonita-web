@@ -18,6 +18,8 @@ package org.bonitasoft.console.server.servlet;
 
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -64,7 +66,7 @@ public class ProcessActorsExportServlet extends HttpServlet {
             // Set response headers
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/octet-stream");
-            final String encodedfileName = URLEncoder.encode(processId + EXPORT_FILE_SUFFIX, "UTF-8");
+            final String encodedfileName = URLEncoder.encode(processId + EXPORT_FILE_SUFFIX, StandardCharsets.UTF_8);
             final String userAgent = request.getHeader("User-Agent");
             if (userAgent != null && userAgent.contains("Firefox")) {
                 response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName);

@@ -28,7 +28,7 @@ import org.bonitasoft.web.rest.server.framework.exception.APIFilterMandatoryExce
  */
 public class FilterAccessor {
 
-    private Map<String, String> filters;
+    private final Map<String, String> filters;
 
     public FilterAccessor(Map<String, String> filters) {
         this.filters = filters;

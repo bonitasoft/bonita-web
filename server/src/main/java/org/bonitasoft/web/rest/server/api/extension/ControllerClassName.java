@@ -22,8 +22,8 @@ package org.bonitasoft.web.rest.server.api.extension;
  */
 public class ControllerClassName {
 
-    private String name;
-    private boolean source;
+    private final String name;
+    private final boolean source;
 
     public ControllerClassName(String name, boolean source) {
         this.name = name;

@@ -32,7 +32,7 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
  */
 public class JSonItemReader {
 
-    public static boolean APPLY_VALIDATORS = true;
+    public static final boolean APPLY_VALIDATORS = true;
 
     // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // UNSERIALIZER

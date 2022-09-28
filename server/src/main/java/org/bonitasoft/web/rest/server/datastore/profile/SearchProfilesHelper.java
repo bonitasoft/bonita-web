@@ -35,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
 
 public class SearchProfilesHelper implements DatastoreHasSearch<ProfileItem> {
 
-    private ProfileEngineClient profileClient;
+    private final ProfileEngineClient profileClient;
 
     public SearchProfilesHelper(ProfileEngineClient profileClient) {
         this.profileClient = profileClient;

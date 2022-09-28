@@ -43,7 +43,7 @@ public class JSPUtils {
 
         // else, try reading in cookies
         if (result == null) {
-            final Cookie cookies[] = this.request.getCookies();
+            final Cookie[] cookies = this.request.getCookies();
             if (cookies != null) {
                 for (int i = 0; i < cookies.length; i++) {
                     if (cookies[i].getName().equals(name)) {
@@ -62,10 +62,6 @@ public class JSPUtils {
         return result;
     }
 
-    public String getSessionOrCookie(final String name) {
-        return this.getSessionOrCookie(name, null);
-    }
-
     public String getParameter(final String name, final String defaultValue) {
         String result = this.request.getParameter(name);
 
@@ -77,7 +73,7 @@ public class JSPUtils {
     }
 
     public String getParameter(final String name) {
-        return this.getParameter(name, (String) null);
+        return this.getParameter(name, null);
     }
     
     public HttpServletRequest getRequest() {
@@ -116,8 +112,7 @@ public class JSPUtils {
             try {
 
                 // If boolean is passed as an integer
-                final int intValue = Integer.parseInt(result);
-                return intValue;
+                return Integer.parseInt(result);
 
             } catch (final NumberFormatException e) {
                 // DO nothing

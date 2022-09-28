@@ -31,7 +31,7 @@ public class ActorMemberDefinition extends AbstractMemberDefinition {
     /**
      * Singleton
      */
-    public static final ActorMemberDefinition get() {
+    public static ActorMemberDefinition get() {
         return (ActorMemberDefinition) Definitions.get(TOKEN);
     }
 

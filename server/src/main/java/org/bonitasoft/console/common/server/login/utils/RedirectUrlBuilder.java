@@ -16,7 +16,6 @@
  */
 package org.bonitasoft.console.common.server.login.utils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,9 +31,9 @@ public class RedirectUrlBuilder {
 
     private final UrlBuilder urlBuilder;
 
-    private final List<String> blackList = Arrays.asList(
+    private final List<String> blackList = List.of(
             AuthenticationManager.REDIRECT_URL
-            );
+    );
 
     public RedirectUrlBuilder(final String redirectUrl) {
         urlBuilder = new UrlBuilder(redirectUrl != null ? redirectUrl : "");

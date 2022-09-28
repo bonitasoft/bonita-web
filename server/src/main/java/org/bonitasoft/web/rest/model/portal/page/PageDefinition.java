@@ -29,7 +29,7 @@ public class PageDefinition extends ItemDefinition<PageItem> {
 
     protected static final String API_URL = "../API/portal/page";
 
-    public static final PageDefinition get() {
+    public static PageDefinition get() {
         return (PageDefinition) Definitions.get(TOKEN);
     }
 

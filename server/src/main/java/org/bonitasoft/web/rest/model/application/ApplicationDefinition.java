@@ -67,7 +67,7 @@ public class ApplicationDefinition extends ItemDefinition<ApplicationItem> {
         return new ApplicationItem();
     }
 
-    public static final ApplicationDefinition get() {
+    public static ApplicationDefinition get() {
         return (ApplicationDefinition) Definitions.get(TOKEN);
     }
 

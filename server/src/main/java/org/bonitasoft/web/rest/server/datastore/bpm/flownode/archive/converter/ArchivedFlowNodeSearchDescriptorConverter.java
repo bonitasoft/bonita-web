@@ -31,8 +31,8 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
  */
 public class ArchivedFlowNodeSearchDescriptorConverter implements AttributeConverter {
 
-    protected static Map<String, String> mapping = new HashMap<>();
-    private static Map<String, TYPE> valueTypeMapping = new HashMap<>();
+    protected static final Map<String, String> mapping = new HashMap<>();
+    private static final Map<String, TYPE> valueTypeMapping = new HashMap<>();
 
     private static void addAttributeConverterItem(String webSearchKey, String engineSearchKey, TYPE attributeType) {
         mapping.put(webSearchKey, engineSearchKey);

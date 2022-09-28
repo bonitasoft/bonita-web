@@ -69,7 +69,7 @@ public class AuthenticationManagerProperties extends ConfigurationFile {
      */
     protected static final String CAS_BONITA_SERVICE_URL = "Cas.bonitaServiceURL";
 
-    private static Map<String, Optional<String>> authenticationProperties = new ConcurrentHashMap<>();
+    private static final Map<String, Optional<String>> authenticationProperties = new ConcurrentHashMap<>();
     
     /**
      * properties

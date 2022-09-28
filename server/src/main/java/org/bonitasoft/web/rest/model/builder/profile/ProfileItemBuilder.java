@@ -36,13 +36,13 @@ public class ProfileItemBuilder {
 
     protected String iconPath;
     
-    protected long createdBy = 0;
+    protected final long createdBy = 0;
     
-    protected String createdOn = null;
+    protected final String createdOn = null;
     
-    protected long updatedBy = 0;
+    protected final long updatedBy = 0;
     
-    protected String updatedOn = null;
+    protected final String updatedOn = null;
     
 
     public static ProfileItemBuilder aProfileItem() {

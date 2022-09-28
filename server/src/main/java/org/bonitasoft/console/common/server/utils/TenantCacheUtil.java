@@ -9,11 +9,11 @@ public class TenantCacheUtil {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(TenantCacheUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TenantCacheUtil.class.getName());
 
     protected static String CACHE_DISK_STORE_PATH = null;
 
-    protected static String PROCESS_ACTOR_INITIATOR_CACHE = "processActorInitiatorCache";
+    protected static final String PROCESS_ACTOR_INITIATOR_CACHE = "processActorInitiatorCache";
 
     protected TenantCacheUtil() {
         try {

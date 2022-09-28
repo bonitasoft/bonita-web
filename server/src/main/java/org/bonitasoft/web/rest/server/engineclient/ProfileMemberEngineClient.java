@@ -40,7 +40,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.T_;
  */
 public class ProfileMemberEngineClient {
 
-    private ProfileAPI profileApi;
+    private final ProfileAPI profileApi;
 
     protected ProfileMemberEngineClient(ProfileAPI profileApi) {
         this.profileApi = profileApi;

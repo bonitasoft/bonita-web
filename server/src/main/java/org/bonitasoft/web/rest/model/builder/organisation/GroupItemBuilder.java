@@ -24,13 +24,13 @@ import org.bonitasoft.web.rest.model.identity.GroupItem;
  *
  */
 public class GroupItemBuilder {
-    
-    private String name = "Group1";
-    private String displayName = "Group";
-    private String description = "Text for describe the group";
-    private String parentPath = "";
-    private String parentGroupId = "";
-    
+
+    private final String name = "Group1";
+    private final String displayName = "Group";
+    private final String description = "Text for describe the group";
+    private final String parentPath = "";
+    private final String parentGroupId = "";
+
     public static GroupItemBuilder aGroup() {
         return new GroupItemBuilder();
     }

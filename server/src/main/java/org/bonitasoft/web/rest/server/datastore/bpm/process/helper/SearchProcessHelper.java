@@ -34,7 +34,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class SearchProcessHelper implements DatastoreHasSearch<ProcessItem> {
 
-    private ProcessEngineClient engineClient;
+    private final ProcessEngineClient engineClient;
 
     public SearchProcessHelper(ProcessEngineClient engineClient) {
         this.engineClient = engineClient;

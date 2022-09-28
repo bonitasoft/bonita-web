@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class DeleteProfileMemberHelper implements DatastoreHasDelete {
 
-    private ProfileMemberEngineClient engineClient;
+    private final ProfileMemberEngineClient engineClient;
 
     public DeleteProfileMemberHelper(ProfileMemberEngineClient engineClient) {
         this.engineClient = engineClient;

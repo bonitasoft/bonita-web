@@ -16,7 +16,7 @@ public class BusinessDataModelDefinition extends ItemDefinition<BusinessDataMode
     public static final String TOKEN = "bdm";
     private static final String API_URL = "../API/tenant/" + TOKEN;
 
-    public static final BusinessDataModelDefinition get() {
+    public static BusinessDataModelDefinition get() {
         return (BusinessDataModelDefinition) Definitions.get(TOKEN);
     }
     

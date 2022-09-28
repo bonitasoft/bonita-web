@@ -47,9 +47,9 @@ import org.bonitasoft.web.toolkit.client.data.item.ItemDefinition;
 public class APICustomUserInfoValue extends ConsoleAPI<CustomUserInfoItem>
         implements APIHasSearch<CustomUserInfoItem>, APIHasUpdate<CustomUserInfoItem> {
 
-    private CustomUserInfoEngineClientCreator engineClientCreator;
+    private final CustomUserInfoEngineClientCreator engineClientCreator;
 
-    private CustomUserInfoConverter converter = new CustomUserInfoConverter();
+    private final CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
     public APICustomUserInfoValue(CustomUserInfoEngineClientCreator engineClientCreator) {
         this.engineClientCreator = engineClientCreator;

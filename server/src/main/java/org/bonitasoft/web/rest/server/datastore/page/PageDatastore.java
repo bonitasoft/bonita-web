@@ -88,7 +88,7 @@ public class PageDatastore extends CommonDatastore<PageItem, Page>
 
     private final BonitaHomeFolderAccessor tenantFolder;
 
-    private CustomPageContentValidator pageContentValidator;
+    private final CustomPageContentValidator pageContentValidator;
 
     private static boolean hasShownIsHiddenLog = false;
 

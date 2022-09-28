@@ -61,7 +61,7 @@ public abstract class AbstractArchivedFlowNodeDatastore<CONSOLE_ITEM extends Arc
      *        The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    public static final ArchivedFlowNodeItem fillConsoleItem(final ArchivedFlowNodeItem result, final ArchivedFlowNodeInstance item) {
+    public static ArchivedFlowNodeItem fillConsoleItem(final ArchivedFlowNodeItem result, final ArchivedFlowNodeInstance item) {
         result.setId(item.getId());
         result.setName(item.getName());
         result.setDisplayName(item.getDisplayName());

@@ -22,8 +22,8 @@ import java.util.Objects;
  */
 public class IconDescriptor {
 
-    private String filename;
-    private byte[] content;
+    private final String filename;
+    private final byte[] content;
 
     public IconDescriptor(String filename, byte[] content) {
         this.filename = filename;

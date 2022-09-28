@@ -77,7 +77,7 @@ public class LoginManager {
         // Otherwise, logging in with the credentials in the request (SSO) it is not mandatory it depends on the AuthenticationManager implementation used
         // some SSO mechanisms already handle it (SAML, OIDC).
         Boolean invalidateAndRecreateHTTPSessionIfSet = (Boolean) credentialsMap.remove(AuthenticationManager.INVALIDATE_SESSION);
-        boolean invalidateAndRecreateHTTPSession = invalidateAndRecreateHTTPSessionIfSet != null ? invalidateAndRecreateHTTPSessionIfSet.booleanValue() : true;
+        boolean invalidateAndRecreateHTTPSession = invalidateAndRecreateHTTPSessionIfSet == null || invalidateAndRecreateHTTPSessionIfSet.booleanValue();
         if(credentialsMap.isEmpty()) {
             if (credentials.getName() == null || credentials.getName().isEmpty()) {
                 LOGGER.debug("There are no credentials in the request");

@@ -76,7 +76,7 @@ public class ResourceExtensionResolver {
             throws NotFoundException {
         final Properties properties = new Properties();
 
-        try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties");) {
+        try (final InputStream resourceAsStream = pageResourceProvider.getResourceAsStream("page.properties")) {
             properties.load(resourceAsStream);
         } catch (final IOException e) {
             throw new NotFoundException("error while getting resource:" + generateMappingKey());

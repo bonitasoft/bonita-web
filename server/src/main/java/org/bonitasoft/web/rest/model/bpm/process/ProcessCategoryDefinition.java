@@ -30,7 +30,7 @@ public class ProcessCategoryDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final ProcessCategoryDefinition get() {
+    public static ProcessCategoryDefinition get() {
         return (ProcessCategoryDefinition) Definitions.get(TOKEN);
     }
 

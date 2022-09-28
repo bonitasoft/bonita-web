@@ -28,7 +28,7 @@ public class ProfileMemberDefinition extends AbstractMemberDefinition<ProfileMem
     /**
      * Singleton
      */
-    public static final ProfileMemberDefinition get() {
+    public static ProfileMemberDefinition get() {
         return (ProfileMemberDefinition) Definitions.get(TOKEN);
     }
 

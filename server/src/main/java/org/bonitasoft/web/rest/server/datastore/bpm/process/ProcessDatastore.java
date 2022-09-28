@@ -116,8 +116,7 @@ public class ProcessDatastore extends CommonDatastore<ProcessItem, ProcessDeploy
     }
 
     protected BonitaHomeFolderAccessor getTenantFolder() {
-        final BonitaHomeFolderAccessor tenantFolder = new BonitaHomeFolderAccessor();
-        return tenantFolder;
+        return new BonitaHomeFolderAccessor();
     }
 
     /*

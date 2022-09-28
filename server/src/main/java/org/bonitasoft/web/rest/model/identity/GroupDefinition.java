@@ -29,7 +29,7 @@ public class GroupDefinition extends ItemDefinition<GroupItem> {
     /**
      * Singleton
      */
-    public static final GroupDefinition get() {
+    public static GroupDefinition get() {
         return (GroupDefinition) Definitions.get(TOKEN);
     }
 

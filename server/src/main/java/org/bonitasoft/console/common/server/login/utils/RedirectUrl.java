@@ -22,7 +22,7 @@ package org.bonitasoft.console.common.server.login.utils;
  */
 public class RedirectUrl {
 
-    private String url;
+    private final String url;
 
     protected RedirectUrl(String url) {
         this.url = url;

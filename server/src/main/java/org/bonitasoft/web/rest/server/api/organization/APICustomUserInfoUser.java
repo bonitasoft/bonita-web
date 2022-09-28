@@ -43,9 +43,9 @@ public class APICustomUserInfoUser extends ConsoleAPI<CustomUserInfoItem> implem
 
     public static final String FIX_ORDER = "Fix order";
 
-    private CustomUserInfoEngineClientCreator engineClientCreator;
+    private final CustomUserInfoEngineClientCreator engineClientCreator;
 
-    private CustomUserInfoConverter converter = new CustomUserInfoConverter();
+    private final CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
     public APICustomUserInfoUser(CustomUserInfoEngineClientCreator engineClientCreator) {
         this.engineClientCreator = engineClientCreator;

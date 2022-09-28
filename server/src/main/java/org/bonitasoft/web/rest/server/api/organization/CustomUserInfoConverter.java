@@ -21,7 +21,6 @@ import org.bonitasoft.engine.identity.CustomUserInfoDefinition;
 import org.bonitasoft.engine.identity.CustomUserInfoValue;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoDefinitionItem;
 import org.bonitasoft.web.rest.model.identity.CustomUserInfoItem;
-import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
 import org.bonitasoft.web.rest.server.datastore.converter.ItemConverter;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 

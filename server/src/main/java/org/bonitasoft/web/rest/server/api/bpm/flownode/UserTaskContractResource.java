@@ -31,7 +31,7 @@ public class UserTaskContractResource extends CommonResource {
 
     private final ProcessAPI processAPI;
 
-    protected ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
+    protected final ContractTypeConverter typeConverterUtil = new ContractTypeConverter(ContractTypeConverter.ISO_8601_DATE_PATTERNS);
 
     public UserTaskContractResource(final ProcessAPI processAPI) {
         this.processAPI = processAPI;

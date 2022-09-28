@@ -40,7 +40,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 // TODO migrate all engine methods relating to cases (i.e. especially those in CaseDatastore) in this class
 public class CaseEngineClient {
 
-    protected ProcessAPI processAPI;
+    protected final ProcessAPI processAPI;
 
     public CaseEngineClient(final ProcessAPI processAPI) {
         this.processAPI = processAPI;

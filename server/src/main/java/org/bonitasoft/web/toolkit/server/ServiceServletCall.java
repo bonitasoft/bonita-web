@@ -39,7 +39,7 @@ import org.bonitasoft.web.toolkit.client.common.json.JsonSerializable;
 public class ServiceServletCall extends ServletCall {
 
     private String calledToolToken;
-	private ServiceFactory serviceFactory;
+	private final ServiceFactory serviceFactory;
 
     public ServiceServletCall(ServiceFactory serviceFactory, final HttpServletRequest request, final HttpServletResponse response) {
         super(request, response);

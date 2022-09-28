@@ -30,7 +30,7 @@ public class ProfileDefinition extends ItemDefinition<ProfileItem> {
     /**
      * Singleton
      */
-    public static final ProfileDefinition get() {
+    public static ProfileDefinition get() {
         return (ProfileDefinition) Definitions.get(TOKEN);
     }
 

@@ -73,9 +73,7 @@ public class APIArchivedCaseDocument extends ConsoleAPI<ArchivedCaseDocumentItem
     public ItemSearchResult<ArchivedCaseDocumentItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final ItemSearchResult<ArchivedCaseDocumentItem> results = getArchivedCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
-
-        return results;
+        return getArchivedCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
     }
 
     @Override

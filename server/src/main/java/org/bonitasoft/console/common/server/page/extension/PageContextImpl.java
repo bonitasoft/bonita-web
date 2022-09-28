@@ -27,11 +27,11 @@ import org.bonitasoft.web.extension.page.PageContext;
  */
 public class PageContextImpl implements PageContext {
 
-    protected APISession apiSession;
+    protected final APISession apiSession;
 
-    protected Locale locale;
+    protected final Locale locale;
 
-    protected String profileID;
+    protected final String profileID;
 
     public PageContextImpl(final APISession apiSession, final Locale locale, final String profileID) {
         super();

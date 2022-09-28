@@ -79,12 +79,12 @@ public class FormsResourcesUtils {
     /**
      * Util class allowing to work with the BPM engine API
      */
-    protected static BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
+    protected static final BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
 
     /**
      * Logger
      */
-    protected static Logger LOGGER = LoggerFactory.getLogger(FormsResourcesUtils.class.getName());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(FormsResourcesUtils.class.getName());
 
     /**
      * Retrieve the web resources from the business archive and store them in a local directory

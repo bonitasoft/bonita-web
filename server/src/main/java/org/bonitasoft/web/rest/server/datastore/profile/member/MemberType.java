@@ -24,7 +24,7 @@ public enum MemberType {
     ROLE(AbstractMemberItem.VALUE_MEMBER_TYPE_ROLE),
     MEMBERSHIP(AbstractMemberItem.VALUE_MEMBER_TYPE_MEMBERSHIP);
 
-    private String type;
+    private final String type;
 
     MemberType(String type) {
         this.type = type;

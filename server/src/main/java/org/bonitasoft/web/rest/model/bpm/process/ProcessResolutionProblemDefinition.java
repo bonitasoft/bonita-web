@@ -27,7 +27,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.validator.EnumValid
  */
 public class ProcessResolutionProblemDefinition extends ItemDefinition<ProcessResolutionProblemItem> {
 
-    public static final ProcessResolutionProblemDefinition get() {
+    public static ProcessResolutionProblemDefinition get() {
         return (ProcessResolutionProblemDefinition) Definitions.get(TOKEN);
     }
 

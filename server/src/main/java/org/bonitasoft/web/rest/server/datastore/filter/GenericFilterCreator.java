@@ -25,7 +25,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute.TYPE;
  */
 public class GenericFilterCreator implements FilterCreator {
 
-    protected AttributeConverter fieldConverter;
+    protected final AttributeConverter fieldConverter;
 
     public GenericFilterCreator(AttributeConverter fieldConverter) {
         this.fieldConverter = fieldConverter;

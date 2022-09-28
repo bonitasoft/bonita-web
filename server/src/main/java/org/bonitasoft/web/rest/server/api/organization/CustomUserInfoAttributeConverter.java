@@ -31,7 +31,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
  */
 public class CustomUserInfoAttributeConverter implements AttributeConverter {
 
-    private static Map<String, String> attributes = new HashMap<>();
+    private static final Map<String, String> attributes = new HashMap<>();
 
     static {
         attributes.put(ATTRIBUTE_USER_ID, USER_ID);

@@ -30,7 +30,7 @@ public class I18nTranslationDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final I18nTranslationDefinition get() {
+    public static I18nTranslationDefinition get() {
         return (I18nTranslationDefinition) Definitions.get(TOKEN);
     }
 

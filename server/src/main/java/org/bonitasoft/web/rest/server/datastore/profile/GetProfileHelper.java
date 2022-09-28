@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class GetProfileHelper implements DatastoreHasGet<ProfileItem> {
 
-    private ProfileEngineClient profileClient;
+    private final ProfileEngineClient profileClient;
 
     public GetProfileHelper(ProfileEngineClient profileClient) {
         this.profileClient = profileClient;

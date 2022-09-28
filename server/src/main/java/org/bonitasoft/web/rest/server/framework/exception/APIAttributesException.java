@@ -73,10 +73,8 @@ public class APIAttributesException extends APIException {
 
     @Override
     protected String defaultMessage() {
-        return new StringBuilder()
-                .append("Malformed attributes : ")
-                .append(ListUtils.join(this.attributesNames, ", "))
-                .toString();
+        return "Malformed attributes : " +
+                ListUtils.join(this.attributesNames, ", ");
     }
 
 }

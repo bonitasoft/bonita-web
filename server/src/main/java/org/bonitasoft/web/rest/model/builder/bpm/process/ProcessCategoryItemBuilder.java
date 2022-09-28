@@ -24,8 +24,8 @@ import org.bonitasoft.web.rest.model.bpm.process.ProcessCategoryItem;
  */
 public class ProcessCategoryItemBuilder {
 
-    private long processId = 1L;
-    private long categoryId = 1L;
+    private final long processId = 1L;
+    private final long categoryId = 1L;
 
     public static ProcessCategoryItemBuilder aProcessCategory() {
         return new ProcessCategoryItemBuilder();

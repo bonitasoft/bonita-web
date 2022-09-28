@@ -50,13 +50,10 @@ public class SearchOptionsCreator {
 
     private void addFilter(SearchOptionsBuilder builder, Filter<?> filter) {
         if (!StringUtil.isBlank(filter.getField())) {
-            switch (filter.getOperator()) {
-                case DIFFERENT_FROM:
-                    builder.differentFrom(filter.getField(), filter.getValue());
-                    break;
-                default:
-                    builder.filter(filter.getField(), filter.getValue());
-                    break;
+            if (filter.getOperator() == Filter.Operator.DIFFERENT_FROM) {
+                builder.differentFrom(filter.getField(), filter.getValue());
+            } else {
+                builder.filter(filter.getField(), filter.getValue());
             }
 
         }

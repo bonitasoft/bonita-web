@@ -26,7 +26,7 @@ public class ApplicationRouter {
 
     private final ApplicationModelFactory applicationModelFactory;
 
-    protected CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
+    protected final CustomPageRequestModifier customPageRequestModifier = new CustomPageRequestModifier();
 
     protected final String THEME_TOKEN = "theme";
 
@@ -56,7 +56,6 @@ public class ApplicationRouter {
         } else {
             hsResponse.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
             hsResponse.flushBuffer();
-            return;
         }
     }
 

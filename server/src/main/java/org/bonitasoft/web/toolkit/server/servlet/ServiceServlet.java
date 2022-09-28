@@ -32,7 +32,7 @@ import org.bonitasoft.web.toolkit.server.ServletCall;
 @SuppressWarnings("serial")
 public abstract class ServiceServlet extends ToolkitHttpServlet {
 
-	private ServiceFactory serviceFactory;
+	private final ServiceFactory serviceFactory;
 
 	public ServiceServlet(ServiceFactory serviceFactory) {
 		this.serviceFactory = serviceFactory;

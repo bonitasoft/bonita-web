@@ -14,7 +14,7 @@
  */
 package org.bonitasoft.web.rest.server.datastore.bpm.flownode;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +57,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
      *        The engine item to use for filling
      * @return This method returns the result parameter passed.
      */
-    protected static final HumanTaskItem fillConsoleItem(final HumanTaskItem result, final HumanTaskInstance item) {
+    protected static HumanTaskItem fillConsoleItem(final HumanTaskItem result, final HumanTaskInstance item) {
         TaskDatastore.fillConsoleItem(result, item);
 
         result.setActorId(APIID.makeAPIID(item.getActorId()));
@@ -91,8 +91,6 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
         }
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_STATE, HumanTaskInstanceSearchDescriptor.STATE_NAME);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_TYPE, ActivityInstanceSearchDescriptor.ACTIVITY_TYPE);
-        // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_SUPERVISOR_ID, HumanTaskInstanceSearchDescriptor.SUPERVISOR_ID);
-        // addFilterToSearchBuilder(filters, builder, HumanTaskItem.FILTER_TEAM_MANAGER_ID, HumanTaskInstanceSearchDescriptor.TEAM_MANAGER_ID);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_ASSIGNED_USER_ID, HumanTaskInstanceSearchDescriptor.ASSIGNEE_ID);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_PRIORITY, HumanTaskInstanceSearchDescriptor.PRIORITY);
         addStringFilterToSearchBuilder(filters, builder, HumanTaskItem.ATTRIBUTE_NAME, HumanTaskInstanceSearchDescriptor.NAME);
@@ -147,6 +145,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
                 // Show also assigned to other users
                 if(filters.containsKey(HumanTaskItem.FILTER_SHOW_ASSIGNED_TO_OTHERS)
                         && Boolean.parseBoolean(filters.get(HumanTaskItem.FILTER_SHOW_ASSIGNED_TO_OTHERS))){
+                    @SuppressWarnings("unchecked")
                     final SearchResult<ENGINE_ITEM> searchPendingTasks = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchPendingOrAssignedToUserOrAssignedToOthersTasks(
                             id.toLong(), builder.done());
                     return searchPendingTasks;
@@ -191,7 +190,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
     private SearchResult<ENGINE_ITEM> runTeamManagerSearch(final Map<String, String> filters, final SearchOptionsBuilder builder, final Long teamManagerId) {
         try {
             if (filters.containsKey(HumanTaskItem.FILTER_IS_ASSIGNED)) {
-                if (MapUtil.getValueAsBoolean(filters, HumanTaskItem.FILTER_IS_ASSIGNED)) {
+                if (Boolean.TRUE.equals(MapUtil.getValueAsBoolean(filters, HumanTaskItem.FILTER_IS_ASSIGNED))) {
                     @SuppressWarnings("unchecked")
                     final SearchResult<ENGINE_ITEM> searchResult = (SearchResult<ENGINE_ITEM>) getProcessAPI().searchAssignedTasksManagedBy(teamManagerId,
                             builder.done());
@@ -300,7 +299,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
     public Long getNumberOfOpenTasks(final APIID userId) {
         try {
-            return getProcessAPI().getNumberOfOpenTasks(Arrays.asList(userId.toLong()))
+            return getProcessAPI().getNumberOfOpenTasks(Collections.singletonList(userId.toLong()))
                     .get(userId.toLong());
         } catch (final Exception e) {
             throw new APIException(e);
@@ -309,7 +308,7 @@ public class AbstractHumanTaskDatastore<CONSOLE_ITEM extends HumanTaskItem, ENGI
 
     public Long getNumberOfOverdueOpenTasks(final APIID userId) {
         try {
-            return getProcessAPI().getNumberOfOverdueOpenTasks(Arrays.asList(userId.toLong()))
+            return getProcessAPI().getNumberOfOverdueOpenTasks(Collections.singletonList(userId.toLong()))
                     .get(userId.toLong());
         } catch (final Exception e) {
             throw new APIException(e);

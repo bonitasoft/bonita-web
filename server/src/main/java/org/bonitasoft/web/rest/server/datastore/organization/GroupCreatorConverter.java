@@ -27,7 +27,7 @@ import org.bonitasoft.web.rest.server.engineclient.GroupEngineClient;
  */
 public class GroupCreatorConverter {
 
-    private GroupEngineClient groupEngineClient;
+    private final GroupEngineClient groupEngineClient;
 
     public GroupCreatorConverter(GroupEngineClient groupEngineClient) {
         this.groupEngineClient = groupEngineClient;

@@ -231,7 +231,6 @@ public class PageServlet extends HttpServlet {
                     final String message = "Both URL and pageId are not set in the page mapping for " + mappingKey;
                     LOGGER.debug(message);
                 }
-                return;
             }
         } catch (final UnauthorizedAccessException e) {
             final String message = "User not Authorized";

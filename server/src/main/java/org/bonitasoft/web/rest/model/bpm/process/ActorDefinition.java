@@ -37,7 +37,7 @@ public class ActorDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final ActorDefinition get() {
+    public static ActorDefinition get() {
         return (ActorDefinition) Definitions.get(TOKEN);
     }
 

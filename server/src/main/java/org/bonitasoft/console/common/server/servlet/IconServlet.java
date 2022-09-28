@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -105,7 +106,7 @@ public abstract class IconServlet extends HttpServlet {
     }
 
     private void setHeaders(HttpServletRequest request, HttpServletResponse response, Long iconId) throws UnsupportedEncodingException {
-        final String encodedFileName = URLEncoder.encode(String.valueOf(iconId), "UTF-8");
+        final String encodedFileName = URLEncoder.encode(String.valueOf(iconId), StandardCharsets.UTF_8);
         final String userAgent = request.getHeader("User-Agent");
         if (userAgent != null && userAgent.contains("Firefox")) {
             response.setHeader("Content-Disposition", "inline; filename*=UTF-8''" + encodedFileName);

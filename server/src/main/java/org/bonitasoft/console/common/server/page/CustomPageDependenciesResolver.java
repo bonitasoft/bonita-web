@@ -61,7 +61,7 @@ public class CustomPageDependenciesResolver {
         final File customPageLibDirectory = new File(pageDirectory, LIB_FOLDER_NAME);
         if (customPageLibDirectory.exists()) {
             this.libTempFolder = new File(this.webBonitaConstantsUtils.getTempFolder(), pageName
-                    + Long.toString(new Date().getTime()));
+                    + new Date().getTime());
             if (!this.libTempFolder.exists()) {
                 this.libTempFolder.mkdirs();
             }

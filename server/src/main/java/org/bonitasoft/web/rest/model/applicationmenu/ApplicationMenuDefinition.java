@@ -55,7 +55,7 @@ public class ApplicationMenuDefinition extends ItemDefinition<ApplicationMenuIte
         return new ApplicationMenuItem();
     }
 
-    public static final ApplicationMenuDefinition get() {
+    public static ApplicationMenuDefinition get() {
         return (ApplicationMenuDefinition) Definitions.get(TOKEN);
     }
 

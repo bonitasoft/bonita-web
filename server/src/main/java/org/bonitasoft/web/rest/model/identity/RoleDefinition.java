@@ -29,7 +29,7 @@ public class RoleDefinition extends ItemDefinition<RoleItem> {
     /**
      * Singleton
      */
-    public static final RoleDefinition get() {
+    public static RoleDefinition get() {
         return (RoleDefinition) Definitions.get(TOKEN);
     }
 

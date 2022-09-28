@@ -29,7 +29,7 @@ import org.restlet.resource.Get;
  */
 public class I18nTranslationResource extends CommonResource {
 
-    private I18n i18n;
+    private final I18n i18n;
 
     public I18nTranslationResource(I18n i18n) {
         this.i18n = i18n;

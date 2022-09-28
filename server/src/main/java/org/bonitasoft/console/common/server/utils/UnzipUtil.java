@@ -47,13 +47,13 @@ public class UnzipUtil {
      * @throws FileNotFoundException
      */
     public static synchronized void unzip(final File zipFile, final String targetPath) throws FileNotFoundException, IOException {
-        try (final FileInputStream zipFileInputStream = new FileInputStream(zipFile);) {
+        try (final FileInputStream zipFileInputStream = new FileInputStream(zipFile)) {
             unzip(zipFileInputStream, targetPath);
         }
 
     }
 
-    public static synchronized void unzip(final File zipFile, final String targetPath, final boolean deleteFileAfterZip) throws FileNotFoundException,
+    public static synchronized void unzip(final File zipFile, final String targetPath, final boolean deleteFileAfterZip) throws
             IOException {
         unzip(zipFile, targetPath);
         if (deleteFileAfterZip) {

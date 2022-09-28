@@ -30,7 +30,7 @@ public class AddProfileMemberHelper implements DatastoreHasAdd<ProfileMemberItem
 
     private static final Long UNSET = null;
 
-    private ProfileMemberEngineClient engineClient;
+    private final ProfileMemberEngineClient engineClient;
 
     public AddProfileMemberHelper(ProfileMemberEngineClient engineClient) {
         this.engineClient = engineClient;

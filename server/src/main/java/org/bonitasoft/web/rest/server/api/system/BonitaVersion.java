@@ -28,7 +28,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class BonitaVersion {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(BonitaVersion.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BonitaVersion.class.getName());
 
     private List<String> metadata;
 

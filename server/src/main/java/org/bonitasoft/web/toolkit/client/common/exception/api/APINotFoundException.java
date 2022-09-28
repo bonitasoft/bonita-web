@@ -43,7 +43,11 @@ public class APINotFoundException extends APIException {
 
     @Override
     protected String defaultMessage() {
-        return "API " + getApi() + " or resource " + getResource() + " doesn't exist or is not declared";
+        return "API " +
+                getApi() +
+                " or resource " +
+                getResource() +
+                " doesn't exist or is not declared";
     }
 
 }

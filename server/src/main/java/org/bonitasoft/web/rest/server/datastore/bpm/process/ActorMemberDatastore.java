@@ -24,7 +24,6 @@ import org.bonitasoft.console.common.server.utils.ListUtil;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.bpm.actor.ActorMember;
-import org.bonitasoft.engine.bpm.actor.ActorNotFoundException;
 import org.bonitasoft.engine.exception.AlreadyExistsException;
 import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
 import org.bonitasoft.engine.exception.CreationException;
@@ -221,7 +220,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         }
     }
 
-    private ActorMember addGroupActorMember(final ActorMemberItem item) throws InvalidSessionException, ActorNotFoundException, NotFoundException,
+    private ActorMember addGroupActorMember(final ActorMemberItem item) throws InvalidSessionException, NotFoundException,
              BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         try {
             return getProcessAPI().addGroupToActor(item.getActorId().toLong(), item.getGroupId().toLong());
@@ -232,7 +231,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         }
     }
 
-    private ActorMember addRoleActorMember(final ActorMemberItem item) throws InvalidSessionException, ActorNotFoundException, NotFoundException,
+    private ActorMember addRoleActorMember(final ActorMemberItem item) throws InvalidSessionException, NotFoundException,
             BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         try {
             return getProcessAPI().addRoleToActor(item.getActorId().toLong(), item.getRoleId().toLong());
@@ -241,7 +240,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         }
     }
 
-    private ActorMember addMembershipActorMember(final ActorMemberItem item) throws InvalidSessionException, ActorNotFoundException, NotFoundException,
+    private ActorMember addMembershipActorMember(final ActorMemberItem item) throws InvalidSessionException,
             NotFoundException, BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         try {
             return getProcessAPI()
@@ -251,7 +250,7 @@ public class ActorMemberDatastore extends CommonDatastore<ActorMemberItem, Actor
         }
     }
 
-    private ActorMember addUserActorMember(final ActorMemberItem item) throws InvalidSessionException, ActorNotFoundException, NotFoundException,
+    private ActorMember addUserActorMember(final ActorMemberItem item) throws InvalidSessionException, NotFoundException,
             BonitaHomeNotSetException, ServerAPIException, UnknownAPITypeException {
         try {
             return getProcessAPI().addUserToActor(item.getActorId().toLong(), item.getUserId().toLong());

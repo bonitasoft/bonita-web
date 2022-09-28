@@ -69,15 +69,15 @@ public class PlatformLoginServlet extends HttpServlet {
      * the URL of the login page
      */
     // FIXME: page does not exist:
-    protected static String LOGIN_PAGE = "/platformLogin.jsp";
+    protected static final String LOGIN_PAGE = "/platformLogin.jsp";
 
     // FIXME: page does not exist:
-    protected static String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
+    protected static final String PLATFORM_PAGE = "platform/BonitaPlatform.html#?_p=Platform";
 
     public static final String ERROR_MESSAGE = "Error while logging in to the platform";
 
-    protected TokenGenerator tokenGenerator = new TokenGenerator();
-    protected PortalCookies portalCookies = new PortalCookies();
+    protected final TokenGenerator tokenGenerator = new TokenGenerator();
+    protected final PortalCookies portalCookies = new PortalCookies();
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {

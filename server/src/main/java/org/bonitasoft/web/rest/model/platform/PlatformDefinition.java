@@ -29,7 +29,7 @@ public class PlatformDefinition extends ItemDefinition<PlatformItem> {
     /**
      * Singleton
      */
-    public static final PlatformDefinition get() {
+    public static PlatformDefinition get() {
         return (PlatformDefinition) Definitions.get(TOKEN);
     }
 

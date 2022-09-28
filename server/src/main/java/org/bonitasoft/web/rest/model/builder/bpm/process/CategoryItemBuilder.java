@@ -24,8 +24,8 @@ import org.bonitasoft.web.rest.model.bpm.process.CategoryItem;
  */
 public class CategoryItemBuilder {
 
-    private String description = "aDescription";
-    private String name = "aCategory";
+    private final String description = "aDescription";
+    private final String name = "aCategory";
 
     public static CategoryItemBuilder aCategoryItem() {
         return new CategoryItemBuilder();

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public abstract class ServletCall {
      * The parameters of the URL.<br />
      * Result of the parsing of the query string : "?a=b&c=d&..."
      */
-    protected Map<String, String[]> parameters = new HashMap<>();
+    protected final Map<String, String[]> parameters = new HashMap<>();
 
     /**
      * The request made to access this servletCall.
@@ -134,7 +135,7 @@ public abstract class ServletCall {
                 // BS-8474 - use custom reader instead of request reader to avoid JBoss5.1 bug
                 // see https://issues.jboss.org/browse/JBAS-7817
                 final ServletInputStream stream = request.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
 
                 final StringBuilder sb = new StringBuilder();
                 String line = reader.readLine();
@@ -182,7 +183,7 @@ public abstract class ServletCall {
      * @return This method returns the values of a parameter as a list of String or null if the parameter isn't defined
      */
     public List<String> getParameterAsList(final String name) {
-        return getParameterAsList(name, (String) null);
+        return getParameterAsList(name, null);
     }
 
     /**
@@ -214,7 +215,7 @@ public abstract class ServletCall {
      * @return This method returns the first value of a parameter as a String or null if the parameter isn't define
      */
     public String getParameter(final String name) {
-        return getParameter(name, (String) null);
+        return getParameter(name, null);
     }
 
     /**

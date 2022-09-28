@@ -32,7 +32,7 @@ public class MembershipDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final MembershipDefinition get() {
+    public static MembershipDefinition get() {
         return (MembershipDefinition) Definitions.get(TOKEN);
     }
 

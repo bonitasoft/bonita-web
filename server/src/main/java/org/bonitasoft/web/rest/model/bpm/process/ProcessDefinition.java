@@ -27,7 +27,7 @@ public class ProcessDefinition extends ItemDefinition<ProcessItem> {
     /**
      * Singleton
      */
-    public static final ProcessDefinition get() {
+    public static ProcessDefinition get() {
         return (ProcessDefinition) Definitions.get(TOKEN);
     }
 

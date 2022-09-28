@@ -53,7 +53,7 @@ public class ProcessFormServlet extends HttpServlet {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(ProcessFormServlet.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessFormServlet.class.getName());
 
     private static final String PAGE_SERVLET_MAPPING = "/portal/resource/";
 

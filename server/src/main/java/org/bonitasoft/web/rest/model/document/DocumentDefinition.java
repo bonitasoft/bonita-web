@@ -30,7 +30,7 @@ public class DocumentDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final DocumentDefinition get() {
+    public static DocumentDefinition get() {
         return (DocumentDefinition) Definitions.get(TOKEN);
     }
 

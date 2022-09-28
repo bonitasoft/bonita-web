@@ -77,8 +77,7 @@ public class APICategory extends ConsoleAPI<CategoryItem> implements APIHasAdd<C
     @Override
     public ItemSearchResult<CategoryItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
-        final ItemSearchResult<CategoryItem> results = new CategoryDatastore(getEngineSession()).search(page, resultsByPage, search, orders, filters);
-        return results;
+        return new CategoryDatastore(getEngineSession()).search(page, resultsByPage, search, orders, filters);
     }
 
     @Override

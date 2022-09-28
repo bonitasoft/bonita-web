@@ -90,7 +90,6 @@ public class CustomPageServlet extends HttpServlet {
                 }
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "User not Authorized");
-                return;
             }
         } catch (final Exception e) {
             handleException(pageName, e);

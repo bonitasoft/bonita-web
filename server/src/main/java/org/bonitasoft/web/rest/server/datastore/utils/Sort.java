@@ -33,11 +33,11 @@ public class Sort {
 
     private static final String SEPARATOR = " ";
 
-    private String field;
+    private final String field;
 
-    private Order order;
+    private final Order order;
 
-    private AttributeConverter converter;
+    private final AttributeConverter converter;
 
     public Sort(String sortValue, AttributeConverter converter) {
         this.converter = converter;
@@ -73,29 +73,31 @@ public class Sort {
 
     @Override
     public String toString() {
-        return new StringBuilder().append(getField())
-                                  .append(SEPARATOR)
-                                  .append(getOrder()).toString();
+        return getField() +
+                SEPARATOR +
+                getOrder();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-
+        }
         Sort other = (Sort) obj;
         if (field == null) {
-            if (other.field != null)
+            if (other.field != null) {
                 return false;
-        } else if (!field.equals(other.field))
+            }
+        } else if (!field.equals(other.field)) {
             return false;
-        if (order != other.order)
-            return false;
-        return true;
+        }
+        return order == other.order;
     }
 
 }

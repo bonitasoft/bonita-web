@@ -38,7 +38,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
  */
 public class ActivityEngineClient {
 
-    private ProcessAPI processAPI;
+    private final ProcessAPI processAPI;
 
     public ActivityEngineClient(ProcessAPI processAPI) {
         this.processAPI = processAPI;

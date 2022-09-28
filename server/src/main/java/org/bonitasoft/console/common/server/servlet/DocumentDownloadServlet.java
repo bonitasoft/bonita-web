@@ -109,7 +109,7 @@ public class DocumentDownloadServlet extends HttpServlet {
     /**
      * Util class allowing to work with the BPM engine API
      */
-    protected BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
+    protected final BPMEngineAPIUtil bpmEngineAPIUtil = new BPMEngineAPIUtil();
 
     /**
      * Logger
@@ -230,7 +230,7 @@ public class DocumentDownloadServlet extends HttpServlet {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try {
-            final String encodedfileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name());
+            final String encodedfileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
             final String userAgent = request.getHeader("User-Agent");
             if (userAgent != null && userAgent.contains("Firefox")) {
                 response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedfileName.replace("+", "%20"));

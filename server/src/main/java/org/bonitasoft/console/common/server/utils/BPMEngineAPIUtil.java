@@ -37,7 +37,7 @@ public class BPMEngineAPIUtil {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(BPMEngineAPIUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BPMEngineAPIUtil.class.getName());
 
     /**
      * Get the engine process API

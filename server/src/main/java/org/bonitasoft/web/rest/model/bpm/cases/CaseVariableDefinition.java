@@ -34,7 +34,7 @@ public class CaseVariableDefinition extends ItemDefinition<CaseVariableItem> {
 
     public static final String TOKEN = "caseVariable";
 
-    public static final CaseVariableDefinition get() {
+    public static CaseVariableDefinition get() {
         return (CaseVariableDefinition) Definitions.get(TOKEN);
     }
 

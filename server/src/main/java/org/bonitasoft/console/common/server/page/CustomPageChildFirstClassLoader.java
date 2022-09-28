@@ -39,7 +39,7 @@ import org.apache.commons.io.FileUtils;
  */
 public class CustomPageChildFirstClassLoader extends MonoParentJarFileClassLoader implements VersionedClassloader {
 
-    protected Map<String, byte[]> nonJarResources = new HashMap<>();
+    protected final Map<String, byte[]> nonJarResources = new HashMap<>();
 
     private boolean isActive = true;
 

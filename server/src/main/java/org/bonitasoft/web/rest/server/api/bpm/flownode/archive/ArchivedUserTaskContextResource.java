@@ -19,7 +19,7 @@ public class ArchivedUserTaskContextResource extends CommonResource {
     static final String ARCHIVED_TASK_ID = "archivedTaskId";
 
     private final ProcessAPI processAPI;
-    private FinderFactory resourceHandler;
+    private final FinderFactory resourceHandler;
 
    public ArchivedUserTaskContextResource(final ProcessAPI processAPI, FinderFactory resourceHandler) {
        this.processAPI = processAPI;

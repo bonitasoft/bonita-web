@@ -46,7 +46,7 @@ public class LocaleUtils {
 
     private static final String DEFAULT_APPLICATION = "portal";
 
-    private static I18n i18n = I18n.getInstance();
+    private static final I18n i18n = I18n.getInstance();
 
     private static final Map<String, String> AVAILABLE_LOCALES = i18n.getAvailableLocalesFor(DEFAULT_APPLICATION);
 

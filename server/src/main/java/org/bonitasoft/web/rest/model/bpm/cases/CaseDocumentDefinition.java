@@ -30,7 +30,7 @@ public class CaseDocumentDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final CaseDocumentDefinition get() {
+    public static CaseDocumentDefinition get() {
         return (CaseDocumentDefinition) Definitions.get(TOKEN);
     }
 

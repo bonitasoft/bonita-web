@@ -66,7 +66,7 @@ public class JSonSerializer extends JSonUtil {
         return quoteInternal(object.toString());
     }
 
-    public static String serializeCollection(final Collection<? extends Object> list) {
+    public static String serializeCollection(final Collection<?> list) {
         return serializeCollectionInternal(list).toString();
     }
 
@@ -84,7 +84,7 @@ public class JSonSerializer extends JSonUtil {
         return json;
     }
 
-    public static String serializeMap(final Map<? extends Object, ? extends Object> map) {
+    public static String serializeMap(final Map<?, ?> map) {
         return serializeMapInternal(map).toString();
     }
 
@@ -106,7 +106,7 @@ public class JSonSerializer extends JSonUtil {
         return new JsonExceptionSerializer(e).end();
     }
 
-    public static String serializeStringMap(final Map<? extends Object, String> map) {
+    public static String serializeStringMap(final Map<?, String> map) {
         return serializeStringMapInternal(map).toString();
     }
 

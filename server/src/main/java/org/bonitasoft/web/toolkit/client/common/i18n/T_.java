@@ -24,7 +24,7 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
 
 public class T_ {
 
-    private String message;
+    private final String message;
     private Arg[] args;
 
     public T_(String message) {

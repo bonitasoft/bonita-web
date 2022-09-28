@@ -27,7 +27,7 @@ import org.bonitasoft.web.rest.model.bpm.flownode.ArchivedHumanTaskItem;
  */
 public class ArchivedActivitySearchDescriptorConverter extends ArchivedFlowNodeSearchDescriptorConverter {
 
-    private static Map<String, String> additionalAttributes = new HashMap<>();
+    private static final Map<String, String> additionalAttributes = new HashMap<>();
 
     static {
         additionalAttributes.put(ArchivedActivityItem.ATTRIBUTE_REACHED_STATE_DATE, ArchivedActivityInstanceSearchDescriptor.REACHED_STATE_DATE);

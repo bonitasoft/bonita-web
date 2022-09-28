@@ -53,11 +53,11 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class ProcessEngineClient {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ProcessEngineClient.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessEngineClient.class.getName());
 
     private static final int DELETE_PROCESS_BUNCH_SIZE = 100;
 
-    protected ProcessAPI processAPI;
+    protected final ProcessAPI processAPI;
 
     public ProcessEngineClient(final ProcessAPI processAPI) {
         this.processAPI = processAPI;

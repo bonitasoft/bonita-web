@@ -2,7 +2,6 @@ package org.bonitasoft.web.rest.server.datastore.page;
 
 import org.bonitasoft.console.common.server.page.CustomPageService;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
-import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.BonitaHomeFolderAccessor;
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.session.APISession;

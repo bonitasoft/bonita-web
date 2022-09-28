@@ -30,7 +30,7 @@ public class ArchivedDocumentDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final ArchivedDocumentDefinition get() {
+    public static ArchivedDocumentDefinition get() {
         return (ArchivedDocumentDefinition) Definitions.get(TOKEN);
     }
 

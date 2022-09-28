@@ -30,7 +30,7 @@ public class ProcessConnectorDependencyDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final ProcessConnectorDependencyDefinition get() {
+    public static ProcessConnectorDependencyDefinition get() {
         return (ProcessConnectorDependencyDefinition) Definitions.get(TOKEN);
     }
 

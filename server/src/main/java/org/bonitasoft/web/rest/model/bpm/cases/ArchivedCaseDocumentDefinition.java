@@ -31,7 +31,7 @@ public class ArchivedCaseDocumentDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final ArchivedCaseDocumentDefinition get() {
+    public static ArchivedCaseDocumentDefinition get() {
         return (ArchivedCaseDocumentDefinition) Definitions.get(TOKEN);
     }
 

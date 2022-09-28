@@ -29,7 +29,7 @@ public class ArchivedCommentDefinition extends ItemDefinition<ArchivedCommentIte
     /**
      * Singleton
      */
-    public static final ArchivedCommentDefinition get() {
+    public static ArchivedCommentDefinition get() {
         return (ArchivedCommentDefinition) Definitions.get(TOKEN);
     }
 

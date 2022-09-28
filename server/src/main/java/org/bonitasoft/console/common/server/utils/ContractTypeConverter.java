@@ -98,7 +98,7 @@ public class ContractTypeConverter {
                                                        final long maxSizeForTenant) throws FileNotFoundException {
         this.maxSizeForTenant = maxSizeForTenant;
         final Map<String, Serializable> processedInputs = new HashMap<>();
-        final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.<String, Serializable> emptyMap()
+        final Map<String, Serializable> contractDefinitionMap = processContract == null ? Collections.emptyMap()
                 : createContractInputMap(processContract.getInputs());
         if (inputs != null) {
             for (final Entry<String, Serializable> inputEntry : inputs.entrySet()) {
@@ -211,12 +211,11 @@ public class ContractTypeConverter {
             final Map<String, Serializable> mapOfValues = (Map<String, Serializable>) inputValue;
             if (mapOfValues.containsKey(InputDefinition.FILE_INPUT_FILENAME) && mapOfValues.containsKey(FILE_TEMP_PATH)) {
                 final String filename = (String) mapOfValues.get(InputDefinition.FILE_INPUT_FILENAME);
-                final FileInputValue fileInputValue = new FileInputValue(
+                return new FileInputValue(
                         filename,
                         (String) mapOfValues.get(CONTENT_TYPE),
                         retrieveFileAndGetContent((String) mapOfValues.get(FILE_TEMP_PATH)),
                         (String) mapOfValues.get(FILE_INPUT_ID));
-                return fileInputValue;
             }
         }
         return inputValue;
@@ -280,8 +279,7 @@ public class ContractTypeConverter {
         }
         final List<ConstraintDefinition> constraints = contract.getConstraints();
         final List<InputDefinition> inputDefinitions = adaptContractInputList(contract.getInputs());
-        final ContractDefinitionImpl contractDefinition = getContractDefinition(constraints, inputDefinitions);
-        return contractDefinition;
+        return getContractDefinition(constraints, inputDefinitions);
     }
 
     private List<InputDefinition> adaptContractInputList(final List<InputDefinition> inputDefinitions) {

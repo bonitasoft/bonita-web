@@ -130,7 +130,7 @@ public class ApiExtensionResource extends ServerResource {
                         .parseLong(value.substring(0, index));
                 final long pageSize = Long.parseLong(value.substring(index + 1,
                         index1));
-                final String strLength = value.substring(index1 + 1, value.length());
+                final String strLength = value.substring(index1 + 1);
                 long instanceSize = 0;
                 if (!("*".equals(strLength))) {
                     instanceSize = Long.parseLong(strLength);

@@ -17,7 +17,6 @@
 package org.bonitasoft.web.rest.server.datastore.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bonitasoft.web.rest.server.datastore.converter.AttributeConverter;
@@ -33,7 +32,7 @@ import org.bonitasoft.web.toolkit.client.common.util.StringUtil;
  */
 public class Sorts {
 
-    private List<Sort> sorts;
+    private final List<Sort> sorts;
 
     public Sorts(String orders, AttributeConverter converter) {
         sorts = parseOrders(orders, converter);
@@ -60,7 +59,7 @@ public class Sorts {
      */
     private List<Sort> buildSortList(final String orders, final AttributeConverter converter) {
         final List<Sort> sorts = new ArrayList<>();
-        for (String order : Arrays.asList(orders.split(","))) {
+        for (String order : orders.split(",")) {
             sorts.add(new Sort(order, converter));
         }
         return sorts;

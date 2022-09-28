@@ -1,8 +1,8 @@
 package org.bonitasoft.console.common.server.servlet;
 
 class IconContent {
-    private byte[] content;
-    private String mimeType;
+    private final byte[] content;
+    private final String mimeType;
 
     public IconContent(byte[] content, String mimeType) {
         this.content = content;

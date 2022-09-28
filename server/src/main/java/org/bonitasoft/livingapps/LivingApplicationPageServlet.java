@@ -142,7 +142,6 @@ public class LivingApplicationPageServlet extends HttpServlet {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             response.flushBuffer();
                         }
-                        return;
                     }
                 } catch (final Exception e) {
                     handleException(customPageName, e, request, response, isNotResourcePath);

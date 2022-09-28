@@ -35,7 +35,7 @@ public class CaseContextResource extends CommonResource {
     static final String CASE_ID = "caseId";
 
     private final ProcessAPI processAPI;
-    private FinderFactory resourceHandler;
+    private final FinderFactory resourceHandler;
 
     public CaseContextResource(final ProcessAPI processAPI, FinderFactory resourceHandler) {
         this.processAPI = processAPI;

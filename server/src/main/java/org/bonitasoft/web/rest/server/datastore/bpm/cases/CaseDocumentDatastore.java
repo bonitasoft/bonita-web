@@ -253,9 +253,8 @@ DatastoreHasUpdate<CaseDocumentItem>, DatastoreHasDelete {
 
     protected SearchOptionsCreator buildSearchOptionCreator(final int page, final int resultsByPage, final String search, final Map<String, String> filters,
             final String orders) {
-        final SearchOptionsCreator searchOptionsCreator = new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
+        return new SearchOptionsCreator(page, resultsByPage, search, new Sorts(orders,
                 getDocumentSearchAttributeConverter()), new Filters(filters, new CaseDocumentFilterCreator(getDocumentSearchAttributeConverter())));
-        return searchOptionsCreator;
     }
 
     private CaseDocumentSearchAttributeConverter getDocumentSearchAttributeConverter() {

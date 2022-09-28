@@ -17,11 +17,7 @@
 package org.bonitasoft.web.rest.server.datastore.bpm.process;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
@@ -100,7 +96,7 @@ public class ProcessCategoryDatastore extends CommonDatastore<ProcessCategoryIte
     public ProcessCategoryItem add(final ProcessCategoryItem item) {
         try {
             getProcessAPI().addCategoriesToProcess(item.getProcessId().toLong(),
-                    Arrays.asList(item.getCategoryId().toLong()));
+                    Collections.singletonList(item.getCategoryId().toLong()));
 
             return item;
         } catch (AlreadyExistsException e) {

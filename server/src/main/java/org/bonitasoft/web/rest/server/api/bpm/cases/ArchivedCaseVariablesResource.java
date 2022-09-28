@@ -30,7 +30,7 @@ import org.restlet.resource.Get;
 
 public class ArchivedCaseVariablesResource extends CommonResource {
 
-    private APICaseVariableAttributeChecker attributeChecker = new APICaseVariableAttributeChecker();
+    private final APICaseVariableAttributeChecker attributeChecker = new APICaseVariableAttributeChecker();
     private final ProcessAPI processAPI;
 
     private List<ArchivedDataInstance> result;
@@ -51,7 +51,7 @@ public class ArchivedCaseVariablesResource extends CommonResource {
         attributeChecker.checkSearchFilters(searchFilters);
         long caseId = Long.parseLong(searchFilters.get(CaseVariableItem.ATTRIBUTE_CASE_ID));
         result = processAPI.getArchivedProcessDataInstances(caseId, 0, Integer.MAX_VALUE);
-        return result.stream().skip((searchPageNumber * searchPageSize)).limit(searchPageSize)
+        return result.stream().skip(((long) searchPageNumber * searchPageSize)).limit(searchPageSize)
                 .map(ArchivedCaseVariable::create).collect(Collectors.toList());
     }
 

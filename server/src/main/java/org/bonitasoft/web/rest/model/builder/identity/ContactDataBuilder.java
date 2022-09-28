@@ -26,17 +26,17 @@ import org.bonitasoft.web.rest.model.identity.ProfessionalContactDataItem;
 public class ContactDataBuilder {
 
     private String address = "anAddress";
-    private String building = "aBuilding";
-    private String city = "aCity";
-    private String country = "aCountry";
-    private String email = "anEmail";
-    private String faxNumber = "aFaxNumber";
-    private String mobileNumber = "aMobileNumber";
-    private String phoneNumber = "aPhoneNumber";
-    private String room = "aRoom";
-    private String state = "aState";
-    private String website = "aWebsite";
-    private String zipCode = "aZipCode";
+    private final String building = "aBuilding";
+    private final String city = "aCity";
+    private final String country = "aCountry";
+    private final String email = "anEmail";
+    private final String faxNumber = "aFaxNumber";
+    private final String mobileNumber = "aMobileNumber";
+    private final String phoneNumber = "aPhoneNumber";
+    private final String room = "aRoom";
+    private final String state = "aState";
+    private final String website = "aWebsite";
+    private final String zipCode = "aZipCode";
 
     public static ContactDataBuilder aContactData() {
         return new ContactDataBuilder();
@@ -48,7 +48,7 @@ public class ContactDataBuilder {
     }
     
     public ContactDataCreator toContactDataCreator() {
-        ContactDataCreator creator = new ContactDataCreator()
+        return new ContactDataCreator()
                 .setAddress(address)
                 .setBuilding(building)
                 .setCity(city)
@@ -61,7 +61,6 @@ public class ContactDataBuilder {
                 .setState(state)
                 .setWebsite(website)
                 .setZipCode(zipCode);
-        return creator;
     }
     
     public ProfessionalContactDataItem toProfessionalContactDataItem() {

@@ -17,8 +17,6 @@
  */
 package org.bonitasoft.web.rest.server.framework.json;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -37,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n;
  */
 public class JacksonDeserializer {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public <T> T deserialize(String json, Class<T> clazz) {
         return deserialize(json, mapper.getTypeFactory().constructType(clazz));

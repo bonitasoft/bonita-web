@@ -49,7 +49,7 @@ public class APICustomUserInfoDefinition extends ConsoleAPI<CustomUserInfoDefini
 
     private final CustomUserInfoConverter converter = new CustomUserInfoConverter();
 
-    private CustomUserInfoEngineClientCreator engineClientCreator;
+    private final CustomUserInfoEngineClientCreator engineClientCreator;
 
     public APICustomUserInfoDefinition(CustomUserInfoEngineClientCreator engineClientCreator) {
         this.engineClientCreator = engineClientCreator;

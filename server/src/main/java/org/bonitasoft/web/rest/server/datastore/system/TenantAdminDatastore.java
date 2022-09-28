@@ -35,7 +35,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class TenantAdminDatastore extends Datastore implements DatastoreHasUpdate<TenantAdminItem>, DatastoreHasGet<TenantAdminItem> {
 
-    protected APISession apiSession;
+    protected final APISession apiSession;
 
     public TenantAdminDatastore(final APISession apiSession) {
         this.apiSession = apiSession;
@@ -48,7 +48,7 @@ public class TenantAdminDatastore extends Datastore implements DatastoreHasUpdat
             final boolean doPause = Boolean.parseBoolean(attributes.get(TenantAdminItem.ATTRIBUTE_IS_PAUSED));
             if (!doPause) {
                 getTenantManagementEngineClient().resumeTenant();
-            } else if (doPause) {
+            } else {
                 getTenantManagementEngineClient().pauseTenant();
             }
             tenantAdminItem.setIsPaused(doPause);

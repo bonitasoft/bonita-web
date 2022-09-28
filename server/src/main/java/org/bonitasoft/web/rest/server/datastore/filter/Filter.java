@@ -25,9 +25,9 @@ public class Filter<V extends Serializable> {
         EQUAL, DIFFERENT_FROM
     }
 
-    private Field field;
+    private final Field field;
 
-    private Value<V> value;
+    private final Value<V> value;
 
     private Operator operator = Operator.EQUAL;
 

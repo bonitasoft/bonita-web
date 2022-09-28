@@ -22,7 +22,7 @@ public class ProcessParameterDefinition extends ItemDefinition<ProcessParameterI
     /**
      * Singleton
      */
-    public static final ProcessParameterDefinition get() {
+    public static ProcessParameterDefinition get() {
         return (ProcessParameterDefinition) Definitions.get(TOKEN);
     }
 

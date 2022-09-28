@@ -12,7 +12,7 @@ import org.bonitasoft.web.toolkit.client.data.item.attribute.ItemAttribute;
 
 public class ActivityAttributeConverter implements AttributeConverter {
 
-    protected static Map<String, String> mapping = new HashMap<>();
+    protected static final Map<String, String> mapping = new HashMap<>();
 
     static {
     	mapping.put(ActivityItem.ATTRIBUTE_CASE_ID, ActivityInstanceSearchDescriptor.PROCESS_INSTANCE_ID);

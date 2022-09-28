@@ -14,8 +14,6 @@
  */
 package org.bonitasoft.console.server.servlet;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.io.FileNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;

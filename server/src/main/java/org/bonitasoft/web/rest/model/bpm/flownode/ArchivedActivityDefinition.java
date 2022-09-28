@@ -50,7 +50,7 @@ public class ArchivedActivityDefinition extends ActivityDefinition {
         return new ArchivedActivityItem();
     }
 
-    public static final ArchivedActivityDefinition get() {
+    public static ArchivedActivityDefinition get() {
         return (ArchivedActivityDefinition) Definitions.get(TOKEN);
     }
 

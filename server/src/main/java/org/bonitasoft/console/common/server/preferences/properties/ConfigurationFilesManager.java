@@ -57,7 +57,7 @@ public class ConfigurationFilesManager {
     /*
      * Map<configurationFileName, File>
      */
-    private Map<String, File> platformConfigurationFiles = new HashMap<>();
+    private final Map<String, File> platformConfigurationFiles = new HashMap<>();
 
     public Properties getPlatformProperties(String propertiesFile) {
         Properties properties = platformConfigurations.get(propertiesFile);

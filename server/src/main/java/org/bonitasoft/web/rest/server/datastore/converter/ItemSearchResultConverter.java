@@ -28,11 +28,11 @@ import org.bonitasoft.web.toolkit.client.data.item.IItem;
  */
 public class ItemSearchResultConverter<I extends IItem, E extends Serializable> {
     
-    private int page;
-    private SearchResult<E> result;
-    private ItemConverter<I, E> converter;
-    private long total;
-    private int nbResultsByPage;
+    private final int page;
+    private final SearchResult<E> result;
+    private final ItemConverter<I, E> converter;
+    private final long total;
+    private final int nbResultsByPage;
     
     public ItemSearchResultConverter(int page, int nbResultsByPage, SearchResult<E> result, ItemConverter<I, E> converter) {
         this(page, nbResultsByPage, result, result.getCount(), converter);

@@ -84,9 +84,7 @@ public class APICaseDocument extends ConsoleAPI<CaseDocumentItem> {
     public ItemSearchResult<CaseDocumentItem> search(final int page, final int resultsByPage, final String search, final String orders,
             final Map<String, String> filters) {
 
-        final ItemSearchResult<CaseDocumentItem> results = getCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
-
-        return results;
+        return getCaseDocumentDatastore().search(page, resultsByPage, search, filters, orders);
     }
 
     @Override

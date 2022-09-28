@@ -28,8 +28,6 @@ import org.bonitasoft.engine.platform.PlatformState;
 import org.bonitasoft.engine.platform.StartNodeException;
 import org.bonitasoft.web.rest.model.platform.PlatformDefinition;
 import org.bonitasoft.web.rest.model.platform.PlatformItem;
-import org.bonitasoft.web.rest.server.framework.api.APIHasAdd;
-import org.bonitasoft.web.rest.server.framework.api.APIHasDelete;
 import org.bonitasoft.web.rest.server.framework.api.APIHasGet;
 import org.bonitasoft.web.rest.server.framework.api.APIHasUpdate;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;

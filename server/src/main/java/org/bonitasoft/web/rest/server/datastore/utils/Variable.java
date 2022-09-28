@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
  */
 public class Variable {
 
-    private Map<String, Object> attributes = new HashMap<>();
+    private final Map<String, Object> attributes = new HashMap<>();
 
     @JsonAnySetter
     public void set(String name, Object value) {

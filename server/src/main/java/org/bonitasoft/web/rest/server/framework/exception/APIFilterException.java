@@ -27,7 +27,7 @@ public class APIFilterException extends APIException {
 
     private static final long serialVersionUID = -3674362051034713685L;
 
-    private String filterName;
+    private final String filterName;
 
     public APIFilterException(final String filterName) {
         super();

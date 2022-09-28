@@ -69,8 +69,8 @@ import org.restlet.resource.ServerResource;
 
 public class FinderFactory {
 
-    protected Map<Class<? extends ServerResource>, ResourceFinder> finders;
-    List<ResourceFinder> resourceFinders = new ArrayList<>();
+    protected final Map<Class<? extends ServerResource>, ResourceFinder> finders;
+    final List<ResourceFinder> resourceFinders = new ArrayList<>();
 
     public FinderFactory() {
         finders = getDefaultFinders();

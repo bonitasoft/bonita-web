@@ -31,7 +31,7 @@ public class CacheUtil {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(CacheUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheUtil.class.getName());
 
     protected static CacheManager CACHE_MANAGER = null;
 

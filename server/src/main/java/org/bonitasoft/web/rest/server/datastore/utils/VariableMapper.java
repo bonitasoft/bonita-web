@@ -31,8 +31,8 @@ import org.bonitasoft.web.toolkit.client.common.texttemplate.Arg;
  */
 public class VariableMapper {
 
-    private JacksonDeserializer deserializer;
-    private Variable variable;
+    private final JacksonDeserializer deserializer;
+    private final Variable variable;
 
     public VariableMapper(Variable variable, JacksonDeserializer jacksonDeserializer) {
         this.variable = variable;
@@ -41,7 +41,7 @@ public class VariableMapper {
     
     public Serializable getSerializableValue(String className) {
         try {
-            return (Serializable) deserializer.convertValue(variable.getValue(), Class.forName(className));
+            return deserializer.convertValue(variable.getValue(), Class.forName(className));
         } catch (IllegalArgumentException e) {
             throw new APIException(new T_("%value% is not a valid value for %className%", new Arg("value", variable.getValue()),
                     new Arg("className", className)));

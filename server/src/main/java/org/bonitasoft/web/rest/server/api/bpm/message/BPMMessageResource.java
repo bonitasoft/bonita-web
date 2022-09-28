@@ -120,9 +120,8 @@ public class BPMMessageResource extends CommonResource {
         }
         String stringValue = String.valueOf(value);
         String expressionName = stringValue.trim().isEmpty() ? "empty-value" : stringValue ;
-        String expressionContent = stringValue;
         return new ExpressionBuilder().createExpression(expressionName,
-                expressionContent, valueType(type, value), ExpressionType.TYPE_CONSTANT);
+                stringValue, valueType(type, value), ExpressionType.TYPE_CONSTANT);
     }
 
     private String valueType(String type, Object value) {

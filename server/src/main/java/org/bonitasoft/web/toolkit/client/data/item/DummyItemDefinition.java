@@ -25,7 +25,7 @@ public class DummyItemDefinition extends ItemDefinition<DummyItem> {
     /**
      * Singleton
      */
-    public static final DummyItemDefinition get() {
+    public static DummyItemDefinition get() {
         return (DummyItemDefinition) Definitions.get(TOKEN);
     }
 

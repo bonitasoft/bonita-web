@@ -18,7 +18,6 @@ import java.io.IOException;
 import org.bonitasoft.engine.bpm.data.impl.DataInstanceImpl;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
@@ -27,10 +26,10 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public class DataInstanceSerializer extends JsonSerializer<DataInstanceImpl> {
 
-    JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
+    final JacksonSerializerHelper jacksonSerializerHelper = new JacksonSerializerHelper();
 
     @Override
-    public void serialize(final DataInstanceImpl value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException, JsonProcessingException {
+    public void serialize(final DataInstanceImpl value, final JsonGenerator jgen, final SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
         jgen.writeObjectField("name", value.getName());
         jgen.writeObjectField("description", value.getDescription());

@@ -35,10 +35,10 @@ import org.bonitasoft.web.toolkit.client.data.item.template.ItemHasUniqueId;
  */
 public class GroupItem extends Item implements ItemHasDualName, ItemHasUniqueId, ItemHasCreator, ItemHasLastUpdateDate, ItemHasIcon {
 
-    public static String ATTRIBUTE_DESCRIPTION = "description";
-    public static String ATTRIBUTE_PATH ="path";
-    public static String ATTRIBUTE_PARENT_PATH = "parent_path";
-    public static String ATTRIBUTE_PARENT_GROUP_ID ="parent_group_id";
+    public static final String ATTRIBUTE_DESCRIPTION = "description";
+    public static final String ATTRIBUTE_PATH ="path";
+    public static final String ATTRIBUTE_PARENT_PATH = "parent_path";
+    public static final String ATTRIBUTE_PARENT_GROUP_ID ="parent_group_id";
     
     public GroupItem() {
         super();

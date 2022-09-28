@@ -22,7 +22,7 @@ package org.bonitasoft.console.common.server.utils;
  */
 public class UrlValue {
 
-    private String value;
+    private final String value;
 
     public UrlValue(String value) {
         this.value = value;

@@ -31,7 +31,7 @@ public class UserDefinition extends ItemDefinition<UserItem> {
     /**
      * Singleton
      */
-    public static final UserDefinition get() {
+    public static UserDefinition get() {
         return (UserDefinition) Definitions.get(TOKEN);
     }
 

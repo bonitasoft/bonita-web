@@ -81,7 +81,7 @@ public class APIProcessParameter extends ConsoleAPI<ProcessParameterItem> {
             }
 
             final String paramValue = parameterInstance.getValue() == null ? "" : parameterInstance.getValue().toString();
-            return new ProcessParameterItem(String.valueOf(processId), parameterInstance.getName(), parameterInstance.getType(),
+            return new ProcessParameterItem(processId, parameterInstance.getName(), parameterInstance.getType(),
                     paramValue, parameterInstance.getDescription(), processDeploy.getDisplayName(), processDef.getVersion());
         } catch (final Exception e) {
             throw new APIException(e);

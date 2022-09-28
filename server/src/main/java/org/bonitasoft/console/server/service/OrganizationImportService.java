@@ -16,8 +16,6 @@
  */
 package org.bonitasoft.console.server.service;
 
-import static org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.t_;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

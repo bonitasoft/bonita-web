@@ -50,7 +50,7 @@ public class ArchivedUserTaskDefinition extends UserTaskDefinition {
         return new ArchivedUserTaskItem();
     }
 
-    public static final ArchivedUserTaskDefinition get() {
+    public static ArchivedUserTaskDefinition get() {
         return (ArchivedUserTaskDefinition) Definitions.get(TOKEN);
     }
 

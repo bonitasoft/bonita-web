@@ -24,7 +24,7 @@ public class TenantAdminDefinition extends ItemDefinition<TenantAdminItem> {
 
     protected static final String API_URL = "../API/system/tenant";
 
-    public static final TenantAdminDefinition get() {
+    public static TenantAdminDefinition get() {
         return (TenantAdminDefinition) Definitions.get(TOKEN);
     }
 

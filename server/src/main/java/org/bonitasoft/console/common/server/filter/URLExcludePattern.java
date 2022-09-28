@@ -16,7 +16,7 @@ public class URLExcludePattern {
     /**
      * the Pattern of url not to filter
      */
-    public Pattern excludePattern;
+    public final Pattern excludePattern;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(URLExcludePattern.class.getName());
 

@@ -42,7 +42,7 @@ public class APISearchIndexOutOfRange extends APIException {
 
     @Override
     protected String defaultMessage() {
-        return "Page index (" + String.valueOf(getPageNumber()) + ") out of range for API " + getApi() + "#" + getResource();
+        return "Page index (" + getPageNumber() + ") out of range for API " + getApi() + "#" + getResource();
     }
 
     @Override

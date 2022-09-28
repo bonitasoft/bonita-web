@@ -41,7 +41,7 @@ public class PageResourceProviderImpl implements PageResourceProvider {
     /**
      * Logger
      */
-    private static Logger LOGGER = LoggerFactory.getLogger(PageResourceProviderImpl.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PageResourceProviderImpl.class.getName());
 
     private static final String VERSION_FILENAME = "VERSION";
 

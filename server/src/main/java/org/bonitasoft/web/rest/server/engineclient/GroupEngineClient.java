@@ -44,7 +44,7 @@ import org.bonitasoft.web.toolkit.client.data.APIID;
  */
 public class GroupEngineClient {
 
-    private GroupAPI groupAPI;
+    private final GroupAPI groupAPI;
 
     protected GroupEngineClient(GroupAPI groupAPI) {
         this.groupAPI = groupAPI;

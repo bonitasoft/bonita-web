@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,7 @@ public class ResourceRenderer {
         if (pathInfo != null) {
             for (final String segment : pathInfo.split("/")) {
                 if (!segment.isEmpty()) {
-                    segments.add(URLDecoder.decode(segment, "UTF-8"));
+                    segments.add(URLDecoder.decode(segment, StandardCharsets.UTF_8));
                 }
             }
         }

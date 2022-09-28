@@ -18,7 +18,6 @@ package org.bonitasoft.web.rest.model.portal.page;
 
 import java.util.Date;
 
-import org.bonitasoft.web.rest.model.bpm.flownode.IFlowNodeItem;
 import org.bonitasoft.web.rest.model.identity.UserItem;
 import org.bonitasoft.web.toolkit.client.data.APIID;
 import org.bonitasoft.web.toolkit.client.data.item.IItem;

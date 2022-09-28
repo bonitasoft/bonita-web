@@ -40,7 +40,7 @@ public class BDMClientDependenciesResolver {
 
     private final APISession session;
 
-    private static Logger LOGGER = LoggerFactory.getLogger(BDMClientDependenciesResolver.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BDMClientDependenciesResolver.class.getName());
 
     private final Set<String> dependenciesNames = new HashSet<>();
 

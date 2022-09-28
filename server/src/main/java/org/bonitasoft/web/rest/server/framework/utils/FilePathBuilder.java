@@ -49,7 +49,7 @@ public class FilePathBuilder {
      */
     private void insert(final String path) {
         if (path.endsWith(File.separator)) {
-            this.path.append(path.substring(0, path.length() - 1));
+            this.path.append(path, 0, path.length() - 1);
         } else {
             this.path.append(path);
         }

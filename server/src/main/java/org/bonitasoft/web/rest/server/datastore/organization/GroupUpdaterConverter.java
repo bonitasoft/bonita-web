@@ -28,7 +28,7 @@ import org.bonitasoft.web.toolkit.client.common.util.MapUtil;
  */
 public class GroupUpdaterConverter {
 
-    private GroupEngineClient groupEngineClient;
+    private final GroupEngineClient groupEngineClient;
 
     public GroupUpdaterConverter(GroupEngineClient groupEngineClient) {
         this.groupEngineClient = groupEngineClient;

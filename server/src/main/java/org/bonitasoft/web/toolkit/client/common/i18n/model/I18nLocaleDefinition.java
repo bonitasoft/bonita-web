@@ -29,7 +29,7 @@ public class I18nLocaleDefinition extends ItemDefinition<I18nLocaleItem> {
     /**
      * Singleton
      */
-    public static final I18nLocaleDefinition get() {
+    public static I18nLocaleDefinition get() {
         return (I18nLocaleDefinition) Definitions.get(TOKEN);
     }
 

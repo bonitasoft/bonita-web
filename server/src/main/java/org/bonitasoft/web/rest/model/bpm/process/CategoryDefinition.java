@@ -30,7 +30,7 @@ public class CategoryDefinition extends ItemDefinition {
     /**
      * Singleton
      */
-    public static final CategoryDefinition get() {
+    public static CategoryDefinition get() {
         return (CategoryDefinition) Definitions.get(TOKEN);
     }
 

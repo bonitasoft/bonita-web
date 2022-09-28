@@ -26,7 +26,7 @@ import java.io.Serializable;
  */
 public class TypeConverter {
 
-    private ConverterFactory factory;
+    private final ConverterFactory factory;
 
     // TODO delete this constructor when we'll be using DIP
     public TypeConverter() {

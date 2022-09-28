@@ -27,7 +27,7 @@ import org.bonitasoft.engine.bpm.process.ProcessDefinitionNotFoundException;
  */
 public class ProcessAccessor {
 
-    private ProcessAPI processAPI;
+    private final ProcessAPI processAPI;
 
     public ProcessAccessor(ProcessAPI processAPI) {
         this.processAPI = processAPI;

@@ -25,8 +25,8 @@ import org.bonitasoft.web.toolkit.client.common.i18n.AbstractI18n.LOCALE;
  */
 public class JSPI18n {
 
-    private LOCALE locale;
-    private JSPUtils jspUtils;
+    private final LOCALE locale;
+    private final JSPUtils jspUtils;
 	
     public JSPI18n(JSPUtils jspUtils) {
         this.jspUtils = jspUtils;
