@@ -213,20 +213,15 @@
             <artifactId>spring-core</artifactId>
         </dependency>
         <!--Test-->
-        <dependency>
-            <groupId>org.bonitasoft.console</groupId>
-            <artifactId>bonita-integration-tests-web</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.bonitasoft.console</groupId>-->
+<!--            <artifactId>bonita-integration-tests-web</artifactId>-->
+<!--            <version>${project.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>net.javacrumbs.json-unit</groupId>
             <artifactId>json-unit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

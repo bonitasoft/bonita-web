@@ -5,7 +5,6 @@ import org.junit.Rule;
 
 public abstract class EngineSetup {
 
-
     @Rule
     public BonitaEngineRule bonitaEngineRule = BonitaEngineRule.create().withCleanAfterTest();
 

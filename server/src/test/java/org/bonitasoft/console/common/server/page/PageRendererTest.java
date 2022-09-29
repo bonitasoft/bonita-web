@@ -18,10 +18,7 @@ package org.bonitasoft.console.common.server.page;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -32,7 +29,6 @@ import org.bonitasoft.console.common.server.page.extension.PageResourceProviderI
 import org.bonitasoft.engine.api.PageAPI;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.page.Page;
-import org.bonitasoft.engine.page.PageNotFoundException;
 import org.bonitasoft.engine.session.APISession;
 import org.junit.Before;
 import org.junit.Test;
@@ -95,7 +91,7 @@ public class PageRendererTest {
         verify(resourceRenderer, times(1)).renderFile(hsRequest, hsResponse, indexFile, true);
     }
 
-    protected File initializeHTMLFilePage() throws URISyntaxException, BonitaException, PageNotFoundException {
+    protected File initializeHTMLFilePage() throws URISyntaxException, BonitaException {
         final String pageName = "my_html_page_v_7";
         final File pageDir = new File(PageRenderer.class.getResource(pageName).toURI());
         final File indexFile = new File(pageDir, "resources" + File.separator + "index.html");
