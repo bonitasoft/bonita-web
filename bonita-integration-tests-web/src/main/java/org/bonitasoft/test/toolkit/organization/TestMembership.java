@@ -17,7 +17,6 @@
 package org.bonitasoft.test.toolkit.organization;
 
 import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.identity.UserMembership;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.test.toolkit.bpm.TestActor;
 import org.bonitasoft.test.toolkit.exception.TestToolkitException;
@@ -28,15 +27,8 @@ import org.bonitasoft.test.toolkit.exception.TestToolkitException;
  */
 public class TestMembership implements TestActor {
 
-    private final UserMembership membership;
-
-    /**
-     * Default Constructor.
-     * 
-     * @throws Exception
-     */
     public TestMembership(final APISession apiSession, final long userId, final long groupId, final long roleId) {
-        this.membership = createMembership(apiSession, userId, groupId, roleId);
+        createMembership(apiSession, userId, groupId, roleId);
     }
 
     public TestMembership(final long userId, final long groupId, final long roleId) {
@@ -47,10 +39,10 @@ public class TestMembership implements TestActor {
     // / Membership creation
     // //////////////////////////////////////////////////////////////////////////////////
 
-    private UserMembership createMembership(final APISession apiSession, final long userId, final long groupId, final long roleId) {
+    private void createMembership(final APISession apiSession, final long userId, final long groupId, final long roleId) {
         final IdentityAPI identityAPI = TestUser.getIdentityAPI(apiSession);
         try {
-            return identityAPI.addUserMembership(userId, groupId, roleId);
+            identityAPI.addUserMembership(userId, groupId, roleId);
         } catch (final Exception e) {
             throw new TestToolkitException("Can't create membership <" + userId + "/" + groupId + "/" + roleId + "/" + ">", e);
         }

@@ -232,19 +232,4 @@ public class TestUser implements TestActor {
         return userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    protected APISession getApiSession() {
-        return apiSession;
-    }
-
-    protected void setApiSession(APISession apiSession) {
-        this.apiSession = apiSession;
-    }
-
-    protected void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
 }

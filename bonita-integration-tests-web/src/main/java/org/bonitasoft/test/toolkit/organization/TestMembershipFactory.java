@@ -16,37 +16,13 @@
  */
 package org.bonitasoft.test.toolkit.organization;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Séverin Moussel
- * 
  */
 public class TestMembershipFactory {
 
-    private final Map<String, TestMembership> membershipList;
-
-    private static TestMembershipFactory instance;
-
-    /**
-     * Default Constructor.
-     */
-    public TestMembershipFactory() {
-        this.membershipList = new HashMap<>();
-    }
-
-    // ////////////////////////////////////////////////////////////////////////////////
-    // / Membership's creation
-    // ////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @param name
-     * @param description
-     * @return
-     */
-    public static TestMembership assignMembership(final TestUser user, final TestGroup group, final TestRole role) {
-        return new TestMembership(user.getId(), group.getId(), role.getId());
+    public static void assignMembership(final TestUser user, final TestGroup group, final TestRole role) {
+        new TestMembership(user.getId(), group.getId(), role.getId());
     }
 
 }

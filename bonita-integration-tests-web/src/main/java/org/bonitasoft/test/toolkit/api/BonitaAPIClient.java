@@ -43,17 +43,6 @@ public interface BonitaAPIClient {
     /** Profile. */
     String PROFILE_API_PATH = "API/portal/profile";
 
-    /** Translation. */
-    String TRANSLATION_API_PATH = "API/system/i18ntranslation";
-
-    /**
-     * Login.
-     * 
-     * @param pUserName
-     * @param pPassword
-     * @param pRedirect
-     * @return
-     */
     @POST
     @Path("loginservice")
     ClientResponse<String> login(@FormParam("username") String pUserName, @FormParam("password") String pPassword, @FormParam("redirect") String pRedirect);

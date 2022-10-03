@@ -16,12 +16,6 @@
  */
 package org.bonitasoft.test.toolkit.bpm;
 
-import java.util.List;
-
-import org.bonitasoft.engine.bpm.flownode.HumanTaskInstance;
-import org.bonitasoft.test.toolkit.TestToolkitUtils;
-import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
-
 /**
  * @author Vincent Elcrin
  * 
@@ -37,19 +31,5 @@ public abstract class AbstractManualTask {
     // /////////////////////////////////////////////////////////////////////////////
     // / Test state
     // /////////////////////////////////////////////////////////////////////////////
-
-    public boolean isPending() {
-        TestToolkitCtx.getInstance().getInitiator().getSession();
-        boolean pending = false;
-        List<HumanTaskInstance> result = TestToolkitUtils.getInstance().searchPendingTasksForUser(0, 100);
-        for (HumanTaskInstance instance : result) {
-            if (instance.getId() == getId()) {
-                pending = true;
-                break;
-            }
-        }
-
-        return pending;
-    }
 
 }

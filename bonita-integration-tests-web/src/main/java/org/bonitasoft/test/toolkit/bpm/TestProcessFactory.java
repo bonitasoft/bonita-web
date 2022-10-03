@@ -45,8 +45,6 @@ public class TestProcessFactory {
 
     protected static final String PROCESS_WITH_DOCUMENT_ATTACHED = "Process with document attached";
 
-    protected static final String PROCESS_MISCONFIGURED = "Process misconfigured";
-
     protected static final String PROCESS_CALL_ACTIVTY = "Process call activity";
 
     private final Map<String, TestProcess> processList;
@@ -100,22 +98,6 @@ public class TestProcessFactory {
                 .addStartEvent("Start")
                 .addUserTask("Activity 1", "Employees")
                 .addEndEvent("Finish");
-        return processDefinitionBuidler;
-    }
-
-    protected static ProcessDefinitionBuilder getMisconfiguredProcessDefinitionBuilder(final String processName) {
-        final ProcessDefinitionBuilder processDefinitionBuidler = new ProcessDefinitionBuilder().createNewInstance(processName, "1.0");
-        try {
-            processDefinitionBuidler.addActor("Employees", true)
-                    .addDescription("This a default process")
-
-                    .addStartEvent("Start")
-                    .addUserTask("Activity 1", "Employees")
-                    .addData("FailedData", "FailedClassName", new ExpressionBuilder().createInputExpression("input", Boolean.class.getName()))
-                    .addEndEvent("Finish");
-        } catch (final InvalidExpressionException e) {
-            throw new TestToolkitException("Invalid expression definition", e);
-        }
         return processDefinitionBuidler;
     }
 
@@ -177,7 +159,6 @@ public class TestProcessFactory {
      * - variable1 : String
      * - variable2 : Long
      * - variable3 : Date
-     * @param initiator
      */
     public static TestHumanTask createActivityWithVariables(TestUser initiator) throws InvalidExpressionException {
         final String processName = "processName";
@@ -200,7 +181,6 @@ public class TestProcessFactory {
     /**
      * This process contains only a human task
      *
-     * @return
      */
     public static TestProcess getDefaultHumanTaskProcess() {
         return getHumanTaskProcess(DEFAULT_HUMAN_TASK_PROCESS_NAME);
@@ -261,7 +241,6 @@ public class TestProcessFactory {
     /**
      * This process contains only a human task
      *
-     * @return
      */
     public static TestProcess getHumanTaskProcess(final String processName) {
         if (getInstance().getProcessList().get(processName) == null) {
@@ -273,23 +252,7 @@ public class TestProcessFactory {
     }
 
     /**
-     * This process contains only a human task
-     *
-     * @return
-     */
-    public static TestProcess getMisconfiguredProcess() {
-        if (getInstance().getProcessList().get(PROCESS_MISCONFIGURED) == null) {
-            final TestProcess testProcess = new TestProcess(getMisconfiguredProcessDefinitionBuilder(PROCESS_MISCONFIGURED));
-            getInstance().getProcessList().put(PROCESS_MISCONFIGURED, testProcess);
-        }
-
-        return getInstance().getProcessList().get(PROCESS_MISCONFIGURED);
-    }
-
-    /**
      * This process contains a call activity
-     *
-     * @return
      */
     public static TestProcess getCallActivityProcess(final ProcessDefinition processToStartViaCallActivity) {
         if (getInstance().getProcessList().get(PROCESS_CALL_ACTIVTY) == null) {

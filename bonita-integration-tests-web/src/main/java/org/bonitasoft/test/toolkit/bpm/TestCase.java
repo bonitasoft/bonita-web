@@ -73,7 +73,7 @@ public class TestCase {
         }
         if (instance == null || !state.equals(instance.getState())) {
             throw new TestToolkitException("Instance <" + processInstance.getId() + "> has not reached the expected state <" + state + ">.");
-    }
+        }
     }
 
     /**
@@ -86,7 +86,7 @@ public class TestCase {
         searchOptBuilder.filter(HumanTaskInstanceSearchDescriptor.STATE_NAME, ActivityStates.READY_STATE);
 
         /*
-         * Get next workable human task. (e.g not in initialization state)
+         * Get next workable human task. (e.g. not in initialization state)
          */
         HumanTaskInstance humanTask = null;
         SearchResult<HumanTaskInstance> result = null;
@@ -152,22 +152,6 @@ public class TestCase {
         return getArchive(TestToolkitCtx.getInstance().getInitiator());
     }
 
-    public void archive() throws InterruptedException {
-        final TestUser user = TestToolkitCtx.getInstance().getInitiator();
-        final APISession session = user.getSession();
-        try {
-            while (true) {
-                final TestHumanTask nextActivityInstance = getNextHumanTask(session);
-                if (nextActivityInstance != null) {
-                    nextActivityInstance.assignTo(user).execute(session);
-                }
-                Thread.sleep(SLEEP_TIME_MS);
-            }
-        } catch (final NoActivityLeftException e) {
-            // no more activity, finished
-        }
-    }
-
     public long getId() {
         return processInstance.getId();
     }
@@ -176,7 +160,7 @@ public class TestCase {
     // / Execution
     // ///////////////////////////////////////////////////////////////////
 
-    public TestCase execute(final APISession apiSession) {
+    public void execute(final APISession apiSession) {
         try {
             final TestHumanTask nextActivityInstance = getNextHumanTask(apiSession);
             if (nextActivityInstance != null) {
@@ -186,15 +170,14 @@ public class TestCase {
             // there were no activity in the process
         }
 
-        return this;
     }
 
-    public TestCase execute(final TestUser user) {
-        return execute(user.getSession());
+    public void execute(final TestUser user) {
+        execute(user.getSession());
     }
 
-    public TestCase execute() throws Exception {
-        return execute(TestToolkitCtx.getInstance().getInitiator());
+    public void execute() {
+        execute(TestToolkitCtx.getInstance().getInitiator());
     }
 
     // ///////////////////////////////////////////////////////////////////

@@ -125,25 +125,16 @@ public class TestHumanTask extends AbstractManualTask {
     // / Execute
     // ////////////////////////////////////////////////////////////////////////////
 
-    public TestHumanTask execute(final APISession apiSession) {
+    public void execute(final APISession apiSession) {
         final ProcessAPI processAPI = TestProcess.getProcessAPI(apiSession);
         try {
             processAPI.executeFlowNode(humanTaskInstance.getId());
         } catch (final Exception e) {
             throw new TestToolkitException("Can't execute activity <" + humanTaskInstance.getId() + ">.", e);
         }
-        return this;
     }
 
-    public TestHumanTask execute(final TestUser initiator) {
-        return execute(initiator.getSession());
-    }
-
-    public TestHumanTask execute() {
-        return execute(TestToolkitCtx.getInstance().getInitiator());
-    }
-
-    public TestHumanTask archive(final APISession apiSession) {
+    public void archive(final APISession apiSession) {
         try {
             execute(apiSession);
         } catch (final TestToolkitException e) {
@@ -151,22 +142,21 @@ public class TestHumanTask extends AbstractManualTask {
                 throw e;
             }
         }
-        return this;
     }
 
-    public TestHumanTask archive(final TestUser initiator) {
-        return archive(initiator.getSession());
+    public void archive(final TestUser initiator) {
+        archive(initiator.getSession());
     }
 
-    public TestHumanTask archive() {
-        return archive(TestToolkitCtx.getInstance().getInitiator());
+    public void archive() {
+        archive(TestToolkitCtx.getInstance().getInitiator());
     }
 
     // /////////////////////////////////////////////////////////////////////////////////
     // Convenient method
     // /////////////////////////////////////////////////////////////////////////////////
 
-    public TestHumanTask waitState(final String state) {
+    public void waitState(final String state) {
         for (int i = 0; i < GET_NEXT_NB_ATTEMPT; i++) {
             try {
                 Thread.sleep(SLEEP_TIME_MS);
@@ -181,7 +171,6 @@ public class TestHumanTask extends AbstractManualTask {
         if (getHumanTaskInstance() == null || !state.equals(getHumanTaskInstance().getState())) {
             throw new TestToolkitException("Expected state <" + state + "> has not been reached for human task<" + getId() + ">.");
         }
-        return this;
     }
 
 }
