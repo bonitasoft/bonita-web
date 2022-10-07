@@ -38,14 +38,14 @@ public class FileUploadServletTest {
         fileUploadServlet.init();
 
         final String jsonResponse = fileUploadServlet.generateResponseJson(request, "originalFileName",
-            "application/json", uploadedFile);
+                "application/json", uploadedFile);
         ObjectMapper mapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
         Map<String, String> jsonResponseMap = mapper.readValue(jsonResponse, Map.class);
 
         assertThat(jsonResponseMap).containsEntry(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE, "originalFileName")
-            .containsEntry(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE, "uploadedFile.txt")
-            .containsEntry(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE, "application/json");
+                .containsEntry(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE, "uploadedFile.txt")
+                .containsEntry(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE, "application/json");
     }
 
     @Test
@@ -57,13 +57,14 @@ public class FileUploadServletTest {
         when(fileUploadServlet.getInitParameter(FileUploadServlet.RETURN_FULL_SERVER_PATH_PARAM)).thenReturn("false");
         fileUploadServlet.init();
 
-        final String responseString = fileUploadServlet.generateResponseString(request, "originalFileName", uploadedFile);
+        final String responseString = fileUploadServlet.generateResponseString(request, "originalFileName",
+                uploadedFile);
 
         assertThat(responseString).isEqualTo("uploadedFile.txt::originalFileName");
     }
 
     @Test
-     public void getExtension_should_return_proper_extension() throws IOException {
+    public void getExtension_should_return_proper_extension() throws IOException {
         // given
         final String filename = "C:\\Users\\Desktop\\process.bar";
 
