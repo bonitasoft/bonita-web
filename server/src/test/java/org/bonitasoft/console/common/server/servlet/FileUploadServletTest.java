@@ -37,8 +37,8 @@ public class FileUploadServletTest {
         when(fileUploadServlet.getInitParameter(FileUploadServlet.RETURN_FULL_SERVER_PATH_PARAM)).thenReturn("false");
         fileUploadServlet.init();
 
-        final String jsonResponse = fileUploadServlet.generateResponseJson(request, "originalFileName",
-                "application/json", uploadedFile);
+        final String jsonResponse = fileUploadServlet.generateResponseJson("originalFileName", "application/json",
+                uploadedFile);
         ObjectMapper mapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
         Map<String, String> jsonResponseMap = mapper.readValue(jsonResponse, Map.class);

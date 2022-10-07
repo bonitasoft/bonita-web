@@ -100,7 +100,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     protected String responseContentType = TEXT_CONTENT_TYPE;
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    
+
     @Override
     public void init() throws ServletException {
 
@@ -248,7 +248,8 @@ public abstract class FileUploadServlet extends HttpServlet {
         return responseString;
     }
 
-    protected String generateResponseJson(final String fileName, String contentType, final File uploadedFile) {
+    protected String generateResponseJson(final String fileName, String contentType, final File uploadedFile)
+            throws JsonProcessingException {
         final Map<String, String> responseMap = new HashMap<>();
         if (alsoReturnOriginalFilename) {
             responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
