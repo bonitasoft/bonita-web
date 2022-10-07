@@ -19,7 +19,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @RunWith(MockitoJUnitRunner.class)
 public class FileUploadServletTest {
 
@@ -38,14 +37,15 @@ public class FileUploadServletTest {
         when(fileUploadServlet.getInitParameter(FileUploadServlet.RETURN_FULL_SERVER_PATH_PARAM)).thenReturn("false");
         fileUploadServlet.init();
 
-        final String jsonResponse = fileUploadServlet.generateResponseJson("originalFileName", "application/json", uploadedFile);
+        final String jsonResponse = fileUploadServlet.generateResponseJson(request, "originalFileName",
+            "application/json", uploadedFile);
         ObjectMapper mapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
         Map<String, String> jsonResponseMap = mapper.readValue(jsonResponse, Map.class);
 
-        assertThat(jsonResponseMap.get(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE)).isEqualTo("originalFileName");
-        assertThat(jsonResponseMap.get(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE)).isEqualTo("uploadedFile.txt");
-        assertThat(jsonResponseMap.get(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE)).isEqualTo("application/json");
+        assertThat(jsonResponseMap).containsEntry(FileUploadServlet.FILE_NAME_RESPONSE_ATTRIBUTE, "originalFileName")
+            .containsEntry(FileUploadServlet.TEMP_PATH_RESPONSE_ATTRIBUTE, "uploadedFile.txt")
+            .containsEntry(FileUploadServlet.CONTENT_TYPE_ATTRIBUTE, "application/json");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class FileUploadServletTest {
         final String extension = fileUploadServlet.getExtension(filename);
 
         // then
-        assertThat(extension).isEqualTo("");
+        assertThat(extension).isEmpty();
     }
 
     @Test
@@ -131,7 +131,7 @@ public class FileUploadServletTest {
         final String extension = fileUploadServlet.getExtension(filename);
 
         // then
-        assertThat(extension).isEqualTo("");
+        assertThat(extension).isEmpty();
     }
 
     @Test
@@ -167,6 +167,6 @@ public class FileUploadServletTest {
         final String filenameLastSegment = fileUploadServlet.getFilenameLastSegment(filename);
 
         // then
-        assertThat(filenameLastSegment).isEqualTo("");
+        assertThat(filenameLastSegment).isEmpty();
     }
 }
