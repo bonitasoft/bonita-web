@@ -13,17 +13,19 @@
  **/
 package org.bonitasoft.console.common.server.auth.impl.oauth;
 
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.auth.AuthenticationFailedException;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.scribe.builder.api.LinkedInApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Ruiheng Fan, Chong Zhao
@@ -46,17 +48,19 @@ public class LinkedInConsumer extends OAuthConsumer {
 
     private static final String PROTECTED_RESOURCE_URL = "http://api.linkedin.com/v1/people/~:(id,first-name,last-name)?format=json";
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+    
     @Override
     public String getUserJSONString(final Token accessToken) throws AuthenticationFailedException {
         try {
             final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
             service.signRequest(accessToken, request);
             final Response response = request.send();
-            final JSONObject jsonObj = new JSONObject(response.getBody());
+            final Map jsonObj = objectMapper.readValue(response.getBody(), Map.class);
 
-            return LINKEDIN_PREFIX + jsonObj.getString("id");
+            return LINKEDIN_PREFIX + jsonObj.get("id");
 
-        } catch (final JSONException e) {
+        } catch (final JsonProcessingException e) {
             final String message = "Return values from LinkedIn cannot be resolved.";
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, e.getMessage());
