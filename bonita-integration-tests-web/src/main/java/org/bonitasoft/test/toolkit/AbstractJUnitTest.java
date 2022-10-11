@@ -14,19 +14,28 @@
  */
 package org.bonitasoft.test.toolkit;
 
+import org.bonitasoft.engine.test.junit.BonitaEngineRule;
 import org.bonitasoft.test.toolkit.organization.AdminUser;
 import org.bonitasoft.test.toolkit.organization.TestToolkitCtx;
 import org.bonitasoft.test.toolkit.organization.TestUser;
 import org.bonitasoft.test.toolkit.organization.TestUserFactory;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 
 /**
  * Template of JUnit Test. Do initialization as well as necessary clean up.
  * 
  * @author Vincent Elcrin, Anthony Birembaut
  */
-public abstract class AbstractJUnitTest extends EngineSetup {
+public abstract class AbstractJUnitTest {
+
+    @Rule
+    public BonitaEngineRule bonitaEngineRule = createBonitaEngineRule();
+
+    protected BonitaEngineRule createBonitaEngineRule() {
+        return BonitaEngineRule.create().withCleanAfterTest();
+    }
 
     @Before
     public final void aaSetUp() throws Exception {
