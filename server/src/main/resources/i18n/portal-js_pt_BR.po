@@ -7,8 +7,8 @@ msgstr ""
 "X-Crowdin-Project: bonita\n"
 "X-Crowdin-Project-ID: 13316\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /master/bonita-web/portal/portal-js.pot\n"
-"X-Crowdin-File-ID: 61810\n"
+"X-Crowdin-File: /dev/bonita-web/portal/portal-js.pot\n"
+"X-Crowdin-File-ID: 60594\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "PO-Revision-Date: 2022-10-06 01:34\n"
@@ -18,6 +18,9 @@ msgstr "1 caso foi excluído"
 
 msgid "A page with this name already exists."
 msgstr "Já existe uma página com esse nome."
+
+msgid "A server error occurred. The operation did not complete successfully"
+msgstr "Ocorreu um erro de servidor. A operação não foi concluída com sucesso"
 
 msgid "Above normal"
 msgstr "Acima do nomal"
@@ -75,6 +78,12 @@ msgstr "Todos"
 
 msgid "All done. Good job!"
 msgstr "Tudo feito. Bom trabalho!"
+
+msgid "An Error occurred during process activation/deactivation."
+msgstr "Ocorreu um erro durante a ativação/desativação do processo"
+
+msgid "An Error occurred during process deletion."
+msgstr "Ocorreu um erro durante o processo de deleção."
 
 msgid "An application is a customized environment for a specific user profile, in which users interact with business data and business processes in the most efficient way."
 msgstr "Uma aplicação é um ambiente personalizado para um perfil específico, no qual usuários interagem com dados e processos de negócios de maneira mais eficaz."
@@ -742,6 +751,9 @@ msgstr "Informações pessoais atualizadas com sucesso"
 msgid "Phone"
 msgstr "Telefone"
 
+msgid "Please refresh the page."
+msgstr "Por favor, atualize a página."
+
 msgid "Priority"
 msgstr "Prioridade"
 
@@ -789,6 +801,9 @@ msgstr "Remover tudo"
 
 msgid "Reset"
 msgstr "Restaurar"
+
+msgid "Reset to default"
+msgstr "Redefinir para padrão"
 
 msgid "Roles"
 msgstr "Funções"
@@ -879,6 +894,9 @@ msgstr "Algo deu errado durante a exclusão. Você pode cancelar e tentar de nov
 
 msgid "Something went wrong during the modification. You might want to cancel and try again."
 msgstr "Algo deu errado durante a modificação. Talvez você queira cancelar e tentar novamente."
+
+msgid "Something went wrong. You might want to cancel and try again."
+msgstr "Algo deu errado. Talvez você queira cancelar e tentar novamente."
 
 msgid "Sort by URL"
 msgstr "Ordenar pela URL"
@@ -997,6 +1015,9 @@ msgstr "Os mapeamentos de formulário devem ser resolvidos antes de ativar o pro
 msgid "The image you are trying to upload is too big"
 msgstr "A imagem que você está tentando enviar é muito grande"
 
+msgid "The item does not exist anymore. Refresh the page to see the new status"
+msgstr "O item não existe mais. Atualize a página para ver o novo status"
+
 msgid "The menu does not exist. Reload the page to see the new list of menus."
 msgstr "O menu não existe. Recarregue a página para ver a nova lista de menus."
 
@@ -1044,6 +1065,9 @@ msgstr "Este é o painel de detalhes de tarefa. Nenhuma informação para exibir
 
 msgid "This name is already in use"
 msgstr "Este nome já está em uso"
+
+msgid "This process is no longer available."
+msgstr "Este processo não está mais disponível."
 
 msgid "This process is not fully configured, but it is still enabled. Users may still be able to start cases or do tasks, which may lead to errors."
 msgstr "Esse processo não está totalmente configurado, mas ainda está habilitado. Os usuários ainda podem iniciar casos ou realizar tarefas, o que pode levar a erros."
@@ -1197,6 +1221,9 @@ msgstr "Com erros"
 
 msgid "You are about to export the descriptor of the application"
 msgstr "Você está prestes a exportar o descritor da aplicação"
+
+msgid "You are going to be redirected to the process list."
+msgstr "Você vai ser redirecionado para a lista de processos."
 
 msgid "You can create custom information in Bonita Studio:"
 msgstr "Você pode criar informações personalizadas no Bonita Studio:"
