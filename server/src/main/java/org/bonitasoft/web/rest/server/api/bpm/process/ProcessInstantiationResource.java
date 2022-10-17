@@ -16,8 +16,6 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -32,13 +30,15 @@ import org.bonitasoft.engine.bpm.process.ProcessExecutionException;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Nicolas Tith
  */
 public class ProcessInstantiationResource extends CommonResource {
 
-    protected static final Logger LOGGER = Logger.getLogger(ProcessInstantiationResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProcessInstantiationResource.class.getName());
     
     private static final String CASE_ID_ATTRIBUTE = "caseId";
 
@@ -78,8 +78,8 @@ public class ProcessInstantiationResource extends CommonResource {
             return returnedObject.toString();
         } catch (ProcessExecutionException e) {
             String errorMessage = "Unable to start the process with ID " + processDefinitionId;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage + " Error: " + e.getMessage());
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(errorMessage + " Error: " + e.getMessage());
             }
             //Avoid throwing original exception that may contain sensitive information unwanted in the HTTP response
             throw new ProcessExecutionException(errorMessage + " (consult the logs for more information).");

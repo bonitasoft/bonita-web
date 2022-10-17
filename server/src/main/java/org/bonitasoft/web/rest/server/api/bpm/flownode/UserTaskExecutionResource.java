@@ -16,8 +16,6 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
@@ -31,6 +29,8 @@ import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.server.api.resource.CommonResource;
 import org.bonitasoft.web.toolkit.client.common.exception.api.APIException;
 import org.restlet.resource.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Emmanuel Duchastenier
@@ -38,7 +38,7 @@ import org.restlet.resource.Post;
  */
 public class UserTaskExecutionResource extends CommonResource {
 
-    protected static final Logger LOGGER = Logger.getLogger(UserTaskExecutionResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserTaskExecutionResource.class.getName());
 
     static final String TASK_ID = "taskId";
 
@@ -78,8 +78,8 @@ public class UserTaskExecutionResource extends CommonResource {
             typeConverterUtil.deleteTemporaryFiles(inputs);
         } catch (FlowNodeExecutionException e) {
             String errorMessage = "Unable to execute the task with ID " + taskId;
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, errorMessage + " Error: " + e.getMessage());
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(errorMessage + " Error: " + e.getMessage());
             }
             //Avoid throwing original exception that may contain sensitive information unwanted in the HTTP response
             throw new FlowNodeExecutionException(errorMessage + " (consult the logs for more information).");
