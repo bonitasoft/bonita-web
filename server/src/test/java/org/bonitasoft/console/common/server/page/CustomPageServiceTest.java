@@ -532,7 +532,7 @@ public class CustomPageServiceTest {
             thread.start();
         }
         for (Thread thread : threads) {
-            thread.join(2000);
+            thread.join(5000);
         }
         
         //then
