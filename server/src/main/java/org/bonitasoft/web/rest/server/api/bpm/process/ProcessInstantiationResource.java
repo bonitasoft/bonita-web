@@ -16,6 +16,8 @@ package org.bonitasoft.web.rest.server.api.bpm.process;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
@@ -41,6 +43,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class ProcessInstantiationResource extends CommonResource {
 
+    protected static final Logger LOGGER = Logger.getLogger(ProcessInstantiationResource.class.getName());
+    
     private static final String CASE_ID_ATTRIBUTE = "caseId";
 
     static final String PROCESS_DEFINITION_ID = "processDefinitionId";
@@ -81,8 +85,15 @@ public class ProcessInstantiationResource extends CommonResource {
             final ObjectNode returnedObject = factory.objectNode();
             returnedObject.put(CASE_ID_ATTRIBUTE, processInstanceId);
             return returnedObject.toString();
+        } catch (ProcessExecutionException e) {
+            String errorMessage = "Unable to start the process with ID " + processDefinitionId;
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage + " Error: " + e.getMessage());
+            }
+            //Avoid throwing original exception that may contain sensitive information unwanted in the HTTP response
+            throw new ProcessExecutionException(errorMessage + " (consult the logs for more information).");
         } catch (final ContractViolationException e) {
-            manageContractViolationException(e, "Cannot instantiate process task.");
+            manageContractViolationException(e, "Cannot instantiate process.");
             return null;
         }
     }

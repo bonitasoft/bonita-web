@@ -16,6 +16,8 @@ package org.bonitasoft.web.rest.server.api.bpm.flownode;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.console.common.server.preferences.properties.PropertiesFactory;
 import org.bonitasoft.console.common.server.utils.ContractTypeConverter;
@@ -35,6 +37,8 @@ import org.restlet.resource.Post;
  * @author Fabio Lombardi
  */
 public class UserTaskExecutionResource extends CommonResource {
+
+    protected static final Logger LOGGER = Logger.getLogger(UserTaskExecutionResource.class.getName());
 
     static final String TASK_ID = "taskId";
 
@@ -73,7 +77,13 @@ public class UserTaskExecutionResource extends CommonResource {
                 processAPI.executeUserTask(userId, taskId, processedInputs);
             }
             typeConverterUtil.deleteTemporaryFiles(inputs, tenantId);
-
+        } catch (FlowNodeExecutionException e) {
+            String errorMessage = "Unable to execute the task with ID " + taskId;
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, errorMessage + " Error: " + e.getMessage());
+            }
+            //Avoid throwing original exception that may contain sensitive information unwanted in the HTTP response
+            throw new FlowNodeExecutionException(errorMessage + " (consult the logs for more information).");
         } catch (final ContractViolationException e) {
             manageContractViolationException(e, "Cannot execute task.");
         }
