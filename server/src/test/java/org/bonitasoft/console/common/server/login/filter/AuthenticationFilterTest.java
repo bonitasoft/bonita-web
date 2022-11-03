@@ -64,9 +64,6 @@ public class AuthenticationFilterTest {
     private FilterChain chain;
 
     @Mock
-    private HttpServletRequestAccessor request;
-
-    @Mock
     private HttpServletRequest httpRequest;
 
     @Mock
@@ -89,25 +86,29 @@ public class AuthenticationFilterTest {
     
     @Spy
     AuthenticationManager authenticationManager = new FakeAuthenticationManager(1L);
+    
+    private HttpServletRequestAccessor request;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        doReturn(httpSession).when(request).getHttpSession();
-        when(request.asHttpServletRequest()).thenReturn(httpRequest);
+        doReturn(httpSession).when(httpRequest).getSession();
+        request = new HttpServletRequestAccessor(httpRequest);
         doReturn(authenticationManager).when(authenticationFilter).getAuthenticationManager(any(TenantIdAccessor.class));
         when(httpRequest.getRequestURL()).thenReturn(new StringBuffer());
         when(servletContext.getContextPath()).thenReturn("");
         when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameterNames()).thenReturn(Collections.emptyEnumeration());
         authenticationFilter.init(filterConfig);
-        when(request.getTenantId()).thenReturn("1");
+        when(httpRequest.getParameter("tenant")).thenReturn("1");
         when(tenantIdAccessor.ensureTenantId()).thenReturn(1L);
         when(httpRequest.getMethod()).thenReturn("GET");
     }
 
     @Test
     public void testIfWeGoThroughFilterWhenAtLeastOneRulePass() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         AuthenticationRule passingRule = spy(createPassingRule());
         authenticationFilter.addRule(passingRule);
         authenticationFilter.addRule(createFailingRule());
@@ -120,6 +121,8 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testIfWeAreNotRedirectedIfAtLeastOneRulePass() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createPassingRule());
 
@@ -135,8 +138,9 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(firstFailingRule);
         AuthenticationRule secondFailingRule = spy(createFailingRule());
         authenticationFilter.addRule(secondFailingRule);
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
@@ -149,8 +153,9 @@ public class AuthenticationFilterTest {
         when(httpRequest.getMethod()).thenReturn("POST");
         authenticationFilter.addRule(createFailingRule());
 
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -161,8 +166,9 @@ public class AuthenticationFilterTest {
     public void testIfWeDontGoThroughTheChainWhenRulesFails() throws Exception {
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createFailingRule());
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
@@ -171,13 +177,16 @@ public class AuthenticationFilterTest {
     @Test
     public void testIfTenantIdIsAddedToRedirectUrlWhenInRequest() throws Exception {
         authenticationFilter.addRule(createFailingRule());
-        doReturn("12").when(request).getTenantId();
+        when(httpRequest.getParameter("tenant")).thenReturn("12");
 
+        when(httpRequest.getRequestURI()).thenReturn("/bonita/apps/app/home");
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
+        
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
 
-        verify(httpResponse).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=");
+        verify(httpResponse).sendRedirect("/bonita/login.jsp?tenant=12&redirectUrl=%2Fbonita%2Fapps%2Fapp%2Fhome");
     }
 
     @Test
@@ -198,6 +207,8 @@ public class AuthenticationFilterTest {
     
     @Test
     public void testFailedLoginOnDoFiltering() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
         doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
@@ -212,6 +223,8 @@ public class AuthenticationFilterTest {
     
     @Test
     public void testTenantIsPausedOnDoFiltering() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed", 1L);
         authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
         doReturn(tenantIdAccessor).when(authenticationFilter).getTenantAccessor(request);
@@ -258,20 +271,10 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testMakeRedirectUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("/portal/homepage");
+        when(httpRequest.getRequestURI()).thenReturn("/portal/homepage");
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
-        verify(request, times(1)).getRequestedUri();
+        verify(httpRequest, times(1)).getRequestURI();
         assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/portal/homepage");
-    }
-
-    @Test
-    public void testMakeRedirectUrlFromRequestUrl() throws Exception {
-        when(request.getRequestedUri()).thenReturn("portal/homepage");
-        when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/portal/homepage"));
-        final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
-        verify(request, times(1)).getRequestedUri();
-        verify(httpRequest, never()).getRequestURI();
-        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("portal/homepage");
     }
 
     @Test
