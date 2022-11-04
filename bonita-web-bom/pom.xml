@@ -41,7 +41,6 @@
         <gwt.version>2.5.1</gwt.version>
         <wro4j.version>1.7.0</wro4j.version>
         <restlet-version>2.3.12</restlet-version>
-        <jackson-ext-modules-version>2.10.1</jackson-ext-modules-version>
         <!-- Keycloak version cannot be updated without also updating the ovewritten code in server-sp/src/main/java/org/bonitasoft/console/common/server/auth/impl/oidc -->
         <keycloak.version>18.0.2</keycloak.version>
         <spnego.version>r9</spnego.version>
@@ -143,37 +142,6 @@
                 <version>${restlet-version}</version>
             </dependency>
 
-            <!-- specify this jackson dependencies to override the ones pulled by Restlet -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-csv</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-smile</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-jaxb-annotations</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-jsonSchema</artifactId>
-                <version>${jackson-ext-modules-version}</version>
-            </dependency>
 
             <!-- JSON -->
             <dependency>
