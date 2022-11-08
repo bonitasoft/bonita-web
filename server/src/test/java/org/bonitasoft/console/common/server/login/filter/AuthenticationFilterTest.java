@@ -321,7 +321,7 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testMakeRedirectUrl() throws Exception {
-        doReturn("/apps/appDirectoryBonita").when(request).getRequestedUri();
+        when(httpRequest.getRequestURI()).thenReturn("/apps/appDirectoryBonita");
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
         verify(httpRequest, times(1)).getRequestURI();
         assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/apps/appDirectoryBonita");
