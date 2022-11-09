@@ -87,10 +87,13 @@ public class AuthenticationFilterTest {
         //remove default rules (already logged in) as they have their own tests
         authenticationFilter.getRules().clear();
         authenticationFilter.init(filterConfig);
+        when(httpRequest.getMethod()).thenReturn("GET");
     }
 
     @Test
     public void testIfWeGoThroughFilterWhenAtLeastOneRulePass() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         AuthenticationRule passingRule = spy(createPassingRule());
         authenticationFilter.addRule(passingRule);
         authenticationFilter.addRule(createFailingRule());
@@ -103,6 +106,8 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testIfWeAreNotRedirectedIfAtLeastOneRulePass() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createPassingRule());
 
@@ -118,8 +123,9 @@ public class AuthenticationFilterTest {
         authenticationFilter.addRule(firstFailingRule);
         AuthenticationRule secondFailingRule = spy(createFailingRule());
         authenticationFilter.addRule(secondFailingRule);
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
@@ -142,8 +148,9 @@ public class AuthenticationFilterTest {
         authenticationFilterWithConfig.addRule(firstFailingRule);
         AuthenticationRule secondFailingRule = spy(createFailingRule());
         authenticationFilterWithConfig.addRule(secondFailingRule);
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilterWithConfig.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse);
@@ -157,8 +164,9 @@ public class AuthenticationFilterTest {
         when(httpRequest.getMethod()).thenReturn("POST");
         authenticationFilter.addRule(createFailingRule());
 
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(httpResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -169,8 +177,9 @@ public class AuthenticationFilterTest {
     public void testIfWeDontGoThroughTheChainWhenRulesFails() throws Exception {
         authenticationFilter.addRule(createFailingRule());
         authenticationFilter.addRule(createFailingRule());
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         when(httpRequest.getContextPath()).thenReturn("/bonita");
-        when(httpRequest.getPathInfo()).thenReturn("/portal");
         authenticationFilter.doAuthenticationFiltering(request, httpResponse, chain);
 
         verify(chain, never()).doFilter(any(ServletRequest.class), any(ServletResponse.class));
@@ -188,6 +197,8 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testFailedLoginOnDoFiltering() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         EngineUserNotFoundOrInactive engineUserNotFoundOrInactive = new EngineUserNotFoundOrInactive("login failed");
         authenticationFilter.addRule(createThrowingExceptionRule(engineUserNotFoundOrInactive));
 
@@ -201,6 +212,8 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testTenantIsPausedOnDoFiltering() throws Exception {
+        when(httpRequest.getServletPath()).thenReturn("/apps");
+        when(httpRequest.getPathInfo()).thenReturn("/app/home");
         TenantIsPausedException tenantIsPausedException = new TenantIsPausedException("login failed");
         authenticationFilter.addRule(createThrowingExceptionRule(tenantIsPausedException));
 
@@ -241,20 +254,10 @@ public class AuthenticationFilterTest {
 
     @Test
     public void testMakeRedirectUrl() {
-        doReturn("/apps/appDirectoryBonita").when(request).getRequestedUri();
+        when(httpRequest.getRequestURI()).thenReturn("/apps/appDirectoryBonita");
         final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
-        verify(request, times(1)).getRequestedUri();
+        verify(httpRequest, times(1)).getRequestURI();
         assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("/apps/appDirectoryBonita");
-    }
-
-    @Test
-    public void testMakeRedirectUrlFromRequestUrl() {
-        doReturn("apps/appDirectoryBonita").when(request).getRequestedUri();
-        when(httpRequest.getRequestURL()).thenReturn(new StringBuffer("http://127.0.1.1:8888/apps/appDirectoryBonita"));
-        final RedirectUrl redirectUrl = authenticationFilter.makeRedirectUrl(request);
-        verify(request, times(1)).getRequestedUri();
-        verify(httpRequest, never()).getRequestURI();
-        assertThat(redirectUrl.getUrl()).isEqualToIgnoringCase("apps/appDirectoryBonita");
     }
 
     @Test
