@@ -141,7 +141,12 @@
                 <artifactId>org.restlet.ext.jackson</artifactId>
                 <version>${restlet-version}</version>
             </dependency>
-
+            <!-- Specify woodstox version to override the version pulled by jackson-dataformat-xml (transitive dep of restlet) -->
+            <dependency>
+                <groupId>com.fasterxml.woodstox</groupId>
+                <artifactId>woodstox-core</artifactId>
+                <version>6.4.0</version>
+            </dependency>
 
             <!-- JSON -->
             <dependency>
