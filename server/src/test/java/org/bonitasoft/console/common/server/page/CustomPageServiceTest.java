@@ -14,39 +14,7 @@
  */
 package org.bonitasoft.console.common.server.page;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
+import groovy.lang.GroovyClassLoader;
 import org.apache.commons.io.IOUtils;
 import org.bonitasoft.console.common.server.page.extension.PageResourceProviderImpl;
 import org.bonitasoft.console.common.server.preferences.constants.WebBonitaConstantsUtils;
@@ -73,7 +41,22 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import groovy.lang.GroovyClassLoader;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomPageServiceTest {
@@ -643,26 +626,23 @@ public class CustomPageServiceTest {
     public void should_generate_thread_safe_page_lock_objects() throws Exception {
         //given
         int nbOfThreads = 300;
-        List<Object> pageLocks = new ArrayList<>();
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < nbOfThreads; i++) {
-            // All threads try to get the lock for the same page ('fullPageName' each time)
-            threads.add(new Thread(() -> pageLocks.add(customPageService.getPageLock(fullPageName))));
-        }
-        
+        ConcurrentLinkedQueue pageLocks = new ConcurrentLinkedQueue<>();
+
         //when
-        for (Thread thread : threads) {
-            thread.start();
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        List<Future<?>> results = new ArrayList<>();
+        for (int i = 0; i < nbOfThreads; i++) {
+            // All runnable try to get the lock for the same page ('fullPageName' each time)
+            results.add(executorService.submit(() -> pageLocks.add(customPageService.getPageLock(fullPageName))));
         }
-        for (Thread thread : threads) {
-            thread.join(5000);
+        for (Future<?> res : results) {
+            res.get();
         }
-        
+
         //then
         //make sure that with many thread in parallel that ask a lock on a page , we have one single unique object created once by page to be used for the lock
         Object pageLock = customPageService.getPageLock(fullPageName);
-        assertThat(pageLocks).hasSize(300);
-        assertThat(pageLocks).containsOnly(pageLock);
+        assertThat(pageLocks).hasSize(nbOfThreads).containsOnly(pageLock);
     }
 
 }
