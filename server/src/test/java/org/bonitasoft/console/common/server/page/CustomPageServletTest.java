@@ -69,8 +69,9 @@ public class CustomPageServletTest {
     @Test
     public void should_get_Forbidden_Status_when_page_unAuthorize() throws Exception {
         hsRequest.setPathInfo("/pageToken/");
-        hsRequest.setParameter("applicationId", "1");
+        hsRequest.setParameter("appToken", "myApp");
         given(resourceRenderer.getPathSegments("/pageToken/")).willReturn(Arrays.asList("pageToken"));
+        doReturn(false).when(apiSession).isTechnicalUser();
         given(customPageAuthorizationsHelper.isPageAuthorized("1", "pageToken")).willReturn(false);
 
         servlet.doGet(hsRequest, hsResponse);
@@ -134,7 +135,7 @@ public class CustomPageServletTest {
     }
 
     @Test
-    public void getResource_should_get_Forbidden_Status_when_unAuthorize() throws Exception {
+    public void should_get_Forbidden_Status_when_we_try_to_access_to_unAuthorize_file_with_pathSegment() throws Exception {
         hsRequest.setPathInfo("/custompage_htmlexample/css/../../../file.css");
         final File pageDir = new File(".");
         given(resourceRenderer.getPathSegments("/custompage_htmlexample/css/../../../file.css")).willReturn(
@@ -142,7 +143,9 @@ public class CustomPageServletTest {
         doReturn(pageResourceProvider).when(pageRenderer).getPageResourceProvider("custompage_htmlexample");
         given(pageResourceProvider.getPageDirectory()).willReturn(pageDir);
         doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
-        given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(false);
+        given(customPageAuthorizationsHelper.isPageAuthorized(null, "custompage_htmlexample")).willReturn(true);
+        // folder we wants to access is not authorized
+        doReturn(false).when(bonitaHomeFolderAccessor).isInFolder(any(File.class), any(File.class));
 
         servlet.doGet(hsRequest, hsResponse);
         verify(hsResponse).sendError(403, "User not Authorized");

@@ -103,6 +103,16 @@ public class TokenValidatorFilterTest {
 
         verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
     }
+    
+    @Test
+    public void should_not_check_csrf_token_for_bearer_request() throws Exception {
+        doReturn("true").when(httpSession).getAttribute(TokenValidatorFilter.BEARER_HEADER_VERIFIED_ATTRIBUTE);
+        doReturn("POST").when(httpRequest).getMethod();
+
+        filter.proceedWithFiltering(httpRequest, httpResponse, chain);
+
+        verify(chain).doFilter(any(ServletRequest.class), any(ServletResponse.class));
+    }
 
     @Test
     public void should_set_401_status_when_csrf_request_header_is_wrong() throws Exception {
