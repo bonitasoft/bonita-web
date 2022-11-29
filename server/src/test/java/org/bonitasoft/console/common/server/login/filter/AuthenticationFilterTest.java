@@ -81,6 +81,9 @@ public class AuthenticationFilterTest {
     private APISession apiSession;
 
     @Mock
+    private APISession apiSession;
+
+    @Mock
     private FilterConfig filterConfig;
     
     @Mock
@@ -173,6 +176,21 @@ public class AuthenticationFilterTest {
 
         verify(firstFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
         verify(secondFailingRule, never()).proceedWithRequest(chain, httpRequest, httpResponse, 1L);
+        verify(authenticationFilter).cleanHttpSession(httpSession);
+        verify(httpResponse).sendRedirect(anyString());
+    }
+    
+    @Test
+    public void testIfSessionIsNotInvalidatedWhenCallingPlatformAPIWithAPISession() throws Exception {
+        AuthenticationRule failingRule = spy(createFailingRule());
+        authenticationFilter.addRule(failingRule);
+        when(httpRequest.getServletPath()).thenReturn("/API");
+        when(httpRequest.getPathInfo()).thenReturn("/platform/license");
+        when(httpRequest.getContextPath()).thenReturn("/bonita");
+        when(httpSession.getAttribute(SessionUtil.API_SESSION_PARAM_KEY)).thenReturn(apiSession);
+        authenticationFilter.doAuthenticationFiltering(request, httpResponse, tenantIdAccessor, chain);
+
+        verify(authenticationFilter, never()).cleanHttpSession(httpSession);
         verify(httpResponse).sendRedirect(anyString());
     }
     
