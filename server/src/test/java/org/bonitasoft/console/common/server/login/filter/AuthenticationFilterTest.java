@@ -76,9 +76,6 @@ public class AuthenticationFilterTest {
 
     @Mock
     private HttpSession httpSession;
-    
-    @Mock
-    private APISession apiSession;
 
     @Mock
     private APISession apiSession;
