@@ -42,7 +42,7 @@
         <wro4j.version>1.7.0</wro4j.version>
         <restlet-version>2.3.12</restlet-version>
         <!-- Keycloak version cannot be updated without also updating the ovewritten code in server-sp/src/main/java/org/bonitasoft/console/common/server/auth/impl/oidc -->
-        <keycloak.version>20.0.1</keycloak.version>
+        <keycloak.version>20.0.3</keycloak.version>
         <spnego.version>r9</spnego.version>
     </properties>
 
