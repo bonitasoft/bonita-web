@@ -523,19 +523,15 @@ public class CustomPageService {
     }
 
     void addRestApiExtensionPermissions(final ResourcesPermissionsMapping resourcesPermissionsMapping,
-            final PageResourceProvider pageResourceProvider,
-            final APISession apiSession) throws IOException, BonitaException {
+            final PageResourceProvider pageResourceProvider)  {
         final Map<String, String> permissionsMapping = getPermissionMapping(pageResourceProvider);
-        for (final String key : permissionsMapping.keySet()) {
-            resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key));
-        }
+        permissionsMapping.keySet()
+            .forEach(key -> resourcesPermissionsMapping.setProperty(key, permissionsMapping.get(key)));
     }
 
     private Map<String, String> getPermissionMapping(final PageResourceProvider pageResourceProvider) {
-        Map<String, String> permissionsMapping;
         final File pageProperties = pageResourceProvider.getResourceAsFile(PAGE_PROPERTIES);
-        permissionsMapping = getApiExtensionResourcesPermissionsMapping(pageProperties);
-        return permissionsMapping;
+        return getApiExtensionResourcesPermissionsMapping(pageProperties);
     }
 
     private Map<String, String> getApiExtensionResourcesPermissionsMapping(final File pagePropertyFile) {
@@ -546,8 +542,12 @@ public class CustomPageService {
             final String[] apiExtensions = apiExtensionList.split(EXTENSION_SEPARATOR);
             for (final String apiExtension : apiExtensions) {
                 final String method = pageProperties.getProperty(String.format(PROPERTY_METHOD_MASK, apiExtension.trim()));
-                final String pathTemplate = pageProperties
+                String pathTemplate = pageProperties
                         .getProperty(String.format(PROPERTY_PATH_TEMPLATE_MASK, apiExtension.trim()));
+                // Remove '/' prefix if declared in page.properties
+                if(pathTemplate != null && pathTemplate.startsWith("/")) {
+                    pathTemplate = pathTemplate.substring(1);
+                }
                 final String permissions = pageProperties
                         .getProperty(String.format(PROPERTY_PERMISSIONS_MASK, apiExtension.trim()));
                 permissionsMap.put(String.format(RESOURCE_PERMISSION_KEY_MASK, method, pathTemplate),
@@ -585,7 +585,7 @@ public class CustomPageService {
         setTimePageUpdateWasCheckedInDB(fullPageName);
         Set<String> customPagePermissions = getCustomPagePermissions(new File(pageDirectory, PAGE_PROPERTIES),
                 resourcesPermissionsMapping, false);
-        addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, session);
+        addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
         addPermissionsToCompoundPermissions(page.getName(), customPagePermissions, compoundPermissionsMapping,
                 resourcesPermissionsMapping);
     }

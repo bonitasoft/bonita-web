@@ -527,11 +527,28 @@ public class CustomPageServiceTest {
         doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
 
         //then
         verify(resourcesPermissionsMapping).setProperty("GET|extension/restApiGet", "[permission1]");
         verify(resourcesPermissionsMapping).setProperty("POST|extension/restApiPost", "[permission2,permission3]");
+    }
+    
+    @Test
+    public void should_add_api_extension_permission_for_absolute_pathTemplate() throws Exception {
+        //given
+        doReturn("custompage_test").when(mockedPage).getName();
+        doReturn(null).when(mockedPage).getProcessDefinitionId();
+        final File propertyFile = new File(getClass().getResource(PAGE_PROPERTIES).toURI());
+        doReturn(pageResourceProvider).when(customPageService).getPageResourceProvider(eq(mockedPage), anyLong());
+        doReturn(propertyFile).when(pageResourceProvider).getResourceAsFile(anyString());
+        doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
+
+        //when
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
+
+        //then
+        verify(resourcesPermissionsMapping).setProperty("POST|extension/absolutePath", "[permission2,permission3]");
     }
 
     @Test
@@ -545,7 +562,7 @@ public class CustomPageServiceTest {
         doNothing().when(customPageService).ensurePageFolderIsUpToDate(apiSession, pageResourceProvider);
 
         //when
-        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider, apiSession);
+        customPageService.addRestApiExtensionPermissions(resourcesPermissionsMapping, pageResourceProvider);
 
         //then
         verifyZeroInteractions(resourcesPermissionsMapping);
