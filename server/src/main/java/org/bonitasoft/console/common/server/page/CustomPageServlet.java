@@ -111,7 +111,7 @@ public class CustomPageServlet extends HttpServlet {
     }
 
     private boolean isPageUrlWithoutFinalSlash(final HttpServletRequest request) {
-        return request.getPathInfo().matches("/[^/]+");
+        return request.getPathInfo() == null || request.getPathInfo().matches("/[^/]+");
     }
 
     private File getResourceFile(final String resourcePath, final String pageName) throws IOException, BonitaException {
