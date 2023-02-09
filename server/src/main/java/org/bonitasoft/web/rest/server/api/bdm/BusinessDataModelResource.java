@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +22,7 @@ import org.bonitasoft.console.common.server.utils.UnauthorizedFolderException;
 import org.bonitasoft.engine.api.TenantAdministrationAPI;
 import org.bonitasoft.engine.business.data.BusinessDataRepositoryDeploymentException;
 import org.bonitasoft.engine.business.data.InvalidBusinessDataModelException;
+import org.bonitasoft.engine.exception.UnavailableLockException;
 import org.bonitasoft.engine.io.IOUtil;
 import org.bonitasoft.engine.session.APISession;
 import org.bonitasoft.web.rest.model.bdm.BusinessDataModelItem;
@@ -40,29 +39,31 @@ import org.restlet.resource.Post;
  */
 public class BusinessDataModelResource extends CommonResource {
 
-
     private final TenantAdministrationAPI tenantAdministrationAPI;
-    
+
     private final BonitaHomeFolderAccessor bonitaHomeFolderAccessor;
-    
+
     private final APISession apiSession;
-    
-    public BusinessDataModelResource(final TenantAdministrationAPI tenantAdministrationAPI, BonitaHomeFolderAccessor bonitaHomeFolderAccessor, APISession apiSession) {
+
+    public BusinessDataModelResource(final TenantAdministrationAPI tenantAdministrationAPI,
+            BonitaHomeFolderAccessor bonitaHomeFolderAccessor, APISession apiSession) {
         this.apiSession = apiSession;
         this.bonitaHomeFolderAccessor = bonitaHomeFolderAccessor;
         this.tenantAdministrationAPI = tenantAdministrationAPI;
     }
-    
+
     @Post("json")
     public TenantResourceItem addBDM(final BusinessDataModelItem businessDataModelItem) {
         if (!isTenantPaused()) {
-            setStatus(Status.CLIENT_ERROR_FORBIDDEN, new APIException("Unable to install the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."));
+            setStatus(Status.CLIENT_ERROR_FORBIDDEN, new APIException(
+                    "Unable to install the Business Data Model. Please pause the BPM Services first. Go to Configuration > BPM Services."));
             return null;
         }
         try {
             final byte[] businessDataModelContent = getBusinessDataModelContent(businessDataModelItem);
             tenantAdministrationAPI.updateBusinessDataModel(businessDataModelContent);
-            return new TenantResourceItem(tenantAdministrationAPI.getBusinessDataModelResource(), businessDataModelItem.getFileUpload());
+            return new TenantResourceItem(tenantAdministrationAPI.getBusinessDataModelResource(),
+                    businessDataModelItem.getFileUpload());
         } catch (APIForbiddenException e) {
             setStatus(Status.CLIENT_ERROR_FORBIDDEN, e);
             return null;
@@ -71,9 +72,19 @@ public class BusinessDataModelResource extends CommonResource {
             return null;
         } catch (final BusinessDataRepositoryDeploymentException e) {
             throw new APIException("An error has occurred when deploying Business Data Model.", e);
+        } catch (Exception e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof UnavailableLockException) {
+                // this request may be long and should make use of 202 status instead of 200
+                // we return a 406 status here in order to prepare for this future API change
+                setStatus(Status.CLIENT_ERROR_NOT_ACCEPTABLE, cause, cause.getMessage());
+                return null;
+            } else {
+                throw e;
+            }
         }
     }
-    
+
     @Get("json")
     public TenantResourceItem getBDM() {
         try {
@@ -82,11 +93,11 @@ public class BusinessDataModelResource extends CommonResource {
             throw new APIException(e);
         }
     }
-    
+
     public boolean isTenantPaused() {
         return tenantAdministrationAPI.isPaused();
     }
-    
+
     private byte[] getBusinessDataModelContent(final BusinessDataModelItem item) {
         try {
             return IOUtil.getAllContentFrom(new File(getCompleteTempFilePath(item.getFileUpload())));
@@ -96,7 +107,7 @@ public class BusinessDataModelResource extends CommonResource {
             throw new APIException("Can't read business data model file", e);
         }
     }
-    
+
     public String getCompleteTempFilePath(final String path) throws IOException {
         return bonitaHomeFolderAccessor.getCompleteTempFilePath(path, apiSession.getTenantId());
     }
