@@ -20,7 +20,6 @@
         <wro4j.version>1.7.0</wro4j.version>
         <assertj.version>3.17.2</assertj.version>
 
-        <tomcat.version>8.5.47</tomcat.version>
         <!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
     </properties>
