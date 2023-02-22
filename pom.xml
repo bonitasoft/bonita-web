@@ -19,8 +19,6 @@
 
         <wro4j.version>1.7.0</wro4j.version>
         <assertj.version>3.17.2</assertj.version>
-
-        <tomcat.version>8.5.47</tomcat.version>
     </properties>
     <modules>
         <module>bonita-web-bom</module>
