@@ -18,8 +18,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <assertj.version>3.17.2</assertj.version>
-
-        <tomcat.version>8.5.47</tomcat.version>
     </properties>
     <modules>
         <module>bonita-web-bom</module>
