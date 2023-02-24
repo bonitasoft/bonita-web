@@ -100,7 +100,7 @@ public abstract class FileUploadServlet extends HttpServlet {
     protected String responseContentType = TEXT_CONTENT_TYPE;
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    
+
     @Override
     public void init() throws ServletException {
 
@@ -236,8 +236,6 @@ public abstract class FileUploadServlet extends HttpServlet {
         return new ServletFileUpload(fileItemFactory);
     }
 
-
-
     protected String generateResponseString(final HttpServletRequest request, final String fileName, final File uploadedFile) throws Exception {
         String responseString;
         if (returnFullPathInResponse) {
@@ -252,7 +250,13 @@ public abstract class FileUploadServlet extends HttpServlet {
     }
 
     protected String generateResponseJson(final HttpServletRequest request, final String fileName, String contentType, final File uploadedFile) throws Exception {
-        final Map<String, String> responseMap = new HashMap<String, String>();
+        final Map<String, Serializable> responseMap = new HashMap<String, Serializable>();
+        fillJsonResponseMap(request, responseMap, fileName, contentType, uploadedFile);
+        return objectMapper.writeValueAsString(responseMap);
+    }
+
+    protected void fillJsonResponseMap(HttpServletRequest request, final Map<String, Serializable> responseMap, final String fileName,
+            final String contentType, final File uploadedFile) {
         if (alsoReturnOriginalFilename) {
             responseMap.put(FILE_NAME_RESPONSE_ATTRIBUTE, getFilenameLastSegment(fileName));
         }
@@ -262,7 +266,6 @@ public abstract class FileUploadServlet extends HttpServlet {
             responseMap.put(TEMP_PATH_RESPONSE_ATTRIBUTE, uploadedFile.getName());
         }
         responseMap.put(CONTENT_TYPE_ATTRIBUTE, contentType);
-        return objectMapper.writeValueAsString(responseMap);
     }
 
     protected File makeUniqueFilename(final File targetDirectory, final String fileName) throws IOException {
@@ -286,7 +289,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         if (slashPos == -1) {
             slashPos = fileName.lastIndexOf("\\");
         }
-        return fileName.substring(slashPos+1);
+        return fileName.substring(slashPos + 1);
     }
 
     protected void outputMediaTypeError(final HttpServletResponse response, final PrintWriter responsePW) {
